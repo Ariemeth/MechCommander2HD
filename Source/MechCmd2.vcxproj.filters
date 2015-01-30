@@ -1,0 +1,719 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Code">
+      <UniqueIdentifier>{d3def869-2038-4df9-95f1-9abe543797bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\Object">
+      <UniqueIdentifier>{134a3ceb-8f16-4c78-b3e1-0efafa4fe669}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\Object\Object Hdrs">
+      <UniqueIdentifier>{620c56a6-839d-44af-85dc-0b060f5947d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\Mission">
+      <UniqueIdentifier>{ffd5e62a-2d4e-477e-97c4-2c8ac14a20fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\Mission\Mission Hdrs">
+      <UniqueIdentifier>{0c578402-7a4b-47f4-b382-8dd8d3dfeca9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\GUI">
+      <UniqueIdentifier>{f9558d0c-b59f-4ebc-90eb-13447760ebe8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\GUI\GUI Hdrs">
+      <UniqueIdentifier>{239c8746-611e-4ca1-8a6b-141b1cdf8ede}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\Logistics">
+      <UniqueIdentifier>{ad7e3904-530d-43d7-8007-5dcbfc883848}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\Logistics\Logistics Hdrs">
+      <UniqueIdentifier>{071cabef-d6be-4a9f-a144-8b2575a384d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\Sound">
+      <UniqueIdentifier>{3967b1ca-854c-42b8-8d11-053e6c68c1af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\Sound\Sound Hdrs">
+      <UniqueIdentifier>{a1b13fdf-5ab6-407c-8740-8e23610bca63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\Movement">
+      <UniqueIdentifier>{95bf7419-ca5e-4a37-a4ca-4c8caa413987}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\Movement\Movement Hdrs">
+      <UniqueIdentifier>{7778bcff-107c-4b86-b1c5-2ec06a6d9118}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\Multiplayer">
+      <UniqueIdentifier>{95e1a4a4-d89e-48ed-ab94-b16814d28e18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\Multiplayer\Multiplayer Hdrs">
+      <UniqueIdentifier>{d4749670-7878-474c-bdea-2fb6c0a6db78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Code\movie">
+      <UniqueIdentifier>{83aebe40-0753-4dbf-bea0-3b6cb4421cbe}</UniqueIdentifier>
+      <Extensions>*.h</Extensions>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{5d25b31b-eaa9-4837-9914-f90b36b16ffa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="AMSTRMID.LIB">
+      <Filter>Code</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Code\dw.cpp">
+      <Filter>Code</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\MechCmd2.cpp">
+      <Filter>Code</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\artlry.cpp">
+      <Filter>Code\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\bldng.cpp">
+      <Filter>Code\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\carnage.cpp">
+      <Filter>Code\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\Collsn.cpp">
+      <Filter>Code\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\comndr.cpp">
+      <Filter>Code\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\Contact.cpp">
+      <Filter>Code\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\gameobj.cpp">
+      <Filter>Code\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\gate.cpp">
+      <Filter>Code\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\goal.cpp">
+      <Filter>Code\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\group.cpp">
+      <Filter>Code\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\gvehicl.cpp">
+      <Filter>Code\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\light.cpp">
+      <Filter>Code\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\mech.cpp">
+      <Filter>Code\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\mover.cpp">
+      <Filter>Code\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\objmgr.cpp">
+      <Filter>Code\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\objtype.cpp">
+      <Filter>Code\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\tacordr.cpp">
+      <Filter>Code\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\team.cpp">
+      <Filter>Code\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\terrobj.cpp">
+      <Filter>Code\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\turret.cpp">
+      <Filter>Code\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\warrior.cpp">
+      <Filter>Code\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\weaponbolt.cpp">
+      <Filter>Code\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\ablmc2.cpp">
+      <Filter>Code\Mission</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\gamecam.cpp">
+      <Filter>Code\Mission</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\mission.cpp">
+      <Filter>Code\Mission</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\mission2.cpp">
+      <Filter>Code\Mission</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\Objective.cpp">
+      <Filter>Code\Mission</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\saveload.cpp">
+      <Filter>Code\Mission</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\trigger.cpp">
+      <Filter>Code\Mission</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\weather.cpp">
+      <Filter>Code\Mission</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\AANIM.CPP">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\aAnimObject.cpp">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\ABUTTON.CPP">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\aEdit.cpp">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\AFONT.CPP">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\ALISTBOX.CPP">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\ASCROLL.CPP">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\ASYSTEM.CPP">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\AttributeMeter.cpp">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\controlGui.cpp">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\ForceGroupBar.cpp">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\gameTacMap.cpp">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\InfoWindow.cpp">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\KeyboardRef.cpp">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\MechIcon.cpp">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\missiongui.cpp">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\MPConnectionType.cpp">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\MPGameBrowser.cpp">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\MPHostGame.cpp">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\MPLoadMap.cpp">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\MPParameterScreen.cpp">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\MPSetupArea.cpp">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\OptionsArea.cpp">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\OptionsScreenWrapper.cpp">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\pauseWindow.cpp">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\prefs.cpp">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\simpleCamera.cpp">
+      <Filter>Code\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\ComponentListBox.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\LoadScreen.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\logistics.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\LogisticsComponent.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\LogisticsData.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\LogisticsDialog.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\LogisticsMech.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\LogisticsMechDisplay.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\LogisticsMechIcon.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\LogisticsMissionInfo.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\LogisticsPilot.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\LogisticsPilotListBox.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\LogisticsScreen.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\LogisticsVariant.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\MainMenu.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\MechBayScreen.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\MechLabScreen.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\MechListBox.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\Mechlopedia.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\MechPurchaseScreen.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\MissionBegin.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\MissionBriefingScreen.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\MissionResults.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\MissionSelectionScreen.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\mpprefs.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\PilotReadyScreen.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\PilotReviewArea.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\SalvageMechArea.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\SimpleComponentListBox.cpp">
+      <Filter>Code\Logistics</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\gamesound.cpp">
+      <Filter>Code\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\radio.cpp">
+      <Filter>Code\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\movemgr.cpp">
+      <Filter>Code\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\ChatWindow.cpp">
+      <Filter>Code\Multiplayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\MPStats.cpp">
+      <Filter>Code\Multiplayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\multplyr.cpp">
+      <Filter>Code\Multiplayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\mc2movie.cpp">
+      <Filter>Code\movie</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Code\version.h">
+      <Filter>Code</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\artlry.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\bldng.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\carnage.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Collsn.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\comndr.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\contact.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\dartlry.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\dbldng.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Dcollsn.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\dcomndr.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\dcontact.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Delemntl.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\dgameobj.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\dgate.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\dgoal.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\dgroup.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Dgvehicl.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\dmech.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\dmover.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\dobjmgr.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\dobjnum.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Dobjtype.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\dtacordr.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\dteam.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\dterrobj.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\dwarrior.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\dweaponbolt.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\gameobj.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\gate.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\goal.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\group.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\gvehicl.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\light.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\mech.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\mechclass.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\mover.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\objmgr.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Objtype.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\tacordr.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Team.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\terrobj.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\turret.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\unitdesg.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\warrior.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\weaponbolt.h">
+      <Filter>Code\Object\Object Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\gamecam.h">
+      <Filter>Code\Mission\Mission Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\mission.h">
+      <Filter>Code\Mission\Mission Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\Objective.h">
+      <Filter>Code\Mission\Mission Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\trigger.h">
+      <Filter>Code\Mission\Mission Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\weather.h">
+      <Filter>Code\Mission\Mission Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\AANIM.H">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\aAnimObject.h">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\ABUTTON.H">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\aEdit.h">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\AFONT.H">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\ALISTBOX.H">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\ASCROLL.H">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\ASYSTEM.H">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\AttributeMeter.h">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\ControlGui.h">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\ForceGroupBar.h">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\gameTacMap.h">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\InfoWindow.h">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\KeyboardRef.h">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\MechIcon.h">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\missiongui.h">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\MPConnectionType.h">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\MPGameBrowser.h">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\MPHostGame.h">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\MPLoadMap.h">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\MPParameterScreen.h">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\MPSetupArea.h">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\OptionsArea.h">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\OptionsScreenWrapper.h">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\PauseWindow.h">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\prefs.h">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\simpleCamera.h">
+      <Filter>Code\GUI\GUI Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\mechlopedia.h">
+      <Filter>Code\Logistics</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\SimpleComponentListBox.h">
+      <Filter>Code\Logistics</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\ComponentListBox.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\LoadScreen.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\logistics.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\LogisticsComponent.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\LogisticsData.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\LogisticsDialog.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\LogisticsErrors.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\LogisticsMech.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\LogisticsMechDisplay.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\LogisticsMechIcon.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\LogisticsMechListBox.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\LogisticsMissionInfo.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\LogisticsPilot.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\LogisticsPilotListBox.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\LogisticsScreen.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\LogisticsVariant.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\MainMenu.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\MechBayScreen.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\MechLabScreen.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\MechListBox.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\MechPurchaseScreen.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\MissionBegin.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\MissionBriefingScreen.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\MissionResults.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\MissionSelectionScreen.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\MPPrefs.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\PilotReadyScreen.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\PilotReviewArea.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\SalvageMechArea.h">
+      <Filter>Code\Logistics\Logistics Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\dradio.h">
+      <Filter>Code\Sound\Sound Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\gamesound.h">
+      <Filter>Code\Sound\Sound Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\radio.h">
+      <Filter>Code\Sound\Sound Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\movemgr.h">
+      <Filter>Code\Movement\Movement Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\ChatWindow.h">
+      <Filter>Code\Multiplayer\Multiplayer Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\dmultplyr.h">
+      <Filter>Code\Multiplayer\Multiplayer Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\MPStats.h">
+      <Filter>Code\Multiplayer\Multiplayer Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\multplyr.h">
+      <Filter>Code\Multiplayer\Multiplayer Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\mc2movie.h">
+      <Filter>Code\movie</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MechCommander2.ico">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Script1.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

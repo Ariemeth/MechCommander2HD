@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="MechCmd2">
+</Property><Property Name="Solution File" Value="E:\Program Files\MechCommander2 Source\Source\MechCmd2.sln">
+</Property><Property Name="Date" Value="Sunday, July 21, 2013">
+</Property><Property Name="Time" Value="23:36 PM">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="MechCmd2.sln" Description="File successfully backed up as E:\Program Files\MechCommander2 Source\Source\Backup\MechCmd2.sln">
+</Event><Event ErrorLevel="0" Project="" Source="MechCmd2.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="MechCmd2.sln" Description="Converted">
+</Event></UpgradeLog>

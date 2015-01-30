@@ -1,0 +1,372 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Geometries">
+      <UniqueIdentifier>{f1e53788-3f88-49b4-92e1-d2cc459bce5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometries\Indexed Polygon Meshes">
+      <UniqueIdentifier>{3a4d2ffd-b023-430d-b345-9ddfb1599b17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometries\Indexed Triangle Meshes">
+      <UniqueIdentifier>{613fde28-688a-43da-bec2-e5029649afe6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometries\Terrain">
+      <UniqueIdentifier>{992e7a38-d5d6-4b20-bb89-3d1f5538bfa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lighting">
+      <UniqueIdentifier>{936bee51-0999-443d-8d92-b7fd16eed243}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sorting">
+      <UniqueIdentifier>{df553557-e7b6-4b4b-8d60-64bf602fc46a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Texture">
+      <UniqueIdentifier>{a8ddb29d-56e5-4f0f-960a-8fb9338b9824}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rasterizer">
+      <UniqueIdentifier>{364b0e58-0ffd-45be-803e-0b011086650e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Clipping">
+      <UniqueIdentifier>{c92714ff-235c-4a8a-9c4e-3ccc75ad7cf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effects">
+      <UniqueIdentifier>{dcf60f7a-5e29-4133-92d9-59f45f8407fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Documentation">
+      <UniqueIdentifier>{906a4fd4-876e-4e16-a688-6a7a9f9f5253}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MLRClipTrick.hpp">
+      <Filter>Geometries</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRIndexedPrimitiveBase.hpp">
+      <Filter>Geometries</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRPrimitiveBase.hpp">
+      <Filter>Geometries</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRPrimitiveClipping.hpp">
+      <Filter>Geometries</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRPrimitiveLighting.hpp">
+      <Filter>Geometries</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRShape.hpp">
+      <Filter>Geometries</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRTriangleClipping.hpp">
+      <Filter>Geometries</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRTriangleLighting.hpp">
+      <Filter>Geometries</Filter>
+    </ClInclude>
+    <ClInclude Include="MLR_I_C_DeT_PMesh.hpp">
+      <Filter>Geometries\Indexed Polygon Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="MLR_I_C_DT_PMesh.hpp">
+      <Filter>Geometries\Indexed Polygon Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="MLR_I_C_PMesh.hpp">
+      <Filter>Geometries\Indexed Polygon Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="MLR_I_DeT_PMesh.hpp">
+      <Filter>Geometries\Indexed Polygon Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="MLR_I_DT_PMesh.hpp">
+      <Filter>Geometries\Indexed Polygon Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="MLR_I_L_DeT_PMesh.hpp">
+      <Filter>Geometries\Indexed Polygon Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="MLR_I_L_DT_PMesh.hpp">
+      <Filter>Geometries\Indexed Polygon Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="MLR_I_L_PMesh.hpp">
+      <Filter>Geometries\Indexed Polygon Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="MLR_I_MT_PMesh.hpp">
+      <Filter>Geometries\Indexed Polygon Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="MLR_I_PMesh.hpp">
+      <Filter>Geometries\Indexed Polygon Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="MLR_I_C_DeT_TMesh.hpp">
+      <Filter>Geometries\Indexed Triangle Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="MLR_I_C_DT_TMesh.hpp">
+      <Filter>Geometries\Indexed Triangle Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="MLR_I_C_TMesh.hpp">
+      <Filter>Geometries\Indexed Triangle Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="MLR_I_DeT_TMesh.hpp">
+      <Filter>Geometries\Indexed Triangle Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="MLR_I_DT_TMesh.hpp">
+      <Filter>Geometries\Indexed Triangle Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="MLR_I_L_DeT_TMesh.hpp">
+      <Filter>Geometries\Indexed Triangle Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="MLR_I_L_DT_TMesh.hpp">
+      <Filter>Geometries\Indexed Triangle Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="MLR_I_L_TMesh.hpp">
+      <Filter>Geometries\Indexed Triangle Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="MLR_I_TMesh.hpp">
+      <Filter>Geometries\Indexed Triangle Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="MLR_Terrain.hpp">
+      <Filter>Geometries\Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="MLR_Terrain2.hpp">
+      <Filter>Geometries\Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRAmbientLight.hpp">
+      <Filter>Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRInfiniteLight.hpp">
+      <Filter>Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRInfiniteLightWithFallOff.hpp">
+      <Filter>Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRLight.hpp">
+      <Filter>Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRLightMap.hpp">
+      <Filter>Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRLookUpLight.hpp">
+      <Filter>Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRPointLight.hpp">
+      <Filter>Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRSpotLight.hpp">
+      <Filter>Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRSortByOrder.hpp">
+      <Filter>Sorting</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRSorter.hpp">
+      <Filter>Sorting</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRState.hpp">
+      <Filter>Sorting</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRTexture.hpp">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRTexturePool.hpp">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="GOSImage.hpp">
+      <Filter>Rasterizer</Filter>
+    </ClInclude>
+    <ClInclude Include="GOSImagePool.hpp">
+      <Filter>Rasterizer</Filter>
+    </ClInclude>
+    <ClInclude Include="GOSVertex.hpp">
+      <Filter>Rasterizer</Filter>
+    </ClInclude>
+    <ClInclude Include="GOSVertex2UV.hpp">
+      <Filter>Rasterizer</Filter>
+    </ClInclude>
+    <ClInclude Include="GOSVertexManipulation.hpp">
+      <Filter>Rasterizer</Filter>
+    </ClInclude>
+    <ClInclude Include="GOSVertexPool.hpp">
+      <Filter>Rasterizer</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRClipper.hpp">
+      <Filter>Clipping</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRClippingState.hpp">
+      <Filter>Clipping</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRCardCloud.hpp">
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="MLREffect.hpp">
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRIndexedTriangleCloud.hpp">
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRLineCloud.hpp">
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRNGonCloud.hpp">
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRPointCloud.hpp">
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="MLRTriangleCloud.hpp">
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="MLR.hpp" />
+    <ClInclude Include="MLRHeaders.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MLRIndexedPrimitiveBase.cpp">
+      <Filter>Geometries</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRPrimitiveBase.cpp">
+      <Filter>Geometries</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRShape.cpp">
+      <Filter>Geometries</Filter>
+    </ClCompile>
+    <ClCompile Include="MLR_I_C_DeT_PMesh.cpp">
+      <Filter>Geometries\Indexed Polygon Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="MLR_I_C_DT_PMesh.cpp">
+      <Filter>Geometries\Indexed Polygon Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="MLR_I_C_PMesh.cpp">
+      <Filter>Geometries\Indexed Polygon Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="MLR_I_DeT_PMesh.cpp">
+      <Filter>Geometries\Indexed Polygon Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="MLR_I_DT_PMesh.cpp">
+      <Filter>Geometries\Indexed Polygon Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="MLR_I_L_DeT_PMesh.cpp">
+      <Filter>Geometries\Indexed Polygon Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="MLR_I_L_DT_PMesh.cpp">
+      <Filter>Geometries\Indexed Polygon Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="MLR_I_L_PMesh.cpp">
+      <Filter>Geometries\Indexed Polygon Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="MLR_I_MT_PMesh.cpp">
+      <Filter>Geometries\Indexed Polygon Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="MLR_I_PMesh.cpp">
+      <Filter>Geometries\Indexed Polygon Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="MLR_I_C_DeT_TMesh.cpp">
+      <Filter>Geometries\Indexed Triangle Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="MLR_I_C_DT_TMesh.cpp">
+      <Filter>Geometries\Indexed Triangle Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="MLR_I_C_TMesh.cpp">
+      <Filter>Geometries\Indexed Triangle Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="MLR_I_DeT_TMesh.cpp">
+      <Filter>Geometries\Indexed Triangle Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="MLR_I_DT_TMesh.cpp">
+      <Filter>Geometries\Indexed Triangle Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="MLR_I_L_DeT_TMesh.cpp">
+      <Filter>Geometries\Indexed Triangle Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="MLR_I_L_DT_TMesh.cpp">
+      <Filter>Geometries\Indexed Triangle Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="MLR_I_L_TMesh.cpp">
+      <Filter>Geometries\Indexed Triangle Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="MLR_I_TMesh.cpp">
+      <Filter>Geometries\Indexed Triangle Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="MLR_Terrain.cpp">
+      <Filter>Geometries\Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="MLR_Terrain2.cpp">
+      <Filter>Geometries\Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRAmbientLight.cpp">
+      <Filter>Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRInfiniteLight.cpp">
+      <Filter>Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRInfiniteLightWithFalloff.cpp">
+      <Filter>Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRLight.cpp">
+      <Filter>Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRLightMap.cpp">
+      <Filter>Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRLookUpLight.cpp">
+      <Filter>Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRPointLight.cpp">
+      <Filter>Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRSpotLight.cpp">
+      <Filter>Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRSortByOrder.cpp">
+      <Filter>Sorting</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRSorter.cpp">
+      <Filter>Sorting</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRState.cpp">
+      <Filter>Sorting</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRTexture.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRTexturePool.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="GOSImage.cpp">
+      <Filter>Rasterizer</Filter>
+    </ClCompile>
+    <ClCompile Include="GOSImagePool.cpp">
+      <Filter>Rasterizer</Filter>
+    </ClCompile>
+    <ClCompile Include="GOSVertex.cpp">
+      <Filter>Rasterizer</Filter>
+    </ClCompile>
+    <ClCompile Include="GOSVertex2UV.cpp">
+      <Filter>Rasterizer</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRClipper.cpp">
+      <Filter>Clipping</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRClippingState.cpp">
+      <Filter>Clipping</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRCardCloud.cpp">
+      <Filter>Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="MLREffect.cpp">
+      <Filter>Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRIndexedTriangleCloud.cpp">
+      <Filter>Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRLineCloud.cpp">
+      <Filter>Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRNGonCloud.cpp">
+      <Filter>Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRPointCloud.cpp">
+      <Filter>Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="MLRTriangleCloud.cpp">
+      <Filter>Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="MLR.cpp" />
+    <ClCompile Include="MLRHeaders.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Documentation\overview.txt">
+      <Filter>Documentation</Filter>
+    </None>
+  </ItemGroup>
+</Project>

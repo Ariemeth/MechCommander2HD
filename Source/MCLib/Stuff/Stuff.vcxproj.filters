@@ -1,0 +1,430 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Armor">
+      <UniqueIdentifier>{01f1f65d-4f43-4c4c-84c4-86269a6b12a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math Library">
+      <UniqueIdentifier>{e06bc3fa-6d0a-4bed-9e9a-d9e85d66f71d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Memory Allocation">
+      <UniqueIdentifier>{4accae5b-2f87-4fb9-9e39-55d080a73104}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Connection Engine">
+      <UniqueIdentifier>{1ad95cde-47f4-4a29-b815-3767fde17267}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stream Functions">
+      <UniqueIdentifier>{cc7325ac-1895-404c-ab7d-702719e74e87}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ArmorOff.hpp">
+      <Filter>Armor</Filter>
+    </ClInclude>
+    <ClInclude Include="ArmorOn.hpp">
+      <Filter>Armor</Filter>
+    </ClInclude>
+    <ClInclude Include="Style.hpp">
+      <Filter>Armor</Filter>
+    </ClInclude>
+    <ClInclude Include="Trace.hpp">
+      <Filter>Armor</Filter>
+    </ClInclude>
+    <ClInclude Include="AffineMatrix.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Angle.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Average.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="ExtentBox.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="LinearMatrix.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Motion.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Normal.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="OBB.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Origin.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Point3D.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Polar.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Random.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Ray.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Rotation.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Scalar.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitVector.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2D.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3D.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector4D.hpp">
+      <Filter>Math Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Auto_Container.hpp">
+      <Filter>Memory Allocation</Filter>
+    </ClInclude>
+    <ClInclude Include="Auto_Ptr.hpp">
+      <Filter>Memory Allocation</Filter>
+    </ClInclude>
+    <ClInclude Include="Initialized_Ptr.hpp">
+      <Filter>Memory Allocation</Filter>
+    </ClInclude>
+    <ClInclude Include="MArray.hpp">
+      <Filter>Memory Allocation</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixStack.hpp">
+      <Filter>Memory Allocation</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryBlock.hpp">
+      <Filter>Memory Allocation</Filter>
+    </ClInclude>
+    <ClInclude Include="MString.hpp">
+      <Filter>Memory Allocation</Filter>
+    </ClInclude>
+    <ClInclude Include="Noncopyable.hpp">
+      <Filter>Memory Allocation</Filter>
+    </ClInclude>
+    <ClInclude Include="Chain.hpp">
+      <Filter>Connection Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Hash.hpp">
+      <Filter>Connection Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Iterator.hpp">
+      <Filter>Connection Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Link.hpp">
+      <Filter>Connection Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.hpp">
+      <Filter>Connection Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Plug.hpp">
+      <Filter>Connection Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="RegisteredClass.hpp">
+      <Filter>Connection Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="SafeChain.hpp">
+      <Filter>Connection Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="SafeSocket.hpp">
+      <Filter>Connection Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Slot.hpp">
+      <Filter>Connection Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket.hpp">
+      <Filter>Connection Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="SortedChain.hpp">
+      <Filter>Connection Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="SortedSocket.hpp">
+      <Filter>Connection Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Table.hpp">
+      <Filter>Connection Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree.hpp">
+      <Filter>Connection Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Database.hpp">
+      <Filter>Stream Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="FileStream.hpp">
+      <Filter>Stream Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="FileStreamManager.hpp">
+      <Filter>Stream Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryStream.hpp">
+      <Filter>Stream Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="NameList.hpp">
+      <Filter>Stream Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="NotationFile.hpp">
+      <Filter>Stream Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="Note.hpp">
+      <Filter>Stream Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="Page.hpp">
+      <Filter>Stream Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="Stuff.hpp" />
+    <ClInclude Include="StuffHeaders.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Style.cpp">
+      <Filter>Armor</Filter>
+    </ClCompile>
+    <ClCompile Include="Trace.cpp">
+      <Filter>Armor</Filter>
+    </ClCompile>
+    <ClCompile Include="AffineMatrix.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="AffineMatrix_Test.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Angle.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Angle_Test.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="ExtentBox.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="LinearMatrix.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="LinearMatrix_Test.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix_Test.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Motion.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Normal.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Normal_Test.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="OBB.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Origin.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Origin_Test.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Point3D.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Point3D_Test.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Polar.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Random.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Random_Test.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Ray.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Ray_Test.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Rotation.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Rotation_Test.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Scalar.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitVector.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitVector_Test.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3D.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3D_Test.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector4D.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector4D_Test.cpp">
+      <Filter>Math Library</Filter>
+    </ClCompile>
+    <ClCompile Include="MatrixStack.cpp">
+      <Filter>Memory Allocation</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryBlock.cpp">
+      <Filter>Memory Allocation</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryBlock_Test.cpp">
+      <Filter>Memory Allocation</Filter>
+    </ClCompile>
+    <ClCompile Include="MString.cpp">
+      <Filter>Memory Allocation</Filter>
+    </ClCompile>
+    <ClCompile Include="MString_Test.cpp">
+      <Filter>Memory Allocation</Filter>
+    </ClCompile>
+    <ClCompile Include="Chain.cpp">
+      <Filter>Connection Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Chain_Test.cpp">
+      <Filter>Connection Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Hash.cpp">
+      <Filter>Connection Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Hash_Test.cpp">
+      <Filter>Connection Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Iterator.cpp">
+      <Filter>Connection Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Link.cpp">
+      <Filter>Connection Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Node.cpp">
+      <Filter>Connection Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Plug.cpp">
+      <Filter>Connection Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="RegisteredClass.cpp">
+      <Filter>Connection Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="SafeChain.cpp">
+      <Filter>Connection Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="SafeChain_Test.cpp">
+      <Filter>Connection Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="SafeSocket.cpp">
+      <Filter>Connection Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Slot.cpp">
+      <Filter>Connection Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket.cpp">
+      <Filter>Connection Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="SortedChain.cpp">
+      <Filter>Connection Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="SortedChain_Test.cpp">
+      <Filter>Connection Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="SortedSocket.cpp">
+      <Filter>Connection Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Table.cpp">
+      <Filter>Connection Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Table_Test.cpp">
+      <Filter>Connection Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree.cpp">
+      <Filter>Connection Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree_Test.cpp">
+      <Filter>Connection Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Database.cpp">
+      <Filter>Stream Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="FileStream.cpp">
+      <Filter>Stream Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="FileStream_Test.cpp">
+      <Filter>Stream Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="FileStreamManager.cpp">
+      <Filter>Stream Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryStream.cpp">
+      <Filter>Stream Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryStream_Test.cpp">
+      <Filter>Stream Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="NameList.cpp">
+      <Filter>Stream Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="NameList_Test.cpp">
+      <Filter>Stream Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="NotationFile.cpp">
+      <Filter>Stream Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="NotationFile_Test.cpp">
+      <Filter>Stream Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="Note.cpp">
+      <Filter>Stream Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="Page.cpp">
+      <Filter>Stream Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="Stuff.cpp" />
+    <ClCompile Include="StuffHeaders.cpp" />
+  </ItemGroup>
+</Project>

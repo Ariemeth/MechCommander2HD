@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{c0398e31-612c-480a-a705-41c163c233fa}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Source Files\abl">
+      <UniqueIdentifier>{5aa898e7-ceff-4fae-af1a-abf29a4df741}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{41a93aca-e550-4e33-b650-57395621b038}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{b6625ba8-5247-4041-8e4c-a9f5c14614a8}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ablmc2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ablt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MCLib\Abldbug.cpp">
+      <Filter>Source Files\abl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MCLib\Abldecl.cpp">
+      <Filter>Source Files\abl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MCLib\Ablenv.cpp">
+      <Filter>Source Files\abl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MCLib\Ablerr.cpp">
+      <Filter>Source Files\abl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MCLib\Ablexec.cpp">
+      <Filter>Source Files\abl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MCLib\Ablexpr.cpp">
+      <Filter>Source Files\abl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MCLib\Ablrtn.cpp">
+      <Filter>Source Files\abl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MCLib\Ablscan.cpp">
+      <Filter>Source Files\abl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MCLib\Ablstd.cpp">
+      <Filter>Source Files\abl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MCLib\Ablstmt.cpp">
+      <Filter>Source Files\abl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MCLib\Ablsymt.cpp">
+      <Filter>Source Files\abl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MCLib\Ablxexpr.cpp">
+      <Filter>Source Files\abl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MCLib\Ablxstd.cpp">
+      <Filter>Source Files\abl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MCLib\Ablxstmt.cpp">
+      <Filter>Source Files\abl</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\MCLib\Abl.h">
+      <Filter>Source Files\abl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MCLib\Abldbug.h">
+      <Filter>Source Files\abl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MCLib\Ablenv.h">
+      <Filter>Source Files\abl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MCLib\Ablerr.h">
+      <Filter>Source Files\abl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MCLib\Ablexec.h">
+      <Filter>Source Files\abl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MCLib\Ablgen.h">
+      <Filter>Source Files\abl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MCLib\Ablparse.h">
+      <Filter>Source Files\abl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MCLib\Ablscan.h">
+      <Filter>Source Files\abl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MCLib\Ablsymt.h">
+      <Filter>Source Files\abl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MCLib\Dabldbug.h">
+      <Filter>Source Files\abl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MCLib\dablenv.h">
+      <Filter>Source Files\abl</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

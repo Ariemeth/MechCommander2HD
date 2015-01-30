@@ -1,0 +1,602 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Lib">
+      <UniqueIdentifier>{d7d5f978-f7a6-4c2f-94f9-538633ed97b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lib\Lib Hdrs">
+      <UniqueIdentifier>{7ff4f173-9b8c-498b-a46d-d711006e9a57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File">
+      <UniqueIdentifier>{02126dd1-7f73-43c9-b475-50f0e340a059}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File\File Hdrs">
+      <UniqueIdentifier>{57a8e816-a42e-40ac-a847-fe723ea76b1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Element">
+      <UniqueIdentifier>{2d7ff4c9-837a-47d9-9659-acfb192563d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Element\Element Hdrs">
+      <UniqueIdentifier>{1e9f32cb-3523-4dfc-9be3-89fe4fc18e3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VFX">
+      <UniqueIdentifier>{4b69c26c-4ffb-41fd-80ae-c679cda277e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ABL">
+      <UniqueIdentifier>{8199ca40-f371-4bbd-826b-7bbdca88f219}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ABL\ABL Hdrs">
+      <UniqueIdentifier>{762f8ee6-5f13-4716-883a-56434aaf26fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gui">
+      <UniqueIdentifier>{d808a18b-6840-4755-9f1a-de5b8e05bfe7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gui\GuiHeaders">
+      <UniqueIdentifier>{828050cb-47ab-4ee3-a24a-2591728dbcb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{694904a8-46b1-4d4c-aa1d-0cd842b64f7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera\Camera Hdrs">
+      <UniqueIdentifier>{95f254b7-5a9b-4dc3-abe9-8869de615e55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Terrain">
+      <UniqueIdentifier>{78f2fd77-c958-4eea-8442-609b601f390c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Terrain\Terrain Hdrs">
+      <UniqueIdentifier>{6172df16-43eb-4c19-83f1-7f20808a88b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Appear">
+      <UniqueIdentifier>{42684774-43c7-4390-8621-f6c211786271}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Appear\Appear Hdrs">
+      <UniqueIdentifier>{5d21f77e-d5c6-4920-b94e-acf0f15e3368}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{6723e18a-3430-4048-b7f1-4e12dcaa68b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\Sound Hdrs">
+      <UniqueIdentifier>{1ac5d1f0-a9db-4825-b2b9-3fe13308db60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Move">
+      <UniqueIdentifier>{f33fc937-5fa8-45a4-83b7-222d5977f333}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{dd2072ea-2294-4c05-96c2-d230fbec42cb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AlphaPalette.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="Bitflag.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="Cident.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="cmponent.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="color.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="debugging.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="err.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="floathelp.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="Heap.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="lzcomp.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="lzdecomp.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="mathfunc.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="mouse.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="msl.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="Paths.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="Pqueue.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="Routines.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="scale.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="sortlist.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="tgainfo.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="tgl.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="Timing.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="txmmgr.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="userinput.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="vport.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="weaponfx.cpp">
+      <Filter>Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="csvfile.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="fastfile.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="ffile.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="File.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="gamelog.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="Inifile.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="Packet.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
+    <ClCompile Include="Celement.cpp">
+      <Filter>Element</Filter>
+    </ClCompile>
+    <ClCompile Include="celine.cpp">
+      <Filter>Element</Filter>
+    </ClCompile>
+    <ClCompile Include="cellip.cpp">
+      <Filter>Element</Filter>
+    </ClCompile>
+    <ClCompile Include="cepane.cpp">
+      <Filter>Element</Filter>
+    </ClCompile>
+    <ClCompile Include="cevfx.cpp">
+      <Filter>Element</Filter>
+    </ClCompile>
+    <ClCompile Include="vfx_ellipse.cpp">
+      <Filter>VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="vfx_map_polygon.cpp">
+      <Filter>VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="vfx_transform.cpp">
+      <Filter>VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="vfx_translatedraw.cpp">
+      <Filter>VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="vfxtile.cpp">
+      <Filter>VFX</Filter>
+    </ClCompile>
+    <ClCompile Include="Abldbug.cpp">
+      <Filter>ABL</Filter>
+    </ClCompile>
+    <ClCompile Include="Abldecl.cpp">
+      <Filter>ABL</Filter>
+    </ClCompile>
+    <ClCompile Include="Ablenv.cpp">
+      <Filter>ABL</Filter>
+    </ClCompile>
+    <ClCompile Include="Ablerr.cpp">
+      <Filter>ABL</Filter>
+    </ClCompile>
+    <ClCompile Include="Ablexec.cpp">
+      <Filter>ABL</Filter>
+    </ClCompile>
+    <ClCompile Include="Ablexpr.cpp">
+      <Filter>ABL</Filter>
+    </ClCompile>
+    <ClCompile Include="Ablrtn.cpp">
+      <Filter>ABL</Filter>
+    </ClCompile>
+    <ClCompile Include="Ablscan.cpp">
+      <Filter>ABL</Filter>
+    </ClCompile>
+    <ClCompile Include="Ablstd.cpp">
+      <Filter>ABL</Filter>
+    </ClCompile>
+    <ClCompile Include="Ablstmt.cpp">
+      <Filter>ABL</Filter>
+    </ClCompile>
+    <ClCompile Include="Ablsymt.cpp">
+      <Filter>ABL</Filter>
+    </ClCompile>
+    <ClCompile Include="Ablxexpr.cpp">
+      <Filter>ABL</Filter>
+    </ClCompile>
+    <ClCompile Include="Ablxstd.cpp">
+      <Filter>ABL</Filter>
+    </ClCompile>
+    <ClCompile Include="Ablxstmt.cpp">
+      <Filter>ABL</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="clouds.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="crater.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="mapdata.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="quad.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="TerrTxm.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="terrtxm2.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="txmconv.cpp">
+      <Filter>Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="Appear.cpp">
+      <Filter>Appear</Filter>
+    </ClCompile>
+    <ClCompile Include="Apprtype.cpp">
+      <Filter>Appear</Filter>
+    </ClCompile>
+    <ClCompile Include="bdactor.cpp">
+      <Filter>Appear</Filter>
+    </ClCompile>
+    <ClCompile Include="genactor.cpp">
+      <Filter>Appear</Filter>
+    </ClCompile>
+    <ClCompile Include="Gvactor.cpp">
+      <Filter>Appear</Filter>
+    </ClCompile>
+    <ClCompile Include="mech3d.cpp">
+      <Filter>Appear</Filter>
+    </ClCompile>
+    <ClCompile Include="Soundsys.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Move.cpp">
+      <Filter>Move</Filter>
+    </ClCompile>
+    <ClCompile Include="ECharString.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="EString.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="EWCharString.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="TacMap.cpp" />
+    <ClCompile Include="Utilities.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Bitflag.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Cident.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="clip.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="cmponent.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="color.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Dbitflag.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="debugging.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Dheap.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Dident.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="dstd.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="err.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="floathelp.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Heap.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Lz.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="mathfunc.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="msl.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="objstatus.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Paths.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Pqueue.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="scale.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="sortlist.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="tgainfo.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="tgl.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Timing.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="txmmgr.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="userInput.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Vfx.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Vport.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="weaponfx.h">
+      <Filter>Lib\Lib Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="csvfile.h">
+      <Filter>File\File Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="dcsvfile.h">
+      <Filter>File\File Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="dffile.h">
+      <Filter>File\File Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="dfile.h">
+      <Filter>File\File Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="dgamelog.h">
+      <Filter>File\File Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Dinifile.h">
+      <Filter>File\File Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="DPacket.h">
+      <Filter>File\File Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="fastfile.h">
+      <Filter>File\File Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="ffent.h">
+      <Filter>File\File Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="ffile.h">
+      <Filter>File\File Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="file.h">
+      <Filter>File\File Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="gamelog.h">
+      <Filter>File\File Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Inifile.h">
+      <Filter>File\File Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="packet.h">
+      <Filter>File\File Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Celement.h">
+      <Filter>Element\Element Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="celine.h">
+      <Filter>Element\Element Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="cellip.h">
+      <Filter>Element\Element Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="cepane.h">
+      <Filter>Element\Element Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="cepoly.h">
+      <Filter>Element\Element Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="cevfx.h">
+      <Filter>Element\Element Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Abl.h">
+      <Filter>ABL\ABL Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Abldbug.h">
+      <Filter>ABL\ABL Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Ablenv.h">
+      <Filter>ABL\ABL Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Ablerr.h">
+      <Filter>ABL\ABL Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Ablexec.h">
+      <Filter>ABL\ABL Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Ablgen.h">
+      <Filter>ABL\ABL Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Ablparse.h">
+      <Filter>ABL\ABL Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Ablscan.h">
+      <Filter>ABL\ABL Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Ablsymt.h">
+      <Filter>ABL\ABL Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Dabldbug.h">
+      <Filter>ABL\ABL Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="dablenv.h">
+      <Filter>ABL\ABL Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="dbasegui.h">
+      <Filter>Gui\GuiHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Camera\Camera Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Dcamera.h">
+      <Filter>Camera\Camera Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="clouds.h">
+      <Filter>Terrain\Terrain Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="crater.h">
+      <Filter>Terrain\Terrain Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="dmapdata.h">
+      <Filter>Terrain\Terrain Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="dquad.h">
+      <Filter>Terrain\Terrain Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="dterrain.h">
+      <Filter>Terrain\Terrain Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="DTerrTxm.h">
+      <Filter>Terrain\Terrain Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Dvertex.h">
+      <Filter>Terrain\Terrain Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="mapdata.h">
+      <Filter>Terrain\Terrain Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="quad.h">
+      <Filter>Terrain\Terrain Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="resizeImage.h">
+      <Filter>Terrain\Terrain Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>Terrain\Terrain Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="TerrTxm.h">
+      <Filter>Terrain\Terrain Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="terrtxm2.h">
+      <Filter>Terrain\Terrain Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="txmconv.h">
+      <Filter>Terrain\Terrain Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Terrain\Terrain Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectAppearance.h">
+      <Filter>Appear</Filter>
+    </ClInclude>
+    <ClInclude Include="Appear.h">
+      <Filter>Appear\Appear Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Apprtype.h">
+      <Filter>Appear\Appear Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="bdactor.h">
+      <Filter>Appear\Appear Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Dappear.h">
+      <Filter>Appear\Appear Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Daprtype.h">
+      <Filter>Appear\Appear Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="genactor.h">
+      <Filter>Appear\Appear Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Gvactor.h">
+      <Filter>Appear\Appear Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="mech3d.h">
+      <Filter>Appear\Appear Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Mstates.h">
+      <Filter>Appear\Appear Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Sounds.h">
+      <Filter>Sound\Sound Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="Soundsys.h">
+      <Filter>Sound\Sound Hdrs</Filter>
+    </ClInclude>
+    <ClInclude Include="dmovemgr.h">
+      <Filter>Move</Filter>
+    </ClInclude>
+    <ClInclude Include="dobjblck.h">
+      <Filter>Move</Filter>
+    </ClInclude>
+    <ClInclude Include="dobjclass.h">
+      <Filter>Move</Filter>
+    </ClInclude>
+    <ClInclude Include="Move.h">
+      <Filter>Move</Filter>
+    </ClInclude>
+    <ClInclude Include="ECharString.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="EList.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="EString.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="EWCharString.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="mclib.h" />
+    <ClInclude Include="TacMap.h" />
+    <ClInclude Include="Utilities.h" />
+  </ItemGroup>
+</Project>
