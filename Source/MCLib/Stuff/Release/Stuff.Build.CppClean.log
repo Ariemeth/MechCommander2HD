@@ -1,0 +1,166 @@
+e:\program files\mechcommander2 source\source\mclib\stuff\release\stuff.pch
+e:\program files\mechcommander2 source\source\mclib\stuff\release\vc120.pdb
+e:\program files\mechcommander2 source\source\mclib\stuff\release\stuffheaders.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\plane.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\origin_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\origin.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\obb.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\normal_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\normal.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\motion.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\matrix_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\matrix.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\linearmatrix_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\linearmatrix.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\line.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\extentbox.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\color.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\angle_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\angle.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\affinematrix_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\affinematrix.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\trace.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\style.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\memoryblock_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\memoryblock.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\matrixstack.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\vector4d_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\vector4d.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\vector3d_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\vector3d.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\unitvector_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\unitvector.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\sphere.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\scalar.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\rotation_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\rotation.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\ray_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\ray.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\random_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\random.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\polar.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\point3d_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\point3d.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\table.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\sortedsocket.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\sortedchain_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\sortedchain.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\socket.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\slot.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\safesocket.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\safechain_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\safechain.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\registeredclass.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\plug.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\node.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\link.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\iterator.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\hash_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\hash.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\chain_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\chain.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\mstring_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\mstring.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\stuff.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\page.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\note.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\notationfile_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\notationfile.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\namelist_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\namelist.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\memorystream_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\memorystream.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\filestreammanager.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\filestream_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\filestream.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\database.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\tree_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\tree.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\table_test.obj
+e:\program files\mechcommander2 source\source\mclib\stuff\release\stuff.lib
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\affinematrix.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\affinematrix_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\angle.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\angle_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\chain.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\chain_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\color.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\database.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\extentbox.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\filestream.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\filestreammanager.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\filestream_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\hash.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\hash_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\iterator.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\line.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\linearmatrix.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\linearmatrix_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\link.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\matrix.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\matrixstack.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\matrix_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\memoryblock.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\memoryblock_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\memorystream.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\memorystream_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\motion.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\mstring.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\mstring_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\namelist.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\namelist_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\node.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\normal.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\normal_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\notationfile.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\notationfile_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\note.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\obb.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\origin.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\origin_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\page.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\plane.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\plug.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\point3d.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\point3d_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\polar.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\random.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\random_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\ray.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\ray_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\registeredclass.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\rotation.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\rotation_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\safechain.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\safechain_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\safesocket.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\scalar.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\slot.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\socket.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\sortedchain.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\sortedchain_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\sortedsocket.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\sphere.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\stuff.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\stuffheaders.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\style.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\table.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\table_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\trace.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\tree.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\tree_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\unitvector.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\unitvector_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\vector3d.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\vector3d_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\vector4d.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\vector4d_test.obj
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\stuff.pch
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\vc120.pdb
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\.\release\stuff.lib
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\stuff.tlog\cl.command.1.tlog
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\stuff.tlog\cl.read.1.tlog
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\stuff.tlog\cl.write.1.tlog
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\stuff.tlog\lib-link.read.1.tlog
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\stuff.tlog\lib-link.write.1.tlog
+c:\users\richard\documents\mechcommander2hd\source\mclib\stuff\release\stuff.tlog\lib.command.1.tlog
