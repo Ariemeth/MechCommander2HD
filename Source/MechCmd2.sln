@@ -1,5 +1,7 @@
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C++ Express 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2013 for Windows Desktop
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUI", "GUI\GUI.vcxproj", "{97985315-F026-4AB8-A765-2DBE7B78CC6C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MCLib", "MCLib\MCLib.vcxproj", "{09582E8D-FAA3-4A07-AB43-74C33436CDDF}"
@@ -18,7 +20,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "aseconv", "Tools\aseconv\as
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gosFX", "MCLib\GOSFX\gosFX.vcxproj", "{FDA65357-68F7-4567-89C0-A4D15FB27CDB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mc2res", "mc2res.vcxproj", "{CFE8A9D5-80DF-4ACC-B91F-64AB2167BC3A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mc2res", "mc2res\mc2res.vcxproj", "{CFE8A9D5-80DF-4ACC-B91F-64AB2167BC3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

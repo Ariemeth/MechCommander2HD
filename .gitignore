@@ -1,17 +1,23 @@
-#nothing yet
-*/Debug
-*/Profile
-*/Release
-!/Source/Editor/Debug
-!/Source/Editor/Profile
-!/Source/Editor/Release
+#Paths
+**/Debug
+**/Profile
+**/Release
 
+#File Types
 *.log
 *.tlog
+*.log.txt
 *.tgl
 *.agl
 *.log
 *.suo
 *.sdf
+*.opensdf
 *.pdb
 *.user
+*.dbg
+
+#Specific Files
+/Source/*.cfg
+/Source/*.fst
+/Source/*.tga

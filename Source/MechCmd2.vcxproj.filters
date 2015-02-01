@@ -51,7 +51,7 @@
       <Extensions>*.h</Extensions>
     </Filter>
     <Filter Include="Resources">
-      <UniqueIdentifier>{5d25b31b-eaa9-4837-9914-f90b36b16ffa}</UniqueIdentifier>
+      <UniqueIdentifier>{6099a95f-3452-4fb1-b72d-33820df609d8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -706,14 +706,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="MechCommander2.ico">
-      <Filter>Resources</Filter>
-    </None>
-    <None Include="Icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Script1.rc">
+    <ResourceCompile Include="mc2res\Script1.rc">
       <Filter>Resources</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="mc2res\MechCommander2.ico">
+      <Filter>Resources</Filter>
+    </Image>
   </ItemGroup>
 </Project>
