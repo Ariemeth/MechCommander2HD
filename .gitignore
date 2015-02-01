@@ -1,1 +1,17 @@
 #nothing yet
+*/Debug
+*/Profile
+*/Release
+!/Source/Editor/Debug
+!/Source/Editor/Profile
+!/Source/Editor/Release
+
+*.log
+*.tlog
+*.tgl
+*.agl
+*.log
+*.suo
+*.sdf
+*.pdb
+*.user

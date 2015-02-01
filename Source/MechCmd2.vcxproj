@@ -104,7 +104,7 @@
     <Link>
       <AdditionalOptions>/FIXED:NO %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>mclib\$(Configuration)\mclib.lib;gameos\lib\$(Configuration)\gameos.lib;gameos\lib\$(Configuration)\gameplatform.lib;mclib\gosfx\$(Configuration)\gosfx.lib;mclib\mlr\$(Configuration)\mlr.lib;mclib\stuff\$(Configuration)\stuff.lib;gameos\lib\$(Configuration)\zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>Release/MC2Rel.exe</OutputFile>
+      <OutputFile>Release/MechCmd2.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\DirectX8\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
