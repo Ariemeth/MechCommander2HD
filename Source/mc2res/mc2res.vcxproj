@@ -65,13 +65,22 @@
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">
-    <CustomBuildBeforeTargets>Clean</CustomBuildBeforeTargets>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
+    <CustomBuildAfterTargets>
+    </CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <CustomBuildBeforeTargets>Clean</CustomBuildBeforeTargets>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
+    <CustomBuildAfterTargets>
+    </CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <CustomBuildBeforeTargets>Clean</CustomBuildBeforeTargets>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
+    <CustomBuildAfterTargets>
+    </CustomBuildAfterTargets>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
@@ -120,8 +129,8 @@
 xcopy "$(TargetPath)" "$(SolutionDir)Editor\$(Configuration)\" /y /d</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>if exist "$(SolutionDir)mc2res.dll" del "$(SolutionDir)mc2res.dll" /f /q
-if exist "$(SolutionDir)Editor\$(Configuration)\" del "$(SolutionDir)Editor\$(Configuration)\mc2res.dll" /f /q</Command>
+      <Command>
+      </Command>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -170,8 +179,8 @@ if exist "$(SolutionDir)Editor\$(Configuration)\" del "$(SolutionDir)Editor\$(Co
 xcopy "$(TargetPath)" "$(SolutionDir)Editor\$(Configuration)\" /y /d</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>if exist "$(SolutionDir)mc2res.dll" del "$(SolutionDir)mc2res.dll" /f /q
-if exist "$(SolutionDir)Editor\$(Configuration)\" del "$(SolutionDir)Editor\$(Configuration)\mc2res.dll" /f /q</Command>
+      <Command>
+      </Command>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">
@@ -221,8 +230,8 @@ if exist "$(SolutionDir)Editor\$(Configuration)\" del "$(SolutionDir)Editor\$(Co
 xcopy "$(TargetPath)" "$(SolutionDir)Editor\$(Configuration)\" /y /d</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>if exist "$(SolutionDir)mc2res.dll" del "$(SolutionDir)mc2res.dll" /f /q
-if exist "$(SolutionDir)Editor\$(Configuration)\" del "$(SolutionDir)Editor\$(Configuration)\mc2res.dll" /f /q</Command>
+      <Command>
+      </Command>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -139,7 +139,8 @@ xcopy "$(SolutionDir)..\FinalBuild\testtxm.tga" "$(SolutionDir)" /y /d</Command>
     <CustomBuildStep>
       <Command>
       </Command>
-      <TreatOutputAsContent>false</TreatOutputAsContent>
+      <TreatOutputAsContent>
+      </TreatOutputAsContent>
       <Outputs>
       </Outputs>
     </CustomBuildStep>
@@ -204,7 +205,8 @@ xcopy "$(SolutionDir)..\FinalBuild\testtxm.tga" "$(SolutionDir)" /y /d</Command>
     <CustomBuildStep>
       <Command>
       </Command>
-      <TreatOutputAsContent>false</TreatOutputAsContent>
+      <TreatOutputAsContent>
+      </TreatOutputAsContent>
       <Outputs>
       </Outputs>
     </CustomBuildStep>
@@ -272,7 +274,8 @@ xcopy "$(SolutionDir)..\FinalBuild\testtxm.tga" "$(SolutionDir)" /y /d</Command>
     <CustomBuildStep>
       <Command>
       </Command>
-      <TreatOutputAsContent>false</TreatOutputAsContent>
+      <TreatOutputAsContent>
+      </TreatOutputAsContent>
       <Outputs>
       </Outputs>
     </CustomBuildStep>
