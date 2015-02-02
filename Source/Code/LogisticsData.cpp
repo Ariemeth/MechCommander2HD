@@ -79,7 +79,7 @@ LogisticsData::~LogisticsData()
 	missionInfo = NULL;
 
 #ifndef VIEWER
-	ChatWindow::destroy();
+	ChatWindow::destroyInstance();
 #endif
 }
 

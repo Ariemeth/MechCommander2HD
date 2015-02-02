@@ -1,6 +1,8 @@
 #ifndef ELIST_H
 #define ELIST_H
 
+// MCHD - MA - 02/02/2015 - Lightly optimized a few things, fixed a few bugs, 
+// disabled warning for placement new, and deleted useless comments.
 #pragma warning( disable : 4211 )
 
 #include <memory.h>
@@ -62,14 +64,12 @@ ELIST_TPL_DEF class EList
 {
 protected:
 
-	//
 	//	The node is used to chain the elements of the list together, it contains pointers
 	//	to the elements preceeding or following it, in addition to the element itself.
 	//	If no preceeding or following element are present the value is NULL
-	//
 	struct ENode
 	{
-		ENode(T_ARG New_Element) : m_Data(New_Element) {};
+		ENode(T_ARG New_Element) : m_Data(New_Element), m_pNext(NULL), m_pPrev(NULL) {};
 		ENode*	m_pNext;
 		ENode*	m_pPrev;
 		T		m_Data;
@@ -102,10 +102,8 @@ public:
 		inline EConstIterator(const EConstIterator& rIter)	{ m_pCur_Node = rIter.m_pCur_Node; }
 		inline EConstIterator& operator=(const EConstIterator& rIter)	{ m_pCur_Node = rIter.m_pCur_Node; return(*this); }
 
-		//
 		//	NOTE:	Postfix operators require "int" to be passed as parameter,
 		//			else compiler error C2807 will occur when used
-		//
 		inline EConstIterator& operator++(int)	// postfix increment
 		{
 			#ifdef	DEBUG
@@ -239,7 +237,7 @@ public:
 
 	//===== MANIPULATORS =====
 
-	bool	Clear();
+	inline	void	Clear();
 
 	inline	bool	Prepend(T_ARG New_Element);	// Add an element to the start of the list
 	inline	bool	Append(T_ARG New_Element);	// Add an element to the end of the list
@@ -295,7 +293,7 @@ private:
 
 	//===== DATA =====
 
-	unsigned long				m_Count;			// number of elements currently in list
+	unsigned long		m_Count;			// number of elements currently in list
 
 	ENode*				m_pHead;			// pointer to first node in list
 	ENode*				m_pTail;			// pointer to last node in list
@@ -349,7 +347,6 @@ INPUT PARAMETERS:
 		The list to be made a copy of
 ***************************************************************************************************/
 ELIST_TPL_DEF EList<ELIST_TPL_ARG>::EList(const EList<ELIST_TPL_ARG>& rList)
-
 {
 	CopyData(rList);
 }
@@ -379,11 +376,7 @@ RETURN VALUE:
 ***************************************************************************************************/
 ELIST_TPL_DEF EList<ELIST_TPL_ARG>& EList<ELIST_TPL_ARG>::operator=(const EList<ELIST_TPL_ARG>& rList)
 {
-	//
-	//	Get rid of any list entries that might be used
-	//
 	DestroyList();
-
 	CopyData(rList);
 	return(*this);
 }
@@ -437,36 +430,26 @@ RETURN VALUE:
 ***************************************************************************************************/
 ELIST_TPL_DEF inline bool EList<ELIST_TPL_ARG>::operator==(const EList<ELIST_TPL_ARG>& rList) const
 {
-	//
-	//	If the count of elements is different in each list,
-	//	they're not equal
-	//
 	if(m_Count != rList.m_Count)
 	{
 		return(false);
 	}
-
-	//
-	//	In case both lists are empty, they're equal, however, we don't
-	//	want to iterate if there is nothing to iterate
-	//
-	if(m_Count == 0 && rList.m_Count == 0)
+	else if(m_Count == 0)
 	{
 		return(true);
 	}
 
-	EConstIterator	List_Iter = rList.Begin();
-	EConstIterator	This_Iter = Begin();
-
-	//
 	//	Iterate through both lists and check if they're equal
-	//
-	for(unsigned long i = 0; i < m_Count; i++)
+	EIterator	List_Iter = rList.Begin();
+	EIterator	This_Iter = Begin();
+	while(This_Iter != End())
 	{
 		if(List_Iter.Item() != This_Iter.Item())
 		{
 			return(false);
 		}
+		List_Iter++;
+		This_Iter++;
 	}
 
 	return(true);
@@ -496,18 +479,17 @@ ELIST_TPL_DEF inline typename EList<ELIST_TPL_ARG>::EIterator EList<ELIST_TPL_AR
 {
 	gosASSERT(Pos < m_Count && m_Count);	// Need to stay within range of number of elements
 
-	if(!m_Count)
+	if(IsEmpty())
 	{
 		return(INVALID_ITERATOR);
 	}
 
-	//
 	//	Iterate through the list until we get to the element we desire
-	//
 	ENode	*pNode = m_pHead;
-	for(unsigned long i = 0; i < Pos; i++)
+	while(Pos)
 	{
 		pNode = pNode->m_pNext;
+		Pos--;
 	}
 	EIterator	Iter;
 	Iter.m_pCur_Node = pNode;
@@ -519,18 +501,17 @@ ELIST_TPL_DEF inline const typename EList<ELIST_TPL_ARG>::EConstIterator EList<E
 {
 	gosASSERT(Pos < m_Count && m_Count);	// Need to stay within range of number of elements
 
-	if(!m_Count)
+	if(IsEmpty())
 	{
 		return(INVALID_ITERATOR);
 	}
 
-	//
 	//	Iterate through the list until we get to the element we desire
-	//
 	ENode	*pNode = m_pHead;
-	for(unsigned long i = 0; i < Pos; i++)
+	while (Pos)
 	{
 		pNode = pNode->m_pNext;
+		Pos--;
 	}
 	EIterator	Iter;
 	Iter.m_pCur_Node = pNode;
@@ -547,7 +528,7 @@ RETURN VALUE:
 ***************************************************************************************************/
 ELIST_TPL_DEF inline typename EList<ELIST_TPL_ARG>::EIterator EList<ELIST_TPL_ARG>::Begin()
 {
-	if(!m_Count)
+	if (IsEmpty())
 	{
 		return(INVALID_ITERATOR);
 	}
@@ -560,7 +541,7 @@ ELIST_TPL_DEF inline typename EList<ELIST_TPL_ARG>::EIterator EList<ELIST_TPL_AR
 //-------------------------------------------------------------------------------------------------
 ELIST_TPL_DEF inline const typename EList<ELIST_TPL_ARG>::EConstIterator EList<ELIST_TPL_ARG>::Begin() const
 {
-	if(!m_Count)
+	if (IsEmpty())
 	{
 		return(INVALID_ITERATOR);
 	}
@@ -582,7 +563,7 @@ ELIST_TPL_DEF inline typename EList<ELIST_TPL_ARG>::EIterator EList<ELIST_TPL_AR
 {
 	gosASSERT(m_Count);		// Don't try to get an iterator if list is empty
 
-	if(!m_Count)
+	if(IsEmpty())
 	{
 		return(INVALID_ITERATOR);
 	}
@@ -597,7 +578,7 @@ ELIST_TPL_DEF inline const typename EList<ELIST_TPL_ARG>::EConstIterator EList<E
 {
 	gosASSERT(m_Count);		// Don't try to get an iterator if list is empty
 
-	if(!m_Count)
+	if(IsEmpty())
 	{
 		return(INVALID_ITERATOR);
 	}
@@ -614,10 +595,9 @@ FUNCTION DESCRIPTION:
 RETURN VALUE:
 		TRUE if success
 ***************************************************************************************************/
-ELIST_TPL_DEF bool EList<ELIST_TPL_ARG>::Clear()
+ELIST_TPL_DEF inline void EList<ELIST_TPL_ARG>::Clear()
 {
 	DestroyList();
-	return(true);	// <<HACK>> BR - need to do checking
 }
 	
 /**************************************************************************************************
@@ -631,28 +611,23 @@ RETURN VALUE:
 ***************************************************************************************************/
 ELIST_TPL_DEF inline bool EList<ELIST_TPL_ARG>::Prepend(T_ARG New_Element)
 {
-	//
 	//	If the list is empty, let's create the first element
-	//
 	if(IsEmpty())
 	{
 		return(AddFirstElement(New_Element));
 	}
 
-	//
 	//	Otherwise create a new element and prepend to to the list
-	//
 	ENode* pNode = CreateElement(New_Element);
 	if(pNode)
 	{
 		m_pHead->m_pPrev = pNode;
 		pNode->m_pNext = m_pHead;
-		pNode->m_pPrev = NULL;
 		m_pHead = pNode;
 		m_Count++;
 		return(true);
 	}
-	return(false);	// <<HACK>> BR
+	return(false);
 }
 	
 /**************************************************************************************************
@@ -666,23 +641,18 @@ RETURN VALUE:
 ***************************************************************************************************/
 ELIST_TPL_DEF inline bool EList<ELIST_TPL_ARG>::Append(T_ARG New_Element)
 {
-	//
 	//	If the list is empty, let's create the first element
-	//
 	if(IsEmpty())
 	{
 		return(AddFirstElement(New_Element));
 	}
 
-	//
 	//	Otherwise create a new element and append to to the list
-	//
 	ENode* pNode = CreateElement(New_Element);
 	if(pNode)
 	{
 		m_pTail->m_pNext = pNode;
 		pNode->m_pPrev = m_pTail;
-		pNode->m_pNext = NULL;
 		m_pTail = pNode;
 		m_Count++;
 		return(true);
@@ -703,30 +673,19 @@ RETURN VALUE:
 ***************************************************************************************************/
 ELIST_TPL_DEF inline bool EList<ELIST_TPL_ARG>::Insert(T_ARG New_Element, const typename EList<ELIST_TPL_ARG>::EIterator& rIter)
 {
-	//
-	//	Make sure we have a valid iterator before we continue
-	//
-	gosASSERT(rIter.m_pCur_Node);
-
-	//
 	//	Attempt to create a new element
-	//
 	ENode* pNode = CreateElement(New_Element);
 	if(!pNode)
 	{
 		return(false);
 	}
 
-	//
 	//	Connect the newly created node
-	//
 	pNode->m_pNext = rIter.m_pCur_Node;
 	pNode->m_pPrev = rIter.m_pCur_Node->m_pPrev;
 
 
-	//
 	//	Make sure to connect the previous node only if we are not the first in the list
-	//
 	if(pNode->m_pPrev)
 	{
 		pNode->m_pPrev->m_pNext = pNode;
@@ -737,9 +696,7 @@ ELIST_TPL_DEF inline bool EList<ELIST_TPL_ARG>::Insert(T_ARG New_Element, const 
 		m_pHead = pNode;
 	}
 
-	//
 	//	Last thing to do is to connect the next node to oursef
-	//
 	pNode->m_pNext->m_pPrev = pNode;
 	m_Count++;
 	return(true);
@@ -750,22 +707,11 @@ ELIST_TPL_DEF inline bool EList<ELIST_TPL_ARG>::Insert(T_ARG  New_Element, unsig
 {
 	gosASSERT(m_Count > Pos && m_Count);
 
-	//
 	//	We can't INSERT after the end of the list, so fail here
-	//
 	if(m_Count <= Pos)
 	{
 		return(false);
 	}
-
-	//
-	//	In case list is empty, simply prepend the element, Prepend() handles this case
-	//
-	if(IsEmpty())
-	{
-		return(Prepend(New_Element));
-	}
-
 	return(Insert(New_Element, Iterator(Pos)));
 }
 	
@@ -779,24 +725,19 @@ RETURN VALUE:
 ***************************************************************************************************/
 ELIST_TPL_DEF inline bool EList<ELIST_TPL_ARG>::DeleteHead()
 {
-	//
-	//	can't delete anything if there is nothing...
-	//
 	gosASSERT(m_Count);
-	if(!m_Count)
+	
+	if(IsEmpty())
 	{
 		return(false);
 	}
 
-
-	//
 	//	In case it's the only element in the list
-	//
 	if(m_Count == 1)
 	{
 		KillElement(m_pHead);
 		m_pHead = m_pTail = NULL;		// make sure haed and tail pointers are set to NULL
-										// if the list is empty
+		
 		m_Count = 0;
 		return(true);
 	}
@@ -806,7 +747,7 @@ ELIST_TPL_DEF inline bool EList<ELIST_TPL_ARG>::DeleteHead()
 		m_pHead = m_pHead->m_pNext;				// Second element becomes head of the list 
 		m_pHead->m_pPrev = NULL;
 		KillElement(pElement_To_Kill);
-
+		
 		m_Count--;
 		return(true);
 	}
@@ -822,20 +763,20 @@ RETURN VALUE:
 ***************************************************************************************************/
 ELIST_TPL_DEF inline bool EList<ELIST_TPL_ARG>::DeleteTail()
 {
-	//
-	//	Make sure we're not trying to delete from an empty list
-	//
 	gosASSERT(m_Count);
-	if(!m_Count)
+	
+	//	Make sure we're not trying to delete from an empty list
+	if (IsEmpty())
 	{
 		return(false);
 	}
 
-	if(m_Count == 1)
+	//	In case it's the only element in the list
+	if (m_Count == 1)
 	{
 		KillElement(m_pHead);
 		m_pHead = m_pTail = NULL;		// make sure haed and tail pointers are set to NULL
-										// if the list is empty
+		
 		m_Count = 0;
 		return(true);
 	}
@@ -862,12 +803,10 @@ RETURN VALUE:
 ***************************************************************************************************/
 ELIST_TPL_DEF inline bool EList<ELIST_TPL_ARG>::Delete(const typename EList<ELIST_TPL_ARG>::EIterator& rIter)
 {
-	//
-	//	Verify that we have a valid iterator
-	//
 	gosASSERT(rIter.IsValid());
 
-	if(m_Count == 1)
+	//	In case it's the only element in the list
+	if (m_Count == 1)
 	{
 		KillElement(m_pHead);
 		m_pHead = m_pTail = NULL;		
@@ -912,14 +851,11 @@ ELIST_TPL_DEF inline bool EList<ELIST_TPL_ARG>::Delete(unsigned long Pos)
 {
 	gosASSERT(m_Count > Pos && m_Count);
 
-	//
 	//	We can't DELETE after the end of the list or if empty, so fail here
-	//
-	if(m_Count <= Pos || (!m_Count))
+	if (m_Count <= Pos)
 	{
 		return(false);
 	}
-
 	return(Delete(Iterator(Pos)));
 }
 	
@@ -940,18 +876,16 @@ ELIST_TPL_DEF inline bool EList<ELIST_TPL_ARG>::Delete(const typename EList<ELIS
 	gosASSERT(rStart_Iter.IsValid() && rEnd_Iter.IsValid());
 	gosASSERT((rStart_Iter != rEnd_Iter));
 
-	if( (!(rStart_Iter.IsValid())) || (!(rEnd_Iter.IsValid())) )
+	if( !rStart_Iter.IsValid() || !rEnd_Iter.IsValid() )
 	{
 		return(false);
 	}
 
 	EIterator Iter;
 	EIterator Next_Iter = rStart_Iter;
-
 	while(Next_Iter != rEnd_Iter)
 	{
 		Iter = Next_Iter;
-
 		Next_Iter++;
 		Delete(Iter);
 	}
@@ -1026,11 +960,11 @@ RETURN VALUE:
 ELIST_TPL_DEF inline bool EList<ELIST_TPL_ARG>::Replace(T_ARG Element, const typename EList<ELIST_TPL_ARG>::EIterator& rIter)
 {
 	gosASSERT(rIter.IsValid());
-
-	if(!(rIter.IsValid()))
+	if(!rIter.IsValid())
 	{
 		return(false);
 	}
+
 	rIter.m_pCur_Node->m_Data = Element;
 	return(true);
 }
@@ -1062,13 +996,12 @@ RETURN VALUE:
 ELIST_TPL_DEF bool EList<ELIST_TPL_ARG>::Append(const EList<ELIST_TPL_ARG>& rList)
 {
 	gosASSERT(&rList != this);
-	//
+
 	//	Iterate through the source list and add any element to this one
-	//
 	const ENode*	pNode = rList.m_pHead;
-	for(unsigned long i = 0; i < rList.m_Count; i++)
+	while (pNode)
 	{
-		Append(pNode->m_Data);		// <<TODO>> BR - This needs to be optimized
+		Append(pNode->m_Data);
 		pNode = pNode->m_pNext;
 	}
 	return(true);
@@ -1086,13 +1019,12 @@ RETURN VALUE:
 ELIST_TPL_DEF bool EList<ELIST_TPL_ARG>::Prepend(const EList<ELIST_TPL_ARG>& rList)
 {
 	gosASSERT(&rList != this);
-	//
+
 	//	Iterate through the source list and add any element to this one
-	//
 	const ENode*	pNode = rList.m_pTail;
-	for(unsigned long i = 0; i < rList.m_Count; i++)
+	while (pNode)
 	{
-		Prepend(pNode->m_Data);		// <<TODO>> BR - This needs to be optimized
+		Prepend(pNode->m_Data);
 		pNode = pNode->m_pPrev;
 	}
 	return(true);
@@ -1112,15 +1044,14 @@ ELIST_TPL_DEF bool EList<ELIST_TPL_ARG>::Insert(const EList<ELIST_TPL_ARG>& rLis
 {
 	gosASSERT(&rList != this);
 	gosASSERT(rIter.IsValid());
+	
 	EConstIterator	Src_Iter = rList.Begin();
-
-	for(unsigned long i = 0; i < rList.m_Count; i++)
+	while (Src_Iter != rList.End())
 	{
 		Insert(Src_Iter.Item(), rIter);
 		Src_Iter++;
 	}
 	return(true);
-
 }
 
 /**************************************************************************************************
@@ -1249,7 +1180,6 @@ ELIST_TPL_DEF inline typename EList<ELIST_TPL_ARG>::EConstIterator EList<ELIST_T
 	gosASSERT(rStart_Iterator.IsValid());
 
 	EConstIterator	Iter = rStart_Iterator;
-
 	while(!(Iter.IsDone()))
 	{
 		if(Iter.Item() == Item)
@@ -1277,7 +1207,6 @@ ELIST_TPL_DEF inline typename EList<ELIST_TPL_ARG>::EIterator EList<ELIST_TPL_AR
 	gosASSERT(rStart_Iterator.IsValid());
 
 	EIterator	Iter = rStart_Iterator;
-
 	while(!(Iter.IsDone()))
 	{
 		if(Iter.Item() == Item)
@@ -1311,7 +1240,7 @@ RETURN VALUE:
 ***************************************************************************************************/
 ELIST_TPL_DEF inline bool EList<ELIST_TPL_ARG>::IsEmpty() const
 {
-	return(m_Count ? false : true);
+	return(m_Count == 0);
 }
 
 /**************************************************************************************************
@@ -1338,11 +1267,7 @@ RETURN VALUE:
 ***************************************************************************************************/
 ELIST_TPL_DEF inline bool EList<ELIST_TPL_ARG>::Exists(unsigned long Pos) const
 {
-	if(Pos < m_Count)
-	{
-		return(true);
-	}
-	return(false);
+	return(Pos < m_Count);
 }
 
 
@@ -1358,26 +1283,28 @@ ELIST_TPL_DEF inline bool EList<ELIST_TPL_ARG>::AddFirstElement(T_ARG New_Elemen
 	}
 
 	m_pHead = m_pTail = pElement;				// Setup List head and tail pointers
-	pElement->m_pNext = pElement->m_pPrev = NULL;
 	m_Count = 1;
-
 	return(true);
 }
 
 //-------------------------------------------------------------------------------------------------
-// Note: m_pNext and m_pPrev are not initialized
+// Note: m_pNext and m_pPrev are initialized to NULL
 ELIST_TPL_DEF inline typename EList<ELIST_TPL_ARG>::ENode* EList<ELIST_TPL_ARG>::CreateElement(T_ARG New_Element)
 {
 	ENode*	pNode = (ENode*)systemHeap->Malloc( sizeof( ENode ) );	// Allocate memory for the node and data
-	if(!pNode)
+	gosASSERT(pNode);
+	if (!pNode)
 	{
-		return(NULL);						// return NULL if it fails
+		return(NULL);
 	}
 
-	pNode = new(pNode) ENode(New_Element);	// and construct the data object explicitly
-	gosASSERT(pNode);
-	return(pNode);							// return the pointer to the Node of the element we created
+	// Construct the data object explicitly
+#pragma warning(disable : 4291)			// Placement new doesn't need a delete
+	pNode = new(pNode) ENode(New_Element);	
+	return(pNode);
+#pragma warning(default : 4291)
 }
+
 //-------------------------------------------------------------------------------------------------
 ELIST_TPL_DEF inline void EList<ELIST_TPL_ARG>::KillElement(ENode* pElement)
 {
@@ -1389,20 +1316,19 @@ ELIST_TPL_DEF inline void EList<ELIST_TPL_ARG>::KillElement(ENode* pElement)
 //-------------------------------------------------------------------------------------------------
 ELIST_TPL_DEF inline void EList<ELIST_TPL_ARG>::DestroyList()
 {
-	//
-	//	simply return if list is empty
-	//
-	if(IsEmpty())
+	//	Remove all elements
+	if (!IsEmpty())
 	{
-		return;
-	}
-
-	//
-	//	Otherwise remove the head element until none are left
-	//
-	while(m_Count)
-	{
-		DeleteHead();
+		ENode*  pNode = m_pHead;
+		m_pHead = NULL;
+		m_pTail = NULL;
+		m_Count = 0;
+		while (pNode)
+		{
+			ENode* pDelete = pNode;
+			pNode = pNode->m_pNext;
+			KillElement(pDelete);
+		}
 	}
 }
 	
@@ -1418,12 +1344,9 @@ RETURN VALUE:
 ***************************************************************************************************/
 ELIST_TPL_DEF bool EList<ELIST_TPL_ARG>::CopyData(const EList<ELIST_TPL_ARG>& rSrc)
 {
-	//
 	//	Iterate through the source list and add any element to this one
-	//
-
 	m_Count = rSrc.m_Count;
-	if(!m_Count)
+	if(IsEmpty())
 	{
 		m_pHead = m_pTail = NULL;
 		return(true);
@@ -1435,11 +1358,9 @@ ELIST_TPL_DEF bool EList<ELIST_TPL_ARG>::CopyData(const EList<ELIST_TPL_ARG>& rS
 	m_pHead = m_pTail = pNode;
 	m_pHead->m_pPrev = NULL;
 	
-	for(unsigned long i = 1; i<rSrc.m_Count; i++)
+	while (pSrc_Node->m_pNext)
 	{
 		pSrc_Node = pSrc_Node->m_pNext;
-		gosASSERT(pSrc_Node);			// Should never be NULL
-
 		m_pTail = CreateElement(pSrc_Node->m_Data);
 		gosASSERT(m_pTail);
 
@@ -1448,8 +1369,6 @@ ELIST_TPL_DEF bool EList<ELIST_TPL_ARG>::CopyData(const EList<ELIST_TPL_ARG>& rS
 		pNode = m_pTail;
 	}
 	m_pTail->m_pNext = NULL;
-
-
 	return(true);
 }
 	

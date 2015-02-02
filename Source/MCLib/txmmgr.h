@@ -513,8 +513,10 @@ class MC_TextureManager
 					#if defined( _DEBUG) || defined(_ARMOR)
 					gos_VERTEX * oldVertices = vertices;
 					gos_VERTEX * oldStart = (masterTextureNodes[nodeId].vertexData2->vertices + masterTextureNodes[nodeId].vertexData2->numVertices);
-					#endif
+					(void)oldVertices;
+					(void)oldStart;
 					gosASSERT(oldVertices < oldStart);
+					#endif
 
 					if (!vertices && !masterTextureNodes[nodeId].vertexData2->vertices)
 					{
@@ -562,8 +564,10 @@ class MC_TextureManager
 					#if defined(_DEBUG) || defined(_ARMOR)
 					gos_VERTEX * oldVertices = vertices;
 					gos_VERTEX * oldStart = (masterTextureNodes[nodeId].vertexData3->vertices + masterTextureNodes[nodeId].vertexData3->numVertices);
-					#endif
+					(void)oldVertices;
+					(void)oldStart;
 					gosASSERT(oldVertices < oldStart);
+					#endif
 
 					if (!vertices && !masterTextureNodes[nodeId].vertexData3->vertices)
 					{

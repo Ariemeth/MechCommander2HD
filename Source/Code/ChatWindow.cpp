@@ -30,7 +30,7 @@ ChatWindow::~ChatWindow()
 }
 
 //-------------------------------------------------------------------------------------------------
-void ChatWindow::destroy()
+void ChatWindow::destroyInstance()
 {
 	if (s_instance)
 	{

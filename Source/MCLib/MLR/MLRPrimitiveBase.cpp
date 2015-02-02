@@ -59,7 +59,7 @@ DynamicArrayOf<DWORD>
 #else
 DynamicArrayOf<RGBAColor>
 #endif
-	*MLR_I_C_PMesh::clipExtraColors;
+	*MLRPrimitiveBase::clipExtraColors;
 
 DynamicArrayOf<unsigned short>
 	*MLRPrimitiveBase::clipExtraLength;
@@ -291,7 +291,7 @@ void
 	Check_Object(this); 
 	Check_Pointer(data);
 
-	Verify(texCoords.GetLength() == 0 || dataSize == texCoords.GetLength());
+	Verify(texCoords.GetLength() == 0 || dataSize == (int)texCoords.GetLength());
 
 #if defined (MAX_NUMBER_VERTICES)
 	Verify(dataSize <= MAX_NUMBER_VERTICES);
@@ -324,7 +324,7 @@ void
 	Check_Object(this); 
 	Check_Pointer(data);
 
-	Verify(coords.GetLength() == 0 || dataSize == coords.GetLength());
+	Verify(coords.GetLength() == 0 || dataSize == (int)coords.GetLength());
 
 	texCoords.AssignData((Vector2DScalar *)data, dataSize);
 }

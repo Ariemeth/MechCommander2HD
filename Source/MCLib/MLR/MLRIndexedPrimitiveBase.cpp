@@ -154,14 +154,14 @@ void
 	Check_Pointer(data);
 	Verify(gos_GetCurrentHeap() == Heap);
 
-	Verify(texCoords.GetLength() == 0 || dataSize == texCoords.GetLength());
+	Verify(texCoords.GetLength() == 0 || dataSize == (int)texCoords.GetLength());
 
 #if defined (MAX_NUMBER_VERTICES)
 	Verify(dataSize <= MAX_NUMBER_VERTICES);
 #endif
 	coords.AssignData(data, dataSize);
 
-	if(index.GetLength() > 0 && visibleIndexedVertices.GetLength() != dataSize)
+	if (index.GetLength() > 0 && (int)visibleIndexedVertices.GetLength() != dataSize)
 	{
 		visibleIndexedVertices.SetLength(dataSize);
 	}

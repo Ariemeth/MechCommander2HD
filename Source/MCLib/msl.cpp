@@ -61,7 +61,6 @@ extern long		ObjectTextureSize;
 
 #define CURRENT_SHAPE_VERSION		0xBAFDECAF
 #define CURRENT_ANIM_VERSION		0xBADDECAF
-#define MAX_PATH					256
 
 //-------------------------------------------------------------------------------
 void GetNextLine (char *rawData, char *result)

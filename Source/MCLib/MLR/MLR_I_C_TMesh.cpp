@@ -216,8 +216,8 @@ void
 	Check_Object(this); 
 	Check_Pointer(data);
 
-	Verify(coords.GetLength() == 0 || dataSize == coords.GetLength());
-	Verify(texCoords.GetLength() == 0 || dataSize == texCoords.GetLength());
+	Verify(coords.GetLength() == 0 || dataSize == (int)coords.GetLength());
+	Verify(texCoords.GetLength() == 0 || dataSize == (int)texCoords.GetLength());
 
 	colors.AssignData(data, dataSize);
 }

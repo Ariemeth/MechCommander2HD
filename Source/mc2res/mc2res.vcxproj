@@ -64,6 +64,15 @@
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">true</IgnoreImportLibrary>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">false</LinkIncremental>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">
+    <CustomBuildBeforeTargets>Clean</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <CustomBuildBeforeTargets>Clean</CustomBuildBeforeTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <CustomBuildBeforeTargets>Clean</CustomBuildBeforeTargets>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -81,7 +90,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <PrecompiledHeaderOutputFile>.\Debug/mc2res.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(IntDir)asm\</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)obj\</ObjectFileName>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
@@ -100,8 +109,8 @@
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>.\Debug/mc2res.pdb</ProgramDatabaseFile>
-      <ImportLibrary>.\Debug/mc2res.lib</ImportLibrary>
+      <ProgramDatabaseFile>$(OutDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
@@ -110,6 +119,10 @@
       <Command>xcopy "$(TargetPath)" "$(SolutionDir)" /y /d
 xcopy "$(TargetPath)" "$(SolutionDir)Editor\$(Configuration)\" /y /d</Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>if exist "$(SolutionDir)mc2res.dll" del "$(SolutionDir)mc2res.dll" /f /q
+if exist "$(SolutionDir)Editor\$(Configuration)\" del "$(SolutionDir)Editor\$(Configuration)\mc2res.dll" /f /q</Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Midl>
@@ -129,7 +142,7 @@ xcopy "$(TargetPath)" "$(SolutionDir)Editor\$(Configuration)\" /y /d</Command>
       <AdditionalIncludeDirectories>$(VCInstallDir)PlatformSDK\Include\mfc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;RESOURCES_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <PrecompiledHeaderOutputFile>.\Release/mc2res.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(IntDir)asm\</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)obj\</ObjectFileName>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
@@ -145,9 +158,10 @@ xcopy "$(TargetPath)" "$(SolutionDir)Editor\$(Configuration)\" /y /d</Command>
     <Link>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <ProgramDatabaseFile>.\Release/mc2res.pdb</ProgramDatabaseFile>
-      <ImportLibrary>.\Release/mc2res.lib</ImportLibrary>
+      <ProgramDatabaseFile>$(OutDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
       <Message>
@@ -155,6 +169,10 @@ xcopy "$(TargetPath)" "$(SolutionDir)Editor\$(Configuration)\" /y /d</Command>
       <Command>xcopy "$(TargetPath)" "$(SolutionDir)" /y /d
 xcopy "$(TargetPath)" "$(SolutionDir)Editor\$(Configuration)\" /y /d</Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>if exist "$(SolutionDir)mc2res.dll" del "$(SolutionDir)mc2res.dll" /f /q
+if exist "$(SolutionDir)Editor\$(Configuration)\" del "$(SolutionDir)Editor\$(Configuration)\mc2res.dll" /f /q</Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">
     <Midl>
@@ -174,7 +192,7 @@ xcopy "$(TargetPath)" "$(SolutionDir)Editor\$(Configuration)\" /y /d</Command>
       <AdditionalIncludeDirectories>$(VCInstallDir)PlatformSDK\Include\mfc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;RESOURCES_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <PrecompiledHeaderOutputFile>.\Profile/mc2res.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(IntDir)asm\</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)obj\</ObjectFileName>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
@@ -191,9 +209,10 @@ xcopy "$(TargetPath)" "$(SolutionDir)Editor\$(Configuration)\" /y /d</Command>
     <Link>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <ProgramDatabaseFile>.\Profile/mc2res.pdb</ProgramDatabaseFile>
-      <ImportLibrary>.\Profile/mc2res.lib</ImportLibrary>
+      <ProgramDatabaseFile>$(OutDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
       <Message>
@@ -201,6 +220,10 @@ xcopy "$(TargetPath)" "$(SolutionDir)Editor\$(Configuration)\" /y /d</Command>
       <Command>xcopy "$(TargetPath)" "$(SolutionDir)" /y /d
 xcopy "$(TargetPath)" "$(SolutionDir)Editor\$(Configuration)\" /y /d</Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>if exist "$(SolutionDir)mc2res.dll" del "$(SolutionDir)mc2res.dll" /f /q
+if exist "$(SolutionDir)Editor\$(Configuration)\" del "$(SolutionDir)Editor\$(Configuration)\mc2res.dll" /f /q</Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="mc2res.cpp">

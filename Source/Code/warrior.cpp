@@ -671,8 +671,8 @@ long TargetPriorityList::calcTarget (MechWarriorPtr pilot, Stuff::Vector3D locat
 				// For now, we'll pick the closest Turret...
 				float shortestDistance = 999999.0;
 				GameObjectPtr closestTurret = NULL;
-				for (long i = 0; i < ObjectManager->getNumTurrets(); i++) {
-					GameObjectPtr turret = (GameObjectPtr)ObjectManager->getTurret(i);
+				for (long j = 0; j < ObjectManager->getNumTurrets(); j++) {
+					GameObjectPtr turret = (GameObjectPtr)ObjectManager->getTurret(j);
 					if (!turret->getTeam()->isFriendly(pilot->getTeam())/* && turret->isCaptureable(pilot->getTeam()->getId())*/) {
 						float distance = pilot->getVehicle()->distanceFrom(turret->getPosition());
 						if (distance < shortestDistance) {

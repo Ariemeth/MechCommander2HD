@@ -19,5 +19,7 @@
 
 #Specific Files
 /Source/*.cfg
+/Source/*.old
 /Source/*.fst
 /Source/*.tga
+/Source/*.dll

@@ -183,7 +183,7 @@ void
 	Check_Object(this); 
 	Check_Pointer(data);
 
-	Verify(coords.GetLength() == 0 || dataSize == 2*coords.GetLength());
+	Verify(coords.GetLength() == 0 || dataSize == 2 * (int)coords.GetLength());
 
 	texCoords.AssignData((Vector2DScalar *)data, dataSize);
 }

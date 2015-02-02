@@ -474,7 +474,7 @@ int
 
 	Start_Timer(Transform_Time);
 
-	Verify(numOfTriangles == testList.GetLength());
+	Verify(numOfTriangles == (int)testList.GetLength());
 	Verify(clippingFlags.GetClippingState() != 0);
 
 	//

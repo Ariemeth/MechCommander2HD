@@ -270,7 +270,7 @@ void
 	Check_Pointer(data);
 
 	Verify(pass>=0 && pass<Limits::Max_Number_Of_Multitextures);
-	Verify(coords.GetLength() == 0 || dataSize == coords.GetLength());
+	Verify(coords.GetLength() == 0 || dataSize == (int)coords.GetLength());
 
 	if(pass == 0)
 	{
@@ -282,7 +282,7 @@ void
 	{
 		if(pass == passes)
 		{
-			Verify(dataSize == multiTexCoords[pass-1]->GetLength());
+			Verify(dataSize == (int)multiTexCoords[pass - 1]->GetLength());
 
 			gos_PushCurrentHeap(Heap);
 			multiTexCoords[pass] = new DynamicArrayOf<Vector2DScalar>;

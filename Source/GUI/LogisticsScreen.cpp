@@ -355,7 +355,7 @@ void LogisticsScreen::render()
 	// transparencies after statics
 	for ( i = 0; i < rectCount; i++ )
 	{
-		if ( rects[i].getColor() & 0xff000000 != 0xff000000 )
+		if ( (rects[i].getColor() & 0xff000000) != 0xff000000 )
 			rects[i].render();
 	}
 

@@ -313,7 +313,7 @@ int
 	int i, j, k, ret = 0;
 	int len = lengths.GetLength();
 
-	Verify(len == testList.GetLength());
+	Verify(len == (int)testList.GetLength());
 	Verify(clippingFlags.GetClippingState() != 0);
 
 	//

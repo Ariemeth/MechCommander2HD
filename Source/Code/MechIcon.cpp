@@ -40,8 +40,8 @@ MechWarrior*	ForceGroupIcon::pilotVideoPilot = NULL;
 #define HEALTH_BARHEIGHT	2.0f * Environment.screenHeight/600.f
 #define TEXT_HEIGHT				8.0f * Environment.screenHeight/480.f
 
-float			MechIcon::unitIconX = 32;
-float			MechIcon::unitIconY = 38;
+float			ForceGroupIcon::unitIconX = 32;
+float			ForceGroupIcon::unitIconY = 38;
 float			PilotIcon::pilotIconX = 25;
 float			PilotIcon::pilotIconY = 36;
 const long		PilotIcon::DEAD_PILOT_INDEX = 27;
@@ -51,14 +51,14 @@ unsigned long	PilotIcon::s_pilotTextureWidth = 0;
 long			ForceGroupIcon::pilotTextTop[17] = {0};
 
 
-long		MechIcon::damageColors[4][3] = 
+long		ForceGroupIcon::damageColors[4][3] =
 		{ 194 << 16 | 229 << 8 | 255 | 0xff << 24,	92 << 16 | 150 << 8 | 194 | 0xff << 24, 0 << 16 | 83 << 8 | 146 | 0xff << 24,
 		  248 << 16 | 241 << 8 | 193 | 0xff << 24,	248 << 16 | 206 << 8 | 31 | 0xff << 24, 139 << 16 | 114 << 8 | 0 | 0xff << 24,
 		  248 << 16 | 193 << 8 | 193 | 0xff << 24,	248 << 16 | 31 << 8 | 31 | 0xff << 24, 139 << 16 | 0 << 8 | 0 | 0xff << 24,
 		  94 << 16 | 101 << 8 | 101 | 0xff << 24,	56 << 16 | 64 << 8 | 64 | 0xff << 24, 26 << 16 | 33 << 8 | 33 | 0xff << 24
 		};
 
-long		MechIcon::ForceGroupColors[11] = {
+long		ForceGroupIcon::ForceGroupColors[11] = {
 		0xff005392,
 		0xffC66600,
 		0xff6E7C00,

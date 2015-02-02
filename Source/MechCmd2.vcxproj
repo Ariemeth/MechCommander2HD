@@ -64,17 +64,20 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">
     <CustomBuildAfterTargets>
     </CustomBuildAfterTargets>
-    <CustomBuildBeforeTargets>Clean</CustomBuildBeforeTargets>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <CustomBuildAfterTargets>
     </CustomBuildAfterTargets>
-    <CustomBuildBeforeTargets>Clean</CustomBuildBeforeTargets>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <CustomBuildAfterTargets>
     </CustomBuildAfterTargets>
-    <CustomBuildBeforeTargets>Clean</CustomBuildBeforeTargets>
+    <CustomBuildBeforeTargets>
+    </CustomBuildBeforeTargets>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Midl>
@@ -117,13 +120,13 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalOptions>/FIXED:NO %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/FIXED:NO %(AdditionalOptions) /ignore:4099</AdditionalOptions>
       <AdditionalDependencies>mclib\$(Configuration)\mclib.lib;gameos\lib\$(Configuration)\gameos.lib;gameos\lib\$(Configuration)\gameplatform.lib;mclib\gosfx\$(Configuration)\gosfx.lib;mclib\mlr\$(Configuration)\mlr.lib;mclib\stuff\$(Configuration)\stuff.lib;gameos\lib\$(Configuration)\zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\DirectX8\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>.\$(Configuration)\MechCmd2.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)$(TargetName).pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
@@ -134,11 +137,11 @@ xcopy "$(SolutionDir)..\FinalBuild\*.cfg" "$(SolutionDir)" /y /d
 xcopy "$(SolutionDir)..\FinalBuild\testtxm.tga" "$(SolutionDir)" /y /d</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>del /f /q "$(SolutionDir)mc2res.dll"
-del /f /q "$(SolutionDir)Editor\$(Configuration)\*.*"
-rmdir "$(SolutionDir)Editor\$(Configuration)"</Command>
+      <Command>
+      </Command>
       <TreatOutputAsContent>false</TreatOutputAsContent>
-      <Outputs>OH SHIT</Outputs>
+      <Outputs>
+      </Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">
@@ -182,13 +185,13 @@ rmdir "$(SolutionDir)Editor\$(Configuration)"</Command>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalOptions>/FIXED:NO %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/FIXED:NO %(AdditionalOptions) /ignore:4099</AdditionalOptions>
       <AdditionalDependencies>mclib\$(Configuration)\mclib.lib;gameos\lib\$(Configuration)\gameos.lib;gameos\lib\$(Configuration)\gameplatform.lib;mclib\gosfx\$(Configuration)\gosfx.lib;mclib\mlr\$(Configuration)\mlr.lib;mclib\stuff\$(Configuration)\stuff.lib;gameos\lib\$(Configuration)\zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\DirectX8\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>.\Profile/MC2Pro.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)$(TargetName).pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
@@ -199,11 +202,11 @@ xcopy "$(SolutionDir)..\FinalBuild\*.cfg" "$(SolutionDir)" /y /d
 xcopy "$(SolutionDir)..\FinalBuild\testtxm.tga" "$(SolutionDir)" /y /d</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>del /f /q "$(SolutionDir)mc2res.dll"
-del /f /q "$(SolutionDir)Editor\$(Configuration)\*.*"
-rmdir "$(SolutionDir)Editor\$(Configuration)"</Command>
+      <Command>
+      </Command>
       <TreatOutputAsContent>false</TreatOutputAsContent>
-      <Outputs>OH SHIT</Outputs>
+      <Outputs>
+      </Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -244,14 +247,14 @@ rmdir "$(SolutionDir)Editor\$(Configuration)"</Command>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalOptions>/FIXED:NO %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/FIXED:NO %(AdditionalOptions) /ignore:4099</AdditionalOptions>
       <AdditionalDependencies>mclib\$(Configuration)\mclib.lib;gameos\lib\$(Configuration)\gameos.lib;gameos\lib\$(Configuration)\gameplatform.lib;mclib\gosfx\$(Configuration)\gosfx.lib;mclib\mlr\$(Configuration)\mlr.lib;mclib\stuff\$(Configuration)\stuff.lib;gameos\lib\$(Configuration)\zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>..\DirectX8\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>.\Debug/MC2Dbg.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)$(TargetName).pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <AllowIsolation>false</AllowIsolation>
@@ -267,11 +270,11 @@ xcopy "$(SolutionDir)..\FinalBuild\*.cfg" "$(SolutionDir)" /y /d
 xcopy "$(SolutionDir)..\FinalBuild\testtxm.tga" "$(SolutionDir)" /y /d</Command>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>del /f /q "$(SolutionDir)mc2res.dll"
-del /f /q "$(SolutionDir)Editor\$(Configuration)\*.*"
-rmdir "$(SolutionDir)Editor\$(Configuration)"</Command>
+      <Command>
+      </Command>
       <TreatOutputAsContent>false</TreatOutputAsContent>
-      <Outputs>OH SHIT</Outputs>
+      <Outputs>
+      </Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>

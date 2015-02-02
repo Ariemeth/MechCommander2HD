@@ -2531,7 +2531,7 @@ void Mission::init (char *missionName, long loadType, long dropZoneID, Stuff::Ve
 				//MUST save off ORIGINAL Pilot.  WE don't load the alternate pilots!!!!!
 				usingAlternate = true;
 				result = missionFile->readIdULong("Pilot", realPilot);
-				gosASSERT(result == NO_ERR,);
+				gosASSERT(result == NO_ERR);
 
 				sprintf(partName, "Part%d", partId);
 				result = missionFile->seekBlock(partName);
@@ -2568,7 +2568,7 @@ void Mission::init (char *missionName, long loadType, long dropZoneID, Stuff::Ve
 			else
 			{
 				result = missionFile->readIdULong("Pilot", parts[i].pilot);
-				gosASSERT(result == NO_ERR,);
+				gosASSERT(result == NO_ERR);
 			}
 			
 			//------------------------------------------------------------------

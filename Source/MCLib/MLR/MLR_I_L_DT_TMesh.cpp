@@ -165,9 +165,9 @@ void
 
 	Check_Pointer(data);
 
-	Verify(coords.GetLength() == 0 || dataSize == coords.GetLength());
-	Verify(colors.GetLength() == 0 || dataSize == colors.GetLength());
-	Verify(texCoords.GetLength() == 0 || 2*dataSize == texCoords.GetLength());
+	Verify(coords.GetLength() == 0 || dataSize == (int)coords.GetLength());
+	Verify(colors.GetLength() == 0 || dataSize == (int)colors.GetLength());
+	Verify(texCoords.GetLength() == 0 || 2*dataSize == (int)texCoords.GetLength());
 
 	normals.AssignData(data, dataSize);
 }
@@ -201,8 +201,8 @@ void
 	Check_Pointer(data);
 	Verify(gos_GetCurrentHeap() == Heap);
 
-	Verify(coords.GetLength() == 0 || dataSize == coords.GetLength());
-	Verify(texCoords.GetLength() == 0 || 2*dataSize == texCoords.GetLength());
+	Verify(coords.GetLength() == 0 || dataSize == (int)coords.GetLength());
+	Verify(texCoords.GetLength() == 0 || 2 * dataSize == (int)texCoords.GetLength());
 
 	litColors.SetLength(dataSize);
 	colors.AssignData(data, dataSize);

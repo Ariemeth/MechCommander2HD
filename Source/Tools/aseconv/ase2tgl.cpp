@@ -182,7 +182,6 @@ long convertASE2TGL (char *file)
 	//---------------------------------------------------
 	// Get all of the .ASE files in the tgl directory.
 	char findString[1024];
-	char armFileName[1024];
 	if( file[0] == '\0')
 	{
 		sprintf(findString,"%s*.ini",tglPath);

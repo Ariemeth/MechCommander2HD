@@ -66,7 +66,7 @@ class ChatWindow: public LogisticsScreen
 		virtual ~ChatWindow();
 
 		static void init();
-		static void destroy();
+		static void destroyInstance();
 		static ChatWindow* instance() { return s_instance; }
 
 		int initInstance();
