@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2015-02-04T13:32:43
+# Project created by QtCreator 2015-02-05T13:40:47
 #
 #-------------------------------------------------
 
@@ -8,15 +8,13 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = ASE_Import
+TARGET = AseImport
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-    McAseImport.cpp
+        mainwindow.cpp
 
-HEADERS  += mainwindow.h \
-    McAseModel.h
+HEADERS  += mainwindow.h
 
 FORMS    += mainwindow.ui
