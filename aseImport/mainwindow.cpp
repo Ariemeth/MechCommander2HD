@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QMessageBox>
+#include <QStandardItem>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -21,4 +23,29 @@ void MainWindow::on_OpenTarget_clicked()
     {
         return;
     }
+    QFile inputFile(openFile);
+        if (inputFile.open(QIODevice::ReadWrite))
+        {
+           QTextStream in(&inputFile);
+           QStandardItemModel* lineitem = new QStandardItemModel(this);
+           while ( !in.atEnd() )
+           {
+              QString line = in.readLine();
+              line.remove("\"");
+              line = line.simplified();
+              QStringList split = line.split(" ");
+              QList<QStandardItem*> list;
+              foreach (QString item, split)
+              {
+                  QStandardItem * subItem = new QStandardItem(item);
+                  list << subItem;
+              }
+              lineitem->appendRow(list);
+
+           }
+           inputFile.close();
+
+           ui->targetView->setModel(lineitem);
+        }
+
 }
