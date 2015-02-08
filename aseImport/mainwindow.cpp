@@ -28,23 +28,34 @@ void MainWindow::on_OpenTarget_clicked()
         {
            QTextStream in(&inputFile);
            QStandardItemModel* lineitem = new QStandardItemModel(this);
-           while ( !in.atEnd() )
-           {
-              QString line = in.readLine();
-              line.remove("\"");
-              line = line.simplified();
-              QStringList split = line.split(" ");
-              QList<QStandardItem*> list;
-              foreach (QString item, split)
-              {
-                  QStandardItem * subItem = new QStandardItem(item);
-                  list << subItem;
-              }
-              lineitem->appendRow(list);
+           lineitem->invisibleRootItem();
+           // For every line in the file, we need to scan for a { and if present
+           // create a block with a title, and everything under it grouped together.
+           // Close the block when a } is found.
 
+           // Each line that does not have a { or } should be all in one row.
+
+           QStandardItem * topItems = new QStandardItem();
+
+         while ( !in.atEnd() )
+           {
+              QString curLine = in.readLine();
+              curLine = curLine.simplified();
+              QStringList lineSplit = curLine.split(" ");
+//              QList<QStandardItem*> subList;
+              QStandardItem * itemRow = new QStandardItem();
+              itemRow->setData(lineSplit[0],Qt::DisplayRole);
+              QList<QStandardItem*> dummy;
+              for (int i=1; i < lineSplit.count(); i++)
+              {
+                  QStandardItem * add = new QStandardItem(lineSplit[i]);
+                  dummy.append(add);
+              }
+              itemRow->appendColumn(dummy);
+              topItems->appendRow(itemRow);
            }
            inputFile.close();
-
+           lineitem->appendRow(topItems);
            ui->targetView->setModel(lineitem);
         }
 
