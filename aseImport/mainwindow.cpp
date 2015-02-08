@@ -35,14 +35,14 @@ void MainWindow::on_OpenTarget_clicked()
 
            // Each line that does not have a { or } should be all in one row.
 
-           QStandardItem * topItems = new QStandardItem();
+           QStandardItem * topItems = new QStandardItem(inputFile.fileName());
 
          while ( !in.atEnd() )
            {
               QString curLine = in.readLine();
               curLine = curLine.simplified();
               QStringList lineSplit = curLine.split(" ");
-//              QList<QStandardItem*> subList;
+
               QStandardItem * itemRow = new QStandardItem();
               itemRow->setData(lineSplit[0],Qt::DisplayRole);
               QList<QStandardItem*> dummy;
