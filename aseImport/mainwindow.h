@@ -6,6 +6,7 @@
 #include <QAbstractItemModel>
 #include <QFile>
 #include <QTextStream>
+#include "aseitem.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,13 +19,15 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    QStringList * targetContents;
+    QStringList * importContents;
+
 
 private slots:
     void on_OpenTarget_clicked();
 
 private:
     Ui::MainWindow *ui;
-    QAbstractItemModel * _modelIn;
 };
 
 #endif // MAINWINDOW_H
