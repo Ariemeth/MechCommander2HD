@@ -17,6 +17,7 @@ SOURCES += main.cpp\
     aseitem.cpp
 
 HEADERS  += mainwindow.h \
-    aseitem.h
+    aseitem.h \
+    asemodel.h
 
 FORMS    += mainwindow.ui

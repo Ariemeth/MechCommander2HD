@@ -68,5 +68,21 @@ public:
     Ase_ThreeFloat meshPoints;
 };
 
+class Ase_Mesh_Face : AseGenericItem
+{
+public:
+    Ase_SingleInt meshNum;
+    Ase_ThreeInt ABC_face;
+    Ase_ThreeInt AB_BC_CA_face;
+    Ase_SingleInt mesh_smoothing;
+    Ase_SingleInt mesh_mtlid;
+};
+
+class Ase_Mesh_Tface : AseGenericItem
+{
+    Ase_SingleInt faceNum;
+    Ase_ThreeInt faceList;
+};
+
 #endif // ASEITEM
 
