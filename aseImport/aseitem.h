@@ -23,18 +23,18 @@ private:
     double _X;
 };
 
-class Ase_ThreeFloat : QObject
+class Ase_ThreeFloat : AseGenericItem
 {
-    Q_OBJECT
+
 public:
     Ase_SingleFloat X;
     Ase_SingleFloat Y;
     Ase_SingleFloat Z;
 };
 
-class Ase_SingleInt : QObject
+class Ase_SingleInt : AseGenericItem
 {
-    Q_OBJECT
+
 public:
     int getI();
     void setI(int);
@@ -42,9 +42,8 @@ private:
     int _X;
 };
 
-class Ase_ThreeInt : QObject
+class Ase_ThreeInt : AseGenericItem
 {
-    Q_OBJECT
 public:
     Ase_SingleInt X;
     Ase_SingleInt Y;
@@ -56,14 +55,17 @@ class Ase_String : AseGenericItem // useful for things like NODE_NAME and NODE_P
 public:
     QString getString();
     void setString(QString);
+
+    bool hasQuotation();
+    void setQuotation(bool);
 private:
     QString _String;
+    bool _Quotation;
 };
 
 class Ase_Mesh_Vertex : AseGenericItem
 {
 public:
-    Ase_Mesh_Vertex::Ase_Mesh_Vertex(QObject *parent = 0);
     Ase_SingleInt meshNo;
     Ase_ThreeFloat meshPoints;
 };
