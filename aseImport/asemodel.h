@@ -94,6 +94,7 @@ public:
     Ase_Node_TM NodeTM;
     Ase_ThreeFloat BoundingBoxMin;
     Ase_ThreeFloat BoundingBoxMax;
+    Tm_Animation TmAnimation;
 };
 
 ////////////////////////////////////////////
@@ -120,6 +121,9 @@ public:
 
    int Mesh_NumCVFaces();
    QList<Ase_Mesh_Tface*> Mesh_CFaceList;
+
+   int numMeshNormals();
+   QList<Ase_MeshNormal*>MeshNormals;
 };
 
 class Ase_GeomObject : public AseGenericItem
@@ -128,10 +132,26 @@ public:
     Ase_String Name;
     Ase_String Parent;
     Ase_Node_TM Node;
-
+    Ase_Mesh Mesh;
+    Ase_SingleInt PropMotionBlur;
+    Ase_SingleInt PropCastShadow;
+    Ase_SingleInt PropRecvShadow;
+    Ase_SingleInt materialRef;
 };
 
+///////////////////////////////////////////////
+class Ase_Control_Rot : public AseGenericItem
+{
+public:
+    QList<Ase_Mesh_Vertex*> ControlRotSample;
+};
 
+class Tm_Animation : public AseGenericItem
+{
+public:
+    Ase_String NodeName;
+    Ase_Control_Rot TmAnimation;
+};
 
 #endif // ASEMODEL
 

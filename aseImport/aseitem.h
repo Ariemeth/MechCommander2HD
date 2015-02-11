@@ -86,5 +86,11 @@ class Ase_Mesh_Tface : AseGenericItem
     Ase_ThreeInt faceList;
 };
 
+class Ase_MeshNormal : AseGenericItem
+{
+    Ase_Mesh_Vertex Mesh_FaceNormal;
+    Ase_Mesh_Vertex Mesh_VertexNormal[3];
+};
+
 #endif // ASEITEM
 
