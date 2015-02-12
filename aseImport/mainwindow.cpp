@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "asemodel.h"
 #include <QMessageBox>
 #include <QStandardItem>
 
@@ -38,4 +39,6 @@ void MainWindow::on_OpenTarget_clicked()
         inputFile.close();
     }
     targetContents = localContents;
+    Ase_Model newModel;
+    newModel.header.setString("thisName");
 }
