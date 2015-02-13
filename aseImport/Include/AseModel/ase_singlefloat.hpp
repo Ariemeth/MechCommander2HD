@@ -1,6 +1,6 @@
 #ifndef ASE_SINGLEFLOAT_HPP
 #define ASE_SINGLEFLOAT_HPP
-#include "aseitem.h"
+#include "aseitem.hpp"
 
 class Ase_SingleFloat : AseGenericItem // Useful for TM_ROTATE_ANGLE
 {

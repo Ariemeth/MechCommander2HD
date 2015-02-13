@@ -1,6 +1,7 @@
 #ifndef ASE_MESH_FACE
 #define ASE_MESH_FACE
-#include "ase_threeint.h"
+#include "ase_threeint.hpp"
+#include "aseitem.hpp"
 
 class Ase_Mesh_Face : AseGenericItem
 {

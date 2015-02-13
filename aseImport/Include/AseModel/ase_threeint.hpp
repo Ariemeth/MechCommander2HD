@@ -1,6 +1,7 @@
 #ifndef ASE_THREEINT
 #define ASE_THREEINT
 #include "ase_singleint.hpp"
+#include "aseitem.hpp"
 
 class Ase_ThreeInt : AseGenericItem
 {

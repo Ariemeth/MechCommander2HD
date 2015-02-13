@@ -1,9 +1,10 @@
 #ifndef ASE_MAPDIFFUSE
 #define ASE_MAPDIFFUSE
 
-#include "ase_string.h"
+#include "ase_string.hpp"
 #include "ase_singlefloat.hpp"
 #include "ase_singleint.hpp"
+#include "aseitem.hpp"
 
 class ase_mapDiffuse : public AseGenericItem
 {

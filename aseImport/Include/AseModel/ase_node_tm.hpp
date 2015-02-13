@@ -1,9 +1,10 @@
 #ifndef ASE_NODE_TM
 #define ASE_NODE_TM
 
-#include "ase_string.h"
-#include "ase_threeint.h"
+#include "ase_string.hpp"
+#include "ase_threeint.hpp"
 #include "ase_threefloat.hpp"
+#include "aseitem.hpp"
 
 class Ase_Node_TM : public AseGenericItem
 {

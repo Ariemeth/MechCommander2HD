@@ -1,9 +1,10 @@
 #ifndef ASE_HELPEROBJECT
 #define ASE_HELPEROBJECT
 
-#include "ase_string.h"
-#include "ase_node_tm.h"
-#include "tm_animation.h"
+#include "ase_string.hpp"
+#include "ase_node_tm.hpp"
+#include "tm_animation.hpp"
+#include "aseitem.hpp"
 
 class Ase_HelperObject : public AseGenericItem
 {

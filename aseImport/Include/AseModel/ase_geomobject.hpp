@@ -1,9 +1,10 @@
 #ifndef ASE_GEOMOBJECT
 #define ASE_GEOMOBJECT
 
-#include "ase_string.h"
-#include "ase_node_tm.h"
-#include "ase_mesh.h"
+#include "ase_string.hpp"
+#include "ase_node_tm.hpp"
+#include "ase_mesh.hpp"
+#include "aseitem.hpp"
 
 class Ase_GeomObject : public AseGenericItem
 {

@@ -6,7 +6,7 @@
 #include <QAbstractItemModel>
 #include <QFile>
 #include <QTextStream>
-#include "aseitem.h"
+//#include "Include/AseModel/asemodel.hpp"
 
 namespace Ui {
 class MainWindow;

@@ -1,6 +1,6 @@
 #ifndef ASE_STRING
 #define ASE_STRING
-#include "aseitem.h"
+#include "aseitem.hpp"
 
 class Ase_String : AseGenericItem // useful for things like NODE_NAME and NODE_PARENT
 {

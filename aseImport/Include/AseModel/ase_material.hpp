@@ -1,9 +1,10 @@
 #ifndef ASE_MATERIAL
 #define ASE_MATERIAL
 
-#include "ase_string.h"
+#include "ase_string.hpp"
 #include "ase_threefloat.hpp"
-#include "ase_mapdiffuse.h"
+#include "ase_mapdiffuse.hpp"
+#include "aseitem.hpp"
 
 class Ase_Material : public AseGenericItem
 {

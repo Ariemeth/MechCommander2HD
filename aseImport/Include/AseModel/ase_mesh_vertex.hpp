@@ -3,6 +3,7 @@
 
 #include "ase_singleint.hpp"
 #include "ase_threefloat.hpp"
+#include "aseitem.hpp"
 
 class Ase_Mesh_Vertex : AseGenericItem
 {

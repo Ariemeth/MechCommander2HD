@@ -1,8 +1,9 @@
 #ifndef ASE_SCENE
 #define ASE_SCENE
-#include "ase_string.h"
+#include "ase_string.hpp"
 #include "ase_singleint.hpp"
 #include "ase_threefloat.hpp"
+#include "aseitem.hpp"
 
 class ase_Scene : public AseGenericItem
 {

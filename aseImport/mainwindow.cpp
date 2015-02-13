@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "asemodel.h"
+#include "Include\AseModel\asemodel.hpp"
 #include <QMessageBox>
 #include <QStandardItem>
 

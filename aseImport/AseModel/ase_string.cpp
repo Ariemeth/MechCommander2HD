@@ -1,4 +1,4 @@
-#include "ase_string.h"
+#include "../Include/AseModel/ase_string.hpp"
 
 void Ase_String::setString(QString string)
 {

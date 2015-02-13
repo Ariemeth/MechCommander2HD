@@ -2,6 +2,7 @@
 #define ASE_THREEFLOAT_HPP
 
 #include "ase_singlefloat.hpp"
+#include "aseitem.hpp"
 
 class Ase_ThreeFloat : AseGenericItem
 {

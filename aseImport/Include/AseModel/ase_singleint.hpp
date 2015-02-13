@@ -1,7 +1,7 @@
 #ifndef ASE_SINGLEINT_HPP
 #define ASE_SINGLEINT_HPP
 
-#include "aseitem.h"
+#include "aseitem.hpp"
 
 class Ase_SingleInt : AseGenericItem
 {

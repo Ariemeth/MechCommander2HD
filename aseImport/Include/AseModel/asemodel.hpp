@@ -1,9 +1,9 @@
 #ifndef ASEMODEL
 #define ASEMODEL
-#include "ase_string.h"
-#include "ase_material_parent.h"
-#include "ase_helperobject.h"
-#include "ase_geomobject.h"
+#include "ase_string.hpp"
+#include "ase_material_parent.hpp"
+#include "ase_helperobject.hpp"
+#include "ase_geomobject.hpp"
 
 class Ase_Model : public AseGenericItem
 {

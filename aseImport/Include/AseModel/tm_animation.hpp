@@ -1,8 +1,9 @@
 #ifndef TM_ANIMATION
 #define TM_ANIMATION
 
-#include "ase_string.h"
-#include "ase_control_rot.h"
+#include "ase_string.hpp"
+#include "ase_control_rot.hpp"
+#include "aseitem.hpp"
 
 class Tm_Animation : public AseGenericItem
 {

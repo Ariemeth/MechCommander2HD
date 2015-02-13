@@ -1,10 +1,11 @@
 #ifndef ASE_MESH
 #define ASE_MESH
 #include "ase_singleint.hpp"
-#include "ase_mesh_vertex.h"
-#include "ase_mesh_face.h"
-#include "ase_mesh_tface.h"
-#include "ase_mesh_normal.h"
+#include "ase_mesh_vertex.hpp"
+#include "ase_mesh_face.hpp"
+#include "ase_mesh_tface.hpp"
+#include "ase_mesh_normal.hpp"
+#include "aseitem.hpp"
 
 class Ase_Mesh : public AseGenericItem
 {
