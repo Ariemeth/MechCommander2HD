@@ -92,133 +92,6 @@ public:
 			long	hotKeyDescriptionText;
 		};
 
-	enum ECommands
-	{
-		// In-Game Commands
-		Cmd_Run,
-		Cmd_RunWaypoint,
-		Cmd_Jump,
-		Cmd_JumpWaypoint,
-		Cmd_AttackFromHere, // Don’t move from current position
-		Cmd_AttackShort,
-		Cmd_AttackMedium,
-		Cmd_AttackLong,
-		Cmd_AttackLegs,
-		Cmd_AttackArms,
-		Cmd_AttackHead,
-		Cmd_AttackEnergyOnly, // No ammo-consuming weapons
-		Cmd_AttackForced, // Shoot whatever the cursor is pointing at - target or not
-		Cmd_Guard,
-		Cmd_Stop, // Stop doing whatever you’re doing
-		Cmd_PowerDown,
-		Cmd_PowerUp,
-		Cmd_Eject,
-		Cmd_VehicleCommand, // Special vehicle action
-		Cmd_ToggleHoldPosition, // MCHD TODO: This flips off randomly - fix it
-		Cmd_GoToNextNavPoint,
-		Cmd_SelectVisible,
-		Cmd_AddVisibleToSelection,
-		Cmd_DeployAirstrike,
-		Cmd_DeploySensor,
-
-		// HUD
-		Cmd_TogglePause,
-		Cmd_TogglePause2,
-		Cmd_TogglePause3,
-		Cmd_ShowObjectives,
-		Cmd_ShowHotkeys,
-		Cmd_ShowCompass,
-		Cmd_CycleHUDTab, // Cycle tabs in the lower-left window
-		Cmd_CycleHUDTabBack,
-		Cmd_SelectionInfo, // Hold and click a unit for info
-		Cmd_AllChat,
-		Cmd_TeamChat,
-
-		// Camera Controls
-		Cmd_CameraDefault, // Resets camera height and orientation
-		Cmd_CameraPreset0, // Camera zoom presets
-		Cmd_CameraPreset1,
-		Cmd_CameraPreset2,
-		Cmd_CameraPreset3,
-		Cmd_CameraAssign0, // Assigns the camera presets to current zoom
-		Cmd_CameraAssign1,
-		Cmd_CameraAssign2,
-		Cmd_CameraAssign3,
-		Cmd_CameraMoveUp,
-		Cmd_CameraMoveDown,
-		Cmd_CameraMoveLeft,
-		Cmd_CameraMoveRight,
-		Cmd_CameraLookUp,
-		Cmd_CameraLookDown,
-		Cmd_CameraLookLeft,
-		Cmd_CameraLookRight,
-		Cmd_CameraZoomIn,
-		Cmd_CameraZoomIn2,
-		Cmd_CameraZoomIn3,
-		Cmd_CameraZoomOut,
-		Cmd_CameraZoomOut2,
-		Cmd_Count,
-	};
-
-	enum EDebugCommands
-	{
-		// Object Stuff
-		DCmd_Teleport,
-		DCmd_BrainDead,
-		DCmd_DamageObject0,
-		DCmd_DamageObject1,
-		DCmd_DamageObject2,
-		DCmd_DamageObject3,
-		DCmd_DamageObject4,
-		DCmd_DamageObject5,
-		DCmd_DamageObject6,
-		DCmd_GoalPlan, // Still don’t know...
-		DCmd_EnemyGoalPlan,
-
-		// Sun Controls
-		DCmd_RotateLightUp,
-		DCmd_RotateLightDown,
-		DCmd_RotateLightLeft,
-		DCmd_RotateLightRight,
-
-		// Render Controls
-		DCmd_ToggleGUI,
-		DCmd_UsePerspective, // Perspective camera with no zoom limit
-		DCmd_DrawObjects,
-		DCmd_DrawBuildings, // Buildings, trees, objective markers
-		DCmd_DrawTerrain,
-		DCmd_DrawOverlays, // MCHD TODO: ???
-		DCmd_DrawClouds,
-		DCmd_DrawFog,
-		DCmd_DrawShadows,
-		DCmd_DrawWaterEffects,
-
-		// Debug Render
-		DCmd_ShowGrid, // Displays pathfinding grid and routes
-		DCmd_ShowLOSGrid,
-		DCmd_ShowMovers, // Display all units on the map
-		DCmd_ShowVictim, // ???
-		DCmd_DisplayDebugInfo,
-		DCmd_CycleDebugWindows,
-		DCmd_SetDebugObject, // MCHD TODO: This whole fucking thing is mostly broken
-		DCmd_PageObjectWindow0,
-		DCmd_PageObjectWindow1,
-		DCmd_PageObjectWindow2,
-		DCmd_JumpToObject0,
-		DCmd_JumpToObject1,
-		DCmd_JumpToObject2,
-
-		// ???
-		DCmd_RecalculateLights, // MCHD TODO: What does it do or remove it
-		DCmd_RecalculateWater, // Holy shit water is fake and sketchy
-		DCmd_ZeroHPrime, // ???
-		DCmd_CalculateValidAreaTable, // ???
-		DCmd_GlobalMapLog, // ???
-		DCmd_RotateObjectLeft, // Maybe editor only?
-		DCmd_RotateObjectRight,
-		DCmd_Count
-	};
-
 	static bool MissionInterfaceManager::isHotKeyLocked(long _key);
 
 	protected:
@@ -234,6 +107,7 @@ public:
 		static Command		s_commands[];
 		static long			s_defaultKeys[];
 		static long			s_numCommands;
+		static int			s_chatCommandIndex; // MCHD NOTE: "AllChat" and "TeamChat" must be consecutive
 
 #ifndef FINAL
 		static Command		s_debugCommands[];

@@ -169,7 +169,6 @@ GameObject* MissionInterfaceManager::target = NULL;
 MissionInterfaceManager* MissionInterfaceManager::s_instance = NULL;
 gosEnum_KeyIndex MissionInterfaceManager::s_waypointKey = (gosEnum_KeyIndex)-1;
 
-
 extern bool drawTerrainTiles;
 extern bool drawTerrainOverlays;
 extern bool renderObjects;
@@ -260,6 +259,7 @@ MissionInterfaceManager::Command		MissionInterfaceManager::s_commands[] =
 
 long MissionInterfaceManager::s_numCommands = sizeof(MissionInterfaceManager::s_commands) / sizeof(MissionInterfaceManager::Command);
 long MissionInterfaceManager::s_defaultKeys[sizeof(MissionInterfaceManager::s_commands) / sizeof(MissionInterfaceManager::Command)] = { };
+int MissionInterfaceManager::s_chatCommandIndex = -1;
 
 #ifndef FINAL
 MissionInterfaceManager::Command		MissionInterfaceManager::s_debugCommands[] =
@@ -278,8 +278,8 @@ MissionInterfaceManager::Command		MissionInterfaceManager::s_debugCommands[] =
 	"EnemyGoalPlan",		ALT | SHIFT | KEY_P, -1, -1, false, &MissionInterfaceManager::enemyGoalPlan, 0, -1,
 
 	// Sun
-	//"DbgRotateLightUp",		ALT | CTRL | KEY_UP, -1, -1, false, &MissionInterfaceManager::rotateLightUp, 0, -1,
-	//"DbgRotateLightDown",	ALT | CTRL | KEY_DOWN, -1, -1, false, &MissionInterfaceManager::rotateLightDown, 0, -1,
+	"DbgRotateLightUp",		ALT | CTRL | KEY_UP, -1, -1, false, &MissionInterfaceManager::rotateLightUp, 0, -1,
+	"DbgRotateLightDown",	ALT | CTRL | KEY_DOWN, -1, -1, false, &MissionInterfaceManager::rotateLightDown, 0, -1,
 	"DbgRotateLightLeft",	ALT | CTRL | KEY_LEFT, -1, -1, false, &MissionInterfaceManager::rotateLightLeft, 0, -1,
 	"DbgRotateLightRight",	ALT | CTRL | KEY_RIGHT, -1, -1, false, &MissionInterfaceManager::rotateLightRight, 0, -1,
 
@@ -1701,16 +1701,15 @@ int MissionInterfaceManager::update( bool leftClickedClick, bool rightClickedCli
 	bool bRetVal = 0;
 
 	int i = 0;
-	int last = s_numCommands;
+	int numCommands = s_numCommands;
 
-	// if chatting, ignore keyboard input
+	// if chatting, ignore keyboard input except for the two chat buttons
 	if ( controlGui.updateChat() )
 	{
-		i = Cmd_AllChat;
-		last = Cmd_TeamChat;
+		i = s_chatCommandIndex;;
+		numCommands = i + 2;
 		bRetVal = 1;
 	}
-
 
 	if ( gos_GetKeyStatus( s_waypointKey ) == KEY_RELEASED )
 	{
@@ -1757,7 +1756,7 @@ int MissionInterfaceManager::update( bool leftClickedClick, bool rightClickedCli
 		}
 	}
 
-	for ( ; i < last; i++ )
+	for (; i < numCommands; i++)
 	{
 		int key = s_commands[i].key;
 		if ( userInput->getKeyDown( gosEnum_KeyIndex(key & 0x0000000ff) ) )
@@ -5330,6 +5329,9 @@ int MissionInterfaceManager::loadHotKeys( FitIniFile& file )
 		bool warning = false;
 		for (int i = 0; i < s_numCommands; i++)
 		{
+			if (s_chatCommandIndex == -1 && strcmp(s_commands[i].name, "AllChat") == 0 || strcmp(s_commands[i].name, "AllChat") == 0)
+				s_chatCommandIndex = i;
+
 			if (s_commands[i].hotKeyDescriptionText == -1) // MCHD CHANGE (02/14/2015): Don't try to read in permanently bound commands
 				continue;
 
