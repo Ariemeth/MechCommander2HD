@@ -170,7 +170,7 @@ void syntaxError (long errCode) {
 	errorCount++;
 	
 	if (errorCount > MAX_SYNTAX_ERRORS) {
-		sprintf(errMessage, "Way too many syntax errors. ABL aborted.\n");
+		sprintf(errMessage, "Way too many syntax errors. ABL g_aborted.\n");
 		ABL_Fatal(0, errMessage);
 	}
 }
@@ -189,7 +189,8 @@ void runtimeError (long errCode) {
 		if (FileNumber > -1)
 			sprintf(message, "FILE %s", CurModule->getSourceFile(FileNumber));
 		else
-			sprintf(message, "FILE %s: unavailable");
+			sprintf(message, "FILE unavailable");
+
 		debugger->print(message);
 		sprintf(message, "LINE %d", execLineNumber);
 		debugger->print(message);

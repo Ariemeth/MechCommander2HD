@@ -33,7 +33,7 @@ Weather *weather = NULL;
 // Class Weather
 void Weather::destroy (void)
 {
-	systemHeap->Free(rainDrops);
+	g_systemHeap->Free(rainDrops);
 	rainDrops = NULL;
 	
 	init();
@@ -159,7 +159,7 @@ void Weather::init (DWORD maxDrops, float startingRain, float brChance, float lt
 	
 	if (maxDrops)
 	{
-		rainDrops = (RainDrops *)systemHeap->Malloc(sizeof(RainDrops) * maxDrops);
+		rainDrops = (RainDrops *)g_systemHeap->Malloc(sizeof(RainDrops) * maxDrops);
 		gosASSERT(rainDrops != NULL);
 		
 		for (long i=0;i<totalRainDrops;i++)
@@ -196,7 +196,7 @@ void Weather::update (void)
 		
 	//------------------------------------------------
 	// Check if we should update the rain state.
-	rainUpdateTime -= frameLength;
+	rainUpdateTime -= g_deltaTime;
 	
 	if (rainUpdateTime <= 0.0f)
 	{
@@ -266,10 +266,10 @@ void Weather::update (void)
 		// Just change 'em based on the weather now.
 		// Must change based on whether or not night has or is falling.
 		if (rainLightLevel < rainLevel)
-			rainLightLevel += BASE_RAIN_LIGHT_RATE * frameLength;
+			rainLightLevel += BASE_RAIN_LIGHT_RATE * g_deltaTime;
 			
 		if (rainLightLevel > rainLevel)
-			rainLightLevel -= BASE_RAIN_LIGHT_RATE * frameLength;
+			rainLightLevel -= BASE_RAIN_LIGHT_RATE * g_deltaTime;
 		 
 		if (rainLightLevel > 1.0f)
 		{
@@ -277,7 +277,7 @@ void Weather::update (void)
 			if (weatherNightFactor > eye->nightFactor)
 				eye->nightFactor = weatherNightFactor;
 		
-			lighteningCheck -= frameLength;
+			lighteningCheck -= g_deltaTime;
 			if (lighteningCheck < 0.0f)
 			{
 				//-----------------------
@@ -334,7 +334,7 @@ void Weather::update (void)
 					lighteningDropoff = -RandomNumber(BASE_LIGHTENING_FALLOFF);
 				}
 
-				lighteningLevel += lighteningDropoff * frameLength;
+				lighteningLevel += lighteningDropoff * g_deltaTime;
 				
 				if (lighteningLevel < 0.0f)
 					lighteningLevel = 0.0f;
@@ -344,7 +344,7 @@ void Weather::update (void)
 			}
 			
 			if (thunderTime > 0.0f)
-				thunderTime -= frameLength;
+				thunderTime -= g_deltaTime;
 
 			if ((thunderSFX != 0xffffffff) && (thunderTime <= 0.0f))
 			{
@@ -418,7 +418,7 @@ void Weather::update (void)
 		{
 			//-----------------------------------------------
 			//Update the position.  Move rain toward ground.
-			rainDrops[i].position.z -= BASE_RAIN_VEL * frameLength * rainLevel;
+			rainDrops[i].position.z -= BASE_RAIN_VEL * g_deltaTime * rainLevel;
 			
 			if (rainDrops[i].position.z <= currentElevation)
 			{

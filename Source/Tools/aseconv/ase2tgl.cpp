@@ -14,21 +14,15 @@ DWORD gosResourceHandle = 0;
 
 Stuff::MemoryStream *effectStream = NULL;
 
-extern char CDInstallPath[];
+extern char g_cdInstallPath[];
 
-bool hasGuardBand = false;
-bool justResaveAllMaps = false;
 Camera *eye = NULL;
 enum { CPU_UNKNOWN, CPU_PENTIUM, CPU_MMX, CPU_KATMAI } Processor = CPU_PENTIUM;		//Needs to be set when GameOS supports ProcessorID -- MECHCMDR2
 
-float MaxMinUV = 8.0f;
-
-DWORD BaseVertexColor = 0x00000000;
-
 static LPCTSTR lpszAppName = "MechCmdr2";
 
-UserHeapPtr systemHeap = NULL;
-UserHeapPtr guiHeap = NULL;
+UserHeapPtr g_systemHeap = NULL;
+UserHeapPtr g_GUIHeap = NULL;
 
 float gosFontScale = 1.0f;
 
@@ -38,18 +32,22 @@ static bool createARM = false;
 
 IProviderEngine * armProvider = NULL;
 
+#define KILOBYTE_TO_BYTES 1024
+#define MEGABYTES_TO_BYTES (KILOBYTE_TO_BYTES * KILOBYTE_TO_BYTES)
+unsigned long g_systemHeapSize = 256 * MEGABYTES_TO_BYTES;
+unsigned long g_guiHeapSize = 4 * MEGABYTES_TO_BYTES;
+unsigned long g_terrainHeapSize = 16 * MEGABYTES_TO_BYTES; 
 unsigned long tglHeapSize = 16386000;
 
-FastFile 	**fastFiles = NULL;
-long 		numFastFiles = 0;
-long		maxFastFiles = 0;
+FastFile 	**g_fastFiles = NULL;
+long 		g_numFastFiles = 0;
+long		g_maxFastFiles = 0;
 
 HWND		appWnd = NULL;
 
 extern char* MechAnimationNames[MaxGestures];
 
-long ObjectTextureSize = 128;
-bool reloadBounds = false;
+long g_objectTextureSize = 128;
 MidLevelRenderer::MLRClipper * theClipper = NULL;
 HGOSFONT3D gosFontHandle = 0;
 extern HGOSFONT3D	FontHandle;
@@ -530,10 +528,10 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	globalHeapList = new HeapList;
 	assert(globalHeapList != NULL);
 
-	systemHeap = new UserHeap;
-	assert(systemHeap != NULL);
+	g_systemHeap = new UserHeap;
+	assert(g_systemHeap != NULL);
 
-	systemHeap->init(2048000);
+	g_systemHeap->init(2048000);
 
 	//---------------------------------------------------------
 	// Start the Tiny Geometry Layer Heap.
@@ -638,10 +636,10 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	// look in CD Install Path for files.
 	//Changed for the shared source release, just set to current directory
 	//DWORD maxPathLength = 1023;
-	//gos_LoadDataFromRegistry("CDPath", CDInstallPath, &maxPathLength);
+	//gos_LoadDataFromRegistry("CDPath", g_cdInstallPath, &maxPathLength);
 	//if (!maxPathLength)
-	//	strcpy(CDInstallPath,"..\\");
-	strcpy(CDInstallPath,".\\");
+	//	strcpy(g_cdInstallPath,"..\\");
+	strcpy(g_cdInstallPath,".\\");
 
 	//-------------------------------------------------------
 	// Check if we are running this from the command line

@@ -69,9 +69,8 @@ extern bool		useFog;
 extern long 	mechRGBLookup[];
 extern long 	mechRGBLookup2[];
 
-extern long		ObjectTextureSize;
+extern long		g_objectTextureSize;
 
-extern bool		reloadBounds;
 extern float	metersPerWorldUnit;
 extern bool		useShadows;
 
@@ -604,7 +603,7 @@ void BldgAppearance::init (AppearanceTypePtr tree, GameObjectPtr obj)
 			bldgShape->GetTextureName(i,txmName,256);
 
 			char texturePath[1024];
-			sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+			sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 	
 			FullPathFileName textureName;
 			textureName.init(texturePath,txmName,"");
@@ -645,7 +644,7 @@ void BldgAppearance::init (AppearanceTypePtr tree, GameObjectPtr obj)
 				bldgShadowShape->GetTextureName(i,txmName,256);
 		
 				char texturePath[1024];
-				sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+				sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 		
 				FullPathFileName textureName;
 				textureName.init(texturePath,txmName,"");
@@ -845,7 +844,7 @@ void BldgAppearance::setObjStatus (long oStatus)
 				bldgShape->GetTextureName(i,txmName,256);
 	
 				char texturePath[1024];
-				sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+				sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 		
 				FullPathFileName textureName;
 				textureName.init(texturePath,txmName,"");
@@ -885,7 +884,7 @@ void BldgAppearance::setObjStatus (long oStatus)
 				bldgShadowShape->GetTextureName(i,txmName,256);
 	
 				char texturePath[1024];
-				sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+				sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 		
 				FullPathFileName textureName;
 				textureName.init(texturePath,txmName,"");
@@ -989,7 +988,7 @@ void BldgAppearance::setGesture (unsigned long gestureId)
 	if ((status == OBJECT_STATUS_DESTROYED) || (status == OBJECT_STATUS_DISABLED))
 		return;
 		
-	if (gestureId == bdAnimationState)
+	if ((long)gestureId == bdAnimationState)
 		return;
 
 	//----------------------------------------------------------------------
@@ -1126,14 +1125,14 @@ bool BldgAppearance::recalcBounds (void)
 			
 			if (eye->usePerspective)
 			{
-				if (distanceToEye > Camera::MaxClipDistance)
+				if (distanceToEye > Camera::maxClipDistance)
 				{
 					hazeFactor = 1.0f;
 					inView = false;
 				}
-				else if (distanceToEye > Camera::MinHazeDistance)
+				else if (distanceToEye > Camera::minHazeDistance)
 				{
-					Camera::HazeFactor = (distanceToEye - Camera::MinHazeDistance) * Camera::DistanceFactor;
+					Camera::HazeFactor = (distanceToEye - Camera::minHazeDistance) * Camera::DistanceFactor;
 					inView = true;
 				}
 				else
@@ -1152,9 +1151,6 @@ bool BldgAppearance::recalcBounds (void)
 		//If we were not behind fog plane, do a bunch O math we need later!!
 		if (inView)
 		{
-			if (reloadBounds)
-				appearType->reinit();
-
 			appearType->boundsLowerRightY = (OBBRadius * eye->getTiltFactor() * 2.0f);
 			
 			//-------------------------------------------------------------------------
@@ -1324,7 +1320,7 @@ bool BldgAppearance::recalcBounds (void)
 						}
 						
 						// we are at this LOD level.
-						if (selectLOD != currentLOD)
+						if ((long)selectLOD != currentLOD)
 						{
 							currentLOD = selectLOD;
 
@@ -1344,7 +1340,7 @@ bool BldgAppearance::recalcBounds (void)
 								bldgShape->GetTextureName(j,txmName,256);
 
 								char texturePath[1024];
-								sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+								sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 
 								FullPathFileName textureName;
 								textureName.init(texturePath,txmName,"");
@@ -1396,7 +1392,7 @@ bool BldgAppearance::recalcBounds (void)
 								bldgShape->GetTextureName(i,txmName,256);
 										
 								char texturePath[1024];
-								sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+								sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 						
 								FullPathFileName textureName;
 								textureName.init(texturePath,txmName,"");
@@ -1880,7 +1876,7 @@ long BldgAppearance::update (bool animate)
 		{
 			if (nodeRecycle[i] > 0.0f)
 			{
-				nodeRecycle[i] -= frameLength;
+				nodeRecycle[i] -= g_deltaTime;
 				if (nodeRecycle[i] < 0.0f)
 					nodeRecycle[i] = 0.0f;
 			}
@@ -1935,8 +1931,8 @@ long BldgAppearance::update (bool animate)
 	//Update flashing regardless of view!!!
 	if (duration > 0.0f)
 	{
-		duration -= frameLength;
-		currentFlash -= frameLength;
+		duration -= g_deltaTime;
+		currentFlash -= g_deltaTime;
 		if (currentFlash < 0.0f)
 		{
 			drawFlash ^= true;
@@ -1951,7 +1947,7 @@ long BldgAppearance::update (bool animate)
 	if (inView)
 	{
 		if (appearType->spinMe)
-			rotation += SPINRATE * frameLength;
+			rotation += SPINRATE * g_deltaTime;
 		
  		if (rotation > 180)
 			rotation -= 360;
@@ -2044,7 +2040,7 @@ long BldgAppearance::update (bool animate)
 	{
 		//--------------------------------------------------------
 		// Make sure animation runs no faster than bdFrameRate fps.
-		float frameInc = bdFrameRate * frameLength;
+		float frameInc = bdFrameRate * g_deltaTime;
 		
 		//---------------------------------------
 		// Increment Frames -- Everything else!
@@ -3220,7 +3216,7 @@ void TreeAppearance::init (AppearanceTypePtr tree, GameObjectPtr obj)
 			treeShape->GetTextureName(i,txmName,256);
 	
 			char texturePath[1024];
-			sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+			sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 	
 			FullPathFileName textureName;
 			textureName.init(texturePath,txmName,"");
@@ -3261,7 +3257,7 @@ void TreeAppearance::init (AppearanceTypePtr tree, GameObjectPtr obj)
 				treeShadowShape->GetTextureName(i,txmName,256);
 		
 				char texturePath[1024];
-				sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+				sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 		
 				FullPathFileName textureName;
 				textureName.init(texturePath,txmName,"");
@@ -3430,7 +3426,7 @@ void TreeAppearance::setObjStatus (long oStatus)
 				treeShape->GetTextureName(i,txmName,256);
 		
 				char texturePath[1024];
-				sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+				sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 		
 				FullPathFileName textureName;
 				textureName.init(texturePath,txmName,"");
@@ -3470,7 +3466,7 @@ void TreeAppearance::setObjStatus (long oStatus)
 				treeShadowShape->GetTextureName(i,txmName,256);
 		
 				char texturePath[1024];
-				sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+				sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 		
 				FullPathFileName textureName;
 				textureName.init(texturePath,txmName,"");
@@ -3603,14 +3599,14 @@ bool TreeAppearance::recalcBounds (void)
 		
 			if (eye->usePerspective)
 			{
-				if (distanceToEye > Camera::MaxClipDistance)
+				if (distanceToEye > Camera::maxClipDistance)
 				{
 					hazeFactor = 1.0f;
 					inView = false;
 				}
-				else if (distanceToEye > Camera::MinHazeDistance)
+				else if (distanceToEye > Camera::minHazeDistance)
 				{
-					Camera::HazeFactor = (distanceToEye - Camera::MinHazeDistance) * Camera::DistanceFactor;
+					Camera::HazeFactor = (distanceToEye - Camera::minHazeDistance) * Camera::DistanceFactor;
 					inView = true;
 				}
 				else
@@ -3748,7 +3744,7 @@ bool TreeAppearance::recalcBounds (void)
 					}
 					
 					// we are at this LOD level.
-					if (selectLOD != currentLOD)
+					if ((long)selectLOD != currentLOD)
 					{
 						currentLOD = selectLOD;
 
@@ -3765,7 +3761,7 @@ bool TreeAppearance::recalcBounds (void)
 							treeShape->GetTextureName(j,txmName,256);
 
 							char texturePath[1024];
-							sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+							sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 
 							FullPathFileName textureName;
 							textureName.init(texturePath,txmName,"");
@@ -3815,7 +3811,7 @@ bool TreeAppearance::recalcBounds (void)
 							treeShape->GetTextureName(i,txmName,256);
 									
 							char texturePath[1024];
-							sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+							sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 					
 							FullPathFileName textureName;
 							textureName.init(texturePath,txmName,"");

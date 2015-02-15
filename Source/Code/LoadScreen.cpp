@@ -16,6 +16,8 @@ LoadScreen.cpp			: Implementation of the LoadScreen component.
 #include "multplyr.h"
 #include "mission.h"
 #include "gameSound.h"
+#include "prefs.h"
+
 float loadProgress = 0.0f;
 
 long LoadScreen::xProgressLoc = 0;
@@ -37,7 +39,7 @@ extern volatile bool mc2IsInMouseTimer;
 extern volatile bool mc2IsInDisplayBackBuffer;
 
 extern void (*AsynFunc)(RECT& WinRect,DDSURFACEDESC2& mouseSurfaceDesc );
-extern CPrefs prefs;
+extern CPrefs g_userPreferences;
 
 //
 // Returns the number of bits in a given mask.  Used to determine if we are in 555 mode vs 565 mode.
@@ -83,7 +85,7 @@ void LoadScreenWrapper::changeRes()
 {
 	const char* Appendix = NULL;
 
-	switch( prefs.resolution )
+	switch( g_userPreferences.resolution )
 	{
 	case 0:
 		Appendix = "_640";
@@ -108,7 +110,7 @@ void LoadScreenWrapper::changeRes()
 		break;
 
 	default:
-		Assert( 0, 0, "Unexpected resolution found in prefs" );
+		Assert( 0, 0, "Unexpected resolution found in g_userPreferences" );
 		break;
 	}
 
@@ -430,12 +432,13 @@ void LoadScreen::update()
 			}
 
 			status = READYTOLOAD;
-			prefs.applyPrefs( true );
+			g_userPreferences.applyPrefs( true );
 
-			turnOffAsyncMouse = mc2UseAsyncMouse;
-			if ( !mc2UseAsyncMouse )
+			// MCHD TODO: What?
+			turnOffAsyncMouse = g_userPreferences.asyncMouse;
+			if (!g_userPreferences.asyncMouse)
 				MouseTimerInit();
-			mc2UseAsyncMouse = true;			
+			g_userPreferences.asyncMouse = true;
 			AsynFunc = ProgressTimer;
 		}
 		else
@@ -454,8 +457,8 @@ void LoadScreen::update()
 			mc2IsInDisplayBackBuffer = true;
 
 			AsynFunc = NULL;
-			mc2UseAsyncMouse = turnOffAsyncMouse;
-			if ( !mc2UseAsyncMouse)
+			g_userPreferences.asyncMouse = turnOffAsyncMouse;
+			if (!g_userPreferences.asyncMouse)
 				MouseTimerKill();
 
 			mc2IsInDisplayBackBuffer = false;

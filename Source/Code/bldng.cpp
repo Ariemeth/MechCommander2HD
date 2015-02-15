@@ -88,7 +88,6 @@ extern float worldUnitsPerMeter;
 bool drawExtents = false;
 extern bool somethingOnFire;
 extern bool	useOldProject;
-extern bool useSound;
 extern char lastName[];
 
 extern GameLog* CombatLog;
@@ -302,7 +301,7 @@ long BuildingType::init (FilePtr objFile, unsigned long fileSize) {
 
 	for (long i=0;i<18;i++)
 	{
-		if (objTypeNum == WallType[i])
+		if (objTypeNum == (ObjectTypeNumber)WallType[i])
 		{
 			setSubType(BUILDING_SUBTYPE_WALL);
 			break;
@@ -754,7 +753,7 @@ long Building::update (void)
 		// Will only be set if we ARE a perimeter alarm in HandleCollision.
 		if (moverInProximity)
 		{
-			proximityTimer += frameLength;
+			proximityTimer += g_deltaTime;
 		}
 		else
 		{

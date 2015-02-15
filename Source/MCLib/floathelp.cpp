@@ -25,7 +25,7 @@ FloatHelp*	FloatHelp::floatHelps = NULL;			//POinters to all of them.
 // class FloatHelp
 void FloatHelp::init (long maxHelps)
 {
-	floatHelps = (FloatHelp *)systemHeap->Malloc(sizeof(FloatHelp) * MAX_FLOAT_HELPS);
+	floatHelps = (FloatHelp *)g_systemHeap->Malloc(sizeof(FloatHelp) * MAX_FLOAT_HELPS);
 	gosASSERT(floatHelps != NULL);
 	
 	FloatHelp *tmp = floatHelps;
@@ -46,7 +46,7 @@ void FloatHelp::init (long maxHelps)
 //-----------------------------------------------------------------------------------------
 void FloatHelp::destroy (void)
 {
-	systemHeap->Free(floatHelps);
+	g_systemHeap->Free(floatHelps);
 	floatHelps = NULL;
 	currentFloatHelp = 0;
 }

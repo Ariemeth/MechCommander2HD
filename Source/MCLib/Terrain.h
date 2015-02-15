@@ -103,8 +103,6 @@ class Terrain
 	//-------------
 	protected:
 
-		unsigned long							terrainHeapSize;
-		
 		long									numberVertices;
 		long									numberQuads;
 		VertexPtr								vertexList;

@@ -161,7 +161,7 @@
       <AssemblerListingLocation>$(IntDir)asm\</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)obj\</ObjectFileName>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
-      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CallingConvention>StdCall</CallingConvention>
@@ -202,7 +202,7 @@
       <CompileAs>Default</CompileAs>
       <DisableSpecificWarnings>4996;4537;4430;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MinimalRebuild>true</MinimalRebuild>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <ResourceCompile>
@@ -211,6 +211,7 @@
     <Lib>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
+      <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>

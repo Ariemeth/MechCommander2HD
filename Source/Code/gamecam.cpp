@@ -584,8 +584,8 @@ long GameCamera::update (void)
 		
   	if (compass && (turn > 3))
 	{
-  		
-   		compass->setObjectParameters(getPosition(),0.0f,false,0,0);
+		Stuff::Vector3D pos = getPosition();
+   		compass->setObjectParameters(pos,0.0f,false,0,0);
    		compass->setMoverParameters(0.0f);
    		compass->setGesture(0);
    		compass->setObjStatus(OBJECT_STATUS_DESTROYED);
@@ -599,7 +599,6 @@ long GameCamera::update (void)
 	if (theSky)
 	{
 		Stuff::Vector3D pos = getPosition();
-		
    		theSky->setObjectParameters(pos,0.0f,false,0,0);
    		theSky->setMoverParameters(0.0f);
    		theSky->setGesture(0);

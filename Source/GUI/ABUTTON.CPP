@@ -8,7 +8,7 @@
 #include <windows.h>
 #include "soundSys.h"
 
-extern SoundSystem *sndSystem;
+extern SoundSystem *g_soundSystem;
 
 
 aButton::aButton()
@@ -85,9 +85,9 @@ void aButton::update()
 				getParent()->handleMessage( aMSG_LEFTMOUSEDOWN, data.ID );
 
 			if ( state != DISABLED && state != HIDDEN )
-				sndSystem->playDigitalSample( clickSFX );
+				g_soundSystem->playDigitalSample( clickSFX );
 			else
-				sndSystem->playDigitalSample( disabledSFX );
+				g_soundSystem->playDigitalSample( disabledSFX );
 
 		}
 		if (userInput->isLeftClick())
@@ -97,9 +97,9 @@ void aButton::update()
 				getParent()->handleMessage( aMSG_LEFTMOUSEDOWN, data.ID );
 
 			if ( state != DISABLED )
-				sndSystem->playDigitalSample( clickSFX );
+				g_soundSystem->playDigitalSample( clickSFX );
 			else
-				sndSystem->playDigitalSample( disabledSFX );
+				g_soundSystem->playDigitalSample( disabledSFX );
 		}
 		else if ( userInput->getMouseLeftHeld() > holdTime && !messageOnRelease &&
 			pointInside(userInput->getMouseDragX(), userInput->getMouseDragY()) )
@@ -107,7 +107,7 @@ void aButton::update()
 		else
 		{
 			if ( state != HIGHLIGHT && state != DISABLED && state != HIDDEN )
-				sndSystem->playDigitalSample( highlightSFX );
+				g_soundSystem->playDigitalSample( highlightSFX );
 			state = HIGHLIGHT;
 			makeUVs( location, state, data );	
 		}
@@ -573,7 +573,7 @@ void aAnimButton::update()
 					press( 1 );
 				}	
 				
-				sndSystem->playDigitalSample( clickSFX );
+				g_soundSystem->playDigitalSample( clickSFX );
 			
 			}
 			else
@@ -582,7 +582,7 @@ void aAnimButton::update()
 				pressedData.begin();
 				highlightData.end();
 
-				sndSystem->playDigitalSample( clickSFX );
+				g_soundSystem->playDigitalSample( clickSFX );
 			}
 
 			if ( getParent() && !messageOnRelease && pointInside(userInput->getMouseDragX(), userInput->getMouseDragY() ) )
@@ -605,12 +605,12 @@ void aAnimButton::update()
 					state = ENABLED;
 			}
 
-	//		sndSystem->playDigitalSample( clickSFX );
+	//		g_soundSystem->playDigitalSample( clickSFX );
 		}
 		else if ( state != PRESSED )
 		{
 			if ( state != HIGHLIGHT && state != DISABLED && state != HIDDEN && isShowing() )
-				sndSystem->playDigitalSample( highlightSFX );
+				g_soundSystem->playDigitalSample( highlightSFX );
 
 			if ( !highlightData.isAnimating() )
 				highlightData.begin();
@@ -640,7 +640,7 @@ void aAnimButton::update()
 	{
 		if ( pointInside( mouseX, mouseY )  && userInput->isLeftClick() )
 		{
-			sndSystem->playDigitalSample( disabledSFX );
+			g_soundSystem->playDigitalSample( disabledSFX );
 		}
 		if ( !disabledData.isAnimating() )
 			disabledData.begin();

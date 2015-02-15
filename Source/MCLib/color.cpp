@@ -49,7 +49,7 @@ void initColorTables (void)
 	result = colorFile.readIdLong("NumTables",numColorRGBTables);
 	gosASSERT(result == NO_ERR);
 
-	colorRGBLookup = (DWORD **)systemHeap->Malloc(sizeof(DWORD *) * numColorRGBTables);
+	colorRGBLookup = (DWORD **)g_systemHeap->Malloc(sizeof(DWORD *) * numColorRGBTables);
 	gosASSERT(colorRGBLookup != NULL);
 
 	memset(colorRGBLookup,0,sizeof(DWORD *) * numColorRGBTables);
@@ -62,7 +62,7 @@ void initColorTables (void)
 		result = colorFile.seekBlock(tableBlock);
 		gosASSERT(result == NO_ERR);
 
-		colorRGBLookup[i] = (DWORD *)systemHeap->Malloc(sizeof(DWORD) * MAX_COLOR_ENTRIES);
+		colorRGBLookup[i] = (DWORD *)g_systemHeap->Malloc(sizeof(DWORD) * MAX_COLOR_ENTRIES);
 		gosASSERT(colorRGBLookup[i] != NULL);
 
 		DWORD *table = colorRGBLookup[i];
@@ -85,12 +85,12 @@ void destroyColorTables (void)
 {
 	for (long i=0;i<numColorRGBTables;i++)
 	{
-		systemHeap->Free(colorRGBLookup[i]);
+		g_systemHeap->Free(colorRGBLookup[i]);
 		colorRGBLookup[i] = NULL;
 	}
 
 	if ( colorRGBLookup )
-		systemHeap->Free(colorRGBLookup);
+		g_systemHeap->Free(colorRGBLookup);
 	colorRGBLookup = NULL;
 }	
 

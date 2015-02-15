@@ -340,16 +340,16 @@ void CraterManager::render (void)
 		
 				Distance.Subtract(objPosition,eyePosition);
 				float eyeDistance = Distance.GetApproximateLength();
-				if (eyeDistance > Camera::MaxClipDistance)
+				if (eyeDistance > Camera::maxClipDistance)
 				{
 					onScreen1 = false;
 					onScreen2 = false;
 					onScreen3 = false;
 					onScreen4 = false;
 				}
-				else if (eyeDistance > Camera::MinHazeDistance)
+				else if (eyeDistance > Camera::minHazeDistance)
 				{
-					hazeFactor = (eyeDistance - Camera::MinHazeDistance) * Camera::DistanceFactor;
+					hazeFactor = (eyeDistance - Camera::minHazeDistance) * Camera::DistanceFactor;
 				}
 				else
 				{

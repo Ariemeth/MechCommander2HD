@@ -196,8 +196,6 @@ int	LogisticsChassis::getSensorID() const
 		return 17;
 	else 
 		return -1;
-
-	return -1;
 }
 
 int LogisticsChassis::getECM() const
@@ -472,7 +470,7 @@ bool LogisticsVariant::addComponent( int idFromFitFile, long& x, long& y )
 					{
 						char errorString[1024];
 						sprintf( errorString, "couldn't add component %s to variant %s because another object was in the specified location", 
-							pComponent->getName(), this->getName() );
+							pComponent->getName(), this->getName().Data() );
 		//				Assert( 0, 0, errorString );
 						return false; 
 					}

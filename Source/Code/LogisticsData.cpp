@@ -31,7 +31,7 @@ LogisticsData.cpp			: Implementation of the LogisticsData component.
 	bool MissionResults::FirstTimeResults = false;
 #endif
 
-extern CPrefs prefs;
+extern CPrefs g_userPreferences;
 
 //----------------------------------------------------------------------
 // WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -567,7 +567,7 @@ LogisticsVariant* LogisticsData::getVariant( int ID )
 {
 	for ( VARIANT_LIST::EIterator iter = variants.Begin(); !iter.IsDone(); iter++ )
 	{
-		if ( (*iter)->getID() == (ID & 0x00ffffff) )
+		if ((int)(*iter)->getID() == (ID & 0x00ffffff))
 		{
 			return *iter;
 		}
@@ -750,16 +750,16 @@ int LogisticsData::getCurrentMissions( const char** missionNames, long& count )
 
 }
 
-bool LogisticsData::getMissionAvailable( const char* missionName )
+bool LogisticsData::getMissionAvailable(const char* missionName)
 {
-	return missionInfo->getMissionAvailable( missionName );
+	return missionInfo->getMissionAvailable(missionName);
 }
 
 
 // SetCurrentMission( char* missionName )
-int LogisticsData::setCurrentMission( const char* missionName )
+int LogisticsData::setCurrentMission(const char* missionName)
 {
-	long result = missionInfo->setNextMission( missionName );
+	long result = missionInfo->setNextMission(missionName);
 
 	if ( result == NO_ERR )
 	{
@@ -795,9 +795,9 @@ void LogisticsData::removeDeadWeight()
 	}
 }
 
-int		LogisticsData::setCurrentMission( const EString& missionName )
+int		LogisticsData::setCurrentMission(const EString& missionName)
 {
-	return setCurrentMission( (const char*)missionName );
+	return setCurrentMission((const char*)missionName);
 }
 
 
@@ -1200,7 +1200,7 @@ long	LogisticsData::load( FitIniFile& file )
 
 
 	//Start finding the Leaks
-	//systemHeap->dumpRecordLog();
+	//g_systemHeap->dumpRecordLog();
 
 	return 0;
 }
@@ -1308,7 +1308,6 @@ long LogisticsData::loadMech( FitIniFile& file, int& count )
 void	LogisticsData::setMissionCompleted( )
 {
 #ifndef VIEWER
-	const char* pMissionName = missionInfo->getCurrentMission();
 	missionInfo->setMissionComplete();
 
 	rpJustAdded = 0;
@@ -2078,8 +2077,6 @@ int LogisticsData::acceptMechModifications( const char* name )
 	// 05/04 HKG, actually, if you increment vIter after deleteing it, it still won't work
 
 	// Good Point.  As you can see, it was pretty late when I "fixed" this!
-	long numVariants = variants.Count();
-	long i=0;
 	for ( VARIANT_LIST::EIterator vIter = variants.Begin(); !vIter.IsDone();  )
 	{
 		if ( (*vIter)->getName().Compare( name, 0 ) == 0 )
@@ -2246,9 +2243,9 @@ const char*				LogisticsData::getCurrentMissionFriendlyName( )
 	return missionInfo->getCurrentMissionFriendlyName();
 }
 
-const char*				LogisticsData::getMissionFriendlyName( const char* missionName )
+const char*				LogisticsData::getMissionFriendlyName(const char* missionName)
 {
-	return missionInfo->getMissionFriendlyName( missionName );
+	return missionInfo->getMissionFriendlyName(missionName);
 }
 
 /*long				LogisticsData::getMaxTeams() const
@@ -2289,7 +2286,7 @@ void				LogisticsData::startNewCampaign( const char* fileName )
 
 	setCurrentMission( missionNames[0] );
 
-	soundSystem->setMusicVolume( prefs.MusicVolume );
+	soundSystem->setMusicVolume( g_userPreferences.MusicVolume );
 	soundSystem->playDigitalMusic(missionInfo->getCurrentLogisticsTuneId());
 }
 
@@ -2341,9 +2338,9 @@ void LogisticsData::startMultiPlayer()
 		MPlayer = new MultiPlayer;
 		MPlayer->setup();
 
-		if ( !strlen( &prefs.playerName[0][0] ) )
+		if ( !strlen( &g_userPreferences.playerName[0][0] ) )
 		{
-			cLoadString( IDS_UNNAMED_PLAYER, &prefs.playerName[0][0], 255 );
+			cLoadString( IDS_UNNAMED_PLAYER, &g_userPreferences.playerName[0][0], 255 );
 		}
 
 		ChatWindow::init();

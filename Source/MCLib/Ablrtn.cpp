@@ -281,18 +281,20 @@ void ABL_AddToProfileLog (char* profileString);
 //***************************************************************************
 
 long DefaultRandom (long range) {
-
+	(void)range;
 	return(0);
 }
 
 //---------------------------------------------------------------------------
 
 void DefaultSeedRandom (unsigned long seed) {
+	(void)seed;
 }
 
 //---------------------------------------------------------------------------
 
 void DefaultDebugPrintCallback (char* s) {
+	(void)s;
 }
 
 //---------------------------------------------------------------------------
@@ -372,9 +374,6 @@ profile = true;
 	//-------------------------------------------------------------------
 	// Let's make sure we have not created too many built-in ABL routines
 	// for the lovely user...
-	if (NUM_ABL_ROUTINES > 254)
-		ABL_Fatal(0, " MAJOR ABL ERROR: Too Many ABL Routines ");
-
 	ABLSystemMallocCallback = systemMallocCallback;
 	ABLStackMallocCallback = stackMallocCallback;
 	ABLCodeMallocCallback = codeMallocCallback;
@@ -770,6 +769,8 @@ long ABLi_preProcess (char* sourceFileName, long* numErrors, long* numLinesProce
 //***************************************************************************
 
 long ABLi_execute (SymTableNodePtr moduleIdPtr, SymTableNodePtr functionIdPtr, ABLParamPtr paramList, StackItemPtr returnVal) {
+	(void)functionIdPtr;
+	(void)moduleIdPtr;
 
 	//insertSymTable(&SymTableDisplay[0], moduleIdPtr);
 
@@ -904,7 +905,7 @@ long ABLi_execute (SymTableNodePtr moduleIdPtr, SymTableNodePtr functionIdPtr, A
 //***************************************************************************
 
 long ABLi_deleteModule (SymTableNodePtr moduleIdPtr) {
-
+	(void)moduleIdPtr;
 	return(ABL_NO_ERR);
 }
 
@@ -1091,6 +1092,7 @@ long ABLi_registerInteger (char* name, long* address, long numElements) {
 //***************************************************************************
 
 long ABLi_registerReal (char* name, float* address, long numElements) {
+	(void)numElements;
 
 	if (strlen(name) >= MAXLEN_TOKENSTRING)
 		ABL_Fatal(0, " ABLi_registerInteger: variable name too long ");
@@ -1316,8 +1318,8 @@ void routine (void) {
 	if (routineIdPtr->defn.info.routine.flags & ROUTINE_FLAG_STATE) {
 		//-----------------------------------
 		// Add it to the state handle list...
-		if (NumStateHandles == MAX_STATE_HANDLES_PER_MODULE)
-			ABL_Fatal(0, "ABL: too many states in fsm [19 max]");
+		if (NumStateHandles >= MAX_STATE_HANDLES_PER_MODULE)
+			ABL_Fatal(0, "ABL: too many states in fsm [10 max]");
 		strcpy(StateHandleList[NumStateHandles].name, routineIdPtr->name);
 		StateHandleList[NumStateHandles].state = routineIdPtr;
 		NumStateHandles++;

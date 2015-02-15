@@ -268,7 +268,7 @@ void CBooleanArray::save (long alignment, FitIniFile *file)
 {
 	char blockID[256];
 	sprintf(blockID, "Team%dBooleanFlags",alignment);
-	long result = file->writeBlock(blockID);
+	file->writeBlock(blockID);
 
 	CEStringList::EIterator flagIDListIter;
 	long count = 0;
@@ -2225,7 +2225,7 @@ bool CObjective::RenderMarkers(GameTacMap *tacMap, bool blink )
 
 				if ( blink )
 				{
-					s_lastBlinkTime += frameLength;
+					s_lastBlinkTime += g_deltaTime;
 					if ( s_lastBlinkTime > s_blinkLength )
 					{
 						s_lastBlinkTime = 0.f;

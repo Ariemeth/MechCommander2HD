@@ -110,8 +110,6 @@ void MPStats::begin()
 	statics[15].setColor( 0 );
 
 	// need to set up map name
-
-	bool bRes = 0;
 	char text2[256];
 	char text[256];
 

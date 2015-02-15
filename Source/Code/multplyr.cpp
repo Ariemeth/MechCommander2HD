@@ -132,11 +132,11 @@ long cLoadString (HINSTANCE hInstance,  UINT uID, LPTSTR lpBuffer, int nBufferMa
 
 #define	MAX_MSG_SIZE		10240
 
-extern CPrefs prefs;
-extern bool quitGame;
+extern CPrefs g_userPreferences;
+extern bool g_quitGame;
 
 extern float loadProgress;
-extern bool aborted;
+extern bool g_aborted;
 
 //***************************************************************************
 
@@ -165,7 +165,7 @@ extern GameLog* NetLog;
 
 extern bool LaunchedFromLobby;
 
-extern UserHeapPtr systemHeap;
+extern UserHeapPtr g_systemHeap;
 
 #ifdef _DEBUG
 //extern DebugFileStream Debug;
@@ -222,7 +222,7 @@ void ShutdownNetworking (void) {
 
 void* WorldChunk::operator new (size_t ourSize) {
 
-	void* result = systemHeap->Malloc(ourSize);
+	void* result = g_systemHeap->Malloc(ourSize);
 	return(result);
 }
 
@@ -230,7 +230,7 @@ void* WorldChunk::operator new (size_t ourSize) {
 
 void WorldChunk::operator delete (void* us) {
 
-	systemHeap->Free(us);
+	g_systemHeap->Free(us);
 }	
 
 //---------------------------------------------------------------------------
@@ -327,7 +327,7 @@ bool WorldChunk::equalTo (WorldChunkPtr chunk) {
 
 void* MultiPlayer::operator new (size_t ourSize) {
 
-	void* result = systemHeap->Malloc(ourSize);
+	void* result = g_systemHeap->Malloc(ourSize);
 	return(result);
 }
 
@@ -335,7 +335,7 @@ void* MultiPlayer::operator new (size_t ourSize) {
 
 void MultiPlayer::operator delete (void* us) {
 
-	systemHeap->Free(us);
+	g_systemHeap->Free(us);
 }	
 
 //---------------------------------------------------------------------------

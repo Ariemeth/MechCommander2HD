@@ -17,7 +17,6 @@ KeyboardRef.cpp			: Implementation of the KeyboardRef component.
 #define ALT		0x00100000
 #define WAYPT	0x20000000
 
-
 KeyboardRef::KeyboardRef(  )
 :	listItemTemplate( IDS_KEYBOARD_REF_FONT ),
 	listItemTemplate2( IDS_KEYBOARD_REF_FONT )
@@ -118,7 +117,7 @@ void KeyboardRef::reseed( MissionInterfaceManager::Command* commands )
 
 	// first count the number of hotTexts
 	long count = 0;
-	for ( int i = 0; i < MAX_COMMAND; i++ )
+	for (int i = 0; i < MissionInterfaceManager::s_numCommands; i++)
 	{
 		if ( commands[i].hotKeyDescriptionText != -1 )
 		{
@@ -126,9 +125,7 @@ void KeyboardRef::reseed( MissionInterfaceManager::Command* commands )
 		}
 	}
 
-	long curCount = 0;
-
-	for ( i = 0; i < MAX_COMMAND; i++ )
+	for (i = 0; i < MissionInterfaceManager::s_numCommands; i++)
 	{
 		if ( commands[i].hotKeyDescriptionText != -1 )
 		{

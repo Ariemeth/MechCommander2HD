@@ -63,7 +63,6 @@
 
 extern unsigned long NextIdNumber;
 extern float worldUnitsPerMeter;
-extern bool useSound;
 extern bool useOldProject;
 extern bool drawExtents;
 

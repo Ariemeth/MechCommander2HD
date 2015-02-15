@@ -71,7 +71,7 @@ long		SpecialtyListItem::s_itemCount = 0; // hack, we really don't want to delet
 
 PilotReviewScreen* PilotReviewScreen::instance = NULL;
 
-extern float frameLength;
+extern float g_deltaTime;
 
 #define RP_TEXTID	3
 #define HELP_TEXTID	2
@@ -108,10 +108,6 @@ PilotReviewScreen::~PilotReviewScreen()
 	LogisticsPilot** pPilots = (LogisticsPilot**)_alloca( count * sizeof(LogisticsPilot*) );
 	LogisticsData::instance->getPilots( pPilots, count );
 
-
-	bool bDeadTextAdded = 0;
-
-	bool bFirst = 0;
 	for ( int i = 0; i < count; i++ )
 	{
 		pPilots[i]->clearIcons();
@@ -555,7 +551,7 @@ void PilotListBox::update()
 {
 	aObject::update();
 
-	timeSinceStart += frameLength;
+	timeSinceStart += g_deltaTime;
 	if ( timeSinceStart < 1.0 )
 		return;
 
@@ -648,7 +644,7 @@ void PilotListBox::update()
 
 	if ( newScroll )
 	{
-		scrollTime += frameLength;
+		scrollTime += g_deltaTime;
 		long delta = 140.f * scrollTime;
 		if ( delta + oldScroll < newScroll && delta + oldScroll < scrollBar->GetScrollMax() )
 			scrollBar->SetScroll( oldScroll + delta );
@@ -785,11 +781,11 @@ void	ActivePilotListItem::render()
 	long y = globalY() + s_killIconRect->top();
 
 	int counter = 0;
-	int oldPossible = 2.0 * (currentTime - frameLength - 1.5);
+	int oldPossible = 2.0 * (currentTime - g_deltaTime - 1.5);
 	int numPossible = 2.0 * (currentTime - 1.5);
 	if ( currentTime - 1.5 < 0 )
 		numPossible = -1;
-	if (currentTime - 1.5 - frameLength < 0 )
+	if (currentTime - 1.5 - g_deltaTime < 0 )
 		oldPossible = -1;
 
 
@@ -1265,7 +1261,7 @@ void PilotListItem::begin()
 }
 void PilotListItem::update()
 {
-	currentTime += frameLength;
+	currentTime += g_deltaTime;
 }
 
 void PilotPromotionArea::init( FitIniFile& file )

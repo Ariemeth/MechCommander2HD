@@ -771,7 +771,7 @@ void MechBayScreen::setMech( LogisticsMech* pMech,  bool bCommandFromLB )
 		fileName = fileName.Left( index );
 		index = fileName.ReverseFind( '\\' );
 		fileName = fileName.Right( fileName.Length() - index - 1 );
-		mechCamera->setMech( fileName, prefs.baseColor, prefs.highlightColor, prefs.highlightColor );
+		mechCamera->setMech( fileName, g_userPreferences.baseColor, g_userPreferences.highlightColor, g_userPreferences.highlightColor );
 		mechCamera->setScale( pMech->getVariant()->getChassis()->getScale() );
 	}
 	else

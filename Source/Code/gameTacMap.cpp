@@ -15,8 +15,10 @@ gameTacMap.cpp			: Implementation of the gameTacMap component.
 #include "mission.h"
 #include <windows.h>
 #include "..\resource.h"
+#include "prefs.h"
+
+extern CPrefs g_userPreferences;
 extern unsigned char godMode;
-extern bool useLeftRightMouseProfile;
 
 #define SQUARE_BLIP 0
 #define DOT_BLIP 1
@@ -25,7 +27,7 @@ extern bool useLeftRightMouseProfile;
 const float GameTacMap::s_blinkLength = .5f;
 float		GameTacMap::s_lastBlinkTime = 0.f;
 
-extern bool ShowMovers;
+extern bool g_dbgShowMovers;
 
 GameTacMap::GameTacMap()
 {
@@ -97,7 +99,7 @@ void GameTacMap::update()
 			((GameCamera*)(eye))->setTarget( 0 );
 		}
 	}
-	else if ( userInput->isRightClick() && useLeftRightMouseProfile )
+	else if ( userInput->isRightClick() && g_userPreferences.leftRightMouseProfile )
 	{
 		screen.x -= left;
 		screen.y -= top;
@@ -183,7 +185,7 @@ void GameTacMap::render()
 		//We are there.  Start flashing.
 		if ((objectiveAnimationId == count) && objectiveNumFlashes)
 		{
-			objectiveFlashTime += frameLength;
+			objectiveFlashTime += g_deltaTime;
 			if ( objectiveFlashTime > .5f )
 			{
 				objectiveFlashTime = 0.0f;
@@ -329,7 +331,7 @@ void GameTacMap::render()
 					if ( objClass == ARTILLERY )
 					{
 						// blink
-						s_lastBlinkTime += frameLength;
+						s_lastBlinkTime += g_deltaTime;
 						if ( s_lastBlinkTime > s_blinkLength )
 						{
 							colorBlip = 0;
@@ -386,7 +388,7 @@ void GameTacMap::render()
 						continue;
 				}
 			}
-			else if (ShowMovers || (MPlayer && MPlayer->allUnitsDestroyed[MPlayer->commanderID]) || ((mover->getTeamId() != Team::home->id)
+			else if (g_dbgShowMovers || (MPlayer && MPlayer->allUnitsDestroyed[MPlayer->commanderID]) || ((mover->getTeamId() != Team::home->id)
 				&&  ( contactStatus != CONTACT_NONE )
 				&&  (mover->getStatus() != OBJECT_STATUS_SHUTDOWN) 
 				&&  (!mover->hasNullSignature())

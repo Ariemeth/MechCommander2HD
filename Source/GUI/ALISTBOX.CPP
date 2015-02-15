@@ -16,7 +16,7 @@
 
 #include "soundSys.h"
 
-extern SoundSystem *sndSystem;
+extern SoundSystem *g_soundSystem;
 
 #include "mclib.h"
 
@@ -149,7 +149,7 @@ void aListBox::update()
 				{
 					iSel = i;
 					if ( items[i]->getState() != aListItem::SELECTED )
-						sndSystem->playDigitalSample( clickSFX );
+						g_soundSystem->playDigitalSample( clickSFX );
 				}
 				else 
 				{
@@ -178,7 +178,7 @@ void aListBox::update()
 			else if ( iHighlight == i && items[i]->getState() != aListItem::SELECTED )
 			{
 				if ( items[i]->getState() != aListItem::HIGHLITE )
-						sndSystem->playDigitalSample( highlightSFX );
+						g_soundSystem->playDigitalSample( highlightSFX );
 				items[i]->setState( aListItem::HIGHLITE );				
 			}
 			else if ( (iSel != -1 || items[i]->getState() != aListItem::SELECTED)

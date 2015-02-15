@@ -131,7 +131,6 @@ class OptionsAudio : public LogisticsScreen
 
 class OptionsHotKeys : public LogisticsScreen
 {
-
 public:
 		void init(long xOffset, long yOffset);
 		virtual void render();

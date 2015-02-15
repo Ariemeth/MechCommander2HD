@@ -18,7 +18,7 @@
 
 //----------------------------------------------------------------------------------
 long	turn = 0;
-float	frameLength = 0.05f;
+float	g_deltaTime = 0.05f;
 float	scenarioTime = 0.0;
 DWORD	LastTimeGetTime = 0;
 bool dynamicFrameTiming = TRUE;

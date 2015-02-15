@@ -72,7 +72,6 @@
 //***************************************************************************
 
 //extern float worldUnitsPerMeter;
-//extern bool useSound;
 //extern BOOL useOldProject;
 //extern BOOL drawExtents;
 
@@ -622,8 +621,6 @@ long Turret::update (void)
 		 ObjectManager->getByWatchID(parent)->isDisabled() || 
 		 !ObjectManager->getByWatchID(parent)->getAwake()))
 	{
-
-		ObjectType* parentClass = ObjectManager->getByWatchID(parent)->getObjectType();
 		if ( active ) // play this sound regardless of wether its a turret control or generator
 		{
 			soundSystem->playBettySample( BETTY_GENERATOR_DESTROYED );
@@ -686,13 +683,13 @@ long Turret::update (void)
 			float maxRate = ((TurretTypePtr)getObjectType())->turretYawRate;
 			if (turretFacing < 0.0)
 			{
-				turretTurnRate = maxRate*frameLength;
+				turretTurnRate = maxRate*g_deltaTime;
 				if (turretTurnRate > fabs(turretFacing))
 					turretTurnRate = fabs(turretFacing);
 			}
 			else
 			{
-				turretTurnRate = -maxRate*frameLength;
+				turretTurnRate = -maxRate*g_deltaTime;
 				if (turretTurnRate < -turretFacing)
 					turretTurnRate = -turretFacing;
 			}
@@ -719,13 +716,13 @@ long Turret::update (void)
 			float maxRate = ((TurretTypePtr)getObjectType())->turretYawRate;
 			if (turretFacing < 0.0)
 			{
-				turretTurnRate = maxRate*frameLength;
+				turretTurnRate = maxRate*g_deltaTime;
 				if (turretTurnRate > fabs(turretFacing))
 					turretTurnRate = fabs(turretFacing);
 			}
 			else
 			{
-				turretTurnRate = -maxRate*frameLength;
+				turretTurnRate = -maxRate*g_deltaTime;
 				if (turretTurnRate < -turretFacing)
 					turretTurnRate = -turretFacing;
 			}
@@ -736,7 +733,7 @@ long Turret::update (void)
 		{
 			setFlag(OBJECT_FLAG_FACING_TARGET,true);
 			
-			idleWait += frameLength;
+			idleWait += g_deltaTime;
 			if (idleWait > 10.0f)
 			{
 				//Since we are idling, pick a new random position to point to.

@@ -57,7 +57,7 @@ class MC2Movie
 		{
 			if (MC2Surface)
 			{
-				systemHeap->Free(MC2Surface);
+				g_systemHeap->Free(MC2Surface);
 				MC2Surface = NULL;
 			}
 
@@ -92,8 +92,9 @@ class MC2Movie
 		}
 
 		//Pause video playback.
-		void pause (bool pauseState)
+		void pause (bool pauseState) // MCHD TODO: Movie pause currently does nothing
 		{
+			(void)pauseState;
 			if (stillPlaying)
 			{
 			}

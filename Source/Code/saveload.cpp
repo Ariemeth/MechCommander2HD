@@ -110,6 +110,8 @@
 #include "loadscreen.h"
 #endif
 
+#include "prefs.h"
+
 #include "..\resource.h"
 #include <GameOS.hpp>
 #include <ddraw.h>
@@ -124,7 +126,6 @@ void MouseTimerKill();
 void ProgressTimer(	RECT& WinRect,DDSURFACEDESC2& mouseSurfaceDesc );
 
 extern volatile bool mc2IsInDisplayBackBuffer;
-extern volatile bool mc2UseAsyncMouse;
 extern volatile bool mc2IsInMouseTimer;
 extern void (*AsynFunc)(RECT& WinRect,DDSURFACEDESC2& mouseSurfaceDesc );
 
@@ -137,7 +138,7 @@ extern float WeaponRanges[NUM_WEAPON_RANGE_TYPES][2];
 extern float OptimalRangePoints[NUM_WEAPON_RANGE_TYPES];
 extern bool OptimalRangePointInRange[NUM_WEAPON_RANGE_TYPES][3];
 
-extern unsigned long missionHeapSize;
+extern unsigned long g_missionHeapSize;
 
 //--------------------------------------------------
 // Game System Constants -- Declarations here.
@@ -188,8 +189,6 @@ extern float CheatHitDamage;
 #endif
 
 void InitDifficultySettings (FitIniFile *gameSystemFile);
-
-extern long GameVisibleVertices;
 
 void GetBlockedDoorCells (long moveLevel, long door, char* openCells);
 void PlaceStationaryMovers (MoveMap* map);
@@ -261,10 +260,10 @@ void Mission::save (const char *saveFileName)
 	LoadScreen::xProgressLoc = 0;
 	LoadScreen::yProgressLoc = 0;
 
-	bool turnOffAsyncMouse = mc2UseAsyncMouse;
-	if ( !mc2UseAsyncMouse )
+	bool turnOffAsyncMouse = g_userPreferences.asyncMouse;
+	if (!g_userPreferences.asyncMouse)
 		MouseTimerInit();
-	mc2UseAsyncMouse = true;			
+	g_userPreferences.asyncMouse = true;
 	AsynFunc = ProgressTimer;
 
 	//Get the campaign name for the campaign we are currently playing.
@@ -494,8 +493,8 @@ void Mission::save (const char *saveFileName)
 	mc2IsInDisplayBackBuffer = true;
 
 	AsynFunc = NULL;
-	mc2UseAsyncMouse = turnOffAsyncMouse;
-	if ( !mc2UseAsyncMouse)
+	g_userPreferences.asyncMouse = turnOffAsyncMouse;
+	if (!g_userPreferences.asyncMouse)
 		MouseTimerKill();
 
 	mc2IsInDisplayBackBuffer = false;
@@ -630,10 +629,10 @@ void Mission::load (const char *loadFileName)
 	LoadScreen::xProgressLoc = 0;
 	LoadScreen::yProgressLoc = 0;
 
-	bool turnOffAsyncMouse = mc2UseAsyncMouse;
-	if ( !mc2UseAsyncMouse )
+	bool turnOffAsyncMouse = g_userPreferences.asyncMouse;
+	if (!g_userPreferences.asyncMouse)
 		MouseTimerInit();
-	mc2UseAsyncMouse = true;			
+	g_userPreferences.asyncMouse = true;
 	AsynFunc = ProgressTimer;
 
 	//Open the In-Mission Save packet file.
@@ -663,7 +662,6 @@ void Mission::load (const char *loadFileName)
 
 	//Get the campaign name for the campaign we are currently playing.
 	EString campaignName = LogisticsData::instance->getCampaignName();
-	const char *cmpName = campaignName.Data();
 
 	/*
 	if (stricmp(campName,cmpName) != 0)
@@ -707,7 +705,7 @@ void Mission::load (const char *loadFileName)
 	missionHeap = new UserHeap;
 	gosASSERT(missionHeap != NULL);
 	
-	missionHeap->init(missionHeapSize,"MISSION");
+	missionHeap->init(g_missionHeapSize,"MISSION");
 	
 	//--------------------------
 	// Load Game System stuff...
@@ -1078,7 +1076,7 @@ void Mission::load (const char *loadFileName)
 
 	loadProgress = 15.0f;
 
-	long terrainInitResult = land->init(&pakFile, 0, GameVisibleVertices, loadProgress, 15.0 );
+	long terrainInitResult = land->init(&pakFile, 0, g_userPreferences.gameVisibleVertices, loadProgress, 15.0);
 
 	if (terrainInitResult != NO_ERR)
 	{
@@ -1451,7 +1449,7 @@ void Mission::load (const char *loadFileName)
 
 	if (tempSpecialAreaFootPrints) 
 	{
-		systemHeap->Free(tempSpecialAreaFootPrints);
+		g_systemHeap->Free(tempSpecialAreaFootPrints);
 		tempSpecialAreaFootPrints = NULL;
 		tempNumSpecialAreas = 0;
 	}
@@ -1521,8 +1519,8 @@ void Mission::load (const char *loadFileName)
 	mc2IsInDisplayBackBuffer = true;
 
 	AsynFunc = NULL;
-	mc2UseAsyncMouse = turnOffAsyncMouse;
-	if ( !mc2UseAsyncMouse)
+	g_userPreferences.asyncMouse = turnOffAsyncMouse;
+	if (!g_userPreferences.asyncMouse)
 		MouseTimerKill();
 
 	mc2IsInDisplayBackBuffer = false;

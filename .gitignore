@@ -28,7 +28,9 @@ Source/*.old
 Source/*.fst
 Source/*.tga
 Source/*.dll
+Source/*.exe
 Source/Data/savegame/**
 
 #TODO: WHAT???
 Source/Data/Textures/*.txm
+FinalBuild/Data/Textures/*.txm

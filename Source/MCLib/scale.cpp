@@ -81,7 +81,7 @@ long scaleDraw (MemoryPtr shapeTable, unsigned long frameNum, long sx, long sy, 
 	}
 
 	if (!tempBuffer)
-		tempBuffer = (MemoryPtr)systemHeap->Malloc(MAX_X * MAX_Y);
+		tempBuffer = (MemoryPtr)g_systemHeap->Malloc(MAX_X * MAX_Y);
 	
 	gosASSERT((yMax * xMax) < (MAX_Y * MAX_X));
 	

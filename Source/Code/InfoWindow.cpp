@@ -80,7 +80,7 @@ extern float WeaponRanges[NUM_WEAPON_RANGE_TYPES][2];
 // initialize statics
 ButtonData InfoWindow::buttonData[2];;
 
-extern bool useUnlimitedAmmo;
+extern bool g_unlimitedAmmo;
 
 InfoWindow::InfoWindow()
 {
@@ -657,7 +657,7 @@ void InfoWindow::drawScrollingStuff()
 			// Glenn has taken the liberty of combining all shots of this type
 			// into one master ammo list!!
 			if ( MasterComponent::masterList[pUnit->inventory[curWeapon].masterID].getWeaponAmmoType() == WEAPON_AMMO_NONE 
-				|| useUnlimitedAmmo )
+				|| g_unlimitedAmmo )
 				ammo[i] = -1;
 			else
 				ammo[i] += pUnit->getWeaponShots( curWeapon );

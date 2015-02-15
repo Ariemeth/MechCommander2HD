@@ -23,7 +23,7 @@ MainMenu.cpp			: Implementation of the MainMenu component.
 #include "Multplyr.h"
 
 #include "prefs.h"
-extern CPrefs prefs;
+extern CPrefs g_userPreferences;
 
 
 #define MM_MSG_NEW_CAMPAIGN 90
@@ -47,7 +47,7 @@ extern void (*AsynFunc)(RECT& WinRect,DDSURFACEDESC2& mouseSurfaceDesc );
 
 
 
-extern bool bInvokeOptionsScreenFlag;
+extern bool g_invokeOptionsScreen;
 bool	MainMenu::bDrawMechlopedia = false;;
 
 void SplashIntro::init()
@@ -179,8 +179,7 @@ void MainMenu::begin()
 			// BLOCK THREAD WHILE THIS IS HAPPENING
 			mc2IsInDisplayBackBuffer = true;
 
-			mc2UseAsyncMouse = prefs.asyncMouse;
-			if ( !mc2UseAsyncMouse)
+			if (!g_userPreferences.asyncMouse)
 				MouseTimerKill();
 
 			mc2IsInDisplayBackBuffer = false;
@@ -192,13 +191,13 @@ void MainMenu::begin()
 			userInput->mouseOn();
 			userInput->setMouseCursor( mState_LOGISTICS );
 
-			DWORD localRenderer = prefs.renderer;
-			if (prefs.renderer != 0 && prefs.renderer != 3)
+			DWORD localRenderer = g_userPreferences.renderer;
+			if (g_userPreferences.renderer != 0 && g_userPreferences.renderer != 3)
 				localRenderer = 0;
 
-   			bool localFullScreen = prefs.fullScreen;
-   			bool localWindow = !prefs.fullScreen;
-   			if (Environment.fullScreen && prefs.fullScreen)
+   			bool localFullScreen = g_userPreferences.fullScreen;
+   			bool localWindow = !g_userPreferences.fullScreen;
+   			if (Environment.fullScreen && g_userPreferences.fullScreen)
    				localFullScreen = false;
 
 
@@ -206,10 +205,10 @@ void MainMenu::begin()
 			if ( Environment.screenWidth != 800 )
 			{
 			
-				if (prefs.renderer == 3)
+				if (g_userPreferences.renderer == 3)
 					gos_SetScreenMode(800,600,16,0,0,0,true,localFullScreen,0,localWindow,0,localRenderer);
 				else
-					gos_SetScreenMode(800,600,16,prefs.renderer,0,0,0,localFullScreen ,0,localWindow,0,localRenderer);
+					gos_SetScreenMode(800,600,16,g_userPreferences.renderer,0,0,0,localFullScreen ,0,localWindow,0,localRenderer);
 			}
 
 
@@ -460,7 +459,7 @@ void MainMenu::update()
 	if (!musicStarted)
 	{
 		musicStarted = true;
-		soundSystem->setMusicVolume( prefs.MusicVolume );
+		soundSystem->setMusicVolume( g_userPreferences.MusicVolume );
 		soundSystem->playDigitalMusic(tuneId);
 	}
 

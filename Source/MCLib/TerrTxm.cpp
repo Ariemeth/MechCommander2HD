@@ -46,7 +46,7 @@ long tileCacheReqs = 0;
 long tileCacheHits = 0;
 long tileCacheMiss = 0;
 
-long TERRAIN_TXM_SIZE = 64;
+long TERRAIN_TXM_SIZE = 64; // MCHD TODO: Move it or whatever - rendering option
 
 #define MAX_MASK_NUM		14
 
@@ -1126,12 +1126,12 @@ long TerrainTextures::createTransition (DWORD typeInfo, DWORD overlayInfo)
 				DWORD fileSize = txmFile.fileSize();
 				MemoryPtr fileRAM = (MemoryPtr)malloc(fileSize);
 				long result = txmFile.read(fileRAM,fileSize);
-				if (result != fileSize)
+				if (result != (long)fileSize)
 					STOP(("Read Error with Texture %s",testPath));
 
 				MemoryPtr lzBuffer = (MemoryPtr)malloc(mipSize * mipSize * sizeof(DWORD));
 				long bufferSize = LZDecomp(lzBuffer,fileRAM,fileSize);
-				if (bufferSize != (mipSize * mipSize * sizeof(DWORD)))
+				if (bufferSize != (long)(mipSize * mipSize * sizeof(DWORD)))
 					STOP(("Texture not correct size!"));
 
 				txmFile.close();

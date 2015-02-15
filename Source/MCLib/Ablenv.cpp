@@ -601,6 +601,7 @@ void ABLModule::read (ABLFile* moduleFile) {
 		char tempName[1024];
 		moduleFile->readString((unsigned char*)tempName);
 		long ignore = moduleFile->readLong();
+		(void)ignore;
 	}
 
 	char stateName[256];
@@ -706,7 +707,7 @@ char* ABLModule::getFileName (void) {
 void ABLModule::setName (char* _name) {
 
 	strncpy(name, _name, MAX_ABLMODULE_NAME);
-	name[MAX_ABLMODULE_NAME] = NULL;
+	name[MAX_ABLMODULE_NAME-1] = NULL;
 }
 
 //---------------------------------------------------------------------------
@@ -1080,12 +1081,11 @@ SymTableNodePtr ABLModule::findFunction (char* functionName, bool searchLibrarie
     {
 		for (long i = 0; i < ModuleRegistry[handle].numLibrariesUsed; i++) 
         {
-            char temp[1024];
-            memset(temp, 0, 1024 );
-            strncpy( temp, functionName, (strlen(functionName) > 1020) ? 1020 : strlen(functionName) );
+			char temp[1024] = {0};
+			int len = strlen(functionName);
+			strncpy(temp, functionName, (len > 1020) ? 1020 : len);
 
 			symbol = searchSymTable(_strlwr(temp), ModuleRegistry[ModuleRegistry[handle].librariesUsed[i]->handle].moduleIdPtr->defn.info.routine.localSymTable);
-
 			if (symbol)
 				break;
 		}
@@ -1306,7 +1306,7 @@ void buildRoutineList (SymTableNodePtr curSymbol, ModuleInfo* moduleInfo) {
 	if (curSymbol) {
 		buildRoutineList(curSymbol->left, moduleInfo);
 		if (curSymbol->defn.key == DFN_FUNCTION) {
-			if (moduleInfo->numRoutines < 1024) {
+			if (moduleInfo->numRoutines < 128) {
 				strcpy(moduleInfo->routineInfo[moduleInfo->numRoutines].name, curSymbol->name);
 				moduleInfo->routineInfo[moduleInfo->numRoutines].codeSegmentSize = curSymbol->defn.info.routine.codeSegmentSize;
 				moduleInfo->numRoutines++;
@@ -1449,6 +1449,7 @@ void ABLi_loadEnvironment (ABLFile* ablFile, bool malloc) {
 		}
 	}
 	long mark = ablFile->readLong();
+	(void)mark;
 	for (i = 0; i < eternalOffset; i++) {
 		StackItemPtr dataPtr = (StackItemPtr)stack + i;
 		if (EternalVariablesSizes[i] > 0)

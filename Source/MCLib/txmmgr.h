@@ -475,32 +475,13 @@ class MC_TextureManager
 						gvManager->getVertexBlock(masterTextureNodes[nodeId].vertexData->numVertices);
 					}
 	
-					if (vertices < (masterTextureNodes[nodeId].vertexData->vertices + masterTextureNodes[nodeId].vertexData->numVertices))
+					gos_VERTEX * verticesEnd = masterTextureNodes[nodeId].vertexData->vertices + masterTextureNodes[nodeId].vertexData->numVertices;
+					DWORD vertexCount = (DWORD)(verticesEnd - vertices);
+					if (vertexCount)
 					{
-						#if 0
-						if ((data[0].u > 64.0f) ||
-							(data[0].u < -64.0f) || 
-							(data[1].u > 64.0f) ||  
-							(data[1].u < -64.0f) ||  
-							(data[2].u > 64.0f) ||  
-							(data[2].u < -64.0f))
-						{
-							PAUSE(("Vertex U Out of range"));
-						}
-
-						if ((data[0].v > 64.0f) ||
-							(data[0].v < -64.0f) || 
-							(data[1].v > 64.0f) ||  
-							(data[1].v < -64.0f) ||  
-							(data[2].v > 64.0f) ||  
-							(data[2].v < -64.0f))
-						{
-							PAUSE(("Vertex V Out of range"));
-						}
-						#endif
-
-						memcpy(vertices,data,sizeof(gos_VERTEX) * 3);
-						vertices += 3;
+						DWORD numCopy = (vertexCount < 3) ? vertexCount : 3;
+						memcpy(vertices, data, sizeof(gos_VERTEX) * numCopy);
+						vertices += numCopy;
 					}
 					
 					masterTextureNodes[nodeId].vertexData->currentVertex = vertices;
@@ -525,33 +506,14 @@ class MC_TextureManager
 						masterTextureNodes[nodeId].vertexData2->vertices =
 						gvManager->getVertexBlock(masterTextureNodes[nodeId].vertexData2->numVertices);
 					}
-	
-					if (vertices < (masterTextureNodes[nodeId].vertexData2->vertices + masterTextureNodes[nodeId].vertexData2->numVertices))
-					{
-						#if 0
-						if ((data[0].u > 64.0f) ||
-							(data[0].u < -64.0f) || 
-							(data[1].u > 64.0f) ||  
-							(data[1].u < -64.0f) ||  
-							(data[2].u > 64.0f) ||  
-							(data[2].u < -64.0f))
-						{
-							PAUSE(("Vertex U Out of range"));
-						}
 
-						if ((data[0].v > 64.0f) ||
-							(data[0].v < -64.0f) || 
-							(data[1].v > 64.0f) ||  
-							(data[1].v < -64.0f) ||  
-							(data[2].v > 64.0f) ||  
-							(data[2].v < -64.0f))
-						{
-							PAUSE(("Vertex V Out of range"));
-						}
-						#endif
-						
-						memcpy(vertices,data,sizeof(gos_VERTEX) * 3);
-						vertices += 3;
+					gos_VERTEX * verticesEnd = masterTextureNodes[nodeId].vertexData->vertices + masterTextureNodes[nodeId].vertexData->numVertices;
+					DWORD vertexCount = (DWORD)(verticesEnd - vertices);
+					if (vertexCount)
+					{						
+						DWORD numCopy = (vertexCount < 3) ? vertexCount : 3;
+						memcpy(vertices, data, sizeof(gos_VERTEX) * numCopy);
+						vertices += numCopy;
 					}
 					
 					masterTextureNodes[nodeId].vertexData2->currentVertex = vertices;
@@ -576,33 +538,14 @@ class MC_TextureManager
 						masterTextureNodes[nodeId].vertexData3->vertices =
 						gvManager->getVertexBlock(masterTextureNodes[nodeId].vertexData3->numVertices);
 					}
-	
-					if (vertices < (masterTextureNodes[nodeId].vertexData3->vertices + masterTextureNodes[nodeId].vertexData3->numVertices))
-					{
-						#if 0
-						if ((data[0].u > 64.0f) ||
-							(data[0].u < -64.0f) || 
-							(data[1].u > 64.0f) ||  
-							(data[1].u < -64.0f) ||  
-							(data[2].u > 64.0f) ||  
-							(data[2].u < -64.0f))
-						{
-							PAUSE(("Vertex U Out of range"));
-						}
 
-						if ((data[0].v > 64.0f) ||
-							(data[0].v < -64.0f) || 
-							(data[1].v > 64.0f) ||  
-							(data[1].v < -64.0f) ||  
-							(data[2].v > 64.0f) ||  
-							(data[2].v < -64.0f))
-						{
-							PAUSE(("Vertex V Out of range"));
-						}
-						#endif
-						
-						memcpy(vertices,data,sizeof(gos_VERTEX) * 3);
-						vertices += 3;
+					gos_VERTEX * verticesEnd = masterTextureNodes[nodeId].vertexData->vertices + masterTextureNodes[nodeId].vertexData->numVertices;
+					DWORD vertexCount = (DWORD)(verticesEnd - vertices);
+					if (vertexCount)
+					{						
+						DWORD numCopy = (vertexCount < 3) ? vertexCount : 3;
+						memcpy(vertices, data, sizeof(gos_VERTEX) * numCopy);
+						vertices += numCopy;
 					}
 					
 					masterTextureNodes[nodeId].vertexData3->currentVertex = vertices;

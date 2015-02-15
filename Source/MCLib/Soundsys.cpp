@@ -20,20 +20,10 @@
 #endif
 
 //---------------------------------------------------------------------------
-// static globals
-bool useSound = TRUE;
-bool useMusic = TRUE;
-
-long DigitalMasterVolume = 0;
-long MusicVolume = 0;
-long sfxVolume = 0;
-long RadioVolume = 0;
-long BettyVolume = 0;
-
 #define MAX_SENSOR_UPDATE_TIME		(5.0f)	//Seconds
 
 float		SoundSystem::digitalMasterVolume = 0.99f;
-float		SoundSystem::SFXVolume = 0.6f;
+float		SoundSystem::sfxVolume = 0.6f;
 float		SoundSystem::musicVolume = 0.4f;
 float		SoundSystem::radioVolume = 0.6f;
 float		SoundSystem::bettyVolume = 0.7f;
@@ -57,166 +47,157 @@ void SoundSystem::destroy (void)
 //---------------------------------------------------------------------------
 long SoundSystem::init (char *soundFileName)
 {
-	if (useSound)
+	FullPathFileName soundName;
+	soundName.init(soundPath,soundFileName,".snd");
+		
+	FitIniFile soundFile;
+	long result = soundFile.open(soundName);
+	gosASSERT(result == NO_ERR);
+
+	result = soundFile.seekBlock("SoundSetup");
+	gosASSERT(result == NO_ERR);
+
+	result = soundFile.readIdULong("soundHeapSize",soundHeapSize);
+	gosASSERT(result == NO_ERR);
+		
+	result = soundFile.readIdFloat("MaxSoundDistance",maxSoundDistance);
+	gosASSERT(result == NO_ERR);
+
+	soundHeap = new UserHeap;
+	gosASSERT(soundHeap != NULL);
+
+	result = soundHeap->init(soundHeapSize,"SOUND");
+	gosASSERT(result == NO_ERR);
+
+	//-----------------------------------------------------------------------
+	// Startup the Sound packet File with the sound Blocks in it.
+	// This works by sound ID.  The sound ID is the packet number.
+	// When ordered to play a sample, the sound system check to see if that
+	// sound ID is in the cache.  If not, it is loaded.  If there is no more
+	// room, any idle sounds are flushed in order of priority.
+	soundDataFile = new PacketFile;
+	gosASSERT(soundDataFile != NULL);
+		
+	FullPathFileName soundDataPath;
+	soundDataPath.init(CDsoundPath,soundFileName,".pak");
+		
+	result = soundDataFile->open(soundDataPath);
+	gosASSERT(result == NO_ERR);
+		
+	bettyDataFile = new PacketFile;
+	gosASSERT(bettyDataFile != NULL);
+		
+	FullPathFileName bettyDataPath;
+	bettyDataPath.init(CDsoundPath,"Betty",".pak");
+		
+	result = bettyDataFile->open(bettyDataPath);
+	gosASSERT(result == NO_ERR);
+
+	numBettySamples = bettyDataFile->getNumPackets();
+		
+	supportDataFile = new PacketFile;
+	gosASSERT(supportDataFile != NULL);
+		
+	FullPathFileName supportDataPath;
+	supportDataPath.init(CDsoundPath,"support",".pak");
+		
+	result = supportDataFile->open(supportDataPath);
+	gosASSERT(result == NO_ERR);
+
+	numSupportSamples = supportDataFile->getNumPackets();
+ 	//-----------------------------------------------------------------------
+	// Load all of the sound Bite data.  Do not load actual packet unless
+	// preload field is TRUE.
+	result = soundFile.seekBlock("SoundBites");
+	gosASSERT(result == NO_ERR);
+
+	result = soundFile.readIdULong("numBites",numSoundBites);
+	gosASSERT(result == NO_ERR);
+
+	//-----------------------------------------------------------------------
+	// Preallocate SoundBites
+	sounds = (SoundBite *)soundHeap->Malloc(sizeof(SoundBite) * numSoundBites);
+	gosASSERT(sounds != NULL);
+	memset(sounds,0,sizeof(SoundBite) * numSoundBites);
+		
+	for (long i=0;i<(long)numSoundBites;i++)
 	{
-		FullPathFileName soundName;
-		soundName.init(soundPath,soundFileName,".snd");
-		
-		FitIniFile soundFile;
-		long result = soundFile.open(soundName);
-		gosASSERT(result == NO_ERR);
-
-		result = soundFile.seekBlock("SoundSetup");
-		gosASSERT(result == NO_ERR);
-
-		result = soundFile.readIdULong("soundHeapSize",soundHeapSize);
-		gosASSERT(result == NO_ERR);
-		
-		result = soundFile.readIdFloat("MaxSoundDistance",maxSoundDistance);
-		gosASSERT(result == NO_ERR);
-
-		soundHeap = new UserHeap;
-		gosASSERT(soundHeap != NULL);
-
-		result = soundHeap->init(soundHeapSize,"SOUND");
-		gosASSERT(result == NO_ERR);
-
-		//-----------------------------------------------------------------------
-		// Startup the Sound packet File with the sound Blocks in it.
-		// This works by sound ID.  The sound ID is the packet number.
-		// When ordered to play a sample, the sound system check to see if that
-		// sound ID is in the cache.  If not, it is loaded.  If there is no more
-		// room, any idle sounds are flushed in order of priority.
-		soundDataFile = new PacketFile;
-		gosASSERT(soundDataFile != NULL);
-		
-		FullPathFileName soundDataPath;
-		soundDataPath.init(CDsoundPath,soundFileName,".pak");
-		
-		result = soundDataFile->open(soundDataPath);
-		gosASSERT(result == NO_ERR);
-		
-		bettyDataFile = new PacketFile;
-		gosASSERT(bettyDataFile != NULL);
-		
-		FullPathFileName bettyDataPath;
-		bettyDataPath.init(CDsoundPath,"Betty",".pak");
-		
-		result = bettyDataFile->open(bettyDataPath);
-		gosASSERT(result == NO_ERR);
-
-		numBettySamples = bettyDataFile->getNumPackets();
-		
-		supportDataFile = new PacketFile;
-		gosASSERT(supportDataFile != NULL);
-		
-		FullPathFileName supportDataPath;
-		supportDataPath.init(CDsoundPath,"support",".pak");
-		
-		result = supportDataFile->open(supportDataPath);
-		gosASSERT(result == NO_ERR);
-
-		numSupportSamples = supportDataFile->getNumPackets();
- 		//-----------------------------------------------------------------------
-		// Load all of the sound Bite data.  Do not load actual packet unless
-		// preload field is TRUE.
-		result = soundFile.seekBlock("SoundBites");
-		gosASSERT(result == NO_ERR);
-
-		result = soundFile.readIdULong("numBites",numSoundBites);
-		gosASSERT(result == NO_ERR);
-
-		//-----------------------------------------------------------------------
-		// Preallocate SoundBites
-		sounds = (SoundBite *)soundHeap->Malloc(sizeof(SoundBite) * numSoundBites);
-		gosASSERT(sounds != NULL);
-		memset(sounds,0,sizeof(SoundBite) * numSoundBites);
-		
-		for (long i=0;i<(long)numSoundBites;i++)
-		{
-			char biteBlock[20];
-			sprintf(biteBlock,"SoundBite%d",i);
+		char biteBlock[20];
+		sprintf(biteBlock,"SoundBite%d",i);
 			
-			result = soundFile.seekBlock(biteBlock);
-			gosASSERT(result == NO_ERR);
-			
-			result = soundFile.readIdULong("priority",sounds[i].priority);
-			gosASSERT(result == NO_ERR);
-			
-			result = soundFile.readIdULong("cache",sounds[i].cacheStatus);
-			gosASSERT(result == NO_ERR);
-			
-			result = soundFile.readIdULong("soundId",sounds[i].soundId);
-			gosASSERT(result == NO_ERR);
-			
-			preloadSoundBite(i);		//ALWAYS Preload!!!!!!!!!!!!!
-
-			result = soundFile.readIdFloat("volume",sounds[i].volume);
-			gosASSERT(result == NO_ERR);
-		}		
-
-		//---------------------------------------------------------------
-		// Load the digital Music Data Strings
-		result = soundFile.seekBlock("DigitalMusic");
+		result = soundFile.seekBlock(biteBlock);
 		gosASSERT(result == NO_ERR);
 			
-		result = soundFile.readIdLong("NumDMS",numDMS);
-		gosASSERT(result == NO_ERR);
-
-		result = soundFile.readIdFloat("StreamFadeDownTime",streamFadeDownTime);
-		gosASSERT(result == NO_ERR);
-
-		result = soundFile.readIdULong("StreamBitDepth",digitalStreamBitDepth);
+		result = soundFile.readIdULong("priority",sounds[i].priority);
 		gosASSERT(result == NO_ERR);
 			
-		result = soundFile.readIdULong("StreamChannels",digitalStreamChannels);
+		result = soundFile.readIdULong("cache",sounds[i].cacheStatus);
+		gosASSERT(result == NO_ERR);
+			
+		result = soundFile.readIdULong("soundId",sounds[i].soundId);
+		gosASSERT(result == NO_ERR);
+			
+		preloadSoundBite(i);		//ALWAYS Preload!!!!!!!!!!!!!
+
+		result = soundFile.readIdFloat("volume",sounds[i].volume);
+		gosASSERT(result == NO_ERR);
+	}		
+
+	//---------------------------------------------------------------
+	// Load the digital Music Data Strings
+	result = soundFile.seekBlock("DigitalMusic");
+	gosASSERT(result == NO_ERR);
+			
+	result = soundFile.readIdLong("NumDMS",numDMS);
+	gosASSERT(result == NO_ERR);
+
+	result = soundFile.readIdFloat("StreamFadeDownTime",streamFadeDownTime);
+	gosASSERT(result == NO_ERR);
+
+	result = soundFile.readIdULong("StreamBitDepth",digitalStreamBitDepth);
+	gosASSERT(result == NO_ERR);
+			
+	result = soundFile.readIdULong("StreamChannels",digitalStreamChannels);
+	gosASSERT(result == NO_ERR);
+
+	digitalMusicIds = (char **)soundHeap->Malloc(sizeof(char *) * numDMS);
+	gosASSERT(digitalMusicIds != NULL);
+			
+	digitalMusicLoopFlags = (bool *)soundHeap->Malloc(sizeof(bool)*numDMS);
+	gosASSERT(digitalMusicLoopFlags != NULL);
+
+	digitalMusicVolume = (float *)soundHeap->Malloc(sizeof(float) * numDMS);
+			
+	for (i=0;i<numDMS;i++)
+	{
+		char digitalMSId[20];
+		sprintf(digitalMSId,"DMS%d",i);
+			
+		char digitalMSBId[20];
+		sprintf(digitalMSBId,"DMSLoop%d",i);
+
+		char digitalMSVId[25];
+		sprintf(digitalMSVId,"DMSVolume%d",i);
+			
+		digitalMusicIds[i] = (char *)soundHeap->Malloc(30);
+		result = soundFile.readIdString(digitalMSId,digitalMusicIds[i],29);
+		gosASSERT(result == NO_ERR);
+			
+		result = soundFile.readIdBoolean(digitalMSBId,digitalMusicLoopFlags[i]);
 		gosASSERT(result == NO_ERR);
 
-		digitalMusicIds = (char **)soundHeap->Malloc(sizeof(char *) * numDMS);
-		gosASSERT(digitalMusicIds != NULL);
-			
-		digitalMusicLoopFlags = (bool *)soundHeap->Malloc(sizeof(bool)*numDMS);
-		gosASSERT(digitalMusicLoopFlags != NULL);
-
-		digitalMusicVolume = (float *)soundHeap->Malloc(sizeof(float) * numDMS);
-			
-		for (i=0;i<numDMS;i++)
-		{
-			char digitalMSId[20];
-			sprintf(digitalMSId,"DMS%d",i);
-			
-			char digitalMSBId[20];
-			sprintf(digitalMSBId,"DMSLoop%d",i);
-
-			char digitalMSVId[25];
-			sprintf(digitalMSVId,"DMSVolume%d",i);
-			
-			digitalMusicIds[i] = (char *)soundHeap->Malloc(30);
-			result = soundFile.readIdString(digitalMSId,digitalMusicIds[i],29);
-			gosASSERT(result == NO_ERR);
-			
-			result = soundFile.readIdBoolean(digitalMSBId,digitalMusicLoopFlags[i]);
-			gosASSERT(result == NO_ERR);
-
-			result = soundFile.readIdFloat(digitalMSVId,digitalMusicVolume[i]);
-			if (result != NO_ERR)
-				digitalMusicVolume[i] = 1.0f;
-		}	
+		result = soundFile.readIdFloat(digitalMSVId,digitalMusicVolume[i]);
+		if (result != NO_ERR)
+			digitalMusicVolume[i] = 1.0f;
+	}	
 		
-		soundFile.close();
+	soundFile.close();
 		
-		for (i=0;i<MAX_DIGITAL_SAMPLES+4;i++)
-		{
-			gosAudio_AllocateChannelSliders(i,gosAudio_Volume | gosAudio_Panning);
-		}
+	for (i=0;i<MAX_DIGITAL_SAMPLES+4;i++)
+	{
+		gosAudio_AllocateChannelSliders(i,gosAudio_Volume | gosAudio_Panning);
 	}
 	
-	digitalMasterVolume = float(DigitalMasterVolume) / 256.0f;
-	SFXVolume = float(sfxVolume) / 256.0f;
-	musicVolume = float(MusicVolume) / 256.0f;
-	radioVolume = float(RadioVolume) / 256.0f;
-	bettyVolume = float(BettyVolume) / 256.0f;
-
 	stream1Id = stream2Id = 0;
 
 	return(NO_ERR);
@@ -393,7 +374,7 @@ void SoundSystem::preloadSoundBite (long soundId)
 //---------------------------------------------------------------------------
 void SoundSystem::update (void)
 {
-	if (useSound && (isRaining != oldRaining))
+	if (isRaining != oldRaining)
 	{
 		//Play the isRaining SoundEffect at the soundEffect level in a loop.
 		if (isRaining && (isRaining < numSoundBites))
@@ -402,7 +383,7 @@ void SoundSystem::update (void)
 	
 			gosAudio_SetChannelSlider(ourChannel,gosAudio_Panning, 0.0);
 			float vol = sounds[isRaining].volume;
-			gosAudio_SetChannelSlider(ourChannel,gosAudio_Volume, (digitalMasterVolume * vol * SFXVolume));
+			gosAudio_SetChannelSlider(ourChannel,gosAudio_Volume, (digitalMasterVolume * vol * sfxVolume));
 			channelSampleId[ourChannel] = isRaining;
 			channelInUse[ourChannel] = TRUE;
 				
@@ -426,7 +407,7 @@ void SoundSystem::update (void)
 		}
  	}
 	
-	if (useSound && bettySoundBite)
+	if (bettySoundBite)
 	{
 		//---------------------------------------------------
 		// Check if betty is done.  If so, whack the memory
@@ -439,7 +420,7 @@ void SoundSystem::update (void)
 		}
 	}
 	
-	if (useSound && supportSoundBite)
+	if (supportSoundBite)
 	{
 		//---------------------------------------------------
 		// Check if betty is done.  If so, whack the memory
@@ -452,7 +433,7 @@ void SoundSystem::update (void)
 		}
 	}
 	
-	if (useSound && stream3Handle)
+	if (stream3Handle)
 	{
 		gosAudio_PlayMode sampleStatus = gosAudio_GetChannelPlayMode(STREAM3CHANNEL);
 		if (!stream3Active && (sampleStatus != gosAudio_PlayOnce))
@@ -490,7 +471,7 @@ void SoundSystem::update (void)
 		gosAudio_SetChannelPlayMode( STREAM2CHANNEL, digitalMusicLoopFlags[currentMusicId] ? gosAudio_Loop : gosAudio_PlayOnce);
 	}
 
- 	if (useMusic && (stream1Active || stream2Active))
+ 	if (stream1Active || stream2Active)
 	{
 		if (stream1Active && (stream1Time != 0.0))
 		{
@@ -498,7 +479,7 @@ void SoundSystem::update (void)
 			{
 				//------------------------------------------
 				// We are fading Down.
-				stream1Time += frameLength;
+				stream1Time += g_deltaTime;
 				if (stream1Time >= 0.0)
 				{
 					stream1Time = 0.0;
@@ -523,7 +504,7 @@ void SoundSystem::update (void)
 			{
 				//------------------------------------------
 				// We are fading Up.
-				stream1Time -= frameLength;
+				stream1Time -= g_deltaTime;
 				if (stream1Time <= 0.0)
 				{
 					stream1Time = 0.0;
@@ -550,7 +531,7 @@ void SoundSystem::update (void)
 			{
 				//------------------------------------------
 				// We are fading Down.
-				stream2Time += frameLength;
+				stream2Time += g_deltaTime;
 				if (stream2Time >= 0.0)
 				{
 					stream2Time = 0.0;
@@ -576,7 +557,7 @@ void SoundSystem::update (void)
 			{
 				//------------------------------------------
 				// We are fading Up.
-				stream2Time -= frameLength;
+				stream2Time -= g_deltaTime;
 				if (stream2Time <= 0.0)
 				{
 					stream2Time = 0.0;
@@ -621,42 +602,39 @@ void SoundSystem::update (void)
 			currentMusicId = -1;
 	}
 
-	if (useSound)
+	//-----------------------------------------------
+	// Check all samples to see if one should end.
+	for (long i=0;i<MAX_DIGITAL_SAMPLES;i++)
 	{
-		//-----------------------------------------------
-		// Check all samples to see if one should end.
-		for (long i=0;i<MAX_DIGITAL_SAMPLES;i++)
+		gosAudio_PlayMode sampleStatus = gosAudio_GetChannelPlayMode(i);
+		if (sampleStatus == gosAudio_PlayOnce)
 		{
-			gosAudio_PlayMode sampleStatus = gosAudio_GetChannelPlayMode(i);
-			if (sampleStatus == gosAudio_PlayOnce)
+			if (fadeDown[i])
 			{
-				if (fadeDown[i])
-				{
-					float vol;
-					gosAudio_GetChannelSlider(i, gosAudio_Volume, &vol);
-					if (vol <= 0.1f)
-						vol = 0.1f;
+				float vol;
+				gosAudio_GetChannelSlider(i, gosAudio_Volume, &vol);
+				if (vol <= 0.1f)
+					vol = 0.1f;
 
-					gosAudio_SetChannelSlider(i, gosAudio_Volume, vol-0.1f);
-					gosAudio_GetChannelSlider(i, gosAudio_Volume, &vol);
-					if (vol == 0.0f)
-					{
-						fadeDown[i] = FALSE;
-						gosAudio_SetChannelPlayMode(i, gosAudio_Stop);
-					}
+				gosAudio_SetChannelSlider(i, gosAudio_Volume, vol-0.1f);
+				gosAudio_GetChannelSlider(i, gosAudio_Volume, &vol);
+				if (vol == 0.0f)
+				{
+					fadeDown[i] = FALSE;
+					gosAudio_SetChannelPlayMode(i, gosAudio_Stop);
 				}
 			}
-			else
-			{
-				fadeDown[i] = FALSE;
-				channelSampleId[i] = -1;
-				channelInUse[i] = FALSE;
-			}
+		}
+		else
+		{
+			fadeDown[i] = FALSE;
+			channelSampleId[i] = -1;
+			channelInUse[i] = FALSE;
 		}
 	}
 
-	if (!gamePaused)
-		sensorBeepUpdateTime += frameLength;
+	if (!g_gamePaused)
+		sensorBeepUpdateTime += g_deltaTime;
 }
 
 //---------------------------------------------------------------------------
@@ -664,100 +642,94 @@ long SoundSystem::playDigitalMusic (long musicId)
 {
 	//-------------------------------------------------------------------
 	// Make sure we have a real music filename.
-	if (useMusic)
+	if ((musicId >= 0) && (musicId < numDMS) && (strncmp(digitalMusicIds[musicId],"NONE",4) != 0))
 	{
-		if ((musicId >= 0) && (musicId < numDMS) && (strncmp(digitalMusicIds[musicId],"NONE",4) != 0))
-		{
-			if (musicId == currentMusicId)
-				return(-1);
+		if (musicId == currentMusicId)
+			return(-1);
 				
-			if (useSound)
+		//---------------------------------------------------------------------------------------------
+		// Just start tune.  No fade necessary.  Set fadeTime to 0.0 to tell update to leave it alone.
+		// Use Stream1 by default.
+		FullPathFileName digitalStream;
+		digitalStream.init(soundPath,digitalMusicIds[musicId],".wav");
+
+		//---------------------------------------------
+		// Gotta check if music file is there
+		// new sound system can't handle it if its not.
+		if (fileExists(digitalStream))
+		{
+			if (!stream1Active && !stream2Active)
 			{
-				//---------------------------------------------------------------------------------------------
-				// Just start tune.  No fade necessary.  Set fadeTime to 0.0 to tell update to leave it alone.
-				// Use Stream1 by default.
-				FullPathFileName digitalStream;
-				digitalStream.init(soundPath,digitalMusicIds[musicId],".wav");
-
-				//---------------------------------------------
-				// Gotta check if music file is there
-				// new sound system can't handle it if its not.
-				if (fileExists(digitalStream))
+				if (stream1Handle)
 				{
-					if (!stream1Active && !stream2Active)
-					{
-						if (stream1Handle)
-						{
-							gosAudio_DestroyResource(&stream1Handle);
-							stream1Handle = 0;
-						}
-							
-						gosAudio_CreateResource(&stream1Handle, gosAudio_StreamedFile, (const char *) digitalStream);
-						
-						stream1Time = streamFadeDownTime;
-						
-						gosAudio_SetChannelSlider( STREAM1CHANNEL, gosAudio_Volume, 0.0f );
-						gosAudio_SetChannelSlider( STREAM1CHANNEL, gosAudio_Panning,0.0f );
-						gosAudio_AssignResourceToChannel( STREAM1CHANNEL, stream1Handle );
-
-						currentMusicId = musicId;
-						stream1Id = musicId;
-					}
-					else if (!stream2Active)
-					{
-						if (stream2Handle)
-						{
-							gosAudio_DestroyResource( &stream2Handle );
-							stream2Handle = 0;
-						}
-							
-						gosAudio_CreateResource( &stream2Handle, gosAudio_StreamedFile, (const char *) digitalStream );
-						
-						//Need to check if stream1 ever got all the way faded up!
-						if (stream1Time > 0.0f)
-							stream1Time = -stream1Time;
-						else
-							stream1Time = -streamFadeDownTime;
-
-						stream2Time = streamFadeDownTime;
-						
-						gosAudio_SetChannelSlider( STREAM2CHANNEL, gosAudio_Volume, 0.0f );
-						gosAudio_SetChannelSlider( STREAM2CHANNEL, gosAudio_Panning,0.0f );
-						gosAudio_AssignResourceToChannel( STREAM2CHANNEL, stream2Handle );
-							
-						currentMusicId = musicId;
-						stream2Id = musicId;
-					}
-					else if (!stream1Active)
-					{
-						if (stream1Handle)
-						{
-							gosAudio_DestroyResource(&stream1Handle);
-							stream1Handle = 0;
-						}
-							
-						gosAudio_CreateResource(&stream1Handle, gosAudio_StreamedFile, (const char *) digitalStream);
-						
-						stream1Time = streamFadeDownTime;
-
-						//Need to check if stream2 ever got all the way faded up!
-						if (stream2Time > 0.0f)
-							stream2Time = -stream2Time;
-						else
-							stream2Time = -streamFadeDownTime;
-
-						gosAudio_SetChannelSlider( STREAM1CHANNEL, gosAudio_Volume, 0.0f );
-						gosAudio_SetChannelSlider( STREAM1CHANNEL, gosAudio_Panning,0.0f );
-						gosAudio_AssignResourceToChannel( STREAM1CHANNEL, stream1Handle );
-							
-						currentMusicId = musicId;
-						stream1Id = musicId;
-					}
-					else
-					{
-						return(-1);
-					}
+					gosAudio_DestroyResource(&stream1Handle);
+					stream1Handle = 0;
 				}
+							
+				gosAudio_CreateResource(&stream1Handle, gosAudio_StreamedFile, (const char *) digitalStream);
+						
+				stream1Time = streamFadeDownTime;
+						
+				gosAudio_SetChannelSlider( STREAM1CHANNEL, gosAudio_Volume, 0.0f );
+				gosAudio_SetChannelSlider( STREAM1CHANNEL, gosAudio_Panning,0.0f );
+				gosAudio_AssignResourceToChannel( STREAM1CHANNEL, stream1Handle );
+
+				currentMusicId = musicId;
+				stream1Id = musicId;
+			}
+			else if (!stream2Active)
+			{
+				if (stream2Handle)
+				{
+					gosAudio_DestroyResource( &stream2Handle );
+					stream2Handle = 0;
+				}
+							
+				gosAudio_CreateResource( &stream2Handle, gosAudio_StreamedFile, (const char *) digitalStream );
+						
+				//Need to check if stream1 ever got all the way faded up!
+				if (stream1Time > 0.0f)
+					stream1Time = -stream1Time;
+				else
+					stream1Time = -streamFadeDownTime;
+
+				stream2Time = streamFadeDownTime;
+						
+				gosAudio_SetChannelSlider( STREAM2CHANNEL, gosAudio_Volume, 0.0f );
+				gosAudio_SetChannelSlider( STREAM2CHANNEL, gosAudio_Panning,0.0f );
+				gosAudio_AssignResourceToChannel( STREAM2CHANNEL, stream2Handle );
+							
+				currentMusicId = musicId;
+				stream2Id = musicId;
+			}
+			else if (!stream1Active)
+			{
+				if (stream1Handle)
+				{
+					gosAudio_DestroyResource(&stream1Handle);
+					stream1Handle = 0;
+				}
+							
+				gosAudio_CreateResource(&stream1Handle, gosAudio_StreamedFile, (const char *) digitalStream);
+						
+				stream1Time = streamFadeDownTime;
+
+				//Need to check if stream2 ever got all the way faded up!
+				if (stream2Time > 0.0f)
+					stream2Time = -stream2Time;
+				else
+					stream2Time = -streamFadeDownTime;
+
+				gosAudio_SetChannelSlider( STREAM1CHANNEL, gosAudio_Volume, 0.0f );
+				gosAudio_SetChannelSlider( STREAM1CHANNEL, gosAudio_Panning,0.0f );
+				gosAudio_AssignResourceToChannel( STREAM1CHANNEL, stream1Handle );
+							
+				currentMusicId = musicId;
+				stream1Id = musicId;
+			}
+			else
+			{
+				return(-1);
 			}
 		}
 	}
@@ -770,42 +742,39 @@ long SoundSystem::playDigitalStream (const char *streamName)
 {
 	//-------------------------------------------------------------------
 	// Make sure we have a real music filename.
-	if (useSound)
+	char actualName[1024];
+	_splitpath(streamName,NULL,NULL,actualName,NULL);
+
+	//---------------------------------------------------------------------------------------------
+	// Just start tune.  No fade necessary.  Set fadeTime to 0.0 to tell update to leave it alone.
+	// Use Stream1 by default.
+	FullPathFileName digitalStream;
+	digitalStream.init(soundPath,actualName,".wav");
+
+	//---------------------------------------------
+	// Gotta check if music file is there
+	// new sound system can't handle it if its not.
+	if (fileExists(digitalStream))
 	{
-		char actualName[1024];
-		_splitpath(streamName,NULL,NULL,actualName,NULL);
-
-		//---------------------------------------------------------------------------------------------
-		// Just start tune.  No fade necessary.  Set fadeTime to 0.0 to tell update to leave it alone.
-		// Use Stream1 by default.
-		FullPathFileName digitalStream;
-		digitalStream.init(soundPath,actualName,".wav");
-
-		//---------------------------------------------
-		// Gotta check if music file is there
-		// new sound system can't handle it if its not.
-		if (fileExists(digitalStream))
+		if (!stream3Active)
 		{
-			if (!stream3Active)
+			if (stream3Handle)
 			{
-				if (stream3Handle)
-				{
-					gosAudio_DestroyResource(&stream3Handle);
-					stream3Handle = 0;
-				}
+				gosAudio_DestroyResource(&stream3Handle);
+				stream3Handle = 0;
+			}
 						
-				gosAudio_CreateResource(&stream3Handle, gosAudio_StreamedFile, (const char *) digitalStream);
+			gosAudio_CreateResource(&stream3Handle, gosAudio_StreamedFile, (const char *) digitalStream);
 				
-				stream3Active = false;
+			stream3Active = false;
 				
-				gosAudio_AssignResourceToChannel( STREAM3CHANNEL, stream3Handle );
-				gosAudio_SetChannelSlider( STREAM3CHANNEL,gosAudio_Volume, digitalMasterVolume * bettyVolume );
-				gosAudio_SetChannelSlider( STREAM3CHANNEL, gosAudio_Panning,0.0f );
-			}
-			else
-			{
-				return(-1);
-			}
+			gosAudio_AssignResourceToChannel( STREAM3CHANNEL, stream3Handle );
+			gosAudio_SetChannelSlider( STREAM3CHANNEL,gosAudio_Volume, digitalMasterVolume * bettyVolume );
+			gosAudio_SetChannelSlider( STREAM3CHANNEL, gosAudio_Panning,0.0f );
+		}
+		else
+		{
+			return(-1);
 		}
 	}
 
@@ -815,7 +784,7 @@ long SoundSystem::playDigitalStream (const char *streamName)
 //---------------------------------------------------------------------------
 long SoundSystem::playBettySample (unsigned long bettySampleId)
 {
-	if (useSound && (bettySoundBite == NULL))	//Playing Betty takes precedence
+	if (bettySoundBite == NULL)	//Playing Betty takes precedence
 	{
 
 		if (bettySampleId >= numBettySamples)
@@ -874,7 +843,7 @@ long SoundSystem::playBettySample (unsigned long bettySampleId)
 //---------------------------------------------------------------------------
 long SoundSystem::playSupportSample (unsigned long supportSampleId, char* fileName)
 {
-	if (useSound && (supportSoundBite == NULL))		//Playing Support takes precedence
+	if (supportSoundBite == NULL)		//Playing Support takes precedence
 	{
 		if (!fileName)
 		{
@@ -1005,7 +974,7 @@ long SoundSystem::findOpenChannel (long start, long end)
 //---------------------------------------------------------------------------
 long SoundSystem::playDigitalSample (unsigned long sampleId, Stuff::Vector3D pos, bool allowDupes)
 {
-	if (useSound && allowDupes || (!isPlayingSample(sampleId) && !allowDupes))
+	if (allowDupes || (!isPlayingSample(sampleId) && !allowDupes))
 	{
 		if (sampleId >= numSoundBites)
 			return(-1);
@@ -1043,7 +1012,7 @@ long SoundSystem::playDigitalSample (unsigned long sampleId, Stuff::Vector3D pos
 				return -1;
 
 			gosAudio_SetChannelSlider(ourChannel,gosAudio_Panning, panVolume);
-			gosAudio_SetChannelSlider(ourChannel,gosAudio_Volume, (digitalMasterVolume * vol * SFXVolume)) ;
+			gosAudio_SetChannelSlider(ourChannel, gosAudio_Volume, (digitalMasterVolume * vol * sfxVolume));
 			channelSampleId[ourChannel] = sampleId;
 			channelInUse[ourChannel] = TRUE;
 				
@@ -1063,44 +1032,38 @@ long SoundSystem::playDigitalSample (unsigned long sampleId, Stuff::Vector3D pos
 //---------------------------------------------------------------------------
 void SoundSystem::stopDigitalSample (unsigned long sampleHandleNumber)
 {
-	if (useSound)
+	gosAudio_PlayMode
+		sampleStatus = gosAudio_GetChannelPlayMode(sampleHandleNumber);
+	if ( sampleStatus == gosAudio_PlayOnce || sampleStatus == gosAudio_Loop )
 	{
-		gosAudio_PlayMode
-			sampleStatus = gosAudio_GetChannelPlayMode(sampleHandleNumber);
-		if ( sampleStatus == gosAudio_PlayOnce || sampleStatus == gosAudio_Loop )
-		{
-			fadeDown[sampleHandleNumber] = TRUE;
-		}
+		fadeDown[sampleHandleNumber] = TRUE;
 	}
 }
 
 //---------------------------------------------------------------------------
 void SoundSystem::stopDigitalMusic (void)
 {
-	if (useSound && useMusic)
+	if (stream1Active && stream1Handle)
 	{
-		if (stream1Active && stream1Handle)
-		{
-			if (stream1Handle) 
-				gosAudio_DestroyResource(&stream1Handle);
+		if (stream1Handle) 
+			gosAudio_DestroyResource(&stream1Handle);
 				
-			stream1Handle = NULL;
-			stream1Time = 0.0;
-			stream1Active = FALSE;
-		}
-		
-		if (stream2Active && stream2Handle)
-		{
-			if (stream2Handle) 
-				gosAudio_DestroyResource(&stream2Handle);
-				
-			stream2Handle = NULL;
-		 	stream2Time = 0.0;
-		 	stream2Active = FALSE;
-		}
-
-		currentMusicId = -1;
+		stream1Handle = NULL;
+		stream1Time = 0.0;
+		stream1Active = FALSE;
 	}
+		
+	if (stream2Active && stream2Handle)
+	{
+		if (stream2Handle) 
+			gosAudio_DestroyResource(&stream2Handle);
+				
+		stream2Handle = NULL;
+		stream2Time = 0.0;
+		stream2Active = FALSE;
+	}
+
+	currentMusicId = -1;
 }	
 
 //---------------------------------------------------------------------------
@@ -1133,117 +1096,69 @@ void SoundSystem::stopBettySample (void)
 //---------------------------------------------------------------------------
 void SoundSystem::setDigitalMasterVolume (byte volume)
 {
-	if (useSound)
-	{
-		DigitalMasterVolume = volume;
-		digitalMasterVolume = float(DigitalMasterVolume) / 256.0f;
-	}
+	digitalMasterVolume = volume;
 }
 
 //---------------------------------------------------------------------------
 long SoundSystem::getDigitalMasterVolume (void)
 {
-	if (useSound)
-	{
-		return DigitalMasterVolume;
-	}
-	
-	return(0);
+	return digitalMasterVolume;
 }	
 
 //---------------------------------------------------------------------------
 void SoundSystem::setSFXVolume(unsigned char volume)
 {
-	if (useSound)
-	{
-		sfxVolume = volume;
-		SFXVolume = float(sfxVolume) / 256.0f;
-	}
+	sfxVolume = volume;
 }
 
 //---------------------------------------------------------------------------
 unsigned char SoundSystem::getSFXVolume(void)
 {
-	if (useSound)
-	{
-		return sfxVolume;
-	}
-	
-	return(0);
+	return sfxVolume;
 }	
 
 //---------------------------------------------------------------------------
 void SoundSystem::setRadioVolume(unsigned char volume)
 {
-	if (useSound)
-	{
-		RadioVolume = volume;
-		radioVolume = float(RadioVolume) / 256.0f;
-	}
+	radioVolume = volume;
 }
 
 //---------------------------------------------------------------------------
 unsigned char SoundSystem::getRadioVolume(void)
 {
-	if (useSound)
-	{
-		return RadioVolume;
-	}
-	
-	return(0);
+	return radioVolume;
 }	
 
 //---------------------------------------------------------------------------
 void SoundSystem::setMusicVolume(unsigned char volume)
 {
-	if (useSound)
+	musicVolume = volume;
+	if (stream1Active && stream1Handle)
 	{
-		MusicVolume = volume;
-		musicVolume = float(MusicVolume) / 256.0f;
-		if (useMusic)
-		{
-			if (stream1Active && stream1Handle)
-			{
-				gosAudio_SetChannelSlider( STREAM1CHANNEL,gosAudio_Volume, (digitalMasterVolume * musicVolume) );
-			}
-			if (stream2Active && stream2Handle)
-			{
-				gosAudio_SetChannelSlider( STREAM2CHANNEL,gosAudio_Volume, (digitalMasterVolume * musicVolume) );
-			}
-		}
+		gosAudio_SetChannelSlider( STREAM1CHANNEL,gosAudio_Volume, (digitalMasterVolume * musicVolume) );
+	}
+	if (stream2Active && stream2Handle)
+	{
+		gosAudio_SetChannelSlider( STREAM2CHANNEL,gosAudio_Volume, (digitalMasterVolume * musicVolume) );
 	}
 }
 
 //---------------------------------------------------------------------------
 unsigned char SoundSystem::getMusicVolume(void)
 {
-	if (useSound)
-	{
-		return MusicVolume;
-	}
-	
-	return(0);
+	return musicVolume;
 }	
 
 //---------------------------------------------------------------------------
 void SoundSystem::setBettyVolume(unsigned char volume)
 {
-	if (useSound)
-	{
-		BettyVolume = volume;
-		bettyVolume = float(BettyVolume) / 256.0f;
-	}
+	bettyVolume = volume;
 }
 
 //---------------------------------------------------------------------------
 unsigned char SoundSystem::getBettyVolume(void)
 {
-	if (useSound)
-	{
-		return BettyVolume;
-	}
-	
-	return(0);
+	return bettyVolume;
 }	
 
 //---------------------------------------------------------------------------

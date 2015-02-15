@@ -546,31 +546,6 @@ static const float bhatx = -0.5; //cos(240/*degrees*/ * DEGREES_TO_RADS);
 static const float bhaty = -0.86602540378443864676372317075294f; //sin(240/*degrees*/ * DEGREES_TO_RADS);
 static const float two_pi = 6.283185307179586476925286766559f;
 
-/* all params range from 0.0 to 1.0 */
-static void rgb2hsi(float r, float g, float b, float &hue, float &saturation, float &intensity)
-{
-	intensity = (r + g + b) / 3.0;
-
-	if (0.0 >= intensity) {
-		saturation = 0.0;
-		hue = 0.0;
-		return;
-	}
-
-	float min = r;
-	if (g < min) { min = g; }
-	if (b < min) { min = b; }
-
-	saturation = 1.0 - (min / intensity);
-
-	float cx = r * rhatx + g * ghatx + b * bhatx;
-	float cy = r * rhaty + g * ghaty + b * bhaty;
-
-	hue = atan2(cy, cx);
-	if (0.0 > hue) { hue += two_pi; }
-	hue /= two_pi;
-}
-
 static void hsi2rgb(float hue, float saturation, float intensity, float &r, float &g, float &b)
 {
 	float thue = hue;

@@ -68,9 +68,8 @@ extern bool		useFog;
 extern long 	mechRGBLookup[];
 extern long 	mechRGBLookup2[];
 
-extern long		ObjectTextureSize;
+extern long		g_objectTextureSize;
 
-extern bool reloadBounds;
 //-----------------------------------------------------------------------------
 // class GenericAppearanceType
 void GenericAppearanceType::init (char * fileName)
@@ -288,7 +287,7 @@ void GenericAppearance::init (AppearanceTypePtr tree, GameObjectPtr obj)
 				genShape->GetTextureName(i,txmName,256);
 
 			char texturePath[1024];
-			sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+			sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 	
 			FullPathFileName textureName;
 			textureName.init(texturePath,txmName,"");
@@ -396,7 +395,7 @@ void GenericAppearance::setObjStatus (long oStatus)
 					genShape->GetTextureName(i,txmName,256);
 					
 					char texturePath[1024];
-					sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+					sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 			
 					FullPathFileName textureName;
 					textureName.init(texturePath,txmName,"");
@@ -514,7 +513,7 @@ void GenericAppearance::setSkyNumber (long skyNum)
 			genShape->GetTextureName(i,txmName,256);
 
 		char texturePath[1024];
-		sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+		sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 
 		//Make txmName into a SKY%02d texture and load it!!
 		skyNumber = skyNum;
@@ -589,14 +588,14 @@ bool GenericAppearance::recalcBounds (void)
 	
 			Distance.Subtract(objPosition,eyePosition);
 			float eyeDistance = Distance.GetApproximateLength();
-			if (eyeDistance > Camera::MaxClipDistance)
+			if (eyeDistance > Camera::maxClipDistance)
 			{
 				hazeFactor = 1.0f;
 				inView = false;
 			}
-			else if (eyeDistance > Camera::MinHazeDistance)
+			else if (eyeDistance > Camera::minHazeDistance)
 			{
-				Camera::HazeFactor = (eyeDistance - Camera::MinHazeDistance) * Camera::DistanceFactor;
+				Camera::HazeFactor = (eyeDistance - Camera::minHazeDistance) * Camera::DistanceFactor;
 				inView = true;
 			}
 			else
@@ -636,9 +635,6 @@ bool GenericAppearance::recalcBounds (void)
 		
 		if (inView)
 		{
-			if (reloadBounds)
-				appearType->reinit();
-
 			appearType->boundsLowerRightY = (OBBRadius * eye->getTiltFactor() * 2.0f);
 			
 			if (screenPos.z > 0.999999f)
@@ -1086,7 +1082,7 @@ long GenericAppearance::update (bool animate)
 	{
 		//--------------------------------------------------------
 		// Make sure animation runs no faster than bdFrameRate fps.
-		float frameInc = genFrameRate * frameLength;
+		float frameInc = genFrameRate * g_deltaTime;
 		
 		//---------------------------------------
 		// Increment Frames -- Everything else!

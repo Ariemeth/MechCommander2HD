@@ -299,10 +299,10 @@ void GameSoundSystem::update (void)
 	if (GeneralAlarm && (generalAlarmTimer < ALARM_TIME))
 	{
 		playDigitalSample(BUZZER1);
-		generalAlarmTimer += frameLength;
+		generalAlarmTimer += g_deltaTime;
 	}
 
-	if (useSound && currentMessage && (gosAudio_GetChannelPlayMode(RADIO_CHANNEL) != gosAudio_PlayOnce))
+	if (currentMessage && (gosAudio_GetChannelPlayMode(RADIO_CHANNEL) != gosAudio_PlayOnce))
 	{
 		if (radioHandle)
 		{
@@ -458,7 +458,7 @@ void GameSoundSystem::update (void)
 		}
 	}
 		
-	if (useSound && messagesInQueue && wholeMsgDone)
+	if (messagesInQueue && wholeMsgDone)
 	{
 		if (radioHandle)
 		{

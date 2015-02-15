@@ -1,7 +1,7 @@
 #ifndef ELIST_H
 #define ELIST_H
 
-// MCHD - MA - 02/02/2015 - Lightly optimized a few things, fixed a few bugs, 
+// MCHD CHANGE (02/02/2015): Lightly optimized a few things, fixed a few bugs, 
 // disabled warning for placement new, and deleted useless comments.
 #pragma warning( disable : 4211 )
 
@@ -1291,7 +1291,7 @@ ELIST_TPL_DEF inline bool EList<ELIST_TPL_ARG>::AddFirstElement(T_ARG New_Elemen
 // Note: m_pNext and m_pPrev are initialized to NULL
 ELIST_TPL_DEF inline typename EList<ELIST_TPL_ARG>::ENode* EList<ELIST_TPL_ARG>::CreateElement(T_ARG New_Element)
 {
-	ENode*	pNode = (ENode*)systemHeap->Malloc( sizeof( ENode ) );	// Allocate memory for the node and data
+	ENode*	pNode = (ENode*)g_systemHeap->Malloc( sizeof( ENode ) );	// Allocate memory for the node and data
 	gosASSERT(pNode);
 	if (!pNode)
 	{
@@ -1310,7 +1310,7 @@ ELIST_TPL_DEF inline void EList<ELIST_TPL_ARG>::KillElement(ENode* pElement)
 {
 	gosASSERT(pElement);
 	pElement->m_Data.~T();			// Destruct the data component of the element
-	systemHeap->Free(pElement);					// Now free the element		
+	g_systemHeap->Free(pElement);					// Now free the element		
 }
 	
 //-------------------------------------------------------------------------------------------------

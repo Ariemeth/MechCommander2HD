@@ -779,7 +779,7 @@ void MechIcon::doDraw( char* newDamage, char* oldDamage, unsigned long handle, u
 {
 	int i = 0; 
 	int maxToCheck = 8;
-	if ( index == backDamageIndex )
+	if ( (int)index == backDamageIndex )
 		i = 7;
 
 	for ( ; i < maxToCheck; ++i )
@@ -999,7 +999,7 @@ void ForceGroupIcon::render()
 		if ( unit->getPilot()->getMessagePlaying() )
 		{
 			long color = 0xffffff00;
-			msgPlayTime += frameLength;
+			msgPlayTime += g_deltaTime;
 			if ( msgPlayTime > .25 )
 				msgPlayTime = 0;
 			if ( msgPlayTime > .125 )
@@ -1439,7 +1439,7 @@ void ForceGroupIcon::drawDeathEffect()
 {
 	unit->setSelected( 0 );
 	bool bFinished = true;
-	deathAnimationTime += frameLength;
+	deathAnimationTime += g_deltaTime;
 	for ( int i = 0; i < NUM_DEATH_INFOS - 1; i++ )
 	{
 		if ( animationInfos[i].time < deathAnimationTime &&

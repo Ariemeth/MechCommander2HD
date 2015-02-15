@@ -311,7 +311,7 @@ class GameObject {
 		ObjectClass					objectClass;		//What kind of object is this.
 		GameObjectHandle			handle;				//Used to reference into master obj table
 		long						partId;				//What is my unique part number.
-		unsigned long				watchID;			//Used to reference in the game engine
+		long						watchID;			//Used to reference in the game engine
 
 		GameObjectTypeHandle		typeHandle;			//Who made me?
 		Stuff::Vector3D				position;			//Where am I?
@@ -409,7 +409,7 @@ class GameObject {
 			return(handle);
 		}
 
-		unsigned long getWatchID (bool assign = true);
+		long getWatchID (bool assign = true);
 
 		virtual char* getName (void) {
 			return(NULL);

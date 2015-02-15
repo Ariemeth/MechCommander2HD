@@ -41,7 +41,6 @@
 #include <gameos.hpp>
 
 //---------------------------------------------------------------------------
-extern bool hasGuardBand;
 extern MidLevelRenderer::MLRClipper * theClipper;
 extern bool drawOldWay;
 extern float BaseHeadShotElevation;
@@ -345,7 +344,7 @@ TG_LightPtr WeaponBoltType::getLight (void)
 
 	if (lightSource)
 	{
-		pointLight = (TG_LightPtr)systemHeap->Malloc(sizeof(TG_Light));
+		pointLight = (TG_LightPtr)g_systemHeap->Malloc(sizeof(TG_Light));
 		pointLight->init(TG_LIGHT_POINT);
 
 		pointLight->SetaRGB(lightRGB);
@@ -523,7 +522,7 @@ long WeaponBolt::update (void)
 	//Update beamDuration
 	if (((WeaponBoltTypePtr)getObjectType())->isBeam)
 	{
-		timeLeft -= frameLength;
+		timeLeft -= g_deltaTime;
 		if (timeLeft >= 0.0f)
 		{
 			gosTextureHandle = mcTextureManager->get_gosTextureHandle(mcTextureHandle);
@@ -533,7 +532,7 @@ long WeaponBolt::update (void)
    			mcTextureManager->addTriangle(mcTextureHandle,MC2_ISEFFECTS|MC2_DRAWONEIN); 
 		}
 
-		startUV += ((WeaponBoltTypePtr)getObjectType())->uvAnimRate * frameLength;
+		startUV += ((WeaponBoltTypePtr)getObjectType())->uvAnimRate * g_deltaTime;
 	}
 	else if (!gosEffect && !((WeaponBoltTypePtr)getObjectType())->isBeam)
 	{
@@ -572,7 +571,7 @@ long WeaponBolt::update (void)
 				
 	Stuff::Vector3D laserVelocity;
 	float velMag = ((WeaponBoltTypePtr)getObjectType())->velocity;
-	velMag *= frameLength;
+	velMag *= g_deltaTime;
 		
 	laserVelocity.Subtract(targetPos,ownerPosition);
 	float distance = laserVelocity.x * laserVelocity.x + laserVelocity.y * laserVelocity.y;
@@ -586,7 +585,7 @@ long WeaponBolt::update (void)
 		if ( goalHeight > 0.0f )
 		{
 			float accel = -((WeaponBoltTypePtr)getObjectType())->arcHeight * 10.0f;
-			goalHeight += accel * frameLength;
+			goalHeight += accel * g_deltaTime;
 			if (goalHeight >= 0.0f)
 			{
 				laserVelocity.z = goalHeight;
@@ -1129,7 +1128,7 @@ long WeaponBolt::update (void)
 		if (isArcing)
 		{
 			laserVelocity.z = 0.0f;
-			tmpZ *= frameLength;
+			tmpZ *= g_deltaTime;
 		}
 		
 		if (laserVelocity.GetLength() != 0.0)
@@ -1258,7 +1257,7 @@ long WeaponBolt::update (void)
 			{
 				//NO LIGHT ALLOWED!  TOO Many in World!
 				// LightId is now -1 which will cause this to NEVER make a light!
-				systemHeap->Free(pointLight);
+				g_systemHeap->Free(pointLight);
 				pointLight = NULL;
 			}
 		}
@@ -1340,7 +1339,7 @@ long WeaponBolt::update (void)
 		
  	if (hitTarget)
 	{
-		hitLeft -= frameLength;
+		hitLeft -= g_deltaTime;
 		
 		if (gosEffect && (hitLeft < 0.0f))
 		{
@@ -1352,7 +1351,7 @@ long WeaponBolt::update (void)
 			if (pointLight)
 			{
 				eye->removeWorldLight(lightId,pointLight);
-				systemHeap->Free(pointLight);
+				g_systemHeap->Free(pointLight);
 				pointLight = NULL;
 			}
  		}
@@ -1404,7 +1403,7 @@ long WeaponBolt::update (void)
 				if (pointLight)
 				{
 					eye->removeWorldLight(lightId,pointLight);
-					systemHeap->Free(pointLight);
+					g_systemHeap->Free(pointLight);
 					pointLight = NULL;
 				}
 				
@@ -1429,7 +1428,7 @@ long WeaponBolt::update (void)
 			if (pointLight)
 			{
 				eye->removeWorldLight(lightId,pointLight);
-				systemHeap->Free(pointLight);
+				g_systemHeap->Free(pointLight);
 				pointLight = NULL;
 			}
 		}
@@ -1489,7 +1488,7 @@ long WeaponBolt::update (void)
 				if (pointLight)
 				{
 					eye->removeWorldLight(lightId,pointLight);
-					systemHeap->Free(pointLight);
+					g_systemHeap->Free(pointLight);
 					pointLight = NULL;
 				}
 			}
@@ -1506,7 +1505,7 @@ long WeaponBolt::update (void)
 			if (pointLight)
 			{
 				eye->removeWorldLight(lightId,pointLight);
-				systemHeap->Free(pointLight);
+				g_systemHeap->Free(pointLight);
 				pointLight = NULL;
 			}
 		}
@@ -1566,7 +1565,7 @@ long WeaponBolt::update (void)
 				if (pointLight)
 				{
 					eye->removeWorldLight(lightId,pointLight);
-					systemHeap->Free(pointLight);
+					g_systemHeap->Free(pointLight);
 					pointLight = NULL;
 				}
 			}
@@ -1583,7 +1582,7 @@ long WeaponBolt::update (void)
 			if (pointLight)
 			{
 				eye->removeWorldLight(lightId,pointLight);
-				systemHeap->Free(pointLight);
+				g_systemHeap->Free(pointLight);
 				pointLight = NULL;
 			}
 		}
@@ -2301,7 +2300,7 @@ void WeaponBolt::destroy (void)
 	{
 		if (eye)
 			eye->removeWorldLight(lightId,pointLight);
-		systemHeap->Free(pointLight);
+		g_systemHeap->Free(pointLight);
 		pointLight = NULL;
 	}
 
@@ -2655,7 +2654,7 @@ void WeaponBolt::finishNow (void)
 		{
 			if (eye)
 				eye->removeWorldLight(lightId,pointLight);
-			systemHeap->Free(pointLight);
+			g_systemHeap->Free(pointLight);
 			pointLight = NULL;
 		}
 

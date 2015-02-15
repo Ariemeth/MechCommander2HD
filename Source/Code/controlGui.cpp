@@ -30,18 +30,17 @@ controlGui.cpp			: Implementation of the controlGui component.
 #include "Objective.h"
 #include "mission.h"
 #include "infoWindow.h"
-
 #include "txmmgr.h"
-
 #include "..\resource.h"
 #include "malloc.h"
-
 #include "ChatWindow.h"
+#include "prefs.h"
 
 
 
 ControlGui* ControlGui::instance = 0;
 
+extern CPrefs g_userPreferences;
 extern long helpTextHeaderID;
 extern long helpTextID;
 
@@ -68,7 +67,6 @@ long ControlGui::HELPAREA_BOTTOM = 0;
 long ControlGui::RPLEFT = 0;
 long ControlGui::RPTOP = 0;
 
-extern bool useLeftRightMouseProfile;
 extern bool drawGUIOn;				//Used to shut off GUI for Screen Shots and Movie Mode
 extern bool paintingMyVtol;
 
@@ -443,7 +441,7 @@ void ControlGui::render( bool bPaused )
 		// flash the rp tab if we just got kudos
 		if ( LogisticsData::instance->rpJustAdded )
 		{
-			tabFlashTime += frameLength;
+			tabFlashTime += g_deltaTime;
 			if ( tabFlashTime > .5 )
 			{
 				tabFlashTime = 0;
@@ -509,7 +507,7 @@ void ControlGui::renderResults()
 		if ( infoWnd ) // kill info wnd stuff
 			infoWnd->setUnit( NULL );
 
-		resultsTime += frameLength;
+		resultsTime += g_deltaTime;
 		float t0, t1, p0, p1;
 		t1 = p1 = t0 = p0 = 0.f;
 		float delta = 0.f;
@@ -610,7 +608,7 @@ void ControlGui::RenderObjectives()
 			}
 		}
 	
-		objectiveTime += frameLength;
+		objectiveTime += g_deltaTime;
 
 		float t0, t1, p0, p1;
 
@@ -1918,7 +1916,7 @@ void ControlGui::renderVehicleTab()
 	/// TUTORIAL!!!
 	if (rpNumFlashes)
 	{
-		rpFlashTime += frameLength;
+		rpFlashTime += g_deltaTime;
 		if ( rpFlashTime > .5f )
 		{
 			rpFlashTime = 0.0f;
@@ -2885,7 +2883,7 @@ void ControlGui::setRolloverHelpText( unsigned long textID )
 	if ( helpTextID && textID != 0 )
 		return;
 
-	if ( useLeftRightMouseProfile )
+	if ( g_userPreferences.leftRightMouseProfile )
 		textID ++;
 
 	helpTextHeaderID = 0;

@@ -193,7 +193,7 @@ bool moverInList (long blockNum)
 
 void* GameObjectManager::operator new (size_t ourSize) {
 
-	void* result = systemHeap->Malloc(ourSize);
+	void* result = g_systemHeap->Malloc(ourSize);
 	if (!result) 
 	{
 		Fatal(0, " GameObjectManager.new: unable to create GameObject Manager ");
@@ -206,7 +206,7 @@ void* GameObjectManager::operator new (size_t ourSize) {
 
 void GameObjectManager::operator delete (void* us) {
 
-	systemHeap->Free(us);
+	g_systemHeap->Free(us);
 }
 
 //---------------------------------------------------------------------------
@@ -487,7 +487,7 @@ void GameObjectManager::setNumObjects (long nMechs,
 	}
 
 	useMoverLineOfSightTable = true;
-	moverLineOfSightTable = (char*)systemHeap->Malloc(maxMovers * maxMovers);
+	moverLineOfSightTable = (char*)g_systemHeap->Malloc(maxMovers * maxMovers);
 	if (!moverLineOfSightTable)
 		Fatal(numGates, " GameObjectManager.setNumObjects: cannot malloc moverLineOfSightTable ");
 
@@ -797,7 +797,7 @@ void GameObjectManager::countTerrainObjects (PacketFile* terrainFile, long first
 
 	if (totalObjCount)
 	{
-		objData = (ObjDataLoader *)systemHeap->Malloc(sizeof(ObjDataLoader) * totalObjCount);
+		objData = (ObjDataLoader *)g_systemHeap->Malloc(sizeof(ObjDataLoader) * totalObjCount);
 		memset(objData,0,sizeof(ObjDataLoader) * totalObjCount);
 	}
 	else
@@ -962,7 +962,7 @@ void GameObjectManager::loadTerrainObjects (PacketFile* terrainFile,
 	handles = NULL;
 	
 	//Done loading the objects, free the memory holding them!!
-	systemHeap->Free(objData);
+	g_systemHeap->Free(objData);
 	objData = NULL;
 
 	//---------------------------------------------------
@@ -1390,7 +1390,7 @@ void GameObjectManager::destroy (void)
 	delete collisionSystem;
 	collisionSystem = NULL;
 
-	systemHeap->Free(moverLineOfSightTable);
+	g_systemHeap->Free(moverLineOfSightTable);
 	moverLineOfSightTable = NULL;
 }
 
@@ -2823,7 +2823,6 @@ void GameObjectManager::updateAppearancesOnly( bool terrain, bool movers, bool o
 					Stuff::Vector3D pos = mechs[i]->getPosition();
 					float rot = mechs[i]->getRotation();
 					pos.z = land->getTerrainElevation(pos);
-					bool selected = mechs[i]->isSelected();
 					int teamID = mechs[i]->getTeamId();
 					mechs[i]->getAppearance()->setObjectParameters(pos,rot,mechs[i]->drawFlags,teamID,Team::getRelation(teamID, Team::home->getId()));
 
@@ -2846,7 +2845,6 @@ void GameObjectManager::updateAppearancesOnly( bool terrain, bool movers, bool o
 					pos.z = land->getTerrainElevation(pos);
 					if ((pos.z < MapData::waterDepth))
 						pos.z = MapData::waterDepth;
-					bool selected = vehicles[i]->isSelected();
 					int teamID = vehicles[i]->getTeamId();
 					vehicles[i]->getAppearance()->setObjectParameters(pos, rot, vehicles[i]->drawFlags, teamID, Team::getRelation(teamID, Team::home->getId()));
 					vehicles[i]->getAppearance()->update( false );
@@ -3045,7 +3043,6 @@ long GameObjectManager::Load (PacketFilePtr file, long packetNum)
 	memset(watchList,0,sizeof(GameObjectPtr) * (getMaxObjects() + 1));
 
 	long i = 0;
-	long curHandle = 1;
 	maxMovers = maxMechs + maxVehicles + numElementals;
 	//--------------------------------------------------------------
 	// For now, we'll use an array of pointers due to the irritating
@@ -3126,7 +3123,7 @@ long GameObjectManager::Load (PacketFilePtr file, long packetNum)
 	}
 
 	useMoverLineOfSightTable = true;
-	moverLineOfSightTable = (char*)systemHeap->Malloc(maxMovers * maxMovers);
+	moverLineOfSightTable = (char*)g_systemHeap->Malloc(maxMovers * maxMovers);
 	if (!moverLineOfSightTable)
 		Fatal(numGates, " GameObjectManager.setNumObjects: cannot malloc moverLineOfSightTable ");
 

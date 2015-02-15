@@ -236,8 +236,8 @@ class Camera
 
 		static float			globalScaleFactor;		//Global Rescale Factor.
 
-		static float			MaxClipDistance;
-		static float    		MinHazeDistance;
+		static float			maxClipDistance;
+		static float    		minHazeDistance;
 		static float			DistanceFactor;
 
 		static float			MinNearPlane;

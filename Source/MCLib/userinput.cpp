@@ -44,10 +44,19 @@
 
 //---------------------------------------------------------------------------
 UserInput *userInput = NULL;
-extern bool 			hasGuardBand;
 volatile bool			UserInput::drawMouse = false;
 extern volatile bool 	mc2IsInDisplayBackBuffer;
 extern volatile bool 	mc2IsInMouseTimer;
+
+extern volatile char	mc2MouseHotSpotX;
+extern volatile char	mc2MouseHotSpotY;
+extern volatile char	mc2MouseWidth;
+extern volatile char	mc2MouseHeight;
+
+extern volatile bool	mc2UseAsyncMouse;		//Should mouse draw and update in separate thread?
+extern volatile bool	mc2MouseThreadStarted;	//Has the thread starting running yet?
+
+extern volatile MemoryPtr mc2MouseData;
 
 void MouseTimerInit();
 void MouseTimerKill();
@@ -206,7 +215,7 @@ void UserInput::update (void)
 		wasRightMouseDrag = rightMouseDrag;
 		
 		leftMouseDrag = false;
-		mouseLeftUpTime += frameLength;
+		mouseLeftUpTime += g_deltaTime;
 //		if ( !bWasDouble )
 			leftMouseJustUp = 1;
 
@@ -217,7 +226,7 @@ void UserInput::update (void)
 	{
 		//--------------------------------------------
 		// We are still up.  Increment mouse up time.
-		mouseLeftUpTime += frameLength;
+		mouseLeftUpTime += g_deltaTime;
 		mouseLeftHeldTime = 0.f;
 	}
 
@@ -262,7 +271,7 @@ void UserInput::update (void)
 		}
 
 		mouseLeftUpTime = 0;
-		mouseLeftHeldTime += frameLength;
+		mouseLeftHeldTime += g_deltaTime;
 
 	}
 
@@ -282,7 +291,7 @@ void UserInput::update (void)
 	{
 		//--------------------------------------------
 		// We are still up.  Increment mouse up time.
-		mouseRightUpTime += frameLength;
+		mouseRightUpTime += g_deltaTime;
 		rightMouseDrag = 0;
 		mouseRightHeldTime = 0.f;
 	}
@@ -320,7 +329,7 @@ void UserInput::update (void)
 		rightClick = true;
 
 		mouseRightUpTime = 0;
-		mouseRightHeldTime += frameLength;
+		mouseRightHeldTime += g_deltaTime;
 	}
 
 	if ((middleMouseButtonState == MC2_MOUSE_UP) && (lastMiddleMouseButtonState == MC2_MOUSE_DOWN))
@@ -334,7 +343,7 @@ void UserInput::update (void)
 	{
 		//--------------------------------------------
 		// We are still up.  Increment mouse up time.
-		mouseMiddleUpTime += frameLength;
+		mouseMiddleUpTime += g_deltaTime;
 	}
 
 	if (gos_GetKeyStatus( KEY_MMOUSE ) == KEY_PRESSED /*mCode & 0x0001*/)
@@ -349,7 +358,7 @@ void UserInput::update (void)
 
 	if (cursors->getNumFrames( mouseState ) > 1 )
 	{
-		mouseFrameLength += frameLength;
+		mouseFrameLength += g_deltaTime;
 		if (mouseFrameLength > cursors->frameLengths[mouseState] )
 		{
 			mouseFrame++;

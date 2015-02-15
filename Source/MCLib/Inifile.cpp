@@ -188,7 +188,7 @@ long FitIniFile::afterOpen (void)
 		
 		//--------------------------------------------------------------------------
 		// Allocate RAM for the BlockInfoNodes.  Check if system Heap is available
-		fileBlocks = (IniBlockNode *)systemHeap->Malloc(sizeof(IniBlockNode) * totalBlocks);
+		fileBlocks = (IniBlockNode *)g_systemHeap->Malloc(sizeof(IniBlockNode) * totalBlocks);
 		
 		gosASSERT(fileBlocks != NULL);
 
@@ -255,7 +255,7 @@ void FitIniFile::atClose (void)
 
 	//-----------------------------
 	// Free up the fileBlocks
-	systemHeap->Free(fileBlocks);
+	g_systemHeap->Free(fileBlocks);
 	fileBlocks = NULL;
 }
 

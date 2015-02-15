@@ -335,7 +335,7 @@ void MechListBoxItem::update()
 		else 
 			countText.setColor( 0xffffffff );
 
-		animTime += frameLength;
+		animTime += g_deltaTime;
 		
 		if ( animTime > 1.0f )
 			animTime = 0.f;

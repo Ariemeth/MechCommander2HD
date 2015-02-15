@@ -27,9 +27,6 @@
 #endif
 
 //------------------------------------------------------------------------------------------
-// Macro Definitions
-extern bool useSound;
-
 PacketFilePtr 		Radio::noiseFile = NULL;
 RadioPtr	  		Radio::radioList[MAX_RADIOS];	//Warriors no longer delete their radios.
 bool				Radio::radioListGo = false;
@@ -121,9 +118,6 @@ long Radio::playMessage (RadioMessageType msgType)
 {
 long i, roll, callsign, fragmentNum, dropOut = 0;
 
-	if (!useSound)
-		return(NO_PLAY);
-	
 	if (!enabled)
 		return(NO_PLAY);
 

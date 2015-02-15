@@ -157,7 +157,7 @@ void VFXElement::draw (void)
 		else		//45Pixel mechs dealt with here.
 		{
 			if (!tempBuffer)
-				tempBuffer = (MemoryPtr)systemHeap->Malloc(MAX_X * MAX_Y);
+				tempBuffer = (MemoryPtr)g_systemHeap->Malloc(MAX_X * MAX_Y);
 
 			if (fadeTable)
 			{
@@ -414,7 +414,7 @@ void VFXShapeElement::drawShape (void)
 		if ((xRes < 16) && (yRes < 16))
 		{
 			if (!shapeBuffer16)
-				shapeBuffer16 = (MemoryPtr)systemHeap->Malloc(16*16);
+				shapeBuffer16 = (MemoryPtr)g_systemHeap->Malloc(16*16);
 				
 			gWindow.buffer = shapeBuffer16;
 			memset(gWindow.buffer,0,16*16);
@@ -425,7 +425,7 @@ void VFXShapeElement::drawShape (void)
 		else if ((xRes < 32) && (yRes < 32))
 		{
 			if (!shapeBuffer32)
-				shapeBuffer32 = (MemoryPtr)systemHeap->Malloc(32*32);
+				shapeBuffer32 = (MemoryPtr)g_systemHeap->Malloc(32*32);
 				
 			gWindow.buffer = shapeBuffer32;
 			memset(gWindow.buffer,0,32*32);
@@ -436,7 +436,7 @@ void VFXShapeElement::drawShape (void)
 		else if ((xRes < 64) && (yRes < 64))
 		{
 			if (!shapeBuffer64)
-				shapeBuffer64 = (MemoryPtr)systemHeap->Malloc(64*64);
+				shapeBuffer64 = (MemoryPtr)g_systemHeap->Malloc(64*64);
 				
 			gWindow.buffer = shapeBuffer64;
 			memset(gWindow.buffer,0,64*64);
@@ -447,7 +447,7 @@ void VFXShapeElement::drawShape (void)
 		else if ((xRes < 128) && (yRes < 128))
 		{
 			if (!shapeBuffer128)
-				shapeBuffer128 = (MemoryPtr)systemHeap->Malloc(128*128);
+				shapeBuffer128 = (MemoryPtr)g_systemHeap->Malloc(128*128);
 				
 			gWindow.buffer = shapeBuffer128;
 			memset(gWindow.buffer,0,128*128);
@@ -458,7 +458,7 @@ void VFXShapeElement::drawShape (void)
 		else if ((xRes < 256) && (yRes < 256))
 		{
 			if (!shapeBuffer256)
-				shapeBuffer256 = (MemoryPtr)systemHeap->Malloc(256*256);
+				shapeBuffer256 = (MemoryPtr)g_systemHeap->Malloc(256*256);
 				
 			gWindow.buffer = shapeBuffer256;
 			memset(gWindow.buffer,0,256*256);
@@ -474,35 +474,35 @@ void VFXShapeElement::drawShape (void)
 		{
 			case 16:
 				if (!shapeBuffer16)
-					shapeBuffer16 = (MemoryPtr)systemHeap->Malloc(16*16);
+					shapeBuffer16 = (MemoryPtr)g_systemHeap->Malloc(16*16);
 					
 				gWindow.buffer = shapeBuffer16;
 				break;
 				
 			case 32:
 				if (!shapeBuffer32)
-					shapeBuffer32 = (MemoryPtr)systemHeap->Malloc(32*32);
+					shapeBuffer32 = (MemoryPtr)g_systemHeap->Malloc(32*32);
 				
 				gWindow.buffer = shapeBuffer32;
 				break;
 				
 			case 64:
 				if (!shapeBuffer64)
-					shapeBuffer64 = (MemoryPtr)systemHeap->Malloc(64*64);
+					shapeBuffer64 = (MemoryPtr)g_systemHeap->Malloc(64*64);
 					
 				gWindow.buffer = shapeBuffer64;
 				break;
 				
 			case 128:
 				if (!shapeBuffer128)
-					shapeBuffer128 = (MemoryPtr)systemHeap->Malloc(128*128);
+					shapeBuffer128 = (MemoryPtr)g_systemHeap->Malloc(128*128);
 					
 				gWindow.buffer = shapeBuffer128;
 				break;
 				
 			case 256:
 				if (!shapeBuffer256)
-					shapeBuffer256 = (MemoryPtr)systemHeap->Malloc(256*256);
+					shapeBuffer256 = (MemoryPtr)g_systemHeap->Malloc(256*256);
 					
 				gWindow.buffer = shapeBuffer256;
 				break;
@@ -525,7 +525,7 @@ void VFXShapeElement::drawShape (void)
 	textureFactor = float(textureWidth) * Camera::globalScaleFactor;
 
 	if (!tempBuffer)
-		tempBuffer = (MemoryPtr)systemHeap->Malloc(MAX_X * MAX_Y);
+		tempBuffer = (MemoryPtr)g_systemHeap->Malloc(MAX_X * MAX_Y);
 
 	while (shapeTable[i] && (i < MAX_ELEMENT_SHAPES))
 	{

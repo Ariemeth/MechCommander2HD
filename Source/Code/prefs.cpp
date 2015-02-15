@@ -11,32 +11,8 @@
 #include "soundSys.h"
 #include "..\resource.h"
 
-extern SoundSystem *sndSystem;
-
-extern long DigitalMasterVolume;
-extern long MusicVolume;
-extern long sfxVolume;
-extern long RadioVolume;
-extern long BettyVolume;
-extern bool useShadows;
-extern bool useLocalShadows;
-extern bool useWaterInterestTexture;
-
-extern bool useUnlimitedAmmo;
-extern long GameDifficulty;
-extern long renderer;
-extern long resolution;
-extern long gammaLevel;
-extern bool useLeftRightMouseProfile;
-extern bool useNonWeaponEffects;
-extern bool useHighObjectDetail;
-
-extern long GameVisibleVertices;
-
-extern volatile bool mc2UseAsyncMouse;		//Should mouse draw and update in separate thread?
-
-
-extern DWORD gEnableDetailTexture;
+extern SoundSystem *g_soundSystem;
+CPrefs CPrefs::originalSettings;
 
 CPrefs::CPrefs() {
 	DigitalMasterVolume = 255;
@@ -46,17 +22,17 @@ CPrefs::CPrefs() {
 	BettyVolume = 64;
 
 	useShadows = true;
-	useWaterInterestTexture = true;
+	useTerrainDetailTexture = true;
 	useHighObjectDetail = true;
 
-	GameDifficulty = 0;
-	useUnlimitedAmmo = true;
+	gameDifficulty = 0;
+	unlimitedAmmo = true;
 
 	renderer = 0;
 	resolution = 1;
 	fullScreen = false;
 	gammaLevel = 0;
-	useLeftRightMouseProfile = true; // if false, use old style commands
+	leftRightMouseProfile = true; // if false, use old style commands
 	for ( int i = 0; i < 10; i++ )
 		playerName[i][0] = 0;
 
@@ -70,16 +46,6 @@ CPrefs::CPrefs() {
 	insigniaFile[0] = 0;
 	for ( i = 0; i < 10; i++ )
 		unitName[i][0] = 0;
-
-#if 0
-	FilterState = gos_FilterNone;
-	TERRAIN_TXM_SIZE = 64;
-	ObjectTextureSize = 128;
-	useRealLOS = true;
-	doubleClickThreshold = 0.2f;
-	dragThreshold = 10;
-	BaseVertexColor = 0x00000000;		//This color is applied to all vertices in game as Brightness correction.
-#endif
 }
 
 int CPrefs::load( const char* pFileName ) {
@@ -128,32 +94,35 @@ int CPrefs::load( const char* pFileName ) {
 			if (result != NO_ERR)
 				useShadows = true;
 
-			result = prefsFile->readIdBoolean( "DetailTexture", useWaterInterestTexture);
+			result = prefsFile->readIdBoolean( "DetailTexture", useTerrainDetailTexture);
 			if (result != NO_ERR)
-				useWaterInterestTexture = true;
+				useTerrainDetailTexture = true;
 
 			result = prefsFile->readIdBoolean( "HighObjectDetail", useHighObjectDetail );
 			if ( result != NO_ERR )
 				useHighObjectDetail = true;
 
-			result = prefsFile->readIdLong("Difficulty",GameDifficulty);
+			result = prefsFile->readIdLong("Difficulty",gameDifficulty);
 			if (result != NO_ERR)
-				GameDifficulty = 1;
+				gameDifficulty = 1;
 
-			result = prefsFile->readIdBoolean("UnlimitedAmmo",useUnlimitedAmmo);
+			result = prefsFile->readIdBoolean("UnlimitedAmmo",unlimitedAmmo);
 			if (result != NO_ERR)
-				useUnlimitedAmmo = true;
+				unlimitedAmmo = true;
 
-			result = prefsFile->readIdLong("Rasterizer",renderer);
+			result = prefsFile->readIdLong("Rasterizer", renderer);
 			if (result != NO_ERR)
 				renderer = 0;
 
 			if ((renderer < 0) || (renderer > 3))
 				renderer = 0;
 
+			// MCHD TODO:	Either detect the best renderer or maybe just hard-code it to zero.
+			//				Just kill it after DX9 goes in.
+
 			//Force use of video card which is above min spec.
 			// Used ONLY if they are using a below minSpec Primary with an above minSpec secondary.
-			if ((renderer >= 0) && (renderer < 3) && 
+			if ((renderer >= 0) && (renderer < 3) &&
 				(gos_GetMachineInformation(gos_Info_GetDeviceLocalMemory, renderer) +
 				gos_GetMachineInformation(gos_Info_GetDeviceAGPMemory, renderer)) < 6291456)
 			{
@@ -186,9 +155,9 @@ int CPrefs::load( const char* pFileName ) {
 			if (result != NO_ERR)
 				gammaLevel = 0;
 
-			result = prefsFile->readIdBoolean( "useLeftRightMouseProfile", useLeftRightMouseProfile );
+			result = prefsFile->readIdBoolean( "UseLeftRightMouseProfile", leftRightMouseProfile );
 			if ( result != NO_ERR )
-				useLeftRightMouseProfile = true;
+				leftRightMouseProfile = true;
 
 			char blockName[64];
 			for ( int i = 0; i < 10; i++ )
@@ -216,11 +185,12 @@ int CPrefs::load( const char* pFileName ) {
 			result = prefsFile->readIdLong( "BaseColor", baseColor );
 			if ( result != NO_ERR )	
 				baseColor = 0xffff7e00;
+
 			result = prefsFile->readIdLong( "Highlightcolor", highlightColor );
 			if ( result != NO_ERR )	
 				highlightColor = 0xffff7e00;
 			
-			result = prefsFile->readIdLong( "faction", faction );
+			result = prefsFile->readIdLong( "Faction", faction );
 			result = prefsFile->readIdString( "InsigniaFile", insigniaFile, 255 );
 
 			result = prefsFile->readIdBoolean( "PilotVideos",	pilotVideos );
@@ -259,6 +229,49 @@ int CPrefs::load( const char* pFileName ) {
 			if ( result != NO_ERR )
 				tutorials = true;
 
+			// MCHD CHANGE (02/14/2015): Moved the camera options into options.cfg
+			useRealLOS = true; // MCHD TODO: Move this to debug options or something
+
+			// Camera options
+			result = prefsFile->readIdFloat("MaxClipDistance", Camera::maxClipDistance);
+			if (result != NO_ERR)
+				Camera::maxClipDistance = 3000.0f;
+
+			result = prefsFile->readIdFloat("MinHazeDistance", Camera::minHazeDistance);
+			if (result != NO_ERR)
+				Camera::minHazeDistance = 2000.0f;
+
+			result = prefsFile->readIdFloat("View0Zoom", Camera::cameraZoom[0]);
+			if (result != NO_ERR)
+				Camera::cameraZoom[0] = 1200.0f;
+
+			result = prefsFile->readIdFloat("View0Tilt", Camera::cameraTilt[0]);
+			if (result != NO_ERR)
+				Camera::cameraTilt[0] = 35.0f;
+
+			result = prefsFile->readIdFloat("View1Zoom", Camera::cameraZoom[1]);
+			if (result != NO_ERR)
+				Camera::cameraZoom[1] = 1200.0f;
+
+			result = prefsFile->readIdFloat("View1Tilt", Camera::cameraTilt[1]);
+			if (result != NO_ERR)
+				Camera::cameraTilt[1] = 35.0f;
+
+			result = prefsFile->readIdFloat("View2Zoom", Camera::cameraZoom[2]);
+			if (result != NO_ERR)
+				Camera::cameraZoom[2] = 1200.0f;
+
+			result = prefsFile->readIdFloat("View2Tilt", Camera::cameraTilt[2]);
+			if (result != NO_ERR)
+				Camera::cameraTilt[2] = 35.0f;
+
+			result = prefsFile->readIdFloat("View3Zoom", Camera::cameraZoom[3]);
+			if (result != NO_ERR)
+				Camera::cameraZoom[3] = 1200.0f;
+
+			result = prefsFile->readIdFloat("View3Tilt", Camera::cameraTilt[3]);
+			if (result != NO_ERR)
+				Camera::cameraTilt[3] = 35.0f;
 		}
 
 	}
@@ -299,7 +312,7 @@ int CPrefs::save() {
 		long prefsBlockResult = 
 #endif
 		prefsFile->writeBlock("MechCommander2");
-		gosASSERT(prefsBlockResult == strlen("\r\n[") + strlen("MechCommander2") + strlen("]\r\n"));
+		gosASSERT(prefsBlockResult == (long)(strlen("\r\n[") + strlen("MechCommander2") + strlen("]\r\n")));
 		{
 			result = prefsFile->writeIdLong("DigitalMasterVolume",DigitalMasterVolume);
 			result = prefsFile->writeIdLong("MusicVolume",MusicVolume);
@@ -308,17 +321,17 @@ int CPrefs::save() {
 			result = prefsFile->writeIdLong("BettyVolume",BettyVolume);
 
 			result = prefsFile->writeIdBoolean( "Shadows", useShadows );
-			result = prefsFile->writeIdBoolean( "DetailTexture", useWaterInterestTexture );
+			result = prefsFile->writeIdBoolean( "DetailTexture", useTerrainDetailTexture );
 			result = prefsFile->writeIdBoolean( "HighObjectDetail", useHighObjectDetail );
 
-			result = prefsFile->writeIdLong("Difficulty",GameDifficulty);
-			result = prefsFile->writeIdBoolean("UnlimitedAmmo",useUnlimitedAmmo);
+			result = prefsFile->writeIdLong("Difficulty",gameDifficulty);
+			result = prefsFile->writeIdBoolean("UnlimitedAmmo",unlimitedAmmo);
 
 			result = prefsFile->writeIdLong("Rasterizer",renderer);
 			result = prefsFile->writeIdLong("Resolution",resolution);
 			result = prefsFile->writeIdBoolean("FullScreen",fullScreen);
 			result = prefsFile->writeIdLong("Brightness",gammaLevel);
-			result = prefsFile->writeIdBoolean( "useLeftRightMouseProfile", useLeftRightMouseProfile );
+			result = prefsFile->writeIdBoolean( "UseLeftRightMouseProfile", leftRightMouseProfile );
 			char blockName[64];
 			for ( int i = 0; i < 10; i++ )
 			{	
@@ -336,7 +349,7 @@ int CPrefs::save() {
 
 			result = prefsFile->writeIdLong( "BaseColor", baseColor );
 			result = prefsFile->writeIdLong( "Highlightcolor", highlightColor );
-			result = prefsFile->writeIdLong( "faction", faction );
+			result = prefsFile->writeIdLong( "Faction", faction );
 			result = prefsFile->writeIdString( "InsigniaFile", insigniaFile );
 
 			result = prefsFile->writeIdBoolean( "PilotVideos",	pilotVideos );
@@ -349,6 +362,21 @@ int CPrefs::save() {
 			result = prefsFile->writeIdBoolean( "SaveTranscripts", saveTranscripts );
 			result = prefsFile->writeIdBoolean( "Tutorials", tutorials );
 
+			// MCHD CHANGE (02/14/2015): Moved camera stuff into options.cfg
+			result = prefsFile->writeIdFloat("MaxClipDistance", Camera::maxClipDistance);
+			result = prefsFile->writeIdFloat("MinHazeDistance", Camera::minHazeDistance);
+
+			result = prefsFile->writeIdFloat("View0Zoom", Camera::cameraZoom[0]);
+			result = prefsFile->writeIdFloat("View0Tilt", Camera::cameraTilt[0]);
+
+			result = prefsFile->writeIdFloat("View1Zoom", Camera::cameraZoom[1]);
+			result = prefsFile->writeIdFloat("View1Tilt", Camera::cameraTilt[1]);
+
+			result = prefsFile->writeIdFloat("View2Zoom", Camera::cameraZoom[2]);
+			result = prefsFile->writeIdFloat("View2Tilt", Camera::cameraTilt[2]);
+
+			result = prefsFile->writeIdFloat("View3Zoom", Camera::cameraZoom[3]);
+			result = prefsFile->writeIdFloat("View3Tilt", Camera::cameraTilt[3]);
 		}
 	}
 #ifndef VIEWER	
@@ -373,41 +401,28 @@ int CPrefs::applyPrefs(bool applyRes) {
 		soundSystem->setBettyVolume(this->BettyVolume);
 	}
 
-	if (sndSystem) {
-		sndSystem->setDigitalMasterVolume(this->DigitalMasterVolume);
-		sndSystem->setSFXVolume(this->sfxVolume);
-		sndSystem->setRadioVolume(this->RadioVolume);
-		sndSystem->setMusicVolume(this->MusicVolume);
-		sndSystem->setBettyVolume(this->BettyVolume);
+	if (g_soundSystem) {
+		g_soundSystem->setDigitalMasterVolume(this->DigitalMasterVolume);
+		g_soundSystem->setSFXVolume(this->sfxVolume);
+		g_soundSystem->setRadioVolume(this->RadioVolume);
+		g_soundSystem->setMusicVolume(this->MusicVolume);
+		g_soundSystem->setBettyVolume(this->BettyVolume);
 	}
 
-	::useShadows = this->useShadows;
-	::useLocalShadows = this->useLocalShadows;
-	::useWaterInterestTexture = this->useWaterInterestTexture;
-
-	::GameDifficulty = this->GameDifficulty;
-	::useUnlimitedAmmo = this->useUnlimitedAmmo;
-
-	::renderer = this->renderer;
-	::resolution = this->resolution;
-	::gammaLevel = this->gammaLevel;
-	mc2UseAsyncMouse = this->asyncMouse;
-	::useLeftRightMouseProfile = this->useLeftRightMouseProfile;
-	::useNonWeaponEffects = this->useNonWeaponEffects;
-	::useHighObjectDetail = this->useHighObjectDetail;
+	// MCHD CHANGE (02/14/2015): Fuck globals - it all lives in CPrefs now
 
 	int bitDepth = this->bitDepth ? 32 : 16;
 
 	//Play with the fog distance.
 	float fogPercent = float(fogPos) / 100.0f;
-	Camera::MaxClipDistance = 3000.0f + (2000.0f * fogPercent);
-	Camera::MinHazeDistance	= 2000.0f + (2000.0f * fogPercent);
+	Camera::maxClipDistance = 3000.0f + (2000.0f * fogPercent);
+	Camera::minHazeDistance	= 2000.0f + (2000.0f * fogPercent);
 
-	::GameVisibleVertices = 30 + (30 * fogPercent);
+	gameVisibleVertices = 256; // MCHD CHANGE (02/14/2015): Bumped this number up an arbitrary amount //30 + (30 * fogPercent);
 
 	if (land)
 	{
-		land->resetVisibleVertices(::GameVisibleVertices);
+		land->resetVisibleVertices(gameVisibleVertices);
 		land->update();
 	}
 
@@ -422,6 +437,7 @@ int CPrefs::applyPrefs(bool applyRes) {
 		if (Environment.fullScreen && fullScreen)
 			localFullScreen = false;
 
+		// MCHD TODO: Change resolution options
 		switch (resolution)
 		{
 			case 0:			//640by480

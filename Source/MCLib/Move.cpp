@@ -42,7 +42,7 @@ typedef enum {
 // EXTERN vars
 
 extern void memclear(void *Dest,int Length);
-extern UserHeapPtr systemHeap;
+extern UserHeapPtr g_systemHeap;
 extern float metersPerWorldUnit;
 
 extern char* ExceptionGameMsg;
@@ -57,7 +57,6 @@ bool GlobalMap::logEnabled = false;
 //------------
 // GLOBAL vars
 bool ZeroHPrime = false;
-bool CullPathAreas = false;
 
 const float LOSincrement = 0.33f;		// based upon cell size
 const float LOFincrement = 0.33f;		// based upon cell size
@@ -540,12 +539,12 @@ void MOVE_buildData (long height, long width, MissionMapCellInfo* mapData, long 
 		}
 
 	if (tempSpecialAreaFootPrints) {
-		systemHeap->Free(tempSpecialAreaFootPrints);
+		g_systemHeap->Free(tempSpecialAreaFootPrints);
 		tempSpecialAreaFootPrints = NULL;
 	}
 	tempNumSpecialAreas = numSpecialAreas;
 	if (tempNumSpecialAreas) {
-		tempSpecialAreaFootPrints = (GameObjectFootPrint*)systemHeap->Malloc(sizeof(GameObjectFootPrint) * tempNumSpecialAreas);
+		tempSpecialAreaFootPrints = (GameObjectFootPrint*)g_systemHeap->Malloc(sizeof(GameObjectFootPrint) * tempNumSpecialAreas);
 		memcpy(tempSpecialAreaFootPrints, specialAreaFootPrints, sizeof(GameObjectFootPrint) * tempNumSpecialAreas);
 	}
 	if (!PathFindMap[SECTOR_PATHMAP])
@@ -707,18 +706,18 @@ long MOVE_readData (PacketFile* packetFile, long whichPacket) {
 		numGlobalMap2Packets = GlobalMoveMap[2]->init(packetFile, whichPacket + numMissionMapPackets + numGlobalMap0Packets + numGlobalMap1Packets);
 		//------------------------------------------------------------------
 		// Delete the pathExistsTable for this one, since we don't use it...
-		systemHeap->Free(GlobalMoveMap[2]->pathExistsTable);
+		g_systemHeap->Free(GlobalMoveMap[2]->pathExistsTable);
 		GlobalMoveMap[2]->pathExistsTable = NULL;
 
 		long numBytes = packetFile->readPacket(whichPacket + numMissionMapPackets + numGlobalMap0Packets + numGlobalMap1Packets + numGlobalMap2Packets, (unsigned char*)&tempNumSpecialAreas);
 		if (numBytes <= 0)
 			Fatal(numBytes, " MOVE_readData: Unable to read num special areas ");
 		if (tempSpecialAreaFootPrints) {
-			systemHeap->Free(tempSpecialAreaFootPrints);
+			g_systemHeap->Free(tempSpecialAreaFootPrints);
 			tempSpecialAreaFootPrints = NULL;
 		}
 		if (tempNumSpecialAreas > 0) {
-			tempSpecialAreaFootPrints = (GameObjectFootPrint*)systemHeap->Malloc(sizeof(GameObjectFootPrint) * tempNumSpecialAreas);
+			tempSpecialAreaFootPrints = (GameObjectFootPrint*)g_systemHeap->Malloc(sizeof(GameObjectFootPrint) * tempNumSpecialAreas);
 			numBytes = packetFile->readPacket(whichPacket + numMissionMapPackets + numGlobalMap0Packets + numGlobalMap1Packets + numGlobalMap2Packets + 1, (unsigned char*)tempSpecialAreaFootPrints);
 			if (numBytes <= 0)
 				Fatal(numBytes, " MOVE_readData: Unable to read num special areas ");
@@ -780,7 +779,7 @@ void MOVE_cleanup (void) {
 
 void* MissionMap::operator new (size_t ourSize) {
 
-	void* result = systemHeap->Malloc(ourSize);
+	void* result = g_systemHeap->Malloc(ourSize);
 	return(result);
 }
 
@@ -788,7 +787,7 @@ void* MissionMap::operator new (size_t ourSize) {
 
 void MissionMap::operator delete (void* us) {
 
-	systemHeap->Free(us);
+	g_systemHeap->Free(us);
 }	
 
 //---------------------------------------------------------------------------
@@ -821,12 +820,12 @@ void MissionMap::init (long h, long w) {
 		Terrain::cellColToWorldCoord[i] = (i * Terrain::worldUnitsPerCell) - (Terrain::worldUnitsMapSide / 2.0);
 
 	if (map) {
-		systemHeap->Free(map);
+		g_systemHeap->Free(map);
 		map = NULL;
 	}
 	long mapSize = sizeof(MapCell) * width * height;
 	if (mapSize > 0)
-		map = (MapCellPtr)systemHeap->Malloc(sizeof(MapCell) * width * height);
+		map = (MapCellPtr)g_systemHeap->Malloc(sizeof(MapCell) * width * height);
 	gosASSERT(map != NULL);
 	memclear(map, sizeof(MapCell) * width * height);
 }
@@ -1230,7 +1229,7 @@ void MissionMap::print (char* fileName) {
 void MissionMap::destroy (void) {
 
 	if (map) {
-		systemHeap->Free(map);
+		g_systemHeap->Free(map);
 		map = NULL;
 	}
 }
@@ -1242,7 +1241,7 @@ void MissionMap::destroy (void) {
 void* MovePath::operator new (size_t ourSize) {
 
 	void* result;
-	result = systemHeap->Malloc(ourSize);
+	result = g_systemHeap->Malloc(ourSize);
 	return(result);
 }
 
@@ -1250,7 +1249,7 @@ void* MovePath::operator new (size_t ourSize) {
 
 void MovePath::operator delete (void* us) {
 
-	systemHeap->Free(us);
+	g_systemHeap->Free(us);
 }	
 
 //---------------------------------------------------------------------------
@@ -1438,7 +1437,7 @@ long MovePath::crossesClosedGate (long start, long range) {
 
 void* GlobalMap::operator new (size_t ourSize) {
 
-	void* result = systemHeap->Malloc(ourSize);
+	void* result = g_systemHeap->Malloc(ourSize);
 	return(result);
 }
 
@@ -1446,7 +1445,7 @@ void* GlobalMap::operator new (size_t ourSize) {
 
 void GlobalMap::operator delete (void* us) {
 
-	systemHeap->Free(us);
+	g_systemHeap->Free(us);
 }	
 
 //------------------------------------------------------------------------------------------
@@ -1455,7 +1454,7 @@ void GlobalMap::init (long w, long h) {
 
 	width = w;
 	height = h;
-	areaMap = (short*)systemHeap->Malloc(sizeof(short) * w * h);
+	areaMap = (short*)g_systemHeap->Malloc(sizeof(short) * w * h);
 	gosASSERT(areaMap != NULL);
 	for (long r = 0; r < height; r++)
 		for (long c = 0; c < width; c++)
@@ -1534,19 +1533,19 @@ long GlobalMap::init (PacketFilePtr packetFile, long whichPacket) {
 #endif
 	}
 
-	areaMap = (short*)systemHeap->Malloc(sizeof(short) * height * width);
+	areaMap = (short*)g_systemHeap->Malloc(sizeof(short) * height * width);
 	gosASSERT(areaMap != NULL);
 	result = packetFile->readPacket(whichPacket++, (unsigned char*)areaMap);
 	if (result == 0)
 		Fatal(result, " GlobalMap.init: unable to read areaMap packet ");
 
-	areas = (GlobalMapAreaPtr)systemHeap->Malloc(sizeof(GlobalMapArea) * numAreas);
+	areas = (GlobalMapAreaPtr)g_systemHeap->Malloc(sizeof(GlobalMapArea) * numAreas);
 	gosASSERT(areas != NULL);
 	result = packetFile->readPacket(whichPacket++, (unsigned char*)areas);
 	if (result == 0)
 		Fatal(result, " GlobalMap.init: unable to read areas packet ");
 
-	doorInfos = (DoorInfoPtr)systemHeap->Malloc(sizeof(DoorInfo) * numDoorInfos);
+	doorInfos = (DoorInfoPtr)g_systemHeap->Malloc(sizeof(DoorInfo) * numDoorInfos);
 	gosASSERT(doorInfos != NULL);
 	long curDoorInfo = 0;
 	for (long i = 0; i < numAreas; i++)
@@ -1566,7 +1565,7 @@ long GlobalMap::init (PacketFilePtr packetFile, long whichPacket) {
 		curDoorInfo += areas[curArea].numDoors;
 	}
 
-	doors = (GlobalMapDoorPtr)systemHeap->Malloc(sizeof(GlobalMapDoor) * (numDoors + NUM_DOOR_OFFSETS));
+	doors = (GlobalMapDoorPtr)g_systemHeap->Malloc(sizeof(GlobalMapDoor) * (numDoors + NUM_DOOR_OFFSETS));
 	gosASSERT(doors != NULL);
 	result = packetFile->readPacket(whichPacket++, (unsigned char*)doors);
 	if (result == 0)
@@ -1574,7 +1573,7 @@ long GlobalMap::init (PacketFilePtr packetFile, long whichPacket) {
 
 	//--------------
 	// Door Links...
-	doorLinks = (DoorLinkPtr)systemHeap->Malloc(sizeof(DoorLink) * numDoorLinks);
+	doorLinks = (DoorLinkPtr)g_systemHeap->Malloc(sizeof(DoorLink) * numDoorLinks);
 	gosASSERT(doorLinks != NULL);
 	long numLinksRead = 0;
 	for (i = 0; i < (numDoors + NUM_DOOR_OFFSETS); i++) {
@@ -1607,7 +1606,7 @@ long GlobalMap::init (PacketFilePtr packetFile, long whichPacket) {
 
 	//--------------------------
 	// Create pathExistsTable...
-	pathExistsTable = (unsigned char*)systemHeap->Malloc(numAreas * (numAreas / 4 + 1));
+	pathExistsTable = (unsigned char*)g_systemHeap->Malloc(numAreas * (numAreas / 4 + 1));
 	if (!pathExistsTable)
 		STOP(("GlobalMap.init: unable to malloc pathExistsTable"));
 	clearPathExistsTable();
@@ -2068,7 +2067,7 @@ void GlobalMap::calcAreas (void) {
 	// NOTE: We allocate one extra area--this is used by the calcPath routine
 	// as a "scratch" area in some cases...
 	gosASSERT(numAreas <= MAX_GLOBALMAP_AREAS);
-	areas = (GlobalMapAreaPtr)systemHeap->Malloc(sizeof(GlobalMapArea) * (numAreas + 1));
+	areas = (GlobalMapAreaPtr)g_systemHeap->Malloc(sizeof(GlobalMapArea) * (numAreas + 1));
 	gosASSERT(areas != NULL);
 	for (long i = 0; i < (numAreas + 1); i++) {
 		areas[i].sectorR = 0;
@@ -2118,7 +2117,7 @@ void GlobalMap::calcCellsCovered (void) {
 
 void GlobalMap::calcSpecialTypes (void) {
 
-//systemHeap->walkHeap();
+//g_systemHeap->walkHeap();
 	for (long i = 0; i < numSpecialAreas; i++) {
 		if (specialAreas[i].type == SPECIAL_WALL)
 			for (long j = 0; j < specialAreas[i].numSubAreas; j++)
@@ -2141,15 +2140,15 @@ void GlobalMap::calcSpecialTypes (void) {
 				if (area > -1)
 					areas[area].offMap = true;
 			}
-//systemHeap->walkHeap();
+//g_systemHeap->walkHeap();
 }
 
 //------------------------------------------------------------------------------------------
 
 void GlobalMap::beginDoorProcessing (void) {
 
-//systemHeap->walkHeap();
-	doorBuildList = (GlobalMapDoorPtr)systemHeap->Malloc(sizeof(GlobalMapDoor) * MAX_GLOBALMAP_DOORS);
+//g_systemHeap->walkHeap();
+	doorBuildList = (GlobalMapDoorPtr)g_systemHeap->Malloc(sizeof(GlobalMapDoor) * MAX_GLOBALMAP_DOORS);
 	for (long i = 0; i < MAX_GLOBALMAP_DOORS; i++) {
 		doorBuildList[i].row = -1;
 		doorBuildList[i].col = -1;
@@ -2220,19 +2219,19 @@ void GlobalMap::addDoor (long area1, long area2, long row, long col, long length
 
 void GlobalMap::endDoorProcessing (void) {
 
-//	systemHeap->walkHeap();
+//	g_systemHeap->walkHeap();
 	if (doorBuildList) {
 		//-----------------------------------------------------------------------
 		// First, save the door list. Note that we make 2 extra doors, to be used
 		// by the pathfinder...
-		doors = (GlobalMapDoorPtr)systemHeap->Malloc(sizeof(GlobalMapDoor) * (numDoors + NUM_DOOR_OFFSETS));
+		doors = (GlobalMapDoorPtr)g_systemHeap->Malloc(sizeof(GlobalMapDoor) * (numDoors + NUM_DOOR_OFFSETS));
 		memcpy(doors, doorBuildList, sizeof(GlobalMapDoor) * (numDoors + NUM_DOOR_OFFSETS));
 		//----------------------------
 		// Free the temp build list...
-		systemHeap->Free(doorBuildList);
+		g_systemHeap->Free(doorBuildList);
 		doorBuildList = NULL;
 	}
-//	systemHeap->walkHeap();
+//	g_systemHeap->walkHeap();
 }
 
 //------------------------------------------------------------------------------------------
@@ -2385,7 +2384,7 @@ void GlobalMap::calcAreaDoors (void) {
 		areas[area].numDoors = numAreaDoors(area);
 		numDoorInfos += areas[area].numDoors;
 		if (areas[area].numDoors) {
-			areas[area].doors = (DoorInfoPtr)systemHeap->Malloc(sizeof(DoorInfo) * areas[area].numDoors);
+			areas[area].doors = (DoorInfoPtr)g_systemHeap->Malloc(sizeof(DoorInfo) * areas[area].numDoors);
 			getAreaDoors(area, areas[area].doors);
 			}
 		else
@@ -2581,7 +2580,7 @@ void GlobalMap::calcDoorLinks (void) {
 				//----------------------------------------------------------------
 				// Allocate enough links for all links to this door plus a scratch
 				// link used during path calc...
-				thisDoor->links[s] = (DoorLinkPtr)systemHeap->Malloc(sizeof(DoorLink) * (thisDoor->numLinks[s] + NUM_EXTRA_DOOR_LINKS));
+				thisDoor->links[s] = (DoorLinkPtr)g_systemHeap->Malloc(sizeof(DoorLink) * (thisDoor->numLinks[s] + NUM_EXTRA_DOOR_LINKS));
 				numDoorLinks += (thisDoor->numLinks[s] + NUM_EXTRA_DOOR_LINKS);
 				gosASSERT(thisDoor->links[s] != NULL);
 				long linkIndex = 0;
@@ -2606,17 +2605,17 @@ void GlobalMap::calcDoorLinks (void) {
 	// Now, set up the start and goal doors...
 	doors[numDoors + DOOR_OFFSET_START].numLinks[0] = maxDoors;
 	numDoorLinks += (doors[numDoors + DOOR_OFFSET_START].numLinks[0] + NUM_EXTRA_DOOR_LINKS);
-	doors[numDoors + DOOR_OFFSET_START].links[0] = (DoorLinkPtr)systemHeap->Malloc(sizeof(DoorLink) * (doors[numDoors + DOOR_OFFSET_START].numLinks[0] + NUM_EXTRA_DOOR_LINKS));
+	doors[numDoors + DOOR_OFFSET_START].links[0] = (DoorLinkPtr)g_systemHeap->Malloc(sizeof(DoorLink) * (doors[numDoors + DOOR_OFFSET_START].numLinks[0] + NUM_EXTRA_DOOR_LINKS));
 	doors[numDoors + DOOR_OFFSET_START].numLinks[1] = 0;
 	numDoorLinks += (doors[numDoors + DOOR_OFFSET_START].numLinks[1] + NUM_EXTRA_DOOR_LINKS);
-	doors[numDoors + DOOR_OFFSET_START].links[1] = (DoorLinkPtr)systemHeap->Malloc(sizeof(DoorLink) * (doors[numDoors + DOOR_OFFSET_START].numLinks[1] + NUM_EXTRA_DOOR_LINKS));
+	doors[numDoors + DOOR_OFFSET_START].links[1] = (DoorLinkPtr)g_systemHeap->Malloc(sizeof(DoorLink) * (doors[numDoors + DOOR_OFFSET_START].numLinks[1] + NUM_EXTRA_DOOR_LINKS));
 
 	doors[numDoors + DOOR_OFFSET_GOAL].numLinks[0] = maxDoors;
 	numDoorLinks += (doors[numDoors + DOOR_OFFSET_GOAL].numLinks[0] + NUM_EXTRA_DOOR_LINKS);
-	doors[numDoors + DOOR_OFFSET_GOAL].links[0] = (DoorLinkPtr)systemHeap->Malloc(sizeof(DoorLink) * (doors[numDoors + DOOR_OFFSET_GOAL].numLinks[0] + NUM_EXTRA_DOOR_LINKS));
+	doors[numDoors + DOOR_OFFSET_GOAL].links[0] = (DoorLinkPtr)g_systemHeap->Malloc(sizeof(DoorLink) * (doors[numDoors + DOOR_OFFSET_GOAL].numLinks[0] + NUM_EXTRA_DOOR_LINKS));
 	doors[numDoors + DOOR_OFFSET_GOAL].numLinks[1] = 0;
 	numDoorLinks += (doors[numDoors + DOOR_OFFSET_GOAL].numLinks[1] + NUM_EXTRA_DOOR_LINKS);
-	doors[numDoors + DOOR_OFFSET_GOAL].links[1] = (DoorLinkPtr)systemHeap->Malloc(sizeof(DoorLink) * (doors[numDoors + DOOR_OFFSET_GOAL].numLinks[1] + NUM_EXTRA_DOOR_LINKS));
+	doors[numDoors + DOOR_OFFSET_GOAL].links[1] = (DoorLinkPtr)g_systemHeap->Malloc(sizeof(DoorLink) * (doors[numDoors + DOOR_OFFSET_GOAL].numLinks[1] + NUM_EXTRA_DOOR_LINKS));
 
 	long numberL = 0;
 	for (long i = 0; i < (numDoors + NUM_DOOR_OFFSETS); i++) {
@@ -2775,7 +2774,7 @@ void GlobalMap::setPathCost (long startArea, long goalArea, bool withSpecialArea
 void GlobalMap::initPathCostTable (void) {
 
 	if (pathCostTable) {
-		systemHeap->Free(pathCostTable);
+		g_systemHeap->Free(pathCostTable);
 		pathCostTable = NULL;
 	}
 
@@ -2783,7 +2782,7 @@ void GlobalMap::initPathCostTable (void) {
 //	if (numAreas > 600)
 //		numAreas = 600;
 
-	pathCostTable = (unsigned char*)systemHeap->Malloc(numAreas * numAreas);
+	pathCostTable = (unsigned char*)g_systemHeap->Malloc(numAreas * numAreas);
 	gosASSERT(pathCostTable != NULL);
 
 	for (long startArea = 0; startArea < numAreas; startArea++)
@@ -2826,10 +2825,10 @@ void GlobalMap::resetPathCostTable (void) {
 void GlobalMap::calcPathCostTable (void) {
 
 	if (pathCostTable) {
-		systemHeap->Free(pathCostTable);
+		g_systemHeap->Free(pathCostTable);
 		pathCostTable = NULL;
 	}
-	pathCostTable = (unsigned char*)systemHeap->Malloc(numAreas * numAreas);
+	pathCostTable = (unsigned char*)g_systemHeap->Malloc(numAreas * numAreas);
 	gosASSERT(pathCostTable != NULL);
 
 	for (long i = 0; i < numAreas; i++)
@@ -2994,7 +2993,7 @@ Stuff::Vector3D GlobalMap::getDoorWorldPos (long area, long door, long* prevGoal
 long GlobalMap::build (MissionMapCellInfo* mapData) {
 
 	#ifdef _DEBUG
-	//systemHeap->walkHeap(false,false,"GlobalMap BAD HEAP1\n");
+	//g_systemHeap->walkHeap(false,false,"GlobalMap BAD HEAP1\n");
 	#endif
 
 	//--------------------------------
@@ -3010,11 +3009,11 @@ long GlobalMap::build (MissionMapCellInfo* mapData) {
 	numAreas = 0;
 	numSpecialAreas = 0;
 	if (specialAreas) {
-		systemHeap->Free(specialAreas);
+		g_systemHeap->Free(specialAreas);
 		specialAreas = NULL;
 	}
 	if (mapData) {
-		specialAreas = (GlobalSpecialAreaInfo*)systemHeap->Malloc(sizeof(GlobalSpecialAreaInfo) * MAX_SPECIAL_AREAS);
+		specialAreas = (GlobalSpecialAreaInfo*)g_systemHeap->Malloc(sizeof(GlobalSpecialAreaInfo) * MAX_SPECIAL_AREAS);
 		if (specialAreas == NULL)
 			Fatal(0, " GlobalMap.build: unable to malloc specialAreas ");
 		calcSpecialAreas(mapData);
@@ -3039,14 +3038,14 @@ long GlobalMap::build (MissionMapCellInfo* mapData) {
 			calcSectorPaths(scenarioMap, r, c);
 */
 	#ifdef _DEBUG
-	//systemHeap->walkHeap(false,false,"GlobalMap BAD HEAP2\n");
+	//g_systemHeap->walkHeap(false,false,"GlobalMap BAD HEAP2\n");
 	#endif
 
 	//if (blank)
 	//	calcPathCostTable();
 
 	if (specialAreas) {
-		systemHeap->Free(specialAreas);
+		g_systemHeap->Free(specialAreas);
 		specialAreas = NULL;
 	}
 
@@ -3365,7 +3364,7 @@ long GlobalMap::calcPath (long startArea,
 						  long goalCol) {
 
 	#ifdef _DEBUG
-	//systemHeap->walkHeap(false,false,"GlobalMap:calc BAD HEAP1\n");
+	//g_systemHeap->walkHeap(false,false,"GlobalMap:calc BAD HEAP1\n");
 	#endif
 
 	if ((startArea == -1) || (goalArea == -1))
@@ -3664,7 +3663,7 @@ long GlobalMap::calcPath (long startArea,
 		}
 
 		#ifdef _DEBUG
-		//systemHeap->walkHeap(false,false,"GlobalMap:calc BAD HEAP2\n");
+		//g_systemHeap->walkHeap(false,false,"GlobalMap:calc BAD HEAP2\n");
 		#endif
 
 #ifdef USE_PATH_COST_TABLE
@@ -3826,11 +3825,11 @@ void GlobalMap::print (char* fileName) {
 void GlobalMap::destroy (void) {
 
 	#ifdef _DEBUG
-//	systemHeap->walkHeap(false,false,"GlobalMap BAD HEAP1\n");
+//	g_systemHeap->walkHeap(false,false,"GlobalMap BAD HEAP1\n");
 	#endif
 
 	if (areaMap) {
-		systemHeap->Free(areaMap);
+		g_systemHeap->Free(areaMap);
 		areaMap = NULL;
 	}
 
@@ -3838,16 +3837,16 @@ void GlobalMap::destroy (void) {
 		if (!doorInfos) {
 			for (long i = 0; i < (numAreas + 1); i++) {
 				if (areas[i].cellsCovered) {
-					systemHeap->Free(areas[i].cellsCovered);
+					g_systemHeap->Free(areas[i].cellsCovered);
 					areas[i].cellsCovered = NULL;
 				}
 				if (areas[i].doors) {
-					systemHeap->Free(areas[i].doors);
+					g_systemHeap->Free(areas[i].doors);
 					areas[i].doors = NULL;
 				}
 			}
 		}
-		systemHeap->Free(areas);
+		g_systemHeap->Free(areas);
 		areas = NULL;
 	}
 
@@ -3856,33 +3855,33 @@ void GlobalMap::destroy (void) {
 			for (long i = 0; i < (numDoors + NUM_DOOR_OFFSETS); i++)
 				for (long s = 0; s < 2; s++) {
 					if (doors[i].links[s]) {
-						systemHeap->Free(doors[i].links[s]);
+						g_systemHeap->Free(doors[i].links[s]);
 						doors[i].links[s] = NULL;
 					}
 				}
 		}
-		systemHeap->Free(doors);
+		g_systemHeap->Free(doors);
 		doors = NULL;
 	}
 
 	if (doorInfos) {
-		systemHeap->Free(doorInfos);
+		g_systemHeap->Free(doorInfos);
 		doorInfos = NULL;
 	}
 
 	if (doorLinks) {
-		systemHeap->Free(doorLinks);
+		g_systemHeap->Free(doorLinks);
 		doorLinks = NULL;
 	}
 
 	if (pathExistsTable) {
-		systemHeap->Free(pathExistsTable);
+		g_systemHeap->Free(pathExistsTable);
 		pathExistsTable = NULL;
 	}
 
 #ifdef USE_PATH_COST_TABLE
 	if (pathCostTable) {
-		systemHeap->Free(pathCostTable);
+		g_systemHeap->Free(pathCostTable);
 		pathCostTable = NULL;
 	}
 #endif
@@ -3967,7 +3966,7 @@ void GlobalMap::writeLog (char* s) {
 
 void* MoveMap::operator new (size_t ourSize) {
 
-	void* result = systemHeap->Malloc(ourSize);
+	void* result = g_systemHeap->Malloc(ourSize);
 	return(result);
 }
 
@@ -3975,7 +3974,7 @@ void* MoveMap::operator new (size_t ourSize) {
 
 void MoveMap::operator delete (void* us) {
 
-	systemHeap->Free(us);
+	g_systemHeap->Free(us);
 }	
 
 //---------------------------------------------------------------------------
@@ -3985,17 +3984,17 @@ void MoveMap::init (long maxW, long maxH) {
 	width = maxWidth = maxW;
 	height = maxHeight = maxH;
 	long mapByteSize = sizeof(MoveMapNode) * maxWidth * maxHeight;
-	map = (MoveMapNodePtr)systemHeap->Malloc(mapByteSize);
+	map = (MoveMapNodePtr)g_systemHeap->Malloc(mapByteSize);
 	gosASSERT(map != NULL);
 
-	mapRowStartTable = (long*)systemHeap->Malloc(maxHeight * sizeof(long));
+	mapRowStartTable = (long*)g_systemHeap->Malloc(maxHeight * sizeof(long));
 	gosASSERT(mapRowStartTable != NULL);
 	for (long r = 0; r < maxHeight; r++)
 		mapRowStartTable[r] = r * maxWidth;
 
-	mapRowTable = (long*)systemHeap->Malloc(maxHeight * maxWidth * sizeof(long));
+	mapRowTable = (long*)g_systemHeap->Malloc(maxHeight * maxWidth * sizeof(long));
 	gosASSERT(mapRowTable != NULL);
-	mapColTable = (long*)systemHeap->Malloc(maxHeight * maxWidth * sizeof(long));
+	mapColTable = (long*)g_systemHeap->Malloc(maxHeight * maxWidth * sizeof(long));
 	gosASSERT(mapColTable != NULL);
 	for (r = 0; r < maxHeight; r++)
 		for (long c = 0; c < maxWidth; c++) {
@@ -4644,7 +4643,7 @@ long MoveMap::setUp (long level,
 					map[moveMapIndex].setFlag(MOVEFLAG_OFFMAP);
 
 				long areaID = GlobalMoveMap[moveLevel]->calcArea(ULr + cellRow, ULc + cellCol);
-				if (CullPathAreas && (areaID != thruAreas[0]) && (areaID != thruAreas[1]))
+				if (areaID != thruAreas[0] && areaID != thruAreas[1])
 					cost = COST_BLOCKED;
 				else if (offMapCell && !travelOffMap)
 					cost = COST_BLOCKED;
@@ -6370,7 +6369,7 @@ void MoveMap::writeDebug (File* debugFile) {
 	debugFile->writeString("-------\n");
 	for (r = 0; r < height; r++) {
 		outString[0] = NULL;
-		char numStr[10];
+		char numStr[10] = {};
 		for (long c = 0; c < width; c++) {
 			if ((goalR == r) && (goalC == c))
 				sprintf(numStr, "G");
@@ -6422,25 +6421,25 @@ void MoveMap::destroy (void) {
 
 	if (map) 
 	{
-		systemHeap->Free(map);
+		g_systemHeap->Free(map);
 		map = NULL;
 	}
 
 	if (mapRowStartTable)
 	{
-		systemHeap->Free(mapRowStartTable);
+		g_systemHeap->Free(mapRowStartTable);
 		mapRowStartTable = NULL;
 	}
 
 	if (mapRowTable)
 	{
-		systemHeap->Free(mapRowTable);
+		g_systemHeap->Free(mapRowTable);
 		mapRowTable = NULL;
 	}
 
 	if (mapColTable)
 	{
-		systemHeap->Free(mapColTable);
+		g_systemHeap->Free(mapColTable);
 		mapColTable = NULL;
 	}
 

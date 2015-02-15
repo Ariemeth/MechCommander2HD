@@ -74,9 +74,7 @@ TG_TrianglePool			*trianglePool = NULL;
 //-------------------------------------------------------------------------------
 extern bool useVertexLighting;
 extern bool useFaceLighting;
-extern bool hasGuardBand;
 extern bool useFog;
-extern DWORD BaseVertexColor;
 bool drawOldWay = false;
 extern bool useShadows;
 bool useLocalShadows = false;
@@ -1741,21 +1739,8 @@ long TG_Shape::MultiTransformShape (Stuff::Matrix4D *shapeToClip, Stuff::Point3D
 			redFinal = blueFinal = greenFinal = 0xff;	//Just max out its light.
 		}
 
-		if (BaseVertexColor)
-		{
-			redFinal += ((BaseVertexColor>>16) & 0x000000ff);
-			if (redFinal > 0xff)
-				redFinal = 0xff;
-				
-			greenFinal += ((BaseVertexColor>>8) & 0x000000ff);
-			if (greenFinal > 0xff)
-				greenFinal = 0xff;
-				
-			blueFinal += (BaseVertexColor & 0x000000ff);
-			if (blueFinal > 0xff)
-				blueFinal = 0xff;
-		}
-			
+		// MCHD CHANGE (02/14/2015): BaseVertexColor removed
+
 		if (useVertexLighting && (Environment.Renderer != 3))
 		{
 			if (!isSpotlight && !isWindow)
@@ -2406,7 +2391,7 @@ void TG_Shape::Render (float forceZ, bool isHudElement, BYTE alphaValue, bool is
 		!listOfTriangles ||
 		!listOfVisibleFaces ||
 		!listOfVisibleShadows ||
-		(/*(lastTurnTransformed != (turn-1)) &&*/ (lastTurnTransformed != turn)))
+		(/*(lastTurnTransformed != (turn-1)) &&*/ ((long)lastTurnTransformed != turn)))
 		return;
 
 	if (fogColor != 0xffffffff)
@@ -2570,7 +2555,7 @@ bool TG_Shape::PerPolySelect (float mouseX, float mouseY)
 			!listOfTriangles ||
 			!listOfVisibleFaces ||
 			!listOfVisibleShadows ||
-			((lastTurnTransformed != (turn-1)) /*&& (lastTurnTransformed != turn)*/))
+			(((long)lastTurnTransformed != (turn - 1)) /*&& (lastTurnTransformed != turn)*/))
 			return false;
 	}
 	else
@@ -2581,7 +2566,7 @@ bool TG_Shape::PerPolySelect (float mouseX, float mouseY)
 			!listOfTriangles ||
 			!listOfVisibleFaces ||
 			!listOfVisibleShadows ||
-			((lastTurnTransformed != (turn-1)) && (lastTurnTransformed != turn)))
+			(((long)lastTurnTransformed != (turn - 1)) && ((long)lastTurnTransformed != turn)))
 			return false;
 	}
 
@@ -3039,7 +3024,7 @@ long TG_Shape::RenderShadows (long startFace)
 		!listOfTriangles ||
 		!listOfVisibleFaces ||
 		!listOfVisibleShadows ||
-		(/*(lastTurnTransformed != (turn-1)) &&*/ (lastTurnTransformed != turn)))
+		(/*(lastTurnTransformed != (turn-1)) &&*/ ((long)lastTurnTransformed != turn)))
 		return startFace;
 
  	if (fogColor != 0xffffffff)

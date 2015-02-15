@@ -78,11 +78,9 @@ extern long 	mechRGBLookup2[];
 
 extern bool 	useShadows;
 
-extern long			ObjectTextureSize;
+extern long			g_objectTextureSize;
 TG_TypeMultiShapePtr GVAppearanceType::SensorTriangleShape = NULL;
 TG_TypeMultiShapePtr GVAppearanceType::SensorCircleShape = NULL;
-
-extern bool reloadBounds;
 
 #define SPIN_RATE		90.0f
 
@@ -749,7 +747,7 @@ void GVAppearance::init (AppearanceTypePtr tree, GameObjectPtr obj)
 			gvShape->GetTextureName(i,txmName,256);
 
 			char texturePath[1024];
-			sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+			sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 	
 			FullPathFileName textureName;
 			textureName.init(texturePath,txmName,"");
@@ -811,7 +809,7 @@ void GVAppearance::init (AppearanceTypePtr tree, GameObjectPtr obj)
 				gvShadowShape->GetTextureName(i,txmName,256);
 		
 				char texturePath[1024];
-				sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+				sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 		
 				FullPathFileName textureName;
 				textureName.init(texturePath,txmName,"");
@@ -853,7 +851,7 @@ void GVAppearance::init (AppearanceTypePtr tree, GameObjectPtr obj)
 			sensorTriangleShape->GetTextureName(i,txmName,256);
 
 			char texturePath[1024];
-			sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+			sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 	
 			FullPathFileName textureName;
 			textureName.init(texturePath,txmName,"");
@@ -889,7 +887,7 @@ void GVAppearance::init (AppearanceTypePtr tree, GameObjectPtr obj)
 			sensorCircleShape->GetTextureName(i,txmName,256);
 
 			char texturePath[1024];
-			sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+			sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 	
 			FullPathFileName textureName;
 			textureName.init(texturePath,txmName,"");
@@ -1059,7 +1057,7 @@ void GVAppearance::setObjStatus (long oStatus)
 			gvShape->GetTextureName(i,txmName,256);
 
 			char texturePath[1024];
-			sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+			sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 	
 			FullPathFileName textureName;
 			textureName.init(texturePath,txmName,"");
@@ -1268,7 +1266,7 @@ void GVAppearance::resetPaintScheme (DWORD red, DWORD green, DWORD blue)
 	gvShape->GetTextureName(0,txmName,256);
 
    	char texturePath[1024];
-   	sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+   	sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 
    	FullPathFileName textureName;
    	textureName.init(texturePath,txmName,"");
@@ -1507,7 +1505,7 @@ void GVAppearance::debugUpdate (void)
 
 	velocity *= velMag * worldUnitsPerMeter;
 
-	velocity *= frameLength;
+	velocity *= g_deltaTime;
 
 	debugGVActorPosition += velocity;
 	debugGVActorPosition.z = land->getTerrainElevation(debugGVActorPosition);
@@ -1564,14 +1562,14 @@ bool GVAppearance::recalcBounds (void)
 	
 			Distance.Subtract(objPosition,eyePosition);
 			eyeDistance = Distance.GetApproximateLength();
-			if (eyeDistance > Camera::MaxClipDistance)
+			if (eyeDistance > Camera::maxClipDistance)
 			{
 				hazeFactor = 1.0f;
 				inView = false;
 			}
-			else if (eyeDistance > Camera::MinHazeDistance)
+			else if (eyeDistance > Camera::minHazeDistance)
 			{
-				Camera::HazeFactor = (eyeDistance - Camera::MinHazeDistance) * Camera::DistanceFactor;
+				Camera::HazeFactor = (eyeDistance - Camera::minHazeDistance) * Camera::DistanceFactor;
 				inView = true;
 			}
 			else
@@ -1611,9 +1609,6 @@ bool GVAppearance::recalcBounds (void)
 		
 		if (inView)
 		{
-			if (reloadBounds)
-				appearType->reinit();
-
 			appearType->boundsLowerRightY = (OBBRadius * eye->getTiltFactor() * 2.0f);
 			
 			//-------------------------------------------------------------------------
@@ -1754,7 +1749,7 @@ bool GVAppearance::recalcBounds (void)
 						}
 						
 						// we are at this LOD level.
-						if (selectLOD != currentLOD)
+						if ((long)selectLOD != currentLOD)
 						{
 							currentLOD = selectLOD;
 
@@ -1777,7 +1772,7 @@ bool GVAppearance::recalcBounds (void)
 								gvShape->GetTextureName(j,txmName,256);
 
 								char texturePath[1024];
-								sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+								sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 
 								FullPathFileName textureName;
 								textureName.init(texturePath,txmName,"");
@@ -1830,7 +1825,7 @@ bool GVAppearance::recalcBounds (void)
 								gvShape->GetTextureName(i,txmName,256);
 										
 								char texturePath[1024];
-								sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+								sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 						
 								FullPathFileName textureName;
 								textureName.init(texturePath,txmName,"");
@@ -2566,7 +2561,7 @@ void GVAppearance::updateGeometry (void)
 		activity->Execute(&info);
 	}
 	
-	sensorSpin += SPIN_RATE * frameLength;
+	sensorSpin += SPIN_RATE * g_deltaTime;
 	if (sensorSpin > 180)
 		sensorSpin -= 360;
 
@@ -2598,7 +2593,7 @@ long GVAppearance::update (bool animate)
 		{
 			if (nodeRecycle[i] > 0.0f)
 			{
-				nodeRecycle[i] -= frameLength;
+				nodeRecycle[i] -= g_deltaTime;
 				if (nodeRecycle[i] < 0.0f)
 					nodeRecycle[i] = 0.0f;
 			}
@@ -2608,8 +2603,8 @@ long GVAppearance::update (bool animate)
 	//Update flashing regardless of view!!!
 	if (duration > 0.0f)
 	{
-		duration -= frameLength;
-		currentFlash -= frameLength;
+		duration -= g_deltaTime;
+		currentFlash -= g_deltaTime;
 		if (currentFlash < 0.0f)
 		{
 			drawFlash ^= true;
@@ -2633,7 +2628,7 @@ long GVAppearance::update (bool animate)
 	{
 		//--------------------------------------------------------
 		// Make sure animation runs no faster than bdFrameRate fps.
-		float frameInc = gvFrameRate * frameLength;
+		float frameInc = gvFrameRate * g_deltaTime;
 		
 		//---------------------------------------
 		// Increment Frames -- Everything else!

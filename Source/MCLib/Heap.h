@@ -52,7 +52,7 @@
 
 #define MAX_HEAPS		256
 //---------------------------------------------------------------------------
-extern UserHeapPtr systemHeap;
+extern UserHeapPtr g_systemHeap;
 
 //---------------------------------------------------------------------------
 // Additional Debug Information

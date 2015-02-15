@@ -326,7 +326,7 @@ void PilotReadyScreen::render(int xOffset, int yOffset )
 
 	if ( launchFadeTime )
 	{
-		launchFadeTime += frameLength;
+		launchFadeTime += g_deltaTime;
 		long color = interpolateColor( 0x00000000, 0x7f000000, launchFadeTime/.5f );
 		GUI_RECT rect = { 0, 0, Environment.screenWidth, Environment.screenHeight };
 		drawRect( rect, color );

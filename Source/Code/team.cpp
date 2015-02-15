@@ -70,6 +70,8 @@
 #include "warrior.h"
 #endif
 
+#include "prefs.h"
+
 char Team::relations[MAX_TEAMS][MAX_TEAMS] = {
 	{0, 2, RELATION_NEUTRAL, 2, 2, 2, 2, 2},
 	{2, 0, 2, 2, 2, 2, 2, 2},
@@ -87,7 +89,6 @@ TeamPtr			Team::home = NULL;
 TeamPtr			Team::teams[MAX_TEAMS] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
 SortListPtr		Team::sortList = NULL;
 
-bool			useRealLOS = true;
 #ifdef LAB_ONLY
 extern bool drawTerrainGrid;
 extern long currentLineElement;
@@ -219,7 +220,7 @@ void Team::addToRoster (MoverPtr mover) {
 void Team::removeFromRoster (MoverPtr mover) {
 
 	for (long i = 0; i < rosterSize; i++)
-		if (roster[i] == mover->getWatchID()) {
+		if (roster[i] == (GameObjectWatchID)mover->getWatchID()) {
 			roster[i] = roster[--rosterSize];
 			break;
 		}
@@ -351,7 +352,7 @@ bool Team::isTargeting (GameObjectWatchID targetWID, GameObjectWatchID exceptWID
 			MechWarriorPtr pilot = mover->getPilot();
 			if (pilot) {
 				GameObjectPtr target = pilot->getCurrentTarget();
-				if (target && (target->getWatchID() == targetWID))
+				if (target && ((GameObjectWatchID)target->getWatchID() == targetWID))
 					return(true);
 			}
 		}
@@ -362,7 +363,7 @@ bool Team::isTargeting (GameObjectWatchID targetWID, GameObjectWatchID exceptWID
 			MechWarriorPtr pilot = mover->getPilot();
 			if (pilot) {
 				GameObjectPtr target = pilot->getCurrentTarget();
-				if (target && (target->getWatchID() == targetWID))
+				if (target && ((GameObjectWatchID)target->getWatchID() == targetWID))
 					return(true);
 			}
 		}
@@ -382,7 +383,7 @@ bool Team::isCapturing (GameObjectWatchID targetWID, GameObjectWatchID exceptWID
 			MechWarriorPtr pilot = mover->getPilot();
 			if (pilot && (pilot->getCurTacOrder()->code == TACTICAL_ORDER_CAPTURE)) {
 				GameObjectPtr target = pilot->getCurTacOrder()->getTarget();
-				if (target && (target->getWatchID() == targetWID))
+				if (target && ((GameObjectWatchID)target->getWatchID() == targetWID))
 					return(true);
 			}
 		}
@@ -393,7 +394,7 @@ bool Team::isCapturing (GameObjectWatchID targetWID, GameObjectWatchID exceptWID
 			MechWarriorPtr pilot = mover->getPilot();
 			if (pilot && (pilot->getCurTacOrder()->code == TACTICAL_ORDER_CAPTURE)) {
 				GameObjectPtr target = pilot->getCurTacOrder()->getTarget();
-				if (target && (target->getWatchID() == targetWID))
+				if (target && ((GameObjectWatchID)target->getWatchID() == targetWID))
 					return(true);
 			}
 		}
@@ -453,7 +454,7 @@ void Team::markSeen (Stuff::Vector3D& location, float specialUnitExpand) {
 
 SystemTrackerPtr Team::addJammer (GameObjectPtr owner, long masterId) {
 
-	SystemTrackerPtr newJammer = (SystemTrackerPtr)systemHeap->Malloc(sizeof(SystemTracker));
+	SystemTrackerPtr newJammer = (SystemTrackerPtr)g_systemHeap->Malloc(sizeof(SystemTracker));
 	if (!newJammer)
 		Fatal(0, " Cannot allocate SystemTracker ");
 
@@ -514,7 +515,7 @@ void Team::removeJammer (SystemTrackerPtr jammerTracker) {
 	else
 		jammers = jammerTracker->next;
 	jammerTracker->owner = NULL;
-	systemHeap->Free(jammerTracker);
+	g_systemHeap->Free(jammerTracker);
 }
 
 //---------------------------------------------------------------------------
@@ -541,7 +542,7 @@ float Team::getJammerEffect (void) {
 
 SystemTrackerPtr Team::addECM (GameObjectPtr owner, long masterId) {
 
-	SystemTrackerPtr newECM = (SystemTrackerPtr)systemHeap->Malloc(sizeof(SystemTracker));
+	SystemTrackerPtr newECM = (SystemTrackerPtr)g_systemHeap->Malloc(sizeof(SystemTracker));
 	if (!newECM)
 		Fatal(0, " Cannot allocate SystemTracker ");
 
@@ -607,7 +608,7 @@ void Team::removeECM (SystemTrackerPtr ecm) {
 	ecm->owner = NULL;
 	//---------------
 	// Free up mem...
-	systemHeap->Free(ecm);
+	g_systemHeap->Free(ecm);
 }
 
 //---------------------------------------------------------------------------
@@ -740,7 +741,7 @@ void Team::destroy (void) {
 		SystemTrackerPtr curTracker = ecms;
 		while (curTracker) {
 			SystemTrackerPtr nextTracker = curTracker->next;
-			systemHeap->Free(curTracker);
+			g_systemHeap->Free(curTracker);
 			curTracker = nextTracker;
 		}
 		ecms = NULL;
@@ -750,7 +751,7 @@ void Team::destroy (void) {
 		SystemTrackerPtr curTracker = jammers;
 		while (curTracker) {
 			SystemTrackerPtr nextTracker = curTracker->next;
-			systemHeap->Free(curTracker);
+			g_systemHeap->Free(curTracker);
 			curTracker = nextTracker;
 		}
 		jammers = NULL;
@@ -937,7 +938,7 @@ bool Team::lineOfSight (float startLocal, long mCellRow, long mCellCol, long tCe
 		}
 	}
 
-	if (useRealLOS)
+	if (g_userPreferences.useRealLOS)
 	{
 		//------------------------------------------------------------------------------------------
 		// Within magic radius.  Check REAL LOS now.
@@ -1078,10 +1079,6 @@ bool Team::lineOfSight (float startLocal, long mCellRow, long mCellCol, float en
 	// Once we allow teams to have alliances (for contacts,
 	// etc.), simply set all nec. team bits in this mask...
 
-	//TILE HACK...
-	long tileRow = tCellRow / 3;
-	long tileCol = tCellCol / 3;
-
 	if ((teamId < 0) || (teamId >= MAX_TEAMS))	//Not on any team.  It can see everything!
 		return true;
 
@@ -1131,7 +1128,7 @@ bool Team::lineOfSight (float startLocal, long mCellRow, long mCellCol, float en
 	}
 #endif
 
-	if (useRealLOS)
+	if (g_userPreferences.useRealLOS)
 	{
 		//------------------------------------------------------------------------------------------
 		// Within magic radius.  Check REAL LOS now.

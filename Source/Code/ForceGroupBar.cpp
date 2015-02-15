@@ -25,8 +25,7 @@ int	  ForceGroupBar::iconsPerRow = 8;
 
 StaticInfo*  ForceGroupBar::s_coverIcon = NULL;
 
-extern bool useLeftRightMouseProfile;
-extern char CDInstallPath[];
+extern char g_cdInstallPath[];
 void EnterWindowMode();
 void EnterFullScreenMode();
 void __stdcall ExitGameOS();
@@ -118,10 +117,10 @@ void ForceGroupBar::removeMover (Mover* mover) {
 void ForceGroupBar::update( )
 {
 	bool bSelect = userInput->isLeftClick();
-	bool bCommand = useLeftRightMouseProfile ? userInput->isRightClick() : userInput->isLeftClick();
+	bool bCommand = g_userPreferences.leftRightMouseProfile ? userInput->isRightClick() : userInput->isLeftClick();
 	bool shiftDn = userInput->getKeyDown( KEY_LSHIFT ) ? true : false;
-	bool bCamera = useLeftRightMouseProfile ? (userInput->isLeftDoubleClick()) : (userInput->isRightClick() && !userInput->isRightDrag());
-	bool bForceGroup = useLeftRightMouseProfile ? (userInput->isLeftDoubleClick()) : userInput->isLeftDoubleClick();
+	bool bCamera = g_userPreferences.leftRightMouseProfile ? (userInput->isLeftDoubleClick()) : (userInput->isRightClick() && !userInput->isRightDrag());
+	bool bForceGroup = g_userPreferences.leftRightMouseProfile ? (userInput->isLeftDoubleClick()) : userInput->isLeftDoubleClick();
 	
 	if ( bCamera )
 		bSelect = 0;
@@ -153,7 +152,7 @@ void ForceGroupBar::update( )
 		&& !ControlGui::instance->isSelectingInfoObject() && (!ControlGui::instance->getRepair()
 		&& !MissionInterfaceManager::instance()->hotKeyIsPressed( EJECT_COMMAND_INDEX )
 		&& !ControlGui::instance->getGuard()
-		|| useLeftRightMouseProfile) )
+		|| g_userPreferences.leftRightMouseProfile) )
 	{
 		Team* pTeam = Team::home;
 		for ( int i = 0; i < pTeam->rosterSize; ++i )
@@ -236,7 +235,7 @@ void ForceGroupBar::update( )
 
 			if ( bSelect && !ControlGui::instance->infoButtonPressed() )
 			{
-				if ( !(ControlGui::instance->getRepair() && MissionInterfaceManager::instance()->canRepair(icons[i]->unit ) && !useLeftRightMouseProfile) )
+				if ( !(ControlGui::instance->getRepair() && MissionInterfaceManager::instance()->canRepair(icons[i]->unit ) && !g_userPreferences.leftRightMouseProfile) )
 					icons[i]->click( shiftDn ); 
 
 				ControlGui::instance->setInfoWndMover( icons[i]->unit );	
@@ -354,7 +353,7 @@ void ForceGroupBar::render()
 
 	if (forceNumFlashes)
 	{
-		forceFlashTime += frameLength;
+		forceFlashTime += g_deltaTime;
 		if ( forceFlashTime > .5f )
 		{
 			forceFlashTime = 0.0f;
@@ -426,7 +425,7 @@ bool ForceGroupBar::setPilotVideo( const char* pVideo, MechWarrior* pPilot )
 	}
 
 	else if  (ForceGroupIcon::bMovie || ControlGui::instance->isMoviePlaying()
-		|| ForceGroupIcon::pilotVideoTexture || !prefs.pilotVideos)
+		|| ForceGroupIcon::pilotVideoTexture || !g_userPreferences.pilotVideos)
 	{
 		// one already playing...
 		// OR we don't want them playing.
@@ -443,7 +442,7 @@ bool ForceGroupBar::setPilotVideo( const char* pVideo, MechWarrior* pPilot )
 				FullPathFileName aviPath;
 				aviPath.init( moviePath, pVideo, ".bik" );
 
-				if ( (frameRate > 15.0) && fileExists(aviPath) && prefs.pilotVideos) // This is about correct.  Slower then this and movie has hard time keeping up!
+				if ( (frameRate > 15.0) && fileExists(aviPath) && g_userPreferences.pilotVideos) // This is about correct.  Slower then this and movie has hard time keeping up!
 				{
 					//Update the RECT every frame.  What if we shift Icons around cause someone died!!
 					RECT vRect;
@@ -476,7 +475,7 @@ bool ForceGroupBar::setPilotVideo( const char* pVideo, MechWarrior* pPilot )
 
 						//Not in main installed directory and not in fastfile.  Look on CD.
 						char actualPath[2048];
-						strcpy(actualPath,CDInstallPath);
+						strcpy(actualPath,g_cdInstallPath);
 						strcat(actualPath,realMoviePath);
 						strcat(actualPath,realMovieName);
 						strcat(actualPath,".tga");
@@ -511,7 +510,7 @@ bool ForceGroupBar::setPilotVideo( const char* pVideo, MechWarrior* pPilot )
 								ForceGroupIcon::pilotVideoTexture = gos_NewTextureFromFile( gos_Texture_Solid, actualPath, 0 );
 						}
 
-						if (openFailed && (Environment.fullScreen == 0) && prefs.fullScreen)
+						if (openFailed && (Environment.fullScreen == 0) && g_userPreferences.fullScreen)
 							EnterFullScreenMode();
 					}
 				}

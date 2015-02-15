@@ -14,7 +14,7 @@
 
 void* TriggerAreaManager::operator new (size_t ourSize) {
 
-	void* result = systemHeap->Malloc(ourSize);
+	void* result = g_systemHeap->Malloc(ourSize);
 	return(result);
 }
 
@@ -22,7 +22,7 @@ void* TriggerAreaManager::operator new (size_t ourSize) {
 
 void TriggerAreaManager::operator delete (void* us) {
 
-	systemHeap->Free(us);
+	g_systemHeap->Free(us);
 }	
 
 //---------------------------------------------------------------------------
@@ -113,7 +113,7 @@ void TriggerAreaManager::setHit (MoverPtr mover) {
 						switch (triggerAreas[i].type) {
 							case TRIGGER_AREA_MOVER:
 								if (triggerAreas[i].param > 0) {
-									if (mover->getWatchID() == triggerAreas[i].param)
+									if ((long)mover->getWatchID() == triggerAreas[i].param)
 										triggerAreas[i].hit = true;
 									}
 								else

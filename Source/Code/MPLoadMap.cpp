@@ -215,7 +215,7 @@ void MPLoadMap::addFile( const char* pFileName, bool bSeedSingle )
 					// now go looking for the appropriate header
 					for ( int i = 0; i < mapList.GetItemCount(); i++ )
 					{
-						if ( mapList.GetItem( i )->getID()  - IDS_MP_LM_TYPE0 == type )
+						if ( mapList.GetItem( i )->getID() - IDS_MP_LM_TYPE0 == (int)type )
 						{
 							pEntry->move( 10, 0 );
 							mapList.InsertItem( pEntry, i+1 );
@@ -335,8 +335,8 @@ void MPLoadMap::seedFromCampaign()
 		 {
 			 findPath.init( savePath, newestFile, ".fit" );
 			 FitIniFile file;
-			 long group;
-			 long missions;
+			 long group = 0;
+			 long missions = 0;
 			 char campaignFileName[256];
 			 campaignFileName[0] = 0;
 			 if ( NO_ERR == file.open( findPath ) )
@@ -349,7 +349,7 @@ void MPLoadMap::seedFromCampaign()
 				 }
 			 }
 
-			 if ( strlen( campaignFileName ) && ( group || missions ) )
+			 if (strlen(campaignFileName) && (group || missions))
 			 {
 				FitIniFile campaignFile;
 				if ( NO_ERR == campaignFile.open( campaignFileName ) )
@@ -533,7 +533,6 @@ void MPLoadMap::updateMapInfo()
 
 		FitIniFile file;
 		FullPathFileName path;
-		const char* fileName = ((aTextListItem*)mapList.GetItem( sel ))->getText();
 		selMapName = ((aLocalizedListItem*)mapList.GetItem(sel))->getHiddenText();
 		path.init( missionPath, selMapName, ".fit" );
 
@@ -553,11 +552,11 @@ void MPLoadMap::updateMapInfo()
 			{
 				unsigned long lRes;
 				file.readIdULong( "MissionNameResourceStringID", lRes );
-				cLoadString( lRes, missionName, 255 );
+				cLoadString(lRes, missionName, 255);
 			}
 			else
 			{
-				file.readIdString( "MissionName", missionName, 255 );
+				file.readIdString("MissionName", missionName, 255);
 			}
 
 			long textureHandle = MissionBriefingScreen::getMissionTGA( selMapName );
@@ -566,7 +565,7 @@ void MPLoadMap::updateMapInfo()
 			statics[18].setColor( 0xffffffff );
  
 			cLoadString( IDS_MP_LM_MAP_LIST_MAP_NAME, text, 255 );
-			sprintf( text2, text, missionName );
+			sprintf(text2, text, missionName);
 			textObjects[3].setText( text2 );
 
 			if ( !bIsSingle )
@@ -629,7 +628,7 @@ void MPLoadMap::updateMapInfo()
 	}
 }
 
-void MPLoadMap::getMapNameFromFile( const char* pFileName, char* missionName, long bufferLength )
+void MPLoadMap::getMapNameFromFile(const char* pFileName, char* missionName, long bufferLength)
 {
 	FullPathFileName path;
 	path.init( missionPath, pFileName, ".fit" );
@@ -657,11 +656,11 @@ void MPLoadMap::getMapNameFromFile( const char* pFileName, char* missionName, lo
 		unsigned long lRes;
 		result = file.readIdULong( "MissionNameResourceStringID", lRes );
 		Assert( result == NO_ERR, 0, "couldn't find the MissionNameResourceStringID" );
-		cLoadString( lRes, missionName, bufferLength );
+		cLoadString(lRes, missionName, bufferLength);
 	}
 	else
 	{
-		result = file.readIdString( "MissionName", missionName, bufferLength );
+		result = file.readIdString("MissionName", missionName, bufferLength);
 		Assert( result == NO_ERR, 0, "couldn't find the missionName" );
 	}
 }

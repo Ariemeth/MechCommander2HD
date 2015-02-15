@@ -90,8 +90,5 @@ class GameSoundSystem : public SoundSystem
 //---------------------------------------------------------------------------
 extern GameSoundSystem *soundSystem;
 
-extern bool useSound;
-extern bool useMusic;
-
 //---------------------------------------------------------------------------
 #endif

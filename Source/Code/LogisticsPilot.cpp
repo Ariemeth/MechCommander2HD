@@ -72,7 +72,7 @@ int LogisticsPilot::init( char* pilotFileName )
 	if ( NO_ERR != pilotFile.open( path ) )
 	{
 		char errorString[256];
-		sprintf( errorString, "Couldn't open file %s", fileName);
+		sprintf( errorString, "Couldn't open file %s", fileName.Data());
 		Assert( 0, 0, errorString );
 		return -1;
 	}

@@ -135,7 +135,7 @@ long Light::update (void) {
 
 void Light::render (void) {
 
-	if (gamePaused)
+	if (g_gamePaused)
 		onScreen();
 
 	if (!getFlag(OBJECT_FLAG_JUSTCREATED) && (windowsVisible == turn) && !getFlag(OBJECT_FLAG_DONE)) {

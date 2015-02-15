@@ -109,9 +109,9 @@ void MechPurchaseScreen::update()
 		else
 			soundSystem->playDigitalSample( WINDOW_CLOSE );
 	}
-	if ( curCount && curCount + frameLength < countDownTime  )
+	if ( curCount && curCount + g_deltaTime < countDownTime  )
 	{
-		curCount += frameLength;
+		curCount += g_deltaTime;
 		float curAmount = previousAmount - (curCount/countDownTime * previousAmount); 
 		amount += curAmount;
 
@@ -121,7 +121,7 @@ void MechPurchaseScreen::update()
 	}
 	else if ( flashTime )
 	{
-		flashTime += frameLength;
+		flashTime += g_deltaTime;
 		if ( flashTime < .125
 			|| ( flashTime > .25 && flashTime < .3875 )
 			|| ( flashTime > .5 && flashTime < .6625 ) )

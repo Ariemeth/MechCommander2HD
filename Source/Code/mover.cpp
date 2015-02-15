@@ -130,7 +130,6 @@ extern long		tileMulMAPCELL_DIM[MAX_MAP_CELL_WIDTH];
 
 extern long					RamObjectWID;
 
-long						MaxMoveGoalChecks = 60;
 float						DelayedOrderTime = 1.0;
 float						GroupOrderGoalOffset = 127.0;
 
@@ -225,7 +224,7 @@ extern GlobalMapPtr			GlobalMoveMap[3];
 
 extern long adjCellTable[MAPCELL_DIM * MAPCELL_DIM][8][4];
 
-extern bool useUnlimitedAmmo;
+extern bool g_unlimitedAmmo;
 
 extern bool CantBlowSalvage;
 long TargetRolo = -1;
@@ -578,7 +577,7 @@ void DebugMoveChunk (MoverPtr mover, MoveChunkPtr chunk1, MoveChunkPtr chunk2) {
 
 void* MoveChunk::operator new (size_t ourSize) {
 
-	void* result = systemHeap->Malloc(ourSize);
+	void* result = g_systemHeap->Malloc(ourSize);
 	return(result);
 }
 
@@ -586,7 +585,7 @@ void* MoveChunk::operator new (size_t ourSize) {
 
 void MoveChunk::operator delete (void* us) {
 
-	systemHeap->Free(us);
+	g_systemHeap->Free(us);
 }	
 
 //---------------------------------------------------------------------------
@@ -1198,7 +1197,7 @@ void DebugStatusChunk (MoverPtr mover, StatusChunkPtr chunk1, StatusChunkPtr chu
 void* StatusChunk::operator new (size_t ourSize) {
 
 	void* result;
-	result = systemHeap->Malloc(ourSize);
+	result = g_systemHeap->Malloc(ourSize);
 	return(result);
 }
 
@@ -1206,7 +1205,7 @@ void* StatusChunk::operator new (size_t ourSize) {
 
 void StatusChunk::operator delete (void* us) {
 
-	systemHeap->Free(us);
+	g_systemHeap->Free(us);
 }	
 
 //---------------------------------------------------------------------------
@@ -1297,7 +1296,6 @@ void StatusChunk::pack (MoverPtr mover) {
 					StatusChunkUnpackErr = 1;
 				#endif
 			}
-			GameObjectPtr target = (GameObjectPtr)MPlayer->moverRoster[targetId];
 			//----------------------------------------------------------------------------
 			// Mover targets could be NULL now, since we free them when they're destroyed.
 			//if (!target) {
@@ -1443,7 +1441,6 @@ void StatusChunk::unpack (MoverPtr mover) {
 					StatusChunkUnpackErr = 1;
 				#endif
 			}
-			GameObjectPtr target = (GameObjectPtr)MPlayer->moverRoster[targetId];
 			//----------------------------------------------------------------------------
 			// Mover targets could be NULL now, since we free them when they're destroyed.
 			//if (!target) {
@@ -1724,6 +1721,7 @@ void MoverControl::brake (void) {
 
 void MoverControl::update (MoverPtr mover) {
 
+//	mover->updatePlayerControl();
 	switch (type) {
 		case CONTROL_AI:
 			mover->updateAIControl();
@@ -4803,7 +4801,7 @@ long Mover::calcMoveGoal (GameObjectPtr target,
 		startTime = GetCycles();
 		long i = 0;
 		ObjectManager->useMoverLineOfSightTable = false;
-		while (noLOF && (i < MaxMoveGoalChecks)) {
+		while (noLOF && (i < MAX_MOVE_GOALS)) {
 			long index = goalList[i][0];
 			curGoalCell[0] = mapCellUL[0] + goalMapRowCol[index][0];
 			curGoalCell[1] = mapCellUL[1] + goalMapRowCol[index][1];
@@ -5781,7 +5779,7 @@ void Mover::calcAmmoTotals (void)
 				if (totalList[curAmmo].masterId == ammoMasterId) 
 				{
 					foundAmmoWeapon = true;
-					if (useUnlimitedAmmo)
+					if (g_unlimitedAmmo)
 					{
 						totalList[curAmmo].curAmount = UNLIMITED_SHOTS;
 						totalList[curAmmo].maxAmount = UNLIMITED_SHOTS;
@@ -7009,7 +7007,7 @@ void GetBlockedDoorCells (long moveLevel, long door, char* openCells) {
 		long numMovers = ObjectManager->getNumMovers();
 		for (long i = 0; i < numMovers; i++) {
 			MoverPtr mover = ObjectManager->getMover(i);
-			if ((mover->getWatchID() != PathFindMap[SECTOR_PATHMAP]->moverWID) && (mover->getWatchID() != RamObjectWID) && !mover->isDisabled()) {
+			if (((GameObjectWatchID)mover->getWatchID() != PathFindMap[SECTOR_PATHMAP]->moverWID) && ((GameObjectWatchID)mover->getWatchID() != RamObjectWID) && !mover->isDisabled()) {
 				long cellPos[2];
 				mover->getCellPosition (cellPos[0], cellPos[1]);
 				long worldCellRow = cellPos[0];
@@ -7076,7 +7074,7 @@ void PlaceStationaryMovers (MoveMap* map) {
 	long numMovers = ObjectManager->getNumMovers();
 	for (long i = 0; i < numMovers; i++) {
 		MoverPtr mover = ObjectManager->getMover(i);
-		if ((mover->getObjectClass() != ELEMENTAL) && (mover->getWatchID() != map->moverWID) && (mover->getWatchID() != RamObjectWID) && !mover->isDisabled()) {
+		if ((mover->getObjectClass() != ELEMENTAL) && ((GameObjectWatchID)mover->getWatchID() != map->moverWID) && ((GameObjectWatchID)mover->getWatchID() != RamObjectWID) && !mover->isDisabled()) {
 			long cellRow, cellCol;
 			mover->getCellPosition(cellRow, cellCol);
 			if ((cellRow >= 0) && (cellRow < map->height) && (cellCol >= 0) && (cellCol < map->width)) {

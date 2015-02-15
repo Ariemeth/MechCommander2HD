@@ -48,7 +48,7 @@ CommanderPtr		Commander::home = NULL;
 
 void* Commander::operator new (size_t ourSize) {
 
-	void* result = systemHeap->Malloc(ourSize);
+	void* result = g_systemHeap->Malloc(ourSize);
 	return(result);
 }
 
@@ -56,7 +56,7 @@ void* Commander::operator new (size_t ourSize) {
 
 void Commander::operator delete (void* us) {
 
-	systemHeap->Free(us);
+	g_systemHeap->Free(us);
 }	
 
 //---------------------------------------------------------------------------

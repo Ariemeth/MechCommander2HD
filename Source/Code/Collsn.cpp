@@ -51,7 +51,7 @@ long GlobalCollisionAlert::init (unsigned long maxCollisionAlerts)
 {
 	maxAlerts = maxCollisionAlerts;
 	
-	collisionAlerts = (CollisionAlertRecordPtr)systemHeap->Malloc(sizeof(CollisionAlertRecord) * maxAlerts);
+	collisionAlerts = (CollisionAlertRecordPtr)g_systemHeap->Malloc(sizeof(CollisionAlertRecord) * maxAlerts);
 	gosASSERT(collisionAlerts != NULL);
 
 	purgeRecords();
@@ -62,7 +62,7 @@ long GlobalCollisionAlert::init (unsigned long maxCollisionAlerts)
 //------------------------------------------------------------------------------
 void GlobalCollisionAlert::destroy (void)
 {
-	systemHeap->Free(collisionAlerts);
+	g_systemHeap->Free(collisionAlerts);
 	collisionAlerts = NULL;
 	maxAlerts = nextRecord = 0;
 }
@@ -399,7 +399,7 @@ void * CollisionSystem::operator new (size_t mySize)
 {
 	void *result = NULL;
 	
-	result = systemHeap->Malloc(mySize);
+	result = g_systemHeap->Malloc(mySize);
 	
 	return(result);
 }
@@ -407,7 +407,7 @@ void * CollisionSystem::operator new (size_t mySize)
 //------------------------------------------------------------------------------
 void CollisionSystem::operator delete (void *us)
 {
-	systemHeap->Free(us);
+	g_systemHeap->Free(us);
 }
 
 //------------------------------------------------------------------------------
@@ -742,11 +742,11 @@ float CollisionSystem::timeToImpact (GameObjectPtr obj1, GameObjectPtr obj2)
 	Stuff::Vector3D obj2Vel = obj2->getVelocity();
 	
 	Stuff::Vector3D obj1FPos;
-	obj1Vel *= frameLength;
+	obj1Vel *= g_deltaTime;
 	obj1FPos.Add(obj1Pos,obj1Vel);
 
 	Stuff::Vector3D obj2FPos;
-	obj2Vel *= frameLength;
+	obj2Vel *= g_deltaTime;
 	obj2FPos.Add(obj2Pos,obj2Vel);
 	
 	Stuff::Vector3D obj1RPos;
@@ -767,7 +767,7 @@ float CollisionSystem::timeToImpact (GameObjectPtr obj1, GameObjectPtr obj2)
 		vel.Subtract(obj2Vel,obj1Vel);
 		
 		float timeOfClosest = -((pos * vel) / (vel * vel));
-		if (timeOfClosest <= frameLength)
+		if (timeOfClosest <= g_deltaTime)
 		{
 			//------------------------------------------------
 			// They are closest during this frame.

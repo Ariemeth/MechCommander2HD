@@ -133,7 +133,7 @@ Mission *mission = NULL;
 unsigned long scenarioResult = mis_PLAYING;
 long scenarioEndTurn = -1;
 
-extern long GameDifficulty;
+extern long g_gameDifficulty;
 long MechSalvageChance = 100;
 
 long globalPlayerSkills[4];		//Per spec.  Integer value = percentage * 100
@@ -159,24 +159,23 @@ extern DWORD ServerPlayerNum;
 
 extern bool useNonWeaponEffects;
 
-extern unsigned long elementHeapSize;
-extern unsigned long maxElements;
-extern unsigned long maxGroups;
-extern unsigned long missionHeapSize;
+//extern unsigned long elementHeapSize;
+//extern unsigned long maxElements;
+//extern unsigned long maxGroups;
+
+extern unsigned long g_missionHeapSize;
 extern unsigned long polyHeapSize;
 extern unsigned long spriteDataHeapSize;
-extern unsigned long spriteHeapSize;
+extern unsigned long g_spriteHeapSize;
 
 extern long	CurMultiplayCode;
 extern long	CurMultiplayParam;
 
-extern bool quitGame;
+extern bool g_quitGame;
 extern float MaxExtractUnitDistance;
 
 extern bool useFog;
 extern bool useShadows;
-extern bool inViewMode;
-extern unsigned long viewObject;
 extern float loadProgress;
 
 extern char TeamRelations[MAX_TEAMS][MAX_TEAMS];
@@ -187,14 +186,14 @@ ByteFlag *SeenBits = NULL;			//What HAS been seen
 UserHeapPtr missionHeap = NULL;
 
 unsigned long MultiPlayTeamId = 0xFFFFFFFF;
-unsigned long MultiPlayCommanderId = 0xFFFFFFFF;
+unsigned long g_mpCommanderId = 0xFFFFFFFF;
 
 bool useSensors = true;
 bool useCollisions = true;
 long missionLineChanged = 0;
 bool GeneralAlarm = false;
 
-extern bool KillAmbientLight;
+extern bool g_disableAmbientLight;
 
 extern GameLog* CombatLog;
 #ifndef FINAL
@@ -211,8 +210,8 @@ void initABL (void);
 void closeABL (void);
 
 #define	MAX_DISABLE_AT_START	100
-extern long NumDisableAtStart;
-extern long DisableAtStart[MAX_DISABLE_AT_START];
+extern long g_dbgNumDisableAtStart;
+extern long g_dbgDisableAtStartIds[MAX_DISABLE_AT_START];
 bool showFrameRate = false;
 
 bool Mission::terminationCounterStarted = false;
@@ -296,15 +295,14 @@ extern __int64 x;
 #define ProfileTime(x,y)	y;
 #endif
 
-long GameVisibleVertices		= 60;
 float BaseHeadShotElevation		= 1.0f;
 
 bool DisplayCameraAngle = false;
-extern long MaxResourcePoints;
+extern long g_dbgResourcePoints;
 extern long resolution;
-extern long renderer;
+extern long g_renderer;
 
-bool loadInMissionSave = false;
+extern bool g_loadInMissionSave;
 bool saveInMissionSave = false;
 
 float forcedFrameRate = -1.0f;
@@ -328,10 +326,11 @@ long Mission::update (void)
 #endif
 
 		if (forcedFrameRate != -1.0f)
-			frameLength /= forcedFrameRate;
+			g_deltaTime /= forcedFrameRate;
 
 		if ((missionLineChanged + 50) < turn)
 		{
+			// MCHD TODO: CHEATS! Wrap cheats up like every other fucking input command
 			#ifndef FINAL
 			if (userInput->getKeyDown(KEY_X) && userInput->ctrl() && !userInput->alt() && !userInput->shift())
 			{
@@ -347,7 +346,7 @@ long Mission::update (void)
 
 			if (userInput->getKeyDown(KEY_Z) && userInput->ctrl() && userInput->alt() && userInput->shift())
 			{
-				loadInMissionSave = true;
+				g_loadInMissionSave = true;
 				missionLineChanged = turn;
 			}		
 
@@ -480,10 +479,6 @@ long Mission::update (void)
 #endif
 		ProfileTime(MCTimePathManagerUpdate,PathManager->update());
 
-		if (KillAmbientLight) {
-	//		ambientRed<<16)+(ambientGreen<<8)+ambientBlue;
-		}
-		
 		//-----------------------------------------------------------
 		// Lastly, process the terrain geometry which loads textures
 		// Must do this to keep from Locking during the updateRenders phase
@@ -521,8 +516,8 @@ long Mission::update (void)
 			{
 				ProfileTime(MCTimeMissionScript,missionBrain->execute());
 				long missionResult = missionBrain->getInteger();
-				if (missionResult == 9999)
-					return(terminationResult = 9999);
+				if (missionResult == InvalidStatus)
+					return(terminationResult = InvalidStatus);
 				if (!MPlayer)
 					terminationResult = missionResult;
 			}
@@ -679,7 +674,7 @@ long Mission::update (void)
 		if (showFrameRate)
 		{
 			char text[1024];
-			sprintf(text,"FrameRate: %f",1.0f/frameLength);
+			sprintf(text,"FrameRate: %f",1.0f/g_deltaTime);
 		
 			DWORD width, height;
 			Stuff::Vector4D moveHere;
@@ -753,7 +748,7 @@ long Mission::render (void)
 	if (active)
 	{
 		unsigned char tempAmbientLight[3];
-		if (KillAmbientLight) {
+		if (g_disableAmbientLight) {
 			tempAmbientLight[0] = eye->ambientRed;
 			tempAmbientLight[1] = eye->ambientGreen;
 			tempAmbientLight[2] = eye->ambientBlue;
@@ -785,7 +780,7 @@ long Mission::render (void)
 		if (missionInterface)
 			missionInterface->render();
 
-		if (KillAmbientLight) {
+		if (g_disableAmbientLight) {
 			eye->ambientRed = tempAmbientLight[0];
 			eye->ambientGreen = tempAmbientLight[1];
 			eye->ambientBlue = tempAmbientLight[2];
@@ -807,13 +802,13 @@ float applyDifficultySkill (float chance, bool isPlayer)
 {
 	if (isPlayer)
 	{
-		switch (GameDifficulty)
+		switch (g_gameDifficulty)
 		{
 			case 0:			//Easy
 			case 1:			//Medium
 			case 2:			//Hard
 			case 3:			//Really Hard
-				chance *= (float(globalPlayerSkills[GameDifficulty]) / 100.0);
+				chance *= (float(globalPlayerSkills[g_gameDifficulty]) / 100.0);
 				return(chance);
 				break;
 
@@ -824,13 +819,13 @@ float applyDifficultySkill (float chance, bool isPlayer)
 	}
 	else
 	{
-		switch (GameDifficulty)
+		switch (g_gameDifficulty)
 		{
 			case 0:			//Easy
 			case 1:			//Medium
 			case 2:			//Hard
 			case 3:			//Really Hard
-				chance *= (float(globalEnemySkills[GameDifficulty]) / 100.0);
+				chance *= (float(globalEnemySkills[g_gameDifficulty]) / 100.0);
 				return(chance);
 				break;
 
@@ -846,13 +841,13 @@ float applyDifficultyWeapon (float dmg, bool isPlayer)
 {
 	if (isPlayer)
 	{
-		switch (GameDifficulty)
+		switch (g_gameDifficulty)
 		{
 			case 0:			//Easy
 			case 1:			//Medium -- NO CHANGE!
 			case 2:			//Hard
 			case 3:			//Very Hard
-				dmg *= (float(globalPlayerWeapons[GameDifficulty]) / 100.0);
+				dmg *= (float(globalPlayerWeapons[g_gameDifficulty]) / 100.0);
 				break;
 				
 			default:
@@ -861,13 +856,13 @@ float applyDifficultyWeapon (float dmg, bool isPlayer)
 	}
 	else
 	{
-		switch (GameDifficulty)
+		switch (g_gameDifficulty)
 		{
 			case 0:			//Easy
 			case 1:			//Medium -- NO CHANGE!
 			case 2:			//Hard
 			case 3:			//Very Hard
-				dmg *= (float(globalEnemyWeapons[GameDifficulty]) / 100.0);
+				dmg *= (float(globalEnemyWeapons[g_gameDifficulty]) / 100.0);
 				break;
 				
 			default:
@@ -1055,7 +1050,7 @@ void Mission::createPartObject (long partIndex, MoverPtr mover) {
 											   MPlayer->colors[MPlayer->playerInfo[mover->commanderId].baseColor[BASECOLOR_TEAM]]);
 				else {
 					if (mover->getCommanderId() == Commander::home->getId())
-						myActor->resetPaintScheme(prefs.highlightColor, prefs.highlightColor, prefs.baseColor);
+						myActor->resetPaintScheme(g_userPreferences.highlightColor, g_userPreferences.highlightColor, g_userPreferences.baseColor);
 					else
 						myActor->resetPaintScheme(parts[partIndex].highlightColor1,
 												parts[partIndex].highlightColor2,
@@ -1072,7 +1067,7 @@ void Mission::createPartObject (long partIndex, MoverPtr mover) {
 											  MPlayer->colors[MPlayer->playerInfo[mover->commanderId].baseColor[BASECOLOR_TEAM]]);
 				else {
 					if (mover->getCommanderId() == Commander::home->getId())
-						myActor->resetPaintScheme(prefs.highlightColor, prefs.highlightColor, prefs.baseColor);
+						myActor->resetPaintScheme(g_userPreferences.highlightColor, g_userPreferences.highlightColor, g_userPreferences.baseColor);
 					else
 						myActor->resetPaintScheme(parts[partIndex].highlightColor1,
 												  parts[partIndex].highlightColor2,
@@ -1411,7 +1406,7 @@ long Mission::addMover (MoverInitData* moveSpec, LogisticsMech* mechData)
 	
 	if ( totalComponents )
 	{
-		componentList = (long *)systemHeap->Malloc(sizeof(long) * totalComponents);
+		componentList = (long *)g_systemHeap->Malloc(sizeof(long) * totalComponents);
 	
 		long otherCount = totalComponents;
 		mechData->getComponents(otherCount, componentList);
@@ -1476,13 +1471,13 @@ void Mission::tradeMover (MoverPtr mover, long newTeamID, long newCommanderID, c
 
 //----------------------------------------------------------------------------
 
-bool Mission::calcComplexDropZones (char* missionName, char dropZoneCID[MAX_MC_PLAYERS]) {
+bool Mission::calcComplexDropZones(char* missionName, char dropZoneCID[MAX_MC_PLAYERS]) {
 
 	for (long p = 0; p < MAX_MC_PLAYERS; p++)
 		dropZoneCID[p] = -1;
 
 	FullPathFileName missionFileName;
-	missionFileName.init(missionPath,missionName,".fit");
+	missionFileName.init(missionPath, missionName, ".fit");
 
 	FitIniFile* missionFile = new FitIniFile;
 	gosASSERT(missionFile != NULL);
@@ -1614,7 +1609,7 @@ bool IsGateOpen (long objectWID) {
 }
 
 //----------------------------------------------------------------------------
-void Mission::init (char *missionName, long loadType, long dropZoneID, Stuff::Vector3D* dropZoneList, char commandersToLoad[8][3], long numMoversPerCommander)
+void Mission::init(char *missionName, long loadType, long dropZoneID, Stuff::Vector3D* dropZoneList, char commandersToLoad[8][3], long numMoversPerCommander)
 {
 	neverEndingStory = false;
 	invulnerableON = false;
@@ -1622,8 +1617,8 @@ void Mission::init (char *missionName, long loadType, long dropZoneID, Stuff::Ve
 	terminationResult = mis_PLAYING; 
 
 	//Start finding the Leaks
-	//systemHeap->startHeapMallocLog();
-	//systemHeap->dumpRecordLog();
+	//g_systemHeap->startHeapMallocLog();
+	//g_systemHeap->dumpRecordLog();
 
 	loadProgress = 0.0f;
 
@@ -1691,7 +1686,7 @@ void Mission::init (char *missionName, long loadType, long dropZoneID, Stuff::Ve
 	missionHeap = new UserHeap;
 	gosASSERT(missionHeap != NULL);
 	
-	missionHeap->init(missionHeapSize,"MISSION");
+	missionHeap->init(g_missionHeapSize,"MISSION");
 	
 	//--------------------------
 	// Load Game System stuff...
@@ -1883,10 +1878,10 @@ void Mission::init (char *missionName, long loadType, long dropZoneID, Stuff::Ve
 	gosASSERT(result == NO_ERR);
 
 	memset(missionFileName,0,80);
-	strncpy(missionFileName,missionName,79);
+	strncpy(missionFileName, missionName, 79);
 
 	FullPathFileName missionFileName;
-	missionFileName.init(missionPath,missionName,".fit");
+	missionFileName.init(missionPath, missionName, ".fit");
 
 	duration = 60;
 	
@@ -1903,7 +1898,7 @@ void Mission::init (char *missionName, long loadType, long dropZoneID, Stuff::Ve
 			#if 0
 			result = missionFile->readIdULong("TeamId", MultiPlayTeamId);
 			gosASSERT(result == NO_ERR);
-			result = missionFile->readIdULong("CommanderId", MultiPlayCommanderId);
+			result = missionFile->readIdULong("CommanderId", g_mpCommanderId);
 			gosASSERT(result == NO_ERR);
 			char sessionName[128];
 			result = missionFile->readIdString("SessionName", sessionName, 127);
@@ -1921,14 +1916,14 @@ void Mission::init (char *missionName, long loadType, long dropZoneID, Stuff::Ve
 			MPlayer = new MultiPlayer;
 			Assert(MPlayer != NULL, 0, " Unable to create MultiPlayer object ");
 			MPlayer->setup();
-			MPlayer->commanderID = MultiPlayCommanderId;
+			MPlayer->commanderID = g_mpCommanderId;
 			//-------------------------------------------
 			// If I'm the server, then create the game...
 			if (isServer) {
 				if (MPlayer->hostGame(sessionName, playerName, numPlayers)) {
 					//---------------------------------------------
 					//game hosted, so now wait for all check-ins...
-					MPlayer->serverCID = MultiPlayCommanderId;//(MultiPlayCommanderId == ServerPlayerNum); //(gos_NetInformation(gos_AmITheServer) == 0);
+					MPlayer->serverCID = g_mpCommanderId;//(g_mpCommanderId == ServerPlayerNum); //(gos_NetInformation(gos_AmITheServer) == 0);
 				}
 				}
 			else {
@@ -2050,7 +2045,7 @@ void Mission::init (char *missionName, long loadType, long dropZoneID, Stuff::Ve
 	
 	if (MPlayer) {
 		Team::home = Team::teams[MultiPlayTeamId];
-		Commander::home = Commander::commanders[MultiPlayCommanderId];
+		Commander::home = Commander::commanders[g_mpCommanderId];
 		for (long i = 0; i <= maxCommanderID; i++)
 			if (MPlayer->playerInfo[i].commanderID > -1)
 				Commander::commanders[MPlayer->playerInfo[i].commanderID]->setTeam(Team::teams[MPlayer->playerInfo[i].team]);
@@ -2109,8 +2104,8 @@ void Mission::init (char *missionName, long loadType, long dropZoneID, Stuff::Ve
 
 	long numRPoints;
 	result = missionFile->readIdLong("ResourcePoints",numRPoints);
-	if (MaxResourcePoints > -1)
-		numRPoints = MaxResourcePoints;
+	if (g_dbgResourcePoints > -1)
+		numRPoints = g_dbgResourcePoints;
 	if (MPlayer) {
 		numRPoints = MPlayer->missionSettings.resourcePoints;
 		for (long i = 0; i < MAX_MC_PLAYERS; i++) {
@@ -2148,7 +2143,7 @@ void Mission::init (char *missionName, long loadType, long dropZoneID, Stuff::Ve
 	// Start the Terrain System
 
 	FullPathFileName terrainFileName;
-	terrainFileName.init( missionPath, missionName, ".pak" ); 
+	terrainFileName.init(missionPath, missionName, ".pak");
 
 	PacketFile pakFile;
 	result = pakFile.open( terrainFileName );
@@ -2167,7 +2162,7 @@ void Mission::init (char *missionName, long loadType, long dropZoneID, Stuff::Ve
 	MCTimeObjectLoad=x-x1;
 #endif
 
-	long terrainInitResult = land->init(&pakFile, 0, GameVisibleVertices, loadProgress, 20.0 );
+	long terrainInitResult = land->init(&pakFile, 0, g_userPreferences.gameVisibleVertices, loadProgress, 20.0 );
 
 	if (terrainInitResult != NO_ERR)
 	{
@@ -2441,7 +2436,7 @@ void Mission::init (char *missionName, long loadType, long dropZoneID, Stuff::Ve
 			result = missionFile->readIdULong("squadNum", squadNum);
 			long squadIndex = 0;
 			for (squadIndex = 0; squadIndex < numSquads; squadIndex++)
-				if (squadMap[squadIndex] == squadNum)
+				if (squadMap[squadIndex] == (long)squadNum)
 					break;
 			if (squadIndex == numSquads)
 				squadMap[numSquads++] = squadNum;
@@ -2468,7 +2463,7 @@ void Mission::init (char *missionName, long loadType, long dropZoneID, Stuff::Ve
 		for (s = 0; s < numSquads; s++)
 		{
 			randomAlternative[s] = alternateChoice;
-			if (GameDifficulty >= 2)
+			if (g_gameDifficulty >= 2)
 			{
 				randomAlternative[s]--;
 				if (randomAlternative[s] < 1)
@@ -2513,7 +2508,7 @@ void Mission::init (char *missionName, long loadType, long dropZoneID, Stuff::Ve
 			parts[i].squadId = squadNum;
 			long squadIndex = 0;
 			for (squadIndex = 0; squadIndex < numSquads; squadIndex++)
-				if (squadMap[squadIndex] == squadNum)
+				if (squadMap[squadIndex] == (long)squadNum)
 					break;
 
 			long alternatives[MAX_ALTERNATIVES];
@@ -2624,15 +2619,15 @@ void Mission::init (char *missionName, long loadType, long dropZoneID, Stuff::Ve
 	
 			result = missionFile->readIdULong("BaseColor",parts[i].baseColor);
 			if (result != NO_ERR || MPlayer )
-				parts[i].baseColor = prefs.baseColor;
+				parts[i].baseColor = g_userPreferences.baseColor;
 				
 			result = missionFile->readIdULong("HighlightColor1",parts[i].highlightColor1);
 			if (result != NO_ERR || MPlayer)
-				parts[i].highlightColor1 = prefs.highlightColor;
+				parts[i].highlightColor1 = g_userPreferences.highlightColor;
 				
 			result = missionFile->readIdULong("HighlightColor2",parts[i].highlightColor2);
 			if (result != NO_ERR || MPlayer )
-				parts[i].highlightColor2 = prefs.highlightColor;
+				parts[i].highlightColor2 = g_userPreferences.highlightColor;
 				
   			parts[i].velocity = 0;
 			
@@ -2794,9 +2789,9 @@ void Mission::init (char *missionName, long loadType, long dropZoneID, Stuff::Ve
 			m_timeLimit = MPlayer->missionSettings.timeLimit;
 	}
 
-	if (NumDisableAtStart) {
-		for (long i = 0; i < NumDisableAtStart; i++)
-			ObjectManager->getByWatchID(parts[DisableAtStart[i]].objectWID)->setDebugFlag(OBJECT_DFLAG_DISABLE, true);
+	if (g_dbgNumDisableAtStart) {
+		for (long i = 0; i < g_dbgNumDisableAtStart; i++)
+			ObjectManager->getByWatchID(parts[g_dbgDisableAtStartIds[i]].objectWID)->setDebugFlag(OBJECT_DFLAG_DISABLE, true);
 	}
 
 	//----------------------------------------------
@@ -2944,7 +2939,7 @@ void Mission::init (char *missionName, long loadType, long dropZoneID, Stuff::Ve
 	//MechWarrior::initGoalManager(200);
 
 	if (tempSpecialAreaFootPrints) {
-		systemHeap->Free(tempSpecialAreaFootPrints);
+		g_systemHeap->Free(tempSpecialAreaFootPrints);
 		tempSpecialAreaFootPrints = NULL;
 		tempNumSpecialAreas = 0;
 	}
@@ -3089,10 +3084,10 @@ void Mission::initTGLForMission()
 
 	loadProgress += 4.0f;
 
-	//Stupid hack for now.  Should really get from prefs!!
+	// Stupid hack for now.  Should really get from g_userPreferences!!
 	// Needed cause Heidi resets in logistics.
 	useFog = true;
-	useShadows = prefs.useShadows;
+	useShadows = g_userPreferences.useShadows;
 }
 
 
@@ -3246,7 +3241,7 @@ void Mission::destroy (bool initLogistics)
 
 	if (MoverGroup::goalMap)
 	{
-		systemHeap->Free(MoverGroup::goalMap);
+		g_systemHeap->Free(MoverGroup::goalMap);
 		MoverGroup::goalMap = NULL;
 	}
 
@@ -3357,13 +3352,13 @@ void Mission::destroy (bool initLogistics)
 	}
 
 	//Heading back to logistics now.  Change screen back to 800x600
-//	if (renderer == 3)
-//		gos_SetScreenMode(800,600,16,0,0,0,true,false,0,false,0,renderer);
+//	if (g_renderer == 3)
+//		gos_SetScreenMode(800,600,16,0,0,0,true,false,0,false,0,g_renderer);
 //	else
-//		gos_SetScreenMode(800,600,16,0,0,0,0,false,0,false,0,renderer);
+//		gos_SetScreenMode(800,600,16,0,0,0,0,false,0,false,0,g_renderer);
 
 	//Start finding the Leaks
-	//systemHeap->dumpRecordLog();
+	//g_systemHeap->dumpRecordLog();
 }
 
 //----------------------------------------------------------------------------------
@@ -3401,7 +3396,7 @@ long Mission::setObjectiveTimer (long objectiveNum, float timeLeft)
 	
 	//------------
 	// Add Timer.
-	TimerPtr timer = timerManager->getTimer(timerNumber);
+	TimerPtr timer = g_timerManager->getTimer(timerNumber);
 	gosASSERT(timer != NULL);
 	timer->setTimer(timeLeft);
 
@@ -3416,7 +3411,7 @@ float Mission::checkObjectiveTimer (long objectiveNum)
 	long timerNumber = OBJECTIVE_1_TIMER + objectiveNum;
 	unsigned long timeLeft = 0;
 
-	TimerPtr timer = timerManager->getTimer(timerNumber);
+	TimerPtr timer = g_timerManager->getTimer(timerNumber);
 	gosASSERT(timer != NULL);
 
 	timeLeft = timer->getCurrentTime();

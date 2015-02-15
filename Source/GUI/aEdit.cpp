@@ -25,7 +25,7 @@ static long acp = 0;
 static bool g_bUseLangDll;
 static gosIME_Appearance g_ia;
 
-extern SoundSystem *sndSystem;
+extern SoundSystem *g_soundSystem;
 
 
 aEdit::aEdit(  )
@@ -112,7 +112,7 @@ aEdit::~aEdit()
 
 void aEdit::update()
 {
-	cursorTime += frameLength;
+	cursorTime += g_deltaTime;
 	if ( cursorTime > .5 )
 	{
 		bCursorVisible ^= 1;
@@ -252,7 +252,7 @@ void aEdit::handleKeyboard()
 			// is there space to insert a character?
 			if (text.Length() - labs( nInsertion2 - nInsertion1 ) + (key2 ? 1 : 0) >= nLimit)
 			{
-				sndSystem->playDigitalSample( LOG_WRONGBUTTON );
+				g_soundSystem->playDigitalSample( LOG_WRONGBUTTON );
 				gos_FinalizeStringIME();
 				gos_KeyboardFlush();
 				return;

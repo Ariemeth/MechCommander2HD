@@ -94,13 +94,7 @@ class GoalObject {
 			destroy();
 		}
 
-		void initObject (char* name, GameObjectPtr obj);
-
 		void initRegion (char* name, long minRow, long minCol, long maxRow, long maxCol);
-
-		void addLink (GoalObjectPtr gobject, GoalLinkType linkType);
-
-		void addController (GoalObjectPtr gobject);
 };
 
 class GoalManager {

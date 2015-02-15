@@ -58,7 +58,6 @@
 
 extern unsigned long	NextIdNumber;
 extern TeamPtr homeTeam;
-extern bool useSound;
 extern bool somethingOnFire;
 
 float Carnage::maxFireBurnTime = 5.0;
@@ -86,37 +85,37 @@ void FireType::destroy (void)
 {
 	if (fireOffsetX) 
 	{
-		systemHeap->Free(fireOffsetX);
+		g_systemHeap->Free(fireOffsetX);
 		fireOffsetX = NULL;
 	}
 
 	if (fireOffsetY) 
 	{
-		systemHeap->Free(fireOffsetY);
+		g_systemHeap->Free(fireOffsetY);
 		fireOffsetY = NULL;
 	}
 	
 	if (fireDelay) 
 	{
-		systemHeap->Free(fireDelay);
+		g_systemHeap->Free(fireDelay);
 		fireDelay = NULL;
 	}
 
 	if (fireRandomOffsetX) 
 	{
-		systemHeap->Free(fireRandomOffsetX);
+		g_systemHeap->Free(fireRandomOffsetX);
 		fireRandomOffsetX = NULL;
 	}
 
 	if (fireRandomOffsetY) 
 	{
-		systemHeap->Free(fireRandomOffsetY);
+		g_systemHeap->Free(fireRandomOffsetY);
 		fireRandomOffsetY = NULL;
 	}
 
 	if (fireRandomDelay) 
 	{
-		systemHeap->Free(fireRandomDelay);
+		g_systemHeap->Free(fireRandomDelay);
 		fireRandomDelay = NULL;
 	}
 
@@ -622,7 +621,7 @@ void Carnage::finishNow (void)
 		if (pointLight)
 		{
 			eye->removeWorldLight(lightId,pointLight);
-			systemHeap->Free(pointLight);
+			g_systemHeap->Free(pointLight);
 			pointLight = NULL;
 		}
 
@@ -681,7 +680,7 @@ long Carnage::update (void)
 			{
 				// Explosion Has Point Light Source
 				// Make and Init it here.
-				pointLight = (TG_LightPtr)systemHeap->Malloc(sizeof(TG_Light));
+				pointLight = (TG_LightPtr)g_systemHeap->Malloc(sizeof(TG_Light));
 				pointLight->init(TG_LIGHT_POINT);
 
 				pointLight->SetaRGB(((ExplosionTypePtr)getObjectType())->lightRGB);
@@ -698,7 +697,7 @@ long Carnage::update (void)
 				{
 					//NO LIGHT ALLOWED!  TOO Many in World!
 					// LightId is now -1 which will cause this to NEVER make a light!
-					systemHeap->Free(pointLight);
+					g_systemHeap->Free(pointLight);
 					pointLight = NULL;
 					duration = 0.0f;
 				}
@@ -729,7 +728,7 @@ long Carnage::update (void)
 				pointLight->SetIntensity(intensity);
 				pointLight->SetFalloffDistances(inRadius,outRadius);
 
-				duration -= frameLength;
+				duration -= g_deltaTime;
 				
 				Stuff::Point3D ourPosition;
 				ourPosition.x = -position.x;
@@ -747,7 +746,7 @@ long Carnage::update (void)
 			else
 			{
 				eye->removeWorldLight(lightId,pointLight);
-				systemHeap->Free(pointLight);
+				g_systemHeap->Free(pointLight);
 				pointLight = NULL;
 			}
 		}
@@ -756,7 +755,7 @@ long Carnage::update (void)
 
 		if (info.explosion.timer > 0.0f)
 		{
-			info.explosion.timer -= frameLength;
+			info.explosion.timer -= g_deltaTime;
 			if (info.explosion.timer <= 0.0f)
 			{
 				setFlag(OBJECT_FLAG_TANGIBLE, true);
@@ -792,7 +791,7 @@ long Carnage::update (void)
 				if (pointLight)
 				{
 					eye->removeWorldLight(lightId,pointLight);
-					systemHeap->Free(pointLight);
+					g_systemHeap->Free(pointLight);
 					pointLight = NULL;
 				}
 		
@@ -804,7 +803,7 @@ long Carnage::update (void)
 			if (pointLight)
 			{
 				eye->removeWorldLight(lightId,pointLight);
-				systemHeap->Free(pointLight);
+				g_systemHeap->Free(pointLight);
 				pointLight = NULL;
 			}
 
@@ -877,7 +876,7 @@ void Carnage::destroy (void)
 		{
 			if (eye)
 				eye->removeWorldLight(lightId,pointLight);
-			systemHeap->Free(pointLight);
+			g_systemHeap->Free(pointLight);
 			pointLight = NULL;
 		}
 	}

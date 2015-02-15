@@ -26,7 +26,7 @@ static const int FIRST_BUTTON_ID = 1000010;
 static const int OK_BUTTON_ID = 1000001;
 static const int CANCEL_BUTTON_ID = 1000002;
 
-extern bool quitGame;
+extern bool g_quitGame;
 
 MPConnectionType::MPConnectionType() : lanPanel(*this), tcpipPanel(*this)
 {
@@ -308,7 +308,7 @@ int	MPConnectionType::handleMessage( unsigned long message, unsigned long who)
 				(*ppConnectionScreen) = pMPPlaceHolderScreen;
 				// now I need to pop a connecting dialog...
 				status = NEXT;
-				quitGame = true;
+				g_quitGame = true;
 			}
 			break;
 		}
@@ -416,7 +416,7 @@ void aZonePanel::update()
 			if ( LogisticsOKDialog::instance()->getStatus() == LogisticsScreen::YES )
 			{
 				pParentScreen->handleMessage( ZONE_PANEL_FIRST_BUTTON_ID, ZONE_PANEL_FIRST_BUTTON_ID );
-				quitGame = true;
+				g_quitGame = true;
 			}
 
 			LogisticsOKDialog::instance()->end();
@@ -515,10 +515,10 @@ void aTcpipPanel::begin()
 
 	for ( int i = 0; i < 10; i++ )
 	{
-		if ( !strlen( prefs.ipAddresses[i] ) )
+		if ( !strlen( g_userPreferences.ipAddresses[i] ) )
 			break;
 
-		comboBox.AddItem( prefs.ipAddresses[i], 0xffffffff );
+		comboBox.AddItem( g_userPreferences.ipAddresses[i], 0xffffffff );
 	}
 
 	bExpanded = 0;
@@ -597,10 +597,10 @@ void aTcpipPanel::init(FitIniFile* pFile)
 
 	for ( int i = 0; i < 10; i++ )
 	{
-		if ( !strlen( prefs.ipAddresses[i] ) )
+		if ( !strlen( g_userPreferences.ipAddresses[i] ) )
 			break;
 
-		comboBox.AddItem( prefs.ipAddresses[i], 0xffffffff );
+		comboBox.AddItem( g_userPreferences.ipAddresses[i], 0xffffffff );
 	}
 
 	addChild( &helpRect );
@@ -630,15 +630,15 @@ void aTcpipPanel::update()
 					if ( sessionCount )
 					{
 						bConnectingDlg = 0;
-						retVal = MPlayer->joinSession( &pSessions[0], prefs.playerName[0] );
+						retVal = MPlayer->joinSession( &pSessions[0], g_userPreferences.playerName[0] );
 						if ( !retVal )
 						{
 							pParentScreen->handleMessage( 1, TCPIP_PANEL_FIRST_BUTTON_ID );
 							MPlayer->endSessionScan();
 							EString ipAddress;
 							comboBox.EditBox().getEntry( ipAddress );
-							prefs.setNewIP( ipAddress );
-							prefs.save();
+							g_userPreferences.setNewIP( ipAddress );
+							g_userPreferences.save();
 							connectingTime = 0.f;
 
 						}
@@ -661,10 +661,10 @@ void aTcpipPanel::update()
 		}
 		else  if ( !bErrorDlg && !bFoundConnection )
 		{
-			connectingTime += frameLength;
+			connectingTime += g_deltaTime;
 
 			long sessionCount;
-			MC2Session* pSessions =  MPlayer->getSessions( sessionCount );
+			MPlayer->getSessions( sessionCount );
 			if ( sessionCount )
 			{
 				bFoundConnection = true;
@@ -835,9 +835,7 @@ void		aTcpipPanel::render()
 
 long aTcpipPanel::getNum( char* pStr, long index1, long index2 )
 {
-	char tmp = pStr[index2];
 	pStr[index2] = 0;
-
 	return atoi( &pStr[index1] );
 
 }

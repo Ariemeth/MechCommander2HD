@@ -31,7 +31,7 @@ static const int CANCEL_BUTTON_ID = 1000002;
 #define SORT_ORDER_MAP	202
 #define SORT_ORDER_PING	203
 
-extern CPrefs prefs;
+extern CPrefs g_userPreferences;
 
 MPGameBrowser::MPGameBrowser()
 {
@@ -184,7 +184,7 @@ int	MPGameBrowser::handleMessage( unsigned long message, unsigned long who)
 		case SORT_ORDER_PLAYERS:
 		case SORT_ORDER_MAP:
 		case SORT_ORDER_PING:
-			if ( sortOrder == who )
+			if ( sortOrder == (int)who )
 				bSortUpward ^= 1;
 			else 
 				bSortUpward = 1;
@@ -214,7 +214,7 @@ int	MPGameBrowser::handleMessage( unsigned long message, unsigned long who)
 					{
 						if ( MPlayer )
 						{
-							long retVal = MPlayer->joinSession ( (MC2Session*)pItem->getSession(), &prefs.playerName[0][0] );
+							long retVal = MPlayer->joinSession ( (MC2Session*)pItem->getSession(), &g_userPreferences.playerName[0][0] );
 							if ( retVal == MPLAYER_NO_ERR ) {
 								MPlayer->setMode(MULTIPLAYER_MODE_PARAMETERS);
 								status = NEXT;

@@ -52,7 +52,6 @@
 //----------------------------------------
 // Externs
 extern bool useFog;
-extern bool hasGuardBand;
 
 //---------------------------------------------------------------------------
 // Class Clouds
@@ -69,7 +68,7 @@ void Clouds::init (char *textureName, long gSize)
 	// Create the CloudVertices here.
 	gridSize = gSize;
 	long gridTotal = gridSize * gridSize;
-	cloudVertices = (CloudVertexPtr)systemHeap->Malloc(sizeof(CloudVertex)*gridTotal);
+	cloudVertices = (CloudVertexPtr)g_systemHeap->Malloc(sizeof(CloudVertex)*gridTotal);
 	gosASSERT(cloudVertices != NULL);
 	
 	memset(cloudVertices,0,sizeof(CloudVertex)*gridTotal);
@@ -80,8 +79,8 @@ void Clouds::update (void)
 {
 	renderClouds = false;
 	
-	scrollU += frameLength * SCROLL_U_FACTOR;
-	scrollV += frameLength * SCROLL_V_FACTOR;
+	scrollU += g_deltaTime * SCROLL_U_FACTOR;
+	scrollV += g_deltaTime * SCROLL_V_FACTOR;
 
 	if (scrollU > 1.0f)
 		scrollU -= 1.0f;
@@ -154,14 +153,14 @@ void Clouds::update (void)
 				
 			Distance.Subtract(eyePosition,vPosition);
 			float eyeDistance = Distance.GetApproximateLength();
-			if (eyeDistance > Camera::MaxClipDistance)
+			if (eyeDistance > Camera::maxClipDistance)
 			{
 				hazeFactor = 1.0f;
 				//onScreen = false;
 			}
-			else if (eyeDistance > Camera::MinHazeDistance)
+			else if (eyeDistance > Camera::minHazeDistance)
 			{
-				hazeFactor = (eyeDistance - Camera::MinHazeDistance) * Camera::DistanceFactor;
+				hazeFactor = (eyeDistance - Camera::minHazeDistance) * Camera::DistanceFactor;
 			}
 			else
 			{
@@ -355,7 +354,7 @@ void Clouds::render (void)
 //---------------------------------------------------------------------------
 void Clouds::destroy (void)
 {
-	systemHeap->Free(cloudVertices);
+	g_systemHeap->Free(cloudVertices);
 	cloudVertices = NULL;
 }
 

@@ -64,6 +64,9 @@ typedef enum {
 	RTN_FATAL,
 	NUM_ABL_ROUTINES
 } RoutineKey;
+#if NUM_ABL_ROUTINES > 254
+#error "We done fucked up"
+#endif
 // NOTE: NUMBER OF ROUTINEKEYS IS LIMITED TO 256!
 
 typedef struct _SymTableNode*	SymTableNodePtr;

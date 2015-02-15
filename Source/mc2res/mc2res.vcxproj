@@ -124,7 +124,7 @@
       <AssemblerListingLocation>$(IntDir)asm\</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)obj\</ObjectFileName>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
-      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CallingConvention>StdCall</CallingConvention>
@@ -144,7 +144,8 @@
       <ProgramDatabaseFile>$(OutDir)$(TargetName).pdb</ProgramDatabaseFile>
       <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
-      <LinkStatus>true</LinkStatus>
+      <LinkStatus>
+      </LinkStatus>
     </Link>
     <PostBuildEvent>
       <Message>
@@ -199,7 +200,8 @@ xcopy "$(TargetPath)" "$(SolutionDir)Editor\$(Configuration)\" /y /d</Command>
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <LinkStatus>true</LinkStatus>
+      <LinkStatus>
+      </LinkStatus>
     </Link>
     <PostBuildEvent>
       <Message>
@@ -256,7 +258,8 @@ xcopy "$(TargetPath)" "$(SolutionDir)Editor\$(Configuration)\" /y /d</Command>
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <LinkStatus>true</LinkStatus>
+      <LinkStatus>
+      </LinkStatus>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
     <PostBuildEvent>
@@ -297,7 +300,7 @@ xcopy "$(TargetPath)" "$(SolutionDir)Editor\$(Configuration)\" /y /d</Command>
       <CallingConvention>StdCall</CallingConvention>
       <DisableSpecificWarnings>4996;4537;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MinimalRebuild>true</MinimalRebuild>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <ResourceCompile>
@@ -312,7 +315,10 @@ xcopy "$(TargetPath)" "$(SolutionDir)Editor\$(Configuration)\" /y /d</Command>
       <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <LinkStatus>true</LinkStatus>
+      <LinkStatus>
+      </LinkStatus>
+      <LinkTimeCodeGeneration>
+      </LinkTimeCodeGeneration>
     </Link>
     <PostBuildEvent>
       <Message>

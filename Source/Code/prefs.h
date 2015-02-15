@@ -12,6 +12,8 @@
 
 class CPrefs {
 public:
+	static CPrefs originalSettings;
+
 	CPrefs();
 	int load( const char* pFileName = "options");
 	int save();
@@ -29,17 +31,17 @@ public:
 	long BettyVolume;
 
 	bool useShadows;
-	bool useWaterInterestTexture;
+	bool useTerrainDetailTexture;
 	bool useHighObjectDetail;
 
-	long GameDifficulty;
-	bool useUnlimitedAmmo;
+	long gameDifficulty;
+	bool unlimitedAmmo;
 
 	long renderer;
 	long resolution;
 	bool fullScreen;
 	long gammaLevel;
-	bool useLeftRightMouseProfile; // if false, use old style commands
+	bool leftRightMouseProfile;
 	long baseColor;
 	long highlightColor;
 	long faction;
@@ -52,22 +54,14 @@ public:
 	bool	useNonWeaponEffects;
 	bool	useLocalShadows;
 	bool	asyncMouse;
+	bool	useRealLOS; // MCHD TODO: Investigate this and if we can use it for fog of war
 	long	fogPos;
+	long	gameVisibleVertices;
 	char	bitDepth; // 0 == 16, 1 == 32
 
 	bool	saveTranscripts;
 	bool	tutorials;
-
-#if 0
-	long FilterState;
-	long TERRAIN_TXM_SIZE;
-	long ObjectTextureSize;
-	bool	useRealLOS;
-	float doubleClickThreshold;
-	long dragThreshold;
-	DWORD BaseVertexColor;		//This color is applied to all vertices in game as Brightness correction.
-#endif
 };
 
-extern CPrefs prefs;
+extern CPrefs g_userPreferences;
 #endif /*PREFS_H*/

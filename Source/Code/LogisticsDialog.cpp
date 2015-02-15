@@ -251,7 +251,19 @@ void	LogisticsOKDialog::setText( int textID, int CancelButton, int OKButton )
 	textObjects[0].setText( textID );
 	buttons[0].setText( CancelButton );
 	buttons[1].setText( OKButton );
+}
 
+void	LogisticsOKDialog::setText(const char* mainText, int OKButton)
+{
+	textObjects[0].setText(mainText);
+	buttons[0].setText(OKButton);
+}
+
+void	LogisticsOKDialog::setText(const char* mainText, int OKButton, int CancelButton)
+{
+	textObjects[0].setText(mainText);
+	buttons[0].setText(OKButton);
+	buttons[1].setText(CancelButton);
 }
 
 void				LogisticsOKDialog::setText( const char* mainText )
@@ -965,14 +977,14 @@ void LogisticsSaveDialog::setMission( const char* fileName)
 			{
 				unsigned long lRes;
 				file.readIdULong( "MissionNameResourceStringID", lRes );
-				cLoadString( lRes, missionName, 255 );
+				cLoadString(lRes, missionName, 255);
 			}
 			else
 			{
-				file.readIdString( "MissionName", missionName, 255 );
+				file.readIdString("MissionName", missionName, 255);
 			}
 
-			textObjects[2].setText( missionName );
+			textObjects[2].setText(missionName);
 
 		}
 		else
@@ -1795,15 +1807,15 @@ void LogisticsMapInfoDialog::setMap( const char* pFileName )
 			{
 				unsigned long lRes;
 				file.readIdULong( "MissionNameResourceStringID", lRes );
-				cLoadString( lRes, missionName, 255 );
+				cLoadString(lRes, missionName, 255);
 			}
 			else
 			{
-				file.readIdString( "MissionName", missionName, 255 );
+				file.readIdString("MissionName", missionName, 255);
 			}
 	
 			cLoadString( IDS_MP_LM_MAP_LIST_MAP_NAME, text, 255 );
-			sprintf( text2, text, missionName );
+			sprintf(text2, text, missionName);
 
 			sprintf( totalText, text2 );
 			strcat( totalText, "\n" );

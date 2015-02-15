@@ -20,7 +20,7 @@ MPParameterScreen.cpp			: Implementation of the MPParameterScreen component.
 #include "MissionBriefingScreen.h"
 #include "ChatWindow.h"
 
-extern bool quitGame;
+extern bool g_quitGame;
 
 #ifndef GAMESOUND_H
 #include "gamesound.h"
@@ -353,7 +353,7 @@ int	MPParameterScreen::handleMessage( unsigned long message, unsigned long who)
 			{
 				if (MPlayer->isHost())
 					MPlayer->setInProgress(true);
-				delayTime += frameLength;
+				delayTime += g_deltaTime;
 				char text[256];
 				cLoadString( IDS_MPLAYER_GAME_ABOUT_TO_START, text, 255 );
 				MPlayer->sendChat( 0, -1, text );
@@ -624,18 +624,18 @@ void MPParameterScreen::setMission( const char* fileName, bool resetData )
 			unsigned long lRes;
 			result = missionFile.readIdULong( "MissionNameResourceStringID", lRes );
 			Assert( result == NO_ERR, 0, "couldn't find the MissionNameResourceStringID" );
-			cLoadString( lRes, missionName, 255 );
+			cLoadString(lRes, missionName, 255);
 		}
 		else
 		{
-			result = missionFile.readIdString( "MissionName", missionName, 255 );
-			Assert( result == NO_ERR, 0, "couldn't find the missionName" );
+			result = missionFile.readIdString("MissionName", missionName, 255);
+			Assert( result == NO_ERR, 0, "couldn't find the g_missionName" );
 		}
 		
-		gosASSERT( strlen( missionName ) < MAXLEN_MAP_NAME );
+		gosASSERT(strlen(missionName) < MAXLEN_MAP_NAME);
 
 		strcpy( MPlayer->missionSettings.map, fileName );
-		strcpy( MPlayer->missionSettings.name, missionName );
+		strcpy(MPlayer->missionSettings.name, missionName);
 
 			
 		result = missionFile.readIdLong( "ResourcePoints", MPlayer->missionSettings.resourcePoints );
@@ -737,7 +737,7 @@ void MPParameterScreen::update()
 				bErrorDlg = 0;
 
 				// might need to kill the game here
-				quitGame = true;
+				g_quitGame = true;
 			}
 
 		}
@@ -798,7 +798,7 @@ void MPParameterScreen::update()
 	}
 
 	if ( delayTime )
-		delayTime += frameLength;
+		delayTime += g_deltaTime;
 
 	if ( delayTime > 5.f )
 	{
@@ -929,7 +929,7 @@ void MPParameterScreen::update()
 				char final[1024];
 
 				cLoadString( chatToSend, chatStr, 255 );
-				sprintf( final, chatStr, prefs.playerName[0] );
+				sprintf( final, chatStr, g_userPreferences.playerName[0] );
 				MPlayer->sendChat( NULL, -1, final );
 			}
 				bShowNoMapDlg = false;

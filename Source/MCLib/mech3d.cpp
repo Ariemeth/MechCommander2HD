@@ -139,7 +139,6 @@ char MechStateByGesture[MAX_MECH_ANIMATIONS] = {
 #define SPIN_RATE		90.0f
 #define JUMP_PITCH		(90.0f)
 
-extern bool reloadBounds;
 char* MechAnimationNames[MaxGestures+2] = 
 {
 	"StandToPark",		//GesturePark							 0 -- Park 
@@ -176,7 +175,7 @@ DWORD				Mech3DAppearance::numPaintSchemata = 0;
 
 TG_TypeMultiShapePtr Mech3DAppearanceType::SensorSquareShape = NULL;
 
-extern long			ObjectTextureSize;
+extern long			g_objectTextureSize;
 
 #define FOOTPRINT_SLOP			2
 
@@ -1094,7 +1093,7 @@ void Mech3DAppearance::init (AppearanceTypePtr tree, GameObjectPtr obj)
 			sensorTriangleShape->GetTextureName(i,txmName,256);
 
 			char texturePath[1024];
-			sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+			sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 	
 			FullPathFileName textureName;
 			textureName.init(texturePath,txmName,"");
@@ -1132,7 +1131,7 @@ void Mech3DAppearance::init (AppearanceTypePtr tree, GameObjectPtr obj)
 				sensorSquareShape->GetTextureName(i,txmName,256);
 	
 				char texturePath[1024];
-				sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+				sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 		
 				FullPathFileName textureName;
 				textureName.init(texturePath,txmName,"");
@@ -1170,7 +1169,7 @@ void Mech3DAppearance::init (AppearanceTypePtr tree, GameObjectPtr obj)
 				sensorSquareShape->GetTextureName(i,txmName,256);
 	
 				char texturePath[1024];
-				sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+				sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 		
 				FullPathFileName textureName;
 				textureName.init(texturePath,txmName,"");
@@ -1347,7 +1346,7 @@ void Mech3DAppearance::init (AppearanceTypePtr tree, GameObjectPtr obj)
 			mechShadowShape->GetTextureName(i,txmName,256);
 
 			char texturePath[1024];
-			sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+			sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 
 			FullPathFileName textureName;
 			textureName.init(texturePath,txmName,"");
@@ -1767,7 +1766,7 @@ void Mech3DAppearance::resetPaintScheme (DWORD red, DWORD green, DWORD blue)
 	mechShape->GetTextureName(0,txmName,256);
 
    	char texturePath[1024];
-   	sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+   	sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 
    	FullPathFileName textureName;
    	textureName.init(texturePath,txmName,"");
@@ -2006,7 +2005,7 @@ void Mech3DAppearance::debugUpdate (long whichOne)
 
 	velocity *= velMag * worldUnitsPerMeter;
 
-	velocity *= frameLength;
+	velocity *= g_deltaTime;
 
 	debugMechActorPosition[whichOne] += velocity;
 	debugMechActorPosition[whichOne].z = land->getTerrainElevation(debugMechActorPosition[whichOne]);
@@ -2064,14 +2063,14 @@ bool Mech3DAppearance::recalcBounds (void)
 	
 			Distance.Subtract(objPosition,eyePosition);
 			eyeDistance = Distance.GetApproximateLength();
-			if (eyeDistance > Camera::MaxClipDistance)
+			if (eyeDistance > Camera::maxClipDistance)
 			{
 				hazeFactor = 1.0f;
 				inView = false;
 			}
-			else if (eyeDistance > Camera::MinHazeDistance)
+			else if (eyeDistance > Camera::minHazeDistance)
 			{
-				Camera::HazeFactor = (eyeDistance - Camera::MinHazeDistance) * Camera::DistanceFactor;
+				Camera::HazeFactor = (eyeDistance - Camera::minHazeDistance) * Camera::DistanceFactor;
 				inView = true;
 			}
 			else
@@ -2111,9 +2110,6 @@ bool Mech3DAppearance::recalcBounds (void)
 		
 		if (inView)
 		{
-			if (reloadBounds)
-				mechType->reinit();
-
 			//mechType->boundsLowerRightY = (OBBRadius * eye->getTiltFactor() * 2.0f);
 			
 			//-------------------------------------------------------------------------
@@ -2262,7 +2258,7 @@ bool Mech3DAppearance::recalcBounds (void)
 						}
 
 						// we are at this LOD level.
-						if (selectLOD != currentLOD)
+						if ((long)selectLOD != currentLOD)
 						{
 							currentLOD = selectLOD;
 
@@ -2897,7 +2893,7 @@ void Mech3DAppearance::setObjStatus (long oStatus)
 				mechShape->GetTextureName(i,txmName,256);
 	
 				char texturePath[1024];
-				sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+				sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 		
 				FullPathFileName textureName;
 				textureName.init(texturePath,txmName,"");
@@ -2991,8 +2987,8 @@ void Mech3DAppearance::updateGeometry (void)
 	//Update flashing regardless of view!!!
 	if (duration > 0.0f)
 	{
-		duration -= frameLength;
-		currentFlash -= frameLength;
+		duration -= g_deltaTime;
+		currentFlash -= g_deltaTime;
 		if (currentFlash < 0.0f)
 		{
 			drawFlash ^= true;
@@ -3339,7 +3335,7 @@ void Mech3DAppearance::updateGeometry (void)
 	}
 	
 	Stuff::UnitQuaternion totalRotation;
-	sensorSpin += SPIN_RATE * frameLength;
+	sensorSpin += SPIN_RATE * g_deltaTime;
 	if (sensorSpin > 180)
 		sensorSpin -= 360;
 
@@ -3684,14 +3680,14 @@ bool Mech3DAppearance::leftArmRecalc (void)
 
 		Distance.Subtract(objPosition,eyePosition);
 		eyeDistance = Distance.GetApproximateLength();
-		if (eyeDistance > Camera::MaxClipDistance)
+		if (eyeDistance > Camera::maxClipDistance)
 		{
 			leftArmHazeFactor = 1.0f;
 			leftArmInView = false;
 		}
-		else if (eyeDistance > Camera::MinHazeDistance)
+		else if (eyeDistance > Camera::minHazeDistance)
 		{
-			leftArmHazeFactor = (eyeDistance - Camera::MinHazeDistance) * Camera::DistanceFactor;
+			leftArmHazeFactor = (eyeDistance - Camera::minHazeDistance) * Camera::DistanceFactor;
 			leftArmInView = true;
 		}
 		else
@@ -3741,14 +3737,14 @@ bool Mech3DAppearance::rightArmRecalc (void)
 
 		Distance.Subtract(objPosition,eyePosition);
 		eyeDistance = Distance.GetApproximateLength();
-		if (eyeDistance > Camera::MaxClipDistance)
+		if (eyeDistance > Camera::maxClipDistance)
 		{
 			rightArmHazeFactor = 1.0f;
 			rightArmInView = false;
 		}
-		else if (eyeDistance > Camera::MinHazeDistance)
+		else if (eyeDistance > Camera::minHazeDistance)
 		{
-			rightArmHazeFactor = (eyeDistance - Camera::MinHazeDistance) * Camera::DistanceFactor;
+			rightArmHazeFactor = (eyeDistance - Camera::minHazeDistance) * Camera::DistanceFactor;
 			rightArmInView = true;
 		}
 		else
@@ -3801,7 +3797,7 @@ long Mech3DAppearance::update (bool animate)
 		{
 			if (nodeRecycle[i] > 0.0f)
 			{
-				nodeRecycle[i] -= frameLength;
+				nodeRecycle[i] -= g_deltaTime;
 				if (nodeRecycle[i] < 0.0f)
 					nodeRecycle[i] = 0.0f;
 			}
@@ -3841,7 +3837,7 @@ long Mech3DAppearance::update (bool animate)
 	//Fix please
 	if (!inCombatMode && (currentGestureId == 2))
 	{
-		idleTime += frameLength;
+		idleTime += g_deltaTime;
 		if (idleTime > idleMAX)
 		{
 			currentGestureId = 13;
@@ -4052,7 +4048,7 @@ long Mech3DAppearance::update (bool animate)
 			{
 				//--------------------------------------------------------
 				// Make sure animation runs no faster than mechFrameRate fps.
-				frameInc = mechFrameRate * frameLength;
+				frameInc = mechFrameRate * g_deltaTime;
 			}
 			
 			//------------------------------------------
@@ -4171,7 +4167,7 @@ long Mech3DAppearance::update (bool animate)
 		if (speed)
 		{
 			Stuff::Vector3D velDiff = dAcc[1];
-			velDiff *= frameLength;
+			velDiff *= g_deltaTime;
 			dVel[1].Add(dVel[1],velDiff);
 			speed = dVel[1].GetLength(); 
 			if (speed < Stuff::SMALL)
@@ -4180,7 +4176,7 @@ long Mech3DAppearance::update (bool animate)
 			}
 				
 			Stuff::Vector3D posDiff = dVel[1];
-			posDiff *= frameLength;
+			posDiff *= g_deltaTime;
 			leftArmPos.Add(leftArmPos,posDiff);
 			float elev = land->getTerrainElevation(leftArmPos); 
 			if (leftArmPos.z < elev)
@@ -4188,17 +4184,17 @@ long Mech3DAppearance::update (bool animate)
 				leftArmPos.z = elev;
 				dRacc[1].Zero();
 				dRVel[1].Zero();
-				dTime[1] -= frameLength;
+				dTime[1] -= g_deltaTime;
 				if (dTime[1] < 0.0)
 					dVel[1].x = dVel[1].y = dVel[1].z = 0.0;
 			}
 			
 			Stuff::Vector3D rvDiff = dRacc[1];
-			rvDiff *= frameLength;
+			rvDiff *= g_deltaTime;
 			dRVel[1].Add(dRVel[1],rvDiff);
 				
 			Stuff::Vector3D rotDiff = dRVel[1];
-			rotDiff *= frameLength;
+			rotDiff *= g_deltaTime;
 			dRot[1].Add(dRot[1],rotDiff);
 		}
 
@@ -4250,7 +4246,7 @@ long Mech3DAppearance::update (bool animate)
 		if (speed)
 		{
 			Stuff::Vector3D velDiff = dAcc[0];
-			velDiff *= frameLength;
+			velDiff *= g_deltaTime;
 			dVel[0].Add(dVel[0],velDiff);
 			speed = dVel[0].GetLength(); 
 			if (speed < Stuff::SMALL)
@@ -4259,7 +4255,7 @@ long Mech3DAppearance::update (bool animate)
 			}
 				
 			Stuff::Vector3D posDiff = dVel[0];
-			posDiff *= frameLength;
+			posDiff *= g_deltaTime;
 			rightArmPos.Add(rightArmPos,posDiff);
 			float elev = land->getTerrainElevation(rightArmPos); 
 			if (rightArmPos.z < elev)
@@ -4267,17 +4263,17 @@ long Mech3DAppearance::update (bool animate)
 				rightArmPos.z = elev;
 				dRacc[0].Zero();
 				dRVel[0].Zero();
-				dTime[0] -= frameLength;
+				dTime[0] -= g_deltaTime;
 				if (dTime[0] < 0.0)
 					dVel[0].x = dVel[0].y = dVel[0].z = 0.0;
 			}
 			
 			Stuff::Vector3D rvDiff = dRacc[0];
-			rvDiff *= frameLength;
+			rvDiff *= g_deltaTime;
 			dRVel[0].Add(dRVel[0],rvDiff);
 				
 			Stuff::Vector3D rotDiff = dRVel[0];
-			rotDiff *= frameLength;
+			rotDiff *= g_deltaTime;
 			dRot[0].Add(dRot[0],rotDiff);
 		}
 

@@ -153,7 +153,8 @@
       <TargetMachine>MachineX86</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <LinkStatus>true</LinkStatus>
+      <LinkStatus>
+      </LinkStatus>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)..\FinalBuild\*.fst" "$(SolutionDir)" /y /d
@@ -224,7 +225,8 @@ xcopy "$(SolutionDir)..\FinalBuild\testtxm.tga" "$(SolutionDir)" /y /d</Command>
       <TargetMachine>MachineX86</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <LinkStatus>true</LinkStatus>
+      <LinkStatus>
+      </LinkStatus>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
     <PostBuildEvent>
@@ -277,7 +279,7 @@ xcopy "$(SolutionDir)..\FinalBuild\testtxm.tga" "$(SolutionDir)" /y /d</Command>
       <CompileAs>Default</CompileAs>
       <DisableSpecificWarnings>4996;4537;4430;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MinimalRebuild>true</MinimalRebuild>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -294,7 +296,10 @@ xcopy "$(SolutionDir)..\FinalBuild\testtxm.tga" "$(SolutionDir)" /y /d</Command>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <LinkStatus>true</LinkStatus>
+      <LinkStatus>
+      </LinkStatus>
+      <LinkTimeCodeGeneration>
+      </LinkTimeCodeGeneration>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)..\FinalBuild\*.fst" "$(SolutionDir)" /y /d
@@ -336,7 +341,7 @@ xcopy "$(SolutionDir)..\FinalBuild\testtxm.tga" "$(SolutionDir)" /y /d</Command>
       <AssemblerListingLocation>$(IntDir)asm\</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)obj\</ObjectFileName>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
-      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CallingConvention>StdCall</CallingConvention>
@@ -361,7 +366,8 @@ xcopy "$(SolutionDir)..\FinalBuild\testtxm.tga" "$(SolutionDir)" /y /d</Command>
       <TargetMachine>MachineX86</TargetMachine>
       <AllowIsolation>false</AllowIsolation>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <LinkStatus>true</LinkStatus>
+      <LinkStatus>
+      </LinkStatus>
     </Link>
     <Manifest>
       <SuppressStartupBanner>false</SuppressStartupBanner>

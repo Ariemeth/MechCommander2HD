@@ -215,7 +215,7 @@ void WeaponShotInfo::setEntryAngle (float _entryAngle) {
 void* WeaponFireChunk::operator new (size_t ourSize) {
 
 	void* result;
-	result = systemHeap->Malloc(ourSize);
+	result = g_systemHeap->Malloc(ourSize);
 	return(result);
 }
 
@@ -223,7 +223,7 @@ void* WeaponFireChunk::operator new (size_t ourSize) {
 
 void WeaponFireChunk::operator delete (void* us) {
 
-	systemHeap->Free(us);
+	g_systemHeap->Free(us);
 }
 	
 
@@ -1093,7 +1093,7 @@ void DebugWeaponHitChunk (WeaponHitChunkPtr chunk1, WeaponHitChunkPtr chunk2) {
 
 void* WeaponHitChunk::operator new (size_t ourSize) {
 
-	void* result = systemHeap->Malloc(ourSize);
+	void* result = g_systemHeap->Malloc(ourSize);
 	return(result);
 }
 
@@ -1101,7 +1101,7 @@ void* WeaponHitChunk::operator new (size_t ourSize) {
 
 void WeaponHitChunk::operator delete (void* us) {
 
-	systemHeap->Free(us);
+	g_systemHeap->Free(us);
 }	
 
 //---------------------------------------------------------------------------
@@ -1560,7 +1560,7 @@ void GameObject::init (bool create, ObjectTypePtr _type) {
 
 //---------------------------------------------------------------------------
 
-unsigned long GameObject::getWatchID (bool assign) {
+long GameObject::getWatchID (bool assign) {
 
 	if ((watchID == 0) && assign)
 		ObjectManager->setWatchID(this);
@@ -1966,9 +1966,6 @@ inline bool GameObject::lineOfSight (GameObjectPtr target, float startExtRad, bo
 //	{
 //		if (land->IsGameSelectTerrainPosition(getLOSPosition()))
 //		{
-			float elev = land->getTerrainElevation(getLOSPosition());
-			float localStart = getLOSPosition().z - elev;
-
 			Stuff::Vector3D targetPosition = target->getLOSPosition();
 		
 			if (Team::lineOfSight(getLOSPosition(), target->getLOSPosition(), getTeamId(), target->getAppearRadius(), startExtRad, checkVisibleBits)) 

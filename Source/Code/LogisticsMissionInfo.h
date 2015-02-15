@@ -37,12 +37,12 @@ class LogisticsMissionInfo
 		long getAvailableMissions( const char** missions, int& numberOfEm );
 		long getCurrentMissions( const char** missions, int& numberOfEm );
 
-		bool getMissionAvailable( const char* missionName );
+		bool getMissionAvailable(const char* missionName);
 
-		bool isMissionComplete( const char* missionName );
+		bool isMissionComplete(const char* missionName);
 		bool isSingleMission() const;
 
-		long setNextMission( const char* missionName );
+		long setNextMission(const char* missionName);
 		void setMissionComplete( );
 
 		long getCurrentLogisticsTuneId();
@@ -58,7 +58,7 @@ class LogisticsMissionInfo
 		const char*			getCurrentOperationFile() const;
 		const char*			getCurrentMissionDescription() const;
 		const char*			getCurrentMissionFriendlyName() const;
-		const char*			getMissionFriendlyName( const char* missionName ) const;
+		const char*			getMissionFriendlyName(const char* missionName) const;
 		const char*			getCurrentABLScriptName() const;
 
 		int					getCurrentRP() const;

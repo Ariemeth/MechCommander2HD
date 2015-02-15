@@ -470,7 +470,7 @@ void Mechlopedia::MechScreen::setVehicle( LogisticsVehicle* pVehicle )
 
 	compListBox.setVehicle( pVehicle );
 
-	camera.setVehicle( pVehicle->getFileName(), prefs.baseColor, prefs.highlightColor, prefs.highlightColor );
+	camera.setVehicle( pVehicle->getFileName(), g_userPreferences.baseColor, g_userPreferences.highlightColor, g_userPreferences.highlightColor );
 	camera.setScale( pVehicle->getScale() );
 
 	textObjects[0].setText( tmpStr );
@@ -556,7 +556,7 @@ void Mechlopedia::MechScreen::setMech( LogisticsVariant* pChassis, bool bShowJum
 
 	compListBox.setMech( pChassis );
 
-	camera.setMech( pChassis->getFileName(), prefs.baseColor, prefs.highlightColor, prefs.highlightColor );
+	camera.setMech( pChassis->getFileName(), g_userPreferences.baseColor, g_userPreferences.highlightColor, g_userPreferences.highlightColor );
 
 	char name[256];
 	cLoadString( pChassis->getChassisName(), name, 255 );
@@ -838,7 +838,7 @@ void Mechlopedia::WeaponScreen::setWeapon ( LogisticsComponent* pComponent )
 	statsListBox.AddItem( pEntry );
 
 	// AMMO
-	if ( !prefs.useUnlimitedAmmo && pComponent->getAmmo() )
+	if ( !g_userPreferences.unlimitedAmmo && pComponent->getAmmo() )
 	{
 		pEntry = new aTextListItem( IDS_EN_WEAPON_FONT );
 

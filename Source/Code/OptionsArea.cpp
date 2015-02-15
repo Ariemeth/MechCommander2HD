@@ -7,7 +7,6 @@ OptionsArea.cpp			: Implementation of the OptionsArea component.
 \*************************************************************************************************/
 
 #include "OptionsArea.h"
-#include "prefs.h"
 #include "IniFile.h"
 #include "../MCLib/UserInput.h"
 #include "..\resource.h"
@@ -16,27 +15,9 @@ OptionsArea.cpp			: Implementation of the OptionsArea component.
 #include "LogisticsDialog.h"
 #include "gameSound.h"
 #include "LoadScreen.h"
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
-
-static bool bShadows = true;
-static bool bDetailTexture = true;
-static int objectDetail = 0;
-static int difficulty = 0;
-static bool bUnLimitedAmmo = false;
-static long DigitalMasterVolume = 255;
-static long MusicVolume = 64;
-static long sfxVolume = 64;
-static long RadioVolume = 64;
-static long BettyVolume = 64;
-CPrefs prefs;
-CPrefs originalSettings;
-
+#include "prefs.h"
 #include "mission.h"
-
-extern SoundSystem *sndSystem;
 
 #define MSB_TAB0 200
 #define MSB_TAB1 201
@@ -75,8 +56,10 @@ extern SoundSystem *sndSystem;
 #define ALT		0x00100000
 #define WAYPT	0x20000000
 
-HotKeyListItem*		HotKeyListItem::s_item = NULL;
+extern CPrefs g_userPreferences;
+extern SoundSystem *g_soundSystem;
 
+HotKeyListItem*	HotKeyListItem::s_item = NULL;
 
 OptionsXScreen::OptionsXScreen()
 {
@@ -193,9 +176,9 @@ void OptionsXScreen::init(FitIniFile* file)
 	pKeys->init(xOffset, yOffset);
 
 	//Needs to be 8.3 or it won't go on the CD!!
-	originalSettings.load( "OrgPrefs" );
+	CPrefs::originalSettings.load( "OrgPrefs" );
 
-	prefs.load();
+	g_userPreferences.load();
 
 
 	for ( i = 0; i < 4; i++ )
@@ -261,17 +244,17 @@ int	OptionsXScreen::handleMessage( unsigned long message, unsigned long who)
 
 		case YES:
 			{
-				int oldRes = prefs.resolution;
-				int oldDepth = prefs.bitDepth;
+				int oldRes = g_userPreferences.resolution;
+				int oldDepth = g_userPreferences.bitDepth;
 				for ( int i = 0; i < 4; i++ )
 					tabAreas[i]->end();
 
-				prefs.save();
-				prefs.applyPrefs(0);
+				g_userPreferences.save();
+				g_userPreferences.applyPrefs(0);
 				LoadScreenWrapper::changeRes();
 
-				int newRes = prefs.resolution;
-				int newDepth = prefs.bitDepth;
+				int newRes = g_userPreferences.resolution;
+				int newDepth = g_userPreferences.bitDepth;
 
 				if ( newRes != oldRes || newDepth != oldDepth )
 				{
@@ -288,8 +271,8 @@ int	OptionsXScreen::handleMessage( unsigned long message, unsigned long who)
 		case NO:
 			{
 				(dynamic_cast<OptionsGamePlay *>(tabAreas[2]))->resetCamera();
-				prefs.load();
-				prefs.applyPrefs(0);
+				g_userPreferences.load();
+				g_userPreferences.applyPrefs(0);
 				bDone = true;
 				return 1;
 			}
@@ -485,7 +468,7 @@ void OptionsGraphics::init(long xOffset, long yOffset)
 int		OptionsGraphics::handleMessage( unsigned long message, unsigned long fromWho )
 {
 	if ( fromWho == MSG_RESET )
-		reset(originalSettings);
+		reset(CPrefs::originalSettings);
 
 	return 1;
 }
@@ -546,20 +529,20 @@ void OptionsGraphics::update()
 void OptionsGraphics::begin()
 {
 	helpTextArrayID = 1;
-	reset(prefs);
+	reset(g_userPreferences);
 
 }
 void OptionsGraphics::end()
 {
-	prefs.useWaterInterestTexture = getButton( MSG_TERRAIN_DETAIL )->isPressed(  );
+	g_userPreferences.useTerrainDetailTexture = getButton( MSG_TERRAIN_DETAIL )->isPressed(  );
 
-	prefs.pilotVideos = getButton( MSG_PILOT_VIDS )->isPressed();
-	prefs.useHighObjectDetail = getButton( MSG_OBJECT_DETAIL )->isPressed();
-	prefs.useShadows = getButton( MSG_SHADOWS )->isPressed();
-	prefs.useNonWeaponEffects = getButton( MSG_NON_WEAPON )->isPressed();
-	prefs.useLocalShadows = getButton( MSG_LOCAL_SHADOWS )->isPressed();
-	prefs.asyncMouse = getButton( MSG_ASYNC_MOUSE )->isPressed();
-	prefs.renderer = getButton( MSG_HARDWARE_RASTERIZER )->isPressed() ? 0 : 3;
+	g_userPreferences.pilotVideos = getButton( MSG_PILOT_VIDS )->isPressed();
+	g_userPreferences.useHighObjectDetail = getButton( MSG_OBJECT_DETAIL )->isPressed();
+	g_userPreferences.useShadows = getButton( MSG_SHADOWS )->isPressed();
+	g_userPreferences.useNonWeaponEffects = getButton( MSG_NON_WEAPON )->isPressed();
+	g_userPreferences.useLocalShadows = getButton( MSG_LOCAL_SHADOWS )->isPressed();
+	g_userPreferences.asyncMouse = getButton( MSG_ASYNC_MOUSE )->isPressed();
+	g_userPreferences.renderer = getButton(MSG_HARDWARE_RASTERIZER)->isPressed() ? 0 : 3;
 
 	int sel = resolutionList.GetSelectedItem();
 	if ( sel > -1 )
@@ -575,34 +558,34 @@ void OptionsGraphics::end()
 				switch (resModes[i-IDS_RESOLUTION0].xRes)
 				{
 					case 640:
-						prefs.resolution = 0;
+						g_userPreferences.resolution = 0;
 						break;
 
 					case 800:
-						prefs.resolution = 1;
+						g_userPreferences.resolution = 1;
 						break;
 	
 					case 1024:
-						prefs.resolution = 2;
+						g_userPreferences.resolution = 2;
 						break;
 
 					case 1280:
-						prefs.resolution = 3;
+						g_userPreferences.resolution = 3;
 						break;
 
 					case 1600:
-						prefs.resolution = 4;
+						g_userPreferences.resolution = 4;
 						break;
 				}
 
 				switch (resModes[i-IDS_RESOLUTION0].bitDepth)
 				{
 					case 16:
-						prefs.bitDepth = 0;
+						g_userPreferences.bitDepth = 0;
 						break;
 	
 					case 32:
-						prefs.bitDepth = 1;
+						g_userPreferences.bitDepth = 1;
 						break;
 				}
 
@@ -612,21 +595,21 @@ void OptionsGraphics::end()
 	}
 
 	int index = cardList.GetSelectedItem( );
-	if ( (index != -1) && (prefs.renderer != 3))
-		prefs.renderer = index;
+	if ((index != -1) && (g_userPreferences.renderer != 3))
+		g_userPreferences.renderer = index;
 
 }
 void OptionsGraphics::reset(const CPrefs& newPrefs)
 {
 	
-	getButton( MSG_TERRAIN_DETAIL )->press( newPrefs.useWaterInterestTexture );
+	getButton( MSG_TERRAIN_DETAIL )->press( newPrefs.useTerrainDetailTexture );
 	getButton( MSG_PILOT_VIDS )->press( newPrefs.pilotVideos );
 	getButton( MSG_OBJECT_DETAIL )->press( newPrefs.useHighObjectDetail );
 	getButton( MSG_SHADOWS )->press( newPrefs.useShadows );
 	getButton( MSG_NON_WEAPON )->press( newPrefs.useNonWeaponEffects );
 	getButton( MSG_LOCAL_SHADOWS )->press( newPrefs.useLocalShadows );
 	getButton( MSG_ASYNC_MOUSE )->press( newPrefs.asyncMouse );
-	getButton( MSG_HARDWARE_RASTERIZER )->press( (newPrefs.renderer != 3) );
+	getButton(MSG_HARDWARE_RASTERIZER)->press((newPrefs.renderer != 3));
 
 	if (availableMode[1])
 	{
@@ -678,7 +661,7 @@ void OptionsAudio::init(long xOffset, long yOffset)
 int		OptionsAudio::handleMessage( unsigned long message, unsigned long fromWho )
 {
 	if ( fromWho == MSG_RESET )
-		reset(originalSettings);
+		reset(CPrefs::originalSettings);
 
 	return 1;
 }
@@ -702,35 +685,35 @@ void OptionsAudio::update()
 	}
 	
 	//Lets update these on the fly so they can hear how much better it sounds.
-	prefs.DigitalMasterVolume = scrollBars[0].GetScrollPos();
-	prefs.MusicVolume = scrollBars[1].GetScrollPos();
-	prefs.sfxVolume = scrollBars[2].GetScrollPos();
-	prefs.RadioVolume = scrollBars[3].GetScrollPos();
-	prefs.BettyVolume = scrollBars[4].GetScrollPos();
+	g_userPreferences.DigitalMasterVolume = scrollBars[0].GetScrollPos();
+	g_userPreferences.MusicVolume = scrollBars[1].GetScrollPos();
+	g_userPreferences.sfxVolume = scrollBars[2].GetScrollPos();
+	g_userPreferences.RadioVolume = scrollBars[3].GetScrollPos();
+	g_userPreferences.BettyVolume = scrollBars[4].GetScrollPos();
 
-	if (sndSystem) 
+	if (g_soundSystem) 
 	{
-		sndSystem->setDigitalMasterVolume(prefs.DigitalMasterVolume);
-		sndSystem->setSFXVolume(prefs.sfxVolume);
-		sndSystem->setRadioVolume(prefs.RadioVolume);
-		sndSystem->setMusicVolume(prefs.MusicVolume);
-		sndSystem->setBettyVolume(prefs.BettyVolume);
+		g_soundSystem->setDigitalMasterVolume(g_userPreferences.DigitalMasterVolume);
+		g_soundSystem->setSFXVolume(g_userPreferences.sfxVolume);
+		g_soundSystem->setRadioVolume(g_userPreferences.RadioVolume);
+		g_soundSystem->setMusicVolume(g_userPreferences.MusicVolume);
+		g_soundSystem->setBettyVolume(g_userPreferences.BettyVolume);
 	}
 }
 
 void OptionsAudio::begin()
 {
 	helpTextArrayID = 15;
-	reset(prefs);
+	reset(g_userPreferences);
 
 }
 void OptionsAudio::end()
 {
-	prefs.DigitalMasterVolume = scrollBars[0].GetScrollPos();
-	prefs.MusicVolume = scrollBars[1].GetScrollPos();
-	prefs.sfxVolume = scrollBars[2].GetScrollPos();
-	prefs.RadioVolume = scrollBars[3].GetScrollPos();
-	prefs.BettyVolume = scrollBars[4].GetScrollPos();
+	g_userPreferences.DigitalMasterVolume = scrollBars[0].GetScrollPos();
+	g_userPreferences.MusicVolume = scrollBars[1].GetScrollPos();
+	g_userPreferences.sfxVolume = scrollBars[2].GetScrollPos();
+	g_userPreferences.RadioVolume = scrollBars[3].GetScrollPos();
+	g_userPreferences.BettyVolume = scrollBars[4].GetScrollPos();
 
 
 }
@@ -802,7 +785,7 @@ int		OptionsGamePlay::handleMessage( unsigned long message, unsigned long fromWh
 	switch( fromWho )
 	{
 		case MSG_RESET:
-			reset(originalSettings);
+			reset(CPrefs::originalSettings);
 			break;
 
 		case MSG_BASE:
@@ -878,7 +861,7 @@ void OptionsGamePlay::update()
 void OptionsGamePlay::begin()
 {
 	helpTextArrayID = 2;
-	reset(prefs);
+	reset(g_userPreferences);
 
 	//Do NOT setup a camera in mission.
 	// A.  We don't need it cause the option is greyed out.
@@ -890,8 +873,8 @@ void OptionsGamePlay::begin()
 	}
 	else
 	{
-		camera.setMech( "Bushwacker", prefs.baseColor, 
-			prefs.highlightColor, prefs.highlightColor );
+		camera.setMech( "Bushwacker", g_userPreferences.baseColor, 
+			g_userPreferences.highlightColor, g_userPreferences.highlightColor );
 	}
 }
 
@@ -900,15 +883,15 @@ void OptionsGamePlay::end()
 	for ( int i  = MSG_GREEN; i < MSG_ELITE + 1; i++ )
 	{
 		if ( getButton( i )->isPressed() )
-			prefs.GameDifficulty = i - MSG_GREEN;
+			g_userPreferences.gameDifficulty = i - MSG_GREEN;
 	}
 
-	prefs.baseColor = rects[36].getColor(  );
-	prefs.highlightColor = rects[37].getColor( );
+	g_userPreferences.baseColor = rects[36].getColor(  );
+	g_userPreferences.highlightColor = rects[37].getColor( );
 
-	prefs.useUnlimitedAmmo = getButton( MSG_UNLIMITED_AMMO )->isPressed();
-	prefs.useLeftRightMouseProfile = getButton( MSG_LEFT_CLICK )->isPressed();
-	//prefs.tutorials = getButton( MSG_TUTORIALS )->isPressed();
+	g_userPreferences.unlimitedAmmo = getButton( MSG_UNLIMITED_AMMO )->isPressed();
+	g_userPreferences.leftRightMouseProfile = getButton( MSG_LEFT_CLICK )->isPressed();
+	//g_userPreferences.tutorials = getButton( MSG_TUTORIALS )->isPressed();
 
 	//Do NOT setup a camera in mission.
 	// A.  We don't need it cause the option is greyed out.
@@ -931,13 +914,13 @@ void OptionsGamePlay::reset(const CPrefs& newPrefs)
 		getButton( i )->press( 0 );
 	}
 
-	getButton( MSG_GREEN + newPrefs.GameDifficulty )->press( true );
+	getButton( MSG_GREEN + newPrefs.gameDifficulty )->press( true );
 
 	rects[36].setColor( newPrefs.baseColor );
 	rects[37].setColor( newPrefs.highlightColor );
 
-	getButton( MSG_UNLIMITED_AMMO )->press( newPrefs.useUnlimitedAmmo );
-	getButton( MSG_LEFT_CLICK )->press( newPrefs.useLeftRightMouseProfile );
+	getButton( MSG_UNLIMITED_AMMO )->press( newPrefs.unlimitedAmmo );
+	getButton( MSG_LEFT_CLICK )->press( newPrefs.leftRightMouseProfile );
 //	getButton( MSG_TUTORIALS )->press( newPrefs.tutorials );
 }
 
@@ -986,6 +969,7 @@ void OptionsHotKeys::render()
 
 void OptionsHotKeys::update()
 {
+	static bool error = false;
 
 	if ( bShowDlg )
 	{
@@ -993,59 +977,64 @@ void OptionsHotKeys::update()
 		if ( LogisticsOKDialog::instance()->isDone() )
 		{
 			bShowDlg = 0;
+
+			// If the user does want to overwrite the previously bound command
 			if ( LogisticsDialog::YES == LogisticsOKDialog::instance()->getStatus() )
 			{
+				// If it was the error dialog, get out of here
+				if (error)
+				{
+					error = false;
+					return;
+				}
+
 				char keysString[256];
 				keysString[0] = 0;
 
 				makeKeyString( curHotKey, keysString );
 
-				
 				long index = hotKeyList.GetSelectedItem();
 				long oldKey = -1;
 				
 				if ( index > -1 )
 				{
-					HotKeyListItem* pItemToSet = (HotKeyListItem*)hotKeyList.GetItem( index );
+					HotKeyListItem* pItemToSet = (HotKeyListItem*)hotKeyList.GetItem(index);
 					// now I've got to find the other one with th new key and set it to the old key
-					for ( int i = 0; i < hotKeyList.GetItemCount(); i++ )
+					for (int i = 0; i < hotKeyList.GetItemCount(); i++)
 					{
-						HotKeyListItem* pTmpItem = (HotKeyListItem*)hotKeyList.GetItem( i );
-						if ( pTmpItem->getHotKey() == curHotKey  && pTmpItem != pItemToSet )
+						HotKeyListItem* pTmpItem = (HotKeyListItem*)hotKeyList.GetItem(i);
+						if (pTmpItem->getHotKey() == curHotKey  && pTmpItem != pItemToSet)
 						{
 
 							// first we've got to see if we can set to the default
-							long*	defaultKeys = MissionInterfaceManager::getOldKeys();
+							long*	defaultKeys = MissionInterfaceManager::s_defaultKeys;
 							int defaultKey = defaultKeys[pTmpItem->getCommand()];
-							for ( int j = 0; j < hotKeyList.GetItemCount(); j++ )
+							for (int j = 0; j < hotKeyList.GetItemCount(); j++)
 							{
-								HotKeyListItem* pCheckItem = (HotKeyListItem*)hotKeyList.GetItem( j );
-								if ( pCheckItem->getHotKey() == defaultKey )
+								HotKeyListItem* pCheckItem = (HotKeyListItem*)hotKeyList.GetItem(j);
+								if (pCheckItem->getHotKey() == defaultKey)
 								{
 									defaultKey = -1;
 									break;
 								}
-							}			 			
+							}
 
-							if ( defaultKey != -1 )
+							if (defaultKey != -1)
 								oldKey = defaultKey;
-							else if ( pItemToSet )
+							else if (pItemToSet)
 								oldKey = pItemToSet->getHotKey();
 
 							char tmpKeyStr[256];
 							tmpKeyStr[0] = 0;
-							makeKeyString( oldKey, tmpKeyStr );
-							pTmpItem->setHotKey( oldKey );
-							pTmpItem->setKey( tmpKeyStr );
+							makeKeyString(oldKey, tmpKeyStr);
+							pTmpItem->setHotKey(oldKey);
+							pTmpItem->setKey(tmpKeyStr);
 						}
 					}
-					pItemToSet->setKey( keysString );
-					pItemToSet->setHotKey( curHotKey );
-					hotKeyList.SelectItem( -1 );
+					pItemToSet->setKey(keysString);
+					pItemToSet->setHotKey(curHotKey);
+					hotKeyList.SelectItem(-1);
 				}
-
-
-
 			}
 		}
 
@@ -1060,41 +1049,47 @@ void OptionsHotKeys::update()
 	while( tmpKey ) // empty out keyboard buffers...
 	{
 		int index = hotKeyList.GetSelectedItem( );
-		tmpKey = 0;
+		tmpKey = gos_GetKey();
 
-		if ( index > -1 )
+		if ( index > -1 && tmpKey )
 		{
-			HotKeyListItem* pItem = (HotKeyListItem*)hotKeyList.GetItem( index );
-			tmpKey = gos_GetKey();
+			char hotKeyString[256];
+			hotKeyString[0] = 0;
 
-			if ( tmpKey )
+			if ( 0 != makeInputKeyString( tmpKey, hotKeyString ) )
+				return;
+
+			curHotKey = tmpKey;
+
+			// check and see if anyone else is using this one...
+			HotKeyListItem* pItem = (HotKeyListItem*)hotKeyList.GetItem(index);
+			for (int i = 0; i < hotKeyList.GetItemCount(); i++)
 			{
-				char hotKeyString[256];
-				hotKeyString[0] = 0;
-
-				if ( 0 != makeInputKeyString( tmpKey, hotKeyString ) )
-					return;
-
-				curHotKey = tmpKey;
-				// check and see if anyone else is using this one...
-				for ( int i = 0; i < hotKeyList.GetItemCount(); i++ )
+				HotKeyListItem* pTmpItem = (HotKeyListItem*)hotKeyList.GetItem( i );
+				if ( pTmpItem->getHotKey() == curHotKey  && pTmpItem != pItem )
 				{
-					HotKeyListItem* pTmpItem = (HotKeyListItem*)hotKeyList.GetItem( i );
-					if ( pTmpItem->getHotKey() == curHotKey  && pTmpItem != pItem )
-					{
-						LogisticsOKDialog::instance()->setText( IDS_OPTIONS_HOTKEY_ERROR, IDS_DIALOG_NO, IDS_DIALOG_YES  );
-						LogisticsOKDialog::instance()->begin();
-						bShowDlg = true;
-					}
-
+					LogisticsOKDialog::instance()->setText( IDS_OPTIONS_HOTKEY_ERROR, IDS_DIALOG_NO, IDS_DIALOG_YES  );
+					LogisticsOKDialog::instance()->begin();
+					bShowDlg = true;
 				}
+
+			}
 				
-				if ( !bShowDlg )
+			if ( !bShowDlg )
+			{
+				error = MissionInterfaceManager::isHotKeyLocked(curHotKey);
+				if (error == false)
 				{
-					pItem->setHotKey( tmpKey );
-					pItem->setKey( hotKeyString );
-					hotKeyList.SelectItem( -1 );
+					pItem->setHotKey(tmpKey);
+					pItem->setKey(hotKeyString);
 				}
+				else
+				{
+					LogisticsOKDialog::instance()->setText("You're trying to re-assign a key permanently bound to another command.", IDS_DIALOG_NO, IDS_DIALOG_NO); // MCHD TODO: OK
+					LogisticsOKDialog::instance()->begin();
+					bShowDlg = true;
+				}
+				hotKeyList.SelectItem( -1 );
 			}
 
 		}
@@ -1225,9 +1220,9 @@ void OptionsHotKeys::reset( bool useOld )
 	cLoadString( IDS_CONTROL, control, 31 );
 	cLoadString( IDS_ALT, alt, 31 );
 
-	MissionInterfaceManager::Command* commands = MissionInterfaceManager::getCommands();
-	long*	oldKeys = MissionInterfaceManager::getOldKeys();
-	for ( int i = 0; i < MAX_COMMAND; i++ )
+	MissionInterfaceManager::Command* commands = MissionInterfaceManager::s_commands;
+	long*	oldKeys = MissionInterfaceManager::s_defaultKeys;
+	for (int i = 0; i < MissionInterfaceManager::s_numCommands; i++)
 	{
 		if ( commands[i].hotKeyDescriptionText != -1 )
 		{
@@ -1242,9 +1237,6 @@ void OptionsHotKeys::reset( bool useOld )
 			item->setHotKey( key );
 			item->setCommand( i );
 			hotKeyList.AddItem( item );
-			
-
-
 		}
 	}
 }

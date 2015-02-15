@@ -237,7 +237,7 @@ void IfaceCallStrike (long strikeID,
 void* ArtilleryChunk::operator new (size_t ourSize) {
 
 	void* result;
-	result = systemHeap->Malloc(ourSize);
+	result = g_systemHeap->Malloc(ourSize);
 	return(result);
 }
 
@@ -245,7 +245,7 @@ void* ArtilleryChunk::operator new (size_t ourSize) {
 
 void ArtilleryChunk::operator delete (void* us) {
 
-	systemHeap->Free(us);
+	g_systemHeap->Free(us);
 }	
 
 //---------------------------------------------------------------------------
@@ -360,19 +360,19 @@ void ArtilleryType::destroy (void)
 {
 	if (explosionOffsetX) 
 	{
-		systemHeap->Free(explosionOffsetX);
+		g_systemHeap->Free(explosionOffsetX);
 		explosionOffsetX = NULL;
 	}
 
 	if (explosionOffsetY) 
 	{
-		systemHeap->Free(explosionOffsetY);
+		g_systemHeap->Free(explosionOffsetY);
 		explosionOffsetY = NULL;
 	}
 
 	if (explosionDelay) 
 	{
-		systemHeap->Free(explosionDelay);
+		g_systemHeap->Free(explosionDelay);
 		explosionDelay = NULL;
 	}
 
@@ -471,13 +471,13 @@ long ArtilleryType::init (FilePtr objFile, unsigned long fileSize) {
 		if (result != NO_ERR)
 			return(result);
 			
-		explosionOffsetX = (float *)systemHeap->Malloc(sizeof(float)*numExplosions);
+		explosionOffsetX = (float *)g_systemHeap->Malloc(sizeof(float)*numExplosions);
 		gosASSERT(explosionOffsetX != NULL);
 
-		explosionOffsetY = (float *)systemHeap->Malloc(sizeof(float)*numExplosions);
+		explosionOffsetY = (float *)g_systemHeap->Malloc(sizeof(float)*numExplosions);
 		gosASSERT(explosionOffsetY != NULL);
 
-		explosionDelay   = (float *)systemHeap->Malloc(sizeof(float)*numExplosions);
+		explosionDelay   = (float *)g_systemHeap->Malloc(sizeof(float)*numExplosions);
 		gosASSERT(explosionDelay != NULL);
 
 		for (long i=0;i<numExplosions;i++)
@@ -857,8 +857,8 @@ long Artillery::update (void)
 	}
 	else
 	{
-		info.strike.timeToImpact -= frameLength;
-		info.strike.timeToLaunch -= frameLength;	
+		info.strike.timeToImpact -= g_deltaTime;
+		info.strike.timeToLaunch -= g_deltaTime;	
 	}
 
 	ArtilleryTypePtr type = (ArtilleryTypePtr)getObjectType();
@@ -1097,7 +1097,7 @@ long Artillery::update (void)
 	// Sensor round is ticking now.  Update Everything.
 	if ((info.strike.timeToBlind > 0.0) && getFlag(OBJECT_FLAG_SENSORS_GOING)) 
 	{
-		info.strike.timeToBlind -= frameLength;
+		info.strike.timeToBlind -= g_deltaTime;
 		info.strike.sensorRange = info.strike.timeToBlind / type->nominalSensorTime;
 		info.strike.sensorRange *= type->nominalSensorRange;
 		info.strike.sensorRange *= worldUnitsPerMeter;
@@ -1176,7 +1176,7 @@ bool Artillery::recalcBounds (CameraPtr myEye)
 	
 			Distance.Subtract(objPosition,eyePosition);
 			float eyeDistance = Distance.GetApproximateLength();
-			if (eyeDistance > Camera::MaxClipDistance)
+			if (eyeDistance > Camera::maxClipDistance)
 			{
 				inView = false;
 			}

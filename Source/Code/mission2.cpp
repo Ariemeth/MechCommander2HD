@@ -92,6 +92,8 @@ extern __int64 x;
 extern float OneOverProcessorSpeed;
 #endif
 
+extern unsigned long g_spriteHeapSize;
+extern unsigned long g_maxVertexCount;
 
 void Mission::initBareMinimum()
 {
@@ -106,20 +108,18 @@ void Mission::initBareMinimum()
 	}
 
 	//Startup the vertex array pool
-	mcTextureManager->startVertices(100000);
+	mcTextureManager->startVertices(g_maxVertexCount);
 
 	initTGLForLogistics();
 
 	//----------------------------------------------
 	// Start Appearance Type Lists.
-	unsigned long spriteHeapSize = 3072000;
 	if ( !appearanceTypeList )
 	{
 		appearanceTypeList = new AppearanceTypeList;
 		gosASSERT(appearanceTypeList != NULL);
-		appearanceTypeList->init(spriteHeapSize);
+		appearanceTypeList->init(g_spriteHeapSize);
 		gosASSERT(result == NO_ERR);
-
 	}
 
 	if ( !weaponEffects )

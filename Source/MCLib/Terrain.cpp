@@ -62,7 +62,6 @@
 // Static Globals
 float worldUnitsPerMeter = 5.01f;
 float metersPerWorldUnit = 0.2f;
-long terrainLineChanged = 0;
 
 MapDataPtr					Terrain::mapData = NULL;
 TerrainTexturesPtr			Terrain::terrainTextures = NULL;
@@ -144,16 +143,14 @@ bool 						useClouds = false;
 bool 						useFog = true;
 bool 						useVertexLighting = true;
 bool 						useFaceLighting = false;
-extern bool					useRealLOS;
+extern bool					g_useRealLOS;
 
 unsigned char 				godMode = 0;			//Can I simply see everything, enemy and friendly?
 
-extern long 				DrawDebugCells;
-
-#define						MAX_TERRAIN_HEAP_SIZE		1024000
+long 						g_dbgDrawCombatMove = 0;
+extern unsigned long		g_terrainHeapSize;
 
 long						visualRangeTable[256];
-extern bool 				justResaveAllMaps;
 //---------------------------------------------------------------------------
 // These are used to determine what terrain objects to process.
 // They date back to GenCon 1996!!
@@ -292,17 +289,6 @@ long Terrain::init (PacketFile* pakFile, int whichPacket, unsigned long visibleV
 	
 	int tmp = pakFile->getPacketSize();
 	realVerticesMapSide = sqrt( float(tmp/ sizeof(PostcompVertex)));
-	
-	if (!justResaveAllMaps && 
-		(realVerticesMapSide != 120) &&
-		(realVerticesMapSide != 100) && 
-		(realVerticesMapSide != 80) &&
-		(realVerticesMapSide != 60))
-	{
-		PAUSE(("This map size NO longer supported %d.  Must be 120, 100, 80 or 60 now!  Can Continue, for NOW!!",realVerticesMapSide));
-//		return -1;
-	}
-	
 	init( realVerticesMapSide, pakFile, visibleVertices, percent, percentRange );	
 	
 	return(NO_ERR);
@@ -375,7 +361,6 @@ long Terrain::init( unsigned long verticesPerMapSide, PacketFile* pakFile, unsig
 
 	Terrain::numObjBlocks = blocksMapSide * blocksMapSide;
 	visibleVerticesPerSide = visibleVertices;
-	terrainHeapSize = MAX_TERRAIN_HEAP_SIZE;
 
 	//-----------------------------------------------------------------
 	// Startup to Terrain Heap
@@ -383,7 +368,7 @@ long Terrain::init( unsigned long verticesPerMapSide, PacketFile* pakFile, unsig
 	{
 		terrainHeap = new UserHeap;
 		gosASSERT(terrainHeap != NULL);
-		terrainHeap->init(terrainHeapSize,"TERRAIN");
+		terrainHeap->init(g_terrainHeapSize, "TERRAIN");
 	}
 
 	percent += percentRange/5.f;
@@ -734,7 +719,6 @@ void Terrain::destroy (void)
 	TerrainQuad::blownTextureHandle = 0xffffffff;
 }
 
-extern float textureOffset;
 //---------------------------------------------------------------------------
 long Terrain::update (void)
 {
@@ -748,29 +732,7 @@ long Terrain::update (void)
 			terrainTextures2->init(terrainName);
 	}
 
-	//----------------------------------------------------------------
-	// Nothing is ever visible.  We recalc every frame.  True LOS!
-//	Terrain::VisibleBits->resetAll(0);
-		
-	if (godMode)	
-	{
-//		Terrain::VisibleBits->resetAll(0xff);
-	}
-
-	if (turn > terrainLineChanged+10)
-	{
-		if (userInput->getKeyDown(KEY_UP) && userInput->ctrl() && userInput->alt() && !userInput->shift())
-		{
-			textureOffset += 0.1f;;
-			terrainLineChanged = turn;
-		}
-		
-		if (userInput->getKeyDown(KEY_DOWN) && userInput->ctrl() && userInput->alt() && !userInput->shift())
-		{
-			textureOffset -= 0.1f;;
-			terrainLineChanged = turn;
-		}
-	}
+	// MCHD CHANGE (02/14/2015): Removed because it was literally doing nothing.
 	
  	//---------------------------------------------------------------------
 	Terrain::mapData->update();
@@ -870,7 +832,7 @@ void Terrain::render (void)
 			if (useFog)
 				gos_SetRenderState( gos_State_Fog, (int)&fogColor);
 		}
-		else if (DrawDebugCells) 
+		else if (g_dbgDrawCombatMove) 
 		{
 			if (useFog)
 				gos_SetRenderState( gos_State_Fog, 0);
@@ -996,13 +958,13 @@ void Terrain::geometry (void)
 			
 			if (onScreen)
 			{
-				if (distanceToEye > Camera::MaxClipDistance)
+				if (distanceToEye > Camera::maxClipDistance)
 				{
 					currentVertex->hazeFactor = 1.0f;
 				}
-				else if (distanceToEye > Camera::MinHazeDistance)
+				else if (distanceToEye > Camera::minHazeDistance)
 				{
-					currentVertex->hazeFactor = (distanceToEye - Camera::MinHazeDistance) * Camera::DistanceFactor;
+					currentVertex->hazeFactor = (distanceToEye - Camera::minHazeDistance) * Camera::DistanceFactor;
 				}
 				else
 				{
@@ -1539,7 +1501,8 @@ void Terrain::clearShadows()
 
 //---------------------------------------------------------------------------
 
-long Terrain::getWater (Stuff::Vector3D& worldPos) {
+long Terrain::getWater (Stuff::Vector3D& worldPos)
+{
 	//-------------------------------------------------
 	// Get elevation at this point and compare to deep
 	// water altitude for this map.

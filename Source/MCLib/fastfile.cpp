@@ -16,7 +16,7 @@ long ffLastError = 0;
 //-----------------------------------------------------------------------------------
 bool FastFileInit (char *fname)
 {
-	if (numFastFiles == maxFastFiles)
+	if (g_numFastFiles == g_maxFastFiles)
 	{
 		ffLastError = -1;
 		return FALSE;
@@ -24,15 +24,15 @@ bool FastFileInit (char *fname)
 
 	//-----------------------------------------------------------------------------
 	//-- Open this fast file, add it to the list O pointers and return TRUE if OK!
-	fastFiles[numFastFiles] = new FastFile;
-	long result = fastFiles[numFastFiles]->open(fname);
+	g_fastFiles[g_numFastFiles] = new FastFile;
+	long result = g_fastFiles[g_numFastFiles]->open(fname);
 	if (result == FASTFILE_VERSION)
 	{
 		ffLastError = result;
 		return FALSE;
 	}
 
-	numFastFiles++;
+	g_numFastFiles++;
 
 	return TRUE;
 }
@@ -40,43 +40,43 @@ bool FastFileInit (char *fname)
 //-----------------------------------------------------------------------------------
 void FastFileFini (void)
 {
-	if (fastFiles)
+	if (g_fastFiles)
 	{
 		long currentFastFile = 0;
-		while (currentFastFile < maxFastFiles)
+		while (currentFastFile < g_maxFastFiles)
 		{
-			if (fastFiles[currentFastFile])
+			if (g_fastFiles[currentFastFile])
 			{
-				fastFiles[currentFastFile]->close();
+				g_fastFiles[currentFastFile]->close();
 	
-				delete fastFiles[currentFastFile];
-				fastFiles[currentFastFile] = NULL;
+				delete g_fastFiles[currentFastFile];
+				g_fastFiles[currentFastFile] = NULL;
 			}
 	
 			currentFastFile++;
 		}
 	}
 
-	free(fastFiles);
-	fastFiles = NULL;
-	numFastFiles= 0;
+	free(g_fastFiles);
+	g_fastFiles = NULL;
+	g_numFastFiles= 0;
 }
 
 //-----------------------------------------------------------------------------------
 FastFile *FastFileFind (char *fname, long &fastFileHandle)
 {
-	if (fastFiles)
+	if (g_fastFiles)
 	{
 		DWORD thisHash = elfHash(fname);
 		long currentFastFile = 0;
 		long tempHandle = -1;
-		while (currentFastFile < numFastFiles)
+		while (currentFastFile < g_numFastFiles)
 		{
-			tempHandle = fastFiles[currentFastFile]->openFast(thisHash,fname);
+			tempHandle = g_fastFiles[currentFastFile]->openFast(thisHash,fname);
 			if (tempHandle != -1)
 			{
 				fastFileHandle = tempHandle;
-				return fastFiles[currentFastFile];
+				return g_fastFiles[currentFastFile];
 			}
 
 			currentFastFile++;
@@ -93,7 +93,8 @@ DWORD elfHash (char *name)
     while ( *name )
     {
         h = ( h << 4 ) + *name++;
-        if ( g = h & 0xF0000000 )
+		g = h & 0xF0000000;
+		if (g)
             h ^= g >> 24;
         h &= ~g;
     }

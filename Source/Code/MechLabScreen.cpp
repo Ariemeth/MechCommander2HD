@@ -18,7 +18,7 @@ MechLabScreen.cpp			: Implementation of the MechLabScreen component.
 #include "gamesound.h"
 #include "ChatWindow.h"
 #include "Multplyr.h"
-extern bool useUnlimitedAmmo;
+extern bool g_unlimitedAmmo;
 #include "Prefs.h"
 
 MechLabScreen* MechLabScreen::s_instance = 0;
@@ -519,9 +519,9 @@ void MechLabScreen::update()
 	// figure out change
 	float costChange = newCost - originalCost;
 
-	if ( curCount && curCount + frameLength < countDownTime  )
+	if ( curCount && curCount + g_deltaTime < countDownTime  )
 	{
-		curCount += frameLength;
+		curCount += g_deltaTime;
 		float curAmount = previousAmount - (curCount/countDownTime * previousAmount); 
 		costChange += curAmount;
 		color = 0xffa21600;
@@ -909,7 +909,7 @@ void MechLabScreen::updateHeatMeter()
 			if ( flashHeatRange )
 				curHeat = pVariant->getHeat();
 
-			heatTime += frameLength;
+			heatTime += g_deltaTime;
 
 		}
 		else if ( heatTime > 1.6 || oldHeat >= curHeat )
@@ -932,7 +932,7 @@ void MechLabScreen::updateHeatMeter()
 					fCurHeat = oldHeat;		
 			}
 		
-			heatTime += frameLength;
+			heatTime += g_deltaTime;
 		}
 	}
 
@@ -967,7 +967,7 @@ void MechLabScreen::updateArmorMeter()
 				curarmor = (float)oldArmor * armorTime/.6;	
 				fCurarmor = curarmor; 
 			}
-			armorTime += frameLength;
+			armorTime += g_deltaTime;
 
 		}
 		else if ( armorTime > 1.6 || oldArmor >= curarmor )
@@ -987,7 +987,7 @@ void MechLabScreen::updateArmorMeter()
 				fCurarmor = oldArmor;		
 			}
 		
-			armorTime += frameLength;
+			armorTime += g_deltaTime;
 		}
 	}
 
@@ -1308,7 +1308,7 @@ void	MechLabScreen::setComponent( LogisticsComponent* pComponent, bool bMessageF
 
 			attributeMeters[7].showGUIWindow( false );
 
-			if ( !useUnlimitedAmmo )
+			if ( !g_unlimitedAmmo )
 			{
 				sprintf( text, "%ld", pCurComponent->getAmmo() );
 				textObjects[13].setText( text );
@@ -1323,7 +1323,7 @@ void	MechLabScreen::setComponent( LogisticsComponent* pComponent, bool bMessageF
 			rects[17].setHelpID( IDS_HELP_MC_DAMAGE );
 			rects[18].setHelpID( IDS_HELP_MC_FIRE_RATE );
 			rects[19].setHelpID( IDS_HELP_MC_HEAT_GENERATED );
-			if ( !prefs.useUnlimitedAmmo )
+			if ( !g_userPreferences.unlimitedAmmo )
 				rects[20].setHelpID( IDS_HELP_MC_AMMO );
 			else
 				rects[20].setHelpID( 0 );
@@ -1374,7 +1374,7 @@ void MechLabScreen::showJumpJetItems( bool bShow )
 		statics[33].showGUIWindow( true );
 
 		// turn off ammo thing if appropriate
-		if (!useUnlimitedAmmo && !bShow)
+		if (!g_unlimitedAmmo && !bShow)
 		{
 			statics[34].showGUIWindow( 1 );
 			attributeMeters[3].showGUIWindow( 1 );
@@ -1549,7 +1549,6 @@ void MechLabScreen::getMouseDiagramCoords( long screenX, long screenY, long& x, 
 	long minX = rects[7 + 6-width].left();
 	long maxY = rects[7].bottom();
 	long minY = maxY - height * LogisticsComponent::YICON_FACTOR;
-	long maxX = minX + width * LogisticsComponent::XICON_FACTOR;
 
 	long mouseX = screenX;
 	long mouseY = screenY;

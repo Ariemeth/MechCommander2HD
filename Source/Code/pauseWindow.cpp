@@ -17,17 +17,17 @@ PauseWindow.cpp			: Implementation of the PauseWindow component.
 #include "LogisticsData.h"
 #include "Multplyr.h"
 
-extern float frameLength;
+extern float g_deltaTime;
 
-extern bool bInvokeOptionsScreenFlag;
+extern bool g_invokeOptionsScreen;
 extern long helpTextHeaderID;
 extern long helpTextID;
 extern unsigned long scenarioResult;
 		
-extern bool loadInMissionSave;
+extern bool g_loadInMissionSave;
 extern bool saveInMissionSave;
 
-bool aborted = false;
+extern bool g_aborted;
 
 MoveInfo PauseWindow::moveInfo[8] = 
 {
@@ -74,17 +74,16 @@ void PauseWindow::update()
 	if ( bPromptToQuit || bPromptToAbort )
 	{
 		LogisticsOKDialog::instance()->update();
-		if ( LogisticsOKDialog::instance()->getStatus() == LogisticsScreen::YES )
+		if (LogisticsOKDialog::instance()->getStatus() == LogisticsScreen::YES)
 		{
-			if ( bPromptToQuit )
+			if (bPromptToQuit)
+			{
 				gos_TerminateApplication();
-			else {
-				//if (MPlayer) {
-				//	MPlayer->leaveSession();
-				//	}
-				//else
+			}
+			else 
+			{
 				scenarioResult = mis_PLAYER_LOST_BIG;
-				aborted = true;
+				g_aborted = true;
 			}
 
 			bPromptToQuit = bPromptToAbort = 0;
@@ -115,7 +114,7 @@ void PauseWindow::update()
 
 	if ( currentTime != 0 )
 	{
-		currentTime += frameLength;
+		currentTime += g_deltaTime;
 		float p0 = 0.f;
 		float p1 = 0.f;
 		float t0 = 0.f;
@@ -388,7 +387,7 @@ void PauseWindow::handleClick( int id )
 		break;
 	case LOAD:
 		if (!MPlayer && !LogisticsData::instance->isSingleMission())
-			loadInMissionSave = true;
+			g_loadInMissionSave = true;
 		else
 			sound = INVALID_GUI;
 		break;
@@ -411,7 +410,7 @@ void PauseWindow::handleClick( int id )
 		if (!MPlayer)
 		{
 			sound = LOG_CLICKONBUTTON;
-			bInvokeOptionsScreenFlag = true;
+			g_invokeOptionsScreen = true;
 		}
 		else
 		{

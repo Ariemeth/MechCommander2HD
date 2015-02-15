@@ -80,7 +80,7 @@ GoalMapNode* MoverGroup::goalMap = NULL;
 
 void* MoverGroup::operator new (size_t ourSize) {
 
-	void* result = systemHeap->Malloc(ourSize);
+	void* result = g_systemHeap->Malloc(ourSize);
 	return(result);
 }
 
@@ -88,7 +88,7 @@ void* MoverGroup::operator new (size_t ourSize) {
 
 void MoverGroup::operator delete (void* us) {
 
-	systemHeap->Free(us);
+	g_systemHeap->Free(us);
 }	
 
 //---------------------------------------------------------------------------
@@ -404,7 +404,7 @@ long MoverGroup::calcMoveGoals (Stuff::Vector3D goal, long numMovers, Stuff::Vec
 		return 0;
 
 	if (!goalMap) {
-		goalMap = (GoalMapNode*)systemHeap->Malloc(sizeof(GoalMapNode) * GOALMAP_DIM * GOALMAP_DIM);
+		goalMap = (GoalMapNode*)g_systemHeap->Malloc(sizeof(GoalMapNode) * GOALMAP_DIM * GOALMAP_DIM);
 		if (!goalMap)
 			Fatal(0, " MoverGroup.calcMoveGoals: unable to malloc goalMap ");
 	}

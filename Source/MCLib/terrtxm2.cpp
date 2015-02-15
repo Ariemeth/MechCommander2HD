@@ -1861,7 +1861,6 @@ long TerrainColorMap::init (char *fileName)
 	return 0;
 }
 
-float textureOffset = 0.4f;
 //---------------------------------------------------------------------------
 DWORD TerrainColorMap::getTextureHandle (VertexPtr vMin, VertexPtr vMax, TerrainUVData *uvData)
 {
@@ -1915,43 +1914,6 @@ DWORD TerrainColorMap::getTextureHandle (VertexPtr vMin, VertexPtr vMax, Terrain
 		float minY = (float)txmNumY * fractionPerTexture;
 		uvData->maxV = (maxY - minY) * numTexturesAcross;
 		uvData->minV = (posY - minY) * numTexturesAcross;
-		
-		/*
-		float textureAdjustFactor = (textureOffset / COLOR_MAP_RES);
-		if (uvData->minU <= textureAdjustFactor)
-			uvData->minU = textureAdjustFactor;
-		else
-			uvData->minU += xAdjust;
-			
-		if (uvData->minV <= textureAdjustFactor)
-			uvData->minV = textureAdjustFactor;
-		else
-			uvData->minV += yAdjust;
-			
-		if (uvData->maxU >= 1.0f)
-			uvData->maxU = 1.0f - textureAdjustFactor;
-		else
-			uvData->maxU += xAdjust;
-		
-		if (uvData->maxV >= 1.0f)
-			uvData->maxV = 1.0f - textureAdjustFactor;
-		else
-			uvData->maxV += yAdjust;
-		*/
-
-#if 0
-		if ((uvData->minU < 0.0f) || (uvData->minU >= 1.0f))
-			STOP(("UvData our of range in minU %f",uvData->minU));
-			
-		if ((uvData->minV < 0.0f) || (uvData->minV >= 1.0f))
-			STOP(("UvData our of range in minV %f",uvData->minV));
-	 
-		if ((uvData->maxU < 0.0f) || (uvData->maxU >= 1.0f))
-			STOP(("UvData our of range in maxU %f",uvData->maxU));
-	 
-		if ((uvData->maxV < 0.0f) || (uvData->maxV >= 1.0f))
-			STOP(("UvData our of range in maxV %f",uvData->maxV));
-#endif
 	
 		mcTextureManager->get_gosTextureHandle(textures[resultTexture].mcTextureNodeIndex);		
 		return textures[resultTexture].mcTextureNodeIndex;

@@ -652,6 +652,7 @@ void execSelectContact (void) {
 
 	long type = ABLi_popInteger();
 	long id = ABLi_popInteger();
+	(void)type;
 
 	long code = -1;
 	if (CurObject->isMover()) {
@@ -1956,6 +1957,7 @@ void execDamageObject (void) {
 	long hitLocation = ABLi_popInteger();
 	float hitRoll = ABLi_popReal();
 	float entryAngle = ABLi_peekReal();
+	(void)hitRoll;
 
 	GameObjectPtr attacker = getObject(attackerId);
 
@@ -2450,7 +2452,7 @@ void execSetTimer (void) {
 	if (timerNumber < SCENARIO_TIMER_1 || timerNumber > SCENARIO_TIMER_8)
 		timerNumber = 0;
 	else {
-		TimerPtr timer = timerManager->getTimer(timerNumber);
+		TimerPtr timer = g_timerManager->getTimer(timerNumber);
 		Assert(timer != NULL, timerNumber, " ABL.execHbSetTimer: NULL timer ");
 		timer->setTimer(duration);
 	}
@@ -2472,7 +2474,7 @@ void execCheckTimer (void) {
 
 	float timeLeft = 0.0;
 	if ((timerNumber >= 0) && (timerNumber < MAX_TIMERS)) {
-		TimerPtr timer = timerManager->getTimer(timerNumber);
+		TimerPtr timer = g_timerManager->getTimer(timerNumber);
 		Assert(timer != NULL, timerNumber, " ABL.execHbSetTimer: NULL timer ");
 		timeLeft = timer->getCurrentTime();
 	}
@@ -2492,8 +2494,7 @@ void execEndTimer (void) {
 	//		PARAMS:	integer
 	//
 	//		Returns: nothing
-	
-	long timerID = ABLi_popInteger();
+	ABLi_popInteger();
 
 // NOT REALLY NECESSARY ANYMORE--since the timers have no callback, they just
 // keep counting down... no harm...
@@ -4685,6 +4686,7 @@ void execIsTeamCapturing (void) {
 	long teamId = ABLi_popInteger();
 	long targetId = ABLi_popInteger();
 	long exceptId = ABLi_popInteger();
+	(void)exceptId;
 
 	bool targeting = false;
 	GameObjectPtr target = getObject(targetId);
@@ -4851,6 +4853,7 @@ void execPathExists (void) {
 	long startCol = ABLi_popInteger();
 	long goalRow = ABLi_popInteger();
 	long goalCol = ABLi_popInteger();
+	(void)moverID;
 
 	//-------------------------------------------------
 	// For now, assumes we mean the ground level (0)...
@@ -5801,7 +5804,7 @@ void execGetCameraFrameLength (void) {
 	//-----------------------------------------------------
 
 
-	ABLi_pushReal(frameLength);	
+	ABLi_pushReal(g_deltaTime);	
 }
 
 //*****************************************************************************
@@ -6256,10 +6259,8 @@ void execClearTacOrder (void) {
 void execPlayWave (void) {
 
 	char* fileName = ABLi_popCharPtr();
-	long type = ABLi_popInteger();
-
+	ABLi_popInteger();
 	soundSystem->playSupportSample(-1, fileName);
-
 	ABLi_pushInteger(0);
 }
 
@@ -6367,7 +6368,7 @@ void execSetKeepMoving (void) {
 
 void* ablSystemMallocCallback (unsigned long memSize) {
 
-	return(systemHeap->Malloc(memSize));
+	return(g_systemHeap->Malloc(memSize));
 }
 
 //-----------------------------------------------------------------------------
@@ -6401,7 +6402,7 @@ void* ablSymbolMallocCallback (unsigned long memSize) {
 
 void ablSystemFreeCallback (void* memBlock) {
 
-	systemHeap->Free(memBlock);
+	g_systemHeap->Free(memBlock);
 }
 
 //-----------------------------------------------------------------------------

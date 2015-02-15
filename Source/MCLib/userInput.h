@@ -99,15 +99,6 @@
 
 #define mouseFrameRate		0.10
 
-extern volatile char mc2MouseHotSpotX;
-extern volatile char mc2MouseHotSpotY;
-extern volatile char mc2MouseWidth;
-extern volatile char mc2MouseHeight;
-
-extern volatile bool mc2UseAsyncMouse;		//Should mouse draw and update in separate thread?
-extern volatile bool mc2MouseThreadStarted;	//Has the thread starting running yet?
-
-extern volatile MemoryPtr mc2MouseData;
 
 //---------------------------------------------------------------------------
 class MouseCursorData

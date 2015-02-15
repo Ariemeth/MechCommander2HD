@@ -51,7 +51,7 @@ class GameCamera : public Camera
 
 			//Check if data not in registry yet.  Goober!
 			if (!szData)
-				drawCompass = true;
+				drawCompass = false; // MCHD CHANGE (02/14/2015): Fuck this thing. Off by default.
 		}
 			
 		~GameCamera (void)

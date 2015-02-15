@@ -33,18 +33,7 @@ const DWORD MAX_MOVIE_HEIGHT 	= 480;
 const float TEXTURE_ADJUST_MIN	= (0.4f / MAX_TEXTURE_WIDTH);
 const float TEXTURE_ADJUST_MAX	= (1.0f - TEXTURE_ADJUST_MIN);
 
-float averageFrameRate = 0.0f;
-long currentFrameNum = 0;
-float last30Frames[30] = {
-	0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-	0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-	0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-	0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-	0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-	0.0f, 0.0f, 0.0f, 0.0f, 0.0f
-};
-
-extern char CDInstallPath[];
+extern char g_cdInstallPath[];
 void EnterWindowMode();
 void EnterFullScreenMode();
 void __stdcall ExitGameOS();
@@ -62,7 +51,7 @@ void MC2Movie::init (char *MC2Name, RECT mRect, bool useWaveFile)
 
 	//Set the volume based on master system volume.
 	// ONLY if we want silence!!!
-	if (useWaveFile && (prefs.DigitalMasterVolume != 0.0f))
+	if (useWaveFile && (g_userPreferences.DigitalMasterVolume != 0.0f))
 	{
 		separateWAVE = true;
 		soundStarted = false;

@@ -125,7 +125,6 @@ extern long StatusChunkUnpackErr;
 extern TeamPtr				homeTeam;
 extern bool					friendlyDestroyed;
 extern bool					enemyDestroyed;
-extern bool					useSound;
 extern bool					useOldProject;
 extern bool drawExtents;
 extern bool drawTerrainGrid;
@@ -145,7 +144,7 @@ extern float MapCellDiagonal;
 extern float				MaxTimeRevealed;
 
 extern bool CantTouchThis;
-extern bool ShowMovers;
+extern bool g_dbgShowMovers;
 
 extern WeaponFireChunk CurMoverWeaponFireChunk;
 extern void DebugWeaponFireChunk (WeaponFireChunkPtr chunk1, WeaponFireChunkPtr chunk2, GameObjectPtr attacker);
@@ -1456,14 +1455,14 @@ bool GroundVehicle::pivotTo (void) {
 	{
 		targetPosition = target->getPosition();
 		relFacingToTarget = relFacingTo(targetPosition);
-		//maxVehiclePivotRate = ((GroundVehicleDynamicsTypePtr)(((GroundVehicleTypePtr)type)->dynamicsType))->maxTurretYawRate * frameLength;
+		//maxVehiclePivotRate = ((GroundVehicleDynamicsTypePtr)(((GroundVehicleTypePtr)type)->dynamicsType))->maxTurretYawRate * g_deltaTime;
 		hasTarget = true;
 	}
 	else if (pilot->getCurTacOrder()->code == TACTICAL_ORDER_ATTACK_POINT) 
 	{
 		targetPosition = pilot->getAttackTargetPoint();
 		relFacingToTarget = relFacingTo(targetPosition);
-		//maxVehiclePivotRate = ((GroundVehicleDynamicsTypePtr)(((GroundVehicleTypePtr)type)->dynamicsType))->maxTurretYawRate * frameLength;
+		//maxVehiclePivotRate = ((GroundVehicleDynamicsTypePtr)(((GroundVehicleTypePtr)type)->dynamicsType))->maxTurretYawRate * g_deltaTime;
 		hasTarget = true;
 	}
 
@@ -1506,7 +1505,7 @@ bool GroundVehicle::pivotTo (void) {
 								turnRate = -relFacingToWayPt;
 						}
 					}
-					float maxRate = vehicleTurnRate[long(tonnage)] * frameLength;
+					float maxRate = vehicleTurnRate[long(tonnage)] * g_deltaTime;
 					if (fabs(turnRate) > maxRate) 
 					{
 						if (turnRate > 0.0)
@@ -1568,7 +1567,7 @@ bool GroundVehicle::pivotTo (void) {
 						else
 							turnRate = 180.0 - relFacingToWayPt;
 					}
-					float maxRate = vehicleTurnRate[long(tonnage)] * frameLength;
+					float maxRate = vehicleTurnRate[long(tonnage)] * g_deltaTime;
 					if (fabs(turnRate) > maxRate) 
 					{
 						if (turnRate > 0.0)
@@ -1622,7 +1621,7 @@ bool GroundVehicle::pivotTo (void) {
 			if ((relFacingToTarget < -fireArc) || (relFacingToTarget > fireArc)) 
 			{
 				float turnRate = -relFacingToTarget;
-				float maxRate = vehicleTurnRate[long(tonnage)] * frameLength;
+				float maxRate = vehicleTurnRate[long(tonnage)] * g_deltaTime;
 				if (fabs(turnRate) > maxRate) 
 				{
 					if (turnRate > 0.0)
@@ -1854,7 +1853,7 @@ bool GroundVehicle::updateMovePath (float& newRotate, char& newThrottleSetting, 
 			//Calculate how far the vehicle will move this frame.
 			// Vel is in m/s
 			float vel = velocityMag;
-			float distanceThisFrame = vel * frameLength;
+			float distanceThisFrame = vel * g_deltaTime;
 
 			float cushion = Mover::marginOfError[0];
 			if (path->curStep == (path->numSteps - 1))
@@ -1908,7 +1907,7 @@ bool GroundVehicle::updateMovePath (float& newRotate, char& newThrottleSetting, 
 							//-----------------------------------------------
 							// We can and will shift facing to destination...
 							newRotate = -relFacingToWayPt;
-							float maxRate = vehicleTurnRate[long(tonnage)] * frameLength;
+							float maxRate = vehicleTurnRate[long(tonnage)] * g_deltaTime;
 							if (fabs(newRotate) > maxRate)
 							{
 								if (fabs(newRotate) < 50.0f)
@@ -1969,7 +1968,7 @@ bool GroundVehicle::updateMovePath (float& newRotate, char& newThrottleSetting, 
 						else
 							newRotate = -(relFacingToWayPt - 180.0);
 							
-						float maxRate = vehicleTurnRate[long(tonnage)] * frameLength;
+						float maxRate = vehicleTurnRate[long(tonnage)] * g_deltaTime;
 						if (fabs(newRotate) > maxRate) 
 						{
 							newThrottleSetting = -50.0f;
@@ -2146,7 +2145,7 @@ void GroundVehicle::updateTurret (float newRotatePerSec) {
 		float newRotateTurret = -turretRelFacing;
 		//-----------------------------------------------
 		// We can and will shift facing to destination...
-		float maxRate = (float)dynamics.max.groundVehicle.turretYawRate * frameLength;
+		float maxRate = (float)dynamics.max.groundVehicle.turretYawRate * g_deltaTime;
 		if (fabs(newRotateTurret) > maxRate) {
 			if (newRotateTurret < 0.0)
 				newRotateTurret = -maxRate;
@@ -2297,7 +2296,7 @@ bool GroundVehicle::netUpdateMovePath (float& newRotate, char& newThrottleSettin
 							//-----------------------------------------------
 							// We can and will shift facing to destination...
 							newRotate = -relFacingToWayPt;
-							float maxRate = dynamics.max.groundVehicle.yawRate * frameLength;
+							float maxRate = dynamics.max.groundVehicle.yawRate * g_deltaTime;
 							if (fabs(newRotate) > maxRate) {
 								if (newRotate > 0.0)
 									newRotate = maxRate;
@@ -2352,7 +2351,7 @@ bool GroundVehicle::netUpdateMovePath (float& newRotate, char& newThrottleSettin
 							newRotate = -(relFacingToWayPt + 180.0);
 						else
 							newRotate = -(relFacingToWayPt - 180.0);
-						float maxRate = dynamics.max.groundVehicle.yawRate * frameLength;
+						float maxRate = dynamics.max.groundVehicle.yawRate * g_deltaTime;
 						if (fabs(newRotate) > maxRate) {
 							if (newRotate > 0.0) {
 								newRotate = maxRate;
@@ -2600,7 +2599,7 @@ bool GroundVehicle::crashAvoidanceSystem (void) {
 
 	Stuff::Vector3D vel = getRotationVector();
 	vel *= -velocityMag;
-	vel *= frameLength;
+	vel *= g_deltaTime;
 	vel *= worldUnitsPerMeter;
 
 	Stuff::Vector3D newPosition;
@@ -2841,16 +2840,16 @@ void GroundVehicle::updatePlayerControl (void) {
 	//-----------------------------------------------------------------
 	// Poll the joystick and keyboards here so player can control mech.
 	if (userInput->getKeyDown(KEY_T))
-		control.settings.groundVehicle.rotate = dynamics.max.groundVehicle.yawRate / 4.0 * frameLength;
+		control.settings.groundVehicle.rotate = dynamics.max.groundVehicle.yawRate / 4.0 * g_deltaTime;
 
 	if (userInput->getKeyDown(KEY_Y))
-		control.settings.groundVehicle.rotate = -dynamics.max.groundVehicle.yawRate / 4.0 * frameLength;
+		control.settings.groundVehicle.rotate = -dynamics.max.groundVehicle.yawRate / 4.0 * g_deltaTime;
 
 	if (userInput->getKeyDown(KEY_INSERT))
-		control.settings.groundVehicle.rotateTurret = dynamics.max.groundVehicle.yawRate / 4.0 * frameLength;
+		control.settings.groundVehicle.rotateTurret = dynamics.max.groundVehicle.yawRate / 4.0 * g_deltaTime;
 
 	if (userInput->getKeyDown(KEY_DELETE))
-		control.settings.groundVehicle.rotateTurret = -dynamics.max.groundVehicle.yawRate / 4.0 * frameLength;
+		control.settings.groundVehicle.rotateTurret = -dynamics.max.groundVehicle.yawRate / 4.0 * g_deltaTime;
 
 	if (userInput->getKeyDown(KEY_NEXT)) {
 		control.settings.groundVehicle.throttle -= 10;
@@ -2986,7 +2985,7 @@ void GroundVehicle::updateDynamics (void) {
 	if (((velDiff < 0.0) && (accel > 0.0)) || ((velDiff > 0.0) && (accel < 0.0)))
 		accel = -accel;
 	
-	float velChangeThisFrame = accel * frameLength;
+	float velChangeThisFrame = accel * g_deltaTime;
 	if (fabs(velChangeThisFrame) > fabs(velDiff))
 		velChangeThisFrame = velDiff;
 	
@@ -3194,7 +3193,7 @@ long GroundVehicle::update (void)
 			if (speed)
 			{
 				Stuff::Vector3D velDiff = dAcc;
-				velDiff *= frameLength;
+				velDiff *= g_deltaTime;
 				dVel.Add(dVel,velDiff);
 				speed = dVel.GetLength(); 
 				if (speed < Stuff::SMALL)
@@ -3203,7 +3202,7 @@ long GroundVehicle::update (void)
 				}
 				
 				Stuff::Vector3D posDiff = dVel;
-				posDiff *= frameLength;
+				posDiff *= g_deltaTime;
 				position.Add(position,posDiff);
 				float elev = land->getTerrainElevation(position); 
 				if (position.z < elev)
@@ -3211,17 +3210,17 @@ long GroundVehicle::update (void)
 					position.z = elev;
 					dRacc.Zero();
 					dRVel.Zero();
-					dTime -= frameLength;
+					dTime -= g_deltaTime;
 					if (dTime < 0.0)
 						dVel.x = dVel.y = dVel.z = 0.0;
 				}
 				
 				Stuff::Vector3D rvDiff = dRacc;
-				rvDiff *= frameLength;
+				rvDiff *= g_deltaTime;
 				dRVel.Add(dRVel,rvDiff);
 				
 				Stuff::Vector3D rotDiff = dRVel;
-				rotDiff *= frameLength;
+				rotDiff *= g_deltaTime;
 				dRot.Add(dRot,rotDiff);
 			}
 		}
@@ -3279,7 +3278,7 @@ long GroundVehicle::update (void)
 	{
 		setTangible(false);
 		appearance->setSensorLevel(0);
-		timeLeft -= frameLength;
+		timeLeft -= g_deltaTime;
 		if (timeLeft < 0.0)
 		{
 			//-------------------------------------------------------------
@@ -3416,7 +3415,7 @@ long GroundVehicle::update (void)
 				dmgSmoke->setOwnerPosition(position);
 				dmgSmoke->setOwnerVelocity(velocity);
 				dmgSmoke->update();
-				timeLeft -= frameLength;
+				timeLeft -= g_deltaTime;
 				if (timeLeft <= -30.0)
 				{
 					delete dmgSmoke;
@@ -3542,7 +3541,7 @@ long GroundVehicle::update (void)
 		}
 	}
 
-	float velMult = velMag * frameLength;
+	float velMult = velMag * g_deltaTime;
 	if (velMult > DistanceToWaypoint)
 		velMult = DistanceToWaypoint;
 	vel *= velMult * worldUnitsPerMeter;
@@ -3599,7 +3598,7 @@ long GroundVehicle::update (void)
 	if (!isDisabled())
 		updatePathLock(true);
 
-	sweepTime += frameLength;
+	sweepTime += g_deltaTime;
 	mineCheck();
 	if (!MPlayer || MPlayer->isServer()) 
 	{
@@ -3609,7 +3608,7 @@ long GroundVehicle::update (void)
 			{
 				if ((cellPositionRow != cellRowToMine) || (cellPositionCol != cellColToMine))
 				{
-					timeInCurrent += frameLength;
+					timeInCurrent += g_deltaTime;
 
 					if (timeInCurrent > MineWaitTime)
 					{
@@ -3653,7 +3652,7 @@ long GroundVehicle::update (void)
 
 			if (curTarget && (dist <= WeaponRanges[WEAPON_RANGE_MEDIUM][1]) && lineOfSight(curTarget))
 			{
-				timeInCurrent += frameLength;
+				timeInCurrent += g_deltaTime;
 				if (timeInCurrent > StrikeWaitTime)
 				{
 					timeInCurrent = 0.0f;
@@ -3735,11 +3734,11 @@ long GroundVehicle::update (void)
 					//---------------------------------------------------------------
 					conStat = getContactStatus(Team::home->getId(), true);
 			
-					if ((conStat == CONTACT_VISUAL) || isDestroyed() || isDisabled() || ShowMovers || (MPlayer && MPlayer->allUnitsDestroyed[MPlayer->commanderID]))
+					if ((conStat == CONTACT_VISUAL) || isDestroyed() || isDisabled() || g_dbgShowMovers || (MPlayer && MPlayer->allUnitsDestroyed[MPlayer->commanderID]))
 					{
 						if (alphaValue != 0xff)
 						{
-							fadeTime += frameLength;
+							fadeTime += g_deltaTime;
 							if (fadeTime > ContactFadeTime)
 							{
 								fadeTime = ContactFadeTime;
@@ -3760,7 +3759,7 @@ long GroundVehicle::update (void)
 						if (alphaValue != 0x0)
 						{
 							//We are fading.  Move it down.
-							fadeTime -= frameLength;
+							fadeTime -= g_deltaTime;
 							if (fadeTime < 0.0f)
 							{
 								fadeTime = 0.0f;
@@ -3878,7 +3877,7 @@ void GroundVehicle::render (void)
 		{
 			long cStat = conStat;
 	
-			if ((cStat == CONTACT_VISUAL) || isDestroyed() || isDisabled() || ShowMovers || (MPlayer && MPlayer->allUnitsDestroyed[MPlayer->commanderID]))
+			if ((cStat == CONTACT_VISUAL) || isDestroyed() || isDisabled() || g_dbgShowMovers || (MPlayer && MPlayer->allUnitsDestroyed[MPlayer->commanderID]))
 			{
 				float barStatus = getTotalEffectiveness();
 				
@@ -4240,8 +4239,6 @@ long GroundVehicle::buildMoveChunk (void) {
 }
 
 //---------------------------------------------------------------------------
-#pragma optimize("",off)
-
 long GroundVehicle::handleMoveChunk (unsigned long chunk) {
 
 	moveChunk.init();
@@ -4274,8 +4271,6 @@ long GroundVehicle::handleMoveChunk (unsigned long chunk) {
 
 	return(NO_ERR);
 }
-
-#pragma optimize("",on)
 
 //---------------------------------------------------------------------------
 

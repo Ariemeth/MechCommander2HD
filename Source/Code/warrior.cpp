@@ -2230,7 +2230,7 @@ GameObjectPtr MechWarrior::calcTurretThreats (float threatRange, long minThreat)
 	unsigned long vehicleWID = getVehicle()->getWatchID();
 	for (i = 0; i < ObjectManager->getNumTurrets(); i++) {
 		Turret* turret = ObjectManager->getTurret(i);
-		if (!turret->isDisabled() && (turret->targetWID == vehicleWID)) {
+		if (!turret->isDisabled() && (turret->targetWID == (GameObjectWatchID)vehicleWID)) {
 			turretThreat[i] += turret->getThreatRating();
 			if (turret->parent)		//Pop-up turrets do NOT have parents!!
 				turretControlThreat[((BuildingPtr)ObjectManager->getByWatchID(turret->parent))->listID] += turret->getThreatRating();
@@ -5997,11 +5997,8 @@ long MechWarrior::orderMoveToPoint (bool unitOrder, bool setTacOrder, long origi
 
 void MechWarrior::clearMovePath (long pathNum) {
 
-	if (moveOrders.path[pathNum]) {
-		if (moveOrders.path[pathNum]->numStepsWhenNotPaused > 0)
-			long i = 0;
+	if (moveOrders.path[pathNum]) 
 		moveOrders.path[pathNum]->clear();
-	}
 }
 
 

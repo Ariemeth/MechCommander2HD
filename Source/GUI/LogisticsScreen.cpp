@@ -16,7 +16,7 @@ LogisticsScreen.cpp			: Implementation of the LogisticsScreen component.
 
 extern long helpTextID;
 extern long helpTextHeaderID;
-extern float frameLength;
+extern float g_deltaTime;
 
 
 LogisticsScreen::LogisticsScreen()
@@ -378,14 +378,14 @@ void LogisticsScreen::render()
 
 	if ( fadeOutTime )
 	{
-		fadeTime += frameLength;
+		fadeTime += g_deltaTime;
 		long color = interpolateColor( 0,fadeOutMaxColor, fadeTime/fadeOutTime );
 		GUI_RECT rect = { 0,0, Environment.screenWidth, Environment.screenHeight };
 		drawRect( rect, color );
 	}
 	else if ( fadeInTime && fadeInTime > fadeTime )
 	{
-		fadeTime += frameLength;
+		fadeTime += g_deltaTime;
 		long color = interpolateColor( fadeOutMaxColor, 0, fadeTime/fadeInTime );
 		GUI_RECT rect = { 0,0, Environment.screenWidth, Environment.screenHeight };
 		drawRect( rect, color );
@@ -484,14 +484,14 @@ void LogisticsScreen::render( int xOffset, int yOffset )
 
 	if ( fadeOutTime )
 	{
-		fadeTime += frameLength;
+		fadeTime += g_deltaTime;
 		long color = interpolateColor( 0,0xff000000, fadeTime/fadeOutTime );
 		GUI_RECT rect = { 0,0, Environment.screenWidth, Environment.screenHeight };
 		drawRect( rect, color );
 	}
 	else if ( fadeInTime && fadeInTime > fadeTime )
 	{
-		fadeTime += frameLength;
+		fadeTime += g_deltaTime;
 		long color = interpolateColor( 0xff000000, 0, fadeTime/fadeInTime );
 		GUI_RECT rect = { 0,0, Environment.screenWidth, Environment.screenHeight };
 		drawRect( rect, color );
@@ -651,8 +651,6 @@ bool	LogisticsScreen::inside( long x, long y)
 		if ( animObjects[i].pointInside( x, y ) )
 			return true;
 	}
-
-		return false;
 
 	return false;
 }

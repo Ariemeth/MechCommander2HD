@@ -114,9 +114,9 @@ class FastFile
 };
 
 //---------------------------------------------------------------------------
-extern FastFile 	**fastFiles;
-extern long 		numFastFiles;
-extern long			maxFastFiles;
+extern FastFile 	**g_fastFiles;
+extern long 		g_numFastFiles;
+extern long			g_maxFastFiles;
 //---------------------------------------------------------------------------
 #endif
 

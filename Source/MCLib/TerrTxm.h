@@ -42,7 +42,6 @@
 #define START_CEMENT_TYPE			13
 #define END_CEMENT_TYPE				20
 
-extern long TERRAIN_TXM_SIZE;
 //---------------------------------------------------------------------------
 // Class Definitions
 extern long tileCacheReqs;

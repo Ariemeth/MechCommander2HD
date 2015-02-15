@@ -127,9 +127,9 @@ void MPPrefs::begin()
 
 	for ( int i = 0; i < 10; i++ )
 	{
-		if ( strlen( prefs.playerName[i] ) )
+		if ( strlen( g_userPreferences.playerName[i] ) )
 		{
-			comboBox[0].AddItem( prefs.playerName[i], 0xffffffff );
+			comboBox[0].AddItem( g_userPreferences.playerName[i], 0xffffffff );
 		}
 		else
 			break;
@@ -142,10 +142,10 @@ void MPPrefs::begin()
 
 	for ( i = 0; i < 10; i++ )
 	{
-		if ( strlen( prefs.unitName[i] ) )
+		if ( strlen( g_userPreferences.unitName[i] ) )
 		{
 			
-			comboBox[1].AddItem( prefs.unitName[i], 0xffffffff );
+			comboBox[1].AddItem( g_userPreferences.unitName[i], 0xffffffff );
 		}
 		else
 			break;
@@ -178,7 +178,7 @@ void MPPrefs::begin()
 			else
 			{
 				long index = comboBox[2].AddItem( pItem );
-				if ( strstr( findResult.cFileName, prefs.insigniaFile ) )
+				if ( strstr( findResult.cFileName, g_userPreferences.insigniaFile ) )
 				{
 					comboBox[2].SelectItem( index );
 					insigniaBmp.setTexture( path );
@@ -358,7 +358,7 @@ void MPPrefs::setColor( unsigned long color )
 	const MC2Player* players = MPlayer->getPlayers(playerCount);
 	for( int i = 0; i < playerCount; i++ )
 	{
-		if ( MPlayer->colors[players[i].baseColor[BASECOLOR_SELF]] == color && i != MPlayer->commanderID )
+		if (MPlayer->colors[players[i].baseColor[BASECOLOR_SELF]] == (long)color && i != MPlayer->commanderID)
 		{
 			soundSystem->playDigitalSample(LOG_WRONGBUTTON);
 			return;
@@ -392,7 +392,7 @@ char MPPrefs::getColorIndex( unsigned long color )
 {
 	for ( int i = 0; i < MAX_COLORS; i++ )
 	{
-		if ( MPlayer->colors[i] == color )
+		if ( MPlayer->colors[i] == (long)color )
 			return i;
 	}
 
@@ -566,9 +566,9 @@ void MPPrefs::saveSettings()
 	EString txt;
 	comboBox[0].EditBox().getEntry( txt );
 
-	if ( txt != prefs.playerName[0] )
+	if ( txt != g_userPreferences.playerName[0] )
 	{
-		prefs.setNewName( txt );
+		g_userPreferences.setNewName( txt );
 	}
 	
 	MC2Player* pInfo = MPlayer->getPlayerInfo( MPlayer->commanderID );
@@ -578,9 +578,9 @@ void MPPrefs::saveSettings()
 	// check and see if name has changed
 	comboBox[1].EditBox().getEntry( txt );
 
-	if ( txt != prefs.unitName[0] )
+	if ( txt != g_userPreferences.unitName[0] )
 	{
-		prefs.setNewUnit( txt );
+		g_userPreferences.setNewUnit( txt );
 	}
 
 	if ( txt )
@@ -596,19 +596,19 @@ void MPPrefs::saveSettings()
 		if ( pItem )
 		{
 			const char* pName = pItem->getBmp();
-			strcpy( prefs.insigniaFile, pName );
+			strcpy( g_userPreferences.insigniaFile, pName );
 			strcpy( pInfo->insigniaFile, pName );
 		}
 	}
 
 //	if ( MPlayer->isHost() )
 	{
-		prefs.baseColor =  MPlayer->colors[pInfo->baseColor[BASECOLOR_PREFERENCE]];
-		prefs.highlightColor = MPlayer->colors[pInfo->stripeColor];
+		g_userPreferences.baseColor =  MPlayer->colors[pInfo->baseColor[BASECOLOR_PREFERENCE]];
+		g_userPreferences.highlightColor = MPlayer->colors[pInfo->stripeColor];
 	}
 
 	MPlayer->sendPlayerUpdate( 0, 5, -1 );
-	prefs.save();
+	g_userPreferences.save();
 
 
 
@@ -618,13 +618,13 @@ void MPPrefs::saveSettings()
 void MPPrefs::cancelSettings()
 {
 	MC2Player* pInfo = MPlayer->getPlayerInfo( MPlayer->commanderID );
-	strcpy( pInfo->name, prefs.playerName[0] );
+	strcpy( pInfo->name, g_userPreferences.playerName[0] );
 
-	strcpy( pInfo->unitName, prefs.unitName[0] );
-	strcpy( pInfo->insigniaFile, prefs.insigniaFile );
+	strcpy( pInfo->unitName, g_userPreferences.unitName[0] );
+	strcpy( pInfo->insigniaFile, g_userPreferences.insigniaFile );
 
 	MPlayer->sendPlayerUpdate( 0, 5, -1 );
-	prefs.save();
+	g_userPreferences.save();
 
 
 }

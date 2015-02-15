@@ -258,9 +258,9 @@ void SalvageMechScreen::update()
 		else
 			soundSystem->playDigitalSample( WINDOW_CLOSE );
 	}
-	if ( curCount && curCount + frameLength < countDownTime  )
+	if ( curCount && curCount + g_deltaTime < countDownTime  )
 	{
-		curCount += frameLength;
+		curCount += g_deltaTime;
 		float curAmount = previousAmount - (curCount/countDownTime * previousAmount); 
 		amount += curAmount;
 	

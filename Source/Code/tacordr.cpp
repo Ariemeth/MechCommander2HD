@@ -127,7 +127,7 @@
 #define	TACORDERCHUNK_TRAINCAR_MASK			0x000000FF
 
 extern TeamPtr homeTeam;
-extern UserHeapPtr systemHeap;
+extern UserHeapPtr g_systemHeap;
 extern float scenarioTime;
 extern float FireArc;
 extern long LastMoveCalcErr;
@@ -153,7 +153,7 @@ long AttitudeEffectOnMovePath[NUM_ATTITUDES][3] = {
 
 void* TacticalOrder::operator new (size_t mySize) {
 
-	void *result = systemHeap->Malloc(mySize);
+	void *result = g_systemHeap->Malloc(mySize);
 	return(result);
 }
 
@@ -161,7 +161,7 @@ void* TacticalOrder::operator new (size_t mySize) {
 
 void TacticalOrder::operator delete (void* us) {
 
-	systemHeap->Free(us);
+	g_systemHeap->Free(us);
 }
 
 //---------------------------------------------------------------------------
@@ -1436,8 +1436,8 @@ long TacticalOrder::status (MechWarriorPtr warrior) {
 				//
 				if (warrior->getVehicle()->refitBuddyWID != target->getWatchID())
 					warrior->getVehicle()->refitBuddyWID = target->getWatchID();
-				if (((MoverPtr) target)->refitBuddyWID != warrior->getVehicle()->getWatchID())
-					((MoverPtr) target)->refitBuddyWID = warrior->getVehicle()->getWatchID();
+				if (((MoverPtr)target)->refitBuddyWID != (GameObjectWatchID)warrior->getVehicle()->getWatchID())
+					((MoverPtr)target)->refitBuddyWID = (GameObjectWatchID)warrior->getVehicle()->getWatchID();
 
 				result = TACORDER_FAILURE;
 				switch(stage) 
@@ -1539,8 +1539,8 @@ long TacticalOrder::status (MechWarriorPtr warrior) {
 			else
 			{
 				// refitter and refitee *should* be pointing at each other...
-				Assert(warrior->getVehicle()->refitBuddyWID == target->getWatchID() &&
-						((BuildingPtr)target)->refitBuddyWID == warrior->getVehicle()->getWatchID(), 0, "Refitee and refitter aren't pointing at each other.");
+				Assert(warrior->getVehicle()->refitBuddyWID == (GameObjectWatchID)target->getWatchID() &&
+					((BuildingPtr)target)->refitBuddyWID == (GameObjectWatchID)warrior->getVehicle()->getWatchID(), 0, "Refitee and refitter aren't pointing at each other.");
 				result = TACORDER_FAILURE;
 				switch(stage) {
 					case 1:	// move

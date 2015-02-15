@@ -261,7 +261,7 @@ long SimpleCamera::update()
 		mechPos.z = tmp;
 
 
-		float rotation = frameLength * rotationIncrement + pObject->rotation;
+		float rotation = g_deltaTime * rotationIncrement + pObject->rotation;
 
 		pObject->setObjectParameters(mechPos, rotation, 0, 0, 0);
 	

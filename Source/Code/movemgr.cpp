@@ -34,7 +34,7 @@ MovePathManagerPtr PathManager = NULL;
 
 void* MovePathManager::operator new (size_t mySize) {
 
-	void *result = systemHeap->Malloc(mySize);
+	void *result = g_systemHeap->Malloc(mySize);
 	return(result);
 }
 
@@ -42,7 +42,7 @@ void* MovePathManager::operator new (size_t mySize) {
 
 void MovePathManager::operator delete (void* us) {
 
-	systemHeap->Free(us);
+	g_systemHeap->Free(us);
 }
 
 //---------------------------------------------------------------------------

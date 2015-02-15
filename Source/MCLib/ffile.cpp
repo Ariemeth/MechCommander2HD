@@ -28,7 +28,7 @@
 MemoryPtr 		LZPacketBuffer = NULL;
 unsigned long	LZPacketBufferSize = 512000;
 
-extern char CDInstallPath[];
+extern char g_cdInstallPath[];
 void EnterWindowMode();
 void EnterFullScreenMode();
 void __stdcall ExitGameOS();
@@ -101,7 +101,7 @@ long FastFile::open (char* fName)
 	{
 		//Check on CD.  They may not have been installed.
 		char actualPath[2048];
-		strcpy(actualPath,CDInstallPath);
+		strcpy(actualPath,g_cdInstallPath);
 		strcat(actualPath,fileName);
 		handle = fopen(actualPath,"r");
 		if (handle == NULL)

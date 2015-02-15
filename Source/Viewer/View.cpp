@@ -20,79 +20,69 @@
 #include "Mechlopedia.h"
 #include "LogisticsData.h"
 #include "prefs.h"
+#include "Soundsys.h"
 
-CPrefs prefs;
-
-
-SoundSystem*	 sndSystem = NULL;
-
+CPrefs g_userPreferences;
+SoundSystem*	 g_soundSystem = NULL;
 MultiPlayer* MPlayer = NULL;
-
-//CPrefs prefs;
 
 extern float frameRate;
 
 // globals used for memory
-UserHeapPtr systemHeap = NULL;
-UserHeapPtr guiHeap = NULL;
+UserHeapPtr g_systemHeap = NULL;
+UserHeapPtr g_GUIHeap = NULL;
 
-long GameVisibleVertices = 30;
-bool useLeftRightMouseProfile = true;
+//unsigned long elementHeapSize = 1024000;
+//unsigned long maxElements = 2048;
+//unsigned long maxGroups = 1024;
+#define KILOBYTE_TO_BYTES 1024
+#define MEGABYTES_TO_BYTES (KILOBYTE_TO_BYTES * KILOBYTE_TO_BYTES)
+unsigned long g_systemHeapSize = 256 * MEGABYTES_TO_BYTES;
+unsigned long g_guiHeapSize = 4 * MEGABYTES_TO_BYTES;
+unsigned long g_terrainHeapSize = 16 * MEGABYTES_TO_BYTES;
+unsigned long g_spriteHeapSize = 64 * MEGABYTES_TO_BYTES;
+unsigned long g_maxVertexCount = 1000000;
+unsigned long tglHeapSize = 256 * MEGABYTES_TO_BYTES;
 
-float MaxMinUV = 8.0f;
-
-unsigned long systemHeapSize = 65535000;
-unsigned long guiHeapSize = 1023999;
-unsigned long tglHeapSize = 32767000;
 bool		  GeneralAlarm = 0;
-
-extern long DigitalMasterVolume;
-extern long MusicVolume;
-extern long sfxVolume;
-extern long RadioVolume;
 
 extern char FileMissingString[];
 extern char CDMissingString[];
 extern char MissingTitleString[];
 
-extern char CDInstallPath[];
+extern char g_cdInstallPath[];
 
-long FilterState = gos_FilterNone;
+// long FilterState = gos_FilterNone;
 long gammaLevel = 0;
-long renderer = 0;
-long GameDifficulty = 0;
-long resolution = 0;
-bool useUnlimitedAmmo = true;
+long g_renderer = 0;
+long g_gameDifficulty = 0;
+bool g_unlimitedAmmo = true;
 
 Camera* eye = NULL;
-unsigned long BaseVertexColor  =0;
-
 enum { CPU_UNKNOWN, CPU_PENTIUM, CPU_MMX, CPU_KATMAI } Processor = CPU_PENTIUM;		//Needs to be set when GameOS supports ProcessorID -- MECHCMDR2
 
-bool	reloadBounds = false;
-long	ObjectTextureSize = 128;
-char	missionName[1024];
+long	g_objectTextureSize = 128;
+char	g_missionName[1024];
 float	gosFontScale = 1.0;
 
-float   doubleClickThreshold;
-float	dragThreshold;
+float   doubleClickThreshold = 0.2f;
+float	dragThreshold = 0.016667f;
 
 
 DWORD gosResourceHandle = 0;
 HGOSFONT3D gosFontHandle = 0;
 
 
-bool quitGame = FALSE;
+bool g_quitGame = FALSE;
 
 
 // these globals are necessary for fast files for some reason
-FastFile 	**fastFiles = NULL;
-long 		numFastFiles = 0;
-long		maxFastFiles = 0;
+FastFile 	**g_fastFiles = NULL;
+long 		g_numFastFiles = 0;
+long		g_maxFastFiles = 0;
 
 char*	ExceptionGameMsg = "";
 
-bool	justResaveAllMaps = 0;
 bool	useLOSAngle = 0;
 
 Stuff::MemoryStream *effectStream = NULL;
@@ -180,7 +170,7 @@ void __stdcall DoGameLogic()
 {
 	//---------------------------------------------------------------
 	// Somewhere in all of the updates, we have asked to be excused!
-	if (quitGame)
+	if (g_quitGame)
 	{
 		//EnterWindowMode();				//Game crashes if _TerminateApp called from fullScreen
 		gos_TerminateApplication();
@@ -189,9 +179,9 @@ void __stdcall DoGameLogic()
 	if (frameRate < Stuff::SMALL)
 		frameRate = 4.0f;
 
-	frameLength = 1.0 / frameRate;
-	if (frameLength > 0.25f)
-		frameLength = 0.25f;
+	g_deltaTime = 1.0 / frameRate;
+	if (g_deltaTime > 0.25f)
+		g_deltaTime = 0.25f;
 
 	userInput->update();
 
@@ -200,7 +190,7 @@ void __stdcall DoGameLogic()
 	pMechlopedia->update();
 
 	if ( LogisticsScreen::RUNNING != pMechlopedia->getStatus() )
-		quitGame = true;
+		g_quitGame = true;
 }
 
 
@@ -229,10 +219,10 @@ void __stdcall InitializeGameEngine()
    	// look in CD Install Path for files.
 	//Changed for the shared source release, just set to current directory
 	//DWORD maxPathLength = 1023;
-	//gos_LoadDataFromRegistry("CDPath", CDInstallPath, &maxPathLength);
+	//gos_LoadDataFromRegistry("CDPath", g_cdInstallPath, &maxPathLength);
 	//if (!maxPathLength)
-	//	strcpy(CDInstallPath,"..\\");
-	strcpy(CDInstallPath,".\\");
+	//	strcpy(g_cdInstallPath,"..\\");
+	strcpy(g_cdInstallPath,".\\");
 
 	cLoadString(IDS_MC2_FILEMISSING,FileMissingString,511);
 	cLoadString(IDS_MC2_CDMISSING,CDMissingString,1023);
@@ -246,13 +236,12 @@ void __stdcall InitializeGameEngine()
 	globalHeapList->init();
 	globalHeapList->update();		//Run Instrumentation into GOS Debugger Screen
 
-	systemHeap = new UserHeap;
-	gosASSERT(systemHeap != NULL);
+	g_systemHeap = new UserHeap;
+	gosASSERT(g_systemHeap != NULL);
 
-	systemHeap->init(systemHeapSize,"SYSTEM");
+	g_systemHeap->init(g_systemHeapSize,"SYSTEM");
 	
 	float doubleClickThreshold = 0.2f;
-	long dragThreshold = .016667;
 
 	//--------------------------------------------------------------
 	// Read in System.CFG
@@ -276,10 +265,10 @@ void __stdcall InitializeGameEngine()
 #ifdef _DEBUG
 		long systemBlockResult = 
 #endif
-		systemFile.seekBlock("systemHeap");
+		systemFile.seekBlock("g_systemHeap");
 		gosASSERT(systemBlockResult == NO_ERR);
 		{
-			long result = systemFile.readIdULong("systemHeapSize",systemHeapSize);
+			long result = systemFile.readIdULong("systemHeapSize",g_systemHeapSize);
 			gosASSERT(result == NO_ERR);
 		}
 
@@ -353,14 +342,14 @@ void __stdcall InitializeGameEngine()
 		systemFile.seekBlock("FastFiles");
 		gosASSERT(fastFileResult == NO_ERR);
 		{
-			long result = systemFile.readIdLong("NumFastFiles",maxFastFiles);
+			long result = systemFile.readIdLong("NumFastFiles",g_maxFastFiles);
 			if (result != NO_ERR)
-				maxFastFiles = 0;
+				g_maxFastFiles = 0;
 
-			if (maxFastFiles)
+			if (g_maxFastFiles)
 			{
-				fastFiles = (FastFile **)malloc(maxFastFiles*sizeof(FastFile *));
-				memset(fastFiles,0,maxFastFiles*sizeof(FastFile *));
+				g_fastFiles = (FastFile **)malloc(g_maxFastFiles*sizeof(FastFile *));
+				memset(g_fastFiles,0,g_maxFastFiles*sizeof(FastFile *));
 
 				long fileNum = 0;
 				char fastFileId[10];
@@ -382,106 +371,12 @@ void __stdcall InitializeGameEngine()
 
 	systemFile.close();
 
-		//--------------------------------------------------------------
-	// Read in Prefs.cfg
-	bool fullScreen = false;
-	FitIniFilePtr prefs = new FitIniFile;
+	//--------------------------------------------------------------
+	// MCHD CHANGE (02/14/2015): Preferences loading block deleted - everything moved to g_userPreferences.load()
 
-#ifdef _DEBUG
-	long prefsOpenResult = 
-#endif
-		prefs->open("prefs.cfg");
-
-	gosASSERT (prefsOpenResult == NO_ERR);
-	{
-#ifdef _DEBUG
-		long prefsBlockResult = 
-#endif
-		prefs->seekBlock("MechCommander2");
-		gosASSERT(prefsBlockResult == NO_ERR);
-		{
-			long filterSetting;
-			long result = prefs->readIdLong("FilterState",filterSetting);
-			if (result == NO_ERR)
-			{
-				switch (filterSetting)
-				{
-				default:
-					case 0:
-						FilterState = gos_FilterNone;
-					break;
-
-					case 1:
-						FilterState = gos_FilterBiLinear;
-					break;
-
-					case 2:
-						FilterState = gos_FilterTriLinear;
-					break;
-				}
-			}
-
-			result = prefs->readIdLong("TerrainTextureRes",TERRAIN_TXM_SIZE);
-			if (result != NO_ERR)
-				TERRAIN_TXM_SIZE = 64;
-
-
-			result = prefs->readIdLong("ObjectTextureRes",ObjectTextureSize);
-			if (result != NO_ERR)
-				ObjectTextureSize = 128;
-
-
-			result = prefs->readIdLong("Brightness",gammaLevel);
-			if (result != NO_ERR)
-				gammaLevel = 0;
-
-			// store volume settings in global variable since soundsystem 
-			// does not exist yet.  These will be set in SoundSystem::init()
-			result = prefs->readIdLong("DigitalMasterVolume",DigitalMasterVolume);
-			if (result != NO_ERR)
-				DigitalMasterVolume = 255;
-
-			result = prefs->readIdLong("MusicVolume",MusicVolume);
-			if (result != NO_ERR)
-				MusicVolume = 64;
-
-			result = prefs->readIdLong("RadioVolume",RadioVolume);
-			if (result != NO_ERR)
-				RadioVolume = 64;
-
-			result = prefs->readIdLong("SFXVolume",sfxVolume);
-			if (result != NO_ERR)
-				sfxVolume = 64;
-
-			result = prefs->readIdFloat("DoubleClickThreshold",doubleClickThreshold);
-			if (result != NO_ERR)
-				doubleClickThreshold = 0.2f;
-
-			result = prefs->readIdLong("DragThreshold",dragThreshold);
-			if (result != NO_ERR)
-				dragThreshold = .016667;
-				
-			result = prefs->readIdULong("BaseVertexColor",BaseVertexColor);
-			if (result != NO_ERR)
-				BaseVertexColor = 0x00000000;
-				
-			result = prefs->readIdBoolean("FullScreen",fullScreen);
-			if (result != NO_ERR)
-				fullScreen = true;
-
-			result = prefs->readIdLong("Rasterizer",renderer);
-			if (result != NO_ERR)
-				renderer = 0;
-
-			if ((renderer < 0) || (renderer > 3))
-				renderer = 0;
-		}
-	}
-	
-	prefs->close();
-	
-	delete prefs;
-	prefs = NULL;
+	// Load and apply options from "options.cfg"
+	g_userPreferences.load();
+	g_userPreferences.applyPrefs();
 
  	//-------------------------------
 	// Used to output debug stuff!
@@ -520,7 +415,7 @@ void __stdcall InitializeGameEngine()
 		STOP(("Could not find MC2.fx"));
 		
 	long effectsSize = effectFile.fileSize();
-	MemoryPtr effectsData = (MemoryPtr)systemHeap->Malloc(effectsSize);
+	MemoryPtr effectsData = (MemoryPtr)g_systemHeap->Malloc(effectsSize);
 	effectFile.read(effectsData,effectsSize);
 	effectFile.close();
 	
@@ -531,7 +426,7 @@ void __stdcall InitializeGameEngine()
 
 	gos_PopCurrentHeap();
 
-	systemHeap->Free(effectsData);
+	g_systemHeap->Free(effectsData);
 	
 
 	//------------------------------------------------
@@ -540,7 +435,7 @@ void __stdcall InitializeGameEngine()
 	mcTextureManager->start();
 
 	//Startup the vertex array pool
-	mcTextureManager->startVertices(500000);
+	mcTextureManager->startVertices(g_maxVertexCount);
 
 	//--------------------------------------------------
 	// Setup Mouse Parameters from Prefs.CFG
@@ -558,7 +453,7 @@ void __stdcall InitializeGameEngine()
 	soundSystem = new GameSoundSystem;
 	soundSystem->init();
 	((SoundSystem *)soundSystem)->init("sound");
-	sndSystem = soundSystem; // for things in the lib that use sound
+	g_soundSystem = soundSystem; // for things in the lib that use sound
 	soundSystem->playDigitalMusic( LOGISTICS_LOOP );
 
 	
@@ -602,12 +497,12 @@ void __stdcall TerminateGameEngine()
 
 	//--------------------------------------------------------------
 	// End the SystemHeap and globalHeapList
-	if (systemHeap)
+	if (g_systemHeap)
 	{
-		systemHeap->destroy();
+		g_systemHeap->destroy();
 
-		delete systemHeap;
-		systemHeap = NULL;
+		delete g_systemHeap;
+		g_systemHeap = NULL;
 	}
 
 
@@ -672,18 +567,9 @@ void __stdcall GetGameOSEnvironment( char* CommandLine )
 	Environment.DoGameLogic				= DoGameLogic;
 	Environment.TerminateGameEngine		= TerminateGameEngine;
 	
-	if (useSound)
-	{
-		Environment.soundDisable			= FALSE;
-		Environment.soundHiFi				= TRUE;
-		Environment.soundChannels			= 24;
-	}
-	else
-	{
-		Environment.soundDisable			= TRUE;
-		Environment.soundHiFi				= FALSE;
-		Environment.soundChannels			= 0;
-	}
+	Environment.soundDisable			= false;
+	Environment.soundHiFi				= true;
+	Environment.soundChannels			= 24;
 
 	Environment.version					= versionStamp;
 

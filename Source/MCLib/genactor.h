@@ -34,7 +34,7 @@
 #define NO_ERR						0
 #endif
 
-#define MAX_GEN_ANIMATIONS			5
+#define MAX_GEN_ANIMATIONS			10
 
 //***********************************************************************
 //

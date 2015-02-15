@@ -14,12 +14,12 @@
 #endif
 
 //----------------------------------------------------------------------------------
-extern bool		gamePaused;			//Is the game paused?
+extern bool		g_gamePaused;			//Is the game paused?
 extern long 	turn;				//What frame of the scenario is it?
-extern float	frameLength;		//Duration of last frame in seconds.
+extern float	g_deltaTime;		//Duration of last frame in seconds.
 extern float	scenarioTime;		//Time scenario has been running.
 extern DWORD	LastTimeGetTime;	//Stores Interval since timeGetTime last called.
-extern bool		dynamicFrameTiming;	//This flag determines if we are using frameLength
+extern bool		dynamicFrameTiming;	//This flag determines if we are using g_deltaTime
 									//To time a frame.  This is FALSE when something
 									//puches a frame length dramatically over 4fps.
 									//Like a cache hit.  It insures all frames get played.
@@ -63,9 +63,9 @@ class Timer
 		
 		void update (void)
 		{
-			if (updateWhilePaused || !gamePaused)
+			if (updateWhilePaused || !g_gamePaused)
 			{
-				currentTime -= frameLength;
+				currentTime -= g_deltaTime;
 				if (currentTime < 0.0)
 					expired = TRUE;
 				else
@@ -150,7 +150,7 @@ class TimerManager
 
 typedef TimerManager *TimerManagerPtr;
 //----------------------------------------------------------------------------------
-extern TimerManagerPtr timerManager;			
+extern TimerManagerPtr g_timerManager;			
 
 extern char *monthName[];
 //----------------------------------------------------------------------------------

@@ -65,14 +65,13 @@ long TerrainQuad::init (VertexPtr v0, VertexPtr v1, VertexPtr v2, VertexPtr v3)
 float twoFiveFive = 255.0;
 #define HUD_DEPTH		0.0001f			//HUD Objects draw over everything else.
 extern float cosineEyeHalfFOV; 
-extern DWORD BaseVertexColor;
 extern bool useShadows;
 extern bool useFog;
 extern long sprayFrame;
-bool useWaterInterestTexture = true;
+bool useTerrainDetailTexture = true;
 bool useOverlayTexture = true;
 long numTerrainFaces = 0;
-extern float MaxMinUV;
+float MaxMinUV = 8.0f; // MCHD TODO: Remove after DX9
 
 extern float leastZ;
 extern float leastW;
@@ -795,20 +794,7 @@ void TerrainQuad::setupTextures (void)
 				lightg = eye->getLightGreen(lightIntensity);
 				lightb = eye->getLightBlue(lightIntensity);
 
-				if (BaseVertexColor)
-				{
-					lightr += ((BaseVertexColor>>16) & 0x000000ff);
-					if (lightr > 0xff)
-						lightr = 0xff;
-
-					lightg += ((BaseVertexColor>>8) & 0x000000ff);
-					if (lightg > 0xff)
-						lightg = 0xff;
-
-					lightb += (BaseVertexColor & 0x000000ff);
-					if (lightb > 0xff)
-						lightb = 0xff;
-				}
+				// MCHD CHANGE (02/14/2015): BaseVertexColor removed
 
 				if (rainLightLevel < 1.0f)
 				{
@@ -951,20 +937,8 @@ void TerrainQuad::setupTextures (void)
 				lightg = eye->getLightGreen(lightIntensity);
 				lightb = eye->getLightBlue(lightIntensity);
 
-				if (BaseVertexColor)
-				{
-					lightr += ((BaseVertexColor>>16) & 0x000000ff);
-					if (lightr > 0xff)
-						lightr = 0xff;
+				// MCHD CHANGE (02/14/2015): BaseVertexColor removed
 
-					lightg += ((BaseVertexColor>>8) & 0x000000ff);
-					if (lightg > 0xff)
-						lightg = 0xff;
-
-					lightb += (BaseVertexColor & 0x000000ff);
-					if (lightb > 0xff)
-						lightb = 0xff;
-				}
 				if (rainLightLevel < 1.0f)
 				{
 					lightr = (float)lightr * rainLightLevel;
@@ -1105,20 +1079,8 @@ void TerrainQuad::setupTextures (void)
 				lightg = eye->getLightGreen(lightIntensity);
 				lightb = eye->getLightBlue(lightIntensity);
 					
-				if (BaseVertexColor)
-				{
-					lightr += ((BaseVertexColor>>16) & 0x000000ff);
-					if (lightr > 0xff)
-						lightr = 0xff;
-						
-					lightg += ((BaseVertexColor>>8) & 0x000000ff);
-					if (lightg > 0xff)
-						lightg = 0xff;
-						
-					lightb += (BaseVertexColor & 0x000000ff);
-					if (lightb > 0xff)
-						lightb = 0xff;
-				}
+				// MCHD CHANGE (02/14/2015): BaseVertexColor removed
+
 				if (rainLightLevel < 1.0f)
 				{
 					lightr = (float)lightr * rainLightLevel;
@@ -1259,20 +1221,8 @@ void TerrainQuad::setupTextures (void)
 				lightg = eye->getLightGreen(lightIntensity);
 				lightb = eye->getLightBlue(lightIntensity);
 					
-				if (BaseVertexColor)
-				{
-					lightr += ((BaseVertexColor>>16) & 0x000000ff);
-					if (lightr > 0xff)
-						lightr = 0xff;
-						
-					lightg += ((BaseVertexColor>>8) & 0x000000ff);
-					if (lightg > 0xff)
-						lightg = 0xff;
-						
-					lightb += (BaseVertexColor & 0x000000ff);
-					if (lightb > 0xff)
-						lightb = 0xff;
-				}
+				// MCHD CHANGE (02/14/2015): BaseVertexColor removed
+
 				if (rainLightLevel < 1.0f)
 				{
 					lightr = (float)lightr * rainLightLevel;
@@ -1509,7 +1459,7 @@ void TerrainQuad::draw (void)
 					
 					//----------------------------------------------------
 					// Draw the detail Texture
-					if (useWaterInterestTexture && (terrainDetailHandle != 0xffffffff))
+					if (useTerrainDetailTexture && (terrainDetailHandle != 0xffffffff))
 					{
 						gos_VERTEX sVertex[3];
 						memcpy(sVertex,gVertex,sizeof(gos_VERTEX)*3);
@@ -1636,7 +1586,7 @@ void TerrainQuad::draw (void)
 					
 					//----------------------------------------------------
 					// Draw the detail Texture
-					if (useWaterInterestTexture && (terrainDetailHandle != 0xffffffff))
+					if (useTerrainDetailTexture && (terrainDetailHandle != 0xffffffff))
 					{
 						gos_VERTEX sVertex[3];
 						memcpy(sVertex,gVertex,sizeof(gos_VERTEX)*3);
@@ -1749,7 +1699,7 @@ void TerrainQuad::draw (void)
  
 					//----------------------------------------------------
 					// Draw the detail Texture
-					if (useWaterInterestTexture && (terrainDetailHandle != 0xffffffff))
+					if (useTerrainDetailTexture && (terrainDetailHandle != 0xffffffff))
 					{
 						gos_VERTEX sVertex[3];
 						memcpy(sVertex,gVertex,sizeof(gos_VERTEX)*3);
@@ -1872,7 +1822,7 @@ void TerrainQuad::draw (void)
  
 					//----------------------------------------------------
 					// Draw the detail Texture
-					if (useWaterInterestTexture && (terrainDetailHandle != 0xffffffff))
+					if (useTerrainDetailTexture && (terrainDetailHandle != 0xffffffff))
 					{
 						gos_VERTEX sVertex[3];
 						memcpy(sVertex,gVertex,sizeof(gos_VERTEX)*3);
@@ -2135,7 +2085,7 @@ void TerrainQuad::drawWater (void)
 						
 					//----------------------------------------------------
 					// Draw the sky reflection on the water.
-					if (useWaterInterestTexture && (waterDetailHandle != 0xffffffff))
+					if (useTerrainDetailTexture && (waterDetailHandle != 0xffffffff))
 					{
 						gos_VERTEX sVertex[3];
 						memcpy(sVertex,gVertex,sizeof(gos_VERTEX)*3);
@@ -2274,7 +2224,7 @@ void TerrainQuad::drawWater (void)
 						
 					//----------------------------------------------------
 					// Draw the sky reflection on the water.
-					if (useWaterInterestTexture && (waterDetailHandle != 0xffffffff))
+					if (useTerrainDetailTexture && (waterDetailHandle != 0xffffffff))
 					{
 						gos_VERTEX sVertex[3];
 						memcpy(sVertex,gVertex,sizeof(gos_VERTEX)*3);
@@ -2420,7 +2370,7 @@ void TerrainQuad::drawWater (void)
 						
 					//----------------------------------------------------
 					// Draw the sky reflection on the water.
-					if (useWaterInterestTexture && (waterDetailHandle != 0xffffffff))
+					if (useTerrainDetailTexture && (waterDetailHandle != 0xffffffff))
 					{
 						gos_VERTEX sVertex[3];
 						memcpy(sVertex,gVertex,sizeof(gos_VERTEX)*3);
@@ -2558,7 +2508,7 @@ void TerrainQuad::drawWater (void)
 						
 					//----------------------------------------------------
 					// Draw the sky reflection on the water.
-					if (useWaterInterestTexture && (waterDetailHandle != 0xffffffff))
+					if (useTerrainDetailTexture && (waterDetailHandle != 0xffffffff))
 					{
 						gos_VERTEX sVertex[3];
 						memcpy(sVertex,gVertex,sizeof(gos_VERTEX)*3);
@@ -2585,7 +2535,7 @@ void TerrainQuad::drawWater (void)
 }
 
 //---------------------------------------------------------------------------
-long DrawDebugCells = 0;
+extern long g_dbgDrawCombatMove;
 
 void TerrainQuad::drawLine (void)
 {
@@ -2825,7 +2775,7 @@ void TerrainQuad::drawLine (void)
 						{
 							color = XP_GREEN;
 						}
-						else if (curCell->getDebug() && DrawDebugCells)
+						else if (curCell->getDebug() && g_dbgDrawCombatMove)
 						{
 							color = XP_YELLOW;
 						}

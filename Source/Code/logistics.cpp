@@ -49,7 +49,7 @@
 #ifndef PREFS_H
 #include "prefs.h"
 #endif
-extern CPrefs prefs;
+extern CPrefs g_userPreferences;
 
 #ifndef GAMECAM_H
 #include "gamecam.h"
@@ -72,13 +72,13 @@ extern CPrefs prefs;
 #include "MissionResults.h"
 #include "paths.h"
 
-extern bool quitGame;
-extern bool justStartMission;
-extern long renderer;
-extern bool useUnlimitedAmmo;
+extern bool g_quitGame;
+extern bool g_dbgLoadMission;
+extern long g_renderer;
+extern bool g_unlimitedAmmo;
 extern float loadProgress;
 
-extern bool aborted;
+extern bool g_aborted;
 
 #include "..\resource.h"
 void DEBUGWINS_print (char* s, long window = 0);
@@ -101,19 +101,20 @@ void Logistics::destroy (void)
 }	
 		
 //----------------------------------------------------------------------------------
+#pragma optimize("", off)
 void Logistics::start (long startMode)
 {
 	bMissionLoaded  = 0;
 	userInput->setMouseCursor( mState_LOGISTICS );
 //	userInput->mouseOn();
 
-	DWORD localRenderer = prefs.renderer;
-	if (prefs.renderer != 0 && prefs.renderer != 3)
+	DWORD localRenderer = g_userPreferences.renderer;
+	if (g_userPreferences.renderer != 0 && g_userPreferences.renderer != 3)
 		localRenderer = 0;
 
-   	bool localFullScreen = prefs.fullScreen;
-   	bool localWindow = !prefs.fullScreen;
-   	if (Environment.fullScreen && prefs.fullScreen)
+   	bool localFullScreen = g_userPreferences.fullScreen;
+   	bool localWindow = !g_userPreferences.fullScreen;
+   	if (Environment.fullScreen && g_userPreferences.fullScreen)
    		localFullScreen = false;
 
 	switch (startMode)
@@ -121,10 +122,10 @@ void Logistics::start (long startMode)
 		case log_RESULTS: // pull out results later...
 			active = true;
 			//Heading back to logistics now.  Change screen back to 800x600
-			if (prefs.renderer == 3)
+			if (g_userPreferences.renderer == 3)
 				gos_SetScreenMode(800,600,16,0,0,0,true,localFullScreen,0,localWindow,0,localRenderer);
 			else
-				gos_SetScreenMode(800,600,16,prefs.renderer,0,0,0,localFullScreen,0,localWindow,0,localRenderer);
+				gos_SetScreenMode(800,600,16,g_userPreferences.renderer,0,0,0,localFullScreen,0,localWindow,0,localRenderer);
 
 			lastMissionResult = scenarioResult;
 			if ( !missionResults )
@@ -170,22 +171,22 @@ void Logistics::start (long startMode)
 				}
 
 			}
-			else if ( !justStartMission )
+			else if ( !g_dbgLoadMission )
 			{
 				missionResults->bDone = true;
 				logisticsState = log_RESULTS;
 			}
 			else // end the game
-				quitGame = true;
+				g_quitGame = true;
 
 			break;
 		case log_SPLASH:
 		{
-			if (aborted) {
-				if (prefs.renderer == 3)
+			if (g_aborted) {
+				if (g_userPreferences.renderer == 3)
 					gos_SetScreenMode(800,600,16,0,0,0,true,localFullScreen,0,localWindow,0,localRenderer);
 				else
-					gos_SetScreenMode(800,600,16,prefs.renderer,0,0,0,localFullScreen,0,localWindow,0,localRenderer);
+					gos_SetScreenMode(800,600,16,g_userPreferences.renderer,0,0,0,localFullScreen,0,localWindow,0,localRenderer);
 
 				if ( missionBegin )
 					missionBegin->beginSplash();
@@ -330,7 +331,7 @@ long Logistics::update (void)
 		if ( missionResults->isDone() )
 		{
 			missionResults->end();
-			if ( !justStartMission && !MPlayer )
+			if ( !g_dbgLoadMission && !MPlayer )
 			{
 					logisticsState = log_SPLASH;
 					if ( !missionBegin )
@@ -386,7 +387,7 @@ long Logistics::update (void)
 				
 			}
 			else
-				quitGame = true;
+				g_quitGame = true;
 		}
 	}
 	//Used to start mission from command line, bypassing logistics
@@ -445,7 +446,7 @@ void Logistics::render (void)
 //-----------------------------------------------------------------------------
 
 extern unsigned long MultiPlayTeamId;
-extern unsigned long MultiPlayCommanderId;
+extern unsigned long g_mpCommanderId;
 
 int _stdcall Logistics::beginMission(void*, int, void*[])
 {
@@ -534,14 +535,14 @@ int _stdcall Logistics::beginMission(void*, int, void*[])
 			MultiPlayTeamId = MPlayer->playerInfo[MPlayer->commanderID].team;
 			if (MultiPlayTeamId < 0)
 				STOP(("Bad commanderID"));
-			MultiPlayCommanderId = MPlayer->commanderID;
-			if (MultiPlayCommanderId < 0)
+			g_mpCommanderId = MPlayer->commanderID;
+			if (g_mpCommanderId < 0)
 				STOP(("Bad commanderID"));
 			missionLoadType = MISSION_LOAD_MP_QUICKSTART;
 			}
 		else {
 			MultiPlayTeamId = MPlayer->playerInfo[MPlayer->commanderID].team;
-			MultiPlayCommanderId = MPlayer->commanderID;
+			g_mpCommanderId = MPlayer->commanderID;
 			missionLoadType = MISSION_LOAD_MP_LOGISTICS;
 		}
 		long maxTeam = -1;
@@ -577,7 +578,7 @@ int _stdcall Logistics::beginMission(void*, int, void*[])
 				dropZoneID = i;
 				break;
 			}
-		useUnlimitedAmmo = MPlayer->missionSettings.unlimitedAmmo;
+		g_unlimitedAmmo = MPlayer->missionSettings.unlimitedAmmo;
 	}
 
 	mission->init((char*)(const char*)LogisticsData::instance->getCurrentMission(), missionLoadType, dropZoneID, dropZoneList, commandersToLoad, numMoversPerCommander[numPlayers - 1]);
@@ -596,7 +597,7 @@ int _stdcall Logistics::beginMission(void*, int, void*[])
 				if ( !(*iter)->getPilot() )
 					continue;
 				CompressedMech mechData;
-				mechData.lastMech = (list.Count() == numMechs);
+				mechData.lastMech = ((long)list.Count() == numMechs);
 				mechData.objNumber =  (*iter)->getFitID();
 				mechData.commanderID = MPlayer->commanderID;
 				mechData.baseColor = MPlayer->colors[MPlayer->playerInfo[MPlayer->commanderID].baseColor[BASECOLOR_TEAM]];
@@ -612,7 +613,7 @@ int _stdcall Logistics::beginMission(void*, int, void*[])
 				mechData.designerMech = (*iter)->getVariant()->isDesignerMech();
 				mechData.numComponents = (*iter)->getComponentCount();
 				if (mechData.numComponents)	{
-					long* componentList = (long*)systemHeap->Malloc(sizeof(long) * mechData.numComponents);
+					long* componentList = (long*)g_systemHeap->Malloc(sizeof(long) * mechData.numComponents);
 					long otherCount = mechData.numComponents;
 					(*iter)->getComponents(otherCount, componentList);
 					if (otherCount != mechData.numComponents)
@@ -639,7 +640,7 @@ int _stdcall Logistics::beginMission(void*, int, void*[])
 							memset(&data, 0, sizeof(MoverInitData));
 							data.objNumber = MPlayer->mechData[i][j].objNumber;
 							data.rosterIndex = 255;
-							data.controlType = 2;
+							data.controlType = CONTROL_AI;
 							data.controlDataType = 1;
 							data.position.x = MPlayer->mechData[i][j].pos[0];
 							data.position.y = MPlayer->mechData[i][j].pos[1];
@@ -727,7 +728,7 @@ int _stdcall Logistics::beginMission(void*, int, void*[])
 		MoverInitData data;
 		memset( &data, 0, sizeof( data ) );
 		data.rosterIndex = 255;
-		data.controlType = 2;
+		data.controlType = CONTROL_AI;
 		data.controlDataType = 1;
 		data.position.Zero(); // need to get the drop zone location
 		data.rotation = 0;
@@ -736,9 +737,9 @@ int _stdcall Logistics::beginMission(void*, int, void*[])
 		data.active = 1;
 		data.exists = 1;
 		data.capturable = 0;
-		data.baseColor = prefs.baseColor;
-		data.highlightColor1 = prefs.highlightColor;
-		data.highlightColor2 = prefs.highlightColor;
+		data.baseColor = g_userPreferences.baseColor;
+		data.highlightColor1 = g_userPreferences.highlightColor;
+		data.highlightColor2 = g_userPreferences.highlightColor;
 		
 
 		strcpy( data.pilotFileName, "pmw00031" );

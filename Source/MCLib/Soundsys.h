@@ -149,16 +149,15 @@ class SoundSystem
 
 		float				sensorBeepUpdateTime;
 		
-		bool				gamePaused;								//Flag to tell me if game is paused
-
-		static float		digitalMasterVolume;
-		static float		SFXVolume;
-		static float		musicVolume;
-		static float		radioVolume;
-		static float		bettyVolume;
+		bool				g_gamePaused;								//Flag to tell me if game is paused
 
 	public:
 
+		static float		digitalMasterVolume;
+		static float		sfxVolume;
+		static float		musicVolume;
+		static float		radioVolume;
+		static float		bettyVolume;
 		static long			largestSensorContact;
 		
 	//Member Functions
@@ -226,7 +225,7 @@ class SoundSystem
 			
 			isRaining = oldRaining = 0;
 			sensorBeepUpdateTime = 0.0f;
-			gamePaused = false;
+			g_gamePaused = false;
 		}
 		
 		long init (char *soundFileName);
@@ -291,19 +290,14 @@ class SoundSystem
 		
 		void setIsPaused (void)
 		{
-			gamePaused = true;
+			g_gamePaused = true;
 		}
 		
 		void clearIsPaused (void)
 		{
-			gamePaused = false;
+			g_gamePaused = false;
 		}
 };
-
-//---------------------------------------------------------------------------
-
-extern bool useSound;
-extern bool useMusic;
 
 //---------------------------------------------------------------------------
 #endif

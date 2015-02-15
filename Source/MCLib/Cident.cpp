@@ -41,7 +41,7 @@ FullPathFileName::~FullPathFileName (void)
 void FullPathFileName::destroy (void)
 {
 	if (fullName)
-		systemHeap->Free(fullName);
+		g_systemHeap->Free(fullName);
 
 	fullName = NULL;
 }
@@ -57,7 +57,7 @@ void FullPathFileName::init (char * dir_path, const char * name, char * ext)
 	total_length++;
 
 
-	fullName = (char *)systemHeap->Malloc(total_length);
+	fullName = (char *)g_systemHeap->Malloc(total_length);
 	gosASSERT(fullName != NULL);
 	fullName[0] = 0;
 

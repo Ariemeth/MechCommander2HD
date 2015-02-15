@@ -16,14 +16,14 @@ LogisticsMissionInfo.cpp			: Implementation of the LogisticsMissionInfo componen
 #include "LogisticsErrors.h"
 #include "Multplyr.h"
 
-extern char missionName[1024];
+extern char g_missionName[1024];
 
 LogisticsMissionInfo::LogisticsMissionInfo()
 {
 	currentMission = -1;
 	currentStage = 0;
 	groups = 0;
-	currentMissionName = missionName;
+	currentMissionName = g_missionName;
 	groupCount = 0;
 	CBills = 0;
 	if ( currentMissionName.Length() < 2 )
@@ -67,7 +67,7 @@ void LogisticsMissionInfo::clear()
 	currentMission = -1;
 	currentStage = 0;
 	groups = 0;
-	currentMissionName = missionName;
+	currentMissionName = g_missionName;
 	groupCount = 0;
 	CBills = 0;
 
@@ -262,7 +262,6 @@ long LogisticsMissionInfo::init( FitIniFile& file )
 
 void LogisticsMissionInfo::readMissionInfo( FitIniFile& file, LogisticsMissionInfo::MissionInfo* pInfo )
 {
-
 	long result = file.seekBlock( "MissionSettings" );
 	Assert( result == NO_ERR, 0, "Coudln't find the mission settings block in the mission file" );
 
@@ -277,12 +276,12 @@ void LogisticsMissionInfo::readMissionInfo( FitIniFile& file, LogisticsMissionIn
 		unsigned long lRes;
 		result = file.readIdULong( "MissionNameResourceStringID", lRes );
 		Assert( result == NO_ERR, 0, "couldn't find the MissionNameResourceStringID" );
-		cLoadString( lRes, missionName, 255 );
+		cLoadString(lRes, missionName, 255);
 	}
 	else
 	{
-		result = file.readIdString( "MissionName", missionName, 255 );
-		Assert( result == NO_ERR, 0, "couldn't find the missionName" );
+		result = file.readIdString("MissionName", missionName, 255);
+		Assert( result == NO_ERR, 0, "couldn't find the g_missionName" );
 	}
 	
 	pInfo->missionDescriptiveName = missionName;
@@ -583,9 +582,9 @@ long LogisticsMissionInfo::getCurrentMissions( const char** missions, int& numbe
 
 	return 0;
 }
-long LogisticsMissionInfo::setNextMission( const char* missionName )
+long LogisticsMissionInfo::setNextMission(const char* missionName)
 {
-	if ( !missionName || !strlen( missionName ) )
+	if (!missionName || !strlen(missionName))
 		return -1;
 	if ( bMultiplayer )
 	{
@@ -609,7 +608,7 @@ long LogisticsMissionInfo::setNextMission( const char* missionName )
 			if ( NO_ERR != missionFile.open( (char*)(const char*)path ) )
 			{
 				char errorStr[256];
-				sprintf( errorStr, "couldn't open file %s", missionName );
+				sprintf(errorStr, "couldn't open file %s", missionName);
 				Assert( 0, 0, errorStr );
 				return -1;
 			}
@@ -668,9 +667,10 @@ long LogisticsMissionInfo::setNextMission( const char* missionName )
 							CBills -= pInfo->additionalCBills;
 					}
 		
+					EString extension(".fit");
 					currentMission = count;
 					currentMissionName = (*iter)->fileName;
-					currentMissionName.Remove( EString(".fit") );
+					currentMissionName.Remove( extension );
 					CBills += (*iter)->additionalCBills;
 				}
 
@@ -720,7 +720,7 @@ void LogisticsMissionInfo::setSingleMission( const char* missionFileName )
 	currentMission = 0;
 	currentStage = 0;
 		
-	pInfo->fileName = missionName;
+	pInfo->fileName = g_missionName;
 	pInfo->completed = 0;
 	pInfo->playMissionSelection = 0;
 	pInfo->playPurchasing = true;
@@ -735,7 +735,7 @@ void LogisticsMissionInfo::setSingleMission( const char* missionFileName )
 	if ( NO_ERR != missionFile.open( (char*)(const char*)path ) )
 	{
 		char errorStr[256];
-		sprintf( errorStr, "couldn't open file %s", missionName );
+		sprintf(errorStr, "couldn't open file %s", g_missionName);
 		Assert( 0, 0, errorStr );
 		return;
 	}
@@ -937,13 +937,13 @@ const char*	LogisticsMissionInfo::getCurrentMissionDescription() const
 	return NULL;
 }
 
-bool LogisticsMissionInfo::getMissionAvailable( const char* missionName )
+bool LogisticsMissionInfo::getMissionAvailable(const char* missionName)
 {
 	MissionGroup* pGroup = &groups[currentStage];
 
 	for ( int i = 0; i < pGroup->infos.Count(); i++ )
 	{
-		if ( pGroup->infos[i]->fileName.Compare( missionName ) == 0 )
+		if (pGroup->infos[i]->fileName.Compare(missionName) == 0)
 		{
 			return !pGroup->infos[i]->completed;
 		}
@@ -977,7 +977,7 @@ const char*			LogisticsMissionInfo::getCurrentABLScriptName() const
 	return NULL;
 }
 
-const char* LogisticsMissionInfo::getMissionFriendlyName( const char* missionName ) const
+const char* LogisticsMissionInfo::getMissionFriendlyName(const char* missionName) const
 {
 	if ( currentStage >= groupCount )
 		return NULL;
@@ -985,7 +985,7 @@ const char* LogisticsMissionInfo::getMissionFriendlyName( const char* missionNam
 
 	for ( int i = 0; i < pGroup->infos.Count(); i++ )
 	{
-		if ( pGroup->infos[i]->fileName.Compare( missionName ) == 0 )
+		if (pGroup->infos[i]->fileName.Compare(missionName) == 0)
 		{
 			return pGroup->infos[i]->missionDescriptiveName;
 		}

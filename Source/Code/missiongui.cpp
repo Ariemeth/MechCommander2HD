@@ -96,6 +96,8 @@
 #include "KeyboardRef.h"
 #endif
 
+#include "LogisticsDialog.h"
+
 #include "..\resource.h"
 
 #include "windows.h"
@@ -124,7 +126,7 @@ extern void testKeyStuff();
 
 extern long helpTextHeaderID;
 extern long helpTextID;
-extern CPrefs prefs;
+extern CPrefs g_userPreferences;
 
 extern bool invulnerableON;
 extern bool MLRVertexLimitReached;
@@ -132,7 +134,7 @@ extern bool MLRVertexLimitReached;
 
 //--------------------------------------------------------------------------------------
 // Globals
-extern float frameLength;
+extern float g_deltaTime;
 
 extern void DEBUGWINS_print (char* s, long window = 0);
 extern void DEBUGWINS_setGameObject (long debugObj, GameObjectPtr obj);
@@ -165,7 +167,7 @@ int MissionInterfaceManager::mouseX = 0;
 int MissionInterfaceManager::mouseY = 0;
 GameObject* MissionInterfaceManager::target = NULL;
 MissionInterfaceManager* MissionInterfaceManager::s_instance = NULL;
-gosEnum_KeyIndex MissionInterfaceManager::WAYPOINT_KEY = (gosEnum_KeyIndex)-1;
+gosEnum_KeyIndex MissionInterfaceManager::s_waypointKey = (gosEnum_KeyIndex)-1;
 
 
 extern bool drawTerrainTiles;
@@ -175,138 +177,151 @@ extern bool drawTerrainGrid;
 extern bool drawLOSGrid;
 extern bool useClouds;
 extern bool useFog;
-extern bool useWaterInterestTexture;
+extern bool useTerrainDetailTexture;
 extern bool useShadows;
 extern bool useFaceLighting;
 extern bool useVertexLighting;
 extern bool renderTGLShapes;
-extern bool useLeftRightMouseProfile;
 bool drawGUIOn = true;				//Used to shut off GUI for Screen Shots and Movie Mode
 bool toggledGUI = true;				//Used to tell if I shut the GUI off or if its in movieMode
 long lightState = 0;
-extern bool ShowMovers;
-extern bool CullPathAreas;
+extern bool g_dbgShowMovers;
 extern bool ZeroHPrime;
 extern bool CalcValidAreaTable;
-extern bool EnemiesGoalPlan;
+extern bool g_dbgGoalPlanEnemy;
 bool paintingMyVtol = false;
 
-long			MissionInterfaceManager::OldKeys[MAX_COMMAND] = {-1};
+MissionInterfaceManager::Command		MissionInterfaceManager::s_commands[] = 
+{ 
+	// In-Game Controls
+	"Run",						KEY_SPACE, mState_RUN, mState_RUN_LOS, false, &MissionInterfaceManager::changeSpeed, &MissionInterfaceManager::stopChangeSpeed, 43218,
+	"RunWaypoint",				WAYPT | KEY_SPACE, mState_RUNWAYPT, mState_RUNWAYPT_LOS, false, &MissionInterfaceManager::changeSpeed, &MissionInterfaceManager::stopChangeSpeed, -1,
+	"Jump",						KEY_J, mState_JUMP1, mState_JUMP_LOS, false, &MissionInterfaceManager::jump, &MissionInterfaceManager::stopJump, 43205,
+	"JumpWaypoint",				WAYPT | KEY_J, mState_JUMPWAYPT, mState_JUMPWAYPT_LOS, false, &MissionInterfaceManager::jump, &MissionInterfaceManager::stopJump, -1,
+	"AttackFromHere",			KEY_C, mState_CURPOS_ATTACK, mState_CURPOS_ATTACK_LOS, false, &MissionInterfaceManager::fireFromCurrentPos, &MissionInterfaceManager::stopFireFromCurrentPos, 43206,
+	"AttackShort",				KEY_S, mState_SHRTRNG_ATTACK, mState_SHRTRNG_LOS, false, &MissionInterfaceManager::attackShort, &MissionInterfaceManager::defaultAttack, 43200,
+	"AttackMedium",				KEY_M, mState_MEDRNG_ATTACK,  mState_MEDRNG_LOS, false,	&MissionInterfaceManager::attackMedium, &MissionInterfaceManager::defaultAttack, 43201,
+	"AttackLong",				KEY_L, mState_LONGRNG_ATTACK, mState_LONGRNG_LOS, false, &MissionInterfaceManager::attackLong, &MissionInterfaceManager::defaultAttack, 43202,
+	"AttackLegs",				KEY_NUMPAD2, mState_DONT, mState_AIMED_ATTACK_LOS, false, &MissionInterfaceManager::aimLeg, 0, 43211,
+	"AttackArms",				KEY_NUMPAD5, mState_DONT, mState_AIMED_ATTACK_LOS, false, &MissionInterfaceManager::aimArm, 0, 43212,
+	"AttackHead",				KEY_NUMPAD8, mState_DONT, mState_AIMED_ATTACK_LOS, false, &MissionInterfaceManager::aimHead, 0, 43213,
+	"AttackEnergyOnly",			KEY_A, mState_ENERGY_WEAPONS, mState_ENERGY_WEAPONS_LOS, false, &MissionInterfaceManager::energyWeapons, &MissionInterfaceManager::energyWeapons, 43204,
+	"AttackForced",				KEY_F, -1, -1, false, &MissionInterfaceManager::forceShot, 0, 43210,
+	"Guard",					KEY_G, mState_GUARD, mState_GUARD, false, &MissionInterfaceManager::guard, &MissionInterfaceManager::stopGuard, 43207,
+	"Stop",						KEY_BACK, -1, -1, false, &MissionInterfaceManager::removeCommand, 0, 43214,
+	"PowerDown",				KEY_NEXT, -1, -1, false, &MissionInterfaceManager::powerDown, 0, 43215,
+	"PowerUp",					KEY_PRIOR, -1, -1, false, &MissionInterfaceManager::powerUp, 0, 43216,
+	"Eject",					KEY_END, mState_EJECT, mState_EJECT, false, &MissionInterfaceManager::eject, 0, 43217,
+	"VehicleCommand",			KEY_V, -1, -1, true, &MissionInterfaceManager::vehicleCommand, 0, 43222,
+	"ToggleHoldPosition",		KEY_H, -1, -1, true, &MissionInterfaceManager::toggleHoldPosition, 0, -1,
+	"GoToNextNavPoint",			KEY_N, -1, -1, true, &MissionInterfaceManager::gotoNextNavMarker, 0, -1,
+	"SelectVisible",			KEY_E, -1, -1, false, &MissionInterfaceManager::selectVisible, 0, 43209,
+	"AddVisibleToSelection",	SHIFT | KEY_E, -1, -1, false, &MissionInterfaceManager::addVisibleToSelection, 0, -1, // MCHD TODO: Fix this so it binds with its parent key maybe?
+	"DeployAirstrike",			KEY_MULTIPLY, mState_UNCERTAIN_AIRSTRIKE, mState_AIRSTRIKE, true, &MissionInterfaceManager::sendAirstrike, 0, 43220,
+	"DeploySensor",				KEY_DIVIDE, mState_SENSORSTRIKE, mState_SENSORSTRIKE, true, &MissionInterfaceManager::sendSensorStrike, 0, 43221,
+	
+	// HUD
+	"TogglePause",		KEY_ESCAPE, -1, -1, true, &MissionInterfaceManager::togglePause, 0, 43234,
+	"TogglePause2",		KEY_P, -1, -1, true, &MissionInterfaceManager::togglePause, 0, -1,
+	"TogglePause3",		KEY_PAUSE, -1, -1, true, &MissionInterfaceManager::togglePause, 0, -1,
+	"ShowObjectives",	KEY_F9, -1, -1, true, &MissionInterfaceManager::showObjectives, 0, 43226,
+	"ShowHotkeys",		KEY_F1, -1, -1, true, &MissionInterfaceManager::toggleHotKeys, 0, -1,
+	"ShowCompass",		KEY_BACKSLASH, -1, -1, true, &MissionInterfaceManager::toggleCompass, 0, 43223,
+	"CycleHUDTab",		KEY_TAB, -1, -1, true, &MissionInterfaceManager::switchTab, 0, -1,
+	"CycleHUDTabBack",	SHIFT | KEY_TAB, -1, -1, true, &MissionInterfaceManager::reverseSwitchTab, 0, -1,
+	"SelectionInfo",	KEY_I, -1, -1, true, &MissionInterfaceManager::infoCommand, &MissionInterfaceManager::infoButtonReleased, 43219,
+	"AllChat",			KEY_RETURN, -1, -1, true, &MissionInterfaceManager::handleChatKey, 0, IDS_HOTKEY_CHAT,
+	"TeamChat",			SHIFT | KEY_RETURN, -1, -1, true, &MissionInterfaceManager::handleTeamChatKey, 0, IDS_HOTKEY_CHAT_TEAM,
 
-
-MissionInterfaceManager::Command		MissionInterfaceManager::commands[MAX_COMMAND] = { 
-		KEY_S,				mState_SHRTRNG_ATTACK, mState_SHRTRNG_LOS,		false,		&MissionInterfaceManager::attackShort, &MissionInterfaceManager::defaultAttack, 43200, 
-		KEY_M,				mState_MEDRNG_ATTACK,  mState_MEDRNG_LOS,		false,		&MissionInterfaceManager::attackMedium, &MissionInterfaceManager::defaultAttack, 43201,
-		KEY_L,				mState_LONGRNG_ATTACK, mState_LONGRNG_LOS,		false,		&MissionInterfaceManager::attackLong, &MissionInterfaceManager::defaultAttack, 43202,
-		KEY_A,				mState_ENERGY_WEAPONS,	mState_ENERGY_WEAPONS_LOS,		false,		&MissionInterfaceManager::energyWeapons, &MissionInterfaceManager::energyWeapons, 43204,
-		KEY_D,				mState_GENERIC_ATTACK, mState_ATTACK_LOS,		false,		&MissionInterfaceManager::defaultAttack,0, -1,
-		KEY_J,				mState_JUMP1, mState_JUMP_LOS,		false,		&MissionInterfaceManager::jump, &MissionInterfaceManager::stopJump, 43205,
-		KEY_J | WAYPT, 		mState_JUMPWAYPT,  mState_JUMPWAYPT_LOS,		false,		&MissionInterfaceManager::jump, &MissionInterfaceManager::stopJump, -1,
-		KEY_C,				mState_CURPOS_ATTACK, mState_CURPOS_ATTACK_LOS,		false,		&MissionInterfaceManager::fireFromCurrentPos, &MissionInterfaceManager::stopFireFromCurrentPos, 43206,
-		KEY_G,				mState_GUARD, mState_GUARD,				false,		&MissionInterfaceManager::guard, &MissionInterfaceManager::stopGuard, 43207,
-		KEY_W,				mState_ENERGY_WEAPONS,	mState_ENERGY_WEAPONS_LOS,	false,		&MissionInterfaceManager::conserveAmmo, 0, -1,
-		KEY_E,				-1,	-1,						false,		&MissionInterfaceManager::selectVisible, 0, 43209,
-		KEY_F,				-1,	-1,						false,		&MissionInterfaceManager::forceShot, 0, 43210,
-		KEY_HOME,				-1,	-1,						true,		&MissionInterfaceManager::cameraNormal,0, -1,
-		KEY_F2,				-1,		-1,					true,		&MissionInterfaceManager::cameraDefault,0, -1,
-		KEY_F3,				-1,		-1,					true,		&MissionInterfaceManager::cameraMaxIn,0, -1,
-		KEY_F4,				-1,		-1,					true,		&MissionInterfaceManager::cameraTight,0, -1,
-		KEY_F5,				-1,		-1,					true,		&MissionInterfaceManager::cameraFour,0, -1,
-		KEY_F2 | CTRL,		-1,		-1,					true,		&MissionInterfaceManager::cameraAssign0,0, -1,
-		KEY_F3 | CTRL, 		-1,		-1,					true,		&MissionInterfaceManager::cameraAssign1,0, -1,
-		KEY_F4 | CTRL, 		-1,		-1,					true,		&MissionInterfaceManager::cameraAssign2,0, -1,
-		KEY_F5 | CTRL, 		-1,		-1,					true,		&MissionInterfaceManager::cameraAssign3,0, -1,
-		KEY_NUMPAD2,		mState_DONT, mState_AIMED_ATTACK_LOS,		false,		&MissionInterfaceManager::aimLeg, 0, 43211,
-		KEY_NUMPAD5,		mState_DONT,  mState_AIMED_ATTACK_LOS,		false,		&MissionInterfaceManager::aimArm, 0, 43212,
-		KEY_NUMPAD8,		mState_DONT,  mState_AIMED_ATTACK_LOS,		false,		&MissionInterfaceManager::aimHead, 0, 43213,
-		KEY_BACK,	-1, -1,							false,		&MissionInterfaceManager::removeCommand, 0, 43214,
-		KEY_NEXT | 0x100,	-1,	-1,						false,		&MissionInterfaceManager::powerDown, 0, 43215,
-		KEY_PRIOR| 0x100,	-1,	-1,						false,		&MissionInterfaceManager::powerUp, 0, 43216,
-		KEY_END| 0x100,	mState_EJECT, mState_EJECT,		false,		&MissionInterfaceManager::eject, 0, 43217,
-		KEY_SPACE, 			mState_RUN,	 mState_RUN_LOS,				false,		&MissionInterfaceManager::changeSpeed, &MissionInterfaceManager::stopChangeSpeed, 43218,
-		KEY_SPACE | WAYPT, 	mState_RUNWAYPT, 	 mState_RUNWAYPT_LOS,					false,		&MissionInterfaceManager::changeSpeed, &MissionInterfaceManager::stopChangeSpeed, -1,
-		KEY_UP | 0x100,				-1,	-1,						false,		&MissionInterfaceManager::scrollUp, 0,  IDS_HOTKEY_TRACKU,
-		KEY_DOWN | 0x100,			-1,	-1,						false,		&MissionInterfaceManager::scrollDown, 0, IDS_HOTKEY_TRACKD,
-		KEY_LEFT | 0x100,			-1,	-1,						false,		&MissionInterfaceManager::scrollLeft, 0, IDS_HOTKEY_TRACKL,
-		KEY_RIGHT | 0x100,	 		-1,	-1,						false,		&MissionInterfaceManager::scrollRight, 0, IDS_HOTKEY_TRACKR,
-		KEY_SUBTRACT,		-1,	-1,						false,		&MissionInterfaceManager::zoomOut,0, 43225,
-		KEY_MINUS,			-1,	-1,						false,		&MissionInterfaceManager::zoomOut,0, -1,
-		KEY_ADD,			-1,	-1,						false,		&MissionInterfaceManager::zoomIn,0, 43224,
-		SHIFT | KEY_EQUALS,			-1,	-1,				false,		&MissionInterfaceManager::zoomIn,0, -1,
-		KEY_LEFT | SHIFT | 0x100, 	-1,	-1,						false,		&MissionInterfaceManager::rotateLeft, 0, IDS_HOTKEY_ROTATEL,
-		KEY_RIGHT | SHIFT | 0x100,	-1,	-1,						false,		&MissionInterfaceManager::rotateRight, 0, IDS_HOTKEY_ROTATER,
-		KEY_UP | SHIFT | 0x100,	-1,	-1,						false,		&MissionInterfaceManager::tiltUp, 0, IDS_HOTKEY_TILTU,
-		KEY_DOWN | SHIFT | 0x100,		-1,	-1,						false,		&MissionInterfaceManager::tiltDown, 0, IDS_HOTKEY_TILTD,
-		KEY_HOME | 0x100,			-1,	-1,						false,		&MissionInterfaceManager::centerCamera, 0, -1,
-		KEY_LEFT | CTRL,	-1,	-1,						false,		&MissionInterfaceManager::rotateLightLeft, 0, -1,
-		KEY_RIGHT | CTRL,	-1,	-1,						false,		&MissionInterfaceManager::rotateLightRight, 0, -1,
-		KEY_UP | CTRL,		-1,	-1,						false,		&MissionInterfaceManager::rotateLightUp, 0, -1,
-		KEY_DOWN | CTRL,	-1,	-1,						false,		&MissionInterfaceManager::rotateLightDown, 0, -1,
-		KEY_T | CTRL | ALT, -1,	-1,						true,		&MissionInterfaceManager::drawTerrain, 0, -1,
-		KEY_O | CTRL | ALT, -1,	-1,						true,		&MissionInterfaceManager::drawOverlays, 0, -1,
-		KEY_B | CTRL | ALT, -1,	-1,						true,		&MissionInterfaceManager::drawBuildings, 0, -1,
-		CTRL | ALT | KEY_G, -1,	-1,						true,		&MissionInterfaceManager::showGrid, 0, -1,
-		CTRL | ALT | KEY_Q, -1,	-1,						true,		&MissionInterfaceManager::recalcLights, 0, -1, 
-		CTRL | ALT | KEY_C, -1,	-1,						true,		&MissionInterfaceManager::drawClouds, 0, -1,
-		CTRL | ALT | KEY_F, -1,	-1,						true,		&MissionInterfaceManager::drawFog, 0, -1,
-		CTRL | ALT | KEY_P, -1,	-1,						true,		&MissionInterfaceManager::usePerspective, 0, -1,
-		CTRL | ALT | KEY_S, -1,	-1,						true,		&MissionInterfaceManager::drawTGLShapes, 0, -1,
-		CTRL | ALT | KEY_V, -1,	-1,						true,		&MissionInterfaceManager::drawWaterEffects, 0, -1,
-		CTRL | ALT | KEY_W, -1,	-1,						true,		&MissionInterfaceManager::recalcWater, 0, -1,
-		CTRL | ALT | KEY_D, -1,	-1,						true,		&MissionInterfaceManager::drawShadows, 0,  -1,
-		CTRL | ALT | KEY_L, -1,	-1,						true,		&MissionInterfaceManager::changeLighting, 0, -1,
-		CTRL | ALT | KEY_Z, -1,	-1,						true,		&MissionInterfaceManager::toggleGUI, 0, -1,
-		KEY_V,				-1,	-1,						true,		&MissionInterfaceManager::vehicleCommand, 0, 43222,
-		KEY_F9,			-1,	-1,						true,		&MissionInterfaceManager::showObjectives, 0, 43226,
-		KEY_ESCAPE,			-1,	-1,						true,		&MissionInterfaceManager::togglePause, 0, 43234,
-		KEY_F1,				-1,	-1,					true,		&MissionInterfaceManager::toggleHotKeys, 0, -1,
-		KEY_P,			-1,	-1,						true,		&MissionInterfaceManager::togglePause, 0, -1,
-		KEY_TAB,			-1,	-1,						true,		&MissionInterfaceManager::switchTab, 0, -1,
-		KEY_TAB | SHIFT,	-1,	-1,						true,		&MissionInterfaceManager::reverseSwitchTab, 0, -1,
-		KEY_I,				-1, -1,						true,		&MissionInterfaceManager::infoCommand, &MissionInterfaceManager::infoButtonReleased, 43219,
-		KEY_N,				-1, -1,						true,		&MissionInterfaceManager::gotoNextNavMarker, 0, -1,
-		KEY_MULTIPLY,  mState_UNCERTAIN_AIRSTRIKE, mState_AIRSTRIKE, true, &MissionInterfaceManager::sendAirstrike, 0, 43220,
-		KEY_DIVIDE, 		mState_SENSORSTRIKE, mState_SENSORSTRIKE, true, &MissionInterfaceManager::sendSensorStrike, 0, 43221,
-		KEY_BACKSLASH,		-1, -1,				true,		&MissionInterfaceManager::toggleCompass, 0, 43223,
-		ALT | KEY_SLASH,	-1, -1,						false,		&MissionInterfaceManager::quickDebugInfo, 0, -1,
-		ALT | SHIFT | KEY_SLASH, -1, -1,				false,		&MissionInterfaceManager::setGameObjectWindow, 0, -1,
-		ALT | CTRL | KEY_1, -1, -1,					false,		&MissionInterfaceManager::pageGameObjectWindow1, 0, -1,
-		ALT | CTRL | KEY_2, -1, -1,					false,		&MissionInterfaceManager::pageGameObjectWindow2, 0, -1,
-		ALT | CTRL | KEY_3, -1, -1,					false,		&MissionInterfaceManager::pageGameObjectWindow3, 0, -1,
-		ALT | KEY_1,		-1,	-1,						false,		&MissionInterfaceManager::jumpToDebugGameObject1, 0, -1,
-		ALT | KEY_2,		-1,	-1,						false,		&MissionInterfaceManager::jumpToDebugGameObject2, 0, -1,
-		ALT | KEY_3,		-1,	-1,						false,		&MissionInterfaceManager::jumpToDebugGameObject3, 0, -1,
- 		ALT | KEY_T,		-1, -1,						false,		&MissionInterfaceManager::teleport, 0, -1,
-		ALT | KEY_W,		-1,	-1,						false,		&MissionInterfaceManager::toggleDebugWins, 0, -1,
-		ALT | KEY_M,		-1,	-1,						false,		&MissionInterfaceManager::showMovers, 0, -1,
-		ALT | KEY_C,		-1,	-1,						false,		&MissionInterfaceManager::cullPathAreas, 0, -1,
-		ALT | KEY_Z,		-1,	-1,						false,		&MissionInterfaceManager::zeroHPrime, 0, -1,
-		ALT | KEY_A,		-1,	-1,						false,		&MissionInterfaceManager::calcValidAreaTable, 0, -1,
-		ALT | KEY_G,		-1,	-1,						false,		&MissionInterfaceManager::globalMapLog, 0, -1,
-		ALT | KEY_B,		-1,	-1,						false,		&MissionInterfaceManager::brainDead, 0, -1,
-		ALT | KEY_P,		-1,	-1,						false,		&MissionInterfaceManager::goalPlan, 0, -1,
-		ALT | KEY_V,		-1,	-1,						false,		&MissionInterfaceManager::showVictim, 0, -1,
-		ALT | CTRL | KEY_P,	-1, -1,						false,		&MissionInterfaceManager::enemyGoalPlan, 0, -1,
-		ALT | KEY_4,	-1, -1,					false,		&MissionInterfaceManager::damageObject1, 0, -1,
-		ALT | KEY_5,	-1, -1,					false,		&MissionInterfaceManager::damageObject2, 0, -1,
-		ALT | KEY_6,	-1, -1,					false,		&MissionInterfaceManager::damageObject3, 0, -1,
-		ALT | KEY_7,	-1, -1,					false,		&MissionInterfaceManager::damageObject4, 0, -1,
-		ALT | KEY_8,	-1, -1,					false,		&MissionInterfaceManager::damageObject5, 0, -1,
-		ALT | KEY_9,	-1, -1,					false,		&MissionInterfaceManager::damageObject6, 0, -1,
-		ALT | KEY_0,	-1, -1,					false,		&MissionInterfaceManager::damageObject0, 0, -1,
-		//ALT | KEY_8,	-1, -1,					false,		&MissionInterfaceManager::damageObject8, 0, -1,
-		//ALT | KEY_9,	-1, -1,					false,		&MissionInterfaceManager::damageObject9, 0, -1,
-		//ALT | KEY_0,	-1, -1,					false,		&MissionInterfaceManager::damageObject0, 0, -1,
-		KEY_H,				-1, -1,						true,		&MissionInterfaceManager::toggleHoldPosition, 0, -1,
-		KEY_RETURN,			-1, -1,						true,		&MissionInterfaceManager::handleChatKey, 0, IDS_HOTKEY_CHAT,
-		SHIFT | KEY_RETURN,	-1, -1,				true,		&MissionInterfaceManager::handleTeamChatKey, 0, IDS_HOTKEY_CHAT_TEAM,
-		KEY_E | SHIFT,				-1,	-1,						false,		&MissionInterfaceManager::addVisibleToSelection, 0, -1,
-		KEY_EQUALS,			-1,	-1,				false,		&MissionInterfaceManager::zoomIn,0, -1,
-		ALT | KEY_PERIOD, -1, -1,						false, &MissionInterfaceManager::rotateObjectLeft, 0, -1,
-		ALT | KEY_COMMA, -1, -1,				false,	&MissionInterfaceManager::rotateObjectRight, 0, -1,
-		KEY_PAUSE,		-1, -1,						true,		&MissionInterfaceManager::togglePause, 0, -1
-
+	// Camera Controls
+	"CameraDefault",	KEY_HOME, -1, -1, true,	&MissionInterfaceManager::cameraNormal,0, -1,
+	"CameraPreset0",	KEY_F2, -1, -1, true, &MissionInterfaceManager::cameraDefault, 0, -1,
+	"CameraPreset1",	KEY_F3, -1, -1, true, &MissionInterfaceManager::cameraMaxIn, 0, -1,
+	"CameraPreset2",	KEY_F4, -1, -1, true, &MissionInterfaceManager::cameraTight, 0, -1,
+	"CameraPreset3",	KEY_F5, -1, -1, true, &MissionInterfaceManager::cameraFour, 0, -1,
+	"CameraAssign0",	CTRL | KEY_F2, -1, -1,	true, &MissionInterfaceManager::cameraAssign0,0, -1,
+	"CameraAssign1",	CTRL | KEY_F3, -1, -1, true, &MissionInterfaceManager::cameraAssign1, 0, -1,
+	"CameraAssign2",	CTRL | KEY_F4, -1, -1, true, &MissionInterfaceManager::cameraAssign2, 0, -1,
+	"CameraAssign3",	CTRL | KEY_F5, -1, -1, true, &MissionInterfaceManager::cameraAssign3, 0, -1,
+	"CameraMoveUp",		KEY_UP,	-1,	-1,	false, &MissionInterfaceManager::scrollUp, 0,  IDS_HOTKEY_TRACKU,
+	"CameraMoveDown",	KEY_DOWN, -1, -1, false, &MissionInterfaceManager::scrollDown, 0, IDS_HOTKEY_TRACKD,
+	"CameraMoveLeft",	KEY_LEFT, -1, -1, false, &MissionInterfaceManager::scrollLeft, 0, IDS_HOTKEY_TRACKL,
+	"CameraMoveRight",	KEY_RIGHT, -1, -1, false, &MissionInterfaceManager::scrollRight, 0, IDS_HOTKEY_TRACKR,
+	"CameraLookUp",		SHIFT | KEY_UP, -1, -1, false, &MissionInterfaceManager::tiltUp, 0, IDS_HOTKEY_TILTU,
+	"CameraLookDown",	SHIFT | KEY_DOWN, -1, -1, false, &MissionInterfaceManager::tiltDown, 0, IDS_HOTKEY_TILTD,
+	"CameraLookLeft",	SHIFT | KEY_LEFT, -1, -1, false, &MissionInterfaceManager::rotateLeft, 0, IDS_HOTKEY_ROTATEL,
+	"CameraLookRight",	SHIFT | KEY_RIGHT, -1, -1, false, &MissionInterfaceManager::rotateRight, 0, IDS_HOTKEY_ROTATER,
+	"CameraZoomIn",		KEY_ADD, -1, -1, false,	&MissionInterfaceManager::zoomIn,0, 43224,
+	"CameraZoomIn2",	SHIFT | KEY_EQUALS, -1, -1, false, &MissionInterfaceManager::zoomIn, 0, -1,
+	"CameraZoomIn3",	KEY_EQUALS, -1, -1, false, &MissionInterfaceManager::zoomIn, 0, -1,
+	"CameraZoomOut",	KEY_SUBTRACT, -1, -1, false, &MissionInterfaceManager::zoomOut, 0, 43225,
+	"CameraZoomOut2",	KEY_MINUS, -1, -1, false, &MissionInterfaceManager::zoomOut, 0, -1,
 };
+
+long MissionInterfaceManager::s_numCommands = sizeof(MissionInterfaceManager::s_commands) / sizeof(MissionInterfaceManager::Command);
+long MissionInterfaceManager::s_defaultKeys[sizeof(MissionInterfaceManager::s_commands) / sizeof(MissionInterfaceManager::Command)] = { };
+
+#ifndef FINAL
+MissionInterfaceManager::Command		MissionInterfaceManager::s_debugCommands[] =
+{
+	// Objects
+	"Teleport",				ALT | KEY_T, -1, -1, false, &MissionInterfaceManager::teleport, 0, -1, 
+	"ToggleBrainDeadEnemy",	ALT | KEY_B, -1, -1, false, &MissionInterfaceManager::brainDead, 0, -1,
+	"DamageObject0",		ALT | KEY_NUMPAD0, -1, -1, false, &MissionInterfaceManager::damageObject0, 0, -1,
+	"DamageObject1",		ALT | KEY_NUMPAD1, -1, -1, false, &MissionInterfaceManager::damageObject1, 0, -1,
+	"DamageObject2",		ALT | KEY_NUMPAD2, -1, -1, false, &MissionInterfaceManager::damageObject2, 0, -1,
+	"DamageObject3",		ALT | KEY_NUMPAD3, -1, -1, false, &MissionInterfaceManager::damageObject3, 0, -1,
+	"DamageObject4",		ALT | KEY_NUMPAD4, -1, -1, false, &MissionInterfaceManager::damageObject4, 0, -1,
+	"DamageObject5",		ALT | KEY_NUMPAD5, -1, -1, false, &MissionInterfaceManager::damageObject5, 0, -1,
+	"DamageObject6",		ALT | KEY_NUMPAD6, -1, -1, false, &MissionInterfaceManager::damageObject6, 0, -1,
+	"GoalPlan",				ALT | KEY_P, -1, -1, false, &MissionInterfaceManager::goalPlan, 0, -1,
+	"EnemyGoalPlan",		ALT | SHIFT | KEY_P, -1, -1, false, &MissionInterfaceManager::enemyGoalPlan, 0, -1,
+
+	// Sun
+	//"DbgRotateLightUp",		ALT | CTRL | KEY_UP, -1, -1, false, &MissionInterfaceManager::rotateLightUp, 0, -1,
+	//"DbgRotateLightDown",	ALT | CTRL | KEY_DOWN, -1, -1, false, &MissionInterfaceManager::rotateLightDown, 0, -1,
+	"DbgRotateLightLeft",	ALT | CTRL | KEY_LEFT, -1, -1, false, &MissionInterfaceManager::rotateLightLeft, 0, -1,
+	"DbgRotateLightRight",	ALT | CTRL | KEY_RIGHT, -1, -1, false, &MissionInterfaceManager::rotateLightRight, 0, -1,
+
+	// Render
+	"ToggleGUI",			ALT | CTRL | KEY_Z, -1, -1, true, &MissionInterfaceManager::toggleGUI, 0, -1,
+	"PerspectiveCamera",	ALT | CTRL | KEY_P, -1, -1, true, &MissionInterfaceManager::usePerspective, 0, -1,
+	"DrawObjects",			ALT | CTRL | KEY_S, -1, -1, true, &MissionInterfaceManager::drawTGLShapes, 0, -1,
+	"DrawBuildings",		ALT | CTRL | KEY_B, -1, -1, true, &MissionInterfaceManager::drawBuildings, 0, -1,
+	"DrawTerrain",			ALT | CTRL | KEY_T, -1, -1, true, &MissionInterfaceManager::drawTerrain, 0, -1,
+	"DrawOverlays",			ALT | CTRL | KEY_O, -1, -1, true, &MissionInterfaceManager::drawOverlays, 0, -1,
+	"DrawClouds",			ALT | CTRL | KEY_C, -1, -1, true, &MissionInterfaceManager::drawClouds, 0, -1,
+	"DrawFog",				ALT | CTRL | KEY_F, -1, -1, true, &MissionInterfaceManager::drawFog, 0, -1,
+	"DrawShadows",			ALT | CTRL | KEY_D, -1, -1, true, &MissionInterfaceManager::drawShadows, 0, -1,
+	"DrawWaterEffects",		ALT | CTRL | KEY_V, -1, -1, true, &MissionInterfaceManager::drawWaterEffects, 0, -1,
+
+	// Debug Render
+	"ShowGrid",				ALT | CTRL | KEY_G, -1, -1, true, &MissionInterfaceManager::showGrid, 0, -1,
+	"ShowLOSGrid",			ALT | CTRL | KEY_L, -1, -1, true, &MissionInterfaceManager::showLOSGrid, 0, -1,
+	"ShowMovers",			ALT | KEY_M, -1, -1, false, &MissionInterfaceManager::showMovers, 0, -1,
+	"ShowVictim",			ALT | KEY_V, -1, -1, false, &MissionInterfaceManager::showVictim, 0, -1,
+	"DisplayDebugInfo",		ALT | KEY_SLASH, -1, -1, false, &MissionInterfaceManager::quickDebugInfo, 0, -1,
+	"CycleDebugWindows",	ALT | KEY_W, -1, -1, false, &MissionInterfaceManager::toggleDebugWins, 0, -1,
+	"SetDebugObject",		ALT | CTRL | KEY_SLASH, -1, -1, false, &MissionInterfaceManager::setGameObjectWindow, 0, -1,
+	"PageObjectWindow0",	ALT | CTRL | KEY_1, -1, -1, false, &MissionInterfaceManager::pageGameObjectWindow1, 0, -1,
+	"PageObjectWindow1",	ALT | CTRL | KEY_2, -1, -1, false, &MissionInterfaceManager::pageGameObjectWindow2, 0, -1,
+	"PageObjectWindow2",	ALT | CTRL | KEY_3, -1, -1, false, &MissionInterfaceManager::pageGameObjectWindow3, 0, -1,
+	"JumpToObject0",		ALT | KEY_1, -1, -1, false, &MissionInterfaceManager::jumpToDebugGameObject1, 0, -1,
+	"JumpToObject1",		ALT | KEY_2, -1, -1, false, &MissionInterfaceManager::jumpToDebugGameObject2, 0, -1,
+	"JumpToObject2",		ALT | KEY_3, -1, -1, false, &MissionInterfaceManager::jumpToDebugGameObject3, 0, -1,
+
+	// ???
+	"RecalculateLights",		ALT | CTRL | KEY_Q, -1, -1, true, &MissionInterfaceManager::recalcLights, 0, -1,
+	"RecalculateWater",			ALT | CTRL | KEY_W, -1, -1, true, &MissionInterfaceManager::recalcWater, 0, -1,
+	"ZeroHPrime",				ALT | KEY_Z, -1, -1, false,			&MissionInterfaceManager::zeroHPrime, 0, -1,
+	"CalculateValidAreaTable",	ALT | KEY_A, -1, -1, false,			&MissionInterfaceManager::calcValidAreaTable, 0, -1,
+	"GlobalMapLog",				ALT | KEY_G, -1, -1, false,			&MissionInterfaceManager::globalMapLog, 0, -1,
+	"RotateObjectLeft",			ALT | KEY_PERIOD, -1, -1, false,	&MissionInterfaceManager::rotateObjectLeft, 0, -1,
+	"RotateObjectRight",		ALT | KEY_COMMA, -1, -1, false,		&MissionInterfaceManager::rotateObjectRight, 0, -1,
+};
+
+long MissionInterfaceManager::s_numDebugCommands = sizeof(MissionInterfaceManager::s_debugCommands) / sizeof(MissionInterfaceManager::Command);
+#endif
 
 extern bool drawTerrainGrid;
 extern long 	turn;				//What frame of the scenario is it?
@@ -319,7 +334,6 @@ void MissionInterfaceManager::init (void)
 	dragStart.Zero();
 	dragEnd.Zero();
 	isDragging = FALSE;	
-	terrainLineChanged = 0;
 	
 	for (long i=0;i<MAX_TEAMS;i++)
 	{
@@ -478,12 +492,12 @@ void MissionInterfaceManager::update (void)
 				float xDistLeft = buttonPosX - realMouseX;
 				float yDistLeft = buttonPosY - realMouseY;
 
-				float xDistThisFrame = xDistLeft / timeLeftToScroll * frameLength;
-				float yDistThisFrame = yDistLeft / timeLeftToScroll * frameLength;
+				float xDistThisFrame = xDistLeft / timeLeftToScroll * g_deltaTime;
+				float yDistThisFrame = yDistLeft / timeLeftToScroll * g_deltaTime;
 
 				userInput->setMousePos(realMouseX + xDistThisFrame, realMouseY+yDistThisFrame);
 
-				timeLeftToScroll -= frameLength;
+				timeLeftToScroll -= g_deltaTime;
 			}
 			else
 			{
@@ -492,7 +506,7 @@ void MissionInterfaceManager::update (void)
 				//We are there.  Start flashing.
 				if (buttonNumFlashes)
 				{
-					buttonFlashTime += frameLength;
+					buttonFlashTime += g_deltaTime;
 					if ( buttonFlashTime > .5f )
 					{
 						controlGui.getButton( targetButtonId )->setColor( 0xffffffff );
@@ -539,12 +553,12 @@ void MissionInterfaceManager::update (void)
 				float xDistLeft = buttonPosX - realMouseX;
 				float yDistLeft = buttonPosY - realMouseY;
 
-				float xDistThisFrame = xDistLeft / timeLeftToScroll * frameLength;
-				float yDistThisFrame = yDistLeft / timeLeftToScroll * frameLength;
+				float xDistThisFrame = xDistLeft / timeLeftToScroll * g_deltaTime;
+				float yDistThisFrame = yDistLeft / timeLeftToScroll * g_deltaTime;
 
 				userInput->setMousePos(realMouseX + xDistThisFrame, realMouseY+yDistThisFrame);
 
-				timeLeftToScroll -= frameLength;
+				timeLeftToScroll -= g_deltaTime;
 			}
 			else
 			{
@@ -553,7 +567,7 @@ void MissionInterfaceManager::update (void)
 				//We are there.  Start flashing.
 				if (buttonNumFlashes)
 				{
-					buttonFlashTime += frameLength;
+					buttonFlashTime += g_deltaTime;
 					if ( buttonFlashTime > .5f )
 					{
 						targetButton->color = 0xff000000;
@@ -783,12 +797,10 @@ void MissionInterfaceManager::update (void)
 			sprintf(mpStr, ", MULTIPLAY: %s-(%d)CLIENT {%d,%d}", MPlayer->getPlayerName(), MPlayer->commanderID, MPlayer->maxReceiveLoad, MPlayer->maxReceiveSize);
 		strcat(DebugStatusBarString, mpStr);
 	}
-	if (EnemiesGoalPlan)
+	if (g_dbgGoalPlanEnemy)
 		strcat(DebugStatusBarString, " [ENEMIES GOALPLAN]");
-	if (ShowMovers)
+	if (g_dbgShowMovers)
 		strcat(DebugStatusBarString, " [SHOW MOVERS]");
-	if (CullPathAreas)
-		strcat(DebugStatusBarString, " [CULL PATH AREAS]");
 	if (ZeroHPrime)
 		strcat(DebugStatusBarString, " [ZERO HPRIME]");
 	if (CalcValidAreaTable)
@@ -837,10 +849,10 @@ void MissionInterfaceManager::update (void)
 
 	}
 	
-	if( useLeftRightMouseProfile ) // using AOE control style
+	if( g_userPreferences.leftRightMouseProfile ) // using AOE control style
 	{
-		if ( WAYPOINT_KEY == -1 )
-			WAYPOINT_KEY = KEY_LCONTROL;
+		if ( s_waypointKey == -1 )
+			s_waypointKey = KEY_LCONTROL;
 		commandClicked = rightClicked;
 		selectClicked = !bLeftDouble && !lastUpdateDoubleClick && userInput->leftMouseReleased() && !userInput->getKeyDown( KEY_T) && !isDragging;
 		cameraClicked = gos_GetKeyStatus( KEY_LMENU ) == KEY_HELD;
@@ -865,8 +877,8 @@ void MissionInterfaceManager::update (void)
 		selectClicked = leftClicked && !lastUpdateDoubleClick;
 		cameraClicked = userInput->isRightDrag();
 
-		if ( WAYPOINT_KEY == -1 )
-			WAYPOINT_KEY = KEY_LCONTROL;
+		if ( s_waypointKey == -1 )
+			s_waypointKey = KEY_LCONTROL;
 		if ( moveCameraAround( lineOfSight, passable, ctrlDn, bGui, moverCount, nonMoverCount ) )
 		{
 			bool leftClicked = (!userInput->isLeftDrag() && !userInput->isRightDrag() && userInput->isLeftClick());
@@ -1209,7 +1221,7 @@ void MissionInterfaceManager::updateTarget( bool bGui)
 	{
 		if ( bGui )
 			target = 0;
-		else if ( target->isMover() && !ShowMovers && !(MPlayer && MPlayer->allUnitsDestroyed[MPlayer->commanderID]))
+		else if ( target->isMover() && !g_dbgShowMovers && !(MPlayer && MPlayer->allUnitsDestroyed[MPlayer->commanderID]))
 		{
 			if ((target->getTeamId() != Team::home->getId()) && 
 				!target->isDisabled() && 
@@ -1267,7 +1279,7 @@ void MissionInterfaceManager::updateOldStyle( bool shiftDn, bool altDn, bool ctr
 	long commanderID = Commander::home->getId();
 	
  	// Update the waypoint markers so that they are visible!
-   	if ( userInput->getKeyDown( WAYPOINT_KEY ) || controlGui.getMines() )
+   	if ( userInput->getKeyDown( s_waypointKey ) || controlGui.getMines() )
    	{
 		drawWayPointPaths(); 	
 		//Can Never make a patrol path.  Causes movement wubbies!
@@ -1461,7 +1473,7 @@ void MissionInterfaceManager::updateAOEStyle(bool shiftDn, bool altDn, bool ctrl
 	long commanderID = Commander::home->getId();
 
  	// Update the waypoint markers so that they are visible!
-   	if ( userInput->getKeyDown( WAYPOINT_KEY ) || controlGui.getMines() )
+   	if ( userInput->getKeyDown( s_waypointKey ) || controlGui.getMines() )
    	{
 		drawWayPointPaths(); 	
 		//Can Never make a patrol path.  Causes movement wubbies!
@@ -1664,7 +1676,7 @@ void MissionInterfaceManager::updateWaypoints (void)
 {
 	// Update the waypoint markers so that they are visible and must happen AFTER camera update!!
 	// Or they wiggle something fierce.
-   	if ( userInput->getKeyDown( WAYPOINT_KEY ) || controlGui.getMines() )
+   	if ( userInput->getKeyDown( s_waypointKey ) || controlGui.getMines() )
    	{
    		Team* pTeam = Team::home;
    		for (long i=0;i<pTeam->getRosterSize();i++)
@@ -1684,23 +1696,23 @@ int MissionInterfaceManager::update( bool leftClickedClick, bool rightClickedCli
 	bool shiftDn = userInput->shift();
 	bool ctrlDn = userInput->ctrl();
 	bool altDn = userInput->alt();
-	bool wayPtDn = userInput->getKeyDown( WAYPOINT_KEY );
+	bool wayPtDn = userInput->getKeyDown( s_waypointKey );
 
 	bool bRetVal = 0;
 
 	int i = 0;
-	int last = MAX_COMMAND;
+	int last = s_numCommands;
 
 	// if chatting, ignore keyboard input
 	if ( controlGui.updateChat() )
 	{
-		i = 100;
-		last = 102;
+		i = Cmd_AllChat;
+		last = Cmd_TeamChat;
 		bRetVal = 1;
 	}
 
 
-	if ( gos_GetKeyStatus( WAYPOINT_KEY ) == KEY_RELEASED )
+	if ( gos_GetKeyStatus( s_waypointKey ) == KEY_RELEASED )
 	{
 		Team* pTeam  = Team::home;
 		for (long i = 0; i < pTeam->getRosterSize(); i++)
@@ -1747,7 +1759,7 @@ int MissionInterfaceManager::update( bool leftClickedClick, bool rightClickedCli
 
 	for ( ; i < last; i++ )
 	{
-		int key = commands[i].key;
+		int key = s_commands[i].key;
 		if ( userInput->getKeyDown( gosEnum_KeyIndex(key & 0x0000000ff) ) )
 		{
 			// check for shifts and stuff
@@ -1764,28 +1776,71 @@ int MissionInterfaceManager::update( bool leftClickedClick, bool rightClickedCli
 				continue;
 			
 			// got this far, call the command
-			if ( commands[i].key != -1 )
-				userInput->setMouseCursor(bLOS ? commands[i].cursorLOS : commands[i].cursor);
+			if ( s_commands[i].key != -1 )
+				userInput->setMouseCursor(bLOS ? s_commands[i].cursorLOS : s_commands[i].cursor);
 
-			if ( !commands[i].singleClick )
+			if ( !s_commands[i].singleClick )
 			{
-				if ( (this->*commands[i].function)() )
+				if ( (this->*s_commands[i].function)() )
 					bRetVal = 1;
 			}
 			else if ( gos_GetKeyStatus( (gosEnum_KeyIndex)(key & 0x000fffff) ) != KEY_HELD )
 			{
-				if ( this->commands[i].function && (this->*commands[i].function)() )
+				if ( this->s_commands[i].function && (this->*s_commands[i].function)() )
 					bRetVal = 1;
-				terrainLineChanged = turn;
 			}	
 		}
 		else if ( gos_GetKeyStatus( gosEnum_KeyIndex(key & 0x000fffff) ) == KEY_RELEASED 
-			&& commands[i].releaseFunction )
+			&& s_commands[i].releaseFunction )
 		{
-			if ( (this->*commands[i].releaseFunction)() )
+			if ( (this->*s_commands[i].releaseFunction)() )
 				bRetVal = 1;
 		}
 	}
+
+#ifndef FINAL
+	for (int i = 0; i < s_numDebugCommands; ++i)
+	{
+		int key = s_debugCommands[i].key;
+		if (userInput->getKeyDown(gosEnum_KeyIndex(key & 0x0000000ff)))
+		{
+			// check for shifts and stuff
+			// must check way pt first, because it can be shift or ctrl
+			if ((key & WAYPT))
+			{
+				if (!wayPtDn)
+					continue;
+			}
+			else if (((key & SHIFT) ? true : false) != shiftDn)
+				continue;
+			else if (((key & CTRL) ? true : false) != ctrlDn)
+				continue;
+			else if (((key & ALT) ? true : false) != altDn)
+				continue;
+
+			// got this far, call the command
+			if (s_debugCommands[i].key != -1)
+				userInput->setMouseCursor(bLOS ? s_debugCommands[i].cursorLOS : s_debugCommands[i].cursor);
+
+			if (!s_debugCommands[i].singleClick)
+			{
+				if ((this->*s_debugCommands[i].function)())
+					bRetVal = 1;
+			}
+			else if (gos_GetKeyStatus((gosEnum_KeyIndex)(key & 0x000fffff)) != KEY_HELD)
+			{
+				if (this->s_debugCommands[i].function && (this->*s_debugCommands[i].function)())
+					bRetVal = 1;
+			}
+		}
+		else if (gos_GetKeyStatus(gosEnum_KeyIndex(key & 0x000fffff)) == KEY_RELEASED
+			&& s_debugCommands[i].releaseFunction)
+		{
+			if ((this->*s_debugCommands[i].releaseFunction)())
+				bRetVal = 1;
+		}
+	}
+#endif
 
 	return bRetVal;
 }
@@ -1793,7 +1848,7 @@ int MissionInterfaceManager::update( bool leftClickedClick, bool rightClickedCli
 void MissionInterfaceManager::doAttack()
 {
 
-	if ( userInput->getKeyDown( WAYPOINT_KEY ) || !target )
+	if ( userInput->getKeyDown( s_waypointKey ) || !target )
 	{
 		soundSystem->playDigitalSample( INVALID_GUI );
 		return; // don't do if in waypoint mode
@@ -2060,10 +2115,6 @@ int MissionInterfaceManager::stopGuard()
 {
 	if ( controlGui.getGuard() )
 		controlGui.toggleGuard();
-	return 0;
-}
-int MissionInterfaceManager::conserveAmmo()
-{
 	return 0;
 }
 int MissionInterfaceManager::selectVisible()
@@ -2494,7 +2545,7 @@ int MissionInterfaceManager::handleOrders( TacticalOrder& order)
 				order.pack(NULL, NULL);
 			}
 			if (MPlayer && !MPlayer->isServer()) {
-				MPlayer->sendPlayerOrder(&order, false, 1, &pMover, 0, NULL, userInput->getKeyDown(WAYPOINT_KEY));
+				MPlayer->sendPlayerOrder(&order, false, 1, &pMover, 0, NULL, userInput->getKeyDown(s_waypointKey));
 				//pMover->getPilot()->setExecutingQueue(false);
 				//pMover->getPilot()->addQueuedTacOrder(order);					
 				}
@@ -2502,7 +2553,7 @@ int MissionInterfaceManager::handleOrders( TacticalOrder& order)
 			{
 				order.attackParams.range = (FireRangeType)pMover->attackRange;
 				order.pack( NULL, NULL );
-				if ( userInput->getKeyDown( WAYPOINT_KEY ) ) // way point one
+				if ( userInput->getKeyDown( s_waypointKey ) ) // way point one
 				{
 					pMover->getPilot()->setExecutingQueue(FALSE);
 					pMover->getPilot()->addQueuedTacOrder(order);					
@@ -2524,7 +2575,7 @@ int MissionInterfaceManager::handleOrders( TacticalOrder& order)
 
 int MissionInterfaceManager::scrollUp()
 {
-	float frameFactor = frameLength / baseFrameLength;
+	float frameFactor = g_deltaTime / baseFrameLength;
 	float scrollFactor = scrollInc / eye->getScaleFactor() * frameFactor;
 	eye->moveUp(scrollFactor);
 	return 1;
@@ -2532,53 +2583,53 @@ int MissionInterfaceManager::scrollUp()
 
 int MissionInterfaceManager::scrollDown()
 {
-	float frameFactor = frameLength / baseFrameLength;
+	float frameFactor = g_deltaTime / baseFrameLength;
 	float scrollFactor = scrollInc / eye->getScaleFactor() * frameFactor;
 	eye->moveDown(scrollFactor);
 	return 1;
 }
 int MissionInterfaceManager::scrollLeft()
 {
-	float frameFactor = frameLength / baseFrameLength;
+	float frameFactor = g_deltaTime / baseFrameLength;
 	float scrollFactor = scrollInc / eye->getScaleFactor() * frameFactor;
 	eye->moveLeft(scrollFactor);
 	return 1;
 }
 int MissionInterfaceManager::scrollRight()
 {
-	float frameFactor = frameLength / baseFrameLength;
+	float frameFactor = g_deltaTime / baseFrameLength;
 	float scrollFactor = scrollInc / eye->getScaleFactor() * frameFactor;
 	eye->moveRight(scrollFactor);
 	return 1;
 }
 int MissionInterfaceManager::zoomOut()
 {
-	float frameFactor = frameLength / baseFrameLength;
+	float frameFactor = g_deltaTime / baseFrameLength;
 	eye->ZoomOut(zoomInc * frameFactor * eye->getScaleFactor());
 	return 1;
 }
 int MissionInterfaceManager::zoomIn()
 {
-	float frameFactor = frameLength / baseFrameLength;
+	float frameFactor = g_deltaTime / baseFrameLength;
 	eye->ZoomIn(zoomInc * frameFactor * eye->getScaleFactor());
 	return 1;
 }
 int MissionInterfaceManager::zoomChoiceOut()
 {
-	float frameFactor = frameLength / baseFrameLength;
+	float frameFactor = g_deltaTime / baseFrameLength;
 	eye->ZoomOut(zoomInc * frameFactor * 5.0f * eye->getScaleFactor());
 
 	return 1;
 }
 int MissionInterfaceManager::zoomChoiceIn()
 {
-	float frameFactor = frameLength / baseFrameLength;
+	float frameFactor = g_deltaTime / baseFrameLength;
 	eye->ZoomIn(zoomInc * frameFactor * 5.0f * eye->getScaleFactor());
  	return 1;
 }
 int MissionInterfaceManager::rotateLeft()
 {
-	float frameFactor = frameLength / baseFrameLength;
+	float frameFactor = g_deltaTime / baseFrameLength;
 	realRotation += degPerSecRot * frameFactor;
 	if (realRotation >= rotationInc)
 	{
@@ -2590,7 +2641,7 @@ int MissionInterfaceManager::rotateLeft()
 }
 int MissionInterfaceManager::rotateRight()
 {
-	float frameFactor = frameLength / baseFrameLength;
+	float frameFactor = g_deltaTime / baseFrameLength;
 	realRotation -= degPerSecRot * frameFactor;
 	if (realRotation <= -rotationInc)
 	{
@@ -2602,14 +2653,14 @@ int MissionInterfaceManager::rotateRight()
 }
 int MissionInterfaceManager::tiltUp()
 {
-	float frameFactor = frameLength / baseFrameLength;
+	float frameFactor = g_deltaTime / baseFrameLength;
 	float scrollFactor = scrollInc / eye->getScaleFactor() * frameFactor;
 	eye->tiltDown(scrollFactor * frameFactor * 30.0f);
 	return 1;
 }
 int MissionInterfaceManager::tiltDown()
 {
-	float frameFactor = frameLength / baseFrameLength;
+	float frameFactor = g_deltaTime / baseFrameLength;
 	float scrollFactor = scrollInc / eye->getScaleFactor() * frameFactor;
 	eye->tiltUp(scrollFactor * frameFactor * 30.0f);
 	return 1;
@@ -2717,15 +2768,13 @@ int MissionInterfaceManager::drawTGLShapes()
 {
 	#ifndef FINAL
 	renderTGLShapes ^= true;
-	terrainLineChanged = turn;
 	#endif
 	return 1;
 }
 int MissionInterfaceManager::drawWaterEffects()
 {
 	#ifndef FINAL
-	useWaterInterestTexture ^= true;
-	terrainLineChanged = turn;
+	useTerrainDetailTexture ^= true;
 	#endif
 	return 1;
 }
@@ -2743,7 +2792,7 @@ int MissionInterfaceManager::drawShadows()
 	#endif
 	return 1;
 }
-int MissionInterfaceManager::changeLighting()
+int MissionInterfaceManager::showLOSGrid()
 {
 	#ifndef FINAL
 	drawLOSGrid ^= true;
@@ -2968,7 +3017,7 @@ void MissionInterfaceManager::render (void)
 			gos_DrawLines(&vertices[3],2);
 		}
 
-		if ( userInput->getKeyDown( WAYPOINT_KEY ) || controlGui.getMines() )
+		if ( userInput->getKeyDown( s_waypointKey ) || controlGui.getMines() )
 		{
 			Team* pTeam = Team::home;
 			for (long i=0;i<pTeam->getRosterSize();i++)
@@ -3044,7 +3093,7 @@ void MissionInterfaceManager::render (void)
 				Distance.Subtract(objPosition,eyePosition);
 				float eyeDistance = Distance.GetApproximateLength();
 				float scaleFactor = 0.0f;
-				scaleFactor = eyeDistance / (Camera::MaxClipDistance * 2.0f);
+				scaleFactor = eyeDistance / (Camera::maxClipDistance * 2.0f);
 				scaleFactor = 1.5f - scaleFactor;
 
 				userInput->setMouseScale(scaleFactor);			
@@ -3057,11 +3106,11 @@ void MissionInterfaceManager::render (void)
   /* 	if ( scenarioTime  < 7.0 )
    	{
    		long color = 0xff000000;
-   		if ( (prefs.resolution == 0 && Environment.screenWidth == 640)
-   		  || (prefs.resolution == 1 && Environment.screenWidth == 800)
-   		  || (prefs.resolution == 2 && Environment.screenWidth == 1024)
-   		  || (prefs.resolution == 3 && Environment.screenWidth == 1280)
-   		  ||(prefs.resolution == 4 && Environment.screenWidth == 1600))
+   		if ( (g_userPreferences.resolution == 0 && Environment.screenWidth == 640)
+   		  || (g_userPreferences.resolution == 1 && Environment.screenWidth == 800)
+   		  || (g_userPreferences.resolution == 2 && Environment.screenWidth == 1024)
+   		  || (g_userPreferences.resolution == 3 && Environment.screenWidth == 1280)
+   		  ||(g_userPreferences.resolution == 4 && Environment.screenWidth == 1600))
    		{
    			color = interpolateColor( 0xff000000, 0x00000000, (scenarioTime-swapTime)/(7.0-swapTime) );
    		}
@@ -3304,8 +3353,8 @@ bool MissionInterfaceManager::moveCameraAround( bool lineOfSight, bool passable,
 	bool bRetVal = 0;
 	bool middleClicked = (!userInput->isLeftDrag() && !userInput->isRightDrag() && userInput->isMiddleClick());
 
-	if ( (useLeftRightMouseProfile && ((userInput->isLeftClick() && userInput->getKeyDown(KEY_T)) || userInput->isLeftDoubleClick()) && target) 
-		|| (!useLeftRightMouseProfile && userInput->isRightClick() && !userInput->isRightDrag() && target) && !bGui)
+	if ( (g_userPreferences.leftRightMouseProfile && ((userInput->isLeftClick() && userInput->getKeyDown(KEY_T)) || userInput->isLeftDoubleClick()) && target) 
+		|| (!g_userPreferences.leftRightMouseProfile && userInput->isRightClick() && !userInput->isRightDrag() && target) && !bGui)
 	{
 		if (eye)
 			((GameCamera *)eye)->setTarget(target);
@@ -3360,12 +3409,12 @@ bool MissionInterfaceManager::moveCameraAround( bool lineOfSight, bool passable,
  	
 	if (attilaRZAxis < -ATTILA_THRESHOLD)
 	{
-		eye->rotateLeft(rotationInc * fabs(attilaRZAxis) * frameLength * ATTILA_ROTATION_FACTOR);
+		eye->rotateLeft(rotationInc * fabs(attilaRZAxis) * g_deltaTime * ATTILA_ROTATION_FACTOR);
 	}
 	
 	if (attilaRZAxis > ATTILA_THRESHOLD)
 	{
-		eye->rotateRight(rotationInc * fabs(attilaRZAxis) * frameLength * ATTILA_ROTATION_FACTOR);
+		eye->rotateRight(rotationInc * fabs(attilaRZAxis) * g_deltaTime * ATTILA_ROTATION_FACTOR);
 	}
 	
  	//------------------------------------------------
@@ -3650,8 +3699,7 @@ bool MissionInterfaceManager::canAddVehicle( const Stuff::Vector3D& pos )
 	{
 		if ( Team::home->teamLineOfSight(pos, 0.0f) )
 		{
-			if ( GameMap->getPassable( pos )
-				&& (!land->getWater((Stuff::Vector3D)pos) ) )
+			if ( GameMap->getPassable(pos) && !land->getWater(const_cast<Stuff::Vector3D&>(pos)) )
 				return true;
 			else 
 				return false;
@@ -3698,7 +3746,7 @@ long MissionInterfaceManager::makeTargetCursor( bool lineOfSight, long moverCoun
 	if ( !moverCount && !nonMoverCount )
 		currentCursor = mState_NORMAL;
 
-	if ( ( userInput->getKeyDown( WAYPOINT_KEY ) ) )
+	if ( ( userInput->getKeyDown( s_waypointKey ) ) )
 	{
 		currentCursor = mState_DONT;
 		return currentCursor;
@@ -3850,7 +3898,7 @@ long MissionInterfaceManager::makeTargetCursor( bool lineOfSight, long moverCoun
 			if ( target->getObjectType()->getSubType() == BUILDING_SUBTYPE_LANDBRIDGE )
 			{
 				//Check if forcing fire or fire from current.  If so, shoot away.
-				if ( gos_GetKeyStatus( (gosEnum_KeyIndex)commands[FORCE_FIRE_KEY].key ) == KEY_HELD || 
+				if ( gos_GetKeyStatus( (gosEnum_KeyIndex)s_commands[FORCE_FIRE_KEY].key ) == KEY_HELD || 
 					 controlGui.getFireFromCurrentPos() )
 				{
 					target->setTargeted(true);
@@ -3890,7 +3938,7 @@ long MissionInterfaceManager::makeTargetCursor( bool lineOfSight, long moverCoun
 			}
 			else if ( targetTeam && !controlGui.getGuard() &&
 				Team::home->isFriendly( targetTeam ) && 				
-				gos_GetKeyStatus( (gosEnum_KeyIndex)commands[FORCE_FIRE_KEY].key ) != KEY_HELD // not forcing fire
+				gos_GetKeyStatus( (gosEnum_KeyIndex)s_commands[FORCE_FIRE_KEY].key ) != KEY_HELD // not forcing fire
 				&& controlGui.getCurrentRange() == FIRERANGE_OPTIMAL ) // range attacks now are force fire
 			{
 				return makeNoTargetCursor( false, lineOfSight, 0, 0, moverCount, nonMoverCount );
@@ -3918,7 +3966,7 @@ long MissionInterfaceManager::makeTargetCursor( bool lineOfSight, long moverCoun
 		if (target)
 			target->setTargeted(true);
 	}
-	else if ( gos_GetKeyStatus( (gosEnum_KeyIndex)commands[FORCE_FIRE_KEY].key ) == KEY_HELD
+	else if ( gos_GetKeyStatus( (gosEnum_KeyIndex)s_commands[FORCE_FIRE_KEY].key ) == KEY_HELD
 		|| ( controlGui.getCurrentRange() != FIRERANGE_OPTIMAL && controlGui.getCurrentRange() != FIRERANGE_CURRENT ) )
 	{
 		currentCursor = makeRangeCursor( lineOfSight );
@@ -3980,7 +4028,7 @@ long MissionInterfaceManager::makeNoTargetCursor( bool passable, bool lineOfSigh
 	if ( !moverCount )
 		cursorType = mState_NORMAL;
 
-	if ( gos_GetKeyStatus( (gosEnum_KeyIndex)commands[FORCE_FIRE_KEY].key ) == KEY_HELD // not forcing fire
+	if ( gos_GetKeyStatus( (gosEnum_KeyIndex)s_commands[FORCE_FIRE_KEY].key ) == KEY_HELD // not forcing fire
 				|| controlGui.getFireFromCurrentPos() )
 	{
 		return makeRangeCursor( lineOfSight );
@@ -4029,7 +4077,7 @@ long MissionInterfaceManager::makeNoTargetCursor( bool passable, bool lineOfSigh
 			cursorType = mState_NORMAL;
 
 	}
-	else if ( userInput->getKeyDown( WAYPOINT_KEY ) || controlGui.getMines() )
+	else if ( userInput->getKeyDown( s_waypointKey ) || controlGui.getMines() )
 	{
 		if ( controlGui.getMines() )
 		{
@@ -4151,7 +4199,7 @@ MoverPtr BringInReinforcement (long vehicleID, long rosterIndex, long commanderI
 	}
 	strcpy( data.pilotFileName, vehicleFile );
 	strcpy( data.brainFileName, "pbrain" );
-	data.controlType = 2;
+	data.controlType = CONTROL_AI;
 	data.controlDataType = 2;
 	data.rosterIndex = rosterIndex;
 	data.objNumber = vehicleID;
@@ -4162,9 +4210,9 @@ MoverPtr BringInReinforcement (long vehicleID, long rosterIndex, long commanderI
 	data.active = 1;
 	data.exists = exists;
 	data.capturable = 0;
-	data.baseColor = prefs.baseColor;
-	data.highlightColor1 = prefs.highlightColor;
-	data.highlightColor2 = prefs.highlightColor;
+	data.baseColor = g_userPreferences.baseColor;
+	data.highlightColor1 = g_userPreferences.highlightColor;
+	data.highlightColor2 = g_userPreferences.highlightColor;
 
 	if ( MPlayer )
 	{
@@ -4271,7 +4319,7 @@ void MissionInterfaceManager::beginVtol (long supportID, long commanderID, Stuff
 			vTol[commanderID] = new BldgAppearance;
 			vTol[commanderID]->init( appearanceType );
 			
-			if (!dustCloud[commanderID] && prefs.useNonWeaponEffects)
+			if (!dustCloud[commanderID] && g_userPreferences.useNonWeaponEffects)
 			{
 				if (strcmp(weaponEffects->GetEffectName(VTOL_DUST_CLOUD),"NONE") != 0)
 				{
@@ -4319,7 +4367,7 @@ void MissionInterfaceManager::beginVtol (long supportID, long commanderID, Stuff
 				mechToRecover[commanderID] = salvageTarget;
 			mechRecovered[commanderID] = false;	//Need to know when mech is done so Karnov can fly away.
 			
-			if (!dustCloud[commanderID] && prefs.useNonWeaponEffects)
+			if (!dustCloud[commanderID] && g_userPreferences.useNonWeaponEffects)
 			{
 				if (strcmp(weaponEffects->GetEffectName(KARNOV_DUST_CLOUD),"NONE") != 0)
 				{
@@ -4681,7 +4729,7 @@ int MissionInterfaceManager::infoButtonReleased()
 }
 int MissionInterfaceManager::energyWeapons()
 {
-	if ( gos_GetKeyStatus( (gosEnum_KeyIndex)(commands[ENERGY_WEAPON_INDEX].key & 0x0000ffff) ) == KEY_HELD )
+	if ( gos_GetKeyStatus( (gosEnum_KeyIndex)(s_commands[ENERGY_WEAPON_INDEX].key & 0x0000ffff) ) == KEY_HELD )
 		bEnergyWeapons = 1;	
 	else
 		bEnergyWeapons = 0;
@@ -4910,25 +4958,13 @@ int MissionInterfaceManager::toggleDebugWins() {
 	return(1);
 }
 
-extern bool ShowMovers;
+extern bool g_dbgShowMovers;
 int MissionInterfaceManager::showMovers() {
 
 	#ifndef FINAL
 	static double lastTime = 0.0;
 	if ((lastTime + 0.5) < gos_GetElapsedTime()) {
-		ShowMovers = !ShowMovers;
-		lastTime = gos_GetElapsedTime();
-	}
-	#endif
-	return(1);
-}
-
-int MissionInterfaceManager::cullPathAreas () {
-
-	#ifndef FINAL
-	static double lastTime = 0.0;
-	if ((lastTime + 0.5) < gos_GetElapsedTime()) {
-		CullPathAreas = !CullPathAreas;
+		g_dbgShowMovers = !g_dbgShowMovers;
 		lastTime = gos_GetElapsedTime();
 	}
 	#endif
@@ -4983,7 +5019,7 @@ int MissionInterfaceManager::teleport() {
 
 extern GameLog*	LRMoveLog;
 
-extern bool quitGame;
+extern bool g_quitGame;
 
 int MissionInterfaceManager::globalMapLog () {
 
@@ -4994,7 +5030,7 @@ int MissionInterfaceManager::globalMapLog () {
 		if ((lastTime + 0.5) < gos_GetElapsedTime()) 
 		{
 			//MPlayer->leaveSession();
-			//quitGame = true;
+			//g_quitGame = true;
 			//GlobalMap::toggleLog();
 			lastTime = gos_GetElapsedTime();
 		}
@@ -5046,11 +5082,11 @@ int MissionInterfaceManager::enemyGoalPlan() {
 	#ifndef FINAL
 	static double lastTime = 0.0;
 	if ((lastTime + 0.5) < gos_GetElapsedTime()) {
-		EnemiesGoalPlan = !EnemiesGoalPlan;
+		g_dbgGoalPlanEnemy = !g_dbgGoalPlanEnemy;
 		for (long i = 0; i < ObjectManager->getNumMovers(); i++) {
 			Mover* mover = ObjectManager->getMover(i);
 			if (mover->getTeam() != Team::home) {
-				((MoverPtr)mover)->getPilot()->setUseGoalPlan(EnemiesGoalPlan);
+				((MoverPtr)mover)->getPilot()->setUseGoalPlan(g_dbgGoalPlanEnemy);
 				((MoverPtr)mover)->getPilot()->setMainGoal(GOAL_ACTION_NONE, NULL, NULL, -1.0);
 			}
 		}
@@ -5260,86 +5296,167 @@ bool MissionInterfaceManager::selectionIsHelicopters( )
 int MissionInterfaceManager::saveHotKeys( FitIniFile& file )
 {
 	file.writeBlock( "Keyboard" );
-	for ( int i = 0; i < MAX_COMMAND; i++ )
+	
+	file.writeIdLong("WayPointKey", s_waypointKey);
+	for (int i = 0; i < s_numCommands; i++)
 	{
-		char header[256];
-		sprintf( header, "Key%ld", i );
-		file.writeIdLong( header, commands[i].key );		
-	}
+		if (s_commands[i].hotKeyDescriptionText == -1) // MCHD CHANGE (02/14/2015): If the user can't change it, don't save it
+			continue;
 
-	file.writeIdLong( "WayPointKey", WAYPOINT_KEY );
-	file.writeIdBoolean( "UseLeftRightMouseProfile", useLeftRightMouseProfile );
+		file.writeIdLong( s_commands[i].name, s_commands[i].key );	// MCHD CHANGE (02/14/2015): Save the names	
+	}
 
 	return 0;
 
 }
 int MissionInterfaceManager::loadHotKeys( FitIniFile& file )
 {
-	if ( OldKeys[0] == -1 )
+	static bool defaultKeysLoaded = false;
+	if (defaultKeysLoaded == false)
 	{
-		for ( int i = 0; i < MAX_COMMAND; i++ )
+		for ( int i = 0; i < s_numCommands; i++ )
 		{
-			OldKeys[i] = commands[i].key;		
+			s_defaultKeys[i] = s_commands[i].key;		
 		}
+		defaultKeysLoaded = true;
 	}
 
 	if ( NO_ERR == file.seekBlock( "Keyboard" ) )
 	{
-		for ( int i = 0; i < MAX_COMMAND; i++ )
+		long tmp;
+		file.readIdLong("WayPointKey", tmp);
+		s_waypointKey = gosEnum_KeyIndex(tmp);
+
+		bool warning = false;
+		for (int i = 0; i < s_numCommands; i++)
 		{
-			char header[256];
-			sprintf( header, "Key%ld", i );
-			file.readIdLong( header, commands[i].key );		
+			if (s_commands[i].hotKeyDescriptionText == -1) // MCHD CHANGE (02/14/2015): Don't try to read in permanently bound commands
+				continue;
+
+			if (file.readIdLong(s_commands[i].name, s_commands[i].key) == VARIABLE_NOT_FOUND)
+				s_commands[i].key = s_defaultKeys[i];
+
+#ifndef FINAL
+			// A retail user could have over-written debug commands; reset to original bindings if so
+			bool reset = false;
+			int resetIndex = 0;
+			for (int j = 0; j < s_numDebugCommands; ++j)
+			{
+				if (s_commands[i].key == s_debugCommands[j].key)
+				{
+					s_commands[i].key = s_defaultKeys[i];
+					warning = reset = true;
+					resetIndex = i;
+				}
+			}
+
+			// If a command was reset, make sure it's not now in conflict with another regular command
+			// If it is, reset that to its default as well and keep doing that until no more keys are in conflict
+			while(reset)
+			{
+				reset = false;
+				for (int j = 0; j < s_numCommands; ++j)
+				{
+					if (s_commands[j].key == s_commands[resetIndex].key)
+					{
+						s_commands[j].key = s_defaultKeys[j];
+						reset = true;
+						resetIndex = j;
+					}
+				}
+			}
+#endif
 		}
 
-		long tmp;
-		file.readIdLong( "WayPointKey", tmp );
-		WAYPOINT_KEY = gosEnum_KeyIndex( tmp );
+#ifndef FINAL
+		if (warning)
+		{
+			// Error message
+			PAUSE(("Some key bindings were overwritten by debug commands and were reverted to their original binding."));
+		}
+#endif
 
-		file.readIdBoolean( "UseLeftRightMouseProfile", useLeftRightMouseProfile );
 		return 0;
 	}
 
-	
 	return -1;
 }
 
-int MissionInterfaceManager::setHotKey( int whichCommand, gosEnum_KeyIndex newKey, bool bShift, bool bControl, bool bAlt )
+// Returns whether or not this key is valid for re-binding 
+// (false == okay to re-bind; true == permanently bound)
+bool MissionInterfaceManager::isHotKeyLocked(long _key)
 {
-	gosASSERT( whichCommand < MAX_COMMAND );
-	long oldKey = commands[whichCommand].key;
+	// Reserved for groups
+	if ((_key & 0xffff) >= KEY_0 && (_key & 0xffff) <= KEY_9)
+	{
+		return true;
+	}
+	// Non-viewable commands should not be changed in the background
+	for (int i = 0; i < MissionInterfaceManager::s_numCommands; ++i)
+	{
+		if (MissionInterfaceManager::s_commands[i].hotKeyDescriptionText == -1)
+		{
+			if (_key == MissionInterfaceManager::s_commands[i].key)
+			{
+				return true;
+			}
+		}
+	}
+#ifndef FINAL
+	for (int i = 0; i < MissionInterfaceManager::s_numDebugCommands; ++i)
+	{
+		if (_key == MissionInterfaceManager::s_debugCommands[i].key)
+		{
+			return true;
+		}
+	}
+#endif
+
+	return false;
+}
+
+int MissionInterfaceManager::setHotKey(int whichCommand, gosEnum_KeyIndex newKey, bool bShift, bool bControl, bool bAlt)
+{
+	gosASSERT(whichCommand < s_numCommands);
+	long oldKey = s_commands[whichCommand].key;
 	long key = newKey;
-	if ( bShift )
+	if (bShift)
 		key |= SHIFT;
-	if ( bControl )
+	if (bControl)
 		key |= CTRL;
-	if ( bAlt )
+	if (bAlt)
 		key |= ALT;
 
-	if ( commands[whichCommand].key & WAYPT )
+	if (s_commands[whichCommand].key & WAYPT)
+	{
 		key |= WAYPT;
+	}
 	else
 	{
-		// change corresponding waypoint keys
-		for ( int i = 0; i < MAX_COMMAND; i++ )
+		if (key != oldKey)
 		{
-			if ( ((commands[i].key & 0x0000ffff) == oldKey)  && (commands[i].key & WAYPT) )
+			// change corresponding waypoint keys
+			for (int i = 0; i < s_numCommands; i++)
 			{
-				commands[i].key = key | WAYPT;
+				long currentKey = s_commands[i].key;
+				if (((currentKey & 0x0000ffff) == oldKey) && (currentKey & WAYPT))
+				{
+					s_commands[i].key = key | WAYPT;
+				}
 			}
 		}
 	}
 
-	commands[whichCommand].key = key;
+	s_commands[whichCommand].key = key;
 
 	return 0;
 }
 
 int MissionInterfaceManager::getHotKey( int whichCommand, gosEnum_KeyIndex& newKey, bool& bShift, bool& bControl, bool& bAlt )
 {
-	gosASSERT( whichCommand < MAX_COMMAND );
+	gosASSERT( whichCommand < s_numCommands );
 	
-	long key = commands[whichCommand].key;
+	long key = s_commands[whichCommand].key;
 
 	if ( key & SHIFT )
 		bShift = true;
@@ -5358,27 +5475,27 @@ int MissionInterfaceManager::getHotKey( int whichCommand, gosEnum_KeyIndex& newK
 
 int MissionInterfaceManager::setWayPointKey( gosEnum_KeyIndex key )
 {
-	WAYPOINT_KEY = key;
+	s_waypointKey = key;
 
 	return 0;
 }
 
 void MissionInterfaceManager::setAOEStyle()
 {
-	useLeftRightMouseProfile = true;
+	g_userPreferences.leftRightMouseProfile = true;
 }
 void MissionInterfaceManager::setMCStyle()
 {
-	useLeftRightMouseProfile = false;
+	g_userPreferences.leftRightMouseProfile = false;
 }
 
 bool MissionInterfaceManager::isAOEStyle()
 {
-	return useLeftRightMouseProfile == true;
+	return g_userPreferences.leftRightMouseProfile == true;
 }
 bool MissionInterfaceManager::isMCStyle()
 {
-	return useLeftRightMouseProfile == false;
+	return g_userPreferences.leftRightMouseProfile == false;
 }
 
 void MissionInterfaceManager::doEject( GameObject* who )
@@ -5395,7 +5512,7 @@ void MissionInterfaceManager::doEject( GameObject* who )
 
 bool MissionInterfaceManager::hotKeyIsPressed( int whichCommand )
 {
-	long key = commands[whichCommand].key;
+	long key = s_commands[whichCommand].key;
 	bool bShift = 0;
 	bool bControl = 0;
 	bool bAlt = 0;
@@ -5450,7 +5567,7 @@ int MissionInterfaceManager::toggleHotKeys()
 	bDrawHotKeys ^= 1;
 	if ( bDrawHotKeys )
 	{
-		keyboardRef->reseed( commands );
+		keyboardRef->reseed( s_commands );
 
 		if ( !isPaused() )
 			togglePauseWithoutMenu();
@@ -5744,7 +5861,7 @@ void MissionInterfaceManager::Load (FitIniFilePtr file)
 		{
 			if (vehicleID[vtolNum] != 147)		//NOT a recovery vehicle.  Standard VTOL
 			{
-				if (!dustCloud[commanderID] && prefs.useNonWeaponEffects)
+				if (!dustCloud[commanderID] && g_userPreferences.useNonWeaponEffects)
 				{
 					if (strcmp(weaponEffects->GetEffectName(VTOL_DUST_CLOUD),"NONE") != 0)
 					{
@@ -5769,7 +5886,7 @@ void MissionInterfaceManager::Load (FitIniFilePtr file)
 			{
 				mechRecovered[commanderID] = false;	//Need to know when mech is done so Karnov can fly away.
 
-				if (!dustCloud[commanderID] && prefs.useNonWeaponEffects)
+				if (!dustCloud[commanderID] && g_userPreferences.useNonWeaponEffects)
 				{
 					if (strcmp(weaponEffects->GetEffectName(KARNOV_DUST_CLOUD),"NONE") != 0)
 					{
@@ -5974,7 +6091,7 @@ void MissionInterfaceManager::updateRollovers()
 			case mState_CURPOS_ATTACK:
 			case mState_CURPOS_ATTACK_LOS:
 				helpTextID = 0;
-				if ( gos_GetKeyStatus( (gosEnum_KeyIndex)commands[FORCE_FIRE_KEY].key ) == KEY_HELD )
+				if ( gos_GetKeyStatus( (gosEnum_KeyIndex)s_commands[FORCE_FIRE_KEY].key ) == KEY_HELD )
 					controlGui.setRolloverHelpText(  IDS_FORCE_FIRE_CURSOR_LEFT_HELP );
 				else
 					controlGui.setRolloverHelpText( IDS_FIRE_FROM_CURRENT_POSITION_CURSOR_LEFT_HELP );

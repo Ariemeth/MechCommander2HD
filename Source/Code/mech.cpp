@@ -143,7 +143,6 @@ extern float				MaxVisualRadius;
 extern unsigned long		NextIdNumber;
 extern float				MetersPerCell;
 extern long					AttitudeEffectOnMovePath[NUM_ATTITUDES][3];
-extern bool					useSound;
 extern bool					friendlyDestroyed;
 extern bool					enemyDestroyed;
 extern TeamPtr				homeTeam;
@@ -491,7 +490,7 @@ extern DebuggerPtr debugger;
 UserFile* MechDebugFile = NULL;
 #endif
 
-extern bool ShowMovers;
+extern bool g_dbgShowMovers;
 extern void LogWeaponFireChunk (WeaponFireChunkPtr chunk, GameObjectPtr attacker, GameObjectPtr target);
 
 //**********************************************************************************
@@ -3565,16 +3564,16 @@ void BattleMech::updateHeat (void)
 
 	if (!isDisabled()) {
 		if (((MechActor*)appearance)->currentGestureId == GestureGetUp)
-			heatChange += (StandUpHeat * frameLength);
+			heatChange += (StandUpHeat * g_deltaTime);
 		else
-			heatChange += (BodyStateHeat[getBodyState()] * frameLength);
+			heatChange += (BodyStateHeat[getBodyState()] * g_deltaTime);
 
 		//----------------------------------------
 		// Engine damage may cause heat buildup...
 		long numEngineHits = getInventoryDamage(engine);
 		if (numEngineHits > 2)
 			numEngineHits = 2;
-		heatChange += (numEngineHits * 0.6 * frameLength);
+		heatChange += (numEngineHits * 0.6 * g_deltaTime);
 	}
 
 	//--------------------------------------------
@@ -3598,13 +3597,13 @@ void BattleMech::updateHeat (void)
 		if (inventory[weaponIndex].readyTime > scenarioTime) {
 			//------------------------------------------
 			// Weapon is recycling, so apply the heat...
-			heatChange += (inventory[weaponIndex].heatPerSec * frameLength);
+			heatChange += (inventory[weaponIndex].heatPerSec * g_deltaTime);
 		}
 
 	//-------------------------------------------------------------------
 	// Now, apply the dissipation amount (never allowing heat to go below
 	// zero, of course)...
-	heatChange -= (heatDissipation * frameLength * heatSinkEfficiency);
+	heatChange -= (heatDissipation * g_deltaTime * heatSinkEfficiency);
 
 	heat += heatChange;
 	if (heat < 0.0)
@@ -3615,9 +3614,9 @@ void BattleMech::updateHeat (void)
 	if (!isDisabled()) {
 		if (inventory[lifeSupport].disabled) {
 			if (heatIndex >= HeatInjuryTable[1][0])
-				pilot->injure(HeatInjuryTable[1][1] * frameLength, true);
+				pilot->injure(HeatInjuryTable[1][1] * g_deltaTime, true);
 			else if (heatIndex >= HeatInjuryTable[0][0])
-				pilot->injure(HeatInjuryTable[0][1] * frameLength, true);
+				pilot->injure(HeatInjuryTable[0][1] * g_deltaTime, true);
 		}
 	}
 
@@ -3827,8 +3826,8 @@ bool BattleMech::updateJump (void) {
 		{
 			//-----------------------------------------------
 			// We can and will shift facing to destination...
-			turnRate = -relFacing * frameLength;
-			float maxRate = tonnageTurnRate[long(tonnage)] * frameLength;
+			turnRate = -relFacing * g_deltaTime;
+			float maxRate = tonnageTurnRate[long(tonnage)] * g_deltaTime;
 			if (turnRate < 0.0f)
 				maxRate = -maxRate;
 
@@ -3926,7 +3925,7 @@ bool BattleMech::pivotTo (void) {
 				float relFacingToWayPt = relFacingTo(wayPt);
 				if ((relFacingToWayPt < -5.0) || (relFacingToWayPt > 5.0)) {
 					float turnRate = -relFacingToWayPt;
-					float maxRate = tonnageTurnRate[long(tonnage)] * frameLength;
+					float maxRate = tonnageTurnRate[long(tonnage)] * g_deltaTime;
 					if (turnRate < 0.0f)
 						maxRate = -maxRate;
 					if (fabs(turnRate) > maxRate) {
@@ -3989,7 +3988,7 @@ bool BattleMech::pivotTo (void) {
 					}
 					
 					//------------------------------------------------------------------------
-					float maxRate = tonnageTurnRate[long(tonnage)] * frameLength;
+					float maxRate = tonnageTurnRate[long(tonnage)] * g_deltaTime;
 					if (fabs(turnRate) > maxRate) {
 						if (turnRate > 0)
 							turnRate = maxRate;
@@ -4037,7 +4036,7 @@ bool BattleMech::pivotTo (void) {
 			float fireArc = getFireArc();
 			if ((relFacingToTarget < -fireArc) || (relFacingToTarget > fireArc)) {
 				float turnRate = -relFacingToTarget;
-				float maxRate = tonnageTurnRate[long(tonnage)] * frameLength;
+				float maxRate = tonnageTurnRate[long(tonnage)] * g_deltaTime;
 				if (fabs(turnRate) > maxRate) {
 					if (turnRate > 0)
 						turnRate = maxRate;
@@ -4284,7 +4283,7 @@ bool BattleMech::updateMovePath (float& newRotate, char& newThrottleSetting, lon
 				//Calculate how far the mech will move this frame.
 				// Vel is in m/s
 				float vel = appearance->getVelocityMagnitude();
-				float distanceThisFrame = vel * frameLength;
+				float distanceThisFrame = vel * g_deltaTime;
 
 				float cushion = Mover::marginOfError[0];
 				if (path->curStep == (path->numSteps - 1))
@@ -4368,7 +4367,7 @@ bool BattleMech::updateMovePath (float& newRotate, char& newThrottleSetting, lon
 								// -fs
 								
 								newRotate = -relFacingToWayPt; 								
-								float maxRate = tonnageTurnRate[long(tonnage)] * frameLength;
+								float maxRate = tonnageTurnRate[long(tonnage)] * g_deltaTime;
 								if (fabs(newRotate) > maxRate) 
 								{
 									if (fabs(newRotate) < 50.0f)
@@ -4446,7 +4445,7 @@ bool BattleMech::updateMovePath (float& newRotate, char& newThrottleSetting, lon
 							// Don't know that we need to force walk to turn!!
 							// -fs
 								
-							float maxRate = tonnageTurnRate[long(tonnage)] * frameLength;
+							float maxRate = tonnageTurnRate[long(tonnage)] * g_deltaTime;
 							if (fabs(newRotate) > maxRate) 
 							{
 								if (fabs(newRotate) < 50.0f)
@@ -4612,7 +4611,7 @@ void BattleMech::updateTorso (float newRotatePerSec)
 		rotateValues[5] = turnRate;
 		//-----------------------------------------------
 		// We can and will shift facing to destination...
-		float maxRate = (float)dynamics.max.mech.torsoYawRate * frameLength;
+		float maxRate = (float)dynamics.max.mech.torsoYawRate * g_deltaTime;
 		if (fabs(turnRate) > maxRate) {
 			if (turnRate < 0.0)
 				turnRate = -maxRate;
@@ -4800,7 +4799,7 @@ void BattleMech::updateMovement (void) {
 		shutDownThisFrame = false;
 		setStatus(OBJECT_STATUS_NORMAL);
 		control.settings.mech.throttle = maxThrottle;
-		if (useSound && !MPlayer && Team::home->isEnemy(getTeam()) && (getMoveType() != MOVETYPE_AIR))
+		if (!MPlayer && Team::home->isEnemy(getTeam()) && (getMoveType() != MOVETYPE_AIR))
 			soundSystem->playBettySample(BETTY_POWERUP);
 		sensorSystem->setShutdown(false);
 		return;
@@ -4963,7 +4962,7 @@ bool BattleMech::netUpdateMovePath (float& newRotate, char& newThrottleSetting, 
 								// Don't know that we need to force walk to turn!!
 								// -fs
 								newRotate = -relFacingToWayPt;
-								float maxRate = tonnageTurnRate[long(tonnage)] * frameLength;
+								float maxRate = tonnageTurnRate[long(tonnage)] * g_deltaTime;
 								if (fabs(newRotate) > maxRate) {
 									if (newRotate > 0.0)
 										newRotate = maxRate;
@@ -5028,9 +5027,9 @@ bool BattleMech::netUpdateMovePath (float& newRotate, char& newThrottleSetting, 
 								// We can and will shift facing to destination...
 								float maxRate = dyn->maxMechYawRate;
 								if (relFacingToWayPt < 0.0)
-									newTurnRate = maxRate*frameLength;
+									newTurnRate = maxRate*g_deltaTime;
 								else
-									newTurnRate = -maxRate*frameLength;
+									newTurnRate = -maxRate*g_deltaTime;
 								
 								relFacingToWayPt = -(relFacingToWayPt + 180.0);
 								if (relFacingToWayPt > 0.0)
@@ -5057,7 +5056,7 @@ bool BattleMech::netUpdateMovePath (float& newRotate, char& newThrottleSetting, 
 								newRotate = -(relFacingToWayPt + 180.0);
 							else
 								newRotate = -(relFacingToWayPt - 180.0);
-							float maxRate = tonnageTurnRate[long(tonnage)] * frameLength;
+							float maxRate = tonnageTurnRate[long(tonnage)] * g_deltaTime;
 							if (fabs(newRotate) > maxRate) {
 								if (newRotate > 0.0)
 									newRotate = maxRate;
@@ -5372,7 +5371,7 @@ bool BattleMech::crashAvoidanceSystem (void) {
 	velocity.z = 0.0;
 
 	Stuff::Vector3D relVelocity = velocity;
-	relVelocity *= frameLength;
+	relVelocity *= g_deltaTime;
 	relVelocity *= worldUnitsPerMeter;
 
 	Stuff::Vector3D newPosition;
@@ -5502,16 +5501,16 @@ void BattleMech::updatePlayerControl (void) {
 	//-----------------------------------------------------------------
 	// Poll the joystick and keyboards here so player can control mech.
 	if (userInput->getKeyDown(KEY_T))
-		control.settings.mech.rotate = tonnageTurnRate[long(tonnage)] / 4.0 * frameLength;
+		control.settings.mech.rotate = tonnageTurnRate[long(tonnage)] / 4.0 * g_deltaTime;
 
 	if (userInput->getKeyDown(KEY_Y))
-		control.settings.mech.rotate = -tonnageTurnRate[long(tonnage)] / 4.0 * frameLength;
+		control.settings.mech.rotate = -tonnageTurnRate[long(tonnage)] / 4.0 * g_deltaTime;
 
 	if (userInput->getKeyDown(KEY_DIVIDE))
-		control.settings.mech.rotateTorso = dynamics.max.mech.torsoYawRate / 4.0 * frameLength;
+		control.settings.mech.rotateTorso = dynamics.max.mech.torsoYawRate / 4.0 * g_deltaTime;
 
 	if (userInput->getKeyDown(KEY_MULTIPLY))
-		control.settings.mech.rotateTorso = -dynamics.max.mech.torsoYawRate / 4.0 * frameLength;
+		control.settings.mech.rotateTorso = -dynamics.max.mech.torsoYawRate / 4.0 * g_deltaTime;
 
 	if (userInput->getKeyDown(KEY_NEXT)) 
 	{
@@ -5529,16 +5528,16 @@ void BattleMech::updatePlayerControl (void) {
 	}
 
 	if (userInput->getKeyDown(KEY_U))
-		control.settings.mech.rotateLeftArm = tonnageTurnRate[long(tonnage)] / 4.0 * frameLength;
+		control.settings.mech.rotateLeftArm = tonnageTurnRate[long(tonnage)] / 4.0 * g_deltaTime;
 
 	if (userInput->getKeyDown(KEY_I))
-		control.settings.mech.rotateLeftArm = -tonnageTurnRate[long(tonnage)] / 4.0 * frameLength;
+		control.settings.mech.rotateLeftArm = -tonnageTurnRate[long(tonnage)] / 4.0 * g_deltaTime;
 
 	if (userInput->getKeyDown(KEY_O))
-		control.settings.mech.rotateRightArm = tonnageTurnRate[long(tonnage)] / 4.0 * frameLength;
+		control.settings.mech.rotateRightArm = tonnageTurnRate[long(tonnage)] / 4.0 * g_deltaTime;
 
 	if (userInput->getKeyDown(KEY_P))
-		control.settings.mech.rotateRightArm = -tonnageTurnRate[long(tonnage)] / 4.0 * frameLength;
+		control.settings.mech.rotateRightArm = -tonnageTurnRate[long(tonnage)] / 4.0 * g_deltaTime;
 
 	if (userInput->getKeyDown(KEY_1))
 		appearance->setGestureGoal(0);
@@ -5915,7 +5914,7 @@ long BattleMech::update (void)
 			//}
 	
 			//--------------------------------------------
-			float velMult = velMag * velFactor * frameLength;
+			float velMult = velMag * velFactor * g_deltaTime;
 			if (velMult > DistanceToWaypoint)
 				velMult = DistanceToWaypoint;
 			vel *= velMult * worldUnitsPerMeter;
@@ -5931,7 +5930,7 @@ long BattleMech::update (void)
 		{
 			//Just move mech in direction of jump.
 			vel = appearance->getVelocity();
-			vel *= frameLength;
+			vel *= g_deltaTime;
 			setVelocity(vel);
 			
 			newPosition.Add(position, vel);
@@ -6047,7 +6046,7 @@ long BattleMech::update (void)
 		// Create vector for velocity
 		Stuff::Vector3D vel = getRotationVector();
 		vel *= velMag * worldUnitsPerMeter;
-		vel *= frameLength;
+		vel *= g_deltaTime;
 		setVelocity(vel);
 
 		Stuff::Vector3D newPosition;
@@ -6073,7 +6072,7 @@ long BattleMech::update (void)
 
 		if (!startDisabled)
 		{
-			timeLeft -= frameLength;
+			timeLeft -= g_deltaTime;
 			if ((timeLeft < 1.0f) && !exploding)
 			{
 				//-------------------------------------------------------
@@ -6113,7 +6112,7 @@ long BattleMech::update (void)
 		// Create vector for velocity
 		Stuff::Vector3D vel = getRotationVector();
 		vel *= velMag * worldUnitsPerMeter;
-		vel *= frameLength;
+		vel *= g_deltaTime;
 		setVelocity(vel);
 
 		Stuff::Vector3D newPosition;
@@ -6149,7 +6148,7 @@ long BattleMech::update (void)
 
 		if (fallen)
 		{
-			timeLeft -= frameLength;
+			timeLeft -= g_deltaTime;
 			if ((timeLeft < 0.4) && !exploding)
 			{
 				//-------------------------------------------------------
@@ -6247,11 +6246,11 @@ long BattleMech::update (void)
 		//---------------------------------------------------------------
 		conStat = getContactStatus(Team::home->getId(), true);
 
-		if ((conStat == CONTACT_VISUAL) || isDestroyed() || isDisabled() || ShowMovers || (MPlayer && MPlayer->allUnitsDestroyed[MPlayer->commanderID]))
+		if ((conStat == CONTACT_VISUAL) || isDestroyed() || isDisabled() || g_dbgShowMovers || (MPlayer && MPlayer->allUnitsDestroyed[MPlayer->commanderID]))
 		{
 			if (alphaValue != 0xff)
 			{
-				fadeTime += frameLength;
+				fadeTime += g_deltaTime;
 				if (fadeTime > ContactFadeTime)
 				{
 					fadeTime = ContactFadeTime;
@@ -6272,7 +6271,7 @@ long BattleMech::update (void)
 			if (alphaValue != 0x0)
 			{
 				//We are fading.  Move it down.
-				fadeTime -= frameLength;
+				fadeTime -= g_deltaTime;
 				if (fadeTime < 0.0f)
 				{
 					fadeTime = 0.0f;
@@ -6358,7 +6357,7 @@ void BattleMech::render (void)
 			// Sensor contact is now same as during update.
 			long cStat = conStat;
 	
-			if ((cStat == CONTACT_VISUAL) || isDestroyed() || isDisabled() || ShowMovers || (MPlayer && MPlayer->allUnitsDestroyed[MPlayer->commanderID]))
+			if ((cStat == CONTACT_VISUAL) || isDestroyed() || isDisabled() || g_dbgShowMovers || (MPlayer && MPlayer->allUnitsDestroyed[MPlayer->commanderID]))
 			{
 				float barStatus = getTotalEffectiveness();
 				
@@ -7232,8 +7231,6 @@ long BattleMech::handleStatusChunk (long updateAge, unsigned long chunk) {
 
 //---------------------------------------------------------------------------
 
-#pragma optimize("",off)
-
 long BattleMech::buildMoveChunk (void) {
 
 	moveChunk.init();
@@ -7300,8 +7297,6 @@ long BattleMech::handleMoveChunk (unsigned long chunk) {
 
 	return(NO_ERR);
 }
-
-#pragma optimize("",on)
 
 //---------------------------------------------------------------------------
 

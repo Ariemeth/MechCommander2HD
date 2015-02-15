@@ -96,7 +96,7 @@ extern long tileCacheHits;
 extern long tileCacheMiss;
 
 bool drawCameraCircle = FALSE;
-extern bool gamePaused;
+extern bool g_gamePaused;
 extern bool gameAsked;
 MemoryPtr pauseShape = NULL;
 MemoryPtr askedShape = NULL;
@@ -124,10 +124,10 @@ float Camera::AltitudeTight = 800.0f;
 
 float Camera::globalScaleFactor = 1.0;
 
-float Camera::MaxClipDistance	= 4000.0f;
-float Camera::MinHazeDistance	= 3000.0f;
+float Camera::maxClipDistance	= 4000.0f;
+float Camera::minHazeDistance	= 3000.0f;
 float Camera::HazeFactor	 	= 0.0f;
-float Camera::DistanceFactor	= 1.0f / (MaxClipDistance - MinHazeDistance);
+float Camera::DistanceFactor	= 1.0f / (maxClipDistance - minHazeDistance);
 float Camera::NearPlaneDistance = -400.0f;
 float Camera::FarPlaneDistance  = 61555.0f;
 
@@ -390,26 +390,26 @@ long Camera::init (FitIniFilePtr cameraFile )
 	//Replace with TGL
 	if ( !worldLights ) // only do the alloc once
 	{
-		worldLights = (TG_LightPtr *)systemHeap->Malloc(sizeof(TG_LightPtr) * MAX_LIGHTS_IN_WORLD);
+		worldLights = (TG_LightPtr *)g_systemHeap->Malloc(sizeof(TG_LightPtr) * MAX_LIGHTS_IN_WORLD);
 		memset(worldLights,0,sizeof(TG_LightPtr) * MAX_LIGHTS_IN_WORLD);
 		numLights = 2;
 
 		//---------------------------------------------------------
 		// First light is sun.
-		worldLights[0] = (TG_LightPtr)systemHeap->Malloc(sizeof(TG_Light));
+		worldLights[0] = (TG_LightPtr)g_systemHeap->Malloc(sizeof(TG_Light));
 		worldLights[0]->init(TG_LIGHT_INFINITE);
 	}
 	
 	if ( !activeLights ) // only do the alloc once
 	{
-		activeLights = (TG_LightPtr *)systemHeap->Malloc(sizeof(TG_LightPtr) * MAX_LIGHTS_IN_WORLD);
+		activeLights = (TG_LightPtr *)g_systemHeap->Malloc(sizeof(TG_LightPtr) * MAX_LIGHTS_IN_WORLD);
 		memset(activeLights,0,sizeof(TG_LightPtr) * MAX_LIGHTS_IN_WORLD);
 		numActiveLights = 0;
 	}
 	
 	if ( !terrainLights ) // only do the alloc once
 	{
-		terrainLights = (TG_LightPtr *)systemHeap->Malloc(sizeof(TG_LightPtr) * MAX_LIGHTS_IN_WORLD);
+		terrainLights = (TG_LightPtr *)g_systemHeap->Malloc(sizeof(TG_LightPtr) * MAX_LIGHTS_IN_WORLD);
 		memset(terrainLights,0,sizeof(TG_LightPtr) * MAX_LIGHTS_IN_WORLD);
 		numTerrainLights = 0;
 	}
@@ -423,7 +423,7 @@ long Camera::init (FitIniFilePtr cameraFile )
 
 	//---------------------------------------------------------
 	// Second light is ambient.
-	worldLights[1] = (TG_LightPtr)systemHeap->Malloc(sizeof(TG_Light));
+	worldLights[1] = (TG_LightPtr)g_systemHeap->Malloc(sizeof(TG_Light));
 	worldLights[1]->init(TG_LIGHT_AMBIENT);
 
 	//---------------------
@@ -521,25 +521,25 @@ void Camera::destroy (void)
 {
 	if (worldLights)
 	{
-		systemHeap->Free(worldLights[1]);
+		g_systemHeap->Free(worldLights[1]);
 		worldLights[1] = NULL;
 
-		systemHeap->Free(worldLights[0]);
+		g_systemHeap->Free(worldLights[0]);
 		worldLights[0] = NULL;
 
-		systemHeap->Free(worldLights);
+		g_systemHeap->Free(worldLights);
 		worldLights = NULL;
 	}
 	
 	if (activeLights)
 	{
-		systemHeap->Free(activeLights);
+		g_systemHeap->Free(activeLights);
 		activeLights = NULL;
 	}
 	
 	if (terrainLights)
 	{
-		systemHeap->Free(terrainLights);
+		g_systemHeap->Free(terrainLights);
 		terrainLights = NULL;
 	}
 }
@@ -950,8 +950,8 @@ void Camera::updateGoalVelocity (void)
 		Stuff::Vector3D velDiff;
 		velDiff.Subtract(goalVelocity,velocity);
 		velDiff /= goalVelTime;
-		velDiff *= frameLength;
-		goalVelTime -= frameLength;
+		velDiff *= g_deltaTime;
+		goalVelTime -= g_deltaTime;
 
 		if (goalVelTime < 0.0)
 			velocity = goalVelocity;
@@ -972,9 +972,9 @@ void Camera::updateGoalFOV (void)
 	{
 		float fovDiff = goalFOV - camera_fov;
 		fovDiff /= goalFOVTime;
-		fovDiff *= frameLength;
+		fovDiff *= g_deltaTime;
 		
- 		goalFOVTime -= frameLength;
+ 		goalFOVTime -= g_deltaTime;
 
 		if (goalFOVTime < 0.0)
 		{
@@ -998,13 +998,13 @@ void Camera::updateGoalRotation (void)
 	{
 		float goalProjectionAngle = goalRotation.x - projectionAngle;
 		goalProjectionAngle /= goalRotTime;
-		goalProjectionAngle *= frameLength;
+		goalProjectionAngle *= g_deltaTime;
 		
 		float goalCameraRotation = goalRotation.y - cameraRotation;
 		goalCameraRotation /= goalRotTime;
-		goalCameraRotation *= frameLength;
+		goalCameraRotation *= g_deltaTime;
 		
- 		goalRotTime -= frameLength;
+ 		goalRotTime -= g_deltaTime;
 
 		if (goalRotTime < 0.0)
 		{
@@ -1033,8 +1033,8 @@ void Camera::updateGoalPosition (Stuff::Vector3D &pos)
 		Stuff::Vector3D posDiff;
 		posDiff.Subtract(goalPosition,pos);
 		posDiff /= goalPosTime;
-		posDiff *= frameLength;
-		goalPosTime -= frameLength;
+		posDiff *= g_deltaTime;
+		goalPosTime -= g_deltaTime;
 
 		if (goalPosTime < 0.0f)
 			pos = goalPosition;
@@ -1427,7 +1427,7 @@ void Camera::updateDaylight (bool bInitialize)
 		if (0xff < fogBlue) { fogBlue = 0xff; }
 		fogColor = (fogRed << 16) + (fogGreen << 8) + fogBlue;
 
-		dayLightTime += frameLength;
+		dayLightTime += g_deltaTime;
 	}
 }
 
@@ -1437,7 +1437,7 @@ void Camera::updateLetterboxAndFade (void)
 	//OK, if we are inMovieMode and we haven't finished letterboxing, finish it!
 	if (!startEnding && inMovieMode && (letterBoxTime != MaxLetterBoxTime))
 	{
-		letterBoxTime += frameLength;
+		letterBoxTime += g_deltaTime;
 		float letterBoxPercent = letterBoxTime / MaxLetterBoxTime;
 		if (letterBoxTime > MaxLetterBoxTime)
 		{
@@ -1452,7 +1452,7 @@ void Camera::updateLetterboxAndFade (void)
 	//Now, if we are in startEnding and we haven't finished DE-Letterboxing, finish it.
 	if (startEnding && inMovieMode && (letterBoxPos != 0.0f))
 	{
-		letterBoxTime -= frameLength;
+		letterBoxTime -= g_deltaTime;
 		float letterBoxPercent = letterBoxTime / MaxLetterBoxTime;
 		if (letterBoxTime < 0.0f)
 		{
@@ -1469,7 +1469,7 @@ void Camera::updateLetterboxAndFade (void)
 	// We only fades during movie Mode at present!!
 	if (inMovieMode && inFadeMode)
 	{
-		timeLeftToFade += frameLength;
+		timeLeftToFade += g_deltaTime;
 		float fadePercent = timeLeftToFade / startFadeTime;
 		if (timeLeftToFade > startFadeTime)
 		{
@@ -1576,7 +1576,7 @@ long Camera::update (void)
 	{
 		Stuff::Vector3D posOffset;
 		posOffset = velocity;
-		posOffset *= frameLength;
+		posOffset *= g_deltaTime;
 		
 		newPosition += posOffset;
 	}
@@ -2226,7 +2226,7 @@ void Camera::setPosition(Stuff::Vector3D newPosition, bool swoopy)
 			if (fabs(goalPositionZ - position.z) > 10.0f )
 			{
 				float offsetZ = goalPositionZ - position.z;
-				offsetZ *= 0.5f * frameLength;
+				offsetZ *= 0.5f * g_deltaTime;
 				position.z += offsetZ;
 			}
 	
@@ -3091,13 +3091,13 @@ bool Camera::save( FitIniFile* file )
 
 float Camera::getFarClipDistance()
 {
-	return MaxClipDistance;
+	return maxClipDistance;
 }
 
 void Camera::setFarClipDistance(float farClipDistance)
 {
-	MaxClipDistance = farClipDistance;
-	DistanceFactor	= 1.0f / (MaxClipDistance - MinHazeDistance);
+	maxClipDistance = farClipDistance;
+	DistanceFactor	= 1.0f / (maxClipDistance - minHazeDistance);
 }
 
 float Camera::getNearClipDistance()

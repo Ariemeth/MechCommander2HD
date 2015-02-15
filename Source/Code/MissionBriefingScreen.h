@@ -50,7 +50,7 @@ class MissionBriefingScreen: public LogisticsScreen
 	virtual int			handleMessage( unsigned long, unsigned long );
 
 
-	static long	getMissionTGA( const char* missionName );
+	static long	getMissionTGA(const char* missionName);
 
 
 

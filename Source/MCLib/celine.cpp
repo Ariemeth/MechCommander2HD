@@ -30,7 +30,6 @@
 //---------------------------------------------------------------------------
 // Static Globals
 
-extern bool hasGuardBand;
 //---------------------------------------------------------------------------
 LineElement::LineElement (Stuff::Vector4D &pos1, Stuff::Vector4D &pos2, long clr, MemoryPtr fTable, long endClr) : Element(0L)
 {

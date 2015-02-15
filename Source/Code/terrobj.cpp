@@ -489,7 +489,7 @@ long TerrainObject::update (void) {
 		{
 			if (fallRate == 0.0f)
 			{
-				if (useSound && soundSystem)
+				if (soundSystem)
 					soundSystem->playDigitalSample(TREEFALL, getPosition(), true);
 					
 				fallRate = TREE_FALL_RATE;
@@ -497,7 +497,7 @@ long TerrainObject::update (void) {
 			else
 				fallRate += TREE_FALL_ACCEL;
 				
-			pitchAngle -= (frameLength * fallRate);
+			pitchAngle -= (g_deltaTime * fallRate);
 			if (pitchAngle < -85.0f)
 			{
 				setFlag(OBJECT_FLAG_FALLEN,true);
@@ -638,7 +638,7 @@ void TerrainObject::destroy (void)
 	if (cellsCovered) 
 	{
 		numCellsCovered = 0;
-		systemHeap->Free(cellsCovered);
+		g_systemHeap->Free(cellsCovered);
 		cellsCovered = NULL;
 	}
 
@@ -1016,7 +1016,7 @@ void TerrainObject::calcSubAreas (long numCells, short cells[MAX_GAME_OBJECT_CEL
 
 	numCellsCovered = numCells;
 	if (numCellsCovered) {
-		cellsCovered = (short*)systemHeap->Malloc(4 * numCellsCovered);
+		cellsCovered = (short*)g_systemHeap->Malloc(4 * numCellsCovered);
 		if (cellsCovered) {
 			short* curCoord = cellsCovered;
 			for (long j = 0; j < numCellsCovered; j++) {
@@ -1280,7 +1280,7 @@ void TerrainObject::Load (TerrainObjectData *data)
 	numCellsCovered = data->numCellsCovered;
 	if (numCellsCovered)
 	{
-		cellsCovered = (short*)systemHeap->Malloc(sizeof(short) * numCellsCovered * 2);
+		cellsCovered = (short*)g_systemHeap->Malloc(sizeof(short) * numCellsCovered * 2);
 		memcpy(cellsCovered, data->cellsCovered,sizeof(short) * numCellsCovered * 2);
 	}
 }

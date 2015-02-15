@@ -159,6 +159,8 @@ WORD GetNumberOfBits( DWORD dwMask )
 //
 // Actual Mouse Callback code here.
 //
+#pragma warning(push)
+#pragma warning( disable:4701 )
 void CALLBACK MouseTimer(UINT wTimerID, UINT msg, DWORD dwUser, DWORD dw1, DWORD dw2)
 {
 	HRESULT lockResult = -1;
@@ -234,7 +236,7 @@ void CALLBACK MouseTimer(UINT wTimerID, UINT msg, DWORD dwUser, DWORD dw1, DWORD
 				{
 					MemoryPtr mBuffer = mouseBuffer;
 
-					for (long y=mouseWASInRect.top;y<mouseWASInRect.bottom;y++)
+					for (long y = mouseWASInRect.top; y<mouseWASInRect.bottom; y++)
 					{
 						MemoryPtr screenPos = (MemoryPtr)mouseSurfaceDesc.lpSurface +
 												((mouseWASInRect.left << 1) +
@@ -857,6 +859,7 @@ mouseTimerDone:
 	mc2IsInMouseTimer = false;
 	mc2DisplayHasFlipped = false;
 }
+#pragma warning( pop )
 
 
 //-------------------------------------------------------------------

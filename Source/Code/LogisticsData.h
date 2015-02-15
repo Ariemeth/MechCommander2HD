@@ -108,7 +108,7 @@ public:
 
 	const EString&		getCurrentMission() const;
 	const EString&		getLastMission() const;
-	int					setCurrentMission( const EString& missionName );
+	int					setCurrentMission(const EString& missionName);
 	void				setSingleMission( const char* pName );
 	bool				isSingleMission();
 	long				getCurrentMissionTune();
@@ -145,9 +145,9 @@ public:
 	const char*			getCurrentMissionDescription();
 	int					getAvailableMissions( const char** missionNames, long& count );
 	int					getCurrentMissions( const char** missionNames, long& count );
-	bool				getMissionAvailable( const char* missionName );
+	bool				getMissionAvailable(const char* missionName);
 	const char*			getCurrentMissionFriendlyName( );
-	const char*			getMissionFriendlyName( const char* missionName );
+	const char*			getMissionFriendlyName(const char* missionName);
 	long				getMaxTeams() const;
 	long				getMaxPlayers() const;
 
@@ -158,7 +158,7 @@ public:
 
 
 
-	int					setCurrentMission( const char* missionName );
+	int					setCurrentMission(const char* missionName);
 
 	void				startNewCampaign( const char* fileName = "campaign");
 	void				startMultiPlayer();

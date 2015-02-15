@@ -95,18 +95,18 @@ void MC_TextureManager::start (void)
 	init();
 
 	//------------------------------------------
-	// Create nodes from systemHeap.
+	// Create nodes from g_systemHeap.
 	long nodeRAM = MC_MAXTEXTURES * sizeof(MC_TextureNode);
-	masterTextureNodes = (MC_TextureNode *)systemHeap->Malloc(nodeRAM);
+	masterTextureNodes = (MC_TextureNode *)g_systemHeap->Malloc(nodeRAM);
 	gosASSERT(masterTextureNodes != NULL);
 
 	for (long i=0;i<MC_MAXTEXTURES;i++)
 		masterTextureNodes[i].init();
 		
 	//-------------------------------------------
-	// Create VertexNodes from systemHeap
+	// Create VertexNodes from g_systemHeap
 	nodeRAM = MC_MAXTEXTURES * sizeof(MC_VertexArrayNode);
-	masterVertexNodes = (MC_VertexArrayNode *)systemHeap->Malloc(nodeRAM);
+	masterVertexNodes = (MC_VertexArrayNode *)g_systemHeap->Malloc(nodeRAM);
 	gosASSERT(masterVertexNodes != NULL);
 	
 	memset(masterVertexNodes,0,nodeRAM);
@@ -135,7 +135,7 @@ void MC_TextureManager::start (void)
 		textureManagerInstrumented = true;
 	}
 	
-	indexArray = (WORD *)systemHeap->Malloc(sizeof(WORD) * MC_MAXFACES);
+	indexArray = (WORD *)g_systemHeap->Malloc(sizeof(WORD) * MC_MAXFACES);
 	for (i=0;i<MC_MAXFACES;i++)
 		indexArray[i] = i;
 		
@@ -195,10 +195,10 @@ void MC_TextureManager::destroy (void)
 
 	//------------------------------------------
 	// free SystemHeap Memory
-	systemHeap->Free(masterTextureNodes);
+	g_systemHeap->Free(masterTextureNodes);
 	masterTextureNodes = NULL;
 	
-	systemHeap->Free(masterVertexNodes);
+	g_systemHeap->Free(masterVertexNodes);
 	masterVertexNodes = NULL;
 	
 	delete textureCacheHeap;
@@ -304,7 +304,7 @@ void MC_TextureManager::flush (bool justTextures)
 		STOP(("Could not find MC2.fx"));
 		
 	long effectsSize = effectFile.fileSize();
-	MemoryPtr effectsData = (MemoryPtr)systemHeap->Malloc(effectsSize);
+	MemoryPtr effectsData = (MemoryPtr)g_systemHeap->Malloc(effectsSize);
 	effectFile.read(effectsData,effectsSize);
 	effectFile.close();
 	
@@ -315,7 +315,7 @@ void MC_TextureManager::flush (bool justTextures)
 
 	gos_PopCurrentHeap();
 
-	systemHeap->Free(effectsData);
+	g_systemHeap->Free(effectsData);
 }
 
 //----------------------------------------------------------------------
@@ -1328,7 +1328,7 @@ long MC_TextureManager::saveTexture (DWORD textureIndex, const char *textureFull
 			//------------------------------------------
 			// Badboys are now LZ Compressed in texture cache.
 			long origSize = LZDecomp(MC_TextureManager::lzBuffer2,(MemoryPtr)masterTextureNodes[textureIndex].textureData,masterTextureNodes[textureIndex].lzCompSize);
-			if (origSize != (masterTextureNodes[textureIndex].width & 0x0fffffff))
+			if (origSize != (long)(masterTextureNodes[textureIndex].width & 0x0fffffff))
 				STOP(("Decompressed to different size from original!  Txm:%s  Width:%d  DecompSize:%d",masterTextureNodes[textureIndex].nodeName,(masterTextureNodes[textureIndex].width & 0x0fffffff),origSize));
 
 			if (origSize >= MAX_LZ_BUFFER_SIZE)
@@ -1392,7 +1392,7 @@ DWORD MC_TextureNode::get_gosTextureHandle (void)	//If texture is not in VidRAM,
 			// Badboys are now LZ Compressed in texture cache.
 			// Uncompress, then memcpy.
 			long origSize = LZDecomp(MC_TextureManager::lzBuffer2,(MemoryPtr)textureData,lzCompSize);
-			if (origSize != (width & 0x0fffffff))
+			if (origSize != (long)(width & 0x0fffffff))
 				STOP(("Decompressed to different size from original!  Txm:%s  Width:%d  DecompSize:%d",nodeName,(width & 0x0fffffff),origSize));
 
 			if (origSize >= MAX_LZ_BUFFER_SIZE)

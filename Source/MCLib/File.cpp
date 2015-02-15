@@ -59,7 +59,7 @@ unsigned long File::lastError = NO_ERR;
 bool		  File::logFileTraffic = FALSE;
 
 FilePtr fileTrafficLog = NULL;
-char CDInstallPath[1024];
+char g_cdInstallPath[1024];
 void EnterWindowMode();
 void EnterFullScreenMode();
 void __stdcall ExitGameOS();
@@ -103,7 +103,7 @@ long fileExistsOnCD (char* fName)
 {
 	//Just add the CD path here and see if its there.
 	char bigPath[2048];
-	strcpy(bigPath,CDInstallPath);
+	strcpy(bigPath,g_cdInstallPath);
 	strcat(bigPath,fName);
 
 	struct _stat st;
@@ -137,7 +137,7 @@ void *File::operator new (size_t mySize)
 {
 	void *result = NULL;
 	
-	result = systemHeap->Malloc(mySize);
+	result = g_systemHeap->Malloc(mySize);
 	
 	return(result);
 }
@@ -145,7 +145,7 @@ void *File::operator new (size_t mySize)
 //---------------------------------------------------------------------------
 void File::operator delete (void *us)
 {
-	systemHeap->Free(us);
+	g_systemHeap->Free(us);
 }
 
 //---------------------------------------------------------------------------
@@ -211,7 +211,7 @@ long File::open (const char* fName, FileMode _mode, long numChild)
 	//-------------------------------------------------------------
 	long fNameLength = strlen(fName);
 	
-	fileName = (char *)systemHeap->Malloc(fNameLength+1);
+	fileName = (char *)g_systemHeap->Malloc(fNameLength+1);
 	gosASSERT(fileName != NULL);
 		
 	strncpy(fileName,fName,fNameLength+1);
@@ -247,7 +247,7 @@ long File::open (const char* fName, FileMode _mode, long numChild)
 				//Not in main installed directory and not in fastfile.  Look on CD.
 
 				char actualPath[2048];
-				strcpy(actualPath,CDInstallPath);
+				strcpy(actualPath,g_cdInstallPath);
 				strcat(actualPath,fileName);
 				handle = _open(actualPath,_O_RDONLY);
 				if (handle == INVALID_HANDLE_VALUE)
@@ -264,7 +264,7 @@ long File::open (const char* fName, FileMode _mode, long numChild)
 						// MANY files in MechCommander 2 are LEGALLY missing!
 						// Tell it to the art staff.
 						char testCDPath[2048];
-						strcpy(testCDPath,CDInstallPath);
+						strcpy(testCDPath,g_cdInstallPath);
 						strcat(testCDPath,"tgl.fst");
 
 						DWORD findCD = fileExists(testCDPath);
@@ -317,7 +317,7 @@ long File::open (const char* fName, FileMode _mode, long numChild)
 					//
 					// There is now an open which takes a FilePtr and a size.
 					maxChildren = numChild;
-					childList = (FilePtr *)systemHeap->Malloc(sizeof(FilePtr) * maxChildren);
+					childList = (FilePtr *)g_systemHeap->Malloc(sizeof(FilePtr) * maxChildren);
 
 					if (!childList)
 					{
@@ -397,7 +397,7 @@ long File::open (const char* fName, FileMode _mode, long numChild)
 			//
 			// There is now an open which takes a FilePtr and a size.
 			maxChildren = numChild;
-			childList = (FilePtr *)systemHeap->Malloc(sizeof(FilePtr) * maxChildren);
+			childList = (FilePtr *)g_systemHeap->Malloc(sizeof(FilePtr) * maxChildren);
 			
 			if (!childList)
 			{
@@ -472,7 +472,7 @@ long File::open (FilePtr _parent, unsigned long fileSize, long numChild)
 		if (numChild != -1)
 		{
 			maxChildren = numChild;
-			childList = (FilePtr *)systemHeap->Malloc(sizeof(FilePtr) * maxChildren);
+			childList = (FilePtr *)g_systemHeap->Malloc(sizeof(FilePtr) * maxChildren);
 			
 			gosASSERT(childList != NULL);
 
@@ -544,7 +544,7 @@ long File::createWithCase( char* fName )
 	//-------------------------------------------------------------
 	long fNameLength = strlen(fName);
 	
-	fileName = (char *)systemHeap->Malloc(fNameLength+1);
+	fileName = (char *)g_systemHeap->Malloc(fNameLength+1);
 	gosASSERT(fileName != NULL);
 		
 	strncpy(fileName,fName,fNameLength+1);
@@ -611,7 +611,7 @@ void File::close (void)
 
 	if ((parent == NULL) && (fileName != NULL))
 	{
-		systemHeap->Free(fileName);
+		g_systemHeap->Free(fileName);
 	}
 
 	fileName = NULL;
@@ -650,7 +650,7 @@ void File::close (void)
 		}
 
 		if (childList)
-			systemHeap->Free(childList);
+			g_systemHeap->Free(childList);
 	}
 	
 	if (parent != NULL)
@@ -1564,7 +1564,7 @@ char* File::getFilename (void)
 //---------------------------------------------------------------------------
 time_t File::getFileMTime (void)
 {
-	time_t mTime;
+	time_t mTime = time_t(0);
 
 	if (isOpen())
 	{

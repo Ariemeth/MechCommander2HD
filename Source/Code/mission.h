@@ -257,7 +257,7 @@ class Mission
 
 		bool calcComplexDropZones (char* missionName, char dropZoneList[MAX_MC_PLAYERS]);
 
-		void init (char *missionName, long loadType, long dropZoneID, Stuff::Vector3D* dropZoneList, char commandersToLoad[8][3], long numMoversPerCommander);
+		void init(char *missionName, long loadType, long dropZoneID, Stuff::Vector3D* dropZoneList, char commandersToLoad[8][3], long numMoversPerCommander);
 
 		static void initBareMinimum();
 		

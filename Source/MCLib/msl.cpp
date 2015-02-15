@@ -57,7 +57,7 @@ extern void GetNumberData (char *rawData, char *result);
 extern void GetNameData (char *rawData, char *result);
 extern void GetWordData (char *rawData, char *result);
 
-extern long		ObjectTextureSize;
+extern long		g_objectTextureSize;
 
 #define CURRENT_SHAPE_VERSION		0xBAFDECAF
 #define CURRENT_ANIM_VERSION		0xBADDECAF
@@ -559,7 +559,7 @@ long TG_TypeMultiShape::LoadTGMultiShapeFromASE (char *fileName, bool forceMakeB
 				//-------------------------------------------------------------------------------
 				// Get and store texture Name.  Will need multiple for Multi-Sub if implemented
 				char textId[256];
-				sprintf(textId,"%s",ASE_MATERIAL_BITMAP_ID,i);
+				sprintf(textId,"%s",ASE_MATERIAL_BITMAP_ID);
 		
 				char *txmTemp = txmData;
 				txmData = strstr(txmData,textId);
@@ -626,7 +626,7 @@ long TG_TypeMultiShape::LoadTGMultiShapeFromASE (char *fileName, bool forceMakeB
 				GetTextureName(i,txmName,256);
 		
 				char texturePath[1024];
-				sprintf(texturePath,"%s%d\\",tglPath,ObjectTextureSize);
+				sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
 			
 				FullPathFileName textureName;
 				textureName.init(texturePath,txmName,"");

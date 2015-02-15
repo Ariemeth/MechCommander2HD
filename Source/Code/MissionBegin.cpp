@@ -31,11 +31,11 @@ MissionBegin.cpp			: Implementation of the MissionBegin component.
 #include "LogisticsMechIcon.h"
 
 #include "prefs.h"
-extern CPrefs prefs;
+extern CPrefs g_userPreferences;
 
 class MechLabScreen;
 
-extern long renderer;
+extern long g_renderer;
 
 void initABL (void);
 void closeABL (void);
@@ -157,21 +157,21 @@ void MissionBegin::begin()
 	}
 
 	//---------------------------------------------
-	DWORD localRenderer = prefs.renderer;
-	if (prefs.renderer != 0 && prefs.renderer != 3)
+	DWORD localRenderer = g_userPreferences.renderer;
+	if (g_userPreferences.renderer != 0 && g_userPreferences.renderer != 3)
 		localRenderer = 0;
 
-   	bool localFullScreen = prefs.fullScreen;
-   	bool localWindow = !prefs.fullScreen;
-   	if (Environment.fullScreen && prefs.fullScreen)
+   	bool localFullScreen = g_userPreferences.fullScreen;
+   	bool localWindow = !g_userPreferences.fullScreen;
+   	if (Environment.fullScreen && g_userPreferences.fullScreen)
    		localFullScreen = false;
 
-	if (prefs.renderer == 3)
+	if (g_userPreferences.renderer == 3)
 		gos_SetScreenMode(800,600,16,0,0,0,true,localFullScreen,0,localWindow,0,localRenderer);
-	else if (prefs.bitDepth)
-		gos_SetScreenMode(800,600,32,prefs.renderer,0,0,0,localFullScreen,0,localWindow,0,localRenderer);
+	else if (g_userPreferences.bitDepth)
+		gos_SetScreenMode(800,600,32,g_userPreferences.renderer,0,0,0,localFullScreen,0,localWindow,0,localRenderer);
 	else
-		gos_SetScreenMode(800,600,16,prefs.renderer,0,0,0,localFullScreen,0,localWindow,0,localRenderer);
+		gos_SetScreenMode(800,600,16,g_userPreferences.renderer,0,0,0,localFullScreen,0,localWindow,0,localRenderer);
 
 	if ( mainMenu ) // already initialized
 	{
@@ -599,12 +599,12 @@ const char* MissionBegin::update()
 						float xDistLeft = buttonPosX - realMouseX;
 						float yDistLeft = buttonPosY - realMouseY;
 
-						float xDistThisFrame = xDistLeft / timeLeftToScroll * frameLength;
-						float yDistThisFrame = yDistLeft / timeLeftToScroll * frameLength;
+						float xDistThisFrame = xDistLeft / timeLeftToScroll * g_deltaTime;
+						float yDistThisFrame = yDistLeft / timeLeftToScroll * g_deltaTime;
 
 						userInput->setMousePos(realMouseX + xDistThisFrame, realMouseY+yDistThisFrame);
 
-						timeLeftToScroll -= frameLength;
+						timeLeftToScroll -= g_deltaTime;
 					}
 					else
 					{
@@ -613,7 +613,7 @@ const char* MissionBegin::update()
 						//We are there.  Start flashing.
 						if (buttonNumFlashes)
 						{
-							buttonFlashTime += frameLength;
+							buttonFlashTime += g_deltaTime;
 							if ( buttonFlashTime > .5f )
 							{
 								pCurScreen->getButton( targetButtonId )->setColor( 0xffffffff );
@@ -660,12 +660,12 @@ const char* MissionBegin::update()
 						float xDistLeft = buttonPosX - realMouseX;
 						float yDistLeft = buttonPosY - realMouseY;
 		
-						float xDistThisFrame = xDistLeft / timeLeftToScroll * frameLength;
-						float yDistThisFrame = yDistLeft / timeLeftToScroll * frameLength;
+						float xDistThisFrame = xDistLeft / timeLeftToScroll * g_deltaTime;
+						float yDistThisFrame = yDistLeft / timeLeftToScroll * g_deltaTime;
 		
 						userInput->setMousePos(realMouseX + xDistThisFrame, realMouseY+yDistThisFrame);
 		
-						timeLeftToScroll -= frameLength;
+						timeLeftToScroll -= g_deltaTime;
 					}
 					else
 					{
@@ -674,7 +674,7 @@ const char* MissionBegin::update()
 						//We are there.  Start flashing.
 						if (buttonNumFlashes)
 						{
-							buttonFlashTime += frameLength;
+							buttonFlashTime += g_deltaTime;
 							if ( buttonFlashTime > .5f )
 							{
 								pCurScreen->getRect( targetButtonId )->setColor( 0xff000000 );

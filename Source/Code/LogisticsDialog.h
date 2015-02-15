@@ -67,8 +67,10 @@ class LogisticsOKDialog : public LogisticsDialog
 
 		static int init( FitIniFile& file );
 
-		void				setText( int textID, int CancelButton, int OKButton );
-		void				setText( const char* mainText );
+		void				setText(int textID, int CancelButton, int OKButton);
+		void				setText(const char* mainText, int OKButton);
+		void				setText(const char* mainText, int OKButton, int CancelButton);
+		void				setText(const char* mainText);
 
 
 

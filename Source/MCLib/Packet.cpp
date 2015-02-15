@@ -46,7 +46,7 @@ void PacketFile::clear (void)
 	numPackets		= 0;
 
 	if (seekTable)
-		systemHeap->Free(seekTable);
+		g_systemHeap->Free(seekTable);
 
 	seekTable 		= NULL;
 }
@@ -177,7 +177,7 @@ long PacketFile::afterOpen (void)
 	{
 		if (numPackets && !seekTable)
 		{
-			seekTable = (long *)systemHeap->Malloc(numPackets * sizeof(long));
+			seekTable = (long *)g_systemHeap->Malloc(numPackets * sizeof(long));
 			gosASSERT(seekTable != NULL);
 				
 			seek(sizeof(long)*2);												//File Version & File Length
@@ -543,7 +543,7 @@ void PacketFile::reserve (long count, bool useCheckSum)
 	// updated in memory and flushed when the file is closed.
 	if (!seekTable)
 	{
-		seekTable = (long *)systemHeap->Malloc(numPackets * sizeof(long));
+		seekTable = (long *)g_systemHeap->Malloc(numPackets * sizeof(long));
    			
    		if (seekTable != NULL)
    		{

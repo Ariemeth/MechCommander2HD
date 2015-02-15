@@ -35,7 +35,7 @@ long SortList::init (long _numItems) {
 	//-------------------------
 	// Create the sort list...
 	numItems = _numItems;
-	list = (SortListNode*)systemHeap->Malloc(sizeof(SortListNode) * numItems);
+	list = (SortListNode*)g_systemHeap->Malloc(sizeof(SortListNode) * numItems);
 	if (!list)
 		Fatal(0, " Unable to init sortList ");
 	return(list == NULL);
@@ -99,7 +99,7 @@ void SortList::sort (bool descendingOrder) {
 
 void SortList::destroy (void) {
 
-	systemHeap->Free(list);
+	g_systemHeap->Free(list);
 	list = NULL;
 }
 

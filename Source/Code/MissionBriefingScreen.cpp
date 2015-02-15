@@ -137,7 +137,7 @@ void MissionBriefingScreen::update()
 		}
 	}
 
-	runTime += frameLength;
+	runTime += g_deltaTime;
 	
 	long selItem = missionListBox.GetSelectedItem( );
 	int ID = -1;
@@ -266,23 +266,21 @@ void MissionBriefingScreen::update()
 	
 }
 
-long	MissionBriefingScreen::getMissionTGA( const char* missionName )
+long	MissionBriefingScreen::getMissionTGA(const char* missionName)
 {
-	if ( !missionName )
+	if (!missionName)
 		return 0;
 
 	// do I need to open the file?  I guess so, if this proves too slow,
 	// it could be done when a stage is completed
 	FullPathFileName path;
-	path.init( missionPath, missionName, ".pak" );
+	path.init(missionPath, missionName, ".pak");
 
 	if ( 1 == fileExists( path ) )
 	{
 
 		// big hack here for some reason we can open files while they're being transferred.
-		HANDLE hFile = CreateFile( path, GENERIC_READ, 0, NULL, OPEN_EXISTING, 0, 0 );
-
-		int error = GetLastError();
+		HANDLE hFile = CreateFile(path, GENERIC_READ, 0, NULL, OPEN_EXISTING, 0, 0); // MCHD TODO: What is this all about?
 
 		if ( hFile == INVALID_HANDLE_VALUE )
 			return 0;
@@ -336,7 +334,7 @@ void MissionBriefingScreen::begin()
 	EString missionName = LogisticsData::instance->getCurrentMission();
 
 
-	long tmpMapTextureHandle = getMissionTGA( missionName );
+	long tmpMapTextureHandle = getMissionTGA(missionName);
 	statics[MAP_INDEX].setTexture( tmpMapTextureHandle );
 	statics[MAP_INDEX].setUVs( 0, 127, 127, 0 );
 	statics[MAP_INDEX].setColor( 0xffffffff );
@@ -344,7 +342,7 @@ void MissionBriefingScreen::begin()
 
 	// need to get all the objectives and stuff
 	FullPathFileName fitPath;
-	fitPath.init( missionPath, missionName, ".fit" );
+	fitPath.init(missionPath, missionName, ".fit");
 	FitIniFile fitFile;
 	fitFile.open( fitPath );
 
@@ -369,8 +367,8 @@ void MissionBriefingScreen::begin()
 	else
 	{
 		char missionName[256];
-		fitFile.readIdString( "MissionName", missionName, 255 );
-		addLBItem( missionName, 0xff005392, -1 );
+		fitFile.readIdString("MissionName", missionName, 255);
+		addLBItem(missionName, 0xff005392, -1);
 
 	}
 

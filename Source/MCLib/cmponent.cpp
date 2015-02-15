@@ -65,7 +65,7 @@ long					MasterComponent::innerSphereAntiMissileSystemID = 106;
 
 void* MasterComponent::operator new (size_t mySize) {
 
-	void* result = systemHeap->Malloc(mySize);
+	void* result = g_systemHeap->Malloc(mySize);
 	return(result);
 }
 
@@ -73,7 +73,7 @@ void* MasterComponent::operator new (size_t mySize) {
 
 void MasterComponent::operator delete (void* us) {
 
-	systemHeap->Free(us);
+	g_systemHeap->Free(us);
 }
 
 //******************************************************************************************
@@ -629,12 +629,12 @@ long MasterComponent::loadMasterList (char* fileName, long listSize, float baseS
 
 	if (masterList) 
 	{
-		systemHeap->Free(masterList);
+		g_systemHeap->Free(masterList);
 		masterList = NULL;
 	}
 
 	numComponents = listSize;
-	masterList = (MasterComponentPtr)systemHeap->Malloc(sizeof(MasterComponent) * numComponents);
+	masterList = (MasterComponentPtr)g_systemHeap->Malloc(sizeof(MasterComponent) * numComponents);
 
 	for (long curComponent = 0; curComponent < numComponents; curComponent++)
 		masterList[curComponent].init();
@@ -730,7 +730,7 @@ long MasterComponent::freeMasterList (void) {
 
 	if (masterList) 
 	{
-		systemHeap->Free(masterList);
+		g_systemHeap->Free(masterList);
 		masterList = NULL;
 		numComponents = 0;
 	}

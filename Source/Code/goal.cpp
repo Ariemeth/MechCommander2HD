@@ -74,11 +74,6 @@ void GoalObject::init (void) {
 
 //---------------------------------------------------------------------------
 
-void GoalObject::initObject (char* name, GameObjectPtr obj) {
-}
-
-//---------------------------------------------------------------------------
-
 void GoalObject::initRegion (char* name, long minRow, long minCol, long maxRow, long maxCol) {
 
 	init();
@@ -89,23 +84,6 @@ void GoalObject::initRegion (char* name, long minRow, long minCol, long maxRow, 
 }
 
 //---------------------------------------------------------------------------
-
-void GoalObject::destroy (void) {
-
-}
-
-//---------------------------------------------------------------------------
-
-void GoalObject::addLink (GoalObjectPtr gobject, GoalLinkType type) {
-
-	GoalLinkPtr newLink = (GoalLink*)missionHeap->Malloc(sizeof(GoalLink));
-	
-}
-
-//---------------------------------------------------------------------------
-
-void GoalObject::addController (GoalObjectPtr gobject) {
-}
 
 //***************************************************************************
 // ACTION GOAL MANAGER
@@ -436,8 +414,6 @@ void GoalManager::build (void) {
 
 	//--------------------------------
 	// First, get the list of walls...
-	GameObjectPtr wallObjects[MAX_WALL_OBJECTS];
-	long numWalls = ObjectManager->getSpecificObjects(BUILDING, BUILDING_SUBTYPE_WALL, wallObjects, MAX_WALL_OBJECTS);
 /*	short cellList[MAX_CELL_COORDS];
 	for (long i = 0; i < numWalls; i++) {
 		cellList[0] = MAX_CELL_COORDS;
@@ -492,9 +468,7 @@ GoalObjectPtr GoalManager::addRegion (GoalObjectPtr parent, GoalLinkType linkTyp
 
 	GoalObjectPtr newRegion = newGoalObject();
 	newRegion->initRegion(name, minRow, minCol, maxRow, maxCol);
-	if (parent)
-		parent->addLink(newRegion, linkType);
-	else
+	if (!parent) // MCHD CHANGE (02/14/2015): Removed addLink - it did nothing
 		goalObjects = newRegion;
 	return(newRegion);
 }
@@ -504,10 +478,8 @@ GoalObjectPtr GoalManager::addRegion (GoalObjectPtr parent, GoalLinkType linkTyp
 GoalObjectPtr GoalManager::addObject (GoalObjectPtr parent, GoalLinkType linkType, char* name, GameObjectPtr object) {
 
 	GoalObjectPtr newObject = newGoalObject();
-	newObject->initObject(name, object);
-	if (parent)
-		parent->addLink(newObject, linkType);
-	else
+	// MCHD CHANGE (02/14/2015): Removed initObject and addLink - they did nothing
+	if (!parent)
 		goalObjects = newObject;
 	return(newObject);
 }

@@ -126,7 +126,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalOptions>/ignore:4099</AdditionalOptions>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <LinkStatus>true</LinkStatus>
+      <LinkStatus>
+      </LinkStatus>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'">
@@ -182,7 +183,8 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalOptions>/ignore:4099</AdditionalOptions>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <LinkStatus>true</LinkStatus>
+      <LinkStatus>
+      </LinkStatus>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
   </ItemDefinitionGroup>
@@ -220,7 +222,7 @@
       <CompileAs>Default</CompileAs>
       <DisableSpecificWarnings>4996;4537;4430;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MinimalRebuild>true</MinimalRebuild>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -237,7 +239,10 @@
       <TargetMachine>MachineX86</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <AdditionalOptions>/ignore:4099</AdditionalOptions>
-      <LinkStatus>true</LinkStatus>
+      <LinkStatus>
+      </LinkStatus>
+      <LinkTimeCodeGeneration>
+      </LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -266,7 +271,7 @@
       <AssemblerListingLocation>$(IntDir)asm\</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)obj\</ObjectFileName>
       <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
-      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CallingConvention>StdCall</CallingConvention>
@@ -289,7 +294,8 @@
       <TargetMachine>MachineX86</TargetMachine>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <AdditionalOptions>/ignore:4099</AdditionalOptions>
-      <LinkStatus>true</LinkStatus>
+      <LinkStatus>
+      </LinkStatus>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
