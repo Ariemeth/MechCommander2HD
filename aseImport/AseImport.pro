@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     AseModel/ase_singleint.cpp \
     AseModel/ase_string.cpp \
     AseModel/aseitem.cpp \
-    build-AseImport-Desktop_Qt_5_4_0_MSVC2010_OpenGL_32bit-Debug/debug/moc_mainwindow.cpp
+    build-AseImport-Desktop_Qt_5_4_0_MSVC2010_OpenGL_32bit-Debug/debug/moc_mainwindow.cpp \
+    AseModel/ase_model.cpp
 
 HEADERS  += mainwindow.h \
     build-AseImport-Desktop_Qt_5_4_0_MSVC2010_OpenGL_32bit-Debug/ui_mainwindow.h \
