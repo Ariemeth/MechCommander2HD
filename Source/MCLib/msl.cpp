@@ -626,7 +626,7 @@ long TG_TypeMultiShape::LoadTGMultiShapeFromASE (char *fileName, bool forceMakeB
 				GetTextureName(i,txmName,256);
 		
 				char texturePath[1024];
-				sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
+				sprintf(texturePath,"%s%ld\\",tglPath,g_objectTextureSize);
 			
 				FullPathFileName textureName;
 				textureName.init(texturePath,txmName,"");
@@ -1206,7 +1206,7 @@ long TG_MultiShape::TransformMultiShape (Stuff::Point3D *pos, Stuff::UnitQuatern
 		zero.x = zero.y = zero.z = 0.0f;
 		for (j=curChild;j>=0;j--)
 		{
-			if (childChain[j]->calcedThisFrame != turn)
+			if (childChain[j]->calcedThisFrame != g_framesSinceMissionStart)
 			{
 				if (j == curChild)		//This is the ROOT Node.
 				{
@@ -1254,7 +1254,7 @@ long TG_MultiShape::TransformMultiShape (Stuff::Point3D *pos, Stuff::UnitQuatern
 						childChain[j]->shapeToWorld.Multiply(childChain[j]->localShapeToWorld,shapeOrigin);
 
 						childChain[j]->worldToShape.Invert(childChain[j]->shapeToWorld);
-						childChain[j]->calcedThisFrame = turn;
+						childChain[j]->calcedThisFrame = g_framesSinceMissionStart;
 					}
 					else
 					{
@@ -1266,7 +1266,7 @@ long TG_MultiShape::TransformMultiShape (Stuff::Point3D *pos, Stuff::UnitQuatern
 						childChain[j]->shapeToWorld.Multiply(childChain[j]->localShapeToWorld,shapeOrigin);
 
 						childChain[j]->worldToShape.Invert(childChain[j]->shapeToWorld);
-						childChain[j]->calcedThisFrame = turn;
+						childChain[j]->calcedThisFrame = g_framesSinceMissionStart;
 					}
 				}
 				else
@@ -1318,7 +1318,7 @@ long TG_MultiShape::TransformMultiShape (Stuff::Point3D *pos, Stuff::UnitQuatern
 						childChain[j]->shapeToWorld.Multiply(childChain[j]->localShapeToWorld,shapeOrigin);
 
 						childChain[j]->worldToShape.Invert(childChain[j]->shapeToWorld);
-						childChain[j]->calcedThisFrame = turn;
+						childChain[j]->calcedThisFrame = g_framesSinceMissionStart;
 					}
 					else
 					{
@@ -1342,7 +1342,7 @@ long TG_MultiShape::TransformMultiShape (Stuff::Point3D *pos, Stuff::UnitQuatern
 						childChain[j]->shapeToWorld.Multiply(childChain[j]->localShapeToWorld,shapeOrigin);
 
 						childChain[j]->worldToShape.Invert(childChain[j]->shapeToWorld);
-						childChain[j]->calcedThisFrame = turn;
+						childChain[j]->calcedThisFrame = g_framesSinceMissionStart;
 					}
 				}
 			}
@@ -2112,7 +2112,6 @@ long TG_AnimateShape::LoadTGMultiShapeAnimationFromASE (char *fileName, TG_TypeM
 		//----------------------------------------------------------------------------
 		// Scan the Nodes.
 		actualCount = 0;
-		bool countUp = false;
 		for (long i=0;i<count;i++)
 		{
 			char *nodeId = shape->GetNodeId(i);
@@ -2183,7 +2182,6 @@ long TG_AnimateShape::LoadTGMultiShapeAnimationFromASE (char *fileName, TG_TypeM
 					animScan = strstr(animScan,ASE_ANIM_POS_HEADER);
 					if (animScan)
 					{
-						countUp = true;
 						actualCount++;
 						animScan += strlen(ASE_ANIM_POS_HEADER);
 		
@@ -2255,7 +2253,6 @@ long TG_AnimateShape::LoadTGMultiShapeAnimationFromASE (char *fileName, TG_TypeM
 		
 					if (animScan)
 					{
-						countUp = true;
 						actualCount++;
 						animScan += strlen(ASE_ANIM_ROT_HEADER);
 		
@@ -2340,8 +2337,6 @@ long TG_AnimateShape::LoadTGMultiShapeAnimationFromASE (char *fileName, TG_TypeM
 						}
 					}
 				}
-				
-				countUp = false;
 			}
 		}
 	

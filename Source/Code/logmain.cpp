@@ -279,13 +279,13 @@ void InitializeGameEngine()
 				long fileNum = 0;
 				char fastFileId[10];
 				char fileName[100];
-				sprintf(fastFileId,"File%d",fileNum);
+				sprintf(fastFileId,"File%ld",fileNum);
 	
 				while (systemFile->readIdString(fastFileId,fileName,99) == NO_ERR)
 				{
 					FastFileInit(fileName);
 					fileNum++;
-					sprintf(fastFileId,"File%d",fileNum);
+					sprintf(fastFileId,"File%ld",fileNum);
 					numFastFiles++;
 				}
 			}

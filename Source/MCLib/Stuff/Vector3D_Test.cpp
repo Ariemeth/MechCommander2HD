@@ -26,20 +26,11 @@ bool
 		d(2.0f,3.0f,1.0f);
 
 	Test_Assumption(!a.x && !a.y && !a.z);
-#if 0
-	Test_Assumption(c.x == 1.0f && c.y == 2.0f && c.z == 3.0f);
-
-	Test_Assumption(c[2] == c.z);
-	Test_Assumption(a[1] == a.y);
-#endif
 
 	Test_Assumption(Small_Enough(a));
 //	Test_Assumption(!a);
 
 	b = c;
-#if 0
-	Test_Assumption(b.x == c.x && b.y == c.y && b.z == c.z);
-#endif
 	Test_Assumption(Close_Enough(b,c));
 	Test_Assumption(b == c);
 	Test_Assumption(a != b);
@@ -60,9 +51,6 @@ bool
 	Test_Assumption(b == Vector3D(d.x-c.x,d.y-c.y,d.z-c.z));
 
 	Scalar f = c*d;
-#if 0
-	Test_Assumption(f == c.x*d.x + c.y*d.y + c.z*d.z);
-#endif
 
 	Vector3D x;
 	x.Cross(Right, Up);
@@ -100,7 +88,7 @@ bool
 	Test_Assumption(b == Vector3D(c.x/d.x,c.y/d.y,c.z/d.z));
 
 	AffineMatrix4D
-		m(true);
+		m(1);
 	EulerAngles
 		r(Pi_Over_4,0.0f,0.0f);
 	m.BuildRotation(r);

@@ -194,7 +194,7 @@ void CGroupDialog::OnGrAddButton()
 void CGroupDialog::OnGrRemoveButton() 
 {
 	unsigned long selectedItemIndex = m_MissionListControl.GetCurSel();
-	if ((0 <= selectedItemIndex) && (m_MissionList.Count() > selectedItemIndex)) {
+	if (m_MissionList.Count() > selectedItemIndex) {
 		// should put up confirmation box here
 		CMissionList::EIterator it = m_MissionList.Begin();
 		unsigned long index;
@@ -219,7 +219,7 @@ void CGroupDialog::OnGrRemoveButton()
 void CGroupDialog::OnGrEditButton() 
 {
 	unsigned long selectedItemIndex = m_MissionListControl.GetCurSel();
-	if ((0 <= selectedItemIndex) && (m_MissionList.Count() > selectedItemIndex)) {
+	if (m_MissionList.Count() > selectedItemIndex) {
 		CMissionData &missionDataRef = m_MissionList[selectedItemIndex];
 		CMissionDialog missionDialog;
 		setMissionDialogValues(missionDialog, missionDataRef);

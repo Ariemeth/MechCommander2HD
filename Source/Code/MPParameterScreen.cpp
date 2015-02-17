@@ -353,7 +353,7 @@ int	MPParameterScreen::handleMessage( unsigned long message, unsigned long who)
 			{
 				if (MPlayer->isHost())
 					MPlayer->setInProgress(true);
-				delayTime += g_deltaTime;
+				delayTime += g_frameTime;
 				char text[256];
 				cLoadString( IDS_MPLAYER_GAME_ABOUT_TO_START, text, 255 );
 				MPlayer->sendChat( 0, -1, text );
@@ -416,7 +416,7 @@ int	MPParameterScreen::handleMessage( unsigned long message, unsigned long who)
 					{
 						if ( MPlayer->commanderID == playerParameters[i].getCommanderID() )
 						{
-							soundSystem->playDigitalSample( LOG_WRONGBUTTON );
+							g_gameSoundSystem->playDigitalSample( LOG_WRONGBUTTON );
 							return 0;
 						}
 						char str[256];
@@ -638,31 +638,31 @@ void MPParameterScreen::setMission( const char* fileName, bool resetData )
 		strcpy(MPlayer->missionSettings.name, missionName);
 
 			
-		result = missionFile.readIdLong( "ResourcePoints", MPlayer->missionSettings.resourcePoints );
-		result = missionFile.readIdLong("AdditionalCBills", MPlayer->missionSettings.defaultCBills );
+		missionFile.readIdLong( "ResourcePoints", MPlayer->missionSettings.resourcePoints );
+		missionFile.readIdLong("AdditionalCBills", MPlayer->missionSettings.defaultCBills );
 		if (MPlayer->isHost())
 			MPlayer->redistributeRP();
 		float fTmp;
-		result = missionFile.readIdFloat( "DropWeightLimit", fTmp );
+		missionFile.readIdFloat( "DropWeightLimit", fTmp );
 		MPlayer->missionSettings.dropWeight = fTmp;
 		result = missionFile.readIdFloat( "TimeLimit", MPlayer->missionSettings.timeLimit );
 		if ( result != NO_ERR )
 			MPlayer->missionSettings.timeLimit = -1.f;
-		result = missionFile.readIdBoolean( "UnlimitedAmmoEnabledDefault", MPlayer->missionSettings.unlimitedAmmo );
-		result = missionFile.readIdBoolean( "NoVariantsEnabledDefault", MPlayer->missionSettings.variants );
+		missionFile.readIdBoolean( "UnlimitedAmmoEnabledDefault", MPlayer->missionSettings.unlimitedAmmo );
+		missionFile.readIdBoolean( "NoVariantsEnabledDefault", MPlayer->missionSettings.variants );
 		MPlayer->missionSettings.variants ^= 1;
-		result = missionFile.readIdBoolean( "AllTechEnabledDefault", MPlayer->missionSettings.allTech );
-		result = missionFile.readIdBoolean( "AirStrikesEnabledDefault", MPlayer->missionSettings.airStrike );
-		result = missionFile.readIdBoolean( "ArtilleryPieceEnabledDefault", MPlayer->missionSettings.guardTower );
-		result = missionFile.readIdBoolean( "RepairVehicleEnabledDefault", MPlayer->missionSettings.repairVehicle );
-		result = missionFile.readIdBoolean( "SalvageCraftEnabledDefault", MPlayer->missionSettings.recoveryTeam );
-		result = missionFile.readIdBoolean( "SensorProbesEnabledDefault", MPlayer->missionSettings.sensorProbe );
-		result = missionFile.readIdBoolean( "ScoutCoptersEnabledDefault", MPlayer->missionSettings.scoutCopter );
-		result = missionFile.readIdBoolean( "MineLayersEnabledDefault", MPlayer->missionSettings.mineLayer );
-		result = missionFile.readIdBoolean( "ResourceBuildingsEnabledDefault", MPlayer->missionSettings.resourceBuilding );
-		result = missionFile.readIdBoolean( "ScoutCoptersEnabledDefault", MPlayer->missionSettings.scoutCopter );
-		result = missionFile.readIdBoolean( "RPsForMechsEnabledDefault", MPlayer->missionSettings.resourceForMechs );
-		result = missionFile.readIdString( "DownloadURL", MPlayer->missionSettings.url, 255 );
+		missionFile.readIdBoolean( "AllTechEnabledDefault", MPlayer->missionSettings.allTech );
+		missionFile.readIdBoolean( "AirStrikesEnabledDefault", MPlayer->missionSettings.airStrike );
+		missionFile.readIdBoolean( "ArtilleryPieceEnabledDefault", MPlayer->missionSettings.guardTower );
+		missionFile.readIdBoolean( "RepairVehicleEnabledDefault", MPlayer->missionSettings.repairVehicle );
+		missionFile.readIdBoolean( "SalvageCraftEnabledDefault", MPlayer->missionSettings.recoveryTeam );
+		missionFile.readIdBoolean( "SensorProbesEnabledDefault", MPlayer->missionSettings.sensorProbe );
+		missionFile.readIdBoolean( "ScoutCoptersEnabledDefault", MPlayer->missionSettings.scoutCopter );
+		missionFile.readIdBoolean( "MineLayersEnabledDefault", MPlayer->missionSettings.mineLayer );
+		missionFile.readIdBoolean( "ResourceBuildingsEnabledDefault", MPlayer->missionSettings.resourceBuilding );
+		missionFile.readIdBoolean( "ScoutCoptersEnabledDefault", MPlayer->missionSettings.scoutCopter );
+		missionFile.readIdBoolean( "RPsForMechsEnabledDefault", MPlayer->missionSettings.resourceForMechs );
+		missionFile.readIdString( "DownloadURL", MPlayer->missionSettings.url, 255 );
 		unsigned long lTmp;
 		if ( NO_ERR == missionFile.readIdULong( "MaximumNumberOfTeams", lTmp ) )
 			MPlayer->missionSettings.maxTeams = lTmp;
@@ -675,7 +675,7 @@ void MPParameterScreen::setMission( const char* fileName, bool resetData )
 			MPlayer->missionSettings.maxPlayers = 8;
 		
 		unsigned long tmp;
-		result = missionFile.readIdULong( "MissionType", tmp );
+		missionFile.readIdULong( "MissionType", tmp );
 			MPlayer->missionSettings.missionType = tmp;
 
 		// divvy up the cBills!
@@ -790,7 +790,7 @@ void MPParameterScreen::update()
 	if ( !bWaitingToStart && MPlayer->missionSettings.inProgress )
 	{
 		bWaitingToStart = true;
-		soundSystem->playBettySample( BETTY_DEPLOY_MSG );
+		g_gameSoundSystem->playBettySample( BETTY_DEPLOY_MSG );
 	}
 	else if ( !MPlayer->missionSettings.inProgress )
 	{
@@ -798,7 +798,7 @@ void MPParameterScreen::update()
 	}
 
 	if ( delayTime )
-		delayTime += g_deltaTime;
+		delayTime += g_frameTime;
 
 	if ( delayTime > 5.f )
 	{
@@ -1202,13 +1202,11 @@ void MPParameterScreen::update()
 			{
 				// new player... need to redistribute rp
 				int maxCommander = -1;
-				int teamID = -1;
 				for( int i = 0; i < playerCount; i++ )
 				{
 					if ( players[i].commanderID > maxCommander )
 					{
 						maxCommander = players[i].commanderID;
-						teamID = players[i].team;
 					}
 				}
 			}
@@ -1531,6 +1529,9 @@ aPlayerParams::~aPlayerParams()
 
 aPlayerParams& aPlayerParams::operator=( const aPlayerParams& src )
 {
+	if(this == &src)
+		return *this;
+
 	aObject::operator=( src );
 
 	addChild(&ReadyButton);
@@ -1587,7 +1588,6 @@ aPlayerParams& aPlayerParams::operator=( const aPlayerParams& src )
 
 	addChild( &factionDropList );
 	factionDropList = src.factionDropList;
-
 
 	return *this;
 }
@@ -1664,7 +1664,7 @@ void aPlayerParams::init( FitIniFile* pFile, const char* blockNameParam )
 				char blockName[128];
 				for ( int i = 0; i < staticCount; i++ )
 				{
-					sprintf( blockName, "%s%ld", staticName, i );
+					sprintf( blockName, "%s%d", staticName, i );
 					statics[i].init( &file, blockName );			
 					addChild(&(statics[i]));
 				}
@@ -1687,7 +1687,7 @@ void aPlayerParams::init( FitIniFile* pFile, const char* blockNameParam )
 				char blockName[128];
 				for ( int i = 0; i < rectCount; i++ )
 				{
-					sprintf( blockName, "%s%ld", rectName, i );
+					sprintf( blockName, "%s%d", rectName, i );
 					rects[i].init( &file, blockName );
 					addChild(&(rects[i]));
 				}
@@ -1710,7 +1710,7 @@ void aPlayerParams::init( FitIniFile* pFile, const char* blockNameParam )
 				char blockName[64];
 				for ( int i = 0; i < textCount; i++ )
 				{
-					sprintf( blockName, "%s%ld", textName, i );
+					sprintf( blockName, "%s%d", textName, i );
 					textObjects[i].init( &file, blockName );
 					addChild(&(textObjects[i]));
 				}
@@ -1966,30 +1966,16 @@ void aPlayerParams::update()
 	if ( !bHasFocus )
 		return;
 
-
-
 	bool bOldReady = ReadyButton.isPressed();
-
 	if ( bOldReady ) // need to check the ready button if nothing else
 	{
 		ReadyButton.update();
 	}
 
-
-
-		// need to check for changes
-		int oldSel = teamNumberDropList.GetSelectedItem();
-		int oldFaction = factionDropList.GetSelectedItem();
-		const char* pText = textObjects[1].text;
+	// need to check for changes
+	int oldSel = teamNumberDropList.GetSelectedItem();
+	int oldFaction = factionDropList.GetSelectedItem();
 		
-		long oldCBills = 0;
-		
-		if ( pText )
-		{
-			oldCBills = atoi( pText ) * 1000;
-		}
-		
-
 	bool bCBillsChanged = 0;
 	if ( !bOldReady || ( MPlayer->isHost() ) ) // don't do anything if all ready. 
 	{
@@ -2097,7 +2083,7 @@ void	aPlayerParams::setData( const _MC2Player* data)
 	else
 	{
 		if ( ReadyButton.isPressed() )
-			soundSystem->playDigitalSample( LOG_UNREADY );
+			g_gameSoundSystem->playDigitalSample( LOG_UNREADY );
 		ReadyButton.press( 0 );
 	}
 

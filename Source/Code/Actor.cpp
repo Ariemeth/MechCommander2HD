@@ -94,7 +94,7 @@ long VFXAppearanceType::loadIniFile (FilePtr apprFile, unsigned long fileSize)
 	for (long curState = 0; curState < numStates; curState++) 
 	{
 		char stateBlockName[20];
-		sprintf(stateBlockName,"State%d",curState);
+		sprintf(stateBlockName,"State%ld",curState);
 
 		result = VFXAppearanceFile.seekBlock(stateBlockName);
 		gosASSERT(result == NO_ERR);
@@ -358,9 +358,6 @@ long VFXAppearance::render (long depthFixup)
 	float tFrameRate = 0.0;
 	currentTexture = appearType->getTexture(currentShapeTypeId,rotation,currentFrame,tFrameRate,oldMirror);
 
-	if (currentFrame < 0)
-		currentFrame = 0;
-
 	TextureElement newElement;
 	bool shapesOK = FALSE;
 
@@ -448,11 +445,9 @@ long VFXAppearance::update (void)
 	//--------------------------------------------------------
 	// Check if we are just starting out.  If so, set
 	// the current frame to zero.
-	bool startingAnimation = FALSE;
 	if (currentFrame == -1)
 	{
 		currentFrame = 0;
-		startingAnimation = TRUE;
 	}
 		
   	//--------------------------------------------------------------

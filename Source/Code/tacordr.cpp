@@ -128,7 +128,7 @@
 
 extern TeamPtr homeTeam;
 extern UserHeapPtr g_systemHeap;
-extern float scenarioTime;
+extern float g_missionTime;
 extern float FireArc;
 extern long LastMoveCalcErr;
 
@@ -213,7 +213,7 @@ void TacticalOrder::init (void) {
 void TacticalOrder::init (OrderOriginType _origin, TacticalOrderCode _code, bool _unitOrder) {
 
 	init();
-	time = scenarioTime;
+	time = g_missionTime;
 	unitOrder = _unitOrder;
 	origin = _origin;
 	code = _code;
@@ -801,7 +801,7 @@ long TacticalOrder::execute (MechWarriorPtr warrior, long& message) {
 	switch (code) {
 		case TACTICAL_ORDER_MOVETO_POINT: {
 			if (delayedTime != -1.0) {
-				if (delayedTime > scenarioTime)
+				if (delayedTime > g_missionTime)
 					return(TACORDER_FAILURE);
 				delayedTime = -1.0;
 			}
@@ -841,7 +841,7 @@ long TacticalOrder::execute (MechWarriorPtr warrior, long& message) {
 			//-----------------------------------------------------
 			// If we got into here, we know the jump can be done...
 			if (delayedTime != -1.0) {
-				if (delayedTime > scenarioTime)
+				if (delayedTime > g_missionTime)
 					return(TACORDER_FAILURE);
 				delayedTime = -1.0;
 			}
@@ -856,7 +856,7 @@ long TacticalOrder::execute (MechWarriorPtr warrior, long& message) {
 			//-----------------------------------------------------
 			// If we got into here, we know the jump can be done...
 			if (delayedTime != -1.0) {
-				if (delayedTime > scenarioTime)
+				if (delayedTime > g_missionTime)
 					return(TACORDER_FAILURE);
 				delayedTime = -1.0;
 			}
@@ -897,7 +897,7 @@ long TacticalOrder::execute (MechWarriorPtr warrior, long& message) {
 			break;
 		case TACTICAL_ORDER_POWERUP:
 			if (delayedTime > -1.0) {
-				if (scenarioTime < delayedTime)
+				if (g_missionTime < delayedTime)
 					return(TACORDER_FAILURE);
 				delayedTime = -1.0;
 			}
@@ -905,7 +905,7 @@ long TacticalOrder::execute (MechWarriorPtr warrior, long& message) {
 			break;
 		case TACTICAL_ORDER_POWERDOWN:
 			if (delayedTime > -1.0) {
-				if (scenarioTime < delayedTime)
+				if (g_missionTime < delayedTime)
 					return(TACORDER_FAILURE);
 				delayedTime = -1.0;
 			}
@@ -1116,11 +1116,6 @@ long TacticalOrder::execute (MechWarriorPtr warrior, long& message) {
 				stage = -1;
 			break;
 		case TACTICAL_ORDER_DEPLOY_ELEMENTALS: {
-			unsigned long params = TACORDER_PARAM_NONE;
-			if (moveParams.wayPath.mode[0] == TRAVEL_MODE_FAST)
-				params |= TACORDER_PARAM_RUN;
-			if (moveParams.wait)
-				params |= TACORDER_PARAM_WAIT;
 			result = TACORDER_SUCCESS;
 			if (result == TACORDER_SUCCESS)
 				stage = -1;
@@ -1130,12 +1125,6 @@ long TacticalOrder::execute (MechWarriorPtr warrior, long& message) {
 			result = TACORDER_SUCCESS;
 			if (target && (target->isCaptureable(warrior->getTeam()->getId())) && !warrior->getVehicle()->isFriendly(target->getTeam())) {
 				if (!target->getCaptureBlocker(warrior->getVehicle())) {
-					bool prison = false;
-					if (target->isBuilding()) {
-						if ((target->getObjectClass() == BUILDING) && ((BuildingPtr)target)->isPrison())
-							prison = true;
-					}
-
 					// if this isn't a prison, go for it. if it is, only a ground vehicle with seats for pilots can capture it
 					// NOTHING IS EVER A PRISON NOW!!
 					result = TACORDER_FAILURE;
@@ -1266,7 +1255,7 @@ long TacticalOrder::status (MechWarriorPtr warrior) {
 	GameObjectPtr target = ObjectManager->getByWatchID(targetWID);
 	switch (code) {
 		case TACTICAL_ORDER_WAIT:
-			result = (scenarioTime > delayedTime) ? TACORDER_SUCCESS : TACORDER_FAILURE;
+			result = (g_missionTime > delayedTime) ? TACORDER_SUCCESS : TACORDER_FAILURE;
 			break;
 		case TACTICAL_ORDER_MOVETO_POINT: {
 			long formation = -1;
@@ -1275,7 +1264,7 @@ long TacticalOrder::status (MechWarriorPtr warrior) {
 				result = TACORDER_FAILURE;
 			else {
 				if (delayedTime > -1.0) {
-					if (scenarioTime < delayedTime)
+					if (g_missionTime < delayedTime)
 						return(TACORDER_FAILURE);
 					delayedTime = -1.0;
 					long message;
@@ -1328,17 +1317,7 @@ long TacticalOrder::status (MechWarriorPtr warrior) {
 #endif
 			}
 			break;
-#if 0
-		case TACTICAL_ORDER_TRAVERSE_PATH:
-			if (stage == 2)
-				result = TACORDER_SUCCESS;
-			else
-				result = TACORDER_FAILURE;
-			break;
-		case TACTICAL_ORDER_PATROL_PATH:
-			result = TACORDER_FAILURE;
-			break;
-#endif
+
 		case TACTICAL_ORDER_ESCORT:
 		case TACTICAL_ORDER_FOLLOW:
 			break;
@@ -1350,7 +1329,7 @@ long TacticalOrder::status (MechWarriorPtr warrior) {
 			break;
 		case TACTICAL_ORDER_POWERUP:
 			if (delayedTime > -1.0) {
-				if (scenarioTime < delayedTime)
+				if (g_missionTime < delayedTime)
 					return(TACORDER_FAILURE);
 				delayedTime = -1.0;
 				long message;
@@ -1361,7 +1340,7 @@ long TacticalOrder::status (MechWarriorPtr warrior) {
 			break;
 		case TACTICAL_ORDER_POWERDOWN:
 			if (delayedTime > -1.0) {
-				if (scenarioTime < delayedTime)
+				if (g_missionTime < delayedTime)
 					return(TACORDER_FAILURE);
 				delayedTime = -1.0;
 				long message;
@@ -1466,17 +1445,17 @@ long TacticalOrder::status (MechWarriorPtr warrior) {
 						if (time == 0)
 						{
 							target->getPilot()->orderPowerDown(unitOrder, ORDER_ORIGIN_SELF);
-							time = scenarioTime;
+							time = g_missionTime;
 						}
-						else if (scenarioTime > time + 3)
+						else if (g_missionTime > time + 3)
 						{
 							stage++;
-							time = scenarioTime;
+							time = g_missionTime;
 						}
 						break;
 					case 3:	// do the deed
 						((GroundVehiclePtr)warrior->getVehicle())->refitting = true;
-						if (scenarioTime > time + Mover::refitTime)
+						if (g_missionTime > time + Mover::refitTime)
 						{
 							float pointsUsed = 0;
 							float pointsAvailable = warrior->getVehicle()->getRefitPoints();
@@ -1511,7 +1490,7 @@ long TacticalOrder::status (MechWarriorPtr warrior) {
 							}
 							stage += result;
 							if (result == 0)
-								time = scenarioTime;
+								time = g_missionTime;
 							if (!warrior->getVehicle()->getRefitPoints())
 								warrior->getVehicle()->disable(POWER_USED_UP);
 
@@ -1551,17 +1530,17 @@ long TacticalOrder::status (MechWarriorPtr warrior) {
 						if (time == 0)
 						{
 							warrior->orderPowerDown(unitOrder, ORDER_ORIGIN_SELF);
-							time = scenarioTime;
+							time = g_missionTime;
 						}
-						else if (scenarioTime > time + 3)
+						else if (g_missionTime > time + 3)
 						{
 							stage++;
-							time = scenarioTime;
-							soundSystem->playDigitalSample( REPAIRBAY_FX, target->getPosition() );
+							time = g_missionTime;
+							g_gameSoundSystem->playDigitalSample( REPAIRBAY_FX, target->getPosition() );
 						}
 						break;
 					case 3:	// do the deed
-						if (scenarioTime > time + Mover::refitTime)
+						if (g_missionTime > time + Mover::refitTime)
 						{
 							float pointsUsed = 0;
 							float pointsAvailable = target->getRefitPoints();
@@ -1590,7 +1569,7 @@ long TacticalOrder::status (MechWarriorPtr warrior) {
 							stage += result;
 							if (result == 0)
 							{
-								time = scenarioTime;
+								time = g_missionTime;
 							}
 							else  // power-up (or whatever) and walk off
 							{
@@ -1643,19 +1622,19 @@ long TacticalOrder::status (MechWarriorPtr warrior) {
 						
 						target->getPilot()->clearMoveOrders();	// stop!
 
-						time = scenarioTime;
+						time = g_missionTime;
 						stage++;	// not really stage here. see below
 					}
 					break;
 				case 2:
-					if ((scenarioTime > time + 3) && myGroup) {
+					if ((g_missionTime > time + 3) && myGroup) {
 						for (long i = 0; i< myGroup->getNumMovers(); i++)
 							myGroup->getMover(i)->getPilot()->orderMoveToObject(false, false, ORDER_ORIGIN_SELF, target, moveParams.fromArea);
 						stage++;
 					}
 					break;
 				case 3:
-					if (scenarioTime > time + 5) {
+					if (g_missionTime > time + 5) {
 						for (long i=0; i < myGroup->getNumMovers(); i++) {
 							((ElementalPtr)myGroup->getMover(i))->transport = (MoverPtr)target;
 							for (int j=0; j<MAX_TOADS; j++)
@@ -1683,7 +1662,7 @@ long TacticalOrder::status (MechWarriorPtr warrior) {
 			if (stage != -1)
 			{
 				result = TACORDER_FAILURE;
-				if (scenarioTime > time + 5)
+				if (g_missionTime > time + 5)
 				{
 				short	deployCount = 5;
 				int		i;
@@ -1711,7 +1690,7 @@ long TacticalOrder::status (MechWarriorPtr warrior) {
 							((GroundVehiclePtr) warrior->getVehicle())->toads[i] = NULL;
 							if (deployCount == 0)
 							{
-								time = scenarioTime;	// come back for another load
+								time = g_missionTime;	// come back for another load
 								break;
 							}
 						}
@@ -1822,85 +1801,6 @@ long TacticalOrder::status (MechWarriorPtr warrior) {
 		case TACTICAL_ORDER_RECOVER:
 			// has recoverer gotten distracted?
 			STOP(("RECOVER TACORDER NO LONGER VALID"));
-#if 0
-			if (!target || (warrior->getVehicle()->recoverBuddyWID == 0) || (((MoverPtr)target)->recoverBuddyWID == 0))
-				result = TACORDER_SUCCESS;
-			else {
-				// refitter and refitee *should* be pointing at each other...
-				//Assert(warrior->getVehicle()->recoverBuddyWID == target->getWatchID() &&
-				//		((MoverPtr) target)->recoverBuddyWID == warrior->getVehicle()->getWatchID(), 0, "Recoveree and recoverer aren't pointing at each other.");
-				result = TACORDER_FAILURE;
-				switch(stage) {
-					case 1:	// move
-						if (warrior->getVehicle()->distanceFrom(target->getPosition()) < Mover::recoverRange)
-							stage++;
-						break;
-					case 2: // power-down (or other cool animation...)
-						if (target->getObjectClass() == BATTLEMECH) {
-							((BattleMechPtr)target)->leftArmBlownThisFrame = false;
-							((BattleMechPtr)target)->rightArmBlownThisFrame = false;
-							((MoverPtr)target)->getPilot()->clearAlarms();
-						}
-						if (target->isDisabled())
-							target->setStatus(OBJECT_STATUS_SHUTDOWN);
-						mission->tradeMover((Mover*)target, Team::home->getId(), Commander::home->getId(), 
-							(char*)LogisticsData::instance->getBestPilot( (target)->tonnage ), "pbrain");
-						((MoverPtr)target)->recoverBuddyWID = warrior->getVehicle()->getWatchID();
-						warrior->getVehicle()->recoverBuddyWID = target->getWatchID();
-						stage++;
-						break;
-					case 3:
-						if (time <= 0.0) {
-							target->getPilot()->orderPowerDown(unitOrder, ORDER_ORIGIN_SELF);
-							time = scenarioTime;
-						}
-						else if (scenarioTime > time + 3.0) {
-							stage++;
-							time = scenarioTime;
-						}
-						break;
-					case 4:	// do the deed
-						((GroundVehiclePtr)warrior->getVehicle())->refitting = true;
-						if (scenarioTime > time + Mover::refitTime) {
-							float pointsUsed = 0;
-							long result = ((MoverPtr)target)->recover(warrior->getVehicle()->getRecoverPoints(), pointsUsed);
-							warrior->getVehicle()->burnRecoverPoints(pointsUsed);
-							if (MPlayer) {
-								STOP((" Need to implement recover for multiplayer "));
-								WeaponShotInfo recoverInfo;
-								recoverInfo.init(NULL,
-											   -5,
-											   pointsUsed,
-											   GROUNDVEHICLE_LOCATION_TURRET,
-											   0.0);
-								MPlayer->addWeaponHitChunk((GameObjectPtr)warrior->getVehicle(), &recoverInfo);
-								recoverInfo.init(NULL,
-											   -5,
-											   pointsUsed,
-											   0,
-											   0.0);
-								MPlayer->addWeaponHitChunk(target, &recoverInfo, TRUE);
-							}
-							stage += result;
-							if (result == 0)
-								time = scenarioTime;
-						}
-						break;
-					case 5: // done. power-up (or whatever) and report
-						((GroundVehiclePtr)warrior->getVehicle())->recovering = false;
-						target->getPilot()->orderPowerUp(unitOrder, ORDER_ORIGIN_SELF);
-						result = TACORDER_SUCCESS;
-						((MoverPtr)target)->recoverBuddyWID = 0;
-						warrior->getVehicle()->recoverBuddyWID = 0;
-						warrior->getVehicle()->setSelected( 0 );
-						warrior->getVehicle()->disable(POWER_USED_UP) ;
-						break;
-					case -1:	// execute failed
-						result = TACORDER_SUCCESS;
-						break;
-				}
-			}
-#endif
 			break;
 	}
 
@@ -2055,7 +1955,7 @@ void TacticalOrder::debugString (MechWarriorPtr pilot, char* s) {
 			curPos.z = 0.0;
 			long cell[2];
 			land->worldToCell(curPos, cell[0], cell[1]);
-			sprintf(s, "move to pt (%.0f, %.0f) [%d, %d]",
+			sprintf(s, "move to pt (%.0f, %.0f) [%ld, %ld]",
 				moveParams.wayPath.points[0],
 				moveParams.wayPath.points[1],
 				cell[0], cell[1]);
@@ -2071,7 +1971,7 @@ void TacticalOrder::debugString (MechWarriorPtr pilot, char* s) {
 			curPos.z = 0.0;
 			long cell[2];
 			land->worldToCell(curPos, cell[0], cell[1]);
-			sprintf(s, "jump to pt (%.0f, %.0f)",
+			sprintf(s, "jump to pt (%.0f, %.0f) [%ld, %ld]",
 				moveParams.wayPath.points[0],
 				moveParams.wayPath.points[1],
 				cell[0], cell[1]);
@@ -2137,7 +2037,7 @@ void TacticalOrder::debugString (MechWarriorPtr pilot, char* s) {
 			GameObjectPtr obj;
 			long goalType = pilot->getMoveGoal(&goalPos, &obj);
 			if ((goalType > 0) && obj) {
-				sprintf(s, "capture obj (%d) [%d]", target ? target->getPartId() : 0, obj->getPartId());
+				sprintf(s, "capture obj (%d) [%ld]", target ? target->getPartId() : 0, obj->getPartId());
 				}
 			else
 				sprintf(s, "capture obj (%d) [GOAL?]", target ? target->getPartId() : 0);

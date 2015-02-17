@@ -66,7 +66,7 @@ void FullPathFileName::init (char * dir_path, const char * name, char * ext)
 	strcat(fullName,name);
 
 	// don't append if its already there
-	if (ext && stricmp( fullName + strlen( fullName ) - strlen( ext ), ext ) != 0)
+	if (stricmp( fullName + strlen( fullName ) - strlen( ext ), ext ) != 0)
 		strcat(fullName,ext);
 
 	CharLower(fullName);

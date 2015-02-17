@@ -15,13 +15,13 @@
 
 //----------------------------------------------------------------------------------
 extern bool		g_gamePaused;			//Is the game paused?
-extern long 	turn;				//What frame of the scenario is it?
-extern float	g_deltaTime;		//Duration of last frame in seconds.
-extern float	scenarioTime;		//Time scenario has been running.
-extern DWORD	LastTimeGetTime;	//Stores Interval since timeGetTime last called.
+extern long 	g_framesSinceMissionStart;				//What frame of the scenario is it?
+extern float	g_frameTime;		//Duration of last frame in seconds.
+extern float	g_missionTime;		//Time scenario has been running.
+extern DWORD	lastTimeGetTime;	//Stores Interval since timeGetTime last called.
 extern bool		dynamicFrameTiming;	//This flag determines if we are using g_deltaTime
-									//To time a frame.  This is FALSE when something
-									//puches a frame length dramatically over 4fps.
+									//to time a frame.  This is FALSE when something
+									//pushes a frame length dramatically under 4fps.
 									//Like a cache hit.  It insures all frames get played.
 
 //----------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ class Timer
 		{
 			if (updateWhilePaused || !g_gamePaused)
 			{
-				currentTime -= g_deltaTime;
+				currentTime -= g_frameTime;
 				if (currentTime < 0.0)
 					expired = TRUE;
 				else

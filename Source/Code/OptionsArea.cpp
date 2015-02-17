@@ -403,10 +403,6 @@ void OptionsGraphics::init(long xOffset, long yOffset)
 	DWORD numDevices = 0;
 	numDevices = gos_GetMachineInformation( gos_Info_NumberDevices );
 
-	//Theoretically impossible but config would probably like to know if it happens!
-	if (numDevices <= 0)
-		STOP(("GameOS said there were no video cards in the system!"));
-
 	long usableCardCount = 0;
 	for (i=0;i<numDevices;i++)
 	{
@@ -520,7 +516,7 @@ void OptionsGraphics::update()
 	else if ( userInput->isLeftClick() &&
 		resolutionList.pointInside( userInput->getMouseX(), userInput->getMouseY() ) )
 	{
-		soundSystem->playDigitalSample( LOG_WRONGBUTTON );
+		g_gameSoundSystem->playDigitalSample( LOG_WRONGBUTTON );
 	}
 	
 
@@ -691,14 +687,14 @@ void OptionsAudio::update()
 	g_userPreferences.RadioVolume = scrollBars[3].GetScrollPos();
 	g_userPreferences.BettyVolume = scrollBars[4].GetScrollPos();
 
-	if (g_soundSystem) 
-	{
-		g_soundSystem->setDigitalMasterVolume(g_userPreferences.DigitalMasterVolume);
-		g_soundSystem->setSFXVolume(g_userPreferences.sfxVolume);
-		g_soundSystem->setRadioVolume(g_userPreferences.RadioVolume);
-		g_soundSystem->setMusicVolume(g_userPreferences.MusicVolume);
-		g_soundSystem->setBettyVolume(g_userPreferences.BettyVolume);
-	}
+	//if (g_soundSystem) 
+	//{
+	//	g_soundSystem->setDigitalMasterVolume(g_userPreferences.DigitalMasterVolume);
+	//	g_soundSystem->setSFXVolume(g_userPreferences.sfxVolume);
+	//	g_soundSystem->setRadioVolume(g_userPreferences.RadioVolume);
+	//	g_soundSystem->setMusicVolume(g_userPreferences.MusicVolume);
+	//	g_soundSystem->setBettyVolume(g_userPreferences.BettyVolume);
+	//}
 }
 
 void OptionsAudio::begin()

@@ -184,10 +184,6 @@ namespace Stuff {
 			);
 		Plug
 			*FindImplementation(const void *value);
-#if 0
-		Plug
-			*FindCloseImplementation(const void *value);
-#endif
 
 	private:
 		//
@@ -221,10 +217,7 @@ namespace Stuff {
 			SortTableEntries();
 		IteratorPosition
 			SearchForValue(const void *value);
-#if 0
-		IteratorPosition
-			SearchForCloseValue(const void *value);
-#endif
+
 		IteratorPosition
 			SearchForTableEntry(TableEntry *entry);
 		void
@@ -277,11 +270,6 @@ namespace Stuff {
 		T
 			Find(const V &value)
 				{return (T)FindImplementation(&value);}
-#if 0
-		T
-			FindClose(const V &value)
-				{return (T)FindCloseImplementation(&value);}
-#endif
 
 	private:
 		//

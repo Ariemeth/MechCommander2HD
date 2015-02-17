@@ -80,7 +80,7 @@ long SunDlg::getHexValue( CEdit& edit )
 	str.Replace( "0x", 0 );
 
 	long value;
-	sscanf( str, "%x", &value ); 
+	sscanf( str, "%x", (unsigned int*)&value ); 
 
 	return value;
 }

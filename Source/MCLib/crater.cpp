@@ -149,7 +149,7 @@ long CraterManager::init (long numCraters, unsigned long craterTypeSize, char *c
 	for (long i=0;i<numCraterTextures;i++)
 	{
 		char craterName[1024];
-		sprintf(craterName,"defaults\\feet%04d",i);
+		sprintf(craterName,"defaults\\feet%04ld",i);
 		
 		FullPathFileName craterPath;
 		craterPath.init(texturePath,craterName,".tga");
@@ -361,15 +361,12 @@ void CraterManager::render (void)
 			// Check clipping
 			if (onScreen1 || onScreen2 || onScreen3 || onScreen4)
 			{
-				DWORD lightRGB = 0xffffffff;
-				DWORD specR = 0, specB = 0, specG = 0;
-				
-				unsigned char lightr = 0xff,lightg = 0xff,lightb = 0xff;
-				lightr = eye->ambientRed;
-				lightg = eye->ambientGreen;
-				lightb = eye->ambientBlue;
+				unsigned char lightr = eye->ambientRed;
+				unsigned char lightg = eye->ambientGreen;
+				unsigned char lightb = eye->ambientBlue;
 						
-				lightRGB = lightb + (lightr<<16) + (lightg << 8) + (0xff << 24);
+				DWORD specR = 0, specB = 0, specG = 0;
+				DWORD lightRGB = lightb + (lightr<<16) + (lightg << 8) + (0xff << 24);
 				
 				if (Terrain::terrainTextures2)
 				{

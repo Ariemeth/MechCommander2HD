@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2013 for Windows Desktop
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUI", "GUI\GUI.vcxproj", "{97985315-F026-4AB8-A765-2DBE7B78CC6C}"
 EndProject
@@ -76,21 +76,18 @@ Global
 		{D6A172C0-ACCD-4F05-BADA-D8DEBD36B666}.Release|Win32.ActiveCfg = Release|Win32
 		{D6A172C0-ACCD-4F05-BADA-D8DEBD36B666}.Release|Win32.Build.0 = Release|Win32
 		{D6A172C0-ACCD-4F05-BADA-D8DEBD36B666}.Retail|Win32.ActiveCfg = Retail|Win32
-		{D6A172C0-ACCD-4F05-BADA-D8DEBD36B666}.Retail|Win32.Build.0 = Retail|Win32
 		{533EB470-9743-48C3-A77F-1490873B7CBB}.Debug|Win32.ActiveCfg = Debug|Win32
 		{533EB470-9743-48C3-A77F-1490873B7CBB}.Debug|Win32.Build.0 = Debug|Win32
 		{533EB470-9743-48C3-A77F-1490873B7CBB}.Profile|Win32.ActiveCfg = Profile|Win32
 		{533EB470-9743-48C3-A77F-1490873B7CBB}.Release|Win32.ActiveCfg = Release|Win32
 		{533EB470-9743-48C3-A77F-1490873B7CBB}.Release|Win32.Build.0 = Release|Win32
 		{533EB470-9743-48C3-A77F-1490873B7CBB}.Retail|Win32.ActiveCfg = Retail|Win32
-		{533EB470-9743-48C3-A77F-1490873B7CBB}.Retail|Win32.Build.0 = Retail|Win32
 		{8D87B501-FAB3-4468-A67E-72CE3F4D21AE}.Debug|Win32.ActiveCfg = Debug|Win32
 		{8D87B501-FAB3-4468-A67E-72CE3F4D21AE}.Debug|Win32.Build.0 = Debug|Win32
 		{8D87B501-FAB3-4468-A67E-72CE3F4D21AE}.Profile|Win32.ActiveCfg = Profile|Win32
 		{8D87B501-FAB3-4468-A67E-72CE3F4D21AE}.Release|Win32.ActiveCfg = Release|Win32
 		{8D87B501-FAB3-4468-A67E-72CE3F4D21AE}.Release|Win32.Build.0 = Release|Win32
 		{8D87B501-FAB3-4468-A67E-72CE3F4D21AE}.Retail|Win32.ActiveCfg = Retail|Win32
-		{8D87B501-FAB3-4468-A67E-72CE3F4D21AE}.Retail|Win32.Build.0 = Retail|Win32
 		{FDA65357-68F7-4567-89C0-A4D15FB27CDB}.Debug|Win32.ActiveCfg = Debug|Win32
 		{FDA65357-68F7-4567-89C0-A4D15FB27CDB}.Debug|Win32.Build.0 = Debug|Win32
 		{FDA65357-68F7-4567-89C0-A4D15FB27CDB}.Profile|Win32.ActiveCfg = Profile|Win32
@@ -106,7 +103,6 @@ Global
 		{CFE8A9D5-80DF-4ACC-B91F-64AB2167BC3A}.Release|Win32.ActiveCfg = Release|Win32
 		{CFE8A9D5-80DF-4ACC-B91F-64AB2167BC3A}.Release|Win32.Build.0 = Release|Win32
 		{CFE8A9D5-80DF-4ACC-B91F-64AB2167BC3A}.Retail|Win32.ActiveCfg = Retail|Win32
-		{CFE8A9D5-80DF-4ACC-B91F-64AB2167BC3A}.Retail|Win32.Build.0 = Retail|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

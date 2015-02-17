@@ -50,7 +50,6 @@ extern char* MechAnimationNames[MaxGestures];
 long g_objectTextureSize = 128;
 MidLevelRenderer::MLRClipper * theClipper = NULL;
 HGOSFONT3D gosFontHandle = 0;
-extern HGOSFONT3D	FontHandle;
 FloatHelpPtr globalFloatHelp = NULL;
 unsigned long currentFloatHelp = 0;
 
@@ -229,7 +228,7 @@ long convertASE2TGL (char *file)
 					// We will get animation from LAST LOD loaded
 					long i=0;
 					char fileCheck[1024];
-					sprintf(fileCheck,"FileName%d",i);
+					sprintf(fileCheck,"FileName%ld",i);
 					result = iniFile.readIdString(fileCheck,fileName,1023);
 					
 					while (result == NO_ERR)
@@ -259,7 +258,7 @@ long convertASE2TGL (char *file)
 						shape->LoadTGMultiShapeFromASE(aseName, true, armProvider);
 						
 						i++;
-						sprintf(fileCheck,"FileName%d",i);
+						sprintf(fileCheck,"FileName%ld",i);
 						result = iniFile.readIdString(fileCheck,fileName,1023);
  					}
 				}
@@ -303,7 +302,7 @@ long convertASE2TGL (char *file)
 
 				long i=0;
 				char animCheck[1024];
-				sprintf(animCheck,"Animation:%d",i);
+				sprintf(animCheck,"Animation:%ld",i);
 				result = iniFile.seekBlock(animCheck);
 				
 				while (result == NO_ERR)		//This thing has animations.  Process them!
@@ -332,7 +331,7 @@ long convertASE2TGL (char *file)
 					}
 					
 					i++;
-					sprintf(animCheck,"Animation:%d",i);
+					sprintf(animCheck,"Animation:%ld",i);
 					result = iniFile.seekBlock(animCheck);
 				}
 				
@@ -682,44 +681,13 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 		}
 	}
 
-	/*
-	//Time BOMB goes here.
-	// Set Date and write Binary data to registry under key
-	// GraphicsDataInit!!
-	SYSTEMTIME bombDate;
-	DWORD dataSize = sizeof(SYSTEMTIME);
-	gos_LoadDataFromRegistry("GraphicsDataInit", &bombDate, &dataSize);
-	if (dataSize == 0)
-	{
-		bombDate.wYear = 2001;
-		bombDate.wMonth = 3;
-		bombDate.wDayOfWeek = 4;
-		bombDate.wDay = 31;
-		bombDate.wHour = 0;
-		bombDate.wMinute = 0;
-		bombDate.wSecond = 0;
-		bombDate.wMilliseconds = 0;
-	
-		dataSize = sizeof(SYSTEMTIME);
-		gos_SaveDataToRegistry("GraphicsDataInit", &bombDate, dataSize);
-	}
-	*/
-
-//
-// Exit app
-//
+	//
+	// Exit app
+	//
 	CoUninitialize();
-
-	//ExitGameOS();	
-
 	return 0;
 }
 
-DWORD	Seed;
-
-//
-//
-//
 void UpdateRenderers()
 {
 }
@@ -728,13 +696,11 @@ void DoGameLogic()
 {
 }
 
-
 //
 // Setup the GameOS structure
 //
 void GetGameOSEnvironment( char* CommandLine )
 {
-	CommandLine=CommandLine;
 	Environment.applicationName			= "MechCmdr2";
 	Environment.screenWidth				= 640;
 	Environment.screenHeight			= 480;

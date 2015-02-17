@@ -35,13 +35,7 @@
 
 inline signed short int float2short(float _in)
 {
-	#if 1
 	return short(floor(_in));
-	#else
-	_in-=0.5f;
-	_in+=12582912.0f;
-	return(*(signed short int*)&_in);
-	#endif
 }
 
 extern float zero;
@@ -525,13 +519,11 @@ class Camera
 		long addWorldLight (TG_LightPtr light)
 		{
 			numLights = MAX_LIGHTS_IN_WORLD;
-			bool lightAdded = false;
 			for (long i=0;i<MAX_LIGHTS_IN_WORLD;i++)
 			{
 				if (!worldLights[i])
 				{
 					worldLights[i] = light;
-					lightAdded = true;
 					return i;
 				}
 			}

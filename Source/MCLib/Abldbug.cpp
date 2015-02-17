@@ -1020,34 +1020,6 @@ void Debugger::showValue (void) {
 void Debugger::assignVariable (void) {
 
 	getToken();
-
-#if 0
-	if (curToken == TKN_SEMICOLON)
-		print("Need a variable.\n");
-	else if (curToken == TKN_IDENTIFIER) {
-		//----------------------------------
-		// Parse the assignment statement...
-		SymTableNodePtr idPtr = NULL;
-		searchAndFindAllSymTables(idPtr);
-		assigmentStatement(idPtr);
-		if (errorCount > 0)
-			return;
-
-		//-------------------
-		// Now, execute it...
-		char* savedCodeSegmentPtr = codeSegmentPtr;
-		long savedCodeToken = codeToken;
-		codeSegmentPtr = codeBuffer + 1;
-		getCodeToken();
-		idPtr = getSymTableCodePtr();
-		execAssignmentStatement(idPtr);
-
-		//----------------------------
-		// Restore the code segment...
-		codeSegmentPtr = savedCodeSegmentPtr;
-		codeToken = savedCodeToken;
-	}
-#endif
 }
 
 //---------------------------------------------------------------------------

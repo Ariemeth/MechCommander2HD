@@ -920,8 +920,6 @@ void BldgAppearance::setObjStatus (long oStatus)
 //-----------------------------------------------------------------------------
 Stuff::Vector3D BldgAppearance::getNodeNamePosition (char *nodeName)
 {
-	Stuff::Vector3D result = position;
-	
    	//-------------------------------------------
    	// Create Matrix to conform to.
    	Stuff::UnitQuaternion qRotation;
@@ -933,7 +931,7 @@ Stuff::Vector3D BldgAppearance::getNodeNamePosition (char *nodeName)
    	xlatPosition.y = position.z;
    	xlatPosition.z = position.y;
    
-	result = bldgShape->GetTransformedNodePosition(&xlatPosition,&qRotation,nodeName);
+	Stuff::Vector3D result = bldgShape->GetTransformedNodePosition(&xlatPosition,&qRotation,nodeName);
 
 	if ((result.x == 0.0f) &&
 		(result.y == 0.0f) && 
@@ -946,8 +944,6 @@ Stuff::Vector3D BldgAppearance::getNodeNamePosition (char *nodeName)
 //-----------------------------------------------------------------------------
 Stuff::Vector3D BldgAppearance::getNodeIdPosition (long nodeId)
 {
-	Stuff::Vector3D result = position;
-	
    	//-------------------------------------------
    	// Create Matrix to conform to.
    	Stuff::UnitQuaternion qRotation;
@@ -959,7 +955,7 @@ Stuff::Vector3D BldgAppearance::getNodeIdPosition (long nodeId)
    	xlatPosition.y = position.z;
    	xlatPosition.z = position.y;
    
-	result = bldgShape->GetTransformedNodePosition(&xlatPosition,&qRotation,nodeId);
+	Stuff::Vector3D result = bldgShape->GetTransformedNodePosition(&xlatPosition,&qRotation,nodeId);
 
 	if ((result.x == 0.0f) &&
 		(result.y == 0.0f) && 
@@ -1484,7 +1480,7 @@ bool BldgAppearance::playDestruction (void)
 			shapeOrigin.BuildRotation(rot);
 			shapeOrigin.BuildTranslation(tPosition);
 			
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 			destructFX->Start(&info);
 			
 			return true;
@@ -1876,7 +1872,7 @@ long BldgAppearance::update (bool animate)
 		{
 			if (nodeRecycle[i] > 0.0f)
 			{
-				nodeRecycle[i] -= g_deltaTime;
+				nodeRecycle[i] -= g_frameTime;
 				if (nodeRecycle[i] < 0.0f)
 					nodeRecycle[i] = 0.0f;
 			}
@@ -1931,8 +1927,8 @@ long BldgAppearance::update (bool animate)
 	//Update flashing regardless of view!!!
 	if (duration > 0.0f)
 	{
-		duration -= g_deltaTime;
-		currentFlash -= g_deltaTime;
+		duration -= g_frameTime;
+		currentFlash -= g_frameTime;
 		if (currentFlash < 0.0f)
 		{
 			drawFlash ^= true;
@@ -1947,7 +1943,7 @@ long BldgAppearance::update (bool animate)
 	if (inView)
 	{
 		if (appearType->spinMe)
-			rotation += SPINRATE * g_deltaTime;
+			rotation += SPINRATE * g_frameTime;
 		
  		if (rotation > 180)
 			rotation -= 360;
@@ -2040,7 +2036,7 @@ long BldgAppearance::update (bool animate)
 	{
 		//--------------------------------------------------------
 		// Make sure animation runs no faster than bdFrameRate fps.
-		float frameInc = bdFrameRate * g_deltaTime;
+		float frameInc = bdFrameRate * g_frameTime;
 		
 		//---------------------------------------
 		// Increment Frames -- Everything else!
@@ -2105,7 +2101,7 @@ long BldgAppearance::update (bool animate)
 			bldgShadowShape->TransformMultiShape (&xlatPosition,&rot);
 		}
  		
-		if ((turn > 3) && useShadows)
+		if ((g_framesSinceMissionStart > 3) && useShadows)
 			beenInView = true;
 			
 		//------------------------------------------------
@@ -2137,7 +2133,7 @@ long BldgAppearance::update (bool animate)
 			shapeOrigin.BuildTranslation(tPosition);
 
 	 		Stuff::OBB boundingBox;
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,&boundingBox);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,&boundingBox);
 	
 			bool result = destructFX->Execute(&info);
 			if (!result)
@@ -2185,7 +2181,7 @@ long BldgAppearance::update (bool animate)
 			*/
 			
 			Stuff::OBB boundingBox;
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,&boundingBox);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,&boundingBox);
 			
 			activity->Execute(&info);
 			
@@ -2222,7 +2218,7 @@ long BldgAppearance::update (bool animate)
 				*/
 				
 				Stuff::OBB boundingBox;
-				gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,&boundingBox);
+				gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,&boundingBox);
 				
 				activity1->Execute(&info);
 			}
@@ -2305,7 +2301,7 @@ void BldgAppearance::startActivity (long effectId, bool loop)
 		localResult.Multiply(localToWorld,shapeOrigin);
 		*/
 			
- 		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+ 		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 
 		activity->Start(&info);
 		
@@ -2341,7 +2337,7 @@ void BldgAppearance::startActivity (long effectId, bool loop)
 			localResult.Multiply(localToWorld,shapeOrigin);
 			*/
 				
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 	
 			activity1->Start(&info);
 		}
@@ -4124,7 +4120,7 @@ long TreeAppearance::update (bool animate)
 			treeShadowShape->TransformMultiShape (&xlatPosition,&rot);
 		}
 		
-		if ((turn > 3) && useShadows)
+		if ((g_framesSinceMissionStart > 3) && useShadows)
 			beenInView = true;
 	}
 	

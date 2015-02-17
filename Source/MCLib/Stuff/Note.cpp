@@ -149,15 +149,8 @@ void
 	Check_Object(this);
 
 	static char contents[64];
-	int temp;
-	temp = sprintf(
-		contents,
-		"%f %f %f",
-		value.x,
-		value.y,
-		value.z
-	);
-	Verify (temp <sizeof(contents));
+	int temp = sprintf(contents, "%f %f %f", value.x, value.y, value.z);
+	Verify (temp < sizeof(contents));
 	SetEntry(contents);
 }
 

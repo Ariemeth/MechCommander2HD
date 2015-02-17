@@ -11,7 +11,6 @@
 bool
 	MString::TestClass()
 {
-#if 1
 	MString string_a;
 
 	//Verify(string_a.stringSize == 0);
@@ -77,7 +76,6 @@ bool
 	Verify(string_p.GetNthToken(0) == string_q);
 	Verify(string_p.GetNthToken(1) == string_r);
 	Verify(string_p.GetNthToken(2) == string_s);
-#endif
 
 	return true;
 }

@@ -122,10 +122,6 @@ void
 
 	Transform(*usedNrOfTriangles, 3);
 
-#if 0
-	Lighting(*shape->worldToShape, dInfo->activeLights, dInfo->nrOfActiveLights);
-#endif
-
 	if( Clip(dInfo->clippingFlags, allVerticesToDraw) )
 	{
 		sorter->AddEffect(this, dInfo->state);
@@ -199,12 +195,6 @@ int
 
 		return visible;
 	}
-
-	int	myNumberUsedClipVertex, myNumberUsedClipIndex, myNumberUsedClipLength;
-
-	myNumberUsedClipVertex = 0;
-	myNumberUsedClipIndex = 0;
-	myNumberUsedClipLength = 0;
 
 	gos_vertices = vt->GetActualVertexPool();
 	numGOSVertices = 0;

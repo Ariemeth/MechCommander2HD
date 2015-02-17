@@ -180,9 +180,6 @@ long MasterComponent::initEXCEL (char* dataLine, float baseSensorRange) {
 	}
 
 	field = strtok( NULL, "," );
-	int flags = 0;
-	if ( field )
-		flags = atoi(field);
 	
 	field = strtok(NULL, ",");
 	int specialEffect = 0;
@@ -702,7 +699,7 @@ long MasterComponent::saveMasterList (char* fileName, long listSize, float baseS
 	sprintf(dataLine,"MasterLegActuatorID = %d,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",legActuatorID);
 	componentFile.writeLine(dataLine);
 
-	sprintf(dataLine,"MasterClanAntiMissileSystemID = 115,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",clanAntiMissileSystemID);
+	sprintf(dataLine,"MasterClanAntiMissileSystemID = 115,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",clanAntiMissileSystemID); // MCHD TODO: Uhhh why hardcoded?
 	componentFile.writeLine(dataLine);
 
 	sprintf(dataLine,"MasterInnerSphereAntiMissileSystemID = 106,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",innerSphereAntiMissileSystemID);

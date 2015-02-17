@@ -567,14 +567,13 @@ Database::Database()
 DatabaseHandle::DatabaseHandle(
 	const char* filename,
 	bool read_only
-)
+) : m_fileName(filename)
 {
 	//
 	//-----------------------------------------------------
 	// Create the database heap if it doesn't already exist
 	//-----------------------------------------------------
 	//
-	m_fileName = filename;
 	if (!Database::FilesOpened++)
 		Database_Heap = gos_CreateMemoryHeap("Database", 0);
 	gos_PushCurrentHeap(Database_Heap);

@@ -224,7 +224,7 @@ void CollisionGrid::destroy (void)
 long CollisionGrid::add (unsigned long gridIndex, GameObjectPtr object)
 {
 	gosASSERT(nextAvailableNode < maxObjects);
-	gosASSERT((gridIndex >= 0) && (gridIndex < (xGridWidth * yGridWidth)));
+	gosASSERT(gridIndex < (xGridWidth * yGridWidth));
 	
 	CollisionGridNodePtr prev = grid[gridIndex];
 	CollisionGridNodePtr node = &nodes[nextAvailableNode++];
@@ -451,8 +451,6 @@ void CollisionSystem::checkObjects (void)
 	// Reset the Collision Alerts
 	globalCollisionAlert->purgeRecords();
 	
-#if 1
-
 	GameObjectPtr* objList = NULL;
 	long numCollidables = ObjectManager->getCollidableList(objList);
 	for (long i = 0; i < numCollidables; i++) 
@@ -467,56 +465,6 @@ void CollisionSystem::checkObjects (void)
 			objList[i]->handleStaticCollision();
 		}
 	}
-
-#else	
-	//---------------------------------------------------------
-	// Convert to Glenn's Magical New Object System!
-	ObjectQueueNodePtr objList = objectList->getHeadList(); 		//Start with the default list.
-	ObjectNodePtr objNode = NULL;
-	unsigned long objectsPerList[MAX_LISTS_TO_CHECK] = 
-	{
-		0,0,0
-	};
-	
-	while (objList && (currentList < MAX_LISTS_TO_CHECK))
-	{
-		//----------------------------------------------------
-		// if getObjectType returns NULL we are a baseObject.
-		// Something like the sun or terrain.  DO NOT CHECK!!
-		// We cast as a GameObject and that will seriously
-		// mess up if we are just a baseObject!
-		if (objNode && objNode->getObjectType() != NULL)
-		{
-			result = collisionGrid->add((GameObjectPtr)objNode);
-			objectsPerList[currentList]++;
-			
-			//----------------------------------------------------------
-			// This can only happen if we are out of nodes.
-			// Just break out of loop and check what we have, cause
-			// no more are getting added!  We should probably Inform
-			// the debug crowd of this!!
-			gosASSERT(result == NO_ERR);
-				
-			//-----------------------------------------------------
-			//-- For right now, just explosions and artillery
-			//-- Movers need a revised check for the code to work.
-			//-- Code is in.  Away we go.
-			objNode->handleStaticCollision();
-			
-			objNode = objNode->next;
-		}
-		else
-		{
-			objNode = objList->head;
-		}
-		
-		if (objNode == NULL)
-		{
-			objList = objList->next;
-			currentList++;
-		}
-	}
-#endif
 	
 	collisionGrid->createGrid();
 }
@@ -588,8 +536,6 @@ void CollisionSystem::detectCollision (GameObjectPtr obj1, GameObjectPtr obj2)
 //------------------------------------------------------------------------------
 void CollisionSystem::detectStaticCollision (GameObjectPtr obj1, GameObjectPtr obj2)
 {
-	float timeOfClosest = 0.0;
-
 	//--------------------------------------------------------
 	// First we check and see if we are already colliding.
 	// If so, dump us to checkExtents.
@@ -606,8 +552,7 @@ void CollisionSystem::detectStaticCollision (GameObjectPtr obj1, GameObjectPtr o
 	maxDist *= maxDist;
 
 	if (distMag < maxDist)
-   	{
-		//-------------------------------------------------------------------------------------------------------
+   	{		//-------------------------------------------------------------------------------------------------------
 		// If we are inside the extent radius AND standing on impassable terrain, we hit the static object.
 		// ONLY if we are a mover.  We hit them if we are not a mover and we are an artillery or turret or gate.
 		if (obj1->isMover() && (obj2->getObjectClass() != TREE) && (obj2->getObjectClass() != TERRAINOBJECT))
@@ -620,6 +565,7 @@ void CollisionSystem::detectStaticCollision (GameObjectPtr obj1, GameObjectPtr o
 					return;
 			}
 		}
+		float timeOfClosest = 0.0f;
 		checkExtents(obj1,obj2,timeOfClosest);
    	}
 }
@@ -742,11 +688,11 @@ float CollisionSystem::timeToImpact (GameObjectPtr obj1, GameObjectPtr obj2)
 	Stuff::Vector3D obj2Vel = obj2->getVelocity();
 	
 	Stuff::Vector3D obj1FPos;
-	obj1Vel *= g_deltaTime;
+	obj1Vel *= g_frameTime;
 	obj1FPos.Add(obj1Pos,obj1Vel);
 
 	Stuff::Vector3D obj2FPos;
-	obj2Vel *= g_deltaTime;
+	obj2Vel *= g_frameTime;
 	obj2FPos.Add(obj2Pos,obj2Vel);
 	
 	Stuff::Vector3D obj1RPos;
@@ -767,7 +713,7 @@ float CollisionSystem::timeToImpact (GameObjectPtr obj1, GameObjectPtr obj2)
 		vel.Subtract(obj2Vel,obj1Vel);
 		
 		float timeOfClosest = -((pos * vel) / (vel * vel));
-		if (timeOfClosest <= g_deltaTime)
+		if (timeOfClosest <= g_frameTime)
 		{
 			//------------------------------------------------
 			// They are closest during this frame.

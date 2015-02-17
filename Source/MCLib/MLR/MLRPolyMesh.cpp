@@ -412,10 +412,9 @@ int
 		return visible;
 	}
 
-	int	myNumberUsedClipVertex, myNumberUsedClipIndex, myNumberUsedClipLength;
+	int	myNumberUsedClipVertex, myNumberUsedClipLength;
 
 	myNumberUsedClipVertex = 0;
-	myNumberUsedClipIndex = 0;
 	myNumberUsedClipLength = 0;
 
 	//

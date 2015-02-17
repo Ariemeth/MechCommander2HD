@@ -241,36 +241,7 @@ void
 	z = v.x*m(0,2) + v.y*m(1,2) + v.z*m(2,2) + m(3,2);
 	rhw = v.x*m(0,3) + v.y*m(1,3) + v.z*m(2,3) + m(3,3);
 #endif
-	
-#if 0	//USE_ASSEMBLER_CODE
-	_asm {
-;		gos_vertices[0].w = 1.0f/coords[offset].w;
 
-		mov         ecx, f
-		fld1
-
-		fdiv        dword ptr [ecx+0Ch]
-
-		fst			dword ptr [ecx+0Ch]
-
-;		gos_vertices[0].x = coords[offset].x * gos_vertices[0].w;
-		fld         st(0)
-		fmul        dword ptr [ecx]
-		fstp        dword ptr [ecx]
-
-;		gos_vertices[0].y = coords[offset].y * gos_vertices[0].w;
-		fld         dword ptr [ecx+4]
-		fmul        st,st(1)
-		fstp        dword ptr [ecx+4]
-;		gos_vertices[0].z = coords[offset].z * gos_vertices[0].w;
-
-;		fld         dword ptr [ecx+8]
-		fmul        dword ptr [ecx+8]
-
-		fstp        dword ptr [ecx+8]
-;		fstp        st(0)
-	}
-#else
 #if FOG_HACK
 	if(foggy)
 	{
@@ -298,7 +269,6 @@ void
 	x = x * rhw;
 	y = y * rhw;
 	z = z * rhw;
-#endif
 
 	Verify(rhw > Stuff::SMALL);
 

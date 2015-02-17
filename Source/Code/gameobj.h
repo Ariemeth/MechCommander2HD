@@ -637,7 +637,7 @@ class GameObject {
 		virtual void setCommanderId (long _commanderId) {
 		}
 
-		virtual MechWarriorPtr getPilot (void) {
+		virtual MechWarriorPtr getPilot (void) const {
 			return(NULL);
 		}
 
@@ -1084,19 +1084,6 @@ class GameObject {
 
 		virtual MechClass getMechClass(void);
 
-#if 0
-
-		virtual void setSalvage (SalvageItemPtr newSalvage)
-		{
-			salvage = newSalvage;
-		}
-		
-		virtual SalvageItemPtr getSalvage (void)
-		{
-			return salvage;
-		}
-	
-#endif
 		virtual bool isFriendly (GameObjectPtr obj);
 
 		virtual bool isEnemy (GameObjectPtr obj);

@@ -20,7 +20,7 @@
 void Fatal (long errCode, char* errMessage) {
 
 	char msg[512];
-	sprintf(msg, " [FATAL %d] %s ", errCode, errMessage);
+	sprintf(msg, " [FATAL %ld] %s ", errCode, errMessage);
 	STOP((msg));
 }
 
@@ -30,7 +30,7 @@ void Assert (bool test, long errCode, char* errMessage) {
 
 	if (!test) {
 		char msg[512];
-		sprintf(msg, " [ASSERT %d] %s ", errCode, errMessage);
+		sprintf(msg, " [ASSERT %ld] %s ", errCode, errMessage);
 		STOP((msg));
 	}
 }

@@ -346,11 +346,11 @@ TypePtr execDeclaredRoutineCall (SymTableNodePtr routineIdPtr, bool skipOrder) {
 
 		if (functionExecTime > ProfileLogFunctionTimeLimit) {
 			char s[512];
-			sprintf(s, "[%08d] ", NumExecutions);
+			sprintf(s, "[%08ld] ", NumExecutions);
 			for (long i = 0; i < CallStackLevel; i++)
 				strcat(s, " ");
 			char s1[512];
-			sprintf(s1, "%s (%d)\n", routineIdPtr->name, functionExecTime);
+			sprintf(s1, "%s (%ld)\n", routineIdPtr->name, functionExecTime);
 			strcat(s, s1);
 			ABL_AddToProfileLog(s);
 		}

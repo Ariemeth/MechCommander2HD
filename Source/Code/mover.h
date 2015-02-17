@@ -527,7 +527,7 @@ class StatusChunk {
 	public:
 
 		unsigned long		bodyState;
-		char				targetType;
+		unsigned char		targetType;
 		long				targetId;
 		long				targetBlockOrTrainNumber;
 		long				targetVertexOrCarNumber;
@@ -1245,7 +1245,7 @@ class Mover : public GameObject {
 
 		virtual CommanderPtr getCommander (void);
 		
-		virtual MechWarriorPtr getPilot (void) {
+		virtual MechWarriorPtr getPilot (void) const {
 			return(pilot);
 		}
 

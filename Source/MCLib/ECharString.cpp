@@ -903,7 +903,7 @@ ECharString operator+( const ECharString& Begin_String, const ECSChar* p_End_Str
 /////////////////////////////////////////////////////////////////
 ECharString operator+( const ECharString& Begin_String,  ECSChar Char )
 {
-	ECSChar Tmp[2];
+	ECSChar Tmp[2]; // MCHD TODO: Why is this needed to avoid infinite recursion warning?
 	Tmp[0] = Char;
 	Tmp[1] = 0;
 
@@ -1064,7 +1064,7 @@ int ECharString::Find( unsigned short Char, int Start_Index ) const
 {
 	unsigned short Tmp[2];
 	*Tmp = Char;
-	Tmp[2] = 0;
+	Tmp[1] = 0;
 
 	return Find( (ECSChar*)Tmp, Start_Index );
 }

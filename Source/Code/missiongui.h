@@ -92,7 +92,7 @@ public:
 			long	hotKeyDescriptionText;
 		};
 
-	static bool MissionInterfaceManager::isHotKeyLocked(long _key);
+	static bool isHotKeyLocked(long _key);
 
 	protected:
 

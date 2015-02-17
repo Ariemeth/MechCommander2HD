@@ -537,21 +537,6 @@ void
 					lightMap->SetPolygonMarker(0);
 					lightMap->AddUShort(3);
 
-#if 0
-					Vector3D vec(coords[index[j]]);
-					SPEW(("micgaert", "\nvertex1 = %f,%f,%f", vec.x, vec.y, vec.z));
-					vec = coords[index[j+1]];
-					SPEW(("micgaert", "vertex2 = %f,%f,%f", vec.x, vec.y, vec.z));
-					vec = coords[index[j+2]];
-					SPEW(("micgaert", "vertex3 = %f,%f,%f", vec.x, vec.y, vec.z));
-					vec = facePlanes[i].normal;
-					SPEW(("micgaert", "normal = %f,%f,%f", vec.x, vec.y, vec.z));
-					SPEW(("micgaert", "forward = %f,%f,%f", forward.x, forward.y, forward.z));
-					SPEW(("micgaert", "distance = %f", f));
-					SPEW(("micgaert", "light = %f,%f,%f", lightPosInShape.x, lightPosInShape.y, lightPosInShape.z));
-					SPEW(("micgaert", "projection = %f,%f,%f", hitPoint.x, hitPoint.y, hitPoint.z));
-#endif
-
 					Scalar sq_falloff
 						= falloff*falloff*light->GetIntensity();
 					RGBAColor color(sq_falloff, sq_falloff, sq_falloff, 1.0f);
@@ -684,12 +669,7 @@ void
 						}
 						(*lightMapSqFalloffs)[k] = falloff*falloff*light->GetIntensity();
 
-						oneOver
-#if 0
-							= 1.0f/(2.0f*distance*tanSpeadAngle);
-#else
-							= OneOverApproximate(2.0f*distance*tanSpeadAngle);
-#endif
+						oneOver = OneOverApproximate(2.0f*distance*tanSpeadAngle);
 					}
 					else
 					{
@@ -729,7 +709,6 @@ void
 						tooBig++;
 					}
 				}
-#if 1
 				if(	
 					tooBig == 0 
 					&& behindCount < 3  
@@ -765,85 +744,6 @@ void
 				SPEW(("micgaert", "up = %f,%f,%f", up.x, up.y, up.z));
 				SPEW(("micgaert", "light = %f,%f,%f\n", lightPosInShape.x, lightPosInShape.y, lightPosInShape.z));
 	#endif
-#else
-				if(tooBig != 0)
-				{
-					lightMap->SetPolygonMarker(1);
-					lightMap->AddUShort(3);
-
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddCoord(coords[index[k+j]]);
-					}
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddColor(RGBAColor(0.0f, 0.0f, 0.5f, 1.0f));
-					}
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddUVs(0.5f, 0.5f);
-		//				DEBUG_STREAM << k << " " << lightMapUVs[k][0] << " " << lightMapUVs[k][0] << "\n";
-					}
-				} 
-				else if(behindCount != 0)
-				{
-					lightMap->SetPolygonMarker(1);
-					lightMap->AddUShort(3);
-
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddCoord(coords[index[k+j]]);
-					}
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddColor(RGBAColor(0.5f, 0.0f, 0.0f, 1.0f));
-					}
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddUVs(0.5f, 0.5f);
-		//				DEBUG_STREAM << k << " " << lightMapUVs[k][0] << " " << lightMapUVs[k][0] << "\n";
-					}
-				} 
-				else	if(behindCount == 0 && (lm == true || CheckForBigTriangles(&lightMapUVs, 3) == true) )
-				{
-					lightMap->SetPolygonMarker(1);
-					lightMap->AddUShort(3);
-
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddCoord(coords[index[k+j]]);
-					}
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddColor(lightMapSqFalloffs[k], lightMapSqFalloffs[k], lightMapSqFalloffs[k], 1.0f);
-					}
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddUVs(lightMapUVs[k][0]+0.5f, lightMapUVs[k][1]+0.5f);
-		//				DEBUG_STREAM << k << " " << lightMapUVs[k][0] << " " << lightMapUVs[k][0] << "\n";
-					}
-
-				}
-				else if(CheckForBigTriangles(&lightMapUVs, 3) == false)
-				{
-					lightMap->SetPolygonMarker(1);
-					lightMap->AddUShort(3);
-
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddCoord(coords[index[k+j]]);
-					}
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddColor(errorColor);
-					}
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddUVs(0.5f, 0.5f);
-		//				DEBUG_STREAM << k << " " << lightMapUVs[k][0] << " " << lightMapUVs[k][0] << "\n";
-					}
-				}
-#endif
 			}
 		}
 		break;
@@ -1033,121 +933,6 @@ MLR_I_TMesh*
 		MLRState *state
 	)
 {
-#if 0
-	gos_PushCurrentHeap(Heap);
-	MLR_I_TMesh *ret = new MLR_I_TMesh();
-	Register_Object(ret);
-
-	Point3D *coords = new Point3D [8];
-	Register_Object(coords);
-
-	coords[0] = Point3D( half, -half,  half);
-	coords[1] = Point3D(-half, -half,  half);
-	coords[2] = Point3D( half, -half, -half);
-	coords[3] = Point3D(-half, -half, -half);
-	coords[4] = Point3D(-half,  half,  half);
-	coords[5] = Point3D( half,  half,  half);
-	coords[6] = Point3D( half,  half, -half);
-	coords[7] = Point3D(-half,  half, -half);
-
-	unsigned char *lengths = new unsigned char [6];
-	Register_Pointer(lengths);
-
-	int i;
-
-	for(i=0;i<6;i++)
-	{
-		lengths[i] = 4;
-	}
-
-	ret->SetSubprimitiveLengths(lengths, 6);
-
-	ret->SetCoordData(coords, 8);
-
-	unsigned short	*index = new unsigned short [6*4];
-	Register_Pointer(index);
-
-	index[0] = 0;
-	index[1] = 2;
-	index[2] = 6;
-	index[3] = 5;
-
-	index[4] = 0;
-	index[5] = 5;
-	index[6] = 4;
-	index[7] = 1;
-
-	index[8] = 5;
-	index[9] = 6;
-	index[10] = 7;
-	index[11] = 4;
-
-	index[12] = 2;
-	index[13] = 3;
-	index[14] = 7;
-	index[15] = 6;
-
-	index[16] = 1;
-	index[17] = 4;
-	index[18] = 7;
-	index[19] = 3;
-
-	index[20] = 0;
-	index[21] = 1;
-	index[22] = 3;
-	index[23] = 2;
-
-	ret->SetIndexData(index, 6*4);
-
-	ret->FindFacePlanes();
-
-	Vector2DScalar *texCoords = new Vector2DScalar[8];
-	Register_Object(texCoords);
-
-	texCoords[0] = Vector2DScalar(0.0f, 0.0f);
-	texCoords[1] = Vector2DScalar(0.0f, 0.0f);
-	texCoords[2] = Vector2DScalar(0.0f, 0.0f);
-	texCoords[3] = Vector2DScalar(0.0f, 0.0f);
-
-	texCoords[4] = Vector2DScalar(0.0f, 0.0f);
-	texCoords[5] = Vector2DScalar(0.0f, 0.0f);
-	texCoords[6] = Vector2DScalar(0.0f, 0.0f);
-	texCoords[7] = Vector2DScalar(0.0f, 0.0f);
-
-	if(state != NULL)
-	{
-		ret->SetReferenceState(*state);
-		if(state->GetTextureHandle() > 0)
-		{
-			texCoords[0] = Vector2DScalar(0.0f, 0.0f);
-			texCoords[1] = Vector2DScalar(1.0f, 0.0f);
-			texCoords[2] = Vector2DScalar(0.25f, 0.25f);
-			texCoords[3] = Vector2DScalar(0.75f, 0.25f);
-
-			texCoords[4] = Vector2DScalar(1.0f, 1.0f);
-			texCoords[5] = Vector2DScalar(0.0f, 1.0f);
-			texCoords[6] = Vector2DScalar(0.25f, 0.75f);
-			texCoords[7] = Vector2DScalar(0.75f, 0.75f);
-		}
-	}
-	ret->SetTexCoordData(texCoords, 8);
-
-	Unregister_Object(texCoords);
-	delete [] texCoords;
-
-	Unregister_Pointer(index);
-	delete [] index;
-
-	Unregister_Pointer(lengths);
-	delete [] lengths;
-
-	Unregister_Object(coords);
-	delete [] coords;
-	
-	gos_PopCurrentHeap();
-
-	return ret;
-#endif
 	return NULL;
 }
 

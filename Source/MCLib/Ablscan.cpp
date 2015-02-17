@@ -619,8 +619,7 @@ void languageDirective (void) {
 			DumbGetCharOn = false;
 			//----------------------------------------------------
 			// Now that we have the file name, let's include it...
-			long openErr = ABL_NO_ERR;
-			if ((openErr = openSourceFile(fileName)) != ABL_NO_ERR) {
+			if (openSourceFile(fileName) != ABL_NO_ERR) {
 				syntaxError(ABL_ERR_SYNTAX_SOURCE_FILE_OPEN);
 				curToken = TKN_ERROR;
 			}
@@ -648,9 +647,6 @@ void languageDirective (void) {
 			// after the directive on this line is ignored...
 			DumbGetCharOn = false;
 			//----------------------------------------------------
-			// Now that we have the file name, let's include it...
-			long openErr = ABL_NO_ERR;
-
 			//---------------------------------------
 			// What's the current module's directory?
 			char fullPath[255];
@@ -664,7 +660,7 @@ void languageDirective (void) {
 				fullPath[curChar + 1] = NULL;
 				strcat(fullPath, fileName);
 			}
-			if ((openErr = openSourceFile(fullPath)) != ABL_NO_ERR) {
+			if (openSourceFile(fullPath) != ABL_NO_ERR) {
 				syntaxError(ABL_ERR_SYNTAX_SOURCE_FILE_OPEN);
 				curToken = TKN_ERROR;
 			}
@@ -1244,7 +1240,7 @@ bool getSourceLine (void) {
 		if (printFlag) 
 		{
 			char printBuffer[MAXLEN_SOURCELINE + 9];
-			sprintf(printBuffer, "%4d %d: %s", lineNumber, level, sourceBuffer);
+			sprintf(printBuffer, "%4ld %ld: %s", lineNumber, level, sourceBuffer);
 			printLine(printBuffer);
 		}
 		return(true);

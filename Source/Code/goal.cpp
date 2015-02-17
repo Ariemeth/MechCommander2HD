@@ -183,76 +183,6 @@ void GoalManager::setup (long poolSize) {
 }
 
 //---------------------------------------------------------------------------
-#if 0
-bool GlobalMap::fillNorthSouthBridgeArea (long row, long col, long area) {
-
-	//----------------------------------------------------------------------
-	// It is assumed that the bridge is erected over non-passable terrain...
-	if ((row < minRow) || (row >= maxRow) || (col < minCol) || (col >= maxCol))
-		return(false);
-
-	areaMap[row * width + col] = area;
-
-	//----------------
-	// Expand North...
-	long adjR = row - 1;
-	long adjC = col;
-	if ((adjR >= minRow) && (adjR < maxRow) && (adjC >= minCol) && (adjC < maxCol))
-		if (GameMap->getOverlay(adjR, adjC) == OVERLAY_WATER_BRIDGE_NS)
-			if (areaMap[adjR * width + adjC] == -1)
-				fillNorthSouthBridgeArea(adjR, adjC, area);
-
-	//----------------
-	// Expand South...
-	adjR = row + 1;
-	adjC = col;
-	if ((adjR >= minRow) && (adjR < maxRow) && (adjC >= minCol) && (adjC < maxCol))
-		if (GameMap->getOverlay(adjR, adjC) == OVERLAY_WATER_BRIDGE_NS)
-			if (areaMap[adjR * width + adjC] == -1)
-				fillNorthSouthBridgeArea(adjR, adjC, area);
-	
-	return(true);
-}
-
-//------------------------------------------------------------------------------------------
-
-bool GlobalMap::fillEastWestBridgeArea (long row, long col, long area) {
-
-	//----------------------------------------------------------------------
-	// It is assumed that the bridge is erected over non-passable terrain...
-	if ((row < minRow) || (row >= maxRow) || (col < minCol) || (col >= maxCol))
-		return(false);
-
-	areaMap[row * width + col] = area;
-
-	//---------------
-	// Expand East...
-	long adjR = row;
-	long adjC = col + 1;
-	if ((adjR >= minRow) && (adjR < maxRow) && (adjC >= minCol) && (adjC < maxCol)) {
-		long overlay = GameMap->getOverlay(adjR, adjC);
-		if (overlay == OVERLAY_WATER_BRIDGE_EW)
-			if (areaMap[adjR * width + adjC] == -1)
-				fillEastWestBridgeArea(adjR, adjC, area);
-	}
-
-	//---------------
-	// Expand West...
-	adjR = row;
-	adjC = col - 1;
-	if ((adjR >= minRow) && (adjR < maxRow) && (adjC >= minCol) && (adjC < maxCol)) {
-		long overlay = GameMap->getOverlay(adjR, adjC);
-		if (overlay == OVERLAY_WATER_BRIDGE_EW)
-			if (areaMap[adjR * width + adjC] == -1)
-				fillEastWestBridgeArea(adjR, adjC, area);
-	}
-	
-	return(true);
-}
-
-//------------------------------------------------------------------------------------------
-
-#endif
 
 bool GoalManager::fillWallGateRegion (long row, long col, long region) {
 
@@ -282,12 +212,6 @@ bool GoalManager::fillWallGateRegion (long row, long col, long region) {
 
 bool GoalManager::fillRegion (long row, long col, long region) {
 
-#if 1
-
-//	long overlay = GameMap->getOverlay(row, col);
-//	if ((overlay == OVERLAY_WATER_BRIDGE_EW) || (overlay == OVERLAY_WATER_BRIDGE_NS))
-//		return(false);
-		
 	if (GameMap->getWall(row, col) || GameMap->getGate(row, col))
 		return(false);
 		
@@ -342,35 +266,6 @@ bool GoalManager::fillRegion (long row, long col, long region) {
 		}
 	}
 	return(true);
-#else
-	if ((row < 0) || (row >= GameMap->height) || (col < 0) || (col >= GameMap->width))
-		return(false);
-
-	//----------------------------------------------------------------------
-	// If we hit a bridge cell, politely stop expanding this area into it...
-	long overlay = GameMap->getOverlay(row, col);
-	if ((overlay == OVERLAY_WATER_BRIDGE_EW) || (overlay == OVERLAY_WATER_BRIDGE_NS))
-		return(false);
-
-	if (GameMap->getWall(row, col) || GameMap->getGate(row, col))
-		return(false);
-
-	if (!GameMap->getPassable(row, col)) {
-		regionMap[row][col] = -2;
-		return(false);
-	}
-
-	regionMap[row][col] = region;
-	for (long dir = 0; dir < 4; dir ++) {
-		long adjR = row + adjCell[dir][0];
-		long adjC = col + adjCell[dir][1];
-		if ((adjR >= 0) && (adjR < GameMap->height) && (adjC >= 0) && (adjC < GameMap->width))
-			if (regionMap[adjR][adjC] == -1)
-				fillRegion(adjR, adjC, region);
-	}
-	
-	return(true);
-#endif
 }
 
 //------------------------------------------------------------------------------------------

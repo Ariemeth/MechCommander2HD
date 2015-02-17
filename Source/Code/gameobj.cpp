@@ -82,7 +82,7 @@ extern float worldUnitsPerMeter;
 extern TeamPtr homeTeam;
 extern float MechClassWeights[NUM_MECH_CLASSES];
 
-extern char* ExceptionGameMsg;
+extern char* g_ExceptionGameMsg;
 char ChunkDebugMsg[5120];
 
 unsigned long GameObject::spanMask = 0;
@@ -399,7 +399,7 @@ void DebugWeaponFireChunk (WeaponFireChunkPtr chunk1, WeaponFireChunkPtr chunk2,
 	delete debugFile;
 	debugFile = NULL;
 
-	ExceptionGameMsg = ChunkDebugMsg;
+	g_ExceptionGameMsg = ChunkDebugMsg;
 }
 
 //---------------------------------------------------------------------------
@@ -1086,7 +1086,7 @@ void DebugWeaponHitChunk (WeaponHitChunkPtr chunk1, WeaponHitChunkPtr chunk2) {
 	delete debugFile;
 	debugFile = NULL;
 
-	ExceptionGameMsg = ChunkDebugMsg;
+	g_ExceptionGameMsg = ChunkDebugMsg;
 }
 
 //---------------------------------------------------------------------------
@@ -1878,8 +1878,9 @@ inline bool GameObject::lineOfSight (GameObjectPtr target, float startExtRad, bo
 	if (altLevel > 255)
 		altLevel = 255;
 
-	float radius = visualRangeTable[altLevel];
-	
+	//float radius = visualRangeTable[altLevel];
+	float radius = (8 * (maxVisualRange / 300.0)) + (altLevel / 100.0); // MCHD TODO: Is this better? What is it even?
+
 	//Scouting specialty skill.
 	if (isMover())
 	{
@@ -2011,7 +2012,7 @@ bool GameObject::onScreen (void) {
 	}
 
 	if (isVisible) {
-		windowsVisible = turn;
+		windowsVisible = g_framesSinceMissionStart;
 		return(true);
 	}
 		

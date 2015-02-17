@@ -691,23 +691,23 @@ long MapData::update (void)
 
 	//Used to scroll the water texture.
 	{
-		cloudScrollX += g_deltaTime * cloudScrollSpeedX;
+		cloudScrollX += g_frameTime * cloudScrollSpeedX;
 		if (cloudScrollX > 1.0f)
 			cloudScrollX = 0.0f;
 			
-		cloudScrollY += g_deltaTime * cloudScrollSpeedY;
+		cloudScrollY += g_frameTime * cloudScrollSpeedY;
 		if (cloudScrollY > 1.0f)
 			cloudScrollY = 0.0f;
 	}
 
-	Terrain::frameAngle += Terrain::waterFreq * g_deltaTime;
+	Terrain::frameAngle += Terrain::waterFreq * g_frameTime;
 	if (Terrain::frameAngle >= 360.0f)
 		Terrain::frameAngle = 0.0f;
 
 	Terrain::frameCosAlpha = cos(Terrain::frameAngle * DEGREES_TO_RADS);
 	Terrain::frameCos = Terrain::frameCosAlpha * Terrain::waterAmplitude;
 
-	SprayTextureNum += g_deltaTime;
+	SprayTextureNum += g_frameTime;
 	if (!Terrain::terrainTextures2)
 	{
 		if ((0.0 != Terrain::terrainTextures->getDetailFrameRate(0))

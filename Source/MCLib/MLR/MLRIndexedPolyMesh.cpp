@@ -479,10 +479,9 @@ int
 	Scalar a=0.0f;
 //	Scalar bc0=0.0f, bc1=0.0f;
 
-	int	myNumberUsedClipVertex, myNumberUsedClipIndex, myNumberUsedClipLength;
+	int	myNumberUsedClipVertex, myNumberUsedClipLength;
 
 	myNumberUsedClipVertex = 0;
-	myNumberUsedClipIndex = 0;
 	myNumberUsedClipLength = 0;
 
 	Verify(index.GetLength() > 0);

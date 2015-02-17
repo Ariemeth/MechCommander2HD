@@ -44,8 +44,8 @@ namespace Stuff {
 		Motion3D(
 			const Vector3D& t,
 			const Vector3D& q
-		)
-			{Check_Object(&t); Check_Object(&q); linearMotion = t; angularMotion = q;}
+		) : linearMotion(t), angularMotion(q)
+			{Check_Object(&t); Check_Object(&q);}
 
 		//
 		// Assignment operators

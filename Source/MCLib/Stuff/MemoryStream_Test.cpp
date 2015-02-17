@@ -304,19 +304,11 @@ bool FloatIntBitStreamTest(int total_sections_to_write)
 	// convert the floats and bits and see if they match..
 	for (i = 0; i < total_sections_to_write; ++i)
 	{
-
-		DWORD buffer;
-
-
-		buffer = 0x00;
-		buffer = Scaled_Int_To_Bits(int_min_max[i].value, int_min_max[i].minValue, int_min_max[i].maxValue, int_bit_depth[i]);
+		DWORD buffer = Scaled_Int_To_Bits(int_min_max[i].value, int_min_max[i].minValue, int_min_max[i].maxValue, int_bit_depth[i]);
 		convert_int_array[i] = Scaled_Int_From_Bits(buffer, int_min_max[i].minValue, int_min_max[i].maxValue, int_bit_depth[i]);;
 		
-		
-		buffer = 0x00;
 		buffer = Scaled_Float_To_Bits(float_min_max[i].value, float_min_max[i].minValue, float_min_max[i].maxValue, float_bit_depth[i]);
 		convert_float_array[i] = Scaled_Float_From_Bits(buffer, float_min_max[i].minValue, float_min_max[i].maxValue, float_bit_depth[i]);
-
 	}
 
 

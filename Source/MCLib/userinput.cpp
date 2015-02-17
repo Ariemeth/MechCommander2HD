@@ -215,7 +215,7 @@ void UserInput::update (void)
 		wasRightMouseDrag = rightMouseDrag;
 		
 		leftMouseDrag = false;
-		mouseLeftUpTime += g_deltaTime;
+		mouseLeftUpTime += g_frameTime;
 //		if ( !bWasDouble )
 			leftMouseJustUp = 1;
 
@@ -226,7 +226,7 @@ void UserInput::update (void)
 	{
 		//--------------------------------------------
 		// We are still up.  Increment mouse up time.
-		mouseLeftUpTime += g_deltaTime;
+		mouseLeftUpTime += g_frameTime;
 		mouseLeftHeldTime = 0.f;
 	}
 
@@ -271,7 +271,7 @@ void UserInput::update (void)
 		}
 
 		mouseLeftUpTime = 0;
-		mouseLeftHeldTime += g_deltaTime;
+		mouseLeftHeldTime += g_frameTime;
 
 	}
 
@@ -291,7 +291,7 @@ void UserInput::update (void)
 	{
 		//--------------------------------------------
 		// We are still up.  Increment mouse up time.
-		mouseRightUpTime += g_deltaTime;
+		mouseRightUpTime += g_frameTime;
 		rightMouseDrag = 0;
 		mouseRightHeldTime = 0.f;
 	}
@@ -329,7 +329,7 @@ void UserInput::update (void)
 		rightClick = true;
 
 		mouseRightUpTime = 0;
-		mouseRightHeldTime += g_deltaTime;
+		mouseRightHeldTime += g_frameTime;
 	}
 
 	if ((middleMouseButtonState == MC2_MOUSE_UP) && (lastMiddleMouseButtonState == MC2_MOUSE_DOWN))
@@ -343,7 +343,7 @@ void UserInput::update (void)
 	{
 		//--------------------------------------------
 		// We are still up.  Increment mouse up time.
-		mouseMiddleUpTime += g_deltaTime;
+		mouseMiddleUpTime += g_frameTime;
 	}
 
 	if (gos_GetKeyStatus( KEY_MMOUSE ) == KEY_PRESSED /*mCode & 0x0001*/)
@@ -358,7 +358,7 @@ void UserInput::update (void)
 
 	if (cursors->getNumFrames( mouseState ) > 1 )
 	{
-		mouseFrameLength += g_deltaTime;
+		mouseFrameLength += g_frameTime;
 		if (mouseFrameLength > cursors->frameLengths[mouseState] )
 		{
 			mouseFrame++;

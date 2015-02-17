@@ -11,12 +11,11 @@ const Motion3D
 	Motion3D::Identity(Vector3D(0.0f, 0.0f, 0.0f), Vector3D(0.0f, 0.0f, 0.0f));
 
 Motion3D::Motion3D(const Motion3D& motion)
+: angularMotion(motion.angularMotion)
+, linearMotion(motion.linearMotion)
 {
 	Check_Pointer(this);
 	Check_Object(&motion);
-
-	angularMotion = motion.angularMotion;
-	linearMotion = motion.linearMotion;
 }
 
 //

@@ -665,7 +665,7 @@ long Carnage::update (void)
 			
 			if (gosEffect && gosEffect->IsExecuted())
 			{
-				gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+				gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 				gosEffect->Start(&info);
 			}
 			
@@ -674,7 +674,7 @@ long Carnage::update (void)
 			//------------------------------------------
 			// If just created, play our sound effect...
 			if (((ExplosionTypePtr)getObjectType())->soundEffectId != -1)
-				soundSystem->playDigitalSample(((ExplosionTypePtr)getObjectType())->soundEffectId,position,true);
+				g_gameSoundSystem->playDigitalSample(((ExplosionTypePtr)getObjectType())->soundEffectId,position,true);
 
 			if (((ExplosionTypePtr)getObjectType())->duration > 0.0f)
 			{
@@ -728,7 +728,7 @@ long Carnage::update (void)
 				pointLight->SetIntensity(intensity);
 				pointLight->SetFalloffDistances(inRadius,outRadius);
 
-				duration -= g_deltaTime;
+				duration -= g_frameTime;
 				
 				Stuff::Point3D ourPosition;
 				ourPosition.x = -position.x;
@@ -755,7 +755,7 @@ long Carnage::update (void)
 
 		if (info.explosion.timer > 0.0f)
 		{
-			info.explosion.timer -= g_deltaTime;
+			info.explosion.timer -= g_frameTime;
 			if (info.explosion.timer <= 0.0f)
 			{
 				setFlag(OBJECT_FLAG_TANGIBLE, true);
@@ -779,7 +779,7 @@ long Carnage::update (void)
 			localToWorld.Multiply(shapeOrigin,gosFX::Effect_Into_Motion);
 		
  			Stuff::OBB boundingBox;
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,&boundingBox);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,&boundingBox);
 			
 			bool result = gosEffect->Execute(&info);
 			if (!result)

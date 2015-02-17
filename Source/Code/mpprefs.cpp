@@ -317,7 +317,7 @@ void MPPrefs::update()
 		MPlayer->sendPlayerInsignia( (char*)pName, pData, size );
 		MPlayer->insigniaList[MPlayer->commanderID] = 1;
 
-		delete pData;
+		delete[] pData;
 	}
 
 	if ( userInput->isLeftClick() && !bExpanded )
@@ -360,7 +360,7 @@ void MPPrefs::setColor( unsigned long color )
 	{
 		if (MPlayer->colors[players[i].baseColor[BASECOLOR_SELF]] == (long)color && i != MPlayer->commanderID)
 		{
-			soundSystem->playDigitalSample(LOG_WRONGBUTTON);
+			g_gameSoundSystem->playDigitalSample(LOG_WRONGBUTTON);
 			return;
 			
 		}

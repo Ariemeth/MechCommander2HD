@@ -818,9 +818,6 @@ bool EditorData::initTerrainFromTGA( int mapSize, int min, int max, int terrain 
 	clear(); // get rid of all the old stuff now
 	EditorData::instance->MissionNeedsSaving(true);
 
-	float MinVal = min;
-	float MaxVal = max;
-
 	long mapWidth = 0;
 	switch (mapSize)
 	{
@@ -1688,7 +1685,6 @@ bool EditorData::saveMissionFitFileStuff( FitIniFile &fitFile )
 			mapAsset->AddProperty("MissionName", buf);
 		}
 
-		memset(buf, 0, 512);
 		strncpy(buf, EditorData::instance->Author(), 511);
 		if (buf[0])
 		{
@@ -1926,8 +1922,6 @@ void EditorData::drawTacMap( BYTE* pDest, long dataSize, int tacMapSize )
 	}
 
 	currentVertex = land->mapData->getData();
-	float elevationRange = maxElv - minElv;
-	elevationRange /= 128.0f;			//Used to scale color based on elevation.
 
 	//------------------------------------------------------
 	// Second Pass - Draw Base Terrain Colors and elevations
@@ -1958,8 +1952,6 @@ void EditorData::drawTacMap( BYTE* pDest, long dataSize, int tacMapSize )
 				terrainType1RGB = 0x002e7599; 		//Derek's magic number for shallow water.
 			else if (isCementType(pVertex1->terrainType))
 				terrainType1RGB = land->terrainTextures->getTextureTypeRGB(pVertex1->terrainType);
-
-			float lightIntensity1 = 1.0f;
 
 			//----------------------------------------------
 			// Get Pointer to BMP data for this point.
@@ -2586,12 +2578,10 @@ void CPlayer::DefaultTeam(int team) {
 
 bool CPlayer::Read( FitIniFile* missionFile, int playerNum )
 {
-	long result = 0;
 	EString tmpStr;
 	tmpStr.Format("Player%d", playerNum);
-	result = missionFile->seekBlock(tmpStr.Data());
-	result = sReadIdWholeNum(missionFile, "DefaultTeam", m_defaultTeam);
-	return result;
+	missionFile->seekBlock(tmpStr.Data());
+	return sReadIdWholeNum(missionFile, "DefaultTeam", m_defaultTeam);
 }
 
 bool CPlayer::Save( FitIniFile* missionFile, int playerNum )

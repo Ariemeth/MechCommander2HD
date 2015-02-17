@@ -1270,13 +1270,6 @@ UnitQuaternion&
 			
 			Verify(cos_table_entry >= 0);
 			Verify(cos_table_entry <= QuaternionLerpTableSize);
-
-
-#if 0
-			sclp = Sin((1.0f - t)*Omega_Table[cos_table_entry]) * SinomOverOne_Table[cos_table_entry];
-			sclq = Sin(t*Omega_Table[cos_table_entry]) * SinomOverOne_Table[cos_table_entry];
-	
-#else
 		
 			float difference, percent, lerped_sin;
 
@@ -1310,31 +1303,21 @@ UnitQuaternion&
 			Max_Clamp(lerp_to_entry, SinTableSize-1);
 			lerped_sin = Stuff::Lerp(Sin_Table[sclq_table_entry], Sin_Table[lerp_to_entry], percent);
 			sclq = lerped_sin * SinomOverOne_Table[cos_table_entry];
-#endif
-			
 		}
 		else 
 		{ 
 			// ends very close -- just lerp
 			sclp = 1.0f - t;
 			sclq = t;
-
-			
 		}
-
 
 		x = sclp*p.x + sclq*q.x;
 		y = sclp*p.y + sclq*q.y;
 		z = sclp*p.z + sclq*q.z;
 		w = sclp*p.w + sclq*q.w;
-
-		
 	}
 	else 
 	{
-
-
-
 		//SPEW(("jerryeds","SPECIAL CASE"));
 		/* p and q nearly opposite on sphere-- this is a 360 degree
 		   rotation, but the axis of rotation is undefined, so

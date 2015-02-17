@@ -561,7 +561,7 @@ profile = true;
 	ABLFile* bFile = new ABLFile;
 	bFile->open("ablFile.txt");
 	bFile->readString(s);
-	long val = bFile->readLong();
+	bFile->readLong();
 	bFile->close();
 	delete bFile;
 	bFile = NULL;
@@ -1470,7 +1470,6 @@ SymTableNodePtr functionHeader (void) {
 SymTableNodePtr formalParamList (long* count, long* totalSize) {
 
 	SymTableNodePtr paramIdPtr;
-	SymTableNodePtr firstIdPtr;
 	SymTableNodePtr lastIdPtr = NULL;
 	SymTableNodePtr paramListPtr = NULL;
 	SymTableNodePtr typeIdPtr;
@@ -1482,7 +1481,6 @@ SymTableNodePtr formalParamList (long* count, long* totalSize) {
 	getToken();
 
 	while ((curToken == TKN_IDENTIFIER) || (curToken == TKN_REF)) {
-		firstIdPtr = NULL;
 
 		if (curToken == TKN_REF) {
 			paramDefn = DFN_REFPARAM;
@@ -1683,7 +1681,7 @@ void transState (SymTableNodePtr newState) {
 	if (CurFSM) {
 		CurFSM->setPrevState(CurFSM->getState());
 		CurFSM->setState(newState);
-		sprintf(SetStateDebugStr, "%s:%s, line %d", CurModule->getFileName(), newState->name, execLineNumber);
+		sprintf(SetStateDebugStr, "%s:%s, line %ld", CurModule->getFileName(), newState->name, execLineNumber);
 		NewStateSet = true;
 	}
 }

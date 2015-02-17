@@ -88,7 +88,7 @@ class GameSoundSystem : public SoundSystem
 };
 
 //---------------------------------------------------------------------------
-extern GameSoundSystem *soundSystem;
+extern GameSoundSystem *g_gameSoundSystem;
 
 //---------------------------------------------------------------------------
 #endif

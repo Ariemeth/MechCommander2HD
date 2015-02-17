@@ -53,7 +53,7 @@ float						SensorSystem::scanFrequency = 0.5;
 bool						TeamSensorSystem::homeTeamInContact = false;
 bool						SensorSystemManager::enemyInLOS = true;
 
-extern float scenarioTime;
+extern float g_missionTime;
 extern UserHeapPtr missionHeap;
 
 #define	VISUAL_CONTACT_FLAG	0x8000
@@ -473,7 +473,7 @@ void SensorSystem::updateContacts (void) {
 	//---------------------------------------------------------------------
 	// If we've already scanned this frame, don't bother updating contacts.
 	// Otherwise, update contacts...
-	if (scenarioTime == lastScanUpdate)
+	if (g_missionTime == lastScanUpdate)
 		return;
 
 	long i = 0;
@@ -510,7 +510,7 @@ void SensorSystem::updateContacts (void) {
 void SensorSystem::updateScan (bool forceUpdate) {
 
 	if (!forceUpdate)
-		if ((masterIndex == -1) || (range < 0.0) || (turn < 2))
+		if ((masterIndex == -1) || (range < 0.0) || (g_framesSinceMissionStart < 2))
 			return;
 
 	if (!enabled()) {
@@ -535,7 +535,7 @@ void SensorSystem::updateScan (bool forceUpdate) {
 			}
 		}
 
-		lastScanUpdate = scenarioTime;
+		lastScanUpdate = g_missionTime;
 		if (!forceUpdate)
 			nextScanUpdate += scanFrequency;
 	}
@@ -750,13 +750,6 @@ void TeamSensorSystem::removeSensor (SensorSystemPtr sensor) {
 void TeamSensorSystem::update (void) {
 
 	if (numSensors > 0) {
-#if 0
-		//DEBUGGING
-		for (long k = 0; k < numContacts; k++) {
-			MoverPtr mover = (MoverPtr)ObjectManager->get(contacts[k]);
-			Assert(mover->getContactInfo()->teams[teamId] == k, 0, " Bad teams/contact link ");
-		}
-#endif
 		
 		if (Team::teams[teamId] == Team::home)
 			SoundSystem::largestSensorContact = -1;
@@ -1014,7 +1007,7 @@ SensorSystemPtr TeamSensorSystem::findBestSpotter (MoverPtr contact, long* statu
 	ContactInfoPtr contactInfo = contact->getContactInfo();
 	if (!contactInfo) {
 		char s[256];
-		sprintf(s, "TeamSensorSystem.findBestSpotter: NULL contactInfo for objClass %d partID %d team %d", contact->getObjectClass(), contact->getPartId(), contact->getTeamId());
+		sprintf(s, "TeamSensorSystem.findBestSpotter: NULL contactInfo for objClass %d partID %ld team %ld", contact->getObjectClass(), contact->getPartId(), contact->getTeamId());
 		STOP((s));
 	}
 	SensorSystemPtr bestSensor = NULL;
@@ -1101,28 +1094,6 @@ void TeamSensorSystem::removeContact (SensorSystemPtr sensor, MoverPtr contact) 
 	}
 }
 
-//---------------------------------------------------------------------------
-#if 0
-void TeamSensorSystem::updateContactList (void) {
-
-	numAllContacts = 0;
-	for (long i = 0; i < ObjectManager->getNumMovers(); i++) {
-		MoverPtr mover = ObjectManager->getMover(i);
-		if (mover) {
-			long bestStatus = CONTACT_NONE;
-			for (long i = 0; i < Team::numTeams; i++) {
-				if (Team::teams[teamId]->isFriendly(Team::teams[i]))
-					if (mover->contactInfo->contactStatus[i] > bestStatus)
-						bestStatus = mover->contactInfo->contactStatus[i];
-			}
-			mover->contactInfo->allContactStatus[teamId] = bestStatus;
-			if (bestStatus != CONTACT_NONE) {
-				allContacts[numAllContacts++] = mover->getHandle();
-			}
-		}
-	}
-}
-#endif
 //---------------------------------------------------------------------------
 
 void TeamSensorSystem::updateEcmEffects (void) {
@@ -1343,15 +1314,6 @@ void SensorSystemManager::updateSensors (void)
 		teamToUpdate = 0;
 }
 
-//---------------------------------------------------------------------------
-#if 0
-void SensorSystemManager::updateTeamContactLists (void) {
-
-	for (long i = 0; i < Team::numTeams; i++) {
-		teamSensors[i]->updateContactList();
-	}
-}
-#endif
 //---------------------------------------------------------------------------
 
 void SensorSystemManager::addEcm (GameObjectPtr owner, float range) {

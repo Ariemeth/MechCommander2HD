@@ -321,85 +321,6 @@ MemoryStream&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//  Bit packing methods...
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-#if 0
-		
-		// quick reference for the boneheads...
-		
-		// >> shift right
-		// << shift left	
-		// ~ complement
-		// ^ exclusive or - 1 if bits match
-		// | and		  - 1 if either bit is one
-		// & or			  - 1 if both bits are one
-		
-		// 0000|1111 << 4 = 1111|0000
-		// 1111|0000 >> 2 = 0011|1100
-		// ~1111|0000 = 0000|1111
-		
-		//
-		//    0000|1111
-		//	^ 1010|1010
-		//---------------
-		//	  0101|1010
-		
-		//
-		//	  0000|0101
-		//	| 1100|1100
-		//---------------
-		//	  1100|1101
-		
-		//
-		//	  0000|0101
-		//	& 1100|1100
-		//---------------
-		//	  0000|0100
-						
-		
-		
-		// set a number to a specific value
-		
-		
-		
-		// bitmasks
-		
-		//0x01 // 0000|0001
-		//0x03 // 0000|0011
-		//0x07 // 0000|0111
-		//0x0f // 0000|1111
-		//0x1f // 0001|1111
-		//0x3f // 0011|1111
-		//0x7f // 0111|1111
-		//0xff // 1111|1111
-		
-		// inverted bitmasks
-		
-		//0x80 // 1000|0000
-		//0xc0 // 1100|0000
-		//0xe0 // 1110|0000
-		//0xf0 // 1111|0000
-		//0xf8 // 1111|1000
-		//0xfc // 1111|1100
-		//0xfe // 1111|1110
-		//0xff // 1111|1111
-
-	
-
-		Verify(bit_count > 0);
-		Verify(bit_count < 32);
-
-		unsigned int bit_count = 0;
-		bit_count = 0x1 << i;
-
-		SPEW(("jerryeds", "%u %u", i,bit_count));
-	
-#endif
-
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 
 void
@@ -510,14 +431,6 @@ MemoryStream&
 	Verify(currentBit >= 0);
 	Verify(currentBit < 8);
 
-	int total_number_of_bytes = (int)(number_of_bits/8.0f);
-	int total_remainder_bits = number_of_bits - (total_number_of_bytes*8);
-
-	if ( total_remainder_bits != 0)
-	{
-		total_number_of_bytes += 1;
-	}
-
 	BYTE *dest_array = Cast_Pointer(BYTE *, ptr);
 	int dest_byte_counter = 0;
 
@@ -609,28 +522,13 @@ MemoryStream&
 	
 	Verify(currentBit >= 0);
 	Verify(currentBit < 8);
-
-
-	
-
-	int total_number_of_bytes = (int)(number_of_bits/8.0f);
-	int total_remainder_bits = number_of_bits  - (total_number_of_bytes*8);
-
-	if ( total_remainder_bits != 0)
-	{
-		total_number_of_bytes += 1;
-	}
-
 	
 	const BYTE *source_array = Cast_Pointer(const BYTE *, ptr);
 	int source_byte_counter = 0;
 	
 	int bits_remaining = number_of_bits;
-
 	while (bits_remaining > 0)
 	{
-	
-		
 		// if we are writing the full byte
 		const BYTE *source = &source_array[source_byte_counter];
 	
@@ -639,8 +537,6 @@ MemoryStream&
 		
 		int bits_in_first_destination_byte = total_bits_to_be_written;
 		Max_Clamp(bits_in_first_destination_byte, 8-currentBit);
-
-
 		
 		// make sure our destination is empty
 		workingBitBuffer &= (0xff >> (8-currentBit));
@@ -649,10 +545,7 @@ MemoryStream&
 		// put the adjusted source into the destination
 		workingBitBuffer |= new_source;
 
-
-
 		currentBit += bits_in_first_destination_byte;
-
 
 		if (currentBit == 8)
 		{
@@ -670,12 +563,9 @@ MemoryStream&
 				workingBitBuffer = (BYTE)(*source >> bits_in_first_destination_byte);
 				currentBit = bits_in_second_destination_byte;
 			}
-
 		}
 
-
 		bits_remaining -= total_bits_to_be_written;
-	
 	}
 	return *this;
 }

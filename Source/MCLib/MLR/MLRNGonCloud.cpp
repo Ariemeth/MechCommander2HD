@@ -208,12 +208,6 @@ int
 		return visible;
 	}
 
-	int	myNumberUsedClipVertex, myNumberUsedClipIndex, myNumberUsedClipLength;
-
-	myNumberUsedClipVertex = 0;
-	myNumberUsedClipIndex = 0;
-	myNumberUsedClipLength = 0;
-
 	//
 	//-------------------------------
 	// Handle the non-indexed version

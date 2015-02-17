@@ -59,29 +59,6 @@ bool
 		 && Close_Enough(a1.angularPosition, a2.angularPosition, e);
 }
 
-#if 0
-//
-//###########################################################################
-//###########################################################################
-//
-Origin3D&
-	Origin3D::AddScaled(
-		const Origin3D& source,
-		const Motion& delta,
-		Scalar t
-	)
-{
-	Check_Pointer(this);
-	Check_Object(&source);
-	Check_Object(&delta);
-	Verify(t >= 0.0f);
-
-	linearPosition.AddScaled(source.linearPosition, delta.linearMotion, t);
-	angularPosition.AddScaled(source.angularPosition, delta.angularMotion, t);
-	return *this;
-}
-#endif
-
 //
 //#############################################################################
 //#############################################################################

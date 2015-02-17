@@ -85,10 +85,6 @@ void
 
 	Transform(*usedNrOfVertices, 1);
 
-#if 0
-	Lighting(*shape->worldToShape, dInfo->activeLights, dInfo->nrOfActiveLights);
-#endif
-
 	if( Clip(dInfo->clippingFlags, allVerticesToDraw) )
 	{
 		sorter->AddEffect(this, dInfo->state);

@@ -208,15 +208,10 @@
 
 			#if defined(USE_TIME_ANALYSIS)
 				lastUpTime = now - lastActivity;
-#if 0 // HACK	
-				Verify(lastUpTime >= 0.0f)
-				totalUpTime += lastUpTime;
-#else
 				if (lastUpTime >= 0.0f)
 				{
 					totalUpTime += lastUpTime;
 				}
-#endif
 			#endif
 
 			#if defined(USE_TRACE_LOG)
@@ -637,18 +632,6 @@
 				activeTraceLog->AdvancePointer(sample->sampleLength);
 			}
 		}
-
-#if 0
-		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		//
-		void
-			TraceManager::WriteClassBlocks(MemoryStream& stream)
-		{
-			stream << static_cast<int>('MSGS')
-			 << RegisteredClass::DefaultData->WriteClassBlock(stream, false);
-			RegisteredClass::DefaultData->WriteClassBlock(stream, true);
-		}
-#endif
 
 	#endif
 

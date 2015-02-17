@@ -400,7 +400,7 @@ bool Unit::save( FitIniFile* file, int WarriorNumber, int controlDataType, char*
 	brain.save( file, WarriorNumber, appearance()->teamId == EDITOR_TEAM1 ? 1 : 0);
 
 	char tmp[256];
-	sprintf( tmp, "Part%ld", WarriorNumber );
+	sprintf( tmp, "Part%d", WarriorNumber );
 	file->writeBlock( tmp );
 	file->writeIdULong( "ObjectNumber", EditorObjectMgr::instance()->getFitID( id ) );
 	file->writeIdULong( "ControlType", 2 );
@@ -624,7 +624,7 @@ bool Brain::save( FitIniFile* file, int warriorNumber, bool bPlayer )
 		char text[256];
 		for (long i=0;i<numCells;i++)
 		{
-			sprintf( text, "Warrior%ldCell%d", warriorNumber, i );
+			sprintf( text, "Warrior%ldCell%ld", warriorNumber, i );
 			file->writeBlock(text);
 			file->writeIdLong("Cell",  cellNum[i]);
 			file->writeIdLong("MemType", cellType[i]);
@@ -652,7 +652,7 @@ bool Brain::save( FitIniFile* file, int warriorNumber, bool bPlayer )
 			char text[256];
 			for (long i=0;i<3;i++)
 			{
-				sprintf( text, "Warrior%ldCell%d", warriorNumber, i );
+				sprintf( text, "Warrior%ldCell%ld", warriorNumber, i );
 				file->writeBlock(text);
 				
 				switch (i)
@@ -717,7 +717,7 @@ bool Brain::load( FitIniFile* file, int warriorNumber )
 	char text[256];
 	for (long i=0;i<numCells;i++)
 	{
-		sprintf( text, "Warrior%ldCell%d", warriorNumber, i );
+		sprintf( text, "Warrior%dCell%ld", warriorNumber, i );
 		
 		file->seekBlock(text);
 		file->readIdLong("Cell",  cellNum[i]);
@@ -970,7 +970,7 @@ void Pilot::setName( const char* newName )
 bool NavMarker::save( FitIniFile* file, int warriorNumber )
 { 
 	char text[32];
-	sprintf( text, "NavMarker%ld", warriorNumber );
+	sprintf( text, "NavMarker%d", warriorNumber );
 	file->writeBlock( text );
 
 	file->writeIdFloat( "xPos", appearance()->position.x );

@@ -96,7 +96,7 @@ public:
 	bool Read( FitIniFile* missionFile );
 	bool Save( FitIniFile* missionFile );
 private:
-	CPlayers &operator=(const CPlayers &master) { /*not valid, do not use*/ }
+	CPlayers &operator=(const CPlayers &master);
 	CPlayer m_playerArray[GAME_MAX_PLAYERS];
 };
 

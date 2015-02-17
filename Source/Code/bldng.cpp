@@ -92,7 +92,7 @@ extern char lastName[];
 
 extern GameLog* CombatLog;
 
-extern float scenarioTime;
+extern float g_missionTime;
 
 //#ifndef SOUNDS_H
 //#include "sounds.h"
@@ -343,7 +343,7 @@ bool BuildingType::handleCollision (GameObjectPtr collidee, GameObjectPtr collid
 		case FIRE: {
 			WeaponShotInfo shot;
 			shot.init(NULL, -1, 10, 0, 0);
-			if (collider->getCollisionFreeTime() < scenarioTime)
+			if (collider->getCollisionFreeTime() < g_missionTime)
 				return(true);
 			collidee->handleWeaponHit(&shot, (MPlayer != NULL));
 			}
@@ -378,7 +378,7 @@ bool Building::isVisible (void) {
 		isVisible = appearance->recalcBounds();
 
 	if (isVisible) {
-		windowsVisible = turn;
+		windowsVisible = g_framesSinceMissionStart;
 		return(true);
 	}
 		
@@ -745,7 +745,7 @@ long Building::update (void)
 
 	//We can call update multiple times now since a special building will be updated
 	//every frame regardless AND it could also be near where the camera is looking!	
-	if (turn != updatedTurn)
+	if (g_framesSinceMissionStart != updatedTurn)
 	{
 		//----------------------------------------------
 		// Perimeter Alarms
@@ -753,7 +753,7 @@ long Building::update (void)
 		// Will only be set if we ARE a perimeter alarm in HandleCollision.
 		if (moverInProximity)
 		{
-			proximityTimer += g_deltaTime;
+			proximityTimer += g_frameTime;
 		}
 		else
 		{
@@ -765,7 +765,7 @@ long Building::update (void)
 		if (!GeneralAlarm && proximityTimer > 0.0f)
 		{
 			//Play something close by sound FX
-			soundSystem->playDigitalSample(PING_SFX);
+			g_gameSoundSystem->playDigitalSample(PING_SFX);
 			if (proximityTimer > ((BuildingTypePtr)getObjectType())->perimeterAlarmTimer)
 			{
 				//Set GeneralAlarm to TRUE.
@@ -774,7 +774,7 @@ long Building::update (void)
 			}
 		}
 
-		updatedTurn = turn;
+		updatedTurn = g_framesSinceMissionStart;
 		if (appearance)
 		{
 			updateAnimations();
@@ -802,7 +802,7 @@ long Building::update (void)
 
 			if (inView)
 			{
-				windowsVisible = turn;
+				windowsVisible = g_framesSinceMissionStart;
 	
 				float zPos = land->getTerrainElevation(position);
 				position.z = zPos;
@@ -893,8 +893,8 @@ long Building::update (void)
 		(ObjectManager->getByWatchID(parent)->getTeamId() != getTeamId()))
 	{
 		// if building recaptured play a sound
-		if ( (ObjectManager->getByWatchID(parent)->getTeamId() != Team::home->getId()) && (turn > 5) && (getTeamId() != -1))
-			soundSystem->playBettySample(BETTY_BUILDING_RECAPTURED);
+		if ( (ObjectManager->getByWatchID(parent)->getTeamId() != Team::home->getId()) && (g_framesSinceMissionStart > 5) && (getTeamId() != -1))
+			g_gameSoundSystem->playBettySample(BETTY_BUILDING_RECAPTURED);
 		setTeamId(ObjectManager->getByWatchID(parent)->getTeam()->getId(),false);
 	}
 
@@ -928,8 +928,8 @@ long Building::setTeamId (long _teamId, bool setup)
 		// If this building is set for a team that isn't in this session, kill it...
 		if (_teamId >= MPlayer->numTeams && (getObjectType()->getObjTypeNum() != GENERIC_HQ_BUILDING_OBJNUM))
 			_teamId = -1;
-		captureTime = scenarioTime;
-		scoreTime = scenarioTime + 1.0;
+		captureTime = g_missionTime;
+		scoreTime = g_missionTime + 1.0;
 		//-----------------------
 		// Now, reset the team...
 		teamId = _teamId;
@@ -947,26 +947,26 @@ long Building::setTeamId (long _teamId, bool setup)
 	if ((teamId > -1) && sensorSystem)
 	{
 		SensorManager->addTeamSensor(teamId, sensorSystem);
-		if ( (turn > 5) && !isLookoutTower())
-			soundSystem->playBettySample( BETTY_SENSOR_CAPTURED );
+		if ( (g_framesSinceMissionStart > 5) && !isLookoutTower())
+			g_gameSoundSystem->playBettySample( BETTY_SENSOR_CAPTURED );
 	}
 
 	static unsigned long highLight[8] = {0x00007f00, 0x0000007f, 0x007f0000};
-	if (turn > 10)
+	if (g_framesSinceMissionStart > 10)
 		appearance->flashBuilding(5.0,0.5,highLight[Team::relations[teamId][Team::home->getId()]]);
 		
-	if ((turn > 10) && ((BuildingTypePtr)getObjectType())->resourcePoints)
+	if ((g_framesSinceMissionStart > 10) && ((BuildingTypePtr)getObjectType())->resourcePoints)
 	{
 		if (MPlayer) {
 			if (MPlayer->isServer())
 				MPlayer->sendReinforcement(((BuildingTypePtr)getObjectType())->resourcePoints, 0, "noname", commanderId, getPosition(), 6);
 				//MPlayer->playerInfo[commanderId].resourcePoints += ((BuildingTypePtr)getObjectType())->resourcePoints;
 			if (teamId == Team::home->getId())
-				soundSystem->playBettySample(BETTY_RESOURCES);
+				g_gameSoundSystem->playBettySample(BETTY_RESOURCES);
 		}
 		else {
 			LogisticsData::instance->addResourcePoints(((BuildingTypePtr)getObjectType())->resourcePoints);
-			soundSystem->playBettySample(BETTY_RESOURCES);
+			g_gameSoundSystem->playBettySample(BETTY_RESOURCES);
 		}
 	}
 
@@ -1106,7 +1106,7 @@ void Building::render (void) {
 		}
 
 
-		windowsVisible = turn;
+		windowsVisible = g_framesSinceMissionStart;
 		appearance->setVisibility(true,true);
 		appearance->render();
 	}
@@ -1375,13 +1375,6 @@ void Building::createBuildingMarines (void) {
 
 					//----------------------------------------------------------------
 					// Multiplayer stuff for vehicle Pilot.  What should I do Glenn?
-				#if 0
-					if (MPlayer) {
-						MPlayer->addToMoverRoster((MoverPtr)parts[i].object);
-						if (parts[i].commanderID == MPlayer->commanderID)
-							MPlayer->addToLocalMovers((MoverPtr)parts[i].object);
-					}
-				#endif
 
 					//--------------------------------------------------------------------
 					// Add the object to the object list, if it exists
@@ -1486,11 +1479,6 @@ long Building::handleWeaponHit (WeaponShotInfoPtr shotInfo, bool addMultiplayChu
 				else	//Play the sound effect and do splash damage but don't draw any effect.  We are playing a magical GosFX one!!
 					ObjectManager->createExplosion(EMPTY_EXPLOSION_ID,NULL,hitNodePos,explDamage,explRadius);
 
-#if 0
-				if (type->marksImpassableWhenDestroyed) 
-					appearance->markMoveMap(true,NULL);
-#endif
-
 				appearance->markLOS(true);
 
 				appearance->setObjStatus(OBJECT_STATUS_DESTROYED);
@@ -1508,16 +1496,9 @@ long Building::handleWeaponHit (WeaponShotInfoPtr shotInfo, bool addMultiplayChu
 					GlobalMoveMap[0]->clearPathExistsTable();
 					GlobalMoveMap[1]->clearPathExistsTable();
 				}
-#if 0
-				else	//We want the buildings remaining shape to correctly calc LOS and Impassability
-				{
-					appearance->markLOS();
-					appearance->markMoveMap(false,NULL);	//Then, use the destroyed shape to mark impassable
-				}
-#endif							
 				if (CombatLog) {
 					char s[1024];
-					sprintf(s, "[%.2f] building.destroyed: [%05d]%s", scenarioTime, this->getPartId(), this->getName());
+					sprintf(s, "[%.2f] building.destroyed: [%05d]%s", g_missionTime, this->getPartId(), this->getName());
 					CombatLog->write(s);
 					CombatLog->write(" ");
 				}
@@ -1651,7 +1632,7 @@ bool Building::burnRefitPoints(float pointsToBurn)
 
 	if (getDamage() >= getDamageLevel())
 	{
-		soundSystem->playBettySample( BETTY_REPAIR_GONE );
+		g_gameSoundSystem->playBettySample( BETTY_REPAIR_GONE );
 		return(false);
 	}
 

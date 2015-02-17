@@ -599,12 +599,12 @@ const char* MissionBegin::update()
 						float xDistLeft = buttonPosX - realMouseX;
 						float yDistLeft = buttonPosY - realMouseY;
 
-						float xDistThisFrame = xDistLeft / timeLeftToScroll * g_deltaTime;
-						float yDistThisFrame = yDistLeft / timeLeftToScroll * g_deltaTime;
+						float xDistThisFrame = xDistLeft / timeLeftToScroll * g_frameTime;
+						float yDistThisFrame = yDistLeft / timeLeftToScroll * g_frameTime;
 
 						userInput->setMousePos(realMouseX + xDistThisFrame, realMouseY+yDistThisFrame);
 
-						timeLeftToScroll -= g_deltaTime;
+						timeLeftToScroll -= g_frameTime;
 					}
 					else
 					{
@@ -613,7 +613,7 @@ const char* MissionBegin::update()
 						//We are there.  Start flashing.
 						if (buttonNumFlashes)
 						{
-							buttonFlashTime += g_deltaTime;
+							buttonFlashTime += g_frameTime;
 							if ( buttonFlashTime > .5f )
 							{
 								pCurScreen->getButton( targetButtonId )->setColor( 0xffffffff );
@@ -660,12 +660,12 @@ const char* MissionBegin::update()
 						float xDistLeft = buttonPosX - realMouseX;
 						float yDistLeft = buttonPosY - realMouseY;
 		
-						float xDistThisFrame = xDistLeft / timeLeftToScroll * g_deltaTime;
-						float yDistThisFrame = yDistLeft / timeLeftToScroll * g_deltaTime;
+						float xDistThisFrame = xDistLeft / timeLeftToScroll * g_frameTime;
+						float yDistThisFrame = yDistLeft / timeLeftToScroll * g_frameTime;
 		
 						userInput->setMousePos(realMouseX + xDistThisFrame, realMouseY+yDistThisFrame);
 		
-						timeLeftToScroll -= g_deltaTime;
+						timeLeftToScroll -= g_frameTime;
 					}
 					else
 					{
@@ -674,7 +674,7 @@ const char* MissionBegin::update()
 						//We are there.  Start flashing.
 						if (buttonNumFlashes)
 						{
-							buttonFlashTime += g_deltaTime;
+							buttonFlashTime += g_frameTime;
 							if ( buttonFlashTime > .5f )
 							{
 								pCurScreen->getRect( targetButtonId )->setColor( 0xff000000 );
@@ -720,8 +720,8 @@ const char* MissionBegin::update()
 
 		if ( pCurScreen->getStatus() != LogisticsScreen::RUNNING )
 		{
-			soundSystem->stopBettySample(); // don't want to carry droning on to next screen
-			soundSystem->stopSupportSample();
+			g_gameSoundSystem->stopBettySample(); // don't want to carry droning on to next screen
+			g_gameSoundSystem->stopSupportSample();
 			if ( pCurScreen->getStatus() == LogisticsScreen::NEXT )
 			{
 				pCurScreen->end();
@@ -755,7 +755,7 @@ const char* MissionBegin::update()
 
 					leftAnim.begin();
 					curScreenX++;
-					soundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
+					g_gameSoundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
 					animJustBegun = true;
 				}
 				else
@@ -777,7 +777,7 @@ const char* MissionBegin::update()
 				}
 				rightAnim.begin();
 				curScreenX--;
-				soundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
+				g_gameSoundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
 				animJustBegun = true;
 			}
 			else if ( pCurScreen->getStatus() == LogisticsScreen::DOWN )
@@ -787,7 +787,7 @@ const char* MissionBegin::update()
 					screens[curScreenX][curScreenY+1]->begin();
 				upAnim.begin();
 				curScreenY++;
-				soundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
+				g_gameSoundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
 				animJustBegun = true;
 			}
 			else if ( pCurScreen->getStatus() == LogisticsScreen::UP )
@@ -797,7 +797,7 @@ const char* MissionBegin::update()
 					screens[curScreenX][curScreenY-1]->begin();
 				downAnim.begin();
 				curScreenY--;
-				soundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
+				g_gameSoundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
 				animJustBegun = true;
 			}
 			else if ( pCurScreen->getStatus() == LogisticsScreen::MAINMENU )
@@ -817,7 +817,7 @@ const char* MissionBegin::update()
 					leftAnim.begin();
 					curScreenX++;
 					curScreenX++;
-					soundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
+					g_gameSoundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
 					animJustBegun = true;
 				}
 				else
@@ -833,7 +833,7 @@ const char* MissionBegin::update()
 				rightAnim.begin();
 				curScreenX--;
 				curScreenX--;
-				soundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
+				g_gameSoundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
 				animJustBegun = true;
 			}
 		} 
@@ -973,7 +973,7 @@ void MissionBegin::beginSplash( const char* playerName)
 
 		mainMenu->setDrawBackground( true );
 		mainMenu->begin();
-		soundSystem->playDigitalSample( LOG_MAINMENUBUTTON );
+		g_gameSoundSystem->playDigitalSample( LOG_MAINMENUBUTTON );
 		if (playerName)
 			mainMenu->setHostLeftDlg(playerName);
 	}

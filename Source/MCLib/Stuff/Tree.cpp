@@ -721,45 +721,6 @@ void
 	#endif
 }
 
-#if 0
-//
-//###########################################################################
-// ReadAndNextImplementation
-//###########################################################################
-//
-void
-	*TreeIterator::ReadAndNextImplementation()
-{
-	Check_Object(this);
-	void *plug;
-
-	if ((plug = GetCurrentImplementation()) != NULL)
-	{
-		Next();
-	}
-	return plug;
-}
-#endif
-
-#if 0
-//
-//###########################################################################
-// ReadAndPreviousImplementation
-//###########################################################################
-//
-void
-	*TreeIterator::ReadAndPreviousImplementation()
-{
-	Check_Object(this);
-	#ifdef __BCPLUSPLUS__
-		#pragma warn -ccc
-			Verify(False);
-		#pragma warn +ccc
-	#endif
-	return(NULL);
-}
-#endif
-
 //
 //###########################################################################
 // GetCurrentImplementation
@@ -795,33 +756,6 @@ CollectionSize
 	}
 	return(i);
 }
-
-#if 0
-//
-//###########################################################################
-// GetNthImplementation
-//###########################################################################
-//
-void
-	*TreeIterator::GetNthImplementation(
-		CollectionSize index
-	)
-{
-	Check_Object(this);
-	CollectionSize i = 0;
-	void 				*plug;
-
-	First();
-	while ((plug = GetCurrentImplementation()) != NULL)
-	{
-		if (i == index)
-			return plug;
-		Next();
-		i++;
-	}
-	return NULL;
-}
-#endif
 
 //
 //###########################################################################

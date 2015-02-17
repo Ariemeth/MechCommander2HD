@@ -81,7 +81,7 @@
 #include "dgamelog.h"
 #endif
 
-extern float scenarioTime;
+extern float g_missionTime;
 
 class BldgAppearance;
 
@@ -614,13 +614,6 @@ typedef struct _SituationOrders {
 	void init (void);
 
 } SituationOrders;
-
-#if 0
-typedef struct _RoleOrders {
-	float						time;
-	MechWarriorRole				role;
-} RoleOrders;
-#endif
 
 //------------------------------------------------------------------------------------------
 
@@ -1850,19 +1843,6 @@ class MechWarrior {
 		{
 			return isPlayingMsg;
 		}
-
-#if 0
-		//-------------
-		// Role Orders
-
-		long getRole (void) {
-			return(roleOrders.role);
-		}
-
-		void setRole (long role) {
-			roleOrders.role = (MechWarriorRole)role;
-		}
-#endif
 
 		//--------------------
 		// Command/Observation

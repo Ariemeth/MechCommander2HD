@@ -359,7 +359,7 @@ void ObjectiveDlg::SaveDialogValues() {
 		if ( tmpStr.GetLength() )
 		{
 			tmpStr.Replace( "0x", "" );
-			sscanf( tmpStr, "%x", &base );
+			sscanf( tmpStr, "%x", (unsigned int *)&base );
 			base |= 0xff000000;
 			m_ModifiedObjective.BaseColor( base );
 		}
@@ -375,7 +375,7 @@ void ObjectiveDlg::SaveDialogValues() {
 		if ( tmpStr.GetLength() )
 		{
 			tmpStr.Replace( "0x", "" );
-			sscanf( tmpStr, "%x", &highlight1 );
+			sscanf( tmpStr, "%x", (unsigned int *)&highlight1 );
 			highlight1 |= 0xff000000;
 			m_ModifiedObjective.HighlightColor( highlight1 );
 		}
@@ -391,7 +391,7 @@ void ObjectiveDlg::SaveDialogValues() {
 		if ( tmpStr.GetLength() )
 		{
 			tmpStr.Replace( "0x", "" );
-			sscanf( tmpStr, "%x", &highlight2 );
+			sscanf( tmpStr, "%x", (unsigned int *)&highlight2 );
 			highlight2 |= 0xff000000;
 			m_ModifiedObjective.HighlightColor2( highlight2 );
 		}
@@ -781,7 +781,7 @@ void ObjectiveDlg::DoColorBox( CWnd* pWnd )
 		tmpStr.Replace( "0x", "" );
 
 		long base;
-		sscanf( tmpStr, "%x", &base );
+		sscanf( tmpStr, "%x", (unsigned int *)&base );
 		base &= 0x00ffffff;
 
 
@@ -810,7 +810,7 @@ HBRUSH ObjectiveDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		tmpStr.Replace( "0x", "" );
 
 		long base;
-		sscanf( tmpStr, "%x", &base );
+		sscanf( tmpStr, "%x", (unsigned int *)&base );
 		base &= 0x00ffffff;
 		base = reverseRGB( base );
 		
@@ -835,7 +835,7 @@ HBRUSH ObjectiveDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		tmpStr.Replace( "0x", "" );
 
 		long base;
-		sscanf( tmpStr, "%x", &base );
+		sscanf( tmpStr, "%x", (unsigned int *)&base );
 		base &= 0x00ffffff;
 		base = reverseRGB( base );
 
@@ -858,7 +858,7 @@ HBRUSH ObjectiveDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		tmpStr.Replace( "0x", "" );
 
 		long base;
-		sscanf( tmpStr, "%x", &base );
+		sscanf( tmpStr, "%x", (unsigned int *)&base );
 		base &= 0x00ffffff;
 		base = reverseRGB( base );
 

@@ -124,7 +124,7 @@ long i, roll, callsign, fragmentNum, dropOut = 0;
 	if (!owner)
 		return(NO_PLAY);
 
-	if (!soundSystem->checkMessage(owner, messageInfo[msgType].priority, msgType))
+	if (!g_gameSoundSystem->checkMessage(owner, messageInfo[msgType].priority, msgType))
 		return(NO_PLAY);
 
 	if ((msgType == RADIO_AMMO_OUT) && ammoOutPlayed)
@@ -165,11 +165,11 @@ long i, roll, callsign, fragmentNum, dropOut = 0;
 	msgData->msgId = messageInfo[msgType].messageMapping + i;
 	msgData->movieCode = messageInfo[msgType].movieCode;
 	msgData->msgHeap = radioHeap;
-	msgData->turnQueued = turn;
+	msgData->turnQueued = g_framesSinceMissionStart;
 			
 	msgData->priority = messageInfo[msgType].priority;
 	msgData->pilot = owner;
-	msgData->expirationDate = scenarioTime + messageInfo[msgType].shelfLife;
+	msgData->expirationDate = g_missionTime + messageInfo[msgType].shelfLife;
 	
 	//-----------------------------------------------------------------------
 	// Load the pieces need for playback.
@@ -258,7 +258,7 @@ long i, roll, callsign, fragmentNum, dropOut = 0;
 	// queue was full.  If it was, memory would leak from
 	// the smacker window.  It wouldn't leak from the RadioHeap
 	// because we clear the radio heap every mission!!
-	if (soundSystem->queueRadioMessage(msgData) != NO_ERR)
+	if (g_gameSoundSystem->queueRadioMessage(msgData) != NO_ERR)
 	{
 		if (msgData)
 		{

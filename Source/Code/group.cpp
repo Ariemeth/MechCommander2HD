@@ -624,7 +624,7 @@ long MoverGroup::calcJumpGoals (Stuff::Vector3D goal, long numMovers, Stuff::Vec
 #ifdef _DEBUG
 #if DEBUGJUMPGOALS
 	char debugStr[256];
-	sprintf(debugStr, "GROUP JUMP(%.2f,%.2f,%.2f)--UL = %d,%d: ", goal.x, goal.y, goal.z,mapCellUL[0], mapCellUL[1]);
+	sprintf(debugStr, "GROUP JUMP(%.2f,%.2f,%.2f)--UL = %ld,%ld: ", goal.x, goal.y, goal.z,mapCellUL[0], mapCellUL[1]);
 #endif
 #endif
 
@@ -651,7 +651,7 @@ long MoverGroup::calcJumpGoals (Stuff::Vector3D goal, long numMovers, Stuff::Vec
 #ifdef _DEBUG
 #if DEBUGJUMPGOALS
 				char s[30];
-				sprintf(s, "[%d,%d] ", curCellRow, curCellCol);
+				sprintf(s, "[%ld,%ld] ", curCellRow, curCellCol);
 				strcat(debugStr, s);
 #endif
 #endif
@@ -847,7 +847,7 @@ Fatal(0, "Need to support jumpGoalList (and goalList) for MOVETO as well in mc2 
 					tacOrder.setWayPoint(0, location);
 				else if (isJump)
 					tacOrder.setWayPoint(0, goalList[i]);
-				tacOrder.delayedTime = scenarioTime + (mover->selectionIndex * DelayedOrderTime);
+				tacOrder.delayedTime = g_missionTime + (mover->selectionIndex * DelayedOrderTime);
 			}
 			switch (tacOrder.origin) {
 				case ORDER_ORIGIN_PLAYER:

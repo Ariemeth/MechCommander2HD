@@ -531,21 +531,6 @@ void
 					lightMap->SetPolygonMarker(0);
 					lightMap->AddUShort(3);
 
-#if 0
-					Vector3D vec(coords[index[j]]);
-					SPEW(("micgaert", "\nvertex1 = %f,%f,%f", vec.x, vec.y, vec.z));
-					vec = coords[index[j+1]];
-					SPEW(("micgaert", "vertex2 = %f,%f,%f", vec.x, vec.y, vec.z));
-					vec = coords[index[j+2]];
-					SPEW(("micgaert", "vertex3 = %f,%f,%f", vec.x, vec.y, vec.z));
-					vec = facePlanes[i].normal;
-					SPEW(("micgaert", "normal = %f,%f,%f", vec.x, vec.y, vec.z));
-					SPEW(("micgaert", "forward = %f,%f,%f", forward.x, forward.y, forward.z));
-					SPEW(("micgaert", "distance = %f", f));
-					SPEW(("micgaert", "light = %f,%f,%f", lightPosInShape.x, lightPosInShape.y, lightPosInShape.z));
-					SPEW(("micgaert", "projection = %f,%f,%f", hitPoint.x, hitPoint.y, hitPoint.z));
-#endif
-
 					Scalar sq_falloff
 						= falloff*falloff*light->GetIntensity();
 					
@@ -685,12 +670,7 @@ void
 						}
 						(*lightMapSqFalloffs)[k] = falloff*falloff*light->GetIntensity();
 
-						oneOver
-#if 0
-							= 1.0f/(2.0f*distance*tanSpeadAngle);
-#else
-							= OneOverApproximate(2.0f*distance*tanSpeadAngle);
-#endif
+						oneOver = OneOverApproximate(2.0f*distance*tanSpeadAngle);
 					}
 					else
 					{
@@ -730,7 +710,6 @@ void
 						tooBig++;
 					}
 				}
-#if 1
 				if(	
 					tooBig == 0 
 					&& behindCount < 3  
@@ -766,85 +745,6 @@ void
 				SPEW(("micgaert", "up = %f,%f,%f", up.x, up.y, up.z));
 				SPEW(("micgaert", "light = %f,%f,%f\n", lightPosInShape.x, lightPosInShape.y, lightPosInShape.z));
 	#endif
-#else
-				if(tooBig != 0)
-				{
-					lightMap->SetPolygonMarker(1);
-					lightMap->AddUShort(3);
-
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddCoord(coords[index[k+j]]);
-					}
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddColor(RGBAColor(0.0f, 0.0f, 0.5f, 1.0f));
-					}
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddUVs(0.5f, 0.5f);
-		//				DEBUG_STREAM << k << " " << lightMapUVs[k][0] << " " << lightMapUVs[k][0] << "\n";
-					}
-				} 
-				else if(behindCount != 0)
-				{
-					lightMap->SetPolygonMarker(1);
-					lightMap->AddUShort(3);
-
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddCoord(coords[index[k+j]]);
-					}
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddColor(RGBAColor(0.5f, 0.0f, 0.0f, 1.0f));
-					}
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddUVs(0.5f, 0.5f);
-		//				DEBUG_STREAM << k << " " << lightMapUVs[k][0] << " " << lightMapUVs[k][0] << "\n";
-					}
-				} 
-				else	if(behindCount == 0 && (lm == true || CheckForBigTriangles(&lightMapUVs, 3) == true) )
-				{
-					lightMap->SetPolygonMarker(1);
-					lightMap->AddUShort(3);
-
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddCoord(coords[index[k+j]]);
-					}
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddColor(lightMapSqFalloffs[k], lightMapSqFalloffs[k], lightMapSqFalloffs[k], 1.0f);
-					}
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddUVs(lightMapUVs[k][0]+0.5f, lightMapUVs[k][1]+0.5f);
-		//				DEBUG_STREAM << k << " " << lightMapUVs[k][0] << " " << lightMapUVs[k][0] << "\n";
-					}
-
-				}
-				else if(CheckForBigTriangles(&lightMapUVs, 3) == false)
-				{
-					lightMap->SetPolygonMarker(1);
-					lightMap->AddUShort(3);
-
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddCoord(coords[index[k+j]]);
-					}
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddColor(errorColor);
-					}
-					for(k=0;k<3;k++)
-					{
-						lightMap->AddUVs(0.5f, 0.5f);
-		//				DEBUG_STREAM << k << " " << lightMapUVs[k][0] << " " << lightMapUVs[k][0] << "\n";
-					}
-				}
-#endif
 			}
 		}
 		break;

@@ -176,7 +176,8 @@ int CCampaignDialog::SaveAs()
 		GetCurrentDirectory(curDirStrSize, curDirStr);
 		BOOL result = SetCurrentDirectory(campaignPath);
 		SetCurrentDirectory(curDirStr);
-		delete curDirStr; curDirStr = 0;
+		delete[] curDirStr; 
+		curDirStr = NULL;
 
 		if (0 == result) {
 			CreateDirectory(campaignPath, NULL);

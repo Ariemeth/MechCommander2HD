@@ -2005,7 +2005,7 @@ void Mech3DAppearance::debugUpdate (long whichOne)
 
 	velocity *= velMag * worldUnitsPerMeter;
 
-	velocity *= g_deltaTime;
+	velocity *= g_frameTime;
 
 	debugMechActorPosition[whichOne] += velocity;
 	debugMechActorPosition[whichOne].z = land->getTerrainElevation(debugMechActorPosition[whichOne]);
@@ -2987,8 +2987,8 @@ void Mech3DAppearance::updateGeometry (void)
 	//Update flashing regardless of view!!!
 	if (duration > 0.0f)
 	{
-		duration -= g_deltaTime;
-		currentFlash -= g_deltaTime;
+		duration -= g_frameTime;
+		currentFlash -= g_frameTime;
 		if (currentFlash < 0.0f)
 		{
 			drawFlash ^= true;
@@ -3189,7 +3189,7 @@ void Mech3DAppearance::updateGeometry (void)
 				shapeOrigin.BuildRotation(Stuff::EulerAngles(0.0f,0.0f,0.0f));
 				shapeOrigin.BuildTranslation(rFootPosition[currentRightPoof]);
 				
-				gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+				gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 				rightDustPoofEffect[currentRightPoof]->Start(&info);
 				rightFootPoofDraw[currentRightPoof] = true;
 				
@@ -3223,7 +3223,7 @@ void Mech3DAppearance::updateGeometry (void)
 				shapeOrigin.BuildRotation(Stuff::EulerAngles(0.0f,0.0f,0.0f));
 				shapeOrigin.BuildTranslation(rFootPosition[currentRightPoof]);
 				
-				gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+				gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 				rightDustPoofEffect[currentRightPoof]->Start(&info);
 				rightFootPoofDraw[currentRightPoof] = true;
 				
@@ -3271,7 +3271,7 @@ void Mech3DAppearance::updateGeometry (void)
 				shapeOrigin.BuildRotation(Stuff::EulerAngles(0.0f,0.0f,0.0f));
 				shapeOrigin.BuildTranslation(lFootPosition[currentLeftPoof]);
 				
-				gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+				gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 				leftDustPoofEffect[currentLeftPoof]->Start(&info);
 				leftFootPoofDraw[currentLeftPoof] = true;
 				
@@ -3305,7 +3305,7 @@ void Mech3DAppearance::updateGeometry (void)
 				shapeOrigin.BuildRotation(Stuff::EulerAngles(0.0f,0.0f,0.0f));
 				shapeOrigin.BuildTranslation(lFootPosition[currentLeftPoof]);
 				
-				gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+				gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 				leftDustPoofEffect[currentLeftPoof]->Start(&info);
 				leftFootPoofDraw[currentLeftPoof] = true;
 				
@@ -3335,7 +3335,7 @@ void Mech3DAppearance::updateGeometry (void)
 	}
 	
 	Stuff::UnitQuaternion totalRotation;
-	sensorSpin += SPIN_RATE * g_deltaTime;
+	sensorSpin += SPIN_RATE * g_frameTime;
 	if (sensorSpin > 180)
 		sensorSpin -= 360;
 
@@ -3385,7 +3385,7 @@ void Mech3DAppearance::updateGeometry (void)
 		localToWorld.Multiply(gosFX::Effect_Against_Motion,effectRot);
 		localResult.Multiply(localToWorld,shapeOrigin);
 					
- 		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&localResult,NULL);
+ 		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&localResult,NULL);
 		jumpJetEffect->Start(&info);
 		
 		jumpFXSetup = true;
@@ -3404,7 +3404,7 @@ void Mech3DAppearance::updateGeometry (void)
 			shapeOrigin.BuildTranslation(rFootPosition[i]);
 	
 			Stuff::OBB boundingBox;
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,&boundingBox);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,&boundingBox);
 	
 			bool result = rightDustPoofEffect[i]->Execute(&info);
 			if (!result)
@@ -3422,7 +3422,7 @@ void Mech3DAppearance::updateGeometry (void)
 			shapeOrigin.BuildTranslation(lFootPosition[i]);
 	
 			Stuff::OBB boundingBox;
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,&boundingBox);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,&boundingBox);
 	
 			bool result = leftDustPoofEffect[i]->Execute(&info);
 			if (!result)
@@ -3455,7 +3455,7 @@ void Mech3DAppearance::updateGeometry (void)
 		localResult.Multiply(localToWorld,shapeOrigin);
 					
  		Stuff::OBB boundingBox;
-   		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&localResult,&boundingBox);
+   		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&localResult,&boundingBox);
 		jumpJetEffect->Execute(&info);
 	}
 	
@@ -3490,7 +3490,7 @@ void Mech3DAppearance::updateGeometry (void)
 		localResult.Multiply(localToWorld,shapeOrigin);
 		
  		Stuff::OBB boundingBox;
-		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&localResult,&boundingBox);
+		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&localResult,&boundingBox);
 		bool result = leftShoulderBoom->Execute(&info);
 		if (!result)
 		{
@@ -3523,7 +3523,7 @@ void Mech3DAppearance::updateGeometry (void)
 		localResult.Multiply(localToWorld,shapeOrigin);
 		
  		Stuff::OBB boundingBox;
-		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&localResult,&boundingBox);
+		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&localResult,&boundingBox);
 		bool result = rightShoulderBoom->Execute(&info);
 		if (!result)
 		{
@@ -3550,7 +3550,7 @@ void Mech3DAppearance::updateGeometry (void)
 		shapeOrigin.BuildTranslation(smokePos);
 				
 		Stuff::OBB boundingBox;
-		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,&boundingBox);
+		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,&boundingBox);
 		
 		if (isSmoking > 0)
 		{
@@ -3597,7 +3597,7 @@ void Mech3DAppearance::updateGeometry (void)
 		localResult.Multiply(localToWorld,shapeOrigin);
 		
  		Stuff::OBB boundingBox;
-		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&localResult,&boundingBox);
+		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&localResult,&boundingBox);
 		
 		waterWake->Execute(&info);
 	}
@@ -3624,7 +3624,7 @@ void Mech3DAppearance::updateGeometry (void)
 		*/
 		
  		Stuff::OBB boundingBox;
-		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,&boundingBox);
+		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,&boundingBox);
 		
 		bool result = helicopterDustCloud->Execute(&info);
 		if (!result)
@@ -3797,7 +3797,7 @@ long Mech3DAppearance::update (bool animate)
 		{
 			if (nodeRecycle[i] > 0.0f)
 			{
-				nodeRecycle[i] -= g_deltaTime;
+				nodeRecycle[i] -= g_frameTime;
 				if (nodeRecycle[i] < 0.0f)
 					nodeRecycle[i] = 0.0f;
 			}
@@ -3837,7 +3837,7 @@ long Mech3DAppearance::update (bool animate)
 	//Fix please
 	if (!inCombatMode && (currentGestureId == 2))
 	{
-		idleTime += g_deltaTime;
+		idleTime += g_frameTime;
 		if (idleTime > idleMAX)
 		{
 			currentGestureId = 13;
@@ -4048,7 +4048,7 @@ long Mech3DAppearance::update (bool animate)
 			{
 				//--------------------------------------------------------
 				// Make sure animation runs no faster than mechFrameRate fps.
-				frameInc = mechFrameRate * g_deltaTime;
+				frameInc = mechFrameRate * g_frameTime;
 			}
 			
 			//------------------------------------------
@@ -4138,7 +4138,7 @@ long Mech3DAppearance::update (bool animate)
 	}
 #endif
 
-	if ((turn < 3) || inView || (currentGestureId == GestureJump))		//Gotta get the weapon nodes working!!
+	if ((g_framesSinceMissionStart < 3) || inView || (currentGestureId == GestureJump))		//Gotta get the weapon nodes working!!
 		updateGeometry();
 
 	//----------------------------------------------------------------------
@@ -4167,7 +4167,7 @@ long Mech3DAppearance::update (bool animate)
 		if (speed)
 		{
 			Stuff::Vector3D velDiff = dAcc[1];
-			velDiff *= g_deltaTime;
+			velDiff *= g_frameTime;
 			dVel[1].Add(dVel[1],velDiff);
 			speed = dVel[1].GetLength(); 
 			if (speed < Stuff::SMALL)
@@ -4176,7 +4176,7 @@ long Mech3DAppearance::update (bool animate)
 			}
 				
 			Stuff::Vector3D posDiff = dVel[1];
-			posDiff *= g_deltaTime;
+			posDiff *= g_frameTime;
 			leftArmPos.Add(leftArmPos,posDiff);
 			float elev = land->getTerrainElevation(leftArmPos); 
 			if (leftArmPos.z < elev)
@@ -4184,17 +4184,17 @@ long Mech3DAppearance::update (bool animate)
 				leftArmPos.z = elev;
 				dRacc[1].Zero();
 				dRVel[1].Zero();
-				dTime[1] -= g_deltaTime;
+				dTime[1] -= g_frameTime;
 				if (dTime[1] < 0.0)
 					dVel[1].x = dVel[1].y = dVel[1].z = 0.0;
 			}
 			
 			Stuff::Vector3D rvDiff = dRacc[1];
-			rvDiff *= g_deltaTime;
+			rvDiff *= g_frameTime;
 			dRVel[1].Add(dRVel[1],rvDiff);
 				
 			Stuff::Vector3D rotDiff = dRVel[1];
-			rotDiff *= g_deltaTime;
+			rotDiff *= g_frameTime;
 			dRot[1].Add(dRot[1],rotDiff);
 		}
 
@@ -4227,7 +4227,7 @@ long Mech3DAppearance::update (bool animate)
 			localResult.Multiply(localToWorld,shapeOrigin);
 			
 			Stuff::OBB boundingBox;
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&localResult,&boundingBox);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&localResult,&boundingBox);
 			bool result = leftArmSmoke->Execute(&info);
 			if (!result)
 			{
@@ -4246,7 +4246,7 @@ long Mech3DAppearance::update (bool animate)
 		if (speed)
 		{
 			Stuff::Vector3D velDiff = dAcc[0];
-			velDiff *= g_deltaTime;
+			velDiff *= g_frameTime;
 			dVel[0].Add(dVel[0],velDiff);
 			speed = dVel[0].GetLength(); 
 			if (speed < Stuff::SMALL)
@@ -4255,7 +4255,7 @@ long Mech3DAppearance::update (bool animate)
 			}
 				
 			Stuff::Vector3D posDiff = dVel[0];
-			posDiff *= g_deltaTime;
+			posDiff *= g_frameTime;
 			rightArmPos.Add(rightArmPos,posDiff);
 			float elev = land->getTerrainElevation(rightArmPos); 
 			if (rightArmPos.z < elev)
@@ -4263,17 +4263,17 @@ long Mech3DAppearance::update (bool animate)
 				rightArmPos.z = elev;
 				dRacc[0].Zero();
 				dRVel[0].Zero();
-				dTime[0] -= g_deltaTime;
+				dTime[0] -= g_frameTime;
 				if (dTime[0] < 0.0)
 					dVel[0].x = dVel[0].y = dVel[0].z = 0.0;
 			}
 			
 			Stuff::Vector3D rvDiff = dRacc[0];
-			rvDiff *= g_deltaTime;
+			rvDiff *= g_frameTime;
 			dRVel[0].Add(dRVel[0],rvDiff);
 				
 			Stuff::Vector3D rotDiff = dRVel[0];
-			rotDiff *= g_deltaTime;
+			rotDiff *= g_frameTime;
 			dRot[0].Add(dRot[0],rotDiff);
 		}
 
@@ -4306,7 +4306,7 @@ long Mech3DAppearance::update (bool animate)
 			localResult.Multiply(localToWorld,shapeOrigin);
 			
 			Stuff::OBB boundingBox;
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&localResult,&boundingBox);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&localResult,&boundingBox);
 			bool result = rightArmSmoke->Execute(&info);
 			if (!result)
 			{
@@ -4391,7 +4391,7 @@ void Mech3DAppearance::blowLeftArm (void)
 		localToWorld.Multiply(gosFX::Effect_Against_Motion,effectRot);
 		localResult.Multiply(localToWorld,shapeOrigin);
 		
- 		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&localResult,NULL);
+ 		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&localResult,NULL);
 		leftShoulderBoom->Start(&info);
 	}
 
@@ -4413,7 +4413,7 @@ void Mech3DAppearance::blowLeftArm (void)
 		localToWorld.Multiply(gosFX::Effect_Against_Motion,effectRot);
 		localResult.Multiply(localToWorld,shapeOrigin);
 		
- 		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&localResult,NULL);
+ 		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&localResult,NULL);
 		leftArmSmoke->Start(&info);
 	}
 	
@@ -4517,7 +4517,7 @@ void Mech3DAppearance::blowRightArm (void)
 		localToWorld.Multiply(gosFX::Effect_Against_Motion,effectRot);
 		localResult.Multiply(localToWorld,shapeOrigin);
 		
- 		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&localResult,NULL);
+ 		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&localResult,NULL);
 		rightShoulderBoom->Start(&info);
 	}
 
@@ -4539,7 +4539,7 @@ void Mech3DAppearance::blowRightArm (void)
 		localToWorld.Multiply(gosFX::Effect_Against_Motion,effectRot);
 		localResult.Multiply(localToWorld,shapeOrigin);
 		
- 		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&localResult,NULL);
+ 		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&localResult,NULL);
 		rightArmSmoke->Start(&info);
 	}
 
@@ -4643,7 +4643,7 @@ void Mech3DAppearance::startSmoking (long smokeLvl)
 			shapeOrigin.BuildRotation(Stuff::EulerAngles(0.0f,0.0f,0.0f));
 			shapeOrigin.BuildTranslation(smokePos);
 
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 
 			if (smokeLvl > 0)
 				criticalSmoke->Start(&info);
@@ -4720,7 +4720,7 @@ void Mech3DAppearance::startWaterWake (void)
 			localToWorld.Multiply(gosFX::Effect_Into_Motion,effectRot);
 		localResult.Multiply(localToWorld,shapeOrigin);
 			
- 		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&localResult,NULL);
+ 		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&localResult,NULL);
 
 		waterWake->Start(&info);
 		isWaking = true;
@@ -4788,7 +4788,7 @@ void Mech3DAppearance::playEjection (void)
 		localResult.Multiply(localToWorld,shapeOrigin);
 		*/
 			
- 		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+ 		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 
 		helicopterDustCloud->Start(&info);
 		isDusting = true;
@@ -5019,7 +5019,7 @@ void Mech3DAppearance::copyFrom (MechAppearanceData *data)
 		localToWorld.Multiply(gosFX::Effect_Against_Motion,effectRot);
 		localResult.Multiply(localToWorld,shapeOrigin);
 					
- 		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&localResult,NULL);
+ 		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&localResult,NULL);
 		jumpJetEffect->Start(&info);
 	}
 

@@ -56,11 +56,6 @@ namespace Stuff {
 			GetData() const
 				{return data;}
 
-#if 0
-		bool
-			Compare(const StaticArrayOf<T, N>&);
-#endif
-
 		friend MemoryStream&
 			MemoryStreamIO_Write(
 				MemoryStream *stream,
@@ -150,21 +145,6 @@ namespace Stuff {
 			data[i] = data_to_copy[i];
 	}
 
-#if 0
-	template <class T, size_t N> bool
-		StaticArrayOf<T, N>::Compare(const StaticArrayOf<T, N> &array) 
-	{
-		if (N != array.GetLength())
-			return false;
-		for (int i = 0; i < N; i++)
-		{
-			if (data[i] != array.data[i])
-				return false;
-		}
-		return true;
-	}
-#endif
-
 	template <class T, size_t N> MemoryStream&
 		MemoryStreamIO_Write(
 			MemoryStream *stream,
@@ -238,11 +218,6 @@ namespace Stuff {
 		const T*
 			GetData() const
 				{return data;}
-
-#if 0
-		bool
-			Compare(const DynamicArrayOf<T>&);
-#endif
 
 		friend MemoryStream&
 			MemoryStreamIO_Write<T>(
@@ -397,21 +372,6 @@ namespace Stuff {
 			length = length_to_set;
 		}
 	}
-
-#if 0
-	template <class T> void
-		DynamicArrayOf<T>::Compare(const DynamicArrayOf<T> &array) 
-	{
-		if (length != array.length)
-			return false;
-		for (int i = 0; i < length; i++)
-		{
-			if (data[i] != array.data[i])
-				return false;
-		}
-		return true;
-	}
-#endif
 
 	template <class T> void
 		DynamicArrayOf<T>::SetStorageLength(size_t length_to_set)

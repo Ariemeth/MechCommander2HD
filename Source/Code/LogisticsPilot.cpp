@@ -98,8 +98,8 @@ int LogisticsPilot::init( char* pilotFileName )
 	gosASSERT( result == 0 );
 //	result = pilotFile.readIdULong( "ID", id );
 //	gosASSERT( result == 0 );
-	result = pilotFile.readIdLong( "FlavorText", flavorTextID );
-	
+	pilotFile.readIdLong( "FlavorText", flavorTextID );
+		
 	result = pilotFile.readIdString( "pilotAudio", path, 256 );
 	gosASSERT( result == 0 );
 	audio = path;
@@ -108,7 +108,7 @@ int LogisticsPilot::init( char* pilotFileName )
 	gosASSERT( result == 0 );
 	video = path;
 
-	result = pilotFile.readIdString( "Picture", path, 256 );
+	pilotFile.readIdString( "Picture", path, 256 );
 	iconFile = artPath;
 	iconFile += path;
 	
@@ -187,7 +187,7 @@ long LogisticsPilot::save( FitIniFile& file, long which )
 	char buffer[64];
 	for ( int i = 0; i < MAX_MEDAL; i++ )
 	{
-		sprintf( buffer, "Medal%ld", i );
+		sprintf( buffer, "Medal%d", i );
 		file.writeIdBoolean( buffer, medals[i] );
 	}
 
@@ -224,7 +224,7 @@ long LogisticsPilot::load( FitIniFile& file )
 	char buffer[64];
 	for ( int i = 0; i < MAX_MEDAL; i++ )
 	{
-		sprintf( buffer, "Medal%ld", i );
+		sprintf( buffer, "Medal%d", i );
 		file.readIdBoolean( buffer, medals[i] );
 	}
 

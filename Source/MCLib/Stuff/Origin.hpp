@@ -97,14 +97,6 @@ namespace Stuff {
 		//
 		// Origin3D motion
 		//
-#if 0
-		Origin3D&
-			AddScaled(
-				const Origin3D& source,
-				const Motion3D& delta,
-				Scalar t
-			);
-#endif
 		Origin3D&
 			Lerp(
 				const Origin3D& start,

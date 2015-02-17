@@ -496,7 +496,6 @@ bool
 		return false;
 	}
 
-#if 1
 	Scalar sign = -1.0f;
 	if( 
 		((*lightMapUVs)[1][0]-(*lightMapUVs)[0][0]) * ((*lightMapUVs)[stride-1][1]-(*lightMapUVs)[0][1]) >
@@ -505,7 +504,6 @@ bool
 	{
 		sign = 1.0f;
 	}
-#endif
 
 	for(k0=0;k0<stride;k0++)
 	{
@@ -716,25 +714,18 @@ void
 					(*lightMapUVs)[k][0] = (left*vec)/(2.0f*distance*tanSpeadAngle);
 					(*lightMapUVs)[k][1] = -(up*vec)/(2.0f*distance*tanSpeadAngle);
 
-					if(
-						(*lightMapUVs)[k][0] >= -0.5f && (*lightMapUVs)[k][0] <= 0.5f &&
-						(*lightMapUVs)[k][1] >= -0.5f && (*lightMapUVs)[k][1] <= 0.5f
-
-					) 
+					if((*lightMapUVs)[k][0] >= -0.5f && (*lightMapUVs)[k][0] <= 0.5f &&
+						(*lightMapUVs)[k][1] >= -0.5f && (*lightMapUVs)[k][1] <= 0.5f) 
 					{
 						lm = true;
 					}
-					if(
-						(*lightMapUVs)[k][0] < -1.5f || (*lightMapUVs)[k][0] > 1.5f ||
-						(*lightMapUVs)[k][1] < -1.5f && (*lightMapUVs)[k][1] > 1.5f
-
-					) 
+					if((*lightMapUVs)[k][0] < -1.5f || (*lightMapUVs)[k][0] > 1.5f ||
+						(*lightMapUVs)[k][1] < -1.5f || (*lightMapUVs)[k][1] > 1.5f) 
 					{
 						tooBig++;
 					}
 				}
 
-#if 1
 				if(	
 					tooBig == 0 &&
 					behindCount == 0 && 
@@ -759,85 +750,6 @@ void
 		//				DEBUG_STREAM << k << " " << lightMapUVs[k][0] << " " << lightMapUVs[k][0] << "\n";
 					}
 				}
-#else
-				if(tooBig != 0)
-				{
-					lightMap->SetPolygonMarker(1);
-					lightMap->AddUShort(stride);
-
-					for(k=0;k<stride;k++)
-					{
-						lightMap->AddCoord(coords[index[k+j]]);
-					}
-					for(k=0;k<stride;k++)
-					{
-						lightMap->AddColor(RGBAColor(0.0f, 0.0f, 0.5f, 1.0f));
-					}
-					for(k=0;k<stride;k++)
-					{
-						lightMap->AddUVs(0.5f, 0.5f);
-		//				DEBUG_STREAM << k << " " << lightMapUVs[k][0] << " " << lightMapUVs[k][0] << "\n";
-					}
-				} 
-				else if(behindCount != 0)
-				{
-					lightMap->SetPolygonMarker(1);
-					lightMap->AddUShort(stride);
-
-					for(k=0;k<stride;k++)
-					{
-						lightMap->AddCoord(coords[index[k+j]]);
-					}
-					for(k=0;k<stride;k++)
-					{
-						lightMap->AddColor(RGBAColor(0.5f, 0.0f, 0.0f, 1.0f));
-					}
-					for(k=0;k<stride;k++)
-					{
-						lightMap->AddUVs(0.5f, 0.5f);
-		//				DEBUG_STREAM << k << " " << lightMapUVs[k][0] << " " << lightMapUVs[k][0] << "\n";
-					}
-				} 
-				else	if(behindCount == 0 && (lm == true || CheckForBigTriangles(&lightMapUVs, stride) == true) )
-				{
-					lightMap->SetPolygonMarker(1);
-					lightMap->AddUShort(stride);
-
-					for(k=0;k<stride;k++)
-					{
-						lightMap->AddCoord(coords[index[k+j]]);
-					}
-					for(k=0;k<stride;k++)
-					{
-						lightMap->AddColor(lightMapSqFalloffs[k], lightMapSqFalloffs[k], lightMapSqFalloffs[k], 1.0f);
-					}
-					for(k=0;k<stride;k++)
-					{
-						lightMap->AddUVs(lightMapUVs[k][0]+0.5f, lightMapUVs[k][1]+0.5f);
-		//				DEBUG_STREAM << k << " " << lightMapUVs[k][0] << " " << lightMapUVs[k][0] << "\n";
-					}
-
-				}
-				else if(CheckForBigTriangles(&lightMapUVs, stride) == false)
-				{
-					lightMap->SetPolygonMarker(1);
-					lightMap->AddUShort(stride);
-
-					for(k=0;k<stride;k++)
-					{
-						lightMap->AddCoord(coords[index[k+j]]);
-					}
-					for(k=0;k<stride;k++)
-					{
-						lightMap->AddColor(errorColor);
-					}
-					for(k=0;k<stride;k++)
-					{
-						lightMap->AddUVs(0.5f, 0.5f);
-		//				DEBUG_STREAM << k << " " << lightMapUVs[k][0] << " " << lightMapUVs[k][0] << "\n";
-					}
-				}
-#endif
 			}
 		}
 		break;

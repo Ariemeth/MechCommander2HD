@@ -398,7 +398,7 @@ bool MC_TextureManager::flushCache (void)
 			(masterTextureNodes[i].gosTextureHandle != 0xffffffff) &&
 			(!masterTextureNodes[i].uniqueInstance))
 		{
-			if (masterTextureNodes[i].lastUsed <= (turn-cache_Threshold))
+			if (masterTextureNodes[i].lastUsed <= (g_framesSinceMissionStart-cache_Threshold))
 			{
 				//----------------------------------------------------------------
 				// Cache this badboy out.  Textures don't change.  Just Destroy!
@@ -421,7 +421,7 @@ bool MC_TextureManager::flushCache (void)
 			(masterTextureNodes[i].gosTextureHandle) &&
 			(!masterTextureNodes[i].uniqueInstance))
 		{
-			if (masterTextureNodes[i].lastUsed <= (turn-30))
+			if (masterTextureNodes[i].lastUsed <= (g_framesSinceMissionStart-30))
 			{
 				//----------------------------------------------------------------
 				// Cache this badboy out.  Textures don't change.  Just Destroy!
@@ -443,7 +443,7 @@ bool MC_TextureManager::flushCache (void)
 			(masterTextureNodes[i].gosTextureHandle != 0xffffffff) &&
 			(!masterTextureNodes[i].uniqueInstance))
 		{
-			if (masterTextureNodes[i].lastUsed <= (turn-1))
+			if (masterTextureNodes[i].lastUsed <= (g_framesSinceMissionStart-1))
 			{
 				//----------------------------------------------------------------
 				// Cache this badboy out.  Textures don't change.  Just Destroy!
@@ -1065,7 +1065,7 @@ DWORD MC_TextureManager::update (void)
 			if (!masterTextureNodes[i].uniqueInstance &&
 				!(masterTextureNodes[i].neverFLUSH & 1))		//Only uncachable if BIT 1 is set, otherwise, cache 'em out!
 			{
-				if (masterTextureNodes[i].lastUsed <= (turn-60))
+				if (masterTextureNodes[i].lastUsed <= (g_framesSinceMissionStart-60))
 				{
 					//----------------------------------------------------------------
 					// Cache this badboy out.  Textures don't change.  Just Destroy!
@@ -1371,7 +1371,7 @@ DWORD MC_TextureNode::get_gosTextureHandle (void)	//If texture is not in VidRAM,
 	
 	if (gosTextureHandle != CACHED_OUT_HANDLE)
 	{
-		lastUsed = turn;
+		lastUsed = g_framesSinceMissionStart;
 		return gosTextureHandle;
 	}
 	else
@@ -1400,7 +1400,7 @@ DWORD MC_TextureNode::get_gosTextureHandle (void)	//If texture is not in VidRAM,
 			
 			gosTextureHandle = gos_NewTextureFromMemory(key,nodeName,MC_TextureManager::lzBuffer2,(width & 0x0fffffff),hints);
 			mcTextureManager->currentUsedTextures++;
-			lastUsed = turn;
+			lastUsed = g_framesSinceMissionStart;
 			
 			return gosTextureHandle;
 		}
@@ -1426,7 +1426,7 @@ DWORD MC_TextureNode::get_gosTextureHandle (void)	//If texture is not in VidRAM,
 			// Unlock the texture
 			gos_UnLockTexture(gosTextureHandle);
 			 
-			lastUsed = turn;
+			lastUsed = g_framesSinceMissionStart;
 			return gosTextureHandle;
 		}
 	}

@@ -220,8 +220,8 @@ namespace MidLevelRenderer {
 				{Check_Object(this); return static_cast<SpecularMode>(renderState & SpecularMask);}
 
 		void
-			SetTextureWrapMode(TextureWrapMode TextureWrap)
-				{Check_Object(this); renderState &= ~TextureWrapMask; renderState |= TextureWrap; renderDeltaMask |= TextureWrapMask;}
+			SetTextureWrapMode(TextureWrapMode textureWrap)
+				{Check_Object(this); renderState &= ~TextureWrapMask; renderState |= textureWrap; renderDeltaMask |= TextureWrapMask;}
 		TextureWrapMode
 			GetTextureWrapMode() const
 				{

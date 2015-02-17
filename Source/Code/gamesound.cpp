@@ -24,7 +24,7 @@
 #endif
 
 //---------------------------------------------------------------------------
-GameSoundSystem *soundSystem = NULL;
+GameSoundSystem *g_gameSoundSystem = NULL;
 
 extern bool wave_ParseWaveMemory(MemoryPtr lpChunkOfMemory, MC2_WAVEFORMATEX** lplpWaveHeader, MemoryPtr* lplpWaveSamples,DWORD *lpcbWaveSize);
 
@@ -208,22 +208,19 @@ void GameSoundSystem::removeCurrentMessage(void)
 //---------------------------------------------------------------------------
 long GameSoundSystem::queueRadioMessage (RadioData *msgData)
 {
-long i;
+	long i;
 
 	//-------------------------------------------------
 	// First, search the Queue and see if this message
 	// was already sent this turn.
-	if (msgData->msgId >= MSG_TOTAL_MSGS)	// is this a real message? (why are we asking this???)
+	for (i = MAX_QUEUED_MESSAGES - 1; i >= 0; i--)
 	{
-		for (i=MAX_QUEUED_MESSAGES-1;i>=0;i--)
+		if (queue[i])
 		{
-			if (queue[i])
+			if ((msgData->turnQueued == queue[i]->turnQueued) &&
+				(msgData->msgId == queue[i]->msgId))
 			{
-				if ((msgData->turnQueued == queue[i]->turnQueued) &&
-					(msgData->msgId == queue[i]->msgId))
-				{
-					removeQueuedMessage(i);
-				}
+				removeQueuedMessage(i);
 			}
 		}
 	}
@@ -299,7 +296,7 @@ void GameSoundSystem::update (void)
 	if (GeneralAlarm && (generalAlarmTimer < ALARM_TIME))
 	{
 		playDigitalSample(BUZZER1);
-		generalAlarmTimer += g_deltaTime;
+		generalAlarmTimer += g_frameTime;
 	}
 
 	if (currentMessage && (gosAudio_GetChannelPlayMode(RADIO_CHANNEL) != gosAudio_PlayOnce))

@@ -139,6 +139,26 @@ void aListBox::update()
 			::helpTextID = helpID;
 		}
 
+		if (bInside && scrollBar) // MCHD CHANGE (02/17/15): List box scroll merged from MC2 Open
+		{
+			long mouseWheelDelta = userInput->getMouseWheelDelta();
+			if (mouseWheelDelta)
+			{
+				if (mouseWheelDelta > 0)
+				{
+					scrollBar->handleMessage(mouseWheelDelta, aMSG_SCROLLDOWN);
+					scroll(mouseWheelDelta);
+				}
+				else
+				{
+					scrollBar->handleMessage(-mouseWheelDelta, aMSG_SCROLLUP);
+					scroll(mouseWheelDelta);
+				}
+			}
+			scrollBar->update();
+
+		}
+
 		for ( int i = 0; i < itemCount; i++ )
 		{
 			if ( bInside &&
@@ -613,12 +633,13 @@ aDropList::aDropList(void)
 
 aDropList& aDropList::operator=( const aDropList& src)
 {
+	if(this == &src)
+		return *this;
+		
 	aObject::operator =( src );
 
-	
 	//Toss the CURRENT listBox
 	listBox.destroy();
-
 
 	//TOss the current rects.  We are about to NEW over them!!
 	if ( rects )
@@ -683,7 +704,7 @@ long aDropList::init( FitIniFile* file, const char* blockName )
 		rects = new aRect[rectCount];
 		for ( int i = 0; i < rectCount; i++ )
 		{
-			sprintf( tmpBlockName, "Rect%ld", i );
+			sprintf( tmpBlockName, "Rect%d", i );
 			rects[i].init( file, tmpBlockName );
 		}
 	}
@@ -950,15 +971,14 @@ aComboBox::aComboBox(void) : templateItem( 27333 )
 
 aComboBox& aComboBox::operator=(const aComboBox& src )
 {
+	if(this == &src)
+		return *this;
+		
 	aObject::operator =( src );
-
-	
 
 	//Toss the CURRENT listBox
 	listBox.destroy();
-
 	addChild( &listBox );
-
 
 	//TOss the current rects.  We are about to NEW over them!!
 	if ( rects )
@@ -983,15 +1003,8 @@ aComboBox& aComboBox::operator=(const aComboBox& src )
 		}
 	}
 
-
-
-
 	addChild( &expandButton );
 	expandButton = src.expandButton;
-
-
-
-
 
 	entry = src.entry;
 	addChild( &entry );
@@ -1021,7 +1034,7 @@ long aComboBox::init( FitIniFile* file, const char* blockName )
 			rects = new aRect[rectCount];
 			for ( int i = 0; i < rectCount; i++ )
 			{
-				sprintf( blockName, "Rect%ld", i );
+				sprintf( blockName, "Rect%d", i );
 				rects[i].init( file, blockName );
 			}
 		}
@@ -1113,15 +1126,14 @@ void aComboBox::update()
 			int cx = userInput->getMouseX();
 			int cy = userInput->getMouseY();
 
-			if (expandButton.pointInside(cx, cy)) {
+			if (expandButton.pointInside(cx, cy)) 
+			{
 				handleMessage(aMSG_BUTTONCLICKED, (unsigned long)(&expandButton));
 			}
-
 			// lose focus if appropriate
-			else if ( ListBox().isShowing() && 
-				( !pointInside( userInput->getMouseX(), userInput->getMouseY() )
-				|| (  ListBox().pointInside(userInput->getMouseX(), userInput->getMouseY() ) )
-				&& !ListBox().pointInScrollBar(userInput->getMouseX(), userInput->getMouseY()) ) )
+			//else if (ListBox().isShowing() && (!pointInside(cx, cy) || (ListBox().pointInside(cx, cy)) && !ListBox().pointInScrollBar(cx, cy)))
+			//else if (ListBox().isShowing() && (!pointInside(cx, cy) || ((ListBox().pointInside(cx, cy)) && !ListBox().pointInScrollBar(cx, cy))))
+			else if (ListBox().isShowing() && (!pointInside(cx, cy) || (ListBox().pointInside(cx, cy) && !ListBox().pointInScrollBar(cx, cy)))) // MCHD TODO: Does this work as intended?
 			{
 				listBox.showGUIWindow(false);
 				rects[2].showGUIWindow(false);
@@ -1237,8 +1249,8 @@ long				aComboBox::AddItem( const char* text, unsigned long color )
 // aTextListItem methods
 ///////////////////////////////////////////////////////////////////////////////
 aTextListItem::aTextListItem( const aFont& newFont )
+: font(newFont)
 {
-	font = newFont;
 	unsigned long height;
 	unsigned long  width;
 	font.getSize( width, height, "> ");

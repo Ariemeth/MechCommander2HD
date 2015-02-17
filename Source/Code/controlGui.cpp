@@ -370,18 +370,18 @@ void ControlGui::render( bool bPaused )
 		if ( mission->m_timeLimit > 0 )
 		{
 	
-			float fTime = (float)mission->m_timeLimit - scenarioTime;	
+			float fTime = (float)mission->m_timeLimit - g_missionTime;	
 			int time = (int)fTime;
 	
 			if ( time <= 120  && !twoMinWarningPlayed )
 			{
 				twoMinWarningPlayed = true;
-				soundSystem->playBettySample( BETTY_TWO_MIN_LEFT );
+				g_gameSoundSystem->playBettySample( BETTY_TWO_MIN_LEFT );
 			}
 			else if ( time <= 30 && !thirtySecondWarningPlayed )
 			{
 				thirtySecondWarningPlayed = true;
-				soundSystem->playBettySample( BETTY_THIRTY_LEFT );
+				g_gameSoundSystem->playBettySample( BETTY_THIRTY_LEFT );
 			}
 			else if ( time < 0)
 			{
@@ -391,7 +391,7 @@ void ControlGui::render( bool bPaused )
 			char buffer[32];
 			unsigned long minutes = time/60;
 			unsigned long seconds = time%60;
-			sprintf( buffer, "%03ld : %02ld", minutes, seconds );
+			sprintf( buffer, "%03lu : %02lu", minutes, seconds );
 	
 			unsigned long color = timerRect.color;
 			if ( minutes < 5 )
@@ -441,7 +441,7 @@ void ControlGui::render( bool bPaused )
 		// flash the rp tab if we just got kudos
 		if ( LogisticsData::instance->rpJustAdded )
 		{
-			tabFlashTime += g_deltaTime;
+			tabFlashTime += g_frameTime;
 			if ( tabFlashTime > .5 )
 			{
 				tabFlashTime = 0;
@@ -507,7 +507,7 @@ void ControlGui::renderResults()
 		if ( infoWnd ) // kill info wnd stuff
 			infoWnd->setUnit( NULL );
 
-		resultsTime += g_deltaTime;
+		resultsTime += g_frameTime;
 		float t0, t1, p0, p1;
 		t1 = p1 = t0 = p0 = 0.f;
 		float delta = 0.f;
@@ -608,7 +608,7 @@ void ControlGui::RenderObjectives()
 			}
 		}
 	
-		objectiveTime += g_deltaTime;
+		objectiveTime += g_frameTime;
 
 		float t0, t1, p0, p1;
 
@@ -687,7 +687,7 @@ void ControlGui::RenderObjectives()
 					if (!playedObjectiveClick[objectiveNum])
 					{
 						playedObjectiveClick[objectiveNum] = true;
-						soundSystem->playDigitalSample(LOG_KILLMARKER);
+						g_gameSoundSystem->playDigitalSample(LOG_KILLMARKER);
 					}
 				}
 
@@ -720,7 +720,7 @@ void ControlGui::RenderObjectives()
 					if (!playedObjectiveClick[objectiveNum])
 					{
 						playedObjectiveClick[objectiveNum] = true;
-						soundSystem->playDigitalSample(LOG_KILLMARKER);
+						g_gameSoundSystem->playDigitalSample(LOG_KILLMARKER);
 					}
 				}
 
@@ -841,13 +841,13 @@ void ControlGui::renderObjective( CObjective* pObjective, long xPos, long yPos, 
 	{
 		/*these used to be declared as unsigned, but mixing signed and unsigned values
 		in arithmetic expressions can be bad news if any intermediate result is negative */
-		long width, height;
+		long width;
 		long descWidth;
 		long dotWidth;
 		
 		char total[64];
 		int amount = pObjective->Status(Team::home->objectives) == OS_SUCCESSFUL ? pObjective->ResourcePoints() : 0;
-		sprintf( total, "%ld", amount );
+		sprintf( total, "%d", amount );
 		width = guiFont.width( total );
 		
 		// draw total
@@ -858,10 +858,8 @@ void ControlGui::renderObjective( CObjective* pObjective, long xPos, long yPos, 
 		unsigned long tmpULong1, tmpULong2;
 		gos_TextStringLength( &tmpULong1, &tmpULong2, pObjective->LocalizedDescription() );
 		descWidth = (int)tmpULong1;
-		height = (int)tmpULong2;
 		gos_TextStringLength( &tmpULong1, &tmpULong2, "...................." );
 		dotWidth = (int)tmpULong1;
-		height = (int)tmpULong2;
 		gosASSERT(0 < dotWidth);
 		float dotRealWidth = (((float)dotWidth)/20.f);
 
@@ -975,7 +973,7 @@ void ControlGui::update( bool bPaused, bool bLOS )
 				if ( buttons[i].location[0].x > lastX || lastX > buttons[i].location[2].x
 				|| lastY < buttons[i].location[0].y || lastY > buttons[i].location[1].y )
 				{
-					soundSystem->playDigitalSample( LOG_HIGHLIGHTBUTTONS );
+					g_gameSoundSystem->playDigitalSample( LOG_HIGHLIGHTBUTTONS );
 				}
 			}
 			
@@ -1012,7 +1010,6 @@ void ControlGui::update( bool bPaused, bool bLOS )
 	bool bGuardTower = 1;
 	bool bPressGuardTower = 1;
 
-	Mover* pSelectedMover = 0;
 	int holdPositionCount = 0;
 	
 	for ( i = 0; i < pTeam->getRosterSize(); ++i )
@@ -1052,9 +1049,7 @@ void ControlGui::update( bool bPaused, bool bLOS )
 				}
 
 				bJump &= pMover->canJump();
-				pSelectedMover = pMover;
 				bMover ++;
-
 			}
 
 		}
@@ -1233,16 +1228,6 @@ void ControlGui::update( bool bPaused, bool bLOS )
 
 bool ControlGui::isOverTacMap()
 {
-	bool bMouseInsideTacArea = 0;
-
-	if ( rectInfos[0].rect.left <= userInput->getMouseX()
-		&& rectInfos[0].rect.right >= userInput->getMouseX()
-		&& rectInfos[0].rect.top <= userInput->getMouseY()
-		&& rectInfos[0].rect.bottom >= userInput->getMouseY() )
-	{
-		bMouseInsideTacArea = true; 
-	}
-
 	if ( getButton( TACMAP_TAB )->state & ControlButton::PRESSED )
 		return true;
 
@@ -1286,7 +1271,7 @@ void ControlGui::addMover (MoverPtr mover)
 {
 	if (mover->getCommanderId() == Commander::home->getId()) 
 	{
-		if ( turn > 3 )
+		if ( g_framesSinceMissionStart > 3 )
 			mover->removeFromUnitGroup( 1 );
 
 		if ( mover->getObjectType()->getObjectTypeClass() == BATTLEMECH_TYPE )
@@ -1344,9 +1329,9 @@ void ControlGui::toggleJump( )
 {
 	curOrder ^= JUMP;
 	curOrder &= JUMP;
-	getButton( JUMP_COMMAND )->press( curOrder & JUMP ? true : false);
-	getButton( RUN_COMMAND )->press( curOrder & RUN ? true : false);
-	getButton( GUARD_COMMAND )->press( curOrder & GUARD ? true : false);
+	getButton( JUMP_COMMAND )->press( (curOrder & JUMP) ? true : false);
+	getButton( RUN_COMMAND )->press( (curOrder & RUN) ? true : false);
+	getButton( GUARD_COMMAND )->press( (curOrder & GUARD) ? true : false);
 }
 bool ControlGui::getJump( )
 {
@@ -1356,9 +1341,9 @@ void ControlGui::toggleDefaultSpeed( )
 {
 	curOrder ^= RUN;
 	curOrder &= ( RUN | GUARD );
-	getButton( RUN_COMMAND )->press( curOrder & RUN ? true : false );
-	getButton( GUARD_COMMAND )->press( curOrder & GUARD ? true : false );
-	getButton( JUMP_COMMAND )->press( curOrder & JUMP ? true : false);
+	getButton( RUN_COMMAND )->press( (curOrder & RUN) ? true : false );
+	getButton( GUARD_COMMAND )->press( (curOrder & GUARD) ? true : false );
+	getButton( JUMP_COMMAND )->press( (curOrder & JUMP) ? true : false);
 
 }
 
@@ -1384,9 +1369,9 @@ void ControlGui::toggleGuard( )
 {
 	curOrder ^= GUARD;
 	curOrder &= ( GUARD | RUN ); // can run and guard
-	getButton( GUARD_COMMAND )->press( curOrder & GUARD ? true : false );
-	getButton( JUMP_COMMAND )->press( curOrder & JUMP ? true : false);
-	getButton( RUN_COMMAND )->press( curOrder & RUN ? true : false);
+	getButton( GUARD_COMMAND )->press( (curOrder & GUARD) ? true : false );
+	getButton( JUMP_COMMAND )->press( (curOrder & JUMP) ? true : false);
+	getButton( RUN_COMMAND )->press( (curOrder & RUN) ? true : false);
 }
 bool ControlGui::getGuard( )
 {
@@ -1535,7 +1520,7 @@ void ControlGui::handleClick( int ID )
 	if ( !getButton( ID )->isEnabled() )
 	{
 		// need to play sound here
-		soundSystem->playDigitalSample(INVALID_GUI);
+		g_gameSoundSystem->playDigitalSample(INVALID_GUI);
 		return;
 	}
 
@@ -1655,14 +1640,14 @@ void ControlGui::handleClick( int ID )
 
 	}
 
-	soundSystem->playDigitalSample( sound );
+	g_gameSoundSystem->playDigitalSample( sound );
 }
 
 void ControlGui::doStop()
 {
 	TacticalOrder tacOrder;
 	tacOrder.init(ORDER_ORIGIN_PLAYER, TACTICAL_ORDER_STOP );
-	soundSystem->playDigitalSample(BUTTON5);
+	g_gameSoundSystem->playDigitalSample(BUTTON5);
 
 	Team* pTeam = Team::home;
 	
@@ -1788,7 +1773,7 @@ void ControlGui::updateVehicleTab(int mouseX, int mouseY, bool bLOS )
 				long lastY = mouseY - userInput->getMouseYDelta();
 				if (  vehicleButtons[i].location[0].x >= lastX || lastX >= vehicleButtons[i].location[2].x
 					|| lastY <= vehicleButtons[i].location[0].y || lastY >= vehicleButtons[i].location[1].y  )
-					soundSystem->playDigitalSample( LOG_HIGHLIGHTBUTTONS );
+					g_gameSoundSystem->playDigitalSample( LOG_HIGHLIGHTBUTTONS );
 			}
 		}
 
@@ -1868,7 +1853,6 @@ void ControlGui::updateVehicleTab(int mouseX, int mouseY, bool bLOS )
 }
 void ControlGui::renderVehicleTab()
 {
-	long cost = -1;
 	char buffer[256];
 
 	LogisticsData::instance->rpJustAdded = 0;
@@ -1882,7 +1866,6 @@ void ControlGui::renderVehicleTab()
 		if ( vehicleButtons[i].state & ControlButton::PRESSED )
 		{
 			ControlButton::makeUVs( vehicleButtons[i].location, ControlButton::ENABLED, *vehicleButtons[i].data );	
-			cost = vehicleCosts[i];
 			GUI_RECT rect = { vehicleButtons[i].location[0].x, vehicleButtons[i].location[0].y,
 				vehicleButtons[i].location[2].x, vehicleButtons[i].location[2].y };
 			vehicleButtons[i].render();
@@ -1916,7 +1899,7 @@ void ControlGui::renderVehicleTab()
 	/// TUTORIAL!!!
 	if (rpNumFlashes)
 	{
-		rpFlashTime += g_deltaTime;
+		rpFlashTime += g_frameTime;
 		if ( rpFlashTime > .5f )
 		{
 			rpFlashTime = 0.0f;
@@ -1944,14 +1927,14 @@ void ControlGui::handleVehicleClick( int ID )
 	if ( getButton( ID )->state & ControlButton::DISABLED ) // ignore disabled button
 	{	
 		// need to play sound here
-		soundSystem->playDigitalSample(INVALID_GUI);
+		g_gameSoundSystem->playDigitalSample(INVALID_GUI);
 		return;
 	}
 
 	if ((ID == STOP_VEHICLE) && paintingMyVtol)
 	{
 		//You cannot stop it once the VTOL is in flight, no matter what the button looks like.
-		soundSystem->playDigitalSample(INVALID_GUI);
+		g_gameSoundSystem->playDigitalSample(INVALID_GUI);
 		return;
 	}
 	
@@ -1980,7 +1963,7 @@ void ControlGui::handleVehicleClick( int ID )
 
 	}
 
-	soundSystem->playDigitalSample( LOG_SELECT );
+	g_gameSoundSystem->playDigitalSample( LOG_SELECT );
 
 
 	switch ( ID )
@@ -2241,7 +2224,7 @@ void ControlButton::initButtons( FitIniFile& buttonFile, long buttonCount, Contr
 	char path[256];
 	for ( int i = 0; i < buttonCount; ++i )
 	{
-		sprintf( path, "%s%ld", str, i );
+		sprintf( path, "%s%d", str, i );
 		Data[i].textureHandle = 0;
 
 		long result = buttonFile.seekBlock( path );
@@ -2402,7 +2385,7 @@ void ControlGui::initStatics( FitIniFile& file )
 	for ( int i = 0; i < staticCount; i++ )
 	{
 		char buffer[32];
-		sprintf( buffer, "Static%ld", i );
+		sprintf( buffer, "Static%d", i );
 
 		staticInfos[i].init( file, buffer ,hiResOffsetX, hiResOffsetY);
 	}
@@ -2599,7 +2582,7 @@ void ControlGui::initRects( FitIniFile& file )
 		char buffer[32];
 		for ( int i = 0; i < rectCount; i++ )
 		{
-			sprintf( buffer, "Rect%ld", i );
+			sprintf( buffer, "Rect%d", i );
 			if ( NO_ERR != file.seekBlock( buffer ) )
 			{
 				Assert( 0, i, "couldn't find the rect block" );
@@ -2901,7 +2884,7 @@ void	ControlGui::toggleHoldPosition()
 		setRange( FIRERANGE_OPTIMAL );
 	}
 	
-	soundSystem->playDigitalSample( LOG_SELECT );
+	g_gameSoundSystem->playDigitalSample( LOG_SELECT );
 
 	if (MPlayer && !MPlayer->isServer())
 		MPlayer->sendHoldPosition();
@@ -2991,7 +2974,7 @@ void ControlGui::setChatText( const char* playerName, const char* message, unsig
 	chatInfos[i].backgroundColor = color;
 	strcpy( chatInfos[i].message, message );
 	strcpy( chatInfos[i].playerName, playerName );
-	chatInfos[i].time = scenarioTime;
+	chatInfos[i].time = g_missionTime;
 	chatInfos[i].chatTextColor = chatColor;
 
 	long totalHeight = chatEdit.font.height( message, chatEdit.width() );
@@ -3042,7 +3025,7 @@ void ControlGui::renderChatText()
 	}
 
 	int lineCount = 0;
-	int curTime = scenarioTime;
+	int curTime = g_missionTime;
 	for ( int i = MAX_CHAT_COUNT - 1; i > -1; i-- )
 	{
 		if ( chatInfos[i].messageLength && curTime - chatInfos[i].time < CHAT_DISPLAY_TIME )
@@ -3129,7 +3112,7 @@ bool ControlGui::playPilotVideo( MechWarrior* pPilot, char movieCode )
 	char fileName[512];
 	strcpy( fileName, moviePath );
 
-	char realPilotName[8];
+	char realPilotName[8] = { 0 };
 	strncpy(realPilotName, pPilot->getName(), 7);
 
 	strcat( fileName, realPilotName ); // swap in pilot name when videos are done

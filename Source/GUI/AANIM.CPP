@@ -171,7 +171,7 @@ void	aAnimation::end()
 void	aAnimation::update()
 {
 	if ( currentTime != -1.f )
-		currentTime += direction * g_deltaTime;
+		currentTime += direction * g_frameTime;
 
 	if ( direction < 0 && bLoops && infoCount && infos )
 	{

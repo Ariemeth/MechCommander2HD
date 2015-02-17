@@ -1066,7 +1066,7 @@ int EString::Find( unsigned short Char, int Start_Index ) const
 {
 	unsigned short Tmp[2];
 	*Tmp = Char;
-	Tmp[2] = 0;
+	Tmp[1] = 0;
 
 	return Find( (EChar*)Tmp, Start_Index );
 }

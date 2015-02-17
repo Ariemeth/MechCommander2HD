@@ -196,22 +196,22 @@ void Weather::update (void)
 		
 	//------------------------------------------------
 	// Check if we should update the rain state.
-	rainUpdateTime -= g_deltaTime;
+	rainUpdateTime -= g_frameTime;
 	
 	if (rainUpdateTime <= 0.0f)
 	{
 		rainLevel += (rainFactor * rainTrend);
 		
 		if (rainLevel > 3.0f)
-			soundSystem->setIsRaining(RAIN1);
+			g_gameSoundSystem->setIsRaining(RAIN1);
 		else if (rainLevel > 2.5f)
-			soundSystem->setIsRaining(RAIN2);
+			g_gameSoundSystem->setIsRaining(RAIN2);
 		else if (rainLevel > 2.0f)
-			soundSystem->setIsRaining(RAIN3);
+			g_gameSoundSystem->setIsRaining(RAIN3);
 		else if (rainLevel > 1.0f)
-			soundSystem->setIsRaining(RAIN4);
+			g_gameSoundSystem->setIsRaining(RAIN4);
 		else
-			soundSystem->setIsRaining(0);
+			g_gameSoundSystem->setIsRaining(0);
 		
 		//-------------------------------------------------------------------
 		// Check if its raining.  If not, check if it should.  If not, exit.
@@ -266,10 +266,10 @@ void Weather::update (void)
 		// Just change 'em based on the weather now.
 		// Must change based on whether or not night has or is falling.
 		if (rainLightLevel < rainLevel)
-			rainLightLevel += BASE_RAIN_LIGHT_RATE * g_deltaTime;
+			rainLightLevel += BASE_RAIN_LIGHT_RATE * g_frameTime;
 			
 		if (rainLightLevel > rainLevel)
-			rainLightLevel -= BASE_RAIN_LIGHT_RATE * g_deltaTime;
+			rainLightLevel -= BASE_RAIN_LIGHT_RATE * g_frameTime;
 		 
 		if (rainLightLevel > 1.0f)
 		{
@@ -277,7 +277,7 @@ void Weather::update (void)
 			if (weatherNightFactor > eye->nightFactor)
 				eye->nightFactor = weatherNightFactor;
 		
-			lighteningCheck -= g_deltaTime;
+			lighteningCheck -= g_frameTime;
 			if (lighteningCheck < 0.0f)
 			{
 				//-----------------------
@@ -334,7 +334,7 @@ void Weather::update (void)
 					lighteningDropoff = -RandomNumber(BASE_LIGHTENING_FALLOFF);
 				}
 
-				lighteningLevel += lighteningDropoff * g_deltaTime;
+				lighteningLevel += lighteningDropoff * g_frameTime;
 				
 				if (lighteningLevel < 0.0f)
 					lighteningLevel = 0.0f;
@@ -344,12 +344,12 @@ void Weather::update (void)
 			}
 			
 			if (thunderTime > 0.0f)
-				thunderTime -= g_deltaTime;
+				thunderTime -= g_frameTime;
 
 			if ((thunderSFX != 0xffffffff) && (thunderTime <= 0.0f))
 			{
 				thunderTime = 0.0f;
-				soundSystem->playDigitalSample(thunderSFX);
+				g_gameSoundSystem->playDigitalSample(thunderSFX);
 				thunderSFX = 0xffffffff;
 			}
 			
@@ -418,7 +418,7 @@ void Weather::update (void)
 		{
 			//-----------------------------------------------
 			//Update the position.  Move rain toward ground.
-			rainDrops[i].position.z -= BASE_RAIN_VEL * g_deltaTime * rainLevel;
+			rainDrops[i].position.z -= BASE_RAIN_VEL * g_frameTime * rainLevel;
 			
 			if (rainDrops[i].position.z <= currentElevation)
 			{

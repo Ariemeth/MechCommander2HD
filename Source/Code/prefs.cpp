@@ -162,23 +162,14 @@ int CPrefs::load( const char* pFileName ) {
 			char blockName[64];
 			for ( int i = 0; i < 10; i++ )
 			{	
-				sprintf( blockName, "PlayerName%ld", i );
+				sprintf( blockName, "PlayerName%d", i );
 				result = prefsFile->readIdString( blockName, &playerName[i][0], 255 );
 
-				if ( result != NO_ERR && i == 0 )
-				{
-					result = prefsFile->readIdString( "PlayerName", &playerName[0][0], 255 );
-					result = prefsFile->readIdString( "UnitName", &unitName[0][0], 255 );
-					break;
-				}
-
-				sprintf( blockName, "IPAddress%ld", i );
+				sprintf( blockName, "IPAddress%d", i );
 				result = prefsFile->readIdString( blockName, &ipAddresses[i][0], 255 );
 
-
-				sprintf( blockName, "UnitName%ld", i );
+				sprintf( blockName, "UnitName%d", i );
 				result = prefsFile->readIdString( blockName, &unitName[i][0], 255 );
-
 			}
 
 		
@@ -336,13 +327,13 @@ int CPrefs::save() {
 			for ( int i = 0; i < 10; i++ )
 			{	
 				
-				sprintf( blockName, "PlayerName%ld", i );
+				sprintf( blockName, "PlayerName%d", i );
 				result = prefsFile->writeIdString( blockName, &playerName[i][0] );
 
-				sprintf( blockName, "UnitName%ld", i );
+				sprintf( blockName, "UnitName%d", i );
 				result = prefsFile->writeIdString( blockName, &unitName[i][0] );
 
-				sprintf( blockName, "IPAddress%ld", i );
+				sprintf( blockName, "IPAddress%d", i );
 				result = prefsFile->writeIdString( blockName, &ipAddresses[i][0] );
 
 			}
@@ -392,22 +383,22 @@ int CPrefs::save() {
 }
 
 int CPrefs::applyPrefs(bool applyRes) {
-	if (soundSystem) {
+	if (g_gameSoundSystem) {
 		/*soundSystem doesn't seem to do anything*/
-		soundSystem->setDigitalMasterVolume(this->DigitalMasterVolume);
-		soundSystem->setSFXVolume(this->sfxVolume);
-		soundSystem->setRadioVolume(this->RadioVolume);
-		soundSystem->setMusicVolume(this->MusicVolume);
-		soundSystem->setBettyVolume(this->BettyVolume);
+		g_gameSoundSystem->setDigitalMasterVolume(this->DigitalMasterVolume);
+		g_gameSoundSystem->setSFXVolume(this->sfxVolume);
+		g_gameSoundSystem->setRadioVolume(this->RadioVolume);
+		g_gameSoundSystem->setMusicVolume(this->MusicVolume);
+		g_gameSoundSystem->setBettyVolume(this->BettyVolume);
 	}
 
-	if (g_soundSystem) {
-		g_soundSystem->setDigitalMasterVolume(this->DigitalMasterVolume);
-		g_soundSystem->setSFXVolume(this->sfxVolume);
-		g_soundSystem->setRadioVolume(this->RadioVolume);
-		g_soundSystem->setMusicVolume(this->MusicVolume);
-		g_soundSystem->setBettyVolume(this->BettyVolume);
-	}
+	//if (g_soundSystem) {
+	//	g_soundSystem->setDigitalMasterVolume(this->DigitalMasterVolume);
+	//	g_soundSystem->setSFXVolume(this->sfxVolume);
+	//	g_soundSystem->setRadioVolume(this->RadioVolume);
+	//	g_soundSystem->setMusicVolume(this->MusicVolume);
+	//	g_soundSystem->setBettyVolume(this->BettyVolume);
+	//}
 
 	// MCHD CHANGE (02/14/2015): Fuck globals - it all lives in CPrefs now
 
@@ -441,8 +432,7 @@ int CPrefs::applyPrefs(bool applyRes) {
 		switch (resolution)
 		{
 			case 0:			//640by480
-				if ((gos_GetMachineInformation( gos_Info_ValidMode, renderer, 640, 480, bitDepth) == 0) && (bitDepth == 32))
-					bitDepth = 16;
+				gos_GetMachineInformation( gos_Info_ValidMode, renderer, 640, 480, bitDepth);
 
 				if (renderer == 3)
 					gos_SetScreenMode(640,480,bitDepth,0,0,0,true,localFullScreen,0,localWindow,0,localRenderer);
@@ -451,8 +441,7 @@ int CPrefs::applyPrefs(bool applyRes) {
 				break;
 
 			case 1:			//800by600
-				if ((gos_GetMachineInformation( gos_Info_ValidMode, renderer, 800, 600, bitDepth) == 0) && (bitDepth == 32))
-					bitDepth = 16;
+				gos_GetMachineInformation( gos_Info_ValidMode, renderer, 800, 600, bitDepth);
 
 				if (renderer == 3)
 					gos_SetScreenMode(800,600,bitDepth,0,0,0,true,localFullScreen,0,localWindow,0,localRenderer);
@@ -461,8 +450,7 @@ int CPrefs::applyPrefs(bool applyRes) {
 				break;
 
 			case 2:			//1024by768
-				if ((gos_GetMachineInformation( gos_Info_ValidMode, renderer, 1024, 768, bitDepth) == 0) && (bitDepth == 32))
-					bitDepth = 16;
+				gos_GetMachineInformation( gos_Info_ValidMode, renderer, 1024, 768, bitDepth);
 
 				if (renderer == 3)
 					gos_SetScreenMode(1024,768,bitDepth,0,0,0,true,localFullScreen,0,localWindow,0,localRenderer);
@@ -471,8 +459,7 @@ int CPrefs::applyPrefs(bool applyRes) {
 				break;
 
 			case 3:			//1280by1024
-				if ((gos_GetMachineInformation( gos_Info_ValidMode, renderer, 1280, 1024, bitDepth) == 0) && (bitDepth == 32))
-					bitDepth = 16;
+				gos_GetMachineInformation( gos_Info_ValidMode, renderer, 1280, 1024, bitDepth);
 
 				if (renderer == 3)
 					gos_SetScreenMode(1280,1024,bitDepth,0,0,0,true,localFullScreen,0,localWindow,0,localRenderer);
@@ -481,8 +468,7 @@ int CPrefs::applyPrefs(bool applyRes) {
 				break;
 
 			case 4:			//1600by1200
-				if ((gos_GetMachineInformation( gos_Info_ValidMode, renderer, 1600, 1200, bitDepth) == 0) && (bitDepth == 32))
-					bitDepth = 16;
+				gos_GetMachineInformation( gos_Info_ValidMode, renderer, 1600, 1200, bitDepth);
 
 				if (renderer == 3)
 					gos_SetScreenMode(1600,1200,16,0,0,0,true,localFullScreen,0,localWindow,0,localRenderer);

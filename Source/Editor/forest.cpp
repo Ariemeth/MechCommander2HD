@@ -121,7 +121,7 @@ void Forest::init( FitIniFile& file )
 	char headerName[256];
 	for ( int i = 0; i < FOREST_TYPES; i++ )
 	{
-		sprintf( headerName, "TreeType%ld", i );
+		sprintf( headerName, "TreeType%d", i );
 		file.readIdFloat( headerName, percentages[i] );	
 	}
 
@@ -171,7 +171,7 @@ void Forest::save( FitIniFile& file )
 	char headerName[256];
 	for ( int i = 0; i < FOREST_TYPES; i++ )
 	{
-		sprintf( headerName, "TreeType%ld", i );
+		sprintf( headerName, "TreeType%d", i );
 		file.writeIdFloat( headerName, percentages[i] );	
 	}
 

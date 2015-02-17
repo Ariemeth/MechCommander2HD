@@ -134,7 +134,7 @@ extern bool MLRVertexLimitReached;
 
 //--------------------------------------------------------------------------------------
 // Globals
-extern float g_deltaTime;
+extern float g_frameTime;
 
 extern void DEBUGWINS_print (char* s, long window = 0);
 extern void DEBUGWINS_setGameObject (long debugObj, GameObjectPtr obj);
@@ -212,7 +212,7 @@ MissionInterfaceManager::Command		MissionInterfaceManager::s_commands[] =
 	"PowerUp",					KEY_PRIOR, -1, -1, false, &MissionInterfaceManager::powerUp, 0, 43216,
 	"Eject",					KEY_END, mState_EJECT, mState_EJECT, false, &MissionInterfaceManager::eject, 0, 43217,
 	"VehicleCommand",			KEY_V, -1, -1, true, &MissionInterfaceManager::vehicleCommand, 0, 43222,
-	"ToggleHoldPosition",		KEY_H, -1, -1, true, &MissionInterfaceManager::toggleHoldPosition, 0, -1,
+	"ToggleHoldPosition",		KEY_H, -1, -1, true, &MissionInterfaceManager::toggleHoldPosition, 0, -1, // MCHD TODO: This turns off randomly; fix it
 	"GoToNextNavPoint",			KEY_N, -1, -1, true, &MissionInterfaceManager::gotoNextNavMarker, 0, -1,
 	"SelectVisible",			KEY_E, -1, -1, false, &MissionInterfaceManager::selectVisible, 0, 43209,
 	"AddVisibleToSelection",	SHIFT | KEY_E, -1, -1, false, &MissionInterfaceManager::addVisibleToSelection, 0, -1, // MCHD TODO: Fix this so it binds with its parent key maybe?
@@ -274,7 +274,7 @@ MissionInterfaceManager::Command		MissionInterfaceManager::s_debugCommands[] =
 	"DamageObject4",		ALT | KEY_NUMPAD4, -1, -1, false, &MissionInterfaceManager::damageObject4, 0, -1,
 	"DamageObject5",		ALT | KEY_NUMPAD5, -1, -1, false, &MissionInterfaceManager::damageObject5, 0, -1,
 	"DamageObject6",		ALT | KEY_NUMPAD6, -1, -1, false, &MissionInterfaceManager::damageObject6, 0, -1,
-	"GoalPlan",				ALT | KEY_P, -1, -1, false, &MissionInterfaceManager::goalPlan, 0, -1,
+	"GoalPlan",				ALT | KEY_P, -1, -1, false, &MissionInterfaceManager::goalPlan, 0, -1, // Still don't know what these do...
 	"EnemyGoalPlan",		ALT | SHIFT | KEY_P, -1, -1, false, &MissionInterfaceManager::enemyGoalPlan, 0, -1,
 
 	// Sun
@@ -289,7 +289,7 @@ MissionInterfaceManager::Command		MissionInterfaceManager::s_debugCommands[] =
 	"DrawObjects",			ALT | CTRL | KEY_S, -1, -1, true, &MissionInterfaceManager::drawTGLShapes, 0, -1,
 	"DrawBuildings",		ALT | CTRL | KEY_B, -1, -1, true, &MissionInterfaceManager::drawBuildings, 0, -1,
 	"DrawTerrain",			ALT | CTRL | KEY_T, -1, -1, true, &MissionInterfaceManager::drawTerrain, 0, -1,
-	"DrawOverlays",			ALT | CTRL | KEY_O, -1, -1, true, &MissionInterfaceManager::drawOverlays, 0, -1,
+	"DrawOverlays",			ALT | CTRL | KEY_O, -1, -1, true, &MissionInterfaceManager::drawOverlays, 0, -1, // MCHD TODO: ???
 	"DrawClouds",			ALT | CTRL | KEY_C, -1, -1, true, &MissionInterfaceManager::drawClouds, 0, -1,
 	"DrawFog",				ALT | CTRL | KEY_F, -1, -1, true, &MissionInterfaceManager::drawFog, 0, -1,
 	"DrawShadows",			ALT | CTRL | KEY_D, -1, -1, true, &MissionInterfaceManager::drawShadows, 0, -1,
@@ -299,10 +299,10 @@ MissionInterfaceManager::Command		MissionInterfaceManager::s_debugCommands[] =
 	"ShowGrid",				ALT | CTRL | KEY_G, -1, -1, true, &MissionInterfaceManager::showGrid, 0, -1,
 	"ShowLOSGrid",			ALT | CTRL | KEY_L, -1, -1, true, &MissionInterfaceManager::showLOSGrid, 0, -1,
 	"ShowMovers",			ALT | KEY_M, -1, -1, false, &MissionInterfaceManager::showMovers, 0, -1,
-	"ShowVictim",			ALT | KEY_V, -1, -1, false, &MissionInterfaceManager::showVictim, 0, -1,
+	"ShowVictim",			ALT | KEY_V, -1, -1, false, &MissionInterfaceManager::showVictim, 0, -1, // MCHD TODO: ???
 	"DisplayDebugInfo",		ALT | KEY_SLASH, -1, -1, false, &MissionInterfaceManager::quickDebugInfo, 0, -1,
 	"CycleDebugWindows",	ALT | KEY_W, -1, -1, false, &MissionInterfaceManager::toggleDebugWins, 0, -1,
-	"SetDebugObject",		ALT | CTRL | KEY_SLASH, -1, -1, false, &MissionInterfaceManager::setGameObjectWindow, 0, -1,
+	"SetDebugObject",		ALT | CTRL | KEY_SLASH, -1, -1, false, &MissionInterfaceManager::setGameObjectWindow, 0, -1, // MCHD TODO: This whole thing is pretty fucked; needs some work
 	"PageObjectWindow0",	ALT | CTRL | KEY_1, -1, -1, false, &MissionInterfaceManager::pageGameObjectWindow1, 0, -1,
 	"PageObjectWindow1",	ALT | CTRL | KEY_2, -1, -1, false, &MissionInterfaceManager::pageGameObjectWindow2, 0, -1,
 	"PageObjectWindow2",	ALT | CTRL | KEY_3, -1, -1, false, &MissionInterfaceManager::pageGameObjectWindow3, 0, -1,
@@ -311,12 +311,12 @@ MissionInterfaceManager::Command		MissionInterfaceManager::s_debugCommands[] =
 	"JumpToObject2",		ALT | KEY_3, -1, -1, false, &MissionInterfaceManager::jumpToDebugGameObject3, 0, -1,
 
 	// ???
-	"RecalculateLights",		ALT | CTRL | KEY_Q, -1, -1, true, &MissionInterfaceManager::recalcLights, 0, -1,
+	"RecalculateLights",		ALT | CTRL | KEY_Q, -1, -1, true, &MissionInterfaceManager::recalcLights, 0, -1, // MCHD TODO: Figure out what it does or remove it
 	"RecalculateWater",			ALT | CTRL | KEY_W, -1, -1, true, &MissionInterfaceManager::recalcWater, 0, -1,
-	"ZeroHPrime",				ALT | KEY_Z, -1, -1, false,			&MissionInterfaceManager::zeroHPrime, 0, -1,
-	"CalculateValidAreaTable",	ALT | KEY_A, -1, -1, false,			&MissionInterfaceManager::calcValidAreaTable, 0, -1,
-	"GlobalMapLog",				ALT | KEY_G, -1, -1, false,			&MissionInterfaceManager::globalMapLog, 0, -1,
-	"RotateObjectLeft",			ALT | KEY_PERIOD, -1, -1, false,	&MissionInterfaceManager::rotateObjectLeft, 0, -1,
+	"ZeroHPrime",				ALT | KEY_Z, -1, -1, false, &MissionInterfaceManager::zeroHPrime, 0, -1, // MCHD TODO: Figure out what it does or remove it
+	"CalculateValidAreaTable",	ALT | KEY_A, -1, -1, false, &MissionInterfaceManager::calcValidAreaTable, 0, -1, // MCHD TODO: Figure out what it does or remove it
+	"GlobalMapLog",				ALT | KEY_G, -1, -1, false, &MissionInterfaceManager::globalMapLog, 0, -1, // MCHD TODO: Figure out what it does or remove it
+	"RotateObjectLeft",			ALT | KEY_PERIOD, -1, -1, false,	&MissionInterfaceManager::rotateObjectLeft, 0, -1, // MCHD TODO: Editor only?
 	"RotateObjectRight",		ALT | KEY_COMMA, -1, -1, false,		&MissionInterfaceManager::rotateObjectRight, 0, -1,
 };
 
@@ -324,7 +324,7 @@ long MissionInterfaceManager::s_numDebugCommands = sizeof(MissionInterfaceManage
 #endif
 
 extern bool drawTerrainGrid;
-extern long 	turn;				//What frame of the scenario is it?
+extern long 	g_framesSinceMissionStart;				//What frame of the scenario is it?
 
 extern char DebugStatusBarString[256];
 
@@ -492,12 +492,12 @@ void MissionInterfaceManager::update (void)
 				float xDistLeft = buttonPosX - realMouseX;
 				float yDistLeft = buttonPosY - realMouseY;
 
-				float xDistThisFrame = xDistLeft / timeLeftToScroll * g_deltaTime;
-				float yDistThisFrame = yDistLeft / timeLeftToScroll * g_deltaTime;
+				float xDistThisFrame = xDistLeft / timeLeftToScroll * g_frameTime;
+				float yDistThisFrame = yDistLeft / timeLeftToScroll * g_frameTime;
 
 				userInput->setMousePos(realMouseX + xDistThisFrame, realMouseY+yDistThisFrame);
 
-				timeLeftToScroll -= g_deltaTime;
+				timeLeftToScroll -= g_frameTime;
 			}
 			else
 			{
@@ -506,7 +506,7 @@ void MissionInterfaceManager::update (void)
 				//We are there.  Start flashing.
 				if (buttonNumFlashes)
 				{
-					buttonFlashTime += g_deltaTime;
+					buttonFlashTime += g_frameTime;
 					if ( buttonFlashTime > .5f )
 					{
 						controlGui.getButton( targetButtonId )->setColor( 0xffffffff );
@@ -531,16 +531,10 @@ void MissionInterfaceManager::update (void)
 		else
 		{
 			ControlGui::RectInfo *targetButton = controlGui.getRect(targetButtonId);
-			if (!targetButton)
-			{
-				animationRunning = false;
-			}
-
 			userInput->setMouseCursor(mState_TUTORIALS);
 
 			//Get button position.
 			float buttonPosX = (targetButton->rect.left + targetButton->rect.right) * 0.5f;
-
 			float buttonPosY = (targetButton->rect.top + targetButton->rect.bottom) * 0.5f;
 
 			//-------------------
@@ -553,12 +547,12 @@ void MissionInterfaceManager::update (void)
 				float xDistLeft = buttonPosX - realMouseX;
 				float yDistLeft = buttonPosY - realMouseY;
 
-				float xDistThisFrame = xDistLeft / timeLeftToScroll * g_deltaTime;
-				float yDistThisFrame = yDistLeft / timeLeftToScroll * g_deltaTime;
+				float xDistThisFrame = xDistLeft / timeLeftToScroll * g_frameTime;
+				float yDistThisFrame = yDistLeft / timeLeftToScroll * g_frameTime;
 
 				userInput->setMousePos(realMouseX + xDistThisFrame, realMouseY+yDistThisFrame);
 
-				timeLeftToScroll -= g_deltaTime;
+				timeLeftToScroll -= g_frameTime;
 			}
 			else
 			{
@@ -567,7 +561,7 @@ void MissionInterfaceManager::update (void)
 				//We are there.  Start flashing.
 				if (buttonNumFlashes)
 				{
-					buttonFlashTime += g_deltaTime;
+					buttonFlashTime += g_frameTime;
 					if ( buttonFlashTime > .5f )
 					{
 						targetButton->color = 0xff000000;
@@ -781,8 +775,8 @@ void MissionInterfaceManager::update (void)
 	// Update the Debug Status Bar...
 	long row, col;
 	land->worldToCell(wPos, row, col);
-	sprintf(DebugStatusBarString, "TIME: %06d, MOUSE: [%d, %d] %d,%d,%d (%.2f, %.2f, %.2f), PATHMGR: %02d(%02d)",
-		(long)scenarioTime,
+	sprintf(DebugStatusBarString, "TIME: %06d, MOUSE: [%ld, %ld] %d,%d,%d (%.2f, %.2f, %.2f), PATHMGR: %02d(%02d)",
+		(long)g_missionTime,
 		row, col,
 		GlobalMoveMap[0]->calcArea(row, col),
 		GlobalMoveMap[1]->calcArea(row, col),
@@ -792,9 +786,9 @@ void MissionInterfaceManager::update (void)
 	if (MPlayer) {
 		char mpStr[256];
 		if (MPlayer->isServer())
-			sprintf(mpStr, ", MULTIPLAY: %s-(%d)SERVER {%d,%d}", MPlayer->getPlayerName(), MPlayer->commanderID, MPlayer->maxReceiveLoad, MPlayer->maxReceiveSize);
+			sprintf(mpStr, ", MULTIPLAY: %s-(%ld)SERVER {%ld,%ld}", MPlayer->getPlayerName(), MPlayer->commanderID, MPlayer->maxReceiveLoad, MPlayer->maxReceiveSize);
 		else
-			sprintf(mpStr, ", MULTIPLAY: %s-(%d)CLIENT {%d,%d}", MPlayer->getPlayerName(), MPlayer->commanderID, MPlayer->maxReceiveLoad, MPlayer->maxReceiveSize);
+			sprintf(mpStr, ", MULTIPLAY: %s-(%ld)CLIENT {%ld,%ld}", MPlayer->getPlayerName(), MPlayer->commanderID, MPlayer->maxReceiveLoad, MPlayer->maxReceiveSize);
 		strcat(DebugStatusBarString, mpStr);
 	}
 	if (g_dbgGoalPlanEnemy)
@@ -930,7 +924,7 @@ void MissionInterfaceManager::updateVTol()
 				if (!vehicleDropped[vtolNum] && (vTol[vtolNum]->currentFrame >= 145))
 				{
 					vehicleDropped[vtolNum] = true;
-					soundSystem->playDigitalSample(VTOL_DROP,vPos[vtolNum]);
+					g_gameSoundSystem->playDigitalSample(VTOL_DROP,vPos[vtolNum]);
 					
 					//OK, if this is another persons vtol, I probably shouldn't do this
 					// Glenn, what should it do?
@@ -1011,7 +1005,7 @@ void MissionInterfaceManager::updateVTol()
 					if (!MPlayer)
 						mechRecovered[vtolNum] = false;		//Need to know when mech is done so Karnov can fly away.
 
-					vTolTime[vtolNum] = scenarioTime;
+					vTolTime[vtolNum] = g_missionTime;
 					
 					//Start GOsFX - We are now hovering.
 					if (recoveryBeam[vtolNum])
@@ -1029,7 +1023,7 @@ void MissionInterfaceManager::updateVTol()
 						shapeOrigin.BuildRotation(Stuff::EulerAngles(0.0f,0.0f,0.0f));
 						shapeOrigin.BuildTranslation(wakePos);
 									
-						gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+						gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 					
 						recoveryBeam[vtolNum]->SetLoopOff();
 						recoveryBeam[vtolNum]->SetExecuteOn();
@@ -1037,11 +1031,11 @@ void MissionInterfaceManager::updateVTol()
 					}
 
 					//Actually the Karnov Deploy Sound Effect!
-					soundSystem->playDigitalSample(RADAR_HUM,vTol[vtolNum]->position,false);
+					g_gameSoundSystem->playDigitalSample(RADAR_HUM,vTol[vtolNum]->position,false);
 				}
 				else if ((vTol[vtolNum]->getCurrentGestureId() == 0) && !mechRecovered[vtolNum] && mechToRecover[vtolNum] && !mechToRecover[vtolNum]->isDestroyed())
 				{
-					if (scenarioTime > vTolTime[vtolNum] + Mover::recoverTime)
+					if (g_missionTime > vTolTime[vtolNum] + Mover::recoverTime)
 					{
 						bool doIt = true;
 						if (MPlayer)
@@ -1146,7 +1140,7 @@ void MissionInterfaceManager::updateVTol()
 				shapeOrigin.BuildTranslation(wakePos);
 						
 				Stuff::OBB boundingBox;
-				gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,&boundingBox);
+				gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,&boundingBox);
 				
 				dustCloud[vtolNum]->Execute(&info);
 			}
@@ -1167,7 +1161,7 @@ void MissionInterfaceManager::updateVTol()
 				shapeOrigin.BuildTranslation(wakePos);
 						
 				Stuff::OBB boundingBox;
-				gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,&boundingBox);
+				gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,&boundingBox);
 				
 				recoveryBeam[vtolNum]->Execute(&info);
 			}
@@ -1338,7 +1332,7 @@ void MissionInterfaceManager::updateOldStyle( bool shiftDn, bool altDn, bool ctr
 		else if ( (controlGui.isAddingVehicle() && !paintingVtol[commanderID] && !canAddVehicle( wPos )) || 
 				(controlGui.isAddingSalvage() && !paintingVtol[commanderID] && !canRecover( wPos )))
 		{
-			soundSystem->playDigitalSample( INVALID_GUI );
+			g_gameSoundSystem->playDigitalSample( INVALID_GUI );
 			return;
 		}
 		else if ( controlGui.isAddingAirstrike() && !paintingVtol[commanderID] ) // if we're painting the vtol, carry on
@@ -1351,7 +1345,7 @@ void MissionInterfaceManager::updateOldStyle( bool shiftDn, bool altDn, bool ctr
 		{
 			if ( controlGui.isSelectingInfoObject() )
 			{
-				soundSystem->playDigitalSample( INVALID_GUI );
+				g_gameSoundSystem->playDigitalSample( INVALID_GUI );
 				controlGui.cancelInfo();
 			}
 			else if (Terrain::IsGameSelectTerrainPosition(wPos))
@@ -1444,7 +1438,7 @@ void MissionInterfaceManager::updateOldStyle( bool shiftDn, bool altDn, bool ctr
 					target->setSelected( true );
 				}
 				else
-					soundSystem->playDigitalSample( INVALID_GUI );
+					g_gameSoundSystem->playDigitalSample( INVALID_GUI );
 
 
 			}
@@ -1531,7 +1525,7 @@ void MissionInterfaceManager::updateAOEStyle(bool shiftDn, bool altDn, bool ctrl
 		else if ( (controlGui.isAddingVehicle() && !paintingVtol[commanderID] && !canAddVehicle( wPos )) || 
 				(controlGui.isAddingSalvage() && !paintingVtol[commanderID] && !canRecover( wPos )))
 		{
-			soundSystem->playDigitalSample( INVALID_GUI );
+			g_gameSoundSystem->playDigitalSample( INVALID_GUI );
 			return;
 		}
 		else if ( controlGui.isAddingAirstrike() && !paintingVtol[commanderID] ) // if we're painting the vtol, carry on
@@ -1544,7 +1538,7 @@ void MissionInterfaceManager::updateAOEStyle(bool shiftDn, bool altDn, bool ctrl
 		{
 			if ( controlGui.isSelectingInfoObject() )
 			{
-				soundSystem->playDigitalSample( INVALID_GUI );
+				g_gameSoundSystem->playDigitalSample( INVALID_GUI );
 				controlGui.cancelInfo();
 			}
 			else if (Terrain::IsGameSelectTerrainPosition(wPos))
@@ -1587,7 +1581,7 @@ void MissionInterfaceManager::updateAOEStyle(bool shiftDn, bool altDn, bool ctrl
 		else if ( target->getTeam() != Team::home && !target->isDisabled() )
 			doAttack();
 		else if (!bForcedShot && !bAimedShot)
-			soundSystem->playDigitalSample( INVALID_GUI );
+			g_gameSoundSystem->playDigitalSample( INVALID_GUI );
 	
 	}
 	else if ( selectClicked && !bGui )
@@ -1607,7 +1601,7 @@ void MissionInterfaceManager::updateAOEStyle(bool shiftDn, bool altDn, bool ctrl
 		else if ( (controlGui.isAddingVehicle() && !paintingVtol[commanderID] && !canAddVehicle( wPos )) || 
 				(controlGui.isAddingSalvage() && !paintingVtol[commanderID] && !canRecover( wPos )))
 		{
-			soundSystem->playDigitalSample( INVALID_GUI );
+			g_gameSoundSystem->playDigitalSample( INVALID_GUI );
 			return;
 		}
 		else if ( controlGui.isAddingAirstrike() && !paintingVtol[commanderID] ) // if we're painting the vtol, carry on
@@ -1667,7 +1661,7 @@ void MissionInterfaceManager::updateAOEStyle(bool shiftDn, bool altDn, bool ctrl
 		{	
 			// tried to select nothing
 			controlGui.cancelInfo();
-			soundSystem->playDigitalSample( INVALID_GUI );
+			g_gameSoundSystem->playDigitalSample( INVALID_GUI );
 		}
 	}
 }
@@ -1735,7 +1729,7 @@ int MissionInterfaceManager::update( bool leftClickedClick, bool rightClickedCli
 	}
 
 	mouseX = MouseX;
-	mouseY = mouseY;
+	mouseY = MouseY;
 	setTarget( pTarget );
 
 
@@ -1849,7 +1843,7 @@ void MissionInterfaceManager::doAttack()
 
 	if ( userInput->getKeyDown( s_waypointKey ) || !target )
 	{
-		soundSystem->playDigitalSample( INVALID_GUI );
+		g_gameSoundSystem->playDigitalSample( INVALID_GUI );
 		return; // don't do if in waypoint mode
 	}
 
@@ -1893,7 +1887,7 @@ void MissionInterfaceManager::doAttack()
 				{
 					if ( target->getCaptureBlocker(pMover) )
 					{
-						soundSystem->playDigitalSample( INVALID_GUI );
+						g_gameSoundSystem->playDigitalSample( INVALID_GUI );
 						return;
 					}
 				}
@@ -1902,7 +1896,7 @@ void MissionInterfaceManager::doAttack()
 					//Can't capture player has at least one support thing selected
 					// At least until design tells me what they REALLY want!
 					// -fs
-					soundSystem->playDigitalSample( INVALID_GUI );
+					g_gameSoundSystem->playDigitalSample( INVALID_GUI );
 					return;
 				}
 			}
@@ -1916,7 +1910,7 @@ void MissionInterfaceManager::doAttack()
 		tacOrder.moveParams.wayPath.mode[0] = controlGui.getWalk() ?  TRAVEL_MODE_SLOW : TRAVEL_MODE_FAST;
 	}
 	
-	soundSystem->playDigitalSample(BUTTON5);
+	g_gameSoundSystem->playDigitalSample(BUTTON5);
 
 	Team* pTeam = Team::home;
 	
@@ -1996,7 +1990,7 @@ int  MissionInterfaceManager::jump()
 {
 	if ( !canJump() )
 	{
-		soundSystem->playDigitalSample( INVALID_GUI );
+		g_gameSoundSystem->playDigitalSample( INVALID_GUI );
 		return 0;
 	}
 	
@@ -2014,15 +2008,12 @@ int MissionInterfaceManager::stopJump()
 }
 void MissionInterfaceManager::doJump()
 {
-	bool passable = 0;
-
 	if ( !target )
 	{
 		if (Terrain::IsGameSelectTerrainPosition(wPos))
 		{
 			long cellR, cellC;
 			land->worldToCell(wPos, cellR, cellC);
-			passable = GameMap->getPassable(cellR,cellC);
 		}
 			
 		bool canJump = canJumpToWPos();	
@@ -2040,13 +2031,13 @@ void MissionInterfaceManager::doJump()
 
 			controlGui.setDefaultSpeed();
 			
-			soundSystem->playDigitalSample(BUTTON5);
+			g_gameSoundSystem->playDigitalSample(BUTTON5);
 			controlGui.setDefaultSpeed();
 		}
 		else
 		{
 			userInput->setMouseCursor(mState_DONT);
-			soundSystem->playDigitalSample( INVALID_GUI );
+			g_gameSoundSystem->playDigitalSample( INVALID_GUI );
 		}
 		
 			
@@ -2054,7 +2045,7 @@ void MissionInterfaceManager::doJump()
 	else
 	{
 		userInput->setMouseCursor(mState_DONT);
-		soundSystem->playDigitalSample( INVALID_GUI );
+		g_gameSoundSystem->playDigitalSample( INVALID_GUI );
 	}
 	
 }
@@ -2102,7 +2093,7 @@ void MissionInterfaceManager::doGuard(GameObject* who)
 		controlGui.setDefaultSpeed();
 	}
 
-	soundSystem->playDigitalSample(BUTTON5);
+	g_gameSoundSystem->playDigitalSample(BUTTON5);
 }
 int MissionInterfaceManager::guard()
 {
@@ -2194,7 +2185,7 @@ int MissionInterfaceManager::aimLeg()
 				tacOrder.pack( NULL, NULL);
 				handleOrders( tacOrder );
 
-				soundSystem->playDigitalSample(BUTTON5);
+				g_gameSoundSystem->playDigitalSample(BUTTON5);
 
 				bAimedShot = true;
 				return 1;
@@ -2232,7 +2223,7 @@ int MissionInterfaceManager::aimArm()
 			tacOrder.pack( NULL, NULL);
 			handleOrders( tacOrder );
 
-			soundSystem->playDigitalSample(BUTTON5);
+			g_gameSoundSystem->playDigitalSample(BUTTON5);
 
 			bAimedShot = true;
 			return 1;
@@ -2284,7 +2275,7 @@ int MissionInterfaceManager::aimHead()
 				handleOrders( tacOrder );
 
 				bAimedShot = true;
-				soundSystem->playDigitalSample(BUTTON5);
+				g_gameSoundSystem->playDigitalSample(BUTTON5);
 			}
 			else if (!anySelectedWithoutAreaEffect())
 			{
@@ -2373,7 +2364,7 @@ int MissionInterfaceManager::bigAirStrike()
 
 	IfaceCallStrike (ARTILLERY_LARGE,&v,NULL);
 //	if ( !isPaused() )
-		soundSystem->playSupportSample(SUPPORT_AIRSTRIKE);
+		g_gameSoundSystem->playSupportSample(SUPPORT_AIRSTRIKE);
 	return 1;
 }
 int MissionInterfaceManager::smlAirStrike()
@@ -2382,7 +2373,7 @@ int MissionInterfaceManager::smlAirStrike()
 
 	IfaceCallStrike (ARTILLERY_SMALL,&v,NULL);
 //	if ( !isPaused() )
-		soundSystem->playSupportSample(SUPPORT_AIRSTRIKE);
+		g_gameSoundSystem->playSupportSample(SUPPORT_AIRSTRIKE);
 	return 1;
 }
 int MissionInterfaceManager::snsAirStrike()
@@ -2391,7 +2382,7 @@ int MissionInterfaceManager::snsAirStrike()
 
 	IfaceCallStrike (ARTILLERY_SENSOR,&v,NULL);
 //	if ( !isPaused() )
-		soundSystem->playSupportSample(SUPPORT_PROBE);
+		g_gameSoundSystem->playSupportSample(SUPPORT_PROBE);
 	return 1;
 }
 
@@ -2574,7 +2565,7 @@ int MissionInterfaceManager::handleOrders( TacticalOrder& order)
 
 int MissionInterfaceManager::scrollUp()
 {
-	float frameFactor = g_deltaTime / baseFrameLength;
+	float frameFactor = g_frameTime / baseFrameLength;
 	float scrollFactor = scrollInc / eye->getScaleFactor() * frameFactor;
 	eye->moveUp(scrollFactor);
 	return 1;
@@ -2582,53 +2573,53 @@ int MissionInterfaceManager::scrollUp()
 
 int MissionInterfaceManager::scrollDown()
 {
-	float frameFactor = g_deltaTime / baseFrameLength;
+	float frameFactor = g_frameTime / baseFrameLength;
 	float scrollFactor = scrollInc / eye->getScaleFactor() * frameFactor;
 	eye->moveDown(scrollFactor);
 	return 1;
 }
 int MissionInterfaceManager::scrollLeft()
 {
-	float frameFactor = g_deltaTime / baseFrameLength;
+	float frameFactor = g_frameTime / baseFrameLength;
 	float scrollFactor = scrollInc / eye->getScaleFactor() * frameFactor;
 	eye->moveLeft(scrollFactor);
 	return 1;
 }
 int MissionInterfaceManager::scrollRight()
 {
-	float frameFactor = g_deltaTime / baseFrameLength;
+	float frameFactor = g_frameTime / baseFrameLength;
 	float scrollFactor = scrollInc / eye->getScaleFactor() * frameFactor;
 	eye->moveRight(scrollFactor);
 	return 1;
 }
 int MissionInterfaceManager::zoomOut()
 {
-	float frameFactor = g_deltaTime / baseFrameLength;
+	float frameFactor = g_frameTime / baseFrameLength;
 	eye->ZoomOut(zoomInc * frameFactor * eye->getScaleFactor());
 	return 1;
 }
 int MissionInterfaceManager::zoomIn()
 {
-	float frameFactor = g_deltaTime / baseFrameLength;
+	float frameFactor = g_frameTime / baseFrameLength;
 	eye->ZoomIn(zoomInc * frameFactor * eye->getScaleFactor());
 	return 1;
 }
 int MissionInterfaceManager::zoomChoiceOut()
 {
-	float frameFactor = g_deltaTime / baseFrameLength;
+	float frameFactor = g_frameTime / baseFrameLength;
 	eye->ZoomOut(zoomInc * frameFactor * 5.0f * eye->getScaleFactor());
 
 	return 1;
 }
 int MissionInterfaceManager::zoomChoiceIn()
 {
-	float frameFactor = g_deltaTime / baseFrameLength;
+	float frameFactor = g_frameTime / baseFrameLength;
 	eye->ZoomIn(zoomInc * frameFactor * 5.0f * eye->getScaleFactor());
  	return 1;
 }
 int MissionInterfaceManager::rotateLeft()
 {
-	float frameFactor = g_deltaTime / baseFrameLength;
+	float frameFactor = g_frameTime / baseFrameLength;
 	realRotation += degPerSecRot * frameFactor;
 	if (realRotation >= rotationInc)
 	{
@@ -2640,7 +2631,7 @@ int MissionInterfaceManager::rotateLeft()
 }
 int MissionInterfaceManager::rotateRight()
 {
-	float frameFactor = g_deltaTime / baseFrameLength;
+	float frameFactor = g_frameTime / baseFrameLength;
 	realRotation -= degPerSecRot * frameFactor;
 	if (realRotation <= -rotationInc)
 	{
@@ -2652,14 +2643,14 @@ int MissionInterfaceManager::rotateRight()
 }
 int MissionInterfaceManager::tiltUp()
 {
-	float frameFactor = g_deltaTime / baseFrameLength;
+	float frameFactor = g_frameTime / baseFrameLength;
 	float scrollFactor = scrollInc / eye->getScaleFactor() * frameFactor;
 	eye->tiltDown(scrollFactor * frameFactor * 30.0f);
 	return 1;
 }
 int MissionInterfaceManager::tiltDown()
 {
-	float frameFactor = g_deltaTime / baseFrameLength;
+	float frameFactor = g_frameTime / baseFrameLength;
 	float scrollFactor = scrollInc / eye->getScaleFactor() * frameFactor;
 	eye->tiltUp(scrollFactor * frameFactor * 30.0f);
 	return 1;
@@ -3036,7 +3027,7 @@ void MissionInterfaceManager::render (void)
 			return;
 		}
 
-		if (turn > 3 /*&& !controlGui.inRegion(userInput->getMouseX(), userInput->getMouseY())*/ )
+		if (g_framesSinceMissionStart > 3 /*&& !controlGui.inRegion(userInput->getMouseX(), userInput->getMouseY())*/ )
 		{
 #ifdef DRAW_CURSOR_CROSSHAIRS
 			Stuff::Vector4D cursorPos;
@@ -3091,8 +3082,7 @@ void MissionInterfaceManager::render (void)
 		
 				Distance.Subtract(objPosition,eyePosition);
 				float eyeDistance = Distance.GetApproximateLength();
-				float scaleFactor = 0.0f;
-				scaleFactor = eyeDistance / (Camera::maxClipDistance * 2.0f);
+				float scaleFactor = eyeDistance / (Camera::maxClipDistance * 2.0f);
 				scaleFactor = 1.5f - scaleFactor;
 
 				userInput->setMouseScale(scaleFactor);			
@@ -3101,25 +3091,6 @@ void MissionInterfaceManager::render (void)
 	}
 
 	controlGui.render( isPaused() && !isPausedWithoutMenu() );
-
-  /* 	if ( scenarioTime  < 7.0 )
-   	{
-   		long color = 0xff000000;
-   		if ( (g_userPreferences.resolution == 0 && Environment.screenWidth == 640)
-   		  || (g_userPreferences.resolution == 1 && Environment.screenWidth == 800)
-   		  || (g_userPreferences.resolution == 2 && Environment.screenWidth == 1024)
-   		  || (g_userPreferences.resolution == 3 && Environment.screenWidth == 1280)
-   		  ||(g_userPreferences.resolution == 4 && Environment.screenWidth == 1600))
-   		{
-   			color = interpolateColor( 0xff000000, 0x00000000, (scenarioTime-swapTime)/(7.0-swapTime) );
-   		}
-   		else
-   			swapTime = scenarioTime;
-   		
-   		GUI_RECT tmpRect = { 0,0, Environment.screenWidth, Environment.screenHeight };
-   		drawRect( tmpRect, color );
-
-	}*/
 }	
 
 void MissionInterfaceManager::initTacMap( PacketFile* file, int packet )
@@ -3131,7 +3102,7 @@ void MissionInterfaceManager::initTacMap( PacketFile* file, int packet )
 	file->readPacket( packet, mem );
 
 	controlGui.initTacMapBuildings( mem, size );
-	delete mem;
+	delete[] mem;
 
 	file->seekPacket(packet + 1);
 	size = file->getPacketSize( );
@@ -3140,7 +3111,7 @@ void MissionInterfaceManager::initTacMap( PacketFile* file, int packet )
 	file->readPacket( packet + 1, mem );
 
 	controlGui.initTacMap( mem, size );
-	delete mem;
+	delete[] mem;
 
 	swapTime = 0.f;
 
@@ -3159,9 +3130,9 @@ void MissionInterfaceManager::printDebugInfo()
 		land->worldToCell(wPos, row, col);
 		char debugString[256];
 		if (target)
-			sprintf(debugString, "POS = %s(%c) %d,%d [%d, %d] (%.4f, %.4f, %.4f) OBJ = %s\n", terrainStr[GameMap->getTerrain(row, col)], GameMap->getPassable(row, col) ? 'T' : 'F', GlobalMoveMap[0]->calcArea(row, col), GlobalMoveMap[1]->calcArea(row, col), row, col, wPos.x, wPos.y, wPos.z, target->getName());
+			sprintf(debugString, "POS = %s(%c) %d,%d [%ld, %ld] (%.4f, %.4f, %.4f) OBJ = %s\n", terrainStr[GameMap->getTerrain(row, col)], GameMap->getPassable(row, col) ? 'T' : 'F', GlobalMoveMap[0]->calcArea(row, col), GlobalMoveMap[1]->calcArea(row, col), row, col, wPos.x, wPos.y, wPos.z, target->getName());
 		else
-			sprintf(debugString, "POS = %s(%c) %d,%d [%d, %d] (%.4f, %.4f, %.4f)\n", terrainStr[GameMap->getTerrain(row, col)], GameMap->getPassable(row, col) ? 'T' : 'F', GlobalMoveMap[0]->calcArea(row, col), GlobalMoveMap[1]->calcArea(row, col), row, col, wPos.x, wPos.y, wPos.z);
+			sprintf(debugString, "POS = %s(%c) %d,%d [%ld, %ld] (%.4f, %.4f, %.4f)\n", terrainStr[GameMap->getTerrain(row, col)], GameMap->getPassable(row, col) ? 'T' : 'F', GlobalMoveMap[0]->calcArea(row, col), GlobalMoveMap[1]->calcArea(row, col), row, col, wPos.x, wPos.y, wPos.z);
 		DEBUGWINS_print(debugString);
 	}
 
@@ -3208,7 +3179,7 @@ void MissionInterfaceManager::doMove(const Stuff::Vector3D& pos)
 
 	handleOrders(tacOrder);
 	
-	soundSystem->playDigitalSample(BUTTON5);
+	g_gameSoundSystem->playDigitalSample(BUTTON5);
 
 	controlGui.setDefaultSpeed();
 }
@@ -3271,7 +3242,7 @@ int MissionInterfaceManager::forceShot()
 			tacOrder.attackParams.pursue = controlGui.getFireFromCurrentPos() ? false : true;
 			tacOrder.moveParams.wayPath.mode[0] = controlGui.getWalk() ?  TRAVEL_MODE_SLOW : TRAVEL_MODE_FAST;
 			
-			soundSystem->playDigitalSample(BUTTON5);
+			g_gameSoundSystem->playDigitalSample(BUTTON5);
 
 			if (target)
 				target->getAppearance()->flashBuilding(1.3f,0.2f,0xffff0000);
@@ -3408,12 +3379,12 @@ bool MissionInterfaceManager::moveCameraAround( bool lineOfSight, bool passable,
  	
 	if (attilaRZAxis < -ATTILA_THRESHOLD)
 	{
-		eye->rotateLeft(rotationInc * fabs(attilaRZAxis) * g_deltaTime * ATTILA_ROTATION_FACTOR);
+		eye->rotateLeft(rotationInc * fabs(attilaRZAxis) * g_frameTime * ATTILA_ROTATION_FACTOR);
 	}
 	
 	if (attilaRZAxis > ATTILA_THRESHOLD)
 	{
-		eye->rotateRight(rotationInc * fabs(attilaRZAxis) * g_deltaTime * ATTILA_ROTATION_FACTOR);
+		eye->rotateRight(rotationInc * fabs(attilaRZAxis) * g_frameTime * ATTILA_ROTATION_FACTOR);
 	}
 	
  	//------------------------------------------------
@@ -4070,7 +4041,7 @@ long MissionInterfaceManager::makeNoTargetCursor( bool passable, bool lineOfSigh
 	{
 		if ( canRecover( wPos ) && !bGui )
 			cursorType = mState_SALVAGE;
-		else if ( !paintingVtol[commanderID] & !bGui) 
+		else if ( !paintingVtol[commanderID] && !bGui) 
 			cursorType = mState_XSALVAGE;
 		else if ( bGui )
 			cursorType = mState_NORMAL;
@@ -4192,7 +4163,7 @@ MoverPtr BringInReinforcement (long vehicleID, long rosterIndex, long commanderI
 	char* vehicleFile = (char*)MissionInterfaceManager::instance()->getSupportVehicleNameFromID(vehicleID);
 	if (!vehicleFile) {
 		char s[1024];
-		sprintf(s, "BringInReinforcement: null behicleFile (%d)", vehicleID);
+		sprintf(s, "BringInReinforcement: null behicleFile (%ld)", vehicleID);
 		STOP((s));
 		//return(NULL);
 	}
@@ -4295,7 +4266,7 @@ void MissionInterfaceManager::beginVtol (long supportID, long commanderID, Stuff
 
 	if (vehicleID[commanderID] == 0) {
 		char s[1024];
-		sprintf(s, "beginvtol: supportID = %d, commanderID = %d, vehicleID = %d, vehicleFile = %s", supportID, commanderID, vehicleID[commanderID], vehicleFile);
+		sprintf(s, "beginvtol: supportID = %ld, commanderID = %ld, vehicleID = %ld, vehicleFile = %s", supportID, commanderID, vehicleID[commanderID], vehicleFile);
 		PAUSE((s));
 	}
 
@@ -4415,23 +4386,23 @@ void MissionInterfaceManager::beginVtol (long supportID, long commanderID, Stuff
 		switch (vehicleID[commanderID])
 		{
 			case 120:	//Minelayer
-				soundSystem->playSupportSample(SUPPORT_MINELAYER);
+				g_gameSoundSystem->playSupportSample(SUPPORT_MINELAYER);
 			break;
 
 			case 182:	//Repair
-				soundSystem->playSupportSample(SUPPORT_REPAIR);
+				g_gameSoundSystem->playSupportSample(SUPPORT_REPAIR);
 			break;
 
 			case 393:	//Scout
-				soundSystem->playSupportSample(SUPPORT_SCOUT);
+				g_gameSoundSystem->playSupportSample(SUPPORT_SCOUT);
 			break;
 
 			case 147:	//Recovery
-				soundSystem->playSupportSample(SUPPORT_RECOVER);
+				g_gameSoundSystem->playSupportSample(SUPPORT_RECOVER);
 			break;
 
 			case 415:	//Artillery
-				soundSystem->playSupportSample(SUPPORT_ARTILLERY);
+				g_gameSoundSystem->playSupportSample(SUPPORT_ARTILLERY);
 
 			break;
 		}
@@ -4448,9 +4419,9 @@ void MissionInterfaceManager::beginVtol (long supportID, long commanderID, Stuff
 	}
 	
 	if (vehicleID[commanderID] != 147)
-		soundSystem->playDigitalSample(VTOL_ANIMATE,newPos);
+		g_gameSoundSystem->playDigitalSample(VTOL_ANIMATE,newPos);
 	else
-		soundSystem->playDigitalSample(SALVAGE_CRAFT,newPos);
+		g_gameSoundSystem->playDigitalSample(SALVAGE_CRAFT,newPos);
 	
 	vTol[commanderID]->setObjectParameters( newPos, 0, false, Team::home->id, 0);
 	eye->update();
@@ -4479,7 +4450,7 @@ void MissionInterfaceManager::beginVtol (long supportID, long commanderID, Stuff
 		shapeOrigin.BuildRotation(Stuff::EulerAngles(0.0f,0.0f,0.0f));
 		shapeOrigin.BuildTranslation(wakePos);
 					
-		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 	
 		dustCloud[commanderID]->SetLoopOff();
 		dustCloud[commanderID]->SetExecuteOn();
@@ -4572,7 +4543,7 @@ void MissionInterfaceManager::doRepair(GameObject* who)
 
 	handleOrders( tacOrder );
 
-	soundSystem->playDigitalSample(BUTTON5);
+	g_gameSoundSystem->playDigitalSample(BUTTON5);
 	controlGui.setDefaultSpeed();
 }
 
@@ -4606,7 +4577,7 @@ void MissionInterfaceManager::doRepairBay(GameObject* who)
 
 	handleOrders( tacOrder );
 
-	soundSystem->playDigitalSample(BUTTON5);
+	g_gameSoundSystem->playDigitalSample(BUTTON5);
 	controlGui.setDefaultSpeed();
 }
 
@@ -4641,7 +4612,7 @@ int MissionInterfaceManager::togglePause()
 	else
 		bPausedWithoutMenu = 0;
 
-	soundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
+	g_gameSoundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
 		
 
 	if ( bPaused )
@@ -4775,14 +4746,14 @@ int MissionInterfaceManager::gotoNextNavMarker()
 
 				handleOrders(tacOrder);
 				
-				soundSystem->playDigitalSample(BUTTON5);
+				g_gameSoundSystem->playDigitalSample(BUTTON5);
 
 				return 1;
 			}
 		}
 
 	// if we got here there weren't any valid markers, play bad sound
-	soundSystem->playDigitalSample( INVALID_GUI );
+	g_gameSoundSystem->playDigitalSample( INVALID_GUI );
 	return 0;
 
 }
@@ -4801,7 +4772,7 @@ int MissionInterfaceManager::quickDebugInfo() {
 		land->worldToCell(wPos, row, col);
 		char debugString[256];
 		if (target)
-			sprintf(debugString, "INFO = %s(%c%c) %d(W%d) [%d, %d] (%.4f, %.4f, %.4f) #Pth=%d(%d) OBJ = %s\n",
+			sprintf(debugString, "INFO = %s(%c%c) %d(W%d) [%ld, %ld] (%.4f, %.4f, %.4f) #Pth=%d(%d) OBJ = %s\n",
 				terrainStr[GameMap->getTerrain(row, col)],
 				GameMap->getPassable(row, col) ? 'T' : 'F',
 				GameMap->getForest(row, col) ? 'T' : 'F',
@@ -4811,7 +4782,7 @@ int MissionInterfaceManager::quickDebugInfo() {
 				wPos.x, wPos.y, wPos.z,
 				PathManager->numPaths, PathManager->peakPaths, target->getName());
 		else
-			sprintf(debugString, "INFO = %s(%c%c) %d(W%d) [%d, %d] (%.4f, %.4f, %.4f) #Pth=%d(%d)\n",
+			sprintf(debugString, "INFO = %s(%c%c) %d(W%d) [%ld, %ld] (%.4f, %.4f, %.4f) #Pth=%d(%d)\n",
 				terrainStr[GameMap->getTerrain(row, col)],
 				GameMap->getPassable(row, col) ? 'T' : 'F',
 				GameMap->getForest(row, col) ? 'T' : 'F',
@@ -5337,11 +5308,42 @@ int MissionInterfaceManager::loadHotKeys( FitIniFile& file )
 
 			if (file.readIdLong(s_commands[i].name, s_commands[i].key) == VARIABLE_NOT_FOUND)
 				s_commands[i].key = s_defaultKeys[i];
+		}
+
+		// Prevent double-binding keys
+		for (int i = 0; i < s_numCommands; i++)
+		{
+			// Check normal commands for duplicate bindings
+			bool reset = false;
+			int resetIndex = 0;
+			for (int j = 0; j < s_numCommands; ++j)
+			{
+				if (i == j)
+					continue;
+
+				if (s_commands[i].key == s_commands[j].key)
+				{
+					// If the j key is default, set the i key to its default
+					if (s_commands[j].key == s_defaultKeys[j])
+					{
+						s_commands[i].key = s_defaultKeys[i];
+						warning = reset = true;
+						resetIndex = i;
+						break;
+					}
+					// If the i key is default, set the j key to its default
+					else
+					{
+						s_commands[j].key = s_defaultKeys[j];
+						warning = reset = true;
+						resetIndex = j;
+						break;
+					}
+				}
+			}
 
 #ifndef FINAL
 			// A retail user could have over-written debug commands; reset to original bindings if so
-			bool reset = false;
-			int resetIndex = 0;
 			for (int j = 0; j < s_numDebugCommands; ++j)
 			{
 				if (s_commands[i].key == s_debugCommands[j].key)
@@ -5349,34 +5351,38 @@ int MissionInterfaceManager::loadHotKeys( FitIniFile& file )
 					s_commands[i].key = s_defaultKeys[i];
 					warning = reset = true;
 					resetIndex = i;
+					break;
 				}
 			}
+#endif
 
 			// If a command was reset, make sure it's not now in conflict with another regular command
 			// If it is, reset that to its default as well and keep doing that until no more keys are in conflict
-			while(reset)
+			while (reset)
 			{
 				reset = false;
 				for (int j = 0; j < s_numCommands; ++j)
 				{
+					// Permanently bound commands will never have changed or need to be reset
+					if (s_commands[j].hotKeyDescriptionText == -1 || j == resetIndex)
+						continue;
+
 					if (s_commands[j].key == s_commands[resetIndex].key)
 					{
 						s_commands[j].key = s_defaultKeys[j];
 						reset = true;
 						resetIndex = j;
+						break;
 					}
 				}
 			}
-#endif
 		}
 
-#ifndef FINAL
 		if (warning)
 		{
 			// Error message
-			PAUSE(("Some key bindings were overwritten by debug commands and were reverted to their original binding."));
+			PAUSE(("There were conflicting key bindings and some were reverted to their original settings."));
 		}
-#endif
 
 		return 0;
 	}
@@ -5701,7 +5707,7 @@ long MissionInterfaceManager::calcRotation()
 		}
 	}
 
-	if ( count && (turn > 3))
+	if ( count && (g_framesSinceMissionStart > 3))
 	{
 		pos.x /= count;
 		pos.y /= count;
@@ -5960,9 +5966,9 @@ void MissionInterfaceManager::Load (FitIniFilePtr file)
 		*/
 
 		if (vehicleID[commanderID] != 147)
-			soundSystem->playDigitalSample(VTOL_ANIMATE,vPos[commanderID]);
+			g_gameSoundSystem->playDigitalSample(VTOL_ANIMATE,vPos[commanderID]);
 		else
-			soundSystem->playDigitalSample(SALVAGE_CRAFT,vPos[commanderID]);
+			g_gameSoundSystem->playDigitalSample(SALVAGE_CRAFT,vPos[commanderID]);
 
 		Stuff::Vector3D newPos = vPos[commanderID];
 		float rotation = 0.f;  // this needs to be pointing 180 degrees from drop point
@@ -5989,7 +5995,7 @@ void MissionInterfaceManager::Load (FitIniFilePtr file)
 			shapeOrigin.BuildRotation(Stuff::EulerAngles(0.0f,0.0f,0.0f));
 			shapeOrigin.BuildTranslation(wakePos);
 
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 
 			dustCloud[commanderID]->SetLoopOff();
 			dustCloud[commanderID]->SetExecuteOn();

@@ -64,9 +64,9 @@ void EnterWindowMode();
 void EnterFullScreenMode();
 void __stdcall ExitGameOS();
 
-extern char FileMissingString[];
-extern char CDMissingString[];
-extern char MissingTitleString[];
+extern char g_FileMissingString[];
+extern char g_CDMissingString[];
+extern char g_MissingTitleString[];
 
 #undef INVALID_HANDLE_VALUE
 #define INVALID_HANDLE_VALUE	-1
@@ -274,8 +274,8 @@ long File::open (const char* fName, FileMode _mode, long numChild)
 						EnterWindowMode();
 		
 						char data[2048];
-						sprintf(data,FileMissingString,fileName,CDMissingString);
-						DWORD result1 = MessageBox(NULL,data,MissingTitleString,MB_OKCANCEL | MB_ICONWARNING);
+						sprintf(data,g_FileMissingString,fileName,g_CDMissingString);
+						DWORD result1 = MessageBox(NULL,data,g_MissingTitleString,MB_OKCANCEL | MB_ICONWARNING);
 						if (result1 == IDCANCEL)
 						{
 							ExitGameOS();
@@ -1550,7 +1550,7 @@ long File::write (MemoryPtr buffer, long bytes)
 }
 
 //---------------------------------------------------------------------------
-bool File::isOpen (void)
+bool File::isOpen (void) const
 {
 	return ((handle != NULL && handle != -1) || (fileImage != NULL));
 }

@@ -301,7 +301,7 @@ long Logistics::update (void)
 
 				bMovie = new MC2Movie;
 				bMovie->init(path,movieRect,true);
-				soundSystem->playDigitalMusic(33);
+				g_gameSoundSystem->playDigitalMusic(33);
 			}
 			else
 			{
@@ -310,7 +310,7 @@ long Logistics::update (void)
 				delete bMovie;
 				bMovie = NULL;
 
-				soundSystem->playDigitalMusic(LogisticsData::instance->getCurrentMissionTune());
+				g_gameSoundSystem->playDigitalMusic(LogisticsData::instance->getCurrentMissionTune());
 				userInput->mouseOn();	
 			}
 		}
@@ -533,11 +533,7 @@ int _stdcall Logistics::beginMission(void*, int, void*[])
 		}
 		if (MPlayer->missionSettings.quickStart) {
 			MultiPlayTeamId = MPlayer->playerInfo[MPlayer->commanderID].team;
-			if (MultiPlayTeamId < 0)
-				STOP(("Bad commanderID"));
 			g_mpCommanderId = MPlayer->commanderID;
-			if (g_mpCommanderId < 0)
-				STOP(("Bad commanderID"));
 			missionLoadType = MISSION_LOAD_MP_QUICKSTART;
 			}
 		else {
@@ -823,21 +819,10 @@ int Logistics::DoBeginMission()
 
 #ifndef TEST_SHELL
 //---------------------------
-// Networking startup code...
-#if 0
-	/*MPlayer->launchedFromLobby =*/ gos_NetCheckLobby();
-	Environment.NetworkGame = TRUE;
-	if (!MPlayer->launchedFromLobby) {
-		if (!gos_NetStartGame(0)) {
-			//gos_TerminateApplication();
-			return;
-		}
-	}
-#endif				
-
+// Networking startup code...		
 if (!MPlayer) {
 	logistics->setLogisticsState(log_DONE);
-	soundSystem->playBettySample(BETTY_NEW_CAMPAIGN);
+	g_gameSoundSystem->playBettySample(BETTY_NEW_CAMPAIGN);
 }
 
 #endif	//TEST_SHELL
@@ -893,7 +878,7 @@ void Logistics::playFullScreenVideo( const char* fileName )
 	bMovie = new MC2Movie;
 	bMovie->init(path,movieRect,true);
 
-	soundSystem->stopDigitalMusic();
+	g_gameSoundSystem->stopDigitalMusic();
 }
 
 void Logistics::setResultsHostLeftDlg( const char* pName )

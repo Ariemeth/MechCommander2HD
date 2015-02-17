@@ -195,7 +195,7 @@ ForceGroupIcon::~ForceGroupIcon()
 void ForceGroupIcon::init( FitIniFile& file, int which )
 {
 	char buffer[256];
-	sprintf( buffer, "MechIcon%ld", which );
+	sprintf( buffer, "MechIcon%d", which );
 	if ( NO_ERR != file.seekBlock( buffer ) )
 		Assert( 0, 0, "couldn't find the icon" );
 
@@ -422,7 +422,7 @@ void ForceGroupIcon::click( bool shiftDn )
 		unit->setSelected( false );
 	}
 
-	soundSystem->playDigitalSample( LOG_SELECT );
+	g_gameSoundSystem->playDigitalSample( LOG_SELECT );
 }
 
 void ForceGroupIcon::init( )
@@ -748,7 +748,6 @@ void MechIcon::update()
 	if (unit->body[MECH_BODY_LOCATION_RARM].damageState == IS_DAMAGE_DESTROYED)
 	{
 		tmp = -1.0f;
-		backTmp = -1.0f;
 	}
 
 	if ( tmp < .0 )
@@ -999,7 +998,7 @@ void ForceGroupIcon::render()
 		if ( unit->getPilot()->getMessagePlaying() )
 		{
 			long color = 0xffffff00;
-			msgPlayTime += g_deltaTime;
+			msgPlayTime += g_frameTime;
 			if ( msgPlayTime > .25 )
 				msgPlayTime = 0;
 			if ( msgPlayTime > .125 )
@@ -1439,7 +1438,7 @@ void ForceGroupIcon::drawDeathEffect()
 {
 	unit->setSelected( 0 );
 	bool bFinished = true;
-	deathAnimationTime += g_deltaTime;
+	deathAnimationTime += g_frameTime;
 	for ( int i = 0; i < NUM_DEATH_INFOS - 1; i++ )
 	{
 		if ( animationInfos[i].time < deathAnimationTime &&

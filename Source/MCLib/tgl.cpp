@@ -92,8 +92,8 @@ void GetNumberData (char *rawData, char *result)
 	while (	(rawData[startIndex] != '+') &&
 			(rawData[startIndex] != '-') &&
 			(rawData[startIndex] != '.') &&
-			(rawData[startIndex] < '0') ||
-			(rawData[startIndex] > '9'))
+			((rawData[startIndex] < '0') ||
+			(rawData[startIndex] > '9')))
 	{
 		startIndex++;
 	}
@@ -102,8 +102,8 @@ void GetNumberData (char *rawData, char *result)
 	while (	(rawData[endIndex] == '+') ||
 			(rawData[endIndex] == '-') ||
 			(rawData[endIndex] == '.') ||
-			(rawData[endIndex] >= '0') &&
-			(rawData[endIndex] <= '9'))
+			((rawData[endIndex] >= '0') &&
+			(rawData[endIndex] <= '9')))
 	{
 		endIndex++;
 	}
@@ -117,10 +117,10 @@ void GetWordData (char *rawData, char *result)
 {
 	long startIndex = 0;
 	long endIndex = 0;
-	while (	(rawData[startIndex] < 'A') ||
-			(rawData[startIndex] > 'Z') &&
-			(rawData[startIndex] < 'a') ||
-			(rawData[startIndex] > 'z'))
+	while (	((rawData[startIndex] < 'A') ||
+			(rawData[startIndex] > 'Z')) &&
+			((rawData[startIndex] < 'a') ||
+			(rawData[startIndex] > 'z')))
 	{
 		startIndex++;
 	}
@@ -774,7 +774,7 @@ long TG_TypeShape::ParseASEFile (BYTE *aseBuffer, char *fileName)
 		//------------------------------------------------
 		// First the Vertex Position
 		char vertexID[256];
-		sprintf(vertexID,"%s% 5d",ASE_MESH_VERTEX_ID,i);
+		sprintf(vertexID,"%s% 5ld",ASE_MESH_VERTEX_ID,i);
 
 		char *vertexData = strstr((char *)aseBuffer,vertexID);
 		gosASSERT(vertexData != NULL);
@@ -1590,7 +1590,7 @@ long TG_Shape::MultiTransformShape (Stuff::Matrix4D *shapeToClip, Stuff::Point3D
 		!listOfVisibleShadows)
 		return(1);
 
-	lastTurnTransformed = turn;
+	lastTurnTransformed = g_framesSinceMissionStart;
 
 	for (long j=0;j<numVertices;j++)
 	{
@@ -2131,8 +2131,7 @@ long TG_Shape::MultiTransformShape (Stuff::Matrix4D *shapeToClip, Stuff::Point3D
 	{
 		//---------------------------------------
 		// Mark backfacing those that are.
-		float cosine = 0.0;
-		cosine = (*backFacePoint * (tri->faceNormal));
+		float cosine = (*backFacePoint * (tri->faceNormal));
 		if ((cosine > 0.0f) || isSpotlight)
 		{
 			listOfVisibleFaces[numVisibleFaces] = j;
@@ -2391,7 +2390,7 @@ void TG_Shape::Render (float forceZ, bool isHudElement, BYTE alphaValue, bool is
 		!listOfTriangles ||
 		!listOfVisibleFaces ||
 		!listOfVisibleShadows ||
-		(/*(lastTurnTransformed != (turn-1)) &&*/ ((long)lastTurnTransformed != turn)))
+		(/*(lastTurnTransformed != (turn-1)) &&*/ ((long)lastTurnTransformed != g_framesSinceMissionStart)))
 		return;
 
 	if (fogColor != 0xffffffff)
@@ -2410,13 +2409,10 @@ void TG_Shape::Render (float forceZ, bool isHudElement, BYTE alphaValue, bool is
 
 	DWORD lastTextureUsed = 0xffffffff;
 	
-	bool isNight = eye->getIsNight();
-	float nightFactor = eye->getNightFactor();
-	
+	bool isNight = eye->getIsNight();	
 	if (lightsOut)
 	{
 		isNight = false;
-		nightFactor = 0.0f;
 	}
 
 	if (isSpotlight && !isNight)
@@ -2555,7 +2551,7 @@ bool TG_Shape::PerPolySelect (float mouseX, float mouseY)
 			!listOfTriangles ||
 			!listOfVisibleFaces ||
 			!listOfVisibleShadows ||
-			(((long)lastTurnTransformed != (turn - 1)) /*&& (lastTurnTransformed != turn)*/))
+			(((long)lastTurnTransformed != (g_framesSinceMissionStart - 1)) /*&& (lastTurnTransformed != turn)*/))
 			return false;
 	}
 	else
@@ -2566,7 +2562,7 @@ bool TG_Shape::PerPolySelect (float mouseX, float mouseY)
 			!listOfTriangles ||
 			!listOfVisibleFaces ||
 			!listOfVisibleShadows ||
-			(((long)lastTurnTransformed != (turn - 1)) && ((long)lastTurnTransformed != turn)))
+			(((long)lastTurnTransformed != (g_framesSinceMissionStart - 1)) && ((long)lastTurnTransformed != g_framesSinceMissionStart)))
 			return false;
 	}
 
@@ -3024,7 +3020,7 @@ long TG_Shape::RenderShadows (long startFace)
 		!listOfTriangles ||
 		!listOfVisibleFaces ||
 		!listOfVisibleShadows ||
-		(/*(lastTurnTransformed != (turn-1)) &&*/ ((long)lastTurnTransformed != turn)))
+		(/*(lastTurnTransformed != (turn-1)) &&*/ ((long)lastTurnTransformed != g_framesSinceMissionStart)))
 		return startFace;
 
  	if (fogColor != 0xffffffff)

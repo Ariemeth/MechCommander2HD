@@ -248,7 +248,7 @@ void Mission::save (const char *saveFileName)
 	__int64 driveSpace = gos_GetDriveFreeSpace(currentPath);
 	if (driveSpace < (5 * 1024 * 1024))
 	{
-		soundSystem->playDigitalSample(INVALID_GUI);
+		g_gameSoundSystem->playDigitalSample(INVALID_GUI);
 		return;
 	}
 
@@ -323,7 +323,7 @@ void Mission::save (const char *saveFileName)
 	tempFile.writeIdBoolean("Active"							, active);
 	tempFile.writeIdFloat("ActualTime"							, actualTime);
 	tempFile.writeIdFloat("RunningTime"							, runningTime);
-	tempFile.writeIdFloat("ScenarioTime"						, scenarioTime);
+	tempFile.writeIdFloat("ScenarioTime"						, g_missionTime);
 	tempFile.writeIdFloat("DropZoneX"							, dropZone.x);
 	tempFile.writeIdFloat("DropZoneY"							, dropZone.y);
 	tempFile.writeIdFloat("DropZoneZ"							, dropZone.z);
@@ -510,7 +510,7 @@ void Mission::save (const char *saveFileName)
 void Part::Load (FitIniFilePtr file, long partNum)
 {
 	char partId[1024];
-	sprintf(partId,"Part%d",partNum);
+	sprintf(partId,"Part%ld",partNum);
 
 	long result = file->seekBlock(partId);
 	if (result != NO_ERR)
@@ -689,7 +689,7 @@ void Mission::load (const char *loadFileName)
 				
 	//-------------------------------------------
 	// Always reset turn at scenario start
-	turn = 0;
+	g_framesSinceMissionStart = 0;
 	terminationCounterStarted = 0;
 
 	//-----------------------
@@ -956,7 +956,7 @@ void Mission::load (const char *loadFileName)
 	if (result != NO_ERR)
 		STOP(("Running Time missing from IN-Mission Save"));
 
-	result = missionFile.readIdFloat("ScenarioTime"						, scenarioTime);
+	result = missionFile.readIdFloat("ScenarioTime"						, g_missionTime);
 	if (result != NO_ERR)
 		STOP(("ScenarioTime missing from IN-Mission Save"));
 
@@ -1217,7 +1217,7 @@ void Mission::load (const char *loadFileName)
 		for (i = 1; i < long(numParts+1); i++)
 		{
 			char partName[12];
-			sprintf(partName,"Part%d",i);
+			sprintf(partName,"Part%ld",i);
 			
 			//------------------------------------------------------------------
 			// Find the object to load
@@ -1533,7 +1533,7 @@ void Mission::load (const char *loadFileName)
 	//Reset so the LastTimeGetTime is RIGHT NOW!!!
 	//  So quickLoad works!!
 	DWORD currentTimeGetTime = timeGetTime();
-	LastTimeGetTime = currentTimeGetTime;
+	lastTimeGetTime = currentTimeGetTime;
 }
 
 //----------------------------------------------------------------------------------------------------

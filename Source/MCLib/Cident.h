@@ -172,9 +172,10 @@ class IDString
 			init(new_id);
 		}
 
-		void operator = (IDString & new_ids)
+		IDString& operator = (IDString & new_ids)
 		{
 			init(new_ids);
+			return *this;
 		}
 
 		bool isNull (void)

@@ -291,7 +291,6 @@ Vector3D*
 		distance = DistanceBetweenLineAndPoint(*point, vertex[numberOfVertices - 1], vertex[0]);
 		if (distance < closest)
 		{
-			closest = distance;
 			point1 = &vertex[numberOfVertices - 1];
 			point2 = &vertex[0];
 		}

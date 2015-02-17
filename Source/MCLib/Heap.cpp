@@ -116,7 +116,7 @@ void HeapManager::destroy (void)
 	{
 		result = VirtualFree(heap,0,MEM_RELEASE);
 		if (result == FALSE)
-			result = GetLastError();
+			gosASSERT(GetLastError());
 	}
 
 	init();
@@ -249,7 +249,7 @@ long HeapManager::decommitHeap (unsigned long decommitSize)
 
 	result = VirtualFree((void *)committedSize,decommitSize,MEM_DECOMMIT);
 	if (result == FALSE)
-		result = GetLastError();
+		gosASSERT(GetLastError());
 	
 	return NO_ERR;
 }

@@ -230,7 +230,7 @@ extern bool CantBlowSalvage;
 long TargetRolo = -1;
 WeaponFireChunk CurMoverWeaponFireChunk;
 
-extern char* ExceptionGameMsg;
+extern char* g_ExceptionGameMsg;
 extern char ChunkDebugMsg[5120];
 
 extern char OverlayIsBridge[NUM_OVERLAY_TYPES];
@@ -570,7 +570,7 @@ void DebugMoveChunk (MoverPtr mover, MoveChunkPtr chunk1, MoveChunkPtr chunk2) {
 	delete debugFile;
 	debugFile = NULL;
 
-	ExceptionGameMsg = ChunkDebugMsg;
+	g_ExceptionGameMsg = ChunkDebugMsg;
 }
 
 //---------------------------------------------------------------------------
@@ -1189,7 +1189,7 @@ void DebugStatusChunk (MoverPtr mover, StatusChunkPtr chunk1, StatusChunkPtr chu
 	delete debugFile;
 	debugFile = NULL;
 
-	ExceptionGameMsg = ChunkDebugMsg;
+	g_ExceptionGameMsg = ChunkDebugMsg;
 }
 
 //---------------------------------------------------------------------------
@@ -2412,24 +2412,14 @@ void Mover::updateDebugWindow (GameDebugWindow* debugWindow) {
 		else
 			sprintf(s, "pos: [%d, %d](%d) snsr: %d[%s]", cellPositionRow, cellPositionCol, distToObj1, sensorRange, contactStr[contStat]);
 		debugWindow->print(s);
-	#if 0
-		if (getObjectClass() == BATTLEMECH) {
-			sprintf(s, "JMP: (%.f) cgid=%d, Su=%d, in=%d, Ar=%d",
-				getJumpRange(),
-				((Mech3DAppearance*)appearance)->getCurrentGestureId(),
-				((Mech3DAppearance*)appearance)->isJumpSetup() ? 1 : 0,
-				((Mech3DAppearance*)appearance)->isInJump() ? 1 : 0,
-				((Mech3DAppearance*)appearance)->isJumpAirborne() ? 1 : 0);
-			debugWindow->print(s);
-		}
-	#else
+
 		sprintf(s, "range: [%.f/%.f/%.f] %.f",
 			getMinFireRange(),
 			getOptimalFireRange(),
 			getMaxFireRange(),
 			getPilot()->getCurrentTarget() ? distanceFrom(getPilot()->getCurrentTarget()->getPosition()) : 0.0);
 		debugWindow->print(s);
-	#endif
+
 		strcpy(s, "order: ");
 		if (getPilot()->getNumTacOrdersQueued()) {
 			if (getPilot()->getExecutingTacOrderQueue()) {
@@ -2605,7 +2595,7 @@ void Mover::updateDebugWindow (GameDebugWindow* debugWindow) {
 				debugWindow->print(s);
 			}
 			for (i = numArmorLocations; i < numArmorLocations; i++) {
-				sprintf(s, "%s AR:%02d(%02d) %s",
+				sprintf(s, "%s AR:%02d(%02d)",
 					locationStrings[i],
 					armor[i].curArmor,
 					armor[i].maxArmor);
@@ -2885,7 +2875,6 @@ float Mover::relFacingDelta (Stuff::Vector3D goalPos, Stuff::Vector3D targetPos)
 
 float Mover::relFacingTo (Stuff::Vector3D goal, long bodyLocation) {
 
-#if 1
 	Stuff::Vector3D facingVec = getRotationVector();
 
 	Stuff::Vector3D goalVec;
@@ -2900,49 +2889,6 @@ float Mover::relFacingTo (Stuff::Vector3D goal, long bodyLocation) {
 		angle = -angle;
 	}
 	return(angle);
-#else
-	Stuff::Vector3D curPos = position;
-	curPos.z = 0;
-	goal.z = 0;
-
-	//-------------------------
-	// Create vector for facing
-	frame_of_ref workFrame = frame;
-	//float angle45 = 45.0;
-	//workFrame.rotate_about_k(angle45);
-
- 	Stuff::Vector3D velVect = -(workFrame.j);
-
-	Stuff::Vector3D goalVec;
-	goalVec = goal - curPos;
-	goalVec.normalize();
-	
-	float resultAngle = velVect.angle_from(goalVec);
-
-	Stuff::Vector3D angleSign = velVect CROSS goalVec; 
-	if (angleSign.z >= 0.0)
-	{
-		resultAngle = -resultAngle;
-	}
-
-	/*
-	if (angle < 180.0) {
-		//---------------------------------------------------
-		// Now, let's determine if it's to the right or left.
-		// If to the right, return a positive angle.
-		// If to the left, return a negative angle.
-		// There has to be a cleaner way to get this, right?!
-		float one = 1.0;
-		workFrame.rotate_about_k(one);
- 		velVect = -(workFrame.j);
-		float angle2 = velVect.angle_from(goal - curPos);
-
-		if (angle2 < angle)
-			return(-angle);
-	}
-	*/
-	return(resultAngle);
-#endif
 }
 
 //------------------------------------------------------------------------------------------
@@ -3145,7 +3091,6 @@ long Mover::handleTacticalOrder (TacticalOrder tacOrder, long priority, bool que
 if (queuePlayerOrder)
 	tacOrder.pack(NULL, NULL);
 
-#if 1
 	if (MPlayer && !MPlayer->isServer()) {
 		//----------------------------
 		// Simply for test purposes...
@@ -3155,7 +3100,6 @@ if (queuePlayerOrder)
 		tacOrder2.data[1] = tacOrder.data[1];
 		tacOrder2.unpack();
 	}
-#endif
 
 	//----------------------------------------------------
 	// Any tacorder that gets here IS NOT a lance order...
@@ -3171,7 +3115,7 @@ if (queuePlayerOrder)
 			// slightly...
 			if (selectionIndex != -1) 
 			{
-				tacOrder.delayedTime = scenarioTime + (selectionIndex * DelayedOrderTime);
+				tacOrder.delayedTime = g_missionTime + (selectionIndex * DelayedOrderTime);
 			}
 
 			if (!canMove())
@@ -3312,7 +3256,7 @@ void Mover::pilotingCheck (unsigned long situation, float modifier) {
 
 void Mover::updateDamageTakenRate (void) {
 
-	if (damageRateCheckTime < scenarioTime) {
+	if (damageRateCheckTime < g_missionTime) {
 		long damageRate = (damageRateTally / DamageRateFrequency);
 		if (damageRate > 10 /*AttitudeEffect[pilot->getAttitude(ORDER_CURRENT)][5]*/)
 			pilot->triggerAlarm(PILOT_ALARM_DAMAGE_TAKEN_RATE, damageRate);
@@ -3425,7 +3369,7 @@ MoverPtr Mover::getPoint (void) {
 bool Mover::hasWeaponNode (void)
 {
 
-	if ((lowestWeaponNodeID == -1) || (lowestWeaponNodeID == -2) || (turn < 6))
+	if ((lowestWeaponNodeID == -1) || (lowestWeaponNodeID == -2) || (g_framesSinceMissionStart < 6))
 	{
 		lowestWeaponNodeID = appearance->getLowestWeaponNode();
 		Stuff::Vector3D nodePos = appearance->getWeaponNodePosition(lowestWeaponNodeID);
@@ -3449,7 +3393,7 @@ Stuff::Vector3D Mover::getLOSPosition (void)
 			((appearance->getCurrentGestureId() == 2) || 
 			 (appearance->getCurrentGestureId() == 4) || 
 			 (appearance->getCurrentGestureId() == 7) || !isMech()) && 
-			((lowestWeaponNodeID == -1) || (lowestWeaponNodeID == -2) || (turn < 6)) )
+			((lowestWeaponNodeID == -1) || (lowestWeaponNodeID == -2) || (g_framesSinceMissionStart < 6)) )
 		{
 			lowestWeaponNodeID = appearance->getLowestWeaponNode();
 			if (lowestWeaponNodeID == -1)
@@ -3523,9 +3467,9 @@ void Mover::printFireWeaponDebugInfo (GameObjectPtr target, Stuff::Vector3D* tar
 			char* targetName = target->getName();
 			char s[1024];
 			if (getObjectClass() == BATTLEMECH)
-				sprintf(s, "[%.2f] mech.fireWeapon HIT: (%05d)%s @ (%05d)%s", scenarioTime, getPartId(), name, target->getPartId(), targetName ? targetName : "unknown");
+				sprintf(s, "[%.2f] mech.fireWeapon HIT: (%05d)%s @ (%05d)%s", g_missionTime, getPartId(), name, target->getPartId(), targetName ? targetName : "unknown");
 			else
-				sprintf(s, "[%.2f] vehicle.fireWeapon HIT: (%05d)%s @ (%05d)%s", scenarioTime, getPartId(), name, target->getPartId(), targetName ? targetName : "unknown");
+				sprintf(s, "[%.2f] vehicle.fireWeapon HIT: (%05d)%s @ (%05d)%s", g_missionTime, getPartId(), name, target->getPartId(), targetName ? targetName : "unknown");
 			CombatLog->write(s);
 			sprintf(s, "     chance = %03d, roll = %03d", chance, roll);
 			CombatLog->write(s);
@@ -3551,9 +3495,9 @@ void Mover::printFireWeaponDebugInfo (GameObjectPtr target, Stuff::Vector3D* tar
 			char* targetName = target->getName();
 			char s[1024];
 			if (getObjectClass() == BATTLEMECH)
-				sprintf(s, "[%.2f] mech.fireWeapon MISS: (%05d)%s @ (%05d)%s", scenarioTime, getPartId(), name, target->getPartId(), targetName ? targetName : "unknown");
+				sprintf(s, "[%.2f] mech.fireWeapon MISS: (%05d)%s @ (%05d)%s", g_missionTime, getPartId(), name, target->getPartId(), targetName ? targetName : "unknown");
 			else
-				sprintf(s, "[%.2f] vehicle.fireWeapon HIT: (%05d)%s @ (%05d)%s", scenarioTime, getPartId(), name, target->getPartId(), targetName ? targetName : "unknown");
+				sprintf(s, "[%.2f] vehicle.fireWeapon HIT: (%05d)%s @ (%05d)%s", g_missionTime, getPartId(), name, target->getPartId(), targetName ? targetName : "unknown");
 			CombatLog->write(s);
 			sprintf(s, "     chance = %03d, roll = %03d", chance, roll);
 			CombatLog->write(s);
@@ -3600,7 +3544,7 @@ void Mover::printHandleWeaponHitDebugInfo (WeaponShotInfo* shotInfo) {
 	};
 
 	char s[1024];
-	char statusStr[15];
+	char statusStr[64];
 	if (FromMP) {
 		if (isDestroyed())
 			sprintf(statusStr, " DESTROYED:");
@@ -3619,13 +3563,13 @@ void Mover::printHandleWeaponHitDebugInfo (WeaponShotInfo* shotInfo) {
 	}
 	if (getObjectClass() == BATTLEMECH)
 		sprintf(s, "[%.2f] mech.handleWeaponHit%s (%05d)%s ",
-			scenarioTime,
+			g_missionTime,
 			statusStr,
 			getPartId(),
 			name);
 	else
 		sprintf(s, "[%.2f] vehicle.handleWeaponHit%s (%05d)%s ",
-			scenarioTime,
+			g_missionTime,
 			statusStr,
 			getPartId(),
 			name);
@@ -3684,10 +3628,6 @@ long Mover::addWeaponFireChunks (long which, unsigned long* packedChunkBuffer, l
 	if ((numWeaponFireChunks[which] + numChunks) >= MAX_WEAPONFIRE_CHUNKS)
 		Fatal(0, " Mover::addWeaponFireChunks--Too many weaponfire chunks ");
 
-#if 0
-	memcpy(&weaponFireChunks[which][numWeaponFireChunks[which]], packedChunkBuffer, 4 * numChunks);
-	numWeaponFireChunks[which] += numChunks;
-#else
 	for (long i = 0; i < numChunks; i++) {
 		weaponFireChunks[which][numWeaponFireChunks[which]++] = packedChunkBuffer[i];
 		//---------------
@@ -3697,7 +3637,7 @@ long Mover::addWeaponFireChunks (long which, unsigned long* packedChunkBuffer, l
 		chunk.data = packedChunkBuffer[i];
 		chunk.unpack(this);
 	}
-#endif
+
 	return(numWeaponFireChunks[which]);
 }
 
@@ -3930,7 +3870,7 @@ void Mover::setThreatRating (short rating) {
 
 long Mover::getThreatRating (void) {
 
-	if ((scenarioTime - creationTime) < 5.0)
+	if ((g_missionTime - creationTime) < 5.0)
 		return((long)((float)threatRating * newThreatMultiplier));
 	return(threatRating);
 }
@@ -3946,33 +3886,6 @@ bool Mover::enemyRevealed (void)
 
 	return(false);
 }
-
-//---------------------------------------------------------------------------
-
-#if 0
-
-void Mover::getDamageClass (long& damageClass, bool& shutDown) {
-
-	//--------------------------------------------
-	// DamageClass is based upon the current CV...
-	float CV = (float)curCV / (float)maxCV;
-	if (CV > 0.90)
-		damageClass = DAMAGE_CLASS_NONE;
-	else if (CV > 0.75)
-		damageClass = DAMAGE_CLASS_LIGHT;
-	else if (CV > 0.50)
-		damageClass = DAMAGE_CLASS_MODERATE;
-	else if (CV > 0.10)
-		damageClass = DAMAGE_CLASS_SEVERE;
-	else
-		damageClass = DAMAGE_CLASS_WRECKAGE;
-
-	//--------------------------------------------
-	// Is the mech currently shutdown due to heat?
-	shutDown = (status == OBJECT_STATUS_SHUTDOWN);
-}
-
-#endif
 
 //------------------------------------------------------------------------------------------
 
@@ -4270,7 +4183,6 @@ void Mover::setMoveType (long type) {
 
 long Mover::calcGlobalPath (GlobalPathStep* globalPath, GameObjectPtr obj, Stuff::Vector3D* location, bool useClosedAreas) {
 
-#if 1
 	long startArea = GlobalMoveMap[moveLevel]->calcArea(cellPositionRow, cellPositionCol);
 	long goalArea = -1;
 	long goalCell[2] = {-1, -1};
@@ -4321,9 +4233,6 @@ long Mover::calcGlobalPath (GlobalPathStep* globalPath, GameObjectPtr obj, Stuff
 		GlobalMoveMap[moveLevel]->useClosedAreas = false;
 	}
 	return(numSteps);
-#else
-	return(0);
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -4496,6 +4405,8 @@ long Mover::calcMoveGoal (GameObjectPtr target,
 		// anything beyond our radius is bad...
 		startTime = GetCycles();
 		if (moveRadius > 0.0) {
+			gosASSERT(false); // MCHD CHANGE (02/17/15): We should never get here since this code would crash
+			/*
 			long moveCellRange = moveRadius / metersPerCell;
 			if (moveCellRange < 1)
 				moveCellRange = 1;
@@ -4509,6 +4420,7 @@ long Mover::calcMoveGoal (GameObjectPtr target,
 				if (inMapBounds(r, c, GOALMAP_CELL_DIM, GOALMAP_CELL_DIM))
 					goalMap[goalMapRowStart[r] + c] -= 5000;
 			}
+			*/
 		}
 #ifdef LAB_ONLY
 		MCTimeCalcGoal2Update += (GetCycles() - startTime);
@@ -4628,9 +4540,6 @@ long Mover::calcMoveGoal (GameObjectPtr target,
 
 	//-----------------------
 	// Init the area lists...
-	char validAreaTable[MAX_GLOBALMAP_AREAS];
-	for (long i = 0; i < GlobalMoveMap[moveLevel]->numAreas; i++)
-		validAreaTable[i] = -1;
 	long curArea = GlobalMoveMap[moveLevel]->calcArea(cellPositionRow, cellPositionCol);
 	long goalArea = GlobalMoveMap[moveLevel]->calcArea(goalCell[0], goalCell[1]);
 	if (numValidAreas > 0) {
@@ -4641,19 +4550,17 @@ long Mover::calcMoveGoal (GameObjectPtr target,
 			}
 		}
 	}
-	for (i = 0; i < numValidAreas; i++)
-		validAreaTable[validAreas[i]] = 1;
 
 	startTime = GetCycles();
 	long deepWaterWeight = ((moveLevel == 1) ? 0 : 999999);
 
 	//-----------------------------------------
 	// Finally, lay down the terrain weights...
-	for (r = 0; r < GOALMAP_CELL_DIM; r++)
+	for (r = 0; r < GOALMAP_CELL_DIM; r++) {
 		for (long c = 0; c < GOALMAP_CELL_DIM; c++) {
 			long curCellRow = mapCellUL[0] + r;
 			long curCellCol = mapCellUL[1] + c;
-			if (GameMap->inBounds(curCellRow, curCellCol)) 
+			if (GameMap->inBounds(curCellRow, curCellCol))
 			{
 				//------------------------------------------------------------
 				// In the long run, we should simply have a look-up table that
@@ -4664,7 +4571,7 @@ long Mover::calcMoveGoal (GameObjectPtr target,
 				//-----------------------
 				// Tile (terrain) type...
 				//long tileType = curTile.getTileType();
-				long goalMapIndex = goalMapRowStart[r] + c; 
+				long goalMapIndex = goalMapRowStart[r] + c;
 				if (!mapCell->getPassable())
 					goalMap[goalMapIndex] -= 10000;
 				if (mapCell->getOffMap())
@@ -4683,7 +4590,7 @@ long Mover::calcMoveGoal (GameObjectPtr target,
 				long area = GlobalMoveMap[moveLevel]->calcArea(curCellRow, curCellCol);
 				if ((area != curArea) && (area != -1) && (curArea != -1)) {
 					if (moveLevel < 2) {
-					//if (GlobalMoveMap[moveLevel]->areas[area].type == AREA_TYPE_NORMAL) {
+						//if (GlobalMoveMap[moveLevel]->areas[area].type == AREA_TYPE_NORMAL) {
 						if (GlobalMoveMap[moveLevel]->getPathExists(curArea, area) == GLOBALPATH_EXISTS_UNKNOWN) {
 							if (CalcValidAreaTable) {
 								GlobalPathStep globalPath[128];
@@ -4692,30 +4599,32 @@ long Mover::calcMoveGoal (GameObjectPtr target,
 									for (long j = 0; j < numSteps; j++)
 										for (long k = 0; k < numSteps; k++)
 											GlobalMoveMap[moveLevel]->setPathExists(globalPath[j].thruArea, globalPath[k].thruArea, GLOBALPATH_EXISTS_TRUE);
-									}
+								}
 								else {
 									GlobalMoveMap[moveLevel]->setPathExists(area, curArea, GLOBALPATH_EXISTS_FALSE);
 									GlobalMoveMap[moveLevel]->setPathExists(curArea, area, GLOBALPATH_EXISTS_FALSE);
 								}
-								}
+							}
 							else
 								GlobalMoveMap[moveLevel]->setPathExists(curArea, area, GLOBALPATH_EXISTS_FALSE);
 						}
 						if (GlobalMoveMap[moveLevel]->getPathExists(curArea, area) == GLOBALPATH_EXISTS_FALSE)
 							goalMap[goalMapRowStart[r] + c] -= 50000;
-					//}
+						//}
 					}
 				}
-				}
+			}
 			else
 				goalMap[goalMapRowStart[r] + c] = -999999;
 		}
+	}
 #ifdef LAB_ONLY
 		MCTimeCalcGoal1Update += (GetCycles() - startTime);
 #endif
 
 	startTime = GetCycles();
 	long goalList[MAX_MOVE_GOALS][2];
+	long i;
 	//------------------
 	// Setup the list...
 	for (i = 0; i < MAX_MOVE_GOALS; i++) {
@@ -4781,9 +4690,6 @@ long Mover::calcMoveGoal (GameObjectPtr target,
 
 	//------------------------------
 	// Now, pick the goal we want...
-	long curGoalIndex = 0;
-	if ((selectionIndex > 0) && (selectionIndex < MAX_MOVE_GOALS))
-		curGoalIndex = selectionIndex;
 	long curGoalCell[2];
 	bool noLOF = true;
 	curGoalCell[0] = mapCellUL[0] + goalMapRowCol[goalList[0][0]][0];
@@ -5106,15 +5012,6 @@ long Mover::calcMovePath (MovePathPtr path,
 		}
 	}
 
-	#if 0
-	File* pathDebugFile = new File;
-	pathDebugFile->create("movemap1.dbg");
-	PathFindMap->writeDebug(pathDebugFile);
-	pathDebugFile->close();
-	delete pathDebugFile;
-	pathDebugFile = NULL;
-	#endif
-
 	return(result);
 }
 
@@ -5205,14 +5102,6 @@ long Mover::calcEscapePath (MovePathPtr path,
 		FindingEscapePath = false;
 	}
 
-#if 0
-		File* pathDebugFile = new File;
-		pathDebugFile->create("movemap1.dbg");
-		PathFindMap->writeDebug(pathDebugFile);
-		pathDebugFile->close();
-		delete pathDebugFile;
-		pathDebugFile = NULL;
-#endif
 	return(result);
 }
 
@@ -5322,28 +5211,6 @@ bool Mover::getPathRangeBlocked (long range, bool* reachedEnd) {
 
 void Mover::updateHustleTime (void) {
 
-#if 0		//Redo when bridges come into play.
-	long overlay = GameMap->getOverlay(cellPositionRow, cellPositionCol);
-
-	//---------------------------------------------------------------------------------
-	// To avoid blocking movement on bridges, we'll keep track of a "hustle" time
-	// for each mover. This will keep us from blocking bridges (and, in the future,
-	// any other weird little predicaments) for our buddies. If we're on a bridge (or
-	// we're recently on a bridge), our hustle flag will get set so we move it (even if
-	// we're in a group move) and don't clog up the tight path...
-	switch (overlay) {
-		case OVERLAY_WATER_BRIDGE_NS:
-		case OVERLAY_WATER_BRIDGE_NS_DESTROYED:
-		case OVERLAY_WATER_BRIDGE_EW:
-		case OVERLAY_WATER_BRIDGE_EW_DESTROYED:
-		case OVERLAY_RAILROAD_WATER_BRIDGE_NS:
-		case OVERLAY_RAILROAD_WATER_BRIDGE_NS_DESTROYED:
-		case OVERLAY_RAILROAD_WATER_BRIDGE_EW:
-		case OVERLAY_RAILROAD_WATER_BRIDGE_EW_DESTROYED:
-			lastHustleTime = scenarioTime;
-			break;
-	}
-#endif
 }
 
 //---------------------------------------------------------------------------
@@ -5473,15 +5340,6 @@ long Mover::calcMovePath (MovePathPtr path,
 		JumpOnBlocked = false;
 	}
 
-	#if 0
-	File* pathDebugFile = new File;
-	pathDebugFile->create("movemap1.dbg");
-	PathFindMap->writeDebug(pathDebugFile);
-	pathDebugFile->close();
-	delete pathDebugFile;
-	pathDebugFile = NULL;
-	#endif
-
 	return(result);
 }
 
@@ -5546,7 +5404,7 @@ long Mover::getWeaponsReady (long* list, long listSize) {
 		}
 	else
 		for (long item = 0; item < listSize; item++) {
-			if (isWeaponReady(list[item])) {
+			if (isWeaponReady(list[item])) { // MCHD TODO: This looks... wrong; if not, get rid of "if (list)"
 				if (list)
 					list[numReady++] = list[item];
 				else
@@ -5701,7 +5559,7 @@ void Mover::calcWeaponEffectiveness (bool setMax) {
 
 	//----------------------------------
 	// Record time of our latest calc...
-	lastWeaponEffectivenessCalc = scenarioTime;
+	lastWeaponEffectivenessCalc = g_missionTime;
 		
 	if (pilot)
 		avgSkill = (float)pilot->getSkill(MWS_GUNNERY) / 50.0;
@@ -5808,7 +5666,7 @@ void Mover::calcAmmoTotals (void)
 
 long Mover::calcFireRanges (void) {
 
-	lastOptimalRangeCalc = scenarioTime;
+	lastOptimalRangeCalc = g_missionTime;
 
 	//---------------------------
 	// Calc min and max ranges...
@@ -5958,7 +5816,7 @@ bool Mover::isWeaponReady (long weaponIndex) {
 
 	if (inventory[weaponIndex].disabled)
 		return(false);
-	else if (inventory[weaponIndex].readyTime > scenarioTime)
+	else if (inventory[weaponIndex].readyTime > g_missionTime)
 		return(false);
 	return(true);
 }
@@ -5967,7 +5825,7 @@ bool Mover::isWeaponReady (long weaponIndex) {
 
 void Mover::startWeaponRecycle (long weaponIndex) {
 
-	inventory[weaponIndex].readyTime = scenarioTime +
+	inventory[weaponIndex].readyTime = g_missionTime +
 									   MasterComponent::masterList[inventory[weaponIndex].masterID].getWeaponRecycleTime();
 }
 
@@ -6130,7 +5988,7 @@ long Mover::sortWeapons (long* weaponList, long* valueList, long listSize, long 
 			sortList->setId(item - numOther, item);
 			switch (sortType) {
 				case WEAPONSORT_ATTACKCHANCE:
-					sortList->setValue(item - numOther, calcAttackChance(target, aimLocation, scenarioTime, item, 0.0, NULL));
+					sortList->setValue(item - numOther, calcAttackChance(target, aimLocation, g_missionTime, item, 0.0, NULL));
 					break;
 				default:
 					//-----------------
@@ -6153,7 +6011,7 @@ long Mover::sortWeapons (long* weaponList, long* valueList, long listSize, long 
 			else
 				switch (sortType) {
 					case WEAPONSORT_ATTACKCHANCE:
-						sortValue = calcAttackChance(target, aimLocation, scenarioTime, weaponList[item], 0.0, NULL);
+						sortValue = calcAttackChance(target, aimLocation, g_missionTime, weaponList[item], 0.0, NULL);
 						break;
 					default:
 						//-----------------
@@ -6201,7 +6059,6 @@ float Mover::calcAttackChance (GameObjectPtr target, long aimLocation, float tar
 	// First, let's find out what kind of object we're targeting...
 	Stuff::Vector3D targetPosition;
 	BattleMechPtr mech = NULL;
-	GroundVehiclePtr vehicle = NULL;
 	
 	if (target) 
 	{
@@ -6210,9 +6067,6 @@ float Mover::calcAttackChance (GameObjectPtr target, long aimLocation, float tar
 		{
 			case BATTLEMECH:
 				mech = (BattleMechPtr)target;
-				break;
-			case GROUNDVEHICLE:
-				vehicle = (GroundVehiclePtr)target;
 				break;
 		}
 		targetPosition = target->getPosition();
@@ -6710,7 +6564,7 @@ bool Mover::refit (float pointsAvailable, float& pointsUsed, bool ammoOnly) {
 			if (getCommanderId() == Commander::home->getId()) 
 			{
 				getPilot()->radioMessage(RADIO_REFIT_DONE, TRUE);
-				soundSystem->playBettySample(BETTY_REPAIR_COMPLETE);
+				g_gameSoundSystem->playBettySample(BETTY_REPAIR_COMPLETE);
 				if (appearance)
 					appearance->startSmoking(-1);	//Turn the smoke off if we successfully repaired.
 			}
@@ -6722,7 +6576,7 @@ bool Mover::refit (float pointsAvailable, float& pointsUsed, bool ammoOnly) {
 		if (getCommanderId() == Commander::home->getId())
 		{
 			getPilot()->radioMessage(RADIO_REFIT_INCOMPLETE, TRUE);
-			soundSystem->playBettySample( BETTY_REPAIR_GONE );
+			g_gameSoundSystem->playBettySample( BETTY_REPAIR_GONE );
 		}
 		result = true;
 	}
@@ -6865,7 +6719,7 @@ bool Mover::recover (void) {
 			if (getCommanderId() == Commander::home->getId()) 
 			{
 				getPilot()->radioMessage(RADIO_REFIT_DONE, TRUE);
-				soundSystem->playBettySample(BETTY_REPAIR_COMPLETE);
+				g_gameSoundSystem->playBettySample(BETTY_REPAIR_COMPLETE);
 			}
 			result = true;
 		}
@@ -6876,8 +6730,8 @@ bool Mover::recover (void) {
 		if (getCommanderId() == Commander::home->getId())
 		{
 			getPilot()->radioMessage(RADIO_REFIT_INCOMPLETE, TRUE);
-			soundSystem->playBettySample( BETTY_REPAIR_GONE );
-			soundSystem->playBettySample(BETTY_REPAIR_INCOMPLETE);
+			g_gameSoundSystem->playBettySample( BETTY_REPAIR_GONE );
+			g_gameSoundSystem->playBettySample(BETTY_REPAIR_INCOMPLETE);
 		}
 		result = true;
 	}
@@ -7118,7 +6972,7 @@ bool Mover::isInUnitGroup( int id )
 {
 	if ( unitGroup == -1 )
 		return false;
-	return unitGroup & ( 1 << id ) ? true : false;
+	return (unitGroup & ( 1 << id )) ? true : false;
 }
 bool Mover::handleEjection()
 {

@@ -133,7 +133,7 @@ int MechLabScreen::init( FitIniFile& file )
 	char blockName[64];
 	for ( int i = 0; i < MECH_LAB_ATTRIBUTE_METER_COUNT; i++ )
 	{
-		sprintf( blockName, "AttributeMeter%ld", i );
+		sprintf( blockName, "AttributeMeter%d", i );
 		attributeMeters[i].init( &file, blockName );
 	}
 
@@ -333,7 +333,7 @@ void MechLabScreen::begin()
 
 	// init CBills
 	char text[32];
-	sprintf( text, "%ld ", LogisticsData::instance->getCBills() );
+	sprintf( text, "%d ", LogisticsData::instance->getCBills() );
 	textObjects[1].setText( text );
 
 
@@ -519,9 +519,9 @@ void MechLabScreen::update()
 	// figure out change
 	float costChange = newCost - originalCost;
 
-	if ( curCount && curCount + g_deltaTime < countDownTime  )
+	if ( curCount && curCount + g_frameTime < countDownTime  )
 	{
-		curCount += g_deltaTime;
+		curCount += g_frameTime;
 		float curAmount = previousAmount - (curCount/countDownTime * previousAmount); 
 		costChange += curAmount;
 		color = 0xffa21600;
@@ -595,29 +595,20 @@ void MechLabScreen::updateDiagramInput()
 				if ( x2 > pVariant->getComponentAreaWidth() )
 				{
 					x = pVariant->getComponentAreaWidth() - pDragComponent->getComponentWidth();
-					x2 = pVariant->getComponentAreaWidth();
 				}
 
 				if ( y2 > pVariant->getComponentAreaHeight() )
 				{
 					y = pVariant->getComponentAreaHeight() - pDragComponent->getComponentHeight();
-					y2 = pVariant->getComponentAreaHeight();
 				}
-			}
-			else
-			{
-				x2 = x + 1;
-				y2 = y + 1;
 			}
 		
 			long tmpX, tmpY;
-
 			diagramToScreen( x, y, tmpX, tmpY );			
 
 			// update outline rect
 			if ( selRect )
 				selRect->moveTo( tmpX, tmpY );			
-
 
 			// highlight text if appropriate
 			LogisticsComponent* pComp = pVariant->getCompAtLocation(x, y, tmpX, tmpY );
@@ -689,7 +680,7 @@ void MechLabScreen::updateDiagramInput()
 						updateDiagram();
 					}
 					else
-						soundSystem->playDigitalSample( LOG_WRONGBUTTON );
+						g_gameSoundSystem->playDigitalSample( LOG_WRONGBUTTON );
 				}
 				else
 					pSelectedComponent = 0;
@@ -716,7 +707,7 @@ void MechLabScreen::updateDiagramInput()
 							selectFirstLBComponent();				
 					}
 					else
-						soundSystem->playDigitalSample( LOG_WRONGBUTTON );
+						g_gameSoundSystem->playDigitalSample( LOG_WRONGBUTTON );
 				}
 			}
 		
@@ -735,7 +726,7 @@ void MechLabScreen::updateDiagramInput()
 				{
 					pSelectedComponent = pComp;
 					setComponent( pComp );
-					soundSystem->playDigitalSample( LOG_SELECT );
+					g_gameSoundSystem->playDigitalSample( LOG_SELECT );
 					componentListBox.SelectItem( -1 );
 				}
 			}
@@ -754,7 +745,7 @@ void MechLabScreen::render(int xOffset, int yOffset)
 	{
 		if ( !MPlayer && !LogisticsData::instance->isSingleMission() && LogisticsData::instance->newWeaponsAvailable() )
 		{
-			soundSystem->playBettySample( BETTY_NEW_WEAPONS );
+			g_gameSoundSystem->playBettySample( BETTY_NEW_WEAPONS );
 			LogisticsData::instance->setNewWeaponsAcknowledged();
 		}
 	}
@@ -909,7 +900,7 @@ void MechLabScreen::updateHeatMeter()
 			if ( flashHeatRange )
 				curHeat = pVariant->getHeat();
 
-			heatTime += g_deltaTime;
+			heatTime += g_frameTime;
 
 		}
 		else if ( heatTime > 1.6 || oldHeat >= curHeat )
@@ -932,7 +923,7 @@ void MechLabScreen::updateHeatMeter()
 					fCurHeat = oldHeat;		
 			}
 		
-			heatTime += g_deltaTime;
+			heatTime += g_frameTime;
 		}
 	}
 
@@ -967,7 +958,7 @@ void MechLabScreen::updateArmorMeter()
 				curarmor = (float)oldArmor * armorTime/.6;	
 				fCurarmor = curarmor; 
 			}
-			armorTime += g_deltaTime;
+			armorTime += g_frameTime;
 
 		}
 		else if ( armorTime > 1.6 || oldArmor >= curarmor )
@@ -987,7 +978,7 @@ void MechLabScreen::updateArmorMeter()
 				fCurarmor = oldArmor;		
 			}
 		
-			armorTime += g_deltaTime;
+			armorTime += g_frameTime;
 		}
 	}
 
@@ -1310,7 +1301,7 @@ void	MechLabScreen::setComponent( LogisticsComponent* pComponent, bool bMessageF
 
 			if ( !g_unlimitedAmmo )
 			{
-				sprintf( text, "%ld", pCurComponent->getAmmo() );
+				sprintf( text, "%d", pCurComponent->getAmmo() );
 				textObjects[13].setText( text );
 				attributeMeters[3].setValue( ((float)pCurComponent->getAmmo())/164.f );
 			}
@@ -1668,9 +1659,9 @@ void MechLabScreen::updateDiagram()
 		curCount = .00001f;
 		oldCBillsAmount = costChange;
 		if ( previousAmount < 0 )
-			soundSystem->playDigitalSample( WINDOW_OPEN );
+			g_gameSoundSystem->playDigitalSample( WINDOW_OPEN );
 		else
-			soundSystem->playDigitalSample( WINDOW_CLOSE );
+			g_gameSoundSystem->playDigitalSample( WINDOW_CLOSE );
 	}
 
 

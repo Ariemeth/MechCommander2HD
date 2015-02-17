@@ -138,7 +138,7 @@ void Light::render (void) {
 	if (g_gamePaused)
 		onScreen();
 
-	if (!getFlag(OBJECT_FLAG_JUSTCREATED) && (windowsVisible == turn) && !getFlag(OBJECT_FLAG_DONE)) {
+	if (!getFlag(OBJECT_FLAG_JUSTCREATED) && (windowsVisible == g_framesSinceMissionStart) && !getFlag(OBJECT_FLAG_DONE)) {
 #ifdef USE_LIGHT_APPEARANCE
 		lightAppearance->render(LIGHT_DEPTH_FIXUP);
 #endif

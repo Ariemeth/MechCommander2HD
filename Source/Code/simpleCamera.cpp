@@ -206,7 +206,7 @@ long SimpleCamera::update()
 {
 	if ( pObject )
 	{
-		turn++;			//Must increment this now or matrices NEVER change!!
+		g_framesSinceMissionStart++;			//Must increment this now or matrices NEVER change!!
 
 		//reset the TGL RAM pools.
 		colorPool->reset();
@@ -261,7 +261,7 @@ long SimpleCamera::update()
 		mechPos.z = tmp;
 
 
-		float rotation = g_deltaTime * rotationIncrement + pObject->rotation;
+		float rotation = g_frameTime * rotationIncrement + pObject->rotation;
 
 		pObject->setObjectParameters(mechPos, rotation, 0, 0, 0);
 	

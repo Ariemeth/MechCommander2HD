@@ -197,7 +197,6 @@ int LogisticsComponent::extractString( char*& pFileLine, char* pBuffer, int buff
 	gosASSERT( i < bufferLength );
 	memcpy( pBuffer, pFileLine, i );
 	pBuffer[i] = NULL;
-	bufferLength = i + 1;
 	pFileLine += i + 1;
 
 	return i;

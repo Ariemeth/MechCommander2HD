@@ -189,7 +189,7 @@ class File
 			long writeString (char *buffer);
 			long writeLine (char *buffer);
 
-			bool isOpen (void);
+			bool isOpen(void) const;
 
 			virtual FileClass getFileClass (void)
 			{

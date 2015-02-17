@@ -81,10 +81,6 @@ namespace MidLevelRenderer {
 		MLRClippingState clippingFlags;
 		const Stuff::LinearMatrix4D *effectToWorld;
 
-#if 0 // for the time being no lights on the effects
-		MLRLight *const *activeLights;
-		int	nrOfActiveLights;
-#endif
 		void
 			TestInstance() const
 				{}

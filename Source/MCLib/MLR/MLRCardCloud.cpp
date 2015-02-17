@@ -149,10 +149,6 @@ void
 
 	Transform(*usedNrOfCards, 4);
 
-#if 0
-	Lighting(*shape->worldToShape, dInfo->activeLights, dInfo->nrOfActiveLights);
-#endif
-
 	if( Clip(dInfo->clippingFlags, allVerticesToDraw) )
 	{
 		sorter->AddEffect(this, dInfo->state);
@@ -246,10 +242,9 @@ int
 		return visible;
 	}
 
-	int	myNumberUsedClipVertex, myNumberUsedClipIndex, myNumberUsedClipLength;
+	int	myNumberUsedClipVertex, myNumberUsedClipLength;
 
 	myNumberUsedClipVertex = 0;
-	myNumberUsedClipIndex = 0;
 	myNumberUsedClipLength = 0;
 
 	//

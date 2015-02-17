@@ -422,7 +422,7 @@ static int TextureToConnectivityMaskMapping(int iTexture) {
 
 static void boundSafeGetOverlay( long tileR, long tileC, Overlays& type, int& Offset )
 {
-	if ((0 > tileR) || (0 > tileC) || (Terrain::realVerticesMapSide <= tileR) || (Terrain::realVerticesMapSide <= tileR))
+	if ((0 > tileR) || (0 > tileC) || (Terrain::realVerticesMapSide <= tileR) || (Terrain::realVerticesMapSide <= tileR)) // MCHD TODO: realHorizontalMapSize <= tileC???
 	{
 		type = INVALID_OVERLAY;
 		Offset = 0;

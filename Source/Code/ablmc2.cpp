@@ -140,7 +140,6 @@ void DEBUGWINS_print (char* s, long window);
 
 long getMoversWithinRadius (MoverPtr* moverList, Stuff::Vector3D center, float radius, long teamID, long commanderID, bool getEnemies, bool sortDescending, bool ignoreOrder) {
 
-	static float sortValues[MAX_MOVERS];
 	if (!Team::sortList) {
 		Team::sortList = new SortList;
 		if (!Team::sortList)
@@ -295,7 +294,6 @@ GameObjectPtr calcBestTarget (MoverPtr attacker, long numAttackers, MoverPtr* at
 			}
 		}
 	attackTotal[bestTarget] += attacker->getThreatRating();
-	attackRatio[bestTarget] = attackTotal[bestTarget] / defenders[bestTarget]->getThreatRating();
 	return(defenders[bestTarget]);
 }
 
@@ -1063,7 +1061,7 @@ void execGetTimeWithoutOrders (void) {
 	if (CurWarrior) {
 		float lastTime = CurWarrior->getTimeOfLastOrders();
 		if (lastTime >= 0.0)
-			ABLi_pokeReal(scenarioTime - lastTime);
+			ABLi_pokeReal(g_missionTime - lastTime);
 	}
 }
 
@@ -1152,7 +1150,7 @@ void execGetAttackerInfo (void) {
 		if (CurWarrior) {
 			AttackerRecPtr attackerRec = CurWarrior->getAttackerInfo(attackerId);
 			if (attackerRec)
-				timeSince = scenarioTime - attackerRec->lastTime;
+				timeSince = g_missionTime - attackerRec->lastTime;
 		}
 	}
 	ABLi_pushReal(timeSince);
@@ -2495,15 +2493,6 @@ void execEndTimer (void) {
 	//
 	//		Returns: nothing
 	ABLi_popInteger();
-
-// NOT REALLY NECESSARY ANYMORE--since the timers have no callback, they just
-// keep counting down... no harm...
-#if 0
-	if ((timerId < SCENARIOTIMER1) || (timerId > SCENARIOTIMER8))
-		timerId = 0;
-	else
-		application->RemoveTimer(application,timerId);
-#endif
 }
 	
 //*****************************************************************************
@@ -2611,8 +2600,8 @@ void execPlayDigitalMusic (void) {
 
 	long soundNum = ABLi_popInteger();
 
-	if (soundSystem)
-		soundSystem->playABLDigitalMusic(soundNum);
+	if (g_gameSoundSystem)
+		g_gameSoundSystem->playABLDigitalMusic(soundNum);
 		
 	ABLi_pushInteger(0);	
 }
@@ -2627,8 +2616,8 @@ void execStopMusic(void) {
 	//
 	//		Returns: None
 
-	if (soundSystem)
-		soundSystem->stopABLMusic();
+	if (g_gameSoundSystem)
+		g_gameSoundSystem->stopABLMusic();
 }
 
 //*****************************************************************************
@@ -2643,8 +2632,8 @@ void execPlaySoundEffect(void) {
 
 	long soundNum = ABLi_popInteger();
 	
-	if (soundSystem)
-		soundSystem->playABLSFX(soundNum);
+	if (g_gameSoundSystem)
+		g_gameSoundSystem->playABLSFX(soundNum);
 	ABLi_pushInteger(0);
 }
 
@@ -2730,7 +2719,7 @@ void execPlayBetty (void) {
 	//-----------------------------------------------
 	// Get the ID of the pilot whose speech this is
 	long messageIndex = ABLi_popInteger();
-	long result = soundSystem->playBettySample(messageIndex);
+	long result = g_gameSoundSystem->playBettySample(messageIndex);
 	
 	ABLi_pushInteger(result);
 }
@@ -2796,7 +2785,7 @@ void execGetSensorsActive (void)
 //*****************************************************************************
 void execGetCurrentMusicId (void) 
 {
-	ABLi_pushInteger(soundSystem->getCurrentMusicId());
+	ABLi_pushInteger(g_gameSoundSystem->getCurrentMusicId());
 }
 
 void execGetMissionTuneId (void)
@@ -4290,7 +4279,7 @@ void execReleaseGateLock (void) {
 
 //*****************************************************************************
 
-void execIsGateOpen (void) {
+void execIsGateOpen(void) {
 
 	//-----------------------------------------------------
 	//
@@ -4311,6 +4300,7 @@ void execIsGateOpen (void) {
 	GameObjectPtr obj = getObject(objectId);
 	if (obj && (obj->getObjectClass() == GATE))	{
 		ABLi_pokeBoolean(((GatePtr)object)->opened);
+	}
 #endif
 }
 
@@ -4592,7 +4582,7 @@ void execGetRepairState (void) {
 
 	ABLi_pokeInteger(0);
 	long max = 0;
-	long cur = 0.0;
+	long cur = 0;
 	GameObjectPtr object = getObject(objectId);
 	if (object && object->isMover()) {
 		MoverPtr mover = (MoverPtr) object;
@@ -4617,6 +4607,12 @@ void execGetRepairState (void) {
 			cur += mover->armor[i].curArmor;
 		}
 	}
+	else
+	{
+		gosASSERT(false); // MCHD CHANGE (02/17/15): Prevent crash and assert
+		max = 1;
+	}
+
 	// make it a percentage...
 	cur *= 100;
 	ABLi_pokeInteger(cur / max);
@@ -4807,11 +4803,6 @@ void execSetDebugString (void) {
 		if (pilot)
 			pilot->setDebugString(stringNum, debugString);
 	}
-#if 0
-	ABLi_popInteger();
-	ABLi_popInteger();
-	ABLi_popCharPtr();
-#endif
 }
 
 //*****************************************************************************
@@ -5804,7 +5795,7 @@ void execGetCameraFrameLength (void) {
 	//-----------------------------------------------------
 
 
-	ABLi_pushReal(g_deltaTime);	
+	ABLi_pushReal(g_frameTime);	
 }
 
 //*****************************************************************************
@@ -5968,7 +5959,7 @@ void execIsPlayingVoiceOver(void)
 	//
 	// Returns a bool,  true if voiceover channel is active, false if not.
 
-	ABLi_pushBoolean(soundSystem->isPlayingVoiceOver());
+	ABLi_pushBoolean(g_gameSoundSystem->isPlayingVoiceOver());
 }
 
 //*****************************************************************************
@@ -5978,7 +5969,7 @@ void execStopVoiceOver(void)
 	//
 	// Returns a NOTHING
 
-	soundSystem->stopSupportSample();
+	g_gameSoundSystem->stopSupportSample();
 }
 
 //*****************************************************************************
@@ -6202,8 +6193,8 @@ void execGetWeapons (void) {
 				}
 				#ifdef BUGLOG
 				if ((numWpns != mover->numFunctionalWeapons) && BugLog) {
-					char s[50];
-					sprintf(s, "[%.2f] ablmc2.execGetWeapons: numWpns != numFunctionalWeapons (%05d)%s", scenarioTime, mover->getPartId(), mover->getName());
+					char s[128];
+					sprintf(s, "[%.2f] ablmc2.execGetWeapons: numWpns != numFunctionalWeapons (%05ld)%s", g_missionTime, mover->getPartId(), mover->getName());
 					BugLog->write(s);
 					BugLog->write(" ");
 				}
@@ -6260,7 +6251,7 @@ void execPlayWave (void) {
 
 	char* fileName = ABLi_popCharPtr();
 	ABLi_popInteger();
-	soundSystem->playSupportSample(-1, fileName);
+	g_gameSoundSystem->playSupportSample(-1, fileName);
 	ABLi_pushInteger(0);
 }
 
@@ -6577,20 +6568,20 @@ extern GameObjectPtr LastCoreAttackTarget;
 void ablEndlessStateCallback (UserFile* log) {
 
 	char s[256];
-	sprintf(s, "Mover = %s (%d)", CurWarrior->getVehicle()->getName(), CurWarrior->getVehicle()->getPartId());
+	sprintf(s, "Mover = %s (%ld)", CurWarrior->getVehicle()->getName(), CurWarrior->getVehicle()->getPartId());
 	log->write(s);
 	sprintf(s, "     Status = %d", CurWarrior->getVehicle()->getStatus());
 	log->write(s);
 	sprintf(s, "     NumWeapons = %d", CurWarrior->getVehicle()->numWeapons);
 	log->write(s);
-	sprintf(s, "     NumFunctionalWeapons = %d", CurWarrior->getVehicle()->numFunctionalWeapons);
+	sprintf(s, "     NumFunctionalWeapons = %ld", CurWarrior->getVehicle()->numFunctionalWeapons);
 	log->write(s);
 	sprintf(s, "     TacOrder = ");
 	CurWarrior->getCurTacOrder()->debugString(CurWarrior, &s[16]);
 	log->write(s);
 	log->write(" ");
 	if (LastCoreAttackTarget) {
-		sprintf(s, "Target = %s (%d)", LastCoreAttackTarget->getName(), LastCoreAttackTarget->getPartId());
+		sprintf(s, "Target = %s (%ld)", LastCoreAttackTarget->getName(), LastCoreAttackTarget->getPartId());
 		log->write(s);
 		Stuff::Vector3D pos;
 		pos = LastCoreAttackTarget->getPosition();
@@ -6605,7 +6596,7 @@ void ablEndlessStateCallback (UserFile* log) {
 			MoverPtr mover = (MoverPtr)LastCoreAttackTarget;
 			sprintf(s, "     NumWeapons = %d", mover->numWeapons);
 			log->write(s);
-			sprintf(s, "     NumFunctionalWeapons = %d", mover->numFunctionalWeapons);
+			sprintf(s, "     NumFunctionalWeapons = %ld", mover->numFunctionalWeapons);
 			log->write(s);
 			sprintf(s, "     TacOrder = ");
 			mover->getPilot()->getCurTacOrder()->debugString(CurWarrior, &s[16]);

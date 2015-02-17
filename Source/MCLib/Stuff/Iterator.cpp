@@ -61,13 +61,12 @@ CollectionSize
 	Iterator::GetSize()
 {
 	CollectionSize i = 0;
-	void *item;
 
 	First();
-	while ((item = GetCurrentImplementation()) != NULL)
+	while (GetCurrentImplementation() != NULL)
 	{
 		i++;
-      Next();
+		Next();
 	}
    return i;
 }

@@ -115,20 +115,11 @@
 
 //---------------------------------------------------------------------------
 // Static Globals
-#if 1	// ids can be 8 long, INCLUDING TERMINATOR!!!!!
 char DEFAULT_LIST_ID[] = "DEFAULT";
 char CLANMECH_LIST_ID[] = "CLANMEC";
 char ISMECH_LIST_ID[] = "ISMECH";
 char ICON_LIST_ID[] = "ICONS";
 char WEAPON_LIST_ID[] = "WEAPON";
-#else
-char DEFAULT_LIST_ID[] = "DEFAULT!";
-char CLANMECH_LIST_ID[] = "CLANMECH";
-char ISMECH_LIST_ID[] = "ISMECH";
-char ICON_LIST_ID[] = "ICONS";
-char WEAPON_LIST_ID[] = "WEAPON";
-#endif
-//long ObjectQueue::objectsInList = 0;
 
 extern long usedBlockList[];			//Trust ME~~!!!!!!!!!!!!!!!!!!!!!!!!
 extern long moverBlockList[];			//Trust ME~~!!!!!!!!!!!!!!!!!!!!!!!!  AGAIN 
@@ -139,14 +130,6 @@ extern bool	renderObjects;
 extern GameObjectPtr MoverRoster[MAX_MOVER_PART_ID - MIN_MOVER_PART_ID + 1];
 extern bool MaxObjectsDrawn;
 extern bool drawOldWay;
-
-/*
-ObjectQueuePtr objectList = NULL;
-ObjectQueueNodePtr clanMechList = NULL;
-ObjectQueueNodePtr innerSphereMechList = NULL;
-ObjectQueueNodePtr iconList = NULL;
-ObjectQueueNodePtr weaponList = NULL;
-*/
 
 #define	VISIBLE_THRESHOLD	1
 
@@ -958,7 +941,7 @@ void GameObjectManager::loadTerrainObjects (PacketFile* terrainFile,
 		progress += increment;
 	}
 
-	delete handles;
+	delete[] handles;
 	handles = NULL;
 	
 	//Done loading the objects, free the memory holding them!!
@@ -1724,14 +1707,14 @@ void GameObjectManager::update (bool terrain, bool movers, bool other)
 		
 		for (long terrainBlock = 0; terrainBlock < Terrain::numObjBlocks; terrainBlock++) 
 		{
-			if (Terrain::objBlockInfo[terrainBlock].active || (turn < 3)) 
+			if (Terrain::objBlockInfo[terrainBlock].active || (g_framesSinceMissionStart < 3)) 
 			{
 				long numObjs = Terrain::objBlockInfo[terrainBlock].numObjects;
 				long objIndex = Terrain::objBlockInfo[terrainBlock].firstHandle;
 				for (long terrainObj = 0; terrainObj < numObjs; terrainObj++,objIndex++) 
 				{
 					if (objList[objIndex] && 
-						(Terrain::objVertexActive[objList[objIndex]->getVertexNum()] || (turn < 3)) && 
+						(Terrain::objVertexActive[objList[objIndex]->getVertexNum()] || (g_framesSinceMissionStart < 3)) && 
 						objList[objIndex]->getExists())
 					{
 			#ifdef LAB_ONLY
@@ -2175,7 +2158,7 @@ GameObjectPtr GameObjectManager::findObjectByMouse (long mouseX,
 			AppearancePtr objAppearance = obj->getAppearance();
 			if (objAppearance && objAppearance->canBeSeen()) 
 			{
-				if (obj->getWindowsVisible() == (turn - VISIBLE_THRESHOLD))
+				if (obj->getWindowsVisible() == (g_framesSinceMissionStart - VISIBLE_THRESHOLD))
 				{
 					//-----------------------------------------------------
 					float tlx = objAppearance->upperLeft.x;
@@ -2244,7 +2227,7 @@ GameObjectPtr GameObjectManager::findMoverByMouse (long mouseX,
 				AppearancePtr objAppearance = obj->getAppearance();
 				if (objAppearance && objAppearance->canBeSeen()) 
 				{
-					if (obj->getWindowsVisible() == (turn - VISIBLE_THRESHOLD)) 
+					if (obj->getWindowsVisible() == (g_framesSinceMissionStart - VISIBLE_THRESHOLD)) 
 					{
 						//-----------------------------------------------------
 						float tlx = objAppearance->upperLeft.x;
@@ -2287,7 +2270,7 @@ GameObjectPtr GameObjectManager::findMoverByMouse (long mouseX,
 				AppearancePtr objAppearance = obj->getAppearance();
 				if (objAppearance && objAppearance->canBeSeen()) 
 				{
-					if (obj->getWindowsVisible() == (turn - VISIBLE_THRESHOLD)) 
+					if (obj->getWindowsVisible() == (g_framesSinceMissionStart - VISIBLE_THRESHOLD)) 
 					{
 						//-----------------------------------------------------
 						float tlx = objAppearance->upperLeft.x;
@@ -2786,7 +2769,7 @@ void GameObjectManager::updateAppearancesOnly( bool terrain, bool movers, bool o
 				for (long terrainObj = 0; terrainObj < numObjs; terrainObj++, objIndex++) 
 				{
 					if (objList[objIndex] && 
-						(Terrain::objVertexActive[objList[objIndex]->getVertexNum()] || (turn < 3)) && 
+						(Terrain::objVertexActive[objList[objIndex]->getVertexNum()] || (g_framesSinceMissionStart < 3)) && 
 						objList[objIndex]->getExists())
 					{
 						if (objList[objIndex]->getAppearance()->recalcBounds()) 
@@ -2817,7 +2800,7 @@ void GameObjectManager::updateAppearancesOnly( bool terrain, bool movers, bool o
 				{
 					bool inView = mechs[i]->getAppearance()->recalcBounds();
 					if (inView)
-						mechs[i]->windowsVisible = turn;
+						mechs[i]->windowsVisible = g_framesSinceMissionStart;
 					
 					// Must force here as well.
 					Stuff::Vector3D pos = mechs[i]->getPosition();
@@ -2837,7 +2820,7 @@ void GameObjectManager::updateAppearancesOnly( bool terrain, bool movers, bool o
 				if (vehicles[i] && vehicles[i]->getExists())
 				{
 					bool inView = vehicles[i]->getAppearance()->recalcBounds();
-					vehicles[i]->windowsVisible = turn;
+					vehicles[i]->windowsVisible = g_framesSinceMissionStart;
 
 					// Must force here as well.
 					Stuff::Vector3D pos = vehicles[i]->getPosition();

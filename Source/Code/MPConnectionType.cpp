@@ -614,10 +614,10 @@ void aTcpipPanel::init(FitIniFile* pFile)
 
 void aTcpipPanel::update()
 {
-	long retVal = 0;
-
 	if ( bConnectingDlg || bErrorDlg )
 	{
+		long retVal = 0;
+	
 		LogisticsOneButtonDialog::instance()->update();
 		if ( LogisticsOneButtonDialog::instance()->isDone()  )
 		{
@@ -661,7 +661,7 @@ void aTcpipPanel::update()
 		}
 		else  if ( !bErrorDlg && !bFoundConnection )
 		{
-			connectingTime += g_deltaTime;
+			connectingTime += g_frameTime;
 
 			long sessionCount;
 			MPlayer->getSessions( sessionCount );

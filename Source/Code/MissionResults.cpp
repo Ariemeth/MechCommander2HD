@@ -41,8 +41,8 @@ MissionResults::~MissionResults()
 void MissionResults::begin()
 {
 
-	if ( soundSystem )
-		soundSystem->stopSupportSample();
+	if ( g_gameSoundSystem )
+		g_gameSoundSystem->stopSupportSample();
 
 
 	if ( !MPlayer )
@@ -181,7 +181,7 @@ void MissionResults::update()
 
 
 			//Also should stop the support sample here. 
-			soundSystem->stopSupportSample();
+			g_gameSoundSystem->stopSupportSample();
 		}
 	}
 
@@ -189,7 +189,7 @@ void MissionResults::update()
 	{
 		//We're done with the win or lose tune.
 		// Start the mission results tune as a loop.
-		soundSystem->playDigitalMusic(RESULTS_LOOP);
+		g_gameSoundSystem->playDigitalMusic(RESULTS_LOOP);
 	}
 }
 
@@ -208,7 +208,7 @@ void MissionResults::render()
 		//Tutorial -- ONLY do first time we get into the salvage screen.
 		if (FirstTimeResults)
 		{
-			soundSystem->playSupportSample(-1, "tut_4a");
+			g_gameSoundSystem->playSupportSample(-1, "tut_4a");
 			FirstTimeResults = false;
 		}
 	}

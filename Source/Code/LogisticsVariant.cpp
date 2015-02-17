@@ -376,7 +376,7 @@ int LogisticsVariant::init( CSVFile* file, LogisticsChassis* pChassis, int Varia
 					if ( !addComponent( pComps[i]->getID(), xLocs[i], yLocs[i] ) )
 					{
 						char errorString[256];
-						sprintf( errorString, "Couldn't add component with id %ld", 
+						sprintf( errorString, "Couldn't add component with id %d", 
 							pComponent->getID() );
 					}
 				}
@@ -441,7 +441,6 @@ bool LogisticsVariant::addComponent( int idFromFitFile, long& x, long& y )
 								|| ( j +l >= chassis->componentAreaHeight ) )
 							{
 								bAdd = false;
-								break;
 								break;
 							}
 						}
@@ -650,7 +649,6 @@ int LogisticsVariant::canAddComponent( LogisticsComponent* pComponent, long& x, 
 							{
 								bAdd = false;
 								break;
-								break;
 							}
 						}
 					}
@@ -851,7 +849,7 @@ long LogisticsVariant::save( FitIniFile& file, long counter )
 
 	for ( int i = 0; i < componentCount; i++ )
 	{
-		sprintf( tmp, "Component%ld", i );
+		sprintf( tmp, "Component%d", i );
 		file.writeIdLong(tmp, components[i].component->getID() );
 		
 		strcpy( tmp2, tmp );

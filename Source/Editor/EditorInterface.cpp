@@ -1815,7 +1815,7 @@ int EditorInterface::SaveAs()
 		for (long i=0;i<MAX_WATER_DETAIL_TEXTURES;i++)
 		{
 			char detailExt[256];
-			sprintf(detailExt,".water%04d.tga",i);
+			sprintf(detailExt,".water%04ld.tga",i);
 			oldBaseFile.init(texturePath,name,detailExt);
 			newBaseFile.init(texturePath,name2,detailExt);
 			
@@ -2194,7 +2194,7 @@ int EditorInterface::Select()
 	{
 		KillCurBrush();
 
-		int radius = GetParent()->GetMenu()->GetMenuState( ID_DRAGNORMAL, MF_BYCOMMAND ) & MF_CHECKED? -1 : smoothRadius;
+		int radius = (GetParent()->GetMenu()->GetMenuState( ID_DRAGNORMAL, MF_BYCOMMAND ) & MF_CHECKED) ? -1 : smoothRadius;
 		curBrush = new SelectionBrush( false, radius );
 		currentBrushID = IDS_SELECT;
 		currentBrushMenuID = ID_OTHER_SELECT;
@@ -2367,7 +2367,6 @@ int EditorInterface::SelectTerrainType()
 		{
 			for ( int i = 0; i < land->realVerticesMapSide; ++i )
 			{
-				int tmp = land->getTerrain( j, i );
 				if (land->getTerrain( j, i ) == selectedTerrainType)
 				{
 					land->selectVertex( j, i );

@@ -176,48 +176,23 @@ void
 //###########################################################################
 //
 Plug*
-	Table::FindImplementation(
-		const void *value
-	)
+Table::FindImplementation(
+const void *value
+)
 {
 	Check_Object(this);
 	IteratorPosition index;
-	
-	if ((index = SearchForValue(value)) != TableNullIndex) 
+
+	if ((index = SearchForValue(value)) != TableNullIndex)
 	{
 		Check_Pointer(array);
 		VERIFY_INDEX(index);
 		Check_Object(array[index]);
-		
+
 		return array[index]->GetPlug();
 	}
 	return NULL;
 }
-
-#if 0
-//
-//###########################################################################
-// FindCloseImplementation
-//###########################################################################
-//
-Plug*
-	Table::FindCloseImplementation(
-		const void *value
-	)
-{
-	Check_Object(this);
-	IteratorPosition index;
-	
-	index = SearchForCloseValue(value);
-	Verify(index != TableNullIndex);
-
-	Check_Pointer(array);
-	VERIFY_INDEX(index);
-	Check_Object(array[index]);
-		
-	return array[index]->GetPlug();
-}
-#endif
 
 //
 //#############################################################################
@@ -390,41 +365,6 @@ IteratorPosition
 	}
 	return TableNullIndex;
 }
-
-#if 0
-//
-//###########################################################################
-// SearchForCloseValue
-//###########################################################################
-//
-IteratorPosition
-	Table::SearchForCloseValue(
-		const void *value
-	)
-{
-	Check_Object(this);
-	size_t n = numItems;
-	size_t i = 0, j;
-	IteratorPosition k;
-	
-	while (i < n) 
-	{
-		j = (i + n - 1) >> 1;
-		
-		Check_Pointer(array);
-		Verify(j < numItems);
-		
-		if ((k = CompareValueToTableEntry(value, array[j])) == 0)
-			break;
-		
-		if (k < 0)
-			n = j;
-		else
-			i = j + 1;
-	}
-	return j;
-}
-#endif
 
 //
 //###########################################################################

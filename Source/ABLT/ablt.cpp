@@ -44,11 +44,11 @@ int main(int argc, char* argv[])
 			long numFiles = 0;
 			if ((s[0] == 'l') && (s[1] == ' ')){
 				ABLi_loadLibrary((char*)&s[2], &numErrs, &numLines, &numFiles, false);
-				printf("     Loaded: %s [%d lines, %d files]\n", &s[2], numLines, numFiles);
+				printf("     Loaded: %s [%ld lines, %ld files]\n", &s[2], numLines, numFiles);
 				}
 			else if ((s[0] == 'm') && (s[1] == ' ')) {
 				ABLi_preProcess((char*)&s[2], &numErrs, &numLines, &numFiles, false);
-				printf("     Loaded: %s [%d lines, %d files]\n", &s[2], numLines, numFiles);
+				printf("     Loaded: %s [%ld lines, %ld files]\n", &s[2], numLines, numFiles);
 			}
 		}
 		bFile->close();
@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
 	long numLines = 0;
 	long numFiles = 0;
 	ABLi_preProcess(argv[argc-1], &numErrs, &numLines, &numFiles, false);
-	printf("SUCCESS: %s [%d lines, %d files]\n", argv[argc-1], numLines, numFiles);
+	printf("SUCCESS: %s [%ld lines, %ld files]\n", argv[argc-1], numLines, numFiles);
 	scanf(" ");
 
 	closeABL();

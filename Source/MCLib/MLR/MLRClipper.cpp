@@ -22,7 +22,6 @@ DrawShapeInformation::DrawShapeInformation()
 DrawScalableShapeInformation::DrawScalableShapeInformation() : DrawShapeInformation()
 {
 	scaling = NULL;
-
 	paintMe = NULL;
 }
 
@@ -31,12 +30,7 @@ DrawEffectInformation::DrawEffectInformation()
 	effect = NULL;
 	state = NULL;
 	effectToWorld = NULL;
-
-#if 0	
-	activeLights = NULL;
-	nrOfActiveLights = 0;
-#endif
-
+	
 	clippingFlags.SetClippingState(0);
 };
 
@@ -46,7 +40,6 @@ DrawScreenQuadsInformation::DrawScreenQuadsInformation()
 	colors = NULL;
 	texCoords = NULL;
 	onOrOff = NULL;
-
 	nrOfQuads = 0;
 };
 
@@ -155,20 +148,15 @@ void
 	gos_PushCurrentHeap(Heap);
 	Scalar z = 1.0f;
 	DWORD back_color = 0;
-	bool
-		fill = false,
-		clear = false;
 	if (z_value)
 	{
 		Check_Pointer(z_value);
 		z = *z_value;
-		fill = true;
 	}
 	if (background_color)
 	{
 		Check_Pointer(background_color);
 		back_color = GOSCopyColor(background_color);
-		clear = true;
 	}
 
 	MLRState::fogColor = back_color;

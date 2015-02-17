@@ -40,12 +40,12 @@ namespace Stuff {
 			const Radian &y,
 			const Radian &p,
 			const Scalar r
-		)
-			{Check_Pointer(this); pitch = p; yaw = y; range = r;}
+		) : pitch(p), yaw(y), range(r)
+			{Check_Pointer(this);}
 		YawPitchRange(const YawPitchRange &polar)
+		 : pitch(polar.pitch), yaw(polar.yaw), range(polar.range)
 			{
 				Check_Pointer(this);
-				pitch = polar.pitch; yaw = polar.yaw; range = polar.range;
 			}
 		explicit YawPitchRange(const Vector3D &vector)
 			{*this = vector;}

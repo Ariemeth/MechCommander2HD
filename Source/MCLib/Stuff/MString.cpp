@@ -116,14 +116,7 @@ MStringRepresentation::~MStringRepresentation()
 void
 	MStringRepresentation::TestInstance() const
 {
-#if 0
-	if (stringLength > 0 || stringText != NULL)
-	{
-		Check_Pointer(stringText);
-		size_t str_len = strlen(stringText);
-		Verify(stringLength == str_len);
-	}
-#endif
+
 }
 
 //
@@ -508,21 +501,15 @@ void
 		MStringRepresentation *value
 	)
 {
-	#if 0
-		Check_Pointer(str);
-		Check_Object(value);
-		*value = str;
-	#else
-		if (str == NULL)
-		{
-			STOP(("Convert_From_Ascii - str == NULL"));
-		}
-		if (value == NULL)
-		{
-			STOP(("Convert_From_Ascii - value == NULL"));
-		}
-		*value = str;
-	#endif
+	if (str == NULL)
+	{
+		STOP(("Convert_From_Ascii - str == NULL"));
+	}
+	if (value == NULL)
+	{
+		STOP(("Convert_From_Ascii - value == NULL"));
+	}
+	*value = str;
 }
 
 //#############################################################################

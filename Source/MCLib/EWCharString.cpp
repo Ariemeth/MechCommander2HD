@@ -905,10 +905,6 @@ EWCharString operator+( const EWCharString& Begin_String, const EWCSChar* p_End_
 /////////////////////////////////////////////////////////////////
 EWCharString operator+( const EWCharString& Begin_String,  EWCSChar Char )
 {
-	EWCSChar Tmp[2];
-	Tmp[0] = Char;
-	Tmp[1] = 0;
-
 	return Begin_String + Char;
 }
 
@@ -1066,7 +1062,7 @@ int EWCharString::Find( unsigned short Char, int Start_Index ) const
 {
 	unsigned short Tmp[2];
 	*Tmp = Char;
-	Tmp[2] = 0;
+	Tmp[1] = 0;
 
 	return Find( (EWCSChar*)Tmp, Start_Index );
 }

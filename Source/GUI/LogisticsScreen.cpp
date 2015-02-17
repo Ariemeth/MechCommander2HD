@@ -16,7 +16,7 @@ LogisticsScreen.cpp			: Implementation of the LogisticsScreen component.
 
 extern long helpTextID;
 extern long helpTextHeaderID;
-extern float g_deltaTime;
+extern float g_frameTime;
 
 
 LogisticsScreen::LogisticsScreen()
@@ -112,7 +112,7 @@ void LogisticsScreen::init( FitIniFile& file, const char* staticName, const char
 				char blockName[128];
 				for ( int i = 0; i < staticCount; i++ )
 				{
-					sprintf( blockName, "%s%ld", staticName, i );
+					sprintf( blockName, "%s%d", staticName, i );
 					statics[i].init( &file, blockName );			
 				}
 				
@@ -134,7 +134,7 @@ void LogisticsScreen::init( FitIniFile& file, const char* staticName, const char
 				char blockName[128];
 				for ( int i = 0; i < rectCount; i++ )
 				{
-					sprintf( blockName, "%s%ld", rectName, i );
+					sprintf( blockName, "%s%d", rectName, i );
 					rects[i].init( &file, blockName );
 				}
 			}
@@ -156,7 +156,7 @@ void LogisticsScreen::init( FitIniFile& file, const char* staticName, const char
 				buttons = new aAnimButton[buttonCount];
 				for ( int i = 0; i < buttonCount; i++ )
 				{
-					sprintf( blockName,"%s%ld", buttonName, i );
+					sprintf( blockName,"%s%d", buttonName, i );
 					buttons[i].init( file, blockName );
 					addChild( &buttons[i] );
 				}
@@ -180,7 +180,7 @@ void LogisticsScreen::init( FitIniFile& file, const char* staticName, const char
 				char blockName[64];
 				for ( int i = 0; i < textCount; i++ )
 				{
-					sprintf( blockName, "%s%ld", textName, i );
+					sprintf( blockName, "%s%d", textName, i );
 					textObjects[i].init( &file, blockName );
 				}
 				
@@ -202,7 +202,7 @@ void LogisticsScreen::init( FitIniFile& file, const char* staticName, const char
 				char blockName[64];
 				for ( int i = 0; i < editCount; i++ )
 				{
-					sprintf( blockName, "%s%ld", editName, i );
+					sprintf( blockName, "%s%d", editName, i );
 					edits[i].init( &file, blockName );
 				}
 				
@@ -223,7 +223,7 @@ void LogisticsScreen::init( FitIniFile& file, const char* staticName, const char
 				char blockName[64];
 				for ( int i = 0; i < animObjectsCount; i++ )
 				{
-					sprintf( blockName, "%s%ld", animObjectName, i );
+					sprintf( blockName, "%s%d", animObjectName, i );
 					animObjects[i].init( &file, blockName, neverFlush );
 				}
 				
@@ -378,14 +378,14 @@ void LogisticsScreen::render()
 
 	if ( fadeOutTime )
 	{
-		fadeTime += g_deltaTime;
+		fadeTime += g_frameTime;
 		long color = interpolateColor( 0,fadeOutMaxColor, fadeTime/fadeOutTime );
 		GUI_RECT rect = { 0,0, Environment.screenWidth, Environment.screenHeight };
 		drawRect( rect, color );
 	}
 	else if ( fadeInTime && fadeInTime > fadeTime )
 	{
-		fadeTime += g_deltaTime;
+		fadeTime += g_frameTime;
 		long color = interpolateColor( fadeOutMaxColor, 0, fadeTime/fadeInTime );
 		GUI_RECT rect = { 0,0, Environment.screenWidth, Environment.screenHeight };
 		drawRect( rect, color );
@@ -484,14 +484,14 @@ void LogisticsScreen::render( int xOffset, int yOffset )
 
 	if ( fadeOutTime )
 	{
-		fadeTime += g_deltaTime;
+		fadeTime += g_frameTime;
 		long color = interpolateColor( 0,0xff000000, fadeTime/fadeOutTime );
 		GUI_RECT rect = { 0,0, Environment.screenWidth, Environment.screenHeight };
 		drawRect( rect, color );
 	}
 	else if ( fadeInTime && fadeInTime > fadeTime )
 	{
-		fadeTime += g_deltaTime;
+		fadeTime += g_frameTime;
 		long color = interpolateColor( 0xff000000, 0, fadeTime/fadeInTime );
 		GUI_RECT rect = { 0,0, Environment.screenWidth, Environment.screenHeight };
 		drawRect( rect, color );

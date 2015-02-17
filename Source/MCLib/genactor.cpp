@@ -143,7 +143,7 @@ void GenericAppearanceType::init (char * fileName)
 	for (long i=0;i<MAX_BD_ANIMATIONS;i++)
 	{
 		char blockId[512];
-		sprintf(blockId,"Animation:%d",i);
+		sprintf(blockId,"Animation:%ld",i);
 		
 		result = iniFile.seekBlock(blockId);
 		if (result == NO_ERR)
@@ -287,7 +287,7 @@ void GenericAppearance::init (AppearanceTypePtr tree, GameObjectPtr obj)
 				genShape->GetTextureName(i,txmName,256);
 
 			char texturePath[1024];
-			sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
+			sprintf(texturePath,"%s%ld\\",tglPath,g_objectTextureSize);
 	
 			FullPathFileName textureName;
 			textureName.init(texturePath,txmName,"");
@@ -395,7 +395,7 @@ void GenericAppearance::setObjStatus (long oStatus)
 					genShape->GetTextureName(i,txmName,256);
 					
 					char texturePath[1024];
-					sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
+					sprintf(texturePath,"%s%ld\\",tglPath,g_objectTextureSize);
 			
 					FullPathFileName textureName;
 					textureName.init(texturePath,txmName,"");
@@ -491,8 +491,7 @@ void GenericAppearance::changeSkyToSkyNum (char *txmName, char *newName)
 	}
 	else
 	{
-		strcpy(newName,"Sky");
-		sprintf(newName,"Sky%02d%s",skyNumber,&txmName[3]);
+		sprintf(newName,"Sky%02ld%s",skyNumber,&txmName[3]);
 	}
 	
 	return;
@@ -513,7 +512,7 @@ void GenericAppearance::setSkyNumber (long skyNum)
 			genShape->GetTextureName(i,txmName,256);
 
 		char texturePath[1024];
-		sprintf(texturePath,"%s%d\\",tglPath,g_objectTextureSize);
+		sprintf(texturePath,"%s%ld\\",tglPath,g_objectTextureSize);
 
 		//Make txmName into a SKY%02d texture and load it!!
 		skyNumber = skyNum;
@@ -1082,7 +1081,7 @@ long GenericAppearance::update (bool animate)
 	{
 		//--------------------------------------------------------
 		// Make sure animation runs no faster than bdFrameRate fps.
-		float frameInc = genFrameRate * g_deltaTime;
+		float frameInc = genFrameRate * g_frameTime;
 		
 		//---------------------------------------
 		// Increment Frames -- Everything else!

@@ -218,7 +218,7 @@ int	SalvageMechScreen::handleMessage( unsigned long message, unsigned long who)
 	{
 		bDone = true;
 		{
-			soundSystem->stopBettySample(); // don't want to carry droning on to next screen
+			g_gameSoundSystem->stopBettySample(); // don't want to carry droning on to next screen
 			if ( LogisticsData::instance->skipPilotReview() )
 			{
 				beginFadeOut(.5);
@@ -254,13 +254,13 @@ void SalvageMechScreen::update()
 		curCount = .00001f;
 		oldCBillsAmount = amount;
 		if ( previousAmount < 0 )
-			soundSystem->playDigitalSample( WINDOW_OPEN );
+			g_gameSoundSystem->playDigitalSample( WINDOW_OPEN );
 		else
-			soundSystem->playDigitalSample( WINDOW_CLOSE );
+			g_gameSoundSystem->playDigitalSample( WINDOW_CLOSE );
 	}
-	if ( curCount && curCount + g_deltaTime < countDownTime  )
+	if ( curCount && curCount + g_frameTime < countDownTime  )
 	{
-		curCount += g_deltaTime;
+		curCount += g_frameTime;
 		float curAmount = previousAmount - (curCount/countDownTime * previousAmount); 
 		amount += curAmount;
 	
@@ -271,7 +271,7 @@ void SalvageMechScreen::update()
 
 
 	char cBillText[32];
-	sprintf( cBillText, "%ld", amount );
+	sprintf( cBillText, "%d", amount );
 	textObjects[RP_TEXTID].setText( cBillText );
 	textObjects[RP_TEXTID].setColor( color );
 
@@ -468,7 +468,7 @@ void SalvageListItem::update()
 			if ( userInput->isLeftClick() )
 			{
 				SalvageMechArea::instance->setMech( pVariant, psBlue, psGreen, psRed  );	
-				soundSystem->playDigitalSample( LOG_WRONGBUTTON );
+				g_gameSoundSystem->playDigitalSample( LOG_WRONGBUTTON );
 			}
 		}
 	}
@@ -622,7 +622,7 @@ void SalvageMechArea::init( FitIniFile* file )
 	char blockName[64];
 	for ( int i = 0; i < 3; i++ )
 	{
-		sprintf( blockName, "AttributeMeter%ld", i );
+		sprintf( blockName, "AttributeMeter%d", i );
 		attributeMeters[i].init( file, blockName );
 	}
 
@@ -651,11 +651,11 @@ void SalvageMechArea::setMech( LogisticsVariant* pMech, long red, long green, lo
 
 		textObjects[NAME_TEXTID].setText( pMech->getName() );
 		char text[256];
-		sprintf( text, "%ld", pMech->getMaxWeight() );
+		sprintf( text, "%f", pMech->getMaxWeight() );
 		textObjects[WEIGHT_TEXTID].setText( text );
-		sprintf( text, "%ld", pMech->getArmor() );
+		sprintf( text, "%d", pMech->getArmor() );
 		textObjects[ARMOR_TEXTID].setText( text );
-		sprintf( text, "%ld", pMech->getDisplaySpeed() );
+		sprintf( text, "%d", pMech->getDisplaySpeed() );
 		textObjects[SPEED_TEXTID].setText( text );
 		sprintf( text, "%ld", pMech->getJumpRange() * 25 );
 		textObjects[JUMP_TEXTID].setText( text );

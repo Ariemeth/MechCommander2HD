@@ -115,7 +115,7 @@ class HeapManager
 		MemoryPtr getHeapPtr (void);
 		operator MemoryPtr (void);
 
-		void HeapManager::MemoryDump();
+		void MemoryDump();
 		
 		virtual unsigned char heapType (void)
 		{

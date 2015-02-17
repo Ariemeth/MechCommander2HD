@@ -284,7 +284,7 @@ void PilotReadyScreen::render(int xOffset, int yOffset )
 	{
 		if ( !MPlayer && !LogisticsData::instance->isSingleMission() && LogisticsData::instance->newPilotsAvailable() )
 		{
-			soundSystem->playBettySample( BETTY_NEW_PILOTS );
+			g_gameSoundSystem->playBettySample( BETTY_NEW_PILOTS );
 			LogisticsData::instance->setNewPilotsAcknowledged();
 		}
 	}
@@ -326,7 +326,7 @@ void PilotReadyScreen::render(int xOffset, int yOffset )
 
 	if ( launchFadeTime )
 	{
-		launchFadeTime += g_deltaTime;
+		launchFadeTime += g_frameTime;
 		long color = interpolateColor( 0x00000000, 0x7f000000, launchFadeTime/.5f );
 		GUI_RECT rect = { 0, 0, Environment.screenWidth, Environment.screenHeight };
 		drawRect( rect, color );
@@ -355,7 +355,7 @@ void PilotReadyScreen::update()
 		char str[64];
 
 		// RP
-		sprintf( str, "%ld ", LogisticsData::instance->getCBills() );
+		sprintf( str, "%d ", LogisticsData::instance->getCBills() );
 		textObjects[1].setText( str );
 
 		for ( int i = 0; i < 4; i++ )
@@ -777,7 +777,7 @@ void PilotReadyScreen::setPilot( LogisticsPilot* pPilot )
 		textObjects[6].setText( number );
 		attributeMeters[1].setValue( pCurPilot->getPiloting()/80.f );
 
-		sprintf( number, "%ld", pCurPilot->getMechKills() );
+		sprintf( number, "%d", pCurPilot->getMechKills() );
 		textObjects[7].setText( number );
 
 		EString name = pCurPilot->getName();

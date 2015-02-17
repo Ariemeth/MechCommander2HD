@@ -149,8 +149,6 @@ bool	MechListBoxItem::pointInside(long xPos, long yPos) const
 }
 MechListBoxItem::MechListBoxItem( LogisticsMech* pRefMech, long count )
 {
-	
-	
 	bIncludeForceGroup = 0;
 	bOrange = 0;
 	if ( s_templateItem )
@@ -170,7 +168,7 @@ MechListBoxItem::MechListBoxItem( LogisticsMech* pRefMech, long count )
 	chassisName.setText( pMech->getChassisName() );
 	
 	char text[32];
-	sprintf( text, "%ld", pMech->getCost() );
+	sprintf( text, "%d", pMech->getCost() );
 	costText.setText( text );
 
 	mechCount = LogisticsData::instance->getVariantsInInventory( pRefMech->getVariant(), bIncludeForceGroup );
@@ -252,9 +250,9 @@ void MechListBoxItem::init( FitIniFile& file )
 		char blockName[64];
 		for ( int i = 0; i < 4; i++ )
 		{
-			sprintf( blockName, "OrangeAnimation%ld", i );
+			sprintf( blockName, "OrangeAnimation%d", i );
 			s_templateItem->animations[1][i].init( &file, blockName );
-			sprintf( blockName, "Animation%ld", i );
+			sprintf( blockName, "Animation%d", i );
 			s_templateItem->animations[0][i].init( &file, blockName );
 		}
 		
@@ -335,7 +333,7 @@ void MechListBoxItem::update()
 		else 
 			countText.setColor( 0xffffffff );
 
-		animTime += g_deltaTime;
+		animTime += g_frameTime;
 		
 		if ( animTime > 1.0f )
 			animTime = 0.f;
@@ -371,7 +369,7 @@ void MechListBoxItem::update()
 	{
 		if ( userInput->isLeftClick() && isInside )
 		{
-			soundSystem->playDigitalSample( LOG_WRONGBUTTON );	
+			g_gameSoundSystem->playDigitalSample( LOG_WRONGBUTTON );	
 			setMech(); // need to call explicitly
 		}
 
@@ -526,7 +524,6 @@ long MechListBox::AddItem(aListItem* itemString)
 			if ( ((MechListBoxItem*)items[i])->pMech->getMaxWeight() < pItem->pMech->getMaxWeight() )
 			{
 				return InsertItem( itemString, i );
-				break;
 			}
 			else if ( ((MechListBoxItem*)items[i])->pMech->getMaxWeight() == pItem->pMech->getMaxWeight()
 				&& chassisName.Compare( addedName ) > 0 )

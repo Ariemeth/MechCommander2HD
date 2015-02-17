@@ -1441,41 +1441,6 @@ int
 			stride = (*clipExtraLength)[i];
 #endif
 
-
-#if 0
-			for(k=j;k<stride+j;k++)
-			{
-				if(clipExtraCoords[k].x < 0.0f && clipExtraCoords[k].x > -SMALL)
-				{
-					clipExtraCoords[k].x = 0.0f;
-				}
-
-				if(clipExtraCoords[k].y < 0.0f && clipExtraCoords[k].y > -SMALL)
-				{
-					clipExtraCoords[k].y = 0.0f;
-				}
-
-				if(clipExtraCoords[k].z < 0.0f && clipExtraCoords[k].z > -SMALL)
-				{
-					clipExtraCoords[k].z = 0.0f;
-				}
-
-				if(clipExtraCoords[k].x > clipExtraCoords[k].w && clipExtraCoords[k].x < clipExtraCoords[k].w + SMALL)
-				{
-					clipExtraCoords[k].x = clipExtraCoords[k].w;
-				}
-
-				if(clipExtraCoords[k].y > clipExtraCoords[k].w && clipExtraCoords[k].y < clipExtraCoords[k].w + SMALL)
-				{
-					clipExtraCoords[k].y = clipExtraCoords[k].w;
-				}
-
-				if(clipExtraCoords[k].z >= clipExtraCoords[k].w && clipExtraCoords[k].z < clipExtraCoords[k].w + SMALL)
-				{
-					clipExtraCoords[k].z = clipExtraCoords[k].w - SMALL;
-				}
-			}
-#endif
 			for(k=1;k<stride-1;k++)
 			{
 				if(db==false)

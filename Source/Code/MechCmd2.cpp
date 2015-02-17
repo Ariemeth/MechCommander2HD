@@ -99,16 +99,15 @@ bool initCombatLog = false;
 bool initBugLog = false;
 bool initLRMoveLog = false;
 
-extern char FileMissingString[];
-extern char CDMissingString[];
-extern char MissingTitleString[];
-char* ExceptionGameMsg = NULL;
+extern char g_FileMissingString[];
+extern char g_CDMissingString[];
+extern char g_MissingTitleString[];
+char* g_ExceptionGameMsg = NULL;
 
 // GameOS
 DWORD gosResourceHandle = 0;
 HGOSFONT3D gosFontHandle = 0;
 float gosFontScale = 1.0;
-extern HGOSFONT3D FontHandle;
 FloatHelpPtr globalFloatHelp = NULL;
 unsigned long currentFloatHelp = 0;
 
@@ -170,7 +169,7 @@ void initDialogs();
 
 char* GetGameInformation() 
 {
-	return(ExceptionGameMsg);
+	return(g_ExceptionGameMsg);
 }
 
 void UpdateGame()
@@ -194,7 +193,7 @@ void UpdateGame()
 		{
 			if (MPlayer->startMission)
 			{
-				soundSystem->playBettySample(BETTY_NEW_CAMPAIGN);
+				g_gameSoundSystem->playBettySample(BETTY_NEW_CAMPAIGN);
 				MPlayer->waitingToStartMission = false;
 			}
 		}
@@ -207,7 +206,7 @@ void UpdateGame()
 	if (frameRate < Stuff::SMALL)
 		frameRate = 4.0f;
 
-	g_deltaTime = 1.0f / frameRate;
+	g_frameTime = 1.0f / frameRate;
 
 	//-------------------------------------
 	// MCHD TODO: Add a framerate counter
@@ -218,7 +217,7 @@ void UpdateGame()
 
 	//----------------------------------------
 	// Update the Sound System for this frame
-	soundSystem->update();
+	g_gameSoundSystem->update();
 
 	//----------------------------------------
 	// Update all of the timers
@@ -276,9 +275,9 @@ void UpdateGame()
 			//if (MPlayer && MPlayer->isServer())
 			//	MPlayer->sendEndMission(1);
 			if (result < mis_PLAYER_DRAW)
-				soundSystem->playBettySample(BETTY_MISSION_LOST);
+				g_gameSoundSystem->playBettySample(BETTY_MISSION_LOST);
 			else if (result > mis_PLAYER_DRAW)
-				soundSystem->playBettySample(BETTY_MISSION_WON);
+				g_gameSoundSystem->playBettySample(BETTY_MISSION_WON);
 
 			//Gotta get rid of the mission textures before Heidi starts her stuff!
 			// No RAM otherwise in mc2_18.
@@ -331,7 +330,7 @@ void UpdateGame()
 	//---------------------------------------------------
 	// Update heap instrumentation.
 #ifdef LAB_ONLY
-	if (turn > 3)
+	if (g_framesSinceMissionStart > 3)
 		globalHeapList->update();
 #endif
 
@@ -460,9 +459,9 @@ void Initialize()
 	if (testMem)
 		VirtualFree(testMem,0,MEM_RELEASE);
 
-	cLoadString(IDS_MC2_FILEMISSING,FileMissingString,511);
-	cLoadString(IDS_MC2_CDMISSING,CDMissingString,1023);
-	cLoadString(IDS_MC2_MISSING_TITLE,MissingTitleString,255);
+	cLoadString(IDS_MC2_FILEMISSING,g_FileMissingString,511);
+	cLoadString(IDS_MC2_CDMISSING,g_CDMissingString,1023);
+	cLoadString(IDS_MC2_MISSING_TITLE,g_MissingTitleString,255);
 
 	//Check for sufficient hard Drive space on drive game is running from
 	char currentPath[1024];
@@ -687,7 +686,7 @@ void Initialize()
 				long fileNum = 0;
 				char fastFileId[10];
 				char fileName[100];
-				sprintf(fastFileId,"File%d",fileNum);
+				sprintf(fastFileId,"File%ld",fileNum);
 		
 				while (systemFile->readIdString(fastFileId,fileName,99) == NO_ERR)
 				{
@@ -696,7 +695,7 @@ void Initialize()
 						STOP(("Unable to startup fastfiles.  Probably an old one in the directory!!"));
 	
 					fileNum++;
-					sprintf(fastFileId,"File%d",fileNum);
+					sprintf(fastFileId,"File%ld",fileNum);
 				}
 			}
 		}
@@ -817,7 +816,6 @@ void Initialize()
 	strcat( path, temp );	
 	
 	gosFontHandle = gos_LoadFont(path);
-	FontHandle = gosFontHandle;
 	globalFloatHelp = new FloatHelp(MAX_FLOAT_HELPS);
 	
 	//----------------------------------
@@ -884,10 +882,10 @@ void Initialize()
 	
 	//------------------------------------------------
 	// Give the Sound System a Whirl!
-	soundSystem = new GameSoundSystem;
-	soundSystem->init();
-	((SoundSystem *)soundSystem)->init("sound");
-	g_soundSystem = soundSystem; // for things in the lib that use sound
+	g_gameSoundSystem = new GameSoundSystem;
+	g_gameSoundSystem->init();
+	((SoundSystem *)g_gameSoundSystem)->init("sound");
+	g_soundSystem = g_gameSoundSystem; // for things in the lib that use sound
 		
 	//-----------------------------------------------
 	// Only used by camera to retrieve screen coords.
@@ -1095,11 +1093,11 @@ void Terminate()
 
 	//-------------------------------------------------------------
 	// Shut down the soundSytem for a change!
-	if (soundSystem)
+	if (g_gameSoundSystem)
 	{
-		soundSystem->destroy();
-		delete soundSystem;
-		soundSystem = NULL;
+		g_gameSoundSystem->destroy();
+		delete g_gameSoundSystem;
+		g_gameSoundSystem = NULL;
 	}
 
 	//------------------------------------------------
@@ -1560,6 +1558,7 @@ void ParseCommandLine(char *command_line)
 			i++;
 			if (i < n_args) {
 				long teamID = textToLong(argv[i]);
+				(void)teamID;
 				//Turret::turretsEnabled[teamID] = false;
 			}
 		}
@@ -1602,6 +1601,7 @@ void ParseCommandLine(char *command_line)
 			i++;
 			if (i < n_args) {
 				long teamID = textToLong(argv[i]);
+				(void)teamID;
 				//Team::noPain[teamID] = true;
 			}
 		}
@@ -1995,7 +1995,7 @@ void DEBUGWINS_renderSpecialWindows(void) {
 			long curY = Environment.screenHeight - 390;
 			for (long i = 0; i < MPlayer->numTeams; i++) {
 				char s[256];
-				sprintf(s, "Team %d score = %d", i, MPlayer->teamScore[i]);
+				sprintf(s, "Team %ld score = %ld", i, MPlayer->teamScore[i]);
 				gos_TextSetPosition(Environment.screenWidth - 380, curY);
 				gos_TextDraw(s);
 				curY += 10;
@@ -2004,7 +2004,7 @@ void DEBUGWINS_renderSpecialWindows(void) {
 			for (i = 0; i < MAX_MC_PLAYERS; i++)
 				if (MPlayer->playerInfo[i].commanderID > -1) {
 					char s[256];
-					sprintf(s, "Player %d (%s) score = %d, %d kills, %d losses",
+					sprintf(s, "Player %d (%s) score = %ld, %ld kills, %ld losses",
 						i,
 						MPlayer->playerInfo[i].name,
 						MPlayer->playerInfo[i].score,

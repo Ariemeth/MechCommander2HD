@@ -95,6 +95,7 @@ namespace MidLevelRenderer
 			Max_Number_ScreenQuads_Per_Frame,
 			Max_Size_Of_LightMap_MemoryStream;
 
+		// MCHD TODO: !!!MAGIC NUMBERS - RENDERING LIMITS!!!
 		enum {
 			Max_Number_Vertices_Per_Mesh = 1024,
 			Max_Number_Vertices_Per_Polygon = 32,
@@ -112,6 +113,7 @@ namespace MidLevelRenderer
 	void
 		WriteMLRVersion(Stuff::MemoryStream *erf_stream);
 
+	// MCHD TODO: !!!MAGIC NUMBERS - RENDERING LIMITS!!!
 	void InitializeClasses(
 		unsigned Max_Number_Vertices_Per_Frame = 8192,
 		unsigned Max_Number_Primitives_Per_Frame = 1024,

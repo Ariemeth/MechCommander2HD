@@ -202,7 +202,7 @@ void UnitSettingsDlg::DoColorBox( CWnd* pWnd )
 		tmpStr.Replace( "0x", "" );
 
 		long base;
-		sscanf( tmpStr, "%x", &base );
+		sscanf( tmpStr, "%x", (unsigned int *)&base );
 		base &= 0x00ffffff;
 
 
@@ -316,7 +316,7 @@ void UnitSettingsDlg::applyChanges()
 		
 
 			tmpStr.Replace( "0x", "" );
-			sscanf( tmpStr, "%x", &base );
+			sscanf( tmpStr, "%x", (unsigned int *)&base );
 			base |= 0xff000000;
 		}
 		
@@ -334,7 +334,7 @@ void UnitSettingsDlg::applyChanges()
 		
 
 			tmpStr.Replace( "0x", "" );
-			sscanf( tmpStr, "%x", &color1 );
+			sscanf( tmpStr, "%x", (unsigned int *)&color1 );
 			color1 |= 0xff000000;
 		}
 		
@@ -351,7 +351,7 @@ void UnitSettingsDlg::applyChanges()
 		
 
 			tmpStr.Replace( "0x", "" );
-			sscanf( tmpStr, "%x", &color2 );
+			sscanf( tmpStr, "%x", (unsigned int *)&color2 );
 			color2 |= 0xff000000;
 		}
 		
@@ -429,7 +429,7 @@ HBRUSH UnitSettingsDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		tmpStr.Replace( "0x", "" );
 
 		long base;
-		sscanf( tmpStr, "%x", &base );
+		sscanf( tmpStr, "%x", (unsigned int *)&base );
 		base &= 0x00ffffff;
 		base = reverseRGB( base );
 		
@@ -454,7 +454,7 @@ HBRUSH UnitSettingsDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		tmpStr.Replace( "0x", "" );
 
 		long base;
-		sscanf( tmpStr, "%x", &base );
+		sscanf( tmpStr, "%x", (unsigned int *)&base );
 		base &= 0x00ffffff;
 		base = reverseRGB( base );
 
@@ -477,7 +477,7 @@ HBRUSH UnitSettingsDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		tmpStr.Replace( "0x", "" );
 
 		long base;
-		sscanf( tmpStr, "%x", &base );
+		sscanf( tmpStr, "%x", (unsigned int *)&base );
 		base &= 0x00ffffff;
 		base = reverseRGB( base );
 
@@ -622,9 +622,9 @@ void UnitSettingsDlg::updateMemberVariables()
 	highlight1 &= 0x00ffffff;
 	highlight2 &= 0x00ffffff;
 
-	sprintf( pBase, "0x%6x", base );
-	sprintf( pH1, "0x%6x", highlight1 );
-	sprintf( pH2, "0x%6x", highlight2 );	
+	sprintf( pBase, "0x%6x", (unsigned int)base );
+	sprintf( pH1, "0x%6x", (unsigned int)highlight1 );
+	sprintf( pH2, "0x%6x", (unsigned int)highlight2 );	
 
 	if ( bBase )
 	{

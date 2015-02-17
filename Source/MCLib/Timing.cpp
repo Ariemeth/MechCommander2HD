@@ -17,10 +17,10 @@
 #include <math.h>
 
 //----------------------------------------------------------------------------------
-long	turn = 0;
-float	g_deltaTime = 0.05f;
-float	scenarioTime = 0.0;
-DWORD	LastTimeGetTime = 0;
+long	g_framesSinceMissionStart = 0;
+float	g_frameTime = 0.05f;
+float	g_missionTime = 0.0;
+DWORD	lastTimeGetTime = 0;
 bool dynamicFrameTiming = TRUE;
 
 char *monthName[12] = 

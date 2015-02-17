@@ -487,7 +487,7 @@ namespace Stuff {
 			ret += r;
 		}
 
-		ret += stringLength&0x3 ? ((int *)stringText)[i] & andAway[stringLength&0x3-1] : 0;
+		ret += (stringLength & 0x3) ? ((int *)stringText)[i] & andAway[stringLength&0x3-1] : 0;
 
 		return (ret & 0x7fffffff);
 	}

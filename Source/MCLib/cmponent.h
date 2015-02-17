@@ -238,7 +238,7 @@ class MasterComponent {
 
 		char getCriticalSpacesReq (long location) 
 		{
-			if ((location < 0) && (location > NUM_BODY_LOCATIONS))
+			if (location < 0 || location > NUM_BODY_LOCATIONS)
 				return -1;
 
 			return(criticalSpacesReq[location]);
@@ -246,7 +246,7 @@ class MasterComponent {
 
 		void setCriticalSpacesReq (long location, char value) 
 		{
-			if ((location < 0) && (location > NUM_BODY_LOCATIONS))
+			if (location < 0 || location > NUM_BODY_LOCATIONS)
 				return;
 
 			criticalSpacesReq[location] = value;

@@ -423,7 +423,7 @@ Stuff::Vector3D relativePositionToPoint (Stuff::Vector3D point, float angle, flo
 			rayLength = curRay.GetLength();
 
 			curPoint3d.x = curPoint.x;
-			curPoint3d.x = curPoint.y;
+			curPoint3d.y = curPoint.y;
 			curPoint3d.z = 0.0;
 
 			land->worldToCell(curPoint3d, cellR, cellC);
@@ -437,7 +437,7 @@ Stuff::Vector3D relativePositionToPoint (Stuff::Vector3D point, float angle, flo
 			rayLength = curRay.GetLength();
 
 			curPoint3d.x = curPoint.x;
-			curPoint3d.x = curPoint.y;
+			curPoint3d.y = curPoint.y;
 			curPoint3d.z = 0.0;
 
 			land->worldToCell(curPoint3d, cellR, cellC);
@@ -449,34 +449,29 @@ Stuff::Vector3D relativePositionToPoint (Stuff::Vector3D point, float angle, flo
 	// back on map if necessary
 	float maxMap = Terrain::worldUnitsMapSide / 2.0;
 	float safety = maxMap - Terrain::worldUnitsPerVertex;
-	bool offMap = false;
 
 	if (lastGoodPoint.x < -safety)
 	{
 		lastGoodPoint.x = -safety;
-		offMap = true;
 	}
 
 	if (lastGoodPoint.x > safety)
 	{
 		lastGoodPoint.x = safety;
-		offMap = true;
 	}
 
 	if (lastGoodPoint.y < -safety)
 	{
 		lastGoodPoint.y = -safety;
-		offMap = true;
 	}
 
 	if (lastGoodPoint.y > safety)
 	{
 		lastGoodPoint.y = safety;
-		offMap = true;
 	}
 	
 	curPoint3d.x = lastGoodPoint.x;
-	curPoint3d.x = lastGoodPoint.y;
+	curPoint3d.y = lastGoodPoint.y;
 	curPoint3d.z = 0.0;
 
 	curPoint3d.z = land->getTerrainElevation(curPoint3d);
@@ -1052,124 +1047,7 @@ void MissionMap::placeTerrainObject(long objectClass,
 									 bool blocksLineOfFire,
 									 long mineType) {
 
-#if 0
 
-	Assert(objectClass != -1, 0, " MissionMap.placeTerrainObject: bad ObjectClass ");
-
-	long maskTemplateLo = footPrint;
-	long maskTemplateHi = footPrint >> 32;
-	
-	long posTileR = cellRow / MAPCELL_DIM;
-	long posTileC = cellCol / MAPCELL_DIM;
-
-	long tileOriginR = posTileR;
-	long tileOriginC = posTileC;
-
-	long startCellR = cellRow % MAPCELL_DIM;
-	long startCellC = cellCol % MAPCELL_DIM;
-	
-	long cellR = startCellR - 4;
-	long cellC = startCellC - 4;
-
-	while (cellR < 0) {
-		posTileR--;
-		cellR += MAPCELL_DIM;
-	}
-	
-	while (cellC < 0) {
-		posTileC--;
-		cellC += MAPCELL_DIM;
-	}
-	
-	if (objectClass == GATE)
-		blocksLineOfFire = false;
-
-	long startCol = posTileC;
-	long firstCellC = cellC;
-	//------------------------------------------------------------------
-	// We now use the objectClass to do this correctly.
-	if ((objectClass == BUILDING) ||
-		(objectClass == TREEBUILDING) ||
-		(objectClass == GATE) ||
-		(objectClass == TURRET) ||
-		(objectClass == TERRAINOBJECT)) {
-		if (maskTemplateLo || maskTemplateHi) {
-			//---------------------------------------------------------------------
-			// We also need to set the BUILDING flag in the scenario map to indicate
-			// a building exists in this tile...
-			//map[tileOriginR * width + tileOriginC].setBuildingHere(true);
-			switch (objectTypeID) {
-				case 644:
-				case 647:
-				case 690:
-				case 691:
-					map[tileOriginR * width + tileOriginC].setOverlayType(OVERLAY_GATE_CLAN_EW_CLOSED);
-					break;
-				case 645:
-				case 646:
-				case 693:
-				case 692:
-					map[tileOriginR * width + tileOriginC].setOverlayType(OVERLAY_GATE_CLAN_NS_CLOSED);
-					break;
-			}
-				
-			long bits = 0;
-				
-			for (long totalCelRSet = 0;totalCelRSet<8;totalCelRSet++) {
-				for (long totalCelCSet = 0;totalCelCSet<8;totalCelCSet++) {
-					long bitMask = 1 << bits;
-					long maskTemplate = maskTemplateLo;
-					
-					if (bits >= 32) {
-						bitMask = 1 << (bits-32);
-						maskTemplate = maskTemplateHi;
-					}
-					
-					if ((bitMask & maskTemplate) == bitMask) {
-						map[posTileR * width + posTileC].setCellPassable(cellR, cellC, 0);
-						if (blocksLineOfFire)
-							map[posTileR * width + posTileC].setCellLOS(cellR, cellC, 0);
-					}
-						
-					cellC++;
-					if (cellC == MAPCELL_DIM) {
-						cellC = 0;
-						posTileC++;
-					}
-						
-					bits++;
-				}
-					
-				posTileC = startCol;
-				cellC = firstCellC;
-				cellR++;
-				if (cellR == MAPCELL_DIM) {
-					cellR = 0;
-					posTileR++;
-				}
-			}
-		}
-		}
-	else if (objectClass == MINE) {
-
-		//-----------------------------------------------------------
-		// We need to know what cell is in the center of this MINE
-		// We then mark the tile as MINED!!!!
-		// We base it on the MineTypeNumber stored in the Mine Class.
-		if (mineType == 3)		//Force into only one slots instead of three
-			mineType = 2;
-		if (mineType == 1)		//Force into only one slots instead of three
-			mineType = 2;
-		if (mineType == 13)		//Force into only one slots instead of three
-			mineType = 12;
-		if (mineType == 11)		//Force into only one slots instead of three
-			mineType = 12;
-		if (mineType > 10) // 10-07-98 HKG hack!  Mines are off by a tile in each direction
-			map[(tileOriginR) * width + tileOriginC].setInnerSphereMine(mineType - 10);
-		else
-			map[(tileOriginR)* width + tileOriginC].setClanMine(mineType);
-	}
-#endif
 }	
 
 //---------------------------------------------------------------------------
@@ -1365,19 +1243,6 @@ bool MovePath::isBlocked (long start, long range, bool* reachedEnd) {
 
 long MovePath::crossesBridge (long start, long range) {
 
-	if (start == -1)
-		start = curStep;
-	long lastStep = start + range;
-	if (lastStep >= numStepsWhenNotPaused)
-		lastStep = numStepsWhenNotPaused;
-	//We need to redo this code when bridges are in cause they are objects now!!
-#if 0
-	for (long i = start; i < lastStep; i++) {
-		long overlayType = GameMap->getOverlay(stepList[i].cell[0], stepList[i].cell[1]);
-		if (OverlayIsBridge[overlayType])
-			return(GlobalMoveMap[0]->calcArea(stepList[i].cell[0], stepList[i].cell[1]));
-	}
-#endif
 	return(-1);
 }
 
@@ -1415,19 +1280,6 @@ long MovePath::crossesClosedISGate (long start, long range) {
 
 long MovePath::crossesClosedGate (long start, long range) {
 
-	if (start == -1)
-		start = curStep;
-	long lastStep = start + range;
-	if (lastStep >= numStepsWhenNotPaused)
-		lastStep = numStepsWhenNotPaused;
-	//Probably should have redone this code cause gates aren't overlays anymore?
-#if 0
-	for (long i = start; i < lastStep; i++) {
-		long overlayType = GameMap->getOverlay(stepList[i].cell[0], stepList[i].cell[1]);
-		if (OverlayIsClosedGate[overlayType])
-			return(i);
-	}
-#endif
 	return(-1);
 }
 
@@ -2654,7 +2506,6 @@ long GlobalMap::getPathCost (long startArea, long goalArea, bool withSpecialArea
 	if (startArea == goalArea)
 		return(1);
 
-#if 1
 	GlobalPathStep path[MAX_GLOBAL_PATH];
 	if (withSpecialAreas)
 		useClosedAreas = true;
@@ -2664,68 +2515,6 @@ long GlobalMap::getPathCost (long startArea, long goalArea, bool withSpecialArea
 	useClosedAreas = false;
 	confidence = GLOBAL_CONFIDENCE_GOOD;
 	return(cost);
-#else
-	calcedPathCost = false;
-	unsigned char data = pathCostTable[startArea * numAreas + goalArea];
-	if (withSpecialAreas) {
-		unsigned char cost = (data & 0x0C) >> 2;
-		if (data & GLOBAL_FLAG_SPECIAL_IMPOSSIBLE) {
-			cost = 0;
-			confidence = GLOBAL_CONFIDENCE_GOOD;
-			}
-		else if (data & GLOBAL_FLAG_SPECIAL_CALC) {
-			if (calcIt) {
-				GlobalPathStep path[MAX_GLOBAL_PATH];
-				useClosedAreas = true;
-				calcPath(startArea, goalArea, path);
-				useClosedAreas = false;
-				cost = getPathCost(startArea, goalArea, true, confidence, false);
-				calcedPathCost = true;
-				confidence = GLOBAL_CONFIDENCE_GOOD;
-				}
-			else
-				confidence = GLOBAL_CONFIDENCE_BAD;
-			}
-		else
-			confidence = GLOBAL_CONFIDENCE_GOOD;
-		return(cost);
-		}
-	else {
-		unsigned char cost = (data & 0x03);
-		if (data & GLOBAL_FLAG_SPECIAL_IMPOSSIBLE) {
-			cost = 0;
-			confidence = GLOBAL_CONFIDENCE_GOOD;
-			}
-		else if (data & GLOBAL_FLAG_NORMAL_CLOSES) {
-			if (calcIt) {
-				GlobalPathStep path[MAX_GLOBAL_PATH];
-				calcPath(startArea, goalArea, path);
-				cost = getPathCost(startArea, goalArea, false, confidence, false);
-				calcedPathCost = true;
-				confidence = GLOBAL_CONFIDENCE_GOOD;
-				}
-			else if (cost)
-				confidence = GLOBAL_CONFIDENCE_BAD;
-			else
-				confidence = GLOBAL_CONFIDENCE_GOOD;
-			}
-		else if (data & GLOBAL_FLAG_NORMAL_OPENS) {
-			if (calcIt) {
-				GlobalPathStep path[MAX_GLOBAL_PATH];
-				calcPath(startArea, goalArea, path);
-				cost = getPathCost(startArea, goalArea, false, confidence, false);
-				calcedPathCost = true;
-				confidence = GLOBAL_CONFIDENCE_GOOD;
-				}
-			else
-				confidence = GLOBAL_CONFIDENCE_AT_LEAST;
-			}
-		else
-			confidence = GLOBAL_CONFIDENCE_GOOD;
-		return(cost);
-	}
-	return(0);
-#endif
 }
 
 //---------------------------------------------------------------------------
@@ -3899,7 +3688,7 @@ bool GlobalMap::toggleLog (void) {
 		long err = log->open("lrmove.log");
 		if (err)
 			Fatal(0, " Couldn't open lrmove log ");
-#if 1
+
 		GlobalMapPtr map = GlobalMoveMap[0];
 		if (true) {
 			char s[256];
@@ -3946,7 +3735,6 @@ bool GlobalMap::toggleLog (void) {
 			}
 			log->write(" ");
 		}
-#endif
 	}
 	logEnabled = !logEnabled;
 	return(logEnabled);
@@ -4387,9 +4175,6 @@ long MoveMap::setUp (long mapULr,
 	bool followRoads = ((params & MOVEPARAM_FOLLOW_ROADS) != 0);
 	bool traverseShallowWater = ((params & (MOVEPARAM_WATER_SHALLOW + MOVEPARAM_WATER_DEEP)) != 0);
 	bool traverseDeepWater = ((params & MOVEPARAM_WATER_DEEP) != 0);
-	bool avoidMines = true;
-	if (params & MOVEPARAM_SWEEP_MINES)
-		avoidMines = false;
 
 	//-------------------------------------------------
 	// Now that the params are set up, build the map...
@@ -4623,9 +4408,6 @@ long MoveMap::setUp (long level,
 	bool followRoads = ((params & MOVEPARAM_FOLLOW_ROADS) != 0);
 	bool traverseShallowWater = ((params & (MOVEPARAM_WATER_SHALLOW + MOVEPARAM_WATER_DEEP)) != 0);
 	bool traverseDeepWater = ((params & MOVEPARAM_WATER_DEEP) != 0);
-	bool avoidMines = true;
-	if (params & MOVEPARAM_SWEEP_MINES)
-		avoidMines = false;
 
 	//--------------------------------------------------------------
 	// Set the map costs based upon the tiles in the scenario map...
@@ -4911,14 +4693,12 @@ inline void MoveMap::propogateCostJUMP (long r, long c, long cost, long g) {
 						if ((succMapNode->hPrime != HPRIME_NOT_CALCED) && (succMapNode->hPrime < MaxHPrime)) {
 							char dirToParent = reverseShift[dir];
 
-							bool jumping = false;
 							long cost = succMapNode->cost;
 							
 							//------------------------------------
 							// Diagonal movement is more costly...
 							gosASSERT(cost > 0);
 							if (dir > 7) {
-								jumping = true;
 								if (JumpOnBlocked)
 									cost = jumpCost;
 								else
@@ -5375,7 +5155,7 @@ long MoveMap::calcPath (MovePathPtr path, Stuff::Vector3D* goalWorldPos, long* g
 		#ifdef TIME_PATH
 			QueryPerformanceCounter(calcStop);
 			calcTime = float(calcStop.LowPart - calcStart.LowPart) / float(countsPerSecond.LowPart);
-			if (debugger && (scenarioTime > 0.0)) {
+			if (debugger && (g_missionTime > 0.0)) {
 				char s[50];
 				sprintf(s, "path calc: %.4f\n", calcTime);
 				OutputDebugString(s);
@@ -5395,7 +5175,7 @@ long MoveMap::calcPath (MovePathPtr path, Stuff::Vector3D* goalWorldPos, long* g
 	#ifdef TIME_PATH
 		QueryPerformanceCounter(calcStop);
 		calcTime = float(calcStop.LowPart - calcStart.LowPart) / float(countsPerSecond.LowPart);
-		if (debugger && (scenarioTime > 0.0)) {
+		if (debugger && (g_missionTime > 0.0)) {
 			char s[50];
 			sprintf(s, "path calc: %.4f", calcTime);
 			debugger->print(s);
@@ -5570,13 +5350,11 @@ long MoveMap::calcPathJUMP (MovePathPtr path, Stuff::Vector3D* goalWorldPos, lon
 
 						//----------------------------------------------------
 						// What's our cost to go from START to this SUCCESSOR?
-						bool jumping = false;
 						long cost = succMapNode->cost;
 						//------------------------------------
 						// Diagonal movement is more costly...
 						gosASSERT(cost > 0);
 						if (dir > 7) {
-							jumping = true;
 							if (JumpOnBlocked)
 								cost = jumpCost;
 							else
@@ -5664,23 +5442,6 @@ long MoveMap::calcPathJUMP (MovePathPtr path, Stuff::Vector3D* goalWorldPos, lon
 			pathDebugFile = NULL;
 		}
 	#endif
-
-#if 0		//REdo when bridges are done
-	if (ClearBridgeTiles) {
-		overlayWeightTable[OVERLAY_WATER_BRIDGE_NS * MAPCELL_DIM * MAPCELL_DIM + 1] += COST_BLOCKED;
-		overlayWeightTable[OVERLAY_WATER_BRIDGE_NS * MAPCELL_DIM * MAPCELL_DIM + 4] += COST_BLOCKED;
-		overlayWeightTable[OVERLAY_WATER_BRIDGE_NS * MAPCELL_DIM * MAPCELL_DIM + 7] += COST_BLOCKED;
-		overlayWeightTable[OVERLAY_WATER_BRIDGE_EW * MAPCELL_DIM * MAPCELL_DIM + 1] += COST_BLOCKED;
-		overlayWeightTable[OVERLAY_WATER_BRIDGE_EW * MAPCELL_DIM * MAPCELL_DIM + 4] += COST_BLOCKED;
-		overlayWeightTable[OVERLAY_WATER_BRIDGE_EW * MAPCELL_DIM * MAPCELL_DIM + 7] += COST_BLOCKED;
-		overlayWeightTable[OVERLAY_RAILROAD_WATER_BRIDGE_NS * MAPCELL_DIM * MAPCELL_DIM + 1] += COST_BLOCKED;
-		overlayWeightTable[OVERLAY_RAILROAD_WATER_BRIDGE_NS * MAPCELL_DIM * MAPCELL_DIM + 4] += COST_BLOCKED;
-		overlayWeightTable[OVERLAY_RAILROAD_WATER_BRIDGE_NS * MAPCELL_DIM * MAPCELL_DIM + 7] += COST_BLOCKED;
-		overlayWeightTable[OVERLAY_RAILROAD_WATER_BRIDGE_EW * MAPCELL_DIM * MAPCELL_DIM + 1] += COST_BLOCKED;
-		overlayWeightTable[OVERLAY_RAILROAD_WATER_BRIDGE_EW * MAPCELL_DIM * MAPCELL_DIM + 4] += COST_BLOCKED;
-		overlayWeightTable[OVERLAY_RAILROAD_WATER_BRIDGE_EW * MAPCELL_DIM * MAPCELL_DIM + 7] += COST_BLOCKED;
-	}
-#endif
 
 	if (goalFound) {
 		//-------------------------------------------
@@ -5845,7 +5606,7 @@ long MoveMap::calcPathJUMP (MovePathPtr path, Stuff::Vector3D* goalWorldPos, lon
 		#ifdef TIME_PATH
 			QueryPerformanceCounter(calcStop);
 			calcTime = float(calcStop.LowPart - calcStart.LowPart) / float(countsPerSecond.LowPart);
-			if (debugger && (scenarioTime > 0.0)) {
+			if (debugger && (g_missionTime > 0.0)) {
 				char s[50];
 				sprintf(s, "path calc: %.4f\n", calcTime);
 				OutputDebugString(s);
@@ -5859,7 +5620,7 @@ long MoveMap::calcPathJUMP (MovePathPtr path, Stuff::Vector3D* goalWorldPos, lon
 	#ifdef TIME_PATH
 		QueryPerformanceCounter(calcStop);
 		calcTime = float(calcStop.LowPart - calcStart.LowPart) / float(countsPerSecond.LowPart);
-		if (debugger && (scenarioTime > 0.0)) {
+		if (debugger && (g_missionTime > 0.0)) {
 			char s[50];
 			sprintf(s, "path calc: %.4f", calcTime);
 			debugger->print(s);
@@ -6035,12 +5796,10 @@ long MoveMap::calcEscapePath (MovePathPtr path, Stuff::Vector3D* goalWorldPos, l
 
 						//----------------------------------------------------
 						// What's our cost to go from START to this SUCCESSOR?
-						bool jumping = false;
 						long cost = succMapNode->cost;
 						//------------------------------------
 						// Diagonal movement is more costly...
 						if (dir > 7) {
-							jumping = true;
 							if (JumpOnBlocked)
 								cost = jumpCost;
 							else
@@ -6128,23 +5887,6 @@ long MoveMap::calcEscapePath (MovePathPtr path, Stuff::Vector3D* goalWorldPos, l
 			pathDebugFile = NULL;
 		}
 	#endif
-
-#if 0	//Redo when bridges are done
-	if (ClearBridgeTiles) {
-		overlayWeightTable[OVERLAY_WATER_BRIDGE_NS * MAPCELL_DIM * MAPCELL_DIM + 1] += COST_BLOCKED;
-		overlayWeightTable[OVERLAY_WATER_BRIDGE_NS * MAPCELL_DIM * MAPCELL_DIM + 4] += COST_BLOCKED;
-		overlayWeightTable[OVERLAY_WATER_BRIDGE_NS * MAPCELL_DIM * MAPCELL_DIM + 7] += COST_BLOCKED;
-		overlayWeightTable[OVERLAY_WATER_BRIDGE_EW * MAPCELL_DIM * MAPCELL_DIM + 1] += COST_BLOCKED;
-		overlayWeightTable[OVERLAY_WATER_BRIDGE_EW * MAPCELL_DIM * MAPCELL_DIM + 4] += COST_BLOCKED;
-		overlayWeightTable[OVERLAY_WATER_BRIDGE_EW * MAPCELL_DIM * MAPCELL_DIM + 7] += COST_BLOCKED;
-		overlayWeightTable[OVERLAY_RAILROAD_WATER_BRIDGE_NS * MAPCELL_DIM * MAPCELL_DIM + 1] += COST_BLOCKED;
-		overlayWeightTable[OVERLAY_RAILROAD_WATER_BRIDGE_NS * MAPCELL_DIM * MAPCELL_DIM + 4] += COST_BLOCKED;
-		overlayWeightTable[OVERLAY_RAILROAD_WATER_BRIDGE_NS * MAPCELL_DIM * MAPCELL_DIM + 7] += COST_BLOCKED;
-		overlayWeightTable[OVERLAY_RAILROAD_WATER_BRIDGE_EW * MAPCELL_DIM * MAPCELL_DIM + 1] += COST_BLOCKED;
-		overlayWeightTable[OVERLAY_RAILROAD_WATER_BRIDGE_EW * MAPCELL_DIM * MAPCELL_DIM + 4] += COST_BLOCKED;
-		overlayWeightTable[OVERLAY_RAILROAD_WATER_BRIDGE_EW * MAPCELL_DIM * MAPCELL_DIM + 7] += COST_BLOCKED;
-	}
-#endif
 
 	if (goalFound) {
 		//-------------------------------------------
@@ -6303,7 +6045,7 @@ long MoveMap::calcEscapePath (MovePathPtr path, Stuff::Vector3D* goalWorldPos, l
 		#ifdef TIME_PATH
 			QueryPerformanceCounter(calcStop);
 			calcTime = float(calcStop.LowPart - calcStart.LowPart) / float(countsPerSecond.LowPart);
-			if (debugger && (scenarioTime > 0.0)) {
+			if (debugger && (g_missionTime > 0.0)) {
 				char s[50];
 				sprintf(s, "path calc: %.4f\n", calcTime);
 				OutputDebugString(s);
@@ -6317,7 +6059,7 @@ long MoveMap::calcEscapePath (MovePathPtr path, Stuff::Vector3D* goalWorldPos, l
 	#ifdef TIME_PATH
 		QueryPerformanceCounter(calcStop);
 		calcTime = float(calcStop.LowPart - calcStart.LowPart) / float(countsPerSecond.LowPart);
-		if (debugger && (scenarioTime > 0.0)) {
+		if (debugger && (g_missionTime > 0.0)) {
 			char s[50];
 			sprintf(s, "path calc: %.4f", calcTime);
 			debugger->print(s);

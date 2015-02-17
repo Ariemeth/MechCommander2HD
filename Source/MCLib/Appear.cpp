@@ -54,10 +54,9 @@ void * Appearance::operator new (size_t mySize)
 //---------------------------------------------------------------------------
 void Appearance::operator delete (void * us)
 {
-	long result;
 	if (AppearanceTypeList::appearanceHeap && AppearanceTypeList::appearanceHeap->heapReady())
 	{
-		result = AppearanceTypeList::appearanceHeap->Free(us);
+		AppearanceTypeList::appearanceHeap->Free(us);
 	}
 }		
 
@@ -77,13 +76,14 @@ void Appearance::drawTextHelp (char *text, unsigned long color)
 	moveHere.z = width;
 	moveHere.w = height;
 
-	globalFloatHelp->setFloatHelp(text,moveHere,color,SD_BLACK,1.0f,true,false,false,false);
+	globalFloatHelp->setFloatHelp(text,moveHere,color,SD_BLACK,1.0f,true,true,false,false); // MCHD CHANGE (02/17/15): Made hover text bold
 }
 
 void Appearance::drawTextHelp( char* text )
 {
 	drawTextHelp( text, SD_GREEN );
 }
+
 void Appearance::drawPilotName(char *text, unsigned long color )
 {
 	DWORD width, height;
@@ -91,7 +91,7 @@ void Appearance::drawPilotName(char *text, unsigned long color )
 	moveHere = screenPos;
 
 
-	gos_TextSetAttributes (gosFontHandle, 0, gosFontScale, false, true, false, false);
+	gos_TextSetAttributes(gosFontHandle, 0, gosFontScale, false, true, true, false); // MCHD CHANGE (02/17/15): Made hover text bold
 	gos_TextStringLength(&width,&height,text);
 
 	moveHere.y = lowerRight.y + 10.0f + height;
@@ -99,7 +99,7 @@ void Appearance::drawPilotName(char *text, unsigned long color )
 	moveHere.z = width;
 	moveHere.w = height;
 
-	globalFloatHelp->setFloatHelp(text,moveHere,color,SD_BLACK,1.0f,true,false,false,false);
+	globalFloatHelp->setFloatHelp(text, moveHere, color, SD_BLACK, 1.0f, true, true, false, false); // MCHD CHANGE (02/17/15): Made hover text bold
 }
 
 //---------------------------------------------------------------------------

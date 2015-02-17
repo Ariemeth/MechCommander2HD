@@ -117,17 +117,6 @@ namespace MidLevelRenderer {
 					else
 						return gos_vertices+numGOSVertices;
 				}
-#if 0
-		virtual unsigned short*
-			GetGOSIndices(int pass=0)
-				{
-					Check_Object(this);
-					if(pass==0)
-						return gos_indices;
-					else
-						return gos_indices2;
-				}
-#endif
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Class Data Support
 	//

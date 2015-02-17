@@ -200,7 +200,7 @@ void IfaceCallStrike (long strikeID,
 		case ARTILLERY_SMALL:
 			if (playerStrike && Team::home->teamLineOfSight(strikeLocation,0.0f))
 			{
-				soundSystem->playDigitalSample(MAPBUTTONS_GUI);
+				g_gameSoundSystem->playDigitalSample(MAPBUTTONS_GUI);
 			}
 			break;
 	}
@@ -281,10 +281,10 @@ void ArtilleryChunk::pack (void) {
 	data |= cellRC[1];
 
 	data <<= ARTILLERYCHUNK_STRIKETYPE_BITS;
-	data |= strikeType;
+	data |= (unsigned char)strikeType;
 
 	data <<= ARTILLERYCHUNK_COMMANDERID_BITS;
-	data |= commanderId;
+	data |= (unsigned char)commanderId;
 }
 
 //---------------------------------------------------------------------------
@@ -484,17 +484,17 @@ long ArtilleryType::init (FilePtr objFile, unsigned long fileSize) {
 		{
 			char explosionId[50];
 
-			sprintf(explosionId,"ExplosionDelay%d",i);
+			sprintf(explosionId,"ExplosionDelay%ld",i);
 			result = miFile.readIdFloat(explosionId,explosionDelay[i]);
 			if (result != NO_ERR)
 				return(result);
 				
-			sprintf(explosionId,"ExplosionOffsetX%d",i);
+			sprintf(explosionId,"ExplosionOffsetX%ld",i);
 			result = miFile.readIdFloat(explosionId,explosionOffsetX[i]);
 			if (result != NO_ERR)
 				return(result);
 
-			sprintf(explosionId,"ExplosionOffsetY%d",i);
+			sprintf(explosionId,"ExplosionOffsetY%ld",i);
 			result = miFile.readIdFloat(explosionId,explosionOffsetY[i]);
 			if (result != NO_ERR)
 				return(result);
@@ -638,7 +638,7 @@ void Artillery::init (bool create)
 	info.strike.timeToLaunch = -1.0;
 			
 	info.strike.sensorRange = 0.0;
-	info.strike.contactUpdate = scenarioTime;
+	info.strike.contactUpdate = g_missionTime;
 	info.strike.sensorSystemIndex = -1;
 
 	info.strike.timeToBlind = 0.0;
@@ -840,7 +840,7 @@ void Artillery::setJustCreated (void)
 					shapeOrigin.BuildRotation(Stuff::EulerAngles(0.0f,0.0f,0.0f));
 					shapeOrigin.BuildTranslation(actualPosition);
 					
-					gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+					gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 					hitEffect->Start(&info);
 				} 
 			}
@@ -857,8 +857,8 @@ long Artillery::update (void)
 	}
 	else
 	{
-		info.strike.timeToImpact -= g_deltaTime;
-		info.strike.timeToLaunch -= g_deltaTime;	
+		info.strike.timeToImpact -= g_frameTime;
+		info.strike.timeToLaunch -= g_frameTime;	
 	}
 
 	ArtilleryTypePtr type = (ArtilleryTypePtr)getObjectType();
@@ -867,7 +867,7 @@ long Artillery::update (void)
 	recalcBounds(eye);		//Are we even visible?
 	if (inView)
 	{
-		windowsVisible = turn;
+		windowsVisible = g_framesSinceMissionStart;
 	}
 	
 	//-------------------------------------------------------------------------------
@@ -891,7 +891,7 @@ long Artillery::update (void)
 			shapeOrigin.BuildTranslation(actualPosition);
 	
 			Stuff::OBB boundingBox;
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,&boundingBox);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,&boundingBox);
 	
 			bool result = hitEffect->Execute(&info);
 			if (!result)
@@ -960,7 +960,7 @@ long Artillery::update (void)
  			shapeOrigin.BuildRotation(Stuff::EulerAngles(0.0f,0.0f,0.0f));
 			shapeOrigin.BuildTranslation(actualPosition);
 			
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 			rightContrail->Start(&info);
 		}
 		
@@ -978,7 +978,7 @@ long Artillery::update (void)
 			shapeOrigin.BuildRotation(Stuff::EulerAngles(0.0f,0.0f,0.0f));
 			shapeOrigin.BuildTranslation(actualPosition);
 			
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 			leftContrail->Start(&info);
 		}
 	}
@@ -1005,7 +1005,7 @@ long Artillery::update (void)
 			shapeOrigin.BuildTranslation(actualPosition);
 	
 			Stuff::OBB boundingBox;
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,&boundingBox);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,&boundingBox);
 	
 			leftContrail->Execute(&info);
 		}
@@ -1025,7 +1025,7 @@ long Artillery::update (void)
 			shapeOrigin.BuildTranslation(actualPosition);
 	
 			Stuff::OBB boundingBox;
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,&boundingBox);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,&boundingBox);
 	
 			rightContrail->Execute(&info);
 		}
@@ -1033,10 +1033,10 @@ long Artillery::update (void)
 	
 	if ((info.strike.timeToImpact <= 5.5) && !getFlag(OBJECT_FLAG_WHOOSH)) 
 	{
-		if (soundSystem && (type->nominalDamage > 0.0)) 
+		if (g_gameSoundSystem && (type->nominalDamage > 0.0)) 
 		{
 			setFlag(OBJECT_FLAG_WHOOSH, true);
-			soundSystem->playDigitalSample(INCOMING_AIRSTRIKE,position,true);
+			g_gameSoundSystem->playDigitalSample(INCOMING_AIRSTRIKE,position,true);
 		}
 	}
 
@@ -1059,7 +1059,7 @@ long Artillery::update (void)
 			shapeOrigin.BuildRotation(Stuff::EulerAngles(0.0f,0.0f,0.0f));
 			shapeOrigin.BuildTranslation(actualPosition);
 			
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 			hitEffect->Start(&info);
 		}
 		
@@ -1078,7 +1078,7 @@ long Artillery::update (void)
 			shapeOrigin.BuildTranslation(actualPosition);
 	
 			Stuff::OBB boundingBox;
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,&boundingBox);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,&boundingBox);
 	
 			bool result = hitEffect->Execute(&info);
 			if (!result)
@@ -1097,7 +1097,7 @@ long Artillery::update (void)
 	// Sensor round is ticking now.  Update Everything.
 	if ((info.strike.timeToBlind > 0.0) && getFlag(OBJECT_FLAG_SENSORS_GOING)) 
 	{
-		info.strike.timeToBlind -= g_deltaTime;
+		info.strike.timeToBlind -= g_frameTime;
 		info.strike.sensorRange = info.strike.timeToBlind / type->nominalSensorTime;
 		info.strike.sensorRange *= type->nominalSensorRange;
 		info.strike.sensorRange *= worldUnitsPerMeter;
@@ -1145,7 +1145,7 @@ long Artillery::update (void)
 			shapeOrigin.BuildTranslation(actualPosition);
 	
 			Stuff::OBB boundingBox;
-			gosFX::Effect::ExecuteInfo xinfo((Stuff::Time)scenarioTime,&shapeOrigin,&boundingBox);
+			gosFX::Effect::ExecuteInfo xinfo((Stuff::Time)g_missionTime,&shapeOrigin,&boundingBox);
 	
 			bool result = hitEffect->Execute(&xinfo);
 			if (!result)
@@ -1397,7 +1397,7 @@ void Artillery::render (void)
 		
 			if (appearance->canBeSeen())
 			{
-				windowsVisible = turn;
+				windowsVisible = g_framesSinceMissionStart;
 				appearance->setVisibility(true,true);
 				appearance->render(-1);
 			}
@@ -1796,7 +1796,7 @@ void Artillery::Load (ArtilleryData *data)
 			shapeOrigin.BuildRotation(Stuff::EulerAngles(0.0f,0.0f,0.0f));
 			shapeOrigin.BuildTranslation(actualPosition);
 
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 			hitEffect->Start(&info);
 		} 
 	}

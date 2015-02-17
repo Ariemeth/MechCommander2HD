@@ -222,14 +222,7 @@ void
 {
 	Check_Object(this);
 
-#if 1
 	Verify(colors.GetLength() == litColors.GetLength());
-#else
-	if(colors.GetLength() == litColors.GetLength())
-	{
-		litColors.SetLength(colors.GetLength());
-	}
-#endif
 
 	int k, len = litColors.GetLength();
 

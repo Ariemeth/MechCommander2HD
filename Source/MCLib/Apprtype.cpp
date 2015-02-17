@@ -55,10 +55,9 @@ void* AppearanceType::operator new (size_t memSize)
 //---------------------------------------------------------------------------
 void AppearanceType::operator delete (void* treePtr)
 {
-	long result;
 	if (AppearanceTypeList::appearanceHeap && AppearanceTypeList::appearanceHeap->heapReady())
 	{
-		result = AppearanceTypeList::appearanceHeap->Free(treePtr);
+		AppearanceTypeList::appearanceHeap->Free(treePtr);
 	}
 }
 
@@ -404,7 +403,6 @@ long AppearanceTypeList::removeAppearance (AppearanceTypePtr which)
 	
 	//----------------------------------------------------------
 	// NEVER remove the types anymore.  Save cache time!
-//#if 0
 	if (appearanceType && (appearanceType->numUsers == 0))
 	{
 		//------------------------------------------------------
@@ -428,7 +426,6 @@ long AppearanceTypeList::removeAppearance (AppearanceTypePtr which)
 		delete appearanceType;
 		appearanceType = NULL;
 	}
-//#endif
 	
 	return NO_ERR;
 }

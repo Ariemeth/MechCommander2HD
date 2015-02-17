@@ -249,20 +249,7 @@ LONG WINAPI DwExceptionFilter(LPEXCEPTION_POINTERS pep)
 				ReleaseMutex(hMutex);
 			}
 		}
-
-#if 0		
-		// did we get attached?
-		// Again, do NOT term the current APP.  Late GameOS have its shot at the exception.
-		if (WaitForSingleObject(hEventDBAttach, 1) == WAIT_OBJECT_0)
-		{
-			// yes, die
-			MessageBox(NULL, "DB Attach ", "out", MB_OK);
-			CloseHandle(hEventAlive);
-			CloseHandle(hEventDone);
-			CloseHandle(hMutex);
-			TerminateProcess(GetCurrentProcess(), 0);
-		}
-#endif		
+	
 		// no, clean up
 		CloseHandle(hEventAlive);
 		CloseHandle(hEventDone);

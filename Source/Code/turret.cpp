@@ -384,7 +384,7 @@ long Turret::setTeamId (long _teamId, bool setup) {
 										  0x0000007f, 0x0000007f,
 										  0x0000007f, 0x0000007f};
 
-	if ((turn > 10) && (teamId > -1) && (teamId < 8))
+	if ((g_framesSinceMissionStart > 10) && (teamId > -1) && (teamId < 8))
 		appearance->flashBuilding(5.0,0.5,highLight[teamId]);
 	
 	return(NO_ERR);
@@ -573,11 +573,11 @@ long Turret::update (void)
 		appearance->setMoverParameters(turretRotation,0.0f,0.0f);
 		bool inView = appearance->recalcBounds();
 	
-		if (inView || !didReveal || (turn < 4))
+		if (inView || !didReveal || (g_framesSinceMissionStart < 4))
 		{
 			appearance->setInView(true);
 			appearance->update();
-			windowsVisible = turn;
+			windowsVisible = g_framesSinceMissionStart;
 			didReveal = true;
 		}
 		
@@ -623,7 +623,7 @@ long Turret::update (void)
 	{
 		if ( active ) // play this sound regardless of wether its a turret control or generator
 		{
-			soundSystem->playBettySample( BETTY_GENERATOR_DESTROYED );
+			g_gameSoundSystem->playBettySample( BETTY_GENERATOR_DESTROYED );
 		}
 		active = false;
 		setAwake(false);
@@ -639,8 +639,8 @@ long Turret::update (void)
 		(ObjectManager->getByWatchID(parent)->getTeamId() != getTeamId()))
 	{
 		// if building recaptured play a sound
-		if ((ObjectManager->getByWatchID(parent)->getTeamId() != Team::home->getId()) && (turn > 5) && (getTeamId() != -1))
-			soundSystem->playBettySample(BETTY_BUILDING_RECAPTURED);
+		if ((ObjectManager->getByWatchID(parent)->getTeamId() != Team::home->getId()) && (g_framesSinceMissionStart > 5) && (getTeamId() != -1))
+			g_gameSoundSystem->playBettySample(BETTY_BUILDING_RECAPTURED);
 
 		setTeamId(ObjectManager->getByWatchID(parent)->getTeam()->getId(),false);
 	}
@@ -653,7 +653,7 @@ long Turret::update (void)
 	}
 
 	//Must reveal every frame now for REAL LOS!!
-	if ((turn > 1) && active && getTeam())
+	if ((g_framesSinceMissionStart > 1) && active && getTeam())
 	{
 		if (turretsEnabled[getTeamId()]) 
 		{
@@ -683,13 +683,13 @@ long Turret::update (void)
 			float maxRate = ((TurretTypePtr)getObjectType())->turretYawRate;
 			if (turretFacing < 0.0)
 			{
-				turretTurnRate = maxRate*g_deltaTime;
+				turretTurnRate = maxRate*g_frameTime;
 				if (turretTurnRate > fabs(turretFacing))
 					turretTurnRate = fabs(turretFacing);
 			}
 			else
 			{
-				turretTurnRate = -maxRate*g_deltaTime;
+				turretTurnRate = -maxRate*g_frameTime;
 				if (turretTurnRate < -turretFacing)
 					turretTurnRate = -turretFacing;
 			}
@@ -716,13 +716,13 @@ long Turret::update (void)
 			float maxRate = ((TurretTypePtr)getObjectType())->turretYawRate;
 			if (turretFacing < 0.0)
 			{
-				turretTurnRate = maxRate*g_deltaTime;
+				turretTurnRate = maxRate*g_frameTime;
 				if (turretTurnRate > fabs(turretFacing))
 					turretTurnRate = fabs(turretFacing);
 			}
 			else
 			{
-				turretTurnRate = -maxRate*g_deltaTime;
+				turretTurnRate = -maxRate*g_frameTime;
 				if (turretTurnRate < -turretFacing)
 					turretTurnRate = -turretFacing;
 			}
@@ -733,7 +733,7 @@ long Turret::update (void)
 		{
 			setFlag(OBJECT_FLAG_FACING_TARGET,true);
 			
-			idleWait += g_deltaTime;
+			idleWait += g_frameTime;
 			if (idleWait > 10.0f)
 			{
 				//Since we are idling, pick a new random position to point to.
@@ -796,11 +796,11 @@ long Turret::update (void)
 	bool inView = appearance->recalcBounds();
 	long canFire = updateAnimations();
 
-	if (inView || !didReveal || (turn < 4))
+	if (inView || !didReveal || (g_framesSinceMissionStart < 4))
 	{
 		appearance->setInView(true);
 		appearance->update();
-		windowsVisible = turn;
+		windowsVisible = g_framesSinceMissionStart;
 		didReveal = true;
 	}
 
@@ -959,7 +959,7 @@ bool Turret::isWeaponReady (long weaponId)
 	if (((TurretTypePtr)getObjectType())->weaponMasterId[weaponId] == -1)
 		return false;
  
-	if ((readyTime[weaponId] > scenarioTime) || !getFlag(OBJECT_FLAG_CAN_FIRE) || !getFlag(OBJECT_FLAG_FACING_TARGET))
+	if ((readyTime[weaponId] > g_missionTime) || !getFlag(OBJECT_FLAG_CAN_FIRE) || !getFlag(OBJECT_FLAG_FACING_TARGET))
 		return(false);
 		
 	return(true);
@@ -996,7 +996,6 @@ float Turret::calcAttackChance (GameObjectPtr target, long* range, long weaponId
 	// First, let's find out what kind of object we're targeting...
 	Stuff::Vector3D targetPosition(0.0f,0.0f,0.0f);
 	BattleMechPtr mech = NULL;
-	GroundVehiclePtr vehicle = NULL;
 	
  	if (target) 
 	{
@@ -1005,9 +1004,6 @@ float Turret::calcAttackChance (GameObjectPtr target, long* range, long weaponId
 		{
 			case BATTLEMECH:
 				mech = (BattleMechPtr)target;
-				break;
-			case GROUNDVEHICLE:
-				vehicle = (GroundVehiclePtr)target;
 				break;
 		}
 		
@@ -1073,14 +1069,14 @@ float Turret::calcAttackChance (GameObjectPtr target, long* range, long weaponId
 
 void Turret::recordWeaponFireTime (long weaponId) {
 
-	lastFireTime[weaponId] = scenarioTime;
+	lastFireTime[weaponId] = g_missionTime;
 }
 
 //------------------------------------------------------------------------------------------
 
 void Turret::startWeaponRecycle (long weaponId) 
 {
-	readyTime[weaponId] = scenarioTime + MasterComponent::masterList[((TurretTypePtr)getObjectType())->weaponMasterId[weaponId]].getWeaponRecycleTime();
+	readyTime[weaponId] = g_missionTime + MasterComponent::masterList[((TurretTypePtr)getObjectType())->weaponMasterId[weaponId]].getWeaponRecycleTime();
 }
 
 //---------------------------------------------------------------------------
@@ -1111,10 +1107,6 @@ long Turret::addWeaponFireChunks (long which, unsigned long* packedChunkBuffer, 
 	if ((numWeaponFireChunks[which] + numChunks) >= MAX_WEAPONFIRE_CHUNKS)
 		Fatal(0, " Turret::addWeaponFireChunks--Too many weaponfire chunks ");
 
-#if 0
-	memcpy(&weaponFireChunks[which][numWeaponFireChunks[which]], packedChunkBuffer, 4 * numChunks);
-	numWeaponFireChunks[which] += numChunks;
-#else
 	for (long i = 0; i < numChunks; i++) {
 		weaponFireChunks[which][numWeaponFireChunks[which]++] = packedChunkBuffer[i];
 		//---------------
@@ -1124,7 +1116,7 @@ long Turret::addWeaponFireChunks (long which, unsigned long* packedChunkBuffer, 
 		chunk.data = packedChunkBuffer[i];
 		chunk.unpack(this);
 	}
-#endif
+
 	return(numWeaponFireChunks[which]);
 }
 
@@ -1262,11 +1254,11 @@ void Turret::printFireWeaponDebugInfo (GameObjectPtr target, Stuff::Vector3D* ta
 		if (target) {
 			char* targetName = target->getName();
 			char s[1024];
-			sprintf(s, "[%.2f] turret.fireWeapon HIT: (%05d)%s @ (%05d)%s", scenarioTime, getPartId(), getName(), target->getPartId(), targetName ? targetName : "unknown");
+			sprintf(s, "[%.2f] turret.fireWeapon HIT: (%05ld)%s @ (%05ld)%s", g_missionTime, getPartId(), getName(), target->getPartId(), targetName ? targetName : "unknown");
 			CombatLog->write(s);
-			sprintf(s, "     chance = %03d, roll = %03d", chance, roll);
+			sprintf(s, "     chance = %03ld, roll = %03ld", chance, roll);
 			CombatLog->write(s);
-			sprintf(s, "     weapon = (%03d)%s, hitLocation = (%d)%s, damage = %.2f, angle = %.2f",
+			sprintf(s, "     weapon = (%03ld)%s, hitLocation = (%ld)%s, damage = %.2f, angle = %.2f",
 				shotInfo->masterId, MasterComponent::masterList[shotInfo->masterId].getName(),
 				shotInfo->hitLocation, (shotInfo->hitLocation > -1) ? locationStrings[shotInfo->hitLocation] : "none",
 				shotInfo->damage,
@@ -1281,11 +1273,11 @@ void Turret::printFireWeaponDebugInfo (GameObjectPtr target, Stuff::Vector3D* ta
 		if (target) {
 			char* targetName = target->getName();
 			char s[1024];
-			sprintf(s, "[%.2f] turret.fireWeapon MISS: (%05d)%s @ (%05d)%s", scenarioTime, getPartId(), getName(), target->getPartId(), targetName ? targetName : "unknown");
+			sprintf(s, "[%.2f] turret.fireWeapon MISS: (%05ld)%s @ (%05ld)%s", g_missionTime, getPartId(), getName(), target->getPartId(), targetName ? targetName : "unknown");
 			CombatLog->write(s);
-			sprintf(s, "     chance = %03d, roll = %03d", chance, roll);
+			sprintf(s, "     chance = %03ld, roll = %03ld", chance, roll);
 			CombatLog->write(s);
-			sprintf(s, "     weapon = (%03d)%s, hitLocation = (%d)%s, damage = %.2f, angle = %.2f",
+			sprintf(s, "     weapon = (%03ld)%s, hitLocation = (%ld)%s, damage = %.2f, angle = %.2f",
 				shotInfo->masterId, MasterComponent::masterList[shotInfo->masterId].getName(),
 				shotInfo->hitLocation, (shotInfo->hitLocation > -1) ? locationStrings[shotInfo->hitLocation] : "none",
 				shotInfo->damage,
@@ -1327,15 +1319,15 @@ void Turret::printHandleWeaponHitDebugInfo (WeaponShotInfo* shotInfo) {
 	//	sprintf(statusStr, " NO PAIN:");
 	else
 		sprintf(statusStr, ":");
-	sprintf(s, "[%.2f] turret.handleWeaponHit%s (%05d)%s ", scenarioTime, statusStr, getPartId(), getName());
+	sprintf(s, "[%.2f] turret.handleWeaponHit%s (%05ld)%s ", g_missionTime, statusStr, getPartId(), getName());
 	CombatLog->write(s);
 	GameObjectPtr attacker = ObjectManager->getByWatchID(shotInfo->attackerWID);
 	if (attacker)
-		sprintf(s, "     attacker = (%05d)%s", attacker->getPartId(), attacker->getName());
+		sprintf(s, "     attacker = (%05ld)%s", attacker->getPartId(), attacker->getName());
 	else
-		sprintf(s, "     attacker = (%05)<unknown WID>", shotInfo->attackerWID);
+		sprintf(s, "     attacker = (%05ld)<unknown WID>", shotInfo->attackerWID);
 	CombatLog->write(s);
-	sprintf(s, "     weapon = (%03d)%s, hitLocation = (%d)%s, damage = %.2f, angle = %.2f",
+	sprintf(s, "     weapon = (%03ld)%s, hitLocation = (%ld)%s, damage = %.2f, angle = %.2f",
 		shotInfo->masterId, MasterComponent::masterList[shotInfo->masterId].getName(),
 		shotInfo->hitLocation, (shotInfo->hitLocation > -1) ? locationStrings[shotInfo->hitLocation] : "none",
 		shotInfo->damage,
@@ -1376,8 +1368,7 @@ void Turret::fireWeapon (GameObjectPtr target, long weaponId) {
 		}
 			
 		
-		bool LOS = false;
-		LOS = lineOfSight(target,getAppearRadius());
+		bool LOS = lineOfSight(target,getAppearRadius());
 		if (!LOS && indirectFireWeapon)
 			LOS = getTeam()->teamLineOfSight(target->getPosition(),target->getAppearRadius());
 		
@@ -1406,7 +1397,7 @@ void Turret::fireWeapon (GameObjectPtr target, long weaponId) {
 	MechWarriorPtr targetPilot = NULL;
 	if (target && target->isMover()) {
 		targetPilot = ((MoverPtr)target)->getPilot();
-		targetPilot->updateAttackerStatus(partId, scenarioTime);
+		targetPilot->updateAttackerStatus(partId, g_missionTime);
 	}
 
 	//-----------------------
@@ -2003,7 +1994,7 @@ long Turret::handleWeaponFire (long weaponIndex,
 	MechWarriorPtr targetPilot = NULL;
 	if (target && target->isMover()) {
 		targetPilot = ((MoverPtr)target)->getPilot();
-		targetPilot->updateAttackerStatus(partId, scenarioTime);
+		targetPilot->updateAttackerStatus(partId, g_missionTime);
 		targetPilot->triggerAlarm(PILOT_ALARM_TARGET_OF_WEAPONFIRE, getWatchID());
 	}
 
@@ -2073,7 +2064,7 @@ void Turret::render (void)
 		}
 
 
-		windowsVisible = turn;
+		windowsVisible = g_framesSinceMissionStart;
 		appearance->setVisibility(true,true);
 		appearance->render();
 	}
@@ -2198,7 +2189,7 @@ long Turret::handleWeaponHit (WeaponShotInfoPtr shotInfo, bool addMultiplayChunk
 		ObjectManager->createExplosion(TURRET_EXPLOSION_ID,NULL,position,explDamage,explRadius);
 		if (CombatLog) {
 			char s[1024];
-			sprintf(s, "[%.2f] turret.destroyed: (%05d)%s", scenarioTime, getPartId(), getName());
+			sprintf(s, "[%.2f] turret.destroyed: (%05ld)%s", g_missionTime, getPartId(), getName());
 			CombatLog->write(s);
 			CombatLog->write(" ");
 		}
@@ -2267,7 +2258,7 @@ void Turret::updateDebugWindow (GameDebugWindow* debugWindow) {
 		}
 	else
 		debugWindow->print("<no name>");
-	sprintf(s, "team: %d, partID: %d, objT: %d", getTeamId(), getPartId(), getObjectType()->whatAmI());
+	sprintf(s, "team: %ld, partID: %ld, objT: %d", getTeamId(), getPartId(), getObjectType()->whatAmI());
 	debugWindow->print(s);
 	GameObjectPtr target = ObjectManager->getByWatchID(targetWID);
 	sprintf(s, "target: %d", target ? target->getPartId() : 0);

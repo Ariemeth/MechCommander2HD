@@ -202,7 +202,6 @@ bool GateType::handleCollision (GameObjectPtr collidee, GameObjectPtr collider)
 			if ((colliderRange < closestRange) && (!collider->isDisabled() && !collider->isDestroyed()) && !((MoverPtr)collider)->isJumping())
 			{
 				gate->closestObject = (MoverPtr)collider;
-				closestRange = colliderRange * colliderRange;
 			}
 		}
 		break;
@@ -235,7 +234,7 @@ bool Gate::isVisible (CameraPtr camera)
 
 	if (isVisible) 
 	{
-		windowsVisible = turn;
+		windowsVisible = g_framesSinceMissionStart;
 		return(true);
 	}
 		
@@ -282,9 +281,9 @@ long Gate::update (void)
 
 	//We can call update multiple times now since a gate will be updated
 	//every frame regardless AND it could also be near where the camera is looking!	
-	if (turn != updatedTurn)
+	if (g_framesSinceMissionStart != updatedTurn)
 	{
-		updatedTurn = turn;
+		updatedTurn = g_framesSinceMissionStart;
 		
 		//---------------------------------------
 		// Handle Building captured.
@@ -293,8 +292,8 @@ long Gate::update (void)
 			!ObjectManager->getByWatchID(parent)->isDestroyed() && 
 			(ObjectManager->getByWatchID(parent)->getTeamId() != getTeamId())) 
 		{
-			if ((ObjectManager->getByWatchID(parent)->getTeamId() != Team::home->getId()) && (turn > 5) && (getTeamId() != -1))
-				soundSystem->playBettySample(BETTY_BUILDING_RECAPTURED);
+			if ((ObjectManager->getByWatchID(parent)->getTeamId() != Team::home->getId()) && (g_framesSinceMissionStart > 5) && (getTeamId() != -1))
+				g_gameSoundSystem->playBettySample(BETTY_BUILDING_RECAPTURED);
 
 			long parentTeamID = ObjectManager->getByWatchID(parent)->getTeamId();
 			setTeamId(parentTeamID, false);
@@ -350,7 +349,7 @@ long Gate::update (void)
 			
 			if (inView)
 			{
-				windowsVisible = turn;
+				windowsVisible = g_framesSinceMissionStart;
 	
 				float zPos = land->getTerrainElevation(position);
 				position.z = zPos;
@@ -427,7 +426,7 @@ void Gate::openGate (void)
 					appearance->setGesture(3);
 					closing = true;
 					closed = opened = opening = false;
-					soundSystem->playDigitalSample(GATE_CLOSE,position,true);
+					g_gameSoundSystem->playDigitalSample(GATE_CLOSE,position,true);
 				}
 				else	//Wait for done opening.
 				{
@@ -438,7 +437,7 @@ void Gate::openGate (void)
 			else if (animState == 2)	//Gate is Open.  Start it closing.
 			{
 				appearance->setGesture(3);
-				soundSystem->playDigitalSample(GATE_CLOSE,position,true);
+				g_gameSoundSystem->playDigitalSample(GATE_CLOSE,position,true);
 				
 				closing = TRUE;
 				closed = opening = opened = false;
@@ -467,14 +466,14 @@ void Gate::openGate (void)
 			if (animState == -1)	//Never Updated - Closed by default
 			{
 				appearance->setGesture(1);
-				soundSystem->playDigitalSample(GATE_OPEN,position,true);
+				g_gameSoundSystem->playDigitalSample(GATE_OPEN,position,true);
 				opening = true;
 				closed = closing = opened = false;
 			}
 			if (animState == 0)
 			{
 				appearance->setGesture(1);
-				soundSystem->playDigitalSample(GATE_OPEN,position,true);
+				g_gameSoundSystem->playDigitalSample(GATE_OPEN,position,true);
 				opening = true;
 				closed = closing = opened = false;
 			}
@@ -503,7 +502,7 @@ void Gate::openGate (void)
 				if (!appearance->getInTransition())
 				{
 					appearance->setGesture(1);
-					soundSystem->playDigitalSample(GATE_OPEN,position,true);
+					g_gameSoundSystem->playDigitalSample(GATE_OPEN,position,true);
 					
 					opening = true;
 					closed = closing = opened = false;
@@ -520,7 +519,7 @@ void Gate::openGate (void)
 			}
 		}
 
-		if (opened && (turn >3))
+		if (opened && (g_framesSinceMissionStart >3))
 		{
 			//-----------------------------------------------------------------------------------------
 			// MARK True when open so that the side pieces of the gate are still IMPASSABLE!!
@@ -532,7 +531,7 @@ void Gate::openGate (void)
 			openSubAreas();
 			lastMarkedOpen = true;
 		}
-		else if (!opened && (turn > 3))
+		else if (!opened && (g_framesSinceMissionStart > 3))
 		{
 			//----------------------------------------------------
 			// Any other state but Opened is Closed!!
@@ -572,7 +571,7 @@ long Gate::setTeamId (long _teamId, bool setup)
 										  0x0000007f, 0x0000007f,
 										  0x0000007f, 0x0000007f};
 
-	if (turn > 10)
+	if (g_framesSinceMissionStart > 10)
 		appearance->flashBuilding(5.0,0.5,highLight[teamId]);
 
 	setSubAreasTeamId(_teamId);
@@ -627,7 +626,7 @@ void Gate::render (void)
 		}
 
 
-		windowsVisible = turn;
+		windowsVisible = g_framesSinceMissionStart;
 		appearance->setVisibility(true,true);
 		appearance->render();
 	}

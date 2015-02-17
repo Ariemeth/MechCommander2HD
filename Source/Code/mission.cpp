@@ -164,8 +164,6 @@ extern bool useNonWeaponEffects;
 //extern unsigned long maxGroups;
 
 extern unsigned long g_missionHeapSize;
-extern unsigned long polyHeapSize;
-extern unsigned long spriteDataHeapSize;
 extern unsigned long g_spriteHeapSize;
 
 extern long	CurMultiplayCode;
@@ -316,7 +314,7 @@ long Mission::update (void)
 {
 	if (active)
 	{
-		turn++;
+		g_framesSinceMissionStart++;
 
 		memset(ObjectManager->moverLineOfSightTable, -1, ObjectManager->maxMovers*ObjectManager->maxMovers);
 
@@ -326,46 +324,46 @@ long Mission::update (void)
 #endif
 
 		if (forcedFrameRate != -1.0f)
-			g_deltaTime /= forcedFrameRate;
+			g_frameTime /= forcedFrameRate;
 
-		if ((missionLineChanged + 50) < turn)
+		if ((missionLineChanged + 50) < g_framesSinceMissionStart)
 		{
 			// MCHD TODO: CHEATS! Wrap cheats up like every other fucking input command
 			#ifndef FINAL
 			if (userInput->getKeyDown(KEY_X) && userInput->ctrl() && !userInput->alt() && !userInput->shift())
 			{
 				useCollisions ^= true;
-				missionLineChanged = turn;
+				missionLineChanged = g_framesSinceMissionStart;
 			}		
 		
 			if (userInput->getKeyDown(KEY_X) && userInput->ctrl() && userInput->alt() && userInput->shift())
 			{
 				saveInMissionSave = true;
-				missionLineChanged = turn;
+				missionLineChanged = g_framesSinceMissionStart;
 			}		
 
 			if (userInput->getKeyDown(KEY_Z) && userInput->ctrl() && userInput->alt() && userInput->shift())
 			{
 				g_loadInMissionSave = true;
-				missionLineChanged = turn;
+				missionLineChanged = g_framesSinceMissionStart;
 			}		
 
 			if (userInput->getKeyDown(KEY_Y) && userInput->ctrl() && !userInput->alt() && !userInput->shift())
 			{
 				DisplayCameraAngle ^= true;
-				missionLineChanged = turn;
+				missionLineChanged = g_framesSinceMissionStart;
 			}		
 
  			if (userInput->getKeyDown(KEY_N) && userInput->ctrl() && !userInput->alt() && !userInput->shift())
 			{
 				useSensors ^= true;
-				missionLineChanged = turn;
+				missionLineChanged = g_framesSinceMissionStart;
 			}
 
 			if (userInput->getKeyDown(KEY_P) && userInput->ctrl() && userInput->alt() && userInput->shift())
 			{
 				LogisticsData::instance->setResourcePoints(100000);
-				missionLineChanged = turn;
+				missionLineChanged = g_framesSinceMissionStart;
 			}		
 
 			if (userInput->getKeyDown(KEY_R) && userInput->ctrl() && userInput->alt() && userInput->shift())
@@ -379,13 +377,13 @@ long Mission::update (void)
 				else if (forcedFrameRate == 10.0f)
 					forcedFrameRate = -1.0f;
 
-				missionLineChanged = turn;
+				missionLineChanged = g_framesSinceMissionStart;
 			}
 
 			if (userInput->getKeyDown(KEY_C) && userInput->ctrl() && userInput->alt() && userInput->shift()) 
 			{
 				neverEndingStory = true;
-				missionLineChanged = turn;
+				missionLineChanged = g_framesSinceMissionStart;
 			}
 			#endif
 		}
@@ -411,51 +409,29 @@ long Mission::update (void)
 			// After that, it increments based on System Time.
 			// NOT the crazy GameOS frameRate.
 			DWORD currentTimeGetTime = timeGetTime();
-			if (LastTimeGetTime != 0xffffffff)
+			if (lastTimeGetTime != 0xffffffff)
 			{
-				float milliseconds = currentTimeGetTime - LastTimeGetTime;
-				scenarioTime += (milliseconds / 1000.0f);
+				float milliseconds = currentTimeGetTime - lastTimeGetTime;
+				g_missionTime += (milliseconds / 1000.0f);
 			}
-			LastTimeGetTime = currentTimeGetTime;
+			lastTimeGetTime = currentTimeGetTime;
 
-			soundSystem->clearIsPaused();
+			g_gameSoundSystem->clearIsPaused();
 		}
 		else
 		{
 			//Keep track of system time.  Just don't add it to scenarioTime!!
 			DWORD currentTimeGetTime = timeGetTime();
-			LastTimeGetTime = currentTimeGetTime;
+			lastTimeGetTime = currentTimeGetTime;
 
-			soundSystem->setIsPaused();
+			g_gameSoundSystem->setIsPaused();
 		}
 
 		//--------------------------------------------------
 		
 		//------------------------------------------------------------------------
-		// There is a TINYYYYYYYYYY chance this will never go if timeGetTime()
-		// happens to return 0 (one millisecond every approx. 49 days). I can live
-		// with that...
-
-//		if (MPlayer && (MPlayer->startTime >= 0.0))
-//			runningTime = (float)(gos_GetElapsedTime()) - MPlayer->startTime;
-//		else if (MPlayer && (scenarioTime > 10.0))
-//			Fatal(MissionStartTime, " runningTime is not working...why? ");
-
-//		if (MPlayer)
-//			actualTime = runningTime;
-//		else
 		//Try ALWAYS using SCENARIO Time.  This has been specially coded to be nummies!!
-			actualTime = scenarioTime;
-
-#if 0
-		static bool tested = false;
-		if ((scenarioTime > 15.0) && !tested) {
-			tested = true;
-			ABLFile* ablSaveFile;
-			ABLi_saveEnvironment (ABLFile* ablFile) {
-
-		}
-#endif
+		actualTime = g_missionTime;
 
 		mcTextureManager->clearArrays();
 		
@@ -648,7 +624,7 @@ long Mission::update (void)
 		if (userInput->getKeyDown(KEY_F) && !userInput->ctrl() && userInput->alt() && !userInput->shift())
 		{
 			showFrameRate ^= true;
-			missionLineChanged = turn;
+			missionLineChanged = g_framesSinceMissionStart;
 		}
 
 #ifndef FINAL
@@ -664,17 +640,17 @@ long Mission::update (void)
 		// Duane decided to switch the order for our conveniance.  Thanks!!
 		if ((terminationResult) && (terminationResult != -1) && (terminationResult < mis_PLAYER_DRAW))
 		{
-			soundSystem->playDigitalMusic(WIN_TUNE_0);
+			g_gameSoundSystem->playDigitalMusic(WIN_TUNE_0);
 		}
 		else if (terminationResult > mis_PLAYER_DRAW)
 		{
-			soundSystem->playDigitalMusic(LOSE_TUNE_0);
+			g_gameSoundSystem->playDigitalMusic(LOSE_TUNE_0);
 		}
 
 		if (showFrameRate)
 		{
 			char text[1024];
-			sprintf(text,"FrameRate: %f",1.0f/g_deltaTime);
+			sprintf(text,"FrameRate: %f",1.0f/g_frameTime);
 		
 			DWORD width, height;
 			Stuff::Vector4D moveHere;
@@ -1505,7 +1481,7 @@ bool Mission::calcComplexDropZones(char* missionName, char dropZoneCID[MAX_MC_PL
 	if (numParts)
 		for (long i = 1; i < long(numParts + 1); i++) {
 			char partName[12];
-			sprintf(partName,"Part%d",i);
+			sprintf(partName,"Part%ld",i);
 			
 			//------------------------------------------------------------------
 			// Find the object to load
@@ -1661,7 +1637,7 @@ void Mission::init(char *missionName, long loadType, long dropZoneID, Stuff::Vec
 				
 	//-------------------------------------------
 	// Always reset turn at scenario start
-	turn = 0;
+	g_framesSinceMissionStart = 0;
 	terminationCounterStarted = 0;
 
 	#ifdef LAB_ONLY
@@ -1877,9 +1853,9 @@ void Mission::init(char *missionName, long loadType, long dropZoneID, Stuff::Vec
 	result = gameSystemFile->readIdFloat("MaxFireBurnTime", maxFireBurnTime);
 	gosASSERT(result == NO_ERR);
 
-	memset(missionFileName,0,80);
 	strncpy(missionFileName, missionName, 79);
-
+	missionFileName[79] = NULL;
+	
 	FullPathFileName missionFileName;
 	missionFileName.init(missionPath, missionName, ".fit");
 
@@ -1894,44 +1870,6 @@ void Mission::init(char *missionName, long loadType, long dropZoneID, Stuff::Vec
 
 	if (!dropZoneList) {
 		result = missionFile->seekBlock("Multiplayer");
-		if (result == NO_ERR) {
-			#if 0
-			result = missionFile->readIdULong("TeamId", MultiPlayTeamId);
-			gosASSERT(result == NO_ERR);
-			result = missionFile->readIdULong("CommanderId", g_mpCommanderId);
-			gosASSERT(result == NO_ERR);
-			char sessionName[128];
-			result = missionFile->readIdString("SessionName", sessionName, 127);
-			gosASSERT(result == NO_ERR);
-			char playerName[128];
-			result = missionFile->readIdString("PlayerName", playerName, 127);
-			gosASSERT(result == NO_ERR);
-			bool isServer = false;
-			result = missionFile->readIdBoolean("Server", isServer);
-			gosASSERT(result == NO_ERR);
-			unsigned long numPlayers;
-			result = missionFile->readIdULong("NumPlayers", numPlayers);
-			gosASSERT(result == NO_ERR);
-			gosASSERT(MPlayer == NULL);
-			MPlayer = new MultiPlayer;
-			Assert(MPlayer != NULL, 0, " Unable to create MultiPlayer object ");
-			MPlayer->setup();
-			MPlayer->commanderID = g_mpCommanderId;
-			//-------------------------------------------
-			// If I'm the server, then create the game...
-			if (isServer) {
-				if (MPlayer->hostGame(sessionName, playerName, numPlayers)) {
-					//---------------------------------------------
-					//game hosted, so now wait for all check-ins...
-					MPlayer->serverCID = g_mpCommanderId;//(g_mpCommanderId == ServerPlayerNum); //(gos_NetInformation(gos_AmITheServer) == 0);
-				}
-				}
-			else {
-				MPlayer->joinGame(NULL, sessionName, playerName);
-				//MPlayer->numFitPlayers = numPlayers;
-			}
-			#endif
-		}
 	}
 
 #ifdef LAB_ONLY
@@ -2295,7 +2233,7 @@ void Mission::init(char *missionName, long loadType, long dropZoneID, Stuff::Vec
 		for (long i = 1; i <= numWarriors; i++) 
 		{
 			char warriorName[12];
-			sprintf(warriorName,"Warrior%d",i);
+			sprintf(warriorName,"Warrior%ld",i);
 			
 			//-------------------------
 			// Find the warrior to load
@@ -2477,7 +2415,7 @@ void Mission::init(char *missionName, long loadType, long dropZoneID, Stuff::Vec
 		if (result == NO_ERR)
 			for (long i = 0; i < numSquads; i++) {
 				char s[128];
-				sprintf(s, "Squad%d", i);
+				sprintf(s, "Squad%ld", i);
 				unsigned long alternate = -1;
 				result = missionFile->readIdULong(s, alternate);
 				if (result == NO_ERR)
@@ -2528,7 +2466,7 @@ void Mission::init(char *missionName, long loadType, long dropZoneID, Stuff::Vec
 				result = missionFile->readIdULong("Pilot", realPilot);
 				gosASSERT(result == NO_ERR);
 
-				sprintf(partName, "Part%d", partId);
+				sprintf(partName, "Part%ld", partId);
 				result = missionFile->seekBlock(partName);
 				gosASSERT(result == NO_ERR);
 			}
@@ -2834,7 +2772,7 @@ void Mission::init(char *missionName, long loadType, long dropZoneID, Stuff::Vec
 		if (commandersToLoad[curCommanderId][0] == -1)
 			continue;
 
-		sprintf(headingStr, "Commander%dGroup:%d", curCommanderId, numGroups);
+		sprintf(headingStr, "Commander%ldGroup:%ld", curCommanderId, numGroups);
 		result = missionFile->seekBlock(headingStr);
 		while (result == NO_ERR) {
 			//---------------------------
@@ -2855,7 +2793,7 @@ void Mission::init(char *missionName, long loadType, long dropZoneID, Stuff::Vec
 			}
 			
 			numGroups++;
-			sprintf(headingStr, "Commander%dGroup:%d", curCommanderId, numGroups);
+			sprintf(headingStr, "Commander%ldGroup:%ld", curCommanderId, numGroups);
 			result = missionFile->seekBlock(headingStr);
 		}
 	}
@@ -2879,8 +2817,8 @@ void Mission::init(char *missionName, long loadType, long dropZoneID, Stuff::Vec
 
 	//-----------------------------------------------------
 	// This tracks time since scenario started in seconds.
-	LastTimeGetTime = 0xffffffff;
-	scenarioTime = 0.0;
+	lastTimeGetTime = 0xffffffff;
+	g_missionTime = 0.0;
 	MissionStartTime = 0;
 	runningTime = 0.0;
 	actualTime = 0.0;
@@ -3341,7 +3279,7 @@ void Mission::destroy (bool initLogistics)
 	mcTextureManager->flush();
 	mcTextureManager->freeVertices();
 
-	soundSystem->purgeSoundSystem();
+	g_gameSoundSystem->purgeSoundSystem();
 
 	missionFileName[0] = 0;
 	

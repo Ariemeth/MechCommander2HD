@@ -79,8 +79,8 @@ void Clouds::update (void)
 {
 	renderClouds = false;
 	
-	scrollU += g_deltaTime * SCROLL_U_FACTOR;
-	scrollV += g_deltaTime * SCROLL_V_FACTOR;
+	scrollU += g_frameTime * SCROLL_U_FACTOR;
+	scrollV += g_frameTime * SCROLL_V_FACTOR;
 
 	if (scrollU > 1.0f)
 		scrollU -= 1.0f;

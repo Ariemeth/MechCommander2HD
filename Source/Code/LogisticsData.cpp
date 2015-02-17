@@ -153,7 +153,7 @@ void LogisticsData::initComponents()
 	{
 		int result = dataFile.readLine( line, 1023 );
 
-		if ( result < 2 || result == 0xBADF0008 || result > 1024  )
+		if ( result < 2 || result > 1024  )
 			break;
 
 		components.Append( tmpComp );
@@ -1150,7 +1150,7 @@ long	LogisticsData::load( FitIniFile& file )
 	// load variants
 	for ( int i = 0; i < variantCount; i++ )
 	{
-		sprintf( tmp, "Variant%ld", i );
+		sprintf( tmp, "Variant%d", i );
 		file.seekBlock( tmp );
 		result = loadVariant( file );
 		if ( result != NO_ERR )
@@ -1249,7 +1249,7 @@ long LogisticsData::loadVariant( FitIniFile& file )
 	// add those components
 	for ( int i = 0; i < componentCount; i++ )
 	{
-		sprintf( tmp, "Component%ld", i );
+		sprintf( tmp, "Component%d", i );
 		file.readIdLong(tmp, id );
 		
 		strcpy( tmp2, tmp );
@@ -1331,8 +1331,6 @@ void	LogisticsData::setMissionCompleted( )
 	// need to go find out which pilots died.
 	Team* pTeam = Team::home;
 
-	int ForceGroupCount = 1;
-
 	if ( pTeam )
 	{
 		for ( int i = pTeam->getRosterSize() - 1; i > -1; i-- )
@@ -1345,6 +1343,7 @@ void	LogisticsData::setMissionCompleted( )
 				 (pMover->getCommanderId() == Commander::home->getId()) &&
 				 (pMover->getMoveType() != MOVETYPE_AIR))
 			{
+				int ForceGroupCount = 1;
 				LogisticsMech* pMech = getMech( pMover->getName(), pMover->getPilot()->getName() );
 
 				unsigned long base, highlight1, highlight2;
@@ -1527,7 +1526,7 @@ long LogisticsData::updateAvailability()
 			available[i] = 1;
 		else
 		{
-			sprintf( tmp, "Component%ld", i );
+			sprintf( tmp, "Component%d", i );
 			if ( NO_ERR != file.readIdLong( tmp, component ) )
 				break;
 
@@ -1686,7 +1685,7 @@ void LogisticsData::appendAvailability(const char* pFileName, bool* availableArr
 		for ( int i = 0; i < 255; i++ )
 		{
 			{
-				sprintf( tmp, "Component%ld", i );
+				sprintf( tmp, "Component%d", i );
 				if ( NO_ERR != file.readIdLong( tmp, component ) )
 					break;
 
@@ -1706,7 +1705,7 @@ void LogisticsData::appendAvailability(const char* pFileName, bool* availableArr
 	file.seekBlock( "Pilots" );
 	for ( int i = 0; i < 255; i++ )
 	{
-		sprintf( tmp, "Pilot%ld", i );
+		sprintf( tmp, "Pilot%d", i );
 		if ( NO_ERR != file.readIdString( tmp, pilotName, 254 ) )
 			break;
 
@@ -2096,17 +2095,6 @@ int LogisticsData::acceptMechModifications( const char* name )
 
 	currentlyModifiedMech = 0;
 	oldVariant = 0;
-
-
-	// temporary, looking for dangling pointers
-	for ( MECH_LIST::EIterator iter = inventory.Begin();
-		!iter.IsDone(); iter++ )
-	{
-		if ( (*iter)->getVariant()->getCost() )
-		{
-			bFound = 1;
-		}
-	}
  
 #ifndef VIEWER
 
@@ -2286,8 +2274,8 @@ void				LogisticsData::startNewCampaign( const char* fileName )
 
 	setCurrentMission( missionNames[0] );
 
-	soundSystem->setMusicVolume( g_userPreferences.MusicVolume );
-	soundSystem->playDigitalMusic(missionInfo->getCurrentLogisticsTuneId());
+	g_gameSoundSystem->setMusicVolume( g_userPreferences.MusicVolume );
+	g_gameSoundSystem->playDigitalMusic(missionInfo->getCurrentLogisticsTuneId());
 }
 
 void LogisticsData::startMultiPlayer()

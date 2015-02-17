@@ -17,7 +17,7 @@ PauseWindow.cpp			: Implementation of the PauseWindow component.
 #include "LogisticsData.h"
 #include "Multplyr.h"
 
-extern float g_deltaTime;
+extern float g_frameTime;
 
 extern bool g_invokeOptionsScreen;
 extern long helpTextHeaderID;
@@ -114,7 +114,7 @@ void PauseWindow::update()
 
 	if ( currentTime != 0 )
 	{
-		currentTime += g_deltaTime;
+		currentTime += g_frameTime;
 		float p0 = 0.f;
 		float p1 = 0.f;
 		float t0 = 0.f;
@@ -176,7 +176,7 @@ void PauseWindow::update()
 				if ( buttons[i].location[0].x >= lastX || lastX >= buttons[i].location[2].x
 				|| lastY <= buttons[i].location[0].y || lastY >= buttons[i].location[1].y )
 				{
-					soundSystem->playDigitalSample( LOG_HIGHLIGHTBUTTONS );
+					g_gameSoundSystem->playDigitalSample( LOG_HIGHLIGHTBUTTONS );
 				}
 
 				if ( buttons[i].state != ControlButton::PRESSED )
@@ -327,7 +327,7 @@ void PauseWindow::init( FitIniFile& file )
 		char buffer[256];
 		for ( int i = 0; i < staticCount; i++ )
 		{
-			sprintf( buffer, "PauseStatic%ld", i );
+			sprintf( buffer, "PauseStatic%d", i );
 			statics[i].init( file, buffer, ControlGui::hiResOffsetX, 0);
 		}
 	}
@@ -429,7 +429,7 @@ void PauseWindow::handleClick( int id )
 		break;
 	}
 
-	soundSystem->playDigitalSample( sound );
+	g_gameSoundSystem->playDigitalSample( sound );
 }
 
 bool PauseWindow::inRect( int mouseX, int mouseY )

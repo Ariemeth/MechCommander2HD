@@ -26,12 +26,6 @@ bool
 		d(2.0f,3.0f,1.0f,4.0f);
 
 	Test_Assumption(!a.x && !a.y && !a.z && !a.w);
-#if 0
-	Test_Assumption(c.x == 1.0f && c.y == 2.0f && c.z == 3.0f && c.w == 4.0f);
-
-	Test_Assumption(c[2] == c.z);
-	Test_Assumption(a[1] == a.y);
-#endif
 
 	Test_Assumption(Small_Enough(a));
 	Test_Assumption(!a);
@@ -64,12 +58,9 @@ bool
 	b -= c;
 	Test_Assumption(b == Vector4D(d.x-c.x,d.y-c.y,d.z-c.z,d.w-c.w));
 
-	Scalar f = c*d;
-#if 0
-	Test_Assumption(f == c.x*d.x + c.y*d.y + c.z*d.z + c.w*d.w);
-#endif
+	// Scalar f = c*d;
 
-	f = 2.0f;
+	Scalar f = 2.0f;
 	b.Multiply(c,f);
 	Test_Assumption(b == Vector4D(f*c.x,f*c.y,f*c.z,f*c.w));
 	b = c;

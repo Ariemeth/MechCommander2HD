@@ -199,7 +199,7 @@ void ABL_AddToProfileLog (char* profileString) {
 		DumpProfileLog();
 
 	strncpy(ProfileLogBuffer[NumProfileLogLines], profileString, MAX_PROFILE_LINELEN - 1);
-	ProfileLogBuffer[NumProfileLogLines][MAX_PROFILE_LINELEN] = NULL;
+	ProfileLogBuffer[NumProfileLogLines][MAX_PROFILE_LINELEN - 1] = NULL;
 	NumProfileLogLines++;
 	TotalProfileLogLines++;
 }
@@ -284,15 +284,14 @@ void UserFile::write (char* s) {
 
 //---------------------------------------------------------------------------
 
-UserFile* UserFile::getNewFile (void) {
-
-	long fileHandle = -1;
+UserFile* UserFile::getNewFile(void) { // MCHD CHANGE (02/17/15): Either fixed a bug or fucked something up
+	
 	for (long i = 0; i < MAX_USER_FILES; i++)
 		if (!files[i]->inUse) {
-			fileHandle = i;
-			break;
+			return(files[i]);
 		}
-	return(files[i]);
+	
+	return NULL;
 }
 
 //---------------------------------------------------------------------------
@@ -1306,7 +1305,7 @@ void buildRoutineList (SymTableNodePtr curSymbol, ModuleInfo* moduleInfo) {
 	if (curSymbol) {
 		buildRoutineList(curSymbol->left, moduleInfo);
 		if (curSymbol->defn.key == DFN_FUNCTION) {
-			if (moduleInfo->numRoutines < 128) {
+			if (moduleInfo->numRoutines < 1024) { // MCHD CHANGE (02/17/15): Increased this number arbirarily because why not
 				strcpy(moduleInfo->routineInfo[moduleInfo->numRoutines].name, curSymbol->name);
 				moduleInfo->routineInfo[moduleInfo->numRoutines].codeSegmentSize = curSymbol->defn.info.routine.codeSegmentSize;
 				moduleInfo->numRoutines++;

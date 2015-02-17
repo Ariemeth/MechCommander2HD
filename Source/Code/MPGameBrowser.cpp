@@ -348,9 +348,9 @@ void MPGameBrowser::update()
 	helpTextID = 0;
 	helpTextHeaderID = 0;
 
-	long sessionCount = 0;
 	if ( MPlayer )
 	{
+		long sessionCount = 0;
 		MC2Session* pSessions =  MPlayer->getSessions (sessionCount);
 
 		gameList.removeAllItems( 0 );
@@ -655,7 +655,7 @@ void aGameListItem::setSessionInfo( MC2Session* pSession )
 	mapName.setText( pSession->map );
 	
 	char tmp[256];
-	sprintf( tmp, "%ld/%ld", pSession->numPlayers, pSession->maxPlayers );
+	sprintf( tmp, "%d/%d", pSession->numPlayers, pSession->maxPlayers );
 	numPlayers.setText( tmp );
 	sprintf( tmp, "%ld", pSession->ping );
 	latency.setText( tmp );

@@ -105,13 +105,13 @@ void MechPurchaseScreen::update()
 		curCount = .00001f;
 		oldCBillsAmount = amount;
 		if ( previousAmount < 0 )
-			soundSystem->playDigitalSample( WINDOW_OPEN );
+			g_gameSoundSystem->playDigitalSample( WINDOW_OPEN );
 		else
-			soundSystem->playDigitalSample( WINDOW_CLOSE );
+			g_gameSoundSystem->playDigitalSample( WINDOW_CLOSE );
 	}
-	if ( curCount && curCount + g_deltaTime < countDownTime  )
+	if ( curCount && curCount + g_frameTime < countDownTime  )
 	{
-		curCount += g_deltaTime;
+		curCount += g_frameTime;
 		float curAmount = previousAmount - (curCount/countDownTime * previousAmount); 
 		amount += curAmount;
 
@@ -121,7 +121,7 @@ void MechPurchaseScreen::update()
 	}
 	else if ( flashTime )
 	{
-		flashTime += g_deltaTime;
+		flashTime += g_frameTime;
 		if ( flashTime < .125
 			|| ( flashTime > .25 && flashTime < .3875 )
 			|| ( flashTime > .5 && flashTime < .6625 ) )
@@ -140,7 +140,7 @@ void MechPurchaseScreen::update()
 	
 
 	char tmp[64];
-	sprintf( tmp, "%ld ", amount);
+	sprintf( tmp, "%d ", amount);
 	textObjects[1].setText( tmp );
 	textObjects[1].setColor( color );
 
@@ -222,7 +222,7 @@ void MechPurchaseScreen::render( int xOffset, int yOffset )
 	{
 		if ( !MPlayer && !LogisticsData::instance->isSingleMission() && LogisticsData::instance->newMechsAvailable() )
 		{
-			soundSystem->playBettySample( BETTY_NEW_MECHS );
+			g_gameSoundSystem->playBettySample( BETTY_NEW_MECHS );
 			LogisticsData::instance->setNewMechsAcknowledged();
 		}
 	}
@@ -470,14 +470,14 @@ int	MechPurchaseScreen::handleMessage( unsigned long what, unsigned long who )
 							int oldCount = LogisticsData::instance->getVariantsInInventory( pMech->getVariant(), true );
 							if ( NO_ERR == LogisticsData::instance->sellMech( pMech ) && ( oldCount < 2 ) )
 								((MechListBoxItem*)pItem)->resetMech( );
-							soundSystem->playDigitalSample( LOG_SELECT );		
+							g_gameSoundSystem->playDigitalSample( LOG_SELECT );		
 						}                                    
 					}
 				}
 
 				else
 					addSelectedMech();
-					soundSystem->playDigitalSample( LOG_SELECT );		
+					g_gameSoundSystem->playDigitalSample( LOG_SELECT );		
 				break;
 			case MB_MSG_REMOVE:
 				removeSelectedMech();

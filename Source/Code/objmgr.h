@@ -545,7 +545,7 @@ class GameObjectManager {
 		
 		void updateCaptureList (void);
 
-		bool GameObjectManager::isTeamCapturing (TeamPtr team, GameObjectWatchID targetWID);
+		bool isTeamCapturing (TeamPtr team, GameObjectWatchID targetWID);
 
 		CarnagePtr createFire (ObjectTypeNumber fireObjTypeHandle,
 							   GameObjectPtr owner,

@@ -95,24 +95,6 @@ typedef StackFrameHeader* StackFrameHeaderPtr;
 
 //***************************************************************************
 
-#if 0
-
-//class ABLmodule {
-
-//	public:
-
-//		SymTableNodePtr		moduleIdPtr;
-
-
-//	public:
-
-
-//};
-
-#endif
-
-//***************************************************************************
-
 extern char*			codeBuffer;
 extern char*			codeBufferPtr;
 extern char*			codeSegmentPtr;

@@ -374,14 +374,14 @@ void MechBayScreen::update()
 	char str[64];
 
 	// RP
-	sprintf( str, "%ld ", LogisticsData::instance->getCBills() );
+	sprintf( str, "%d ", LogisticsData::instance->getCBills() );
 	textObjects[1].setText( str );
 
 	long mouseX = userInput->getMouseX();
 	long mouseY = userInput->getMouseY();
 	if ( userInput->isLeftClick() && dropWeightMeter.pointInside( mouseX, mouseY ) )
 	{
-		soundSystem->playDigitalSample( LOG_WRONGBUTTON );
+		g_gameSoundSystem->playDigitalSample( LOG_WRONGBUTTON );
 	}
 	
 	// current drop weight
@@ -402,19 +402,12 @@ void MechBayScreen::update()
 			userInput->getMouseY() - dragIcon.height() / 2 );
 
 		bool bLeft = 0;
-		bool bRight = 0;
 		
 		GUI_RECT testRect;
 		testRect.left = mechListBox.globalX();
 		testRect.right = mechListBox.globalX() + mechListBox.width();
 		testRect.top = mechListBox.globalY();
 		testRect.bottom = mechListBox.globalY() + mechListBox.height();
-
-
-		if ( dragIcon.rectIntersect( testRect ) )
-		{
-			// set the focus
-		}	bRight = true;
 
 		testRect.left = pIcons[0].globalX();
 		testRect.right = pIcons[ICON_COUNT - 1].globalX() + pIcons[0].width();
@@ -626,7 +619,7 @@ int	MechBayScreen::handleMessage( unsigned long message, unsigned long who )
 	case MB_MSG_ADD:
 		
 		addSelectedMech();
-		soundSystem->playDigitalSample( LOG_SELECT );		
+		g_gameSoundSystem->playDigitalSample( LOG_SELECT );		
 		break;
 
 	case MB_MSG_REMOVE:
@@ -802,13 +795,13 @@ void MechBayScreen::setMech( LogisticsMech* pMech,  bool bCommandFromLB )
 
 		// armor
 		int armor = pCurMech->getArmor();
-		sprintf( str, "%ld", armor );
+		sprintf( str, "%d", armor );
 		textObjects[8].setText( str );
 		attributeMeters[0].setValue( armor/MAX_ARMOR_RANGE );
 
 		// speed
 		int speed = pCurMech->getDisplaySpeed();
-		sprintf( str, "%ld", speed );
+		sprintf( str, "%d", speed );
 		textObjects[9].setText( str );
 		attributeMeters[1].setValue( pCurMech->getSpeed()/MAX_SPEED_RANGE );
 

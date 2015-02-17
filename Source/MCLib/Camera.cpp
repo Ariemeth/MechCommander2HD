@@ -378,12 +378,12 @@ long Camera::init (FitIniFilePtr cameraFile )
 	gosASSERT(result == NO_ERR);
 
 	FOVMax = 90.0f;
-	result = cameraFile->readIdFloat("FOVMax",FOVMax);
-//	gosASSERT(result == NO_ERR);
+	//result = cameraFile->readIdFloat("FOVMax",FOVMax);
+	//gosASSERT(result == NO_ERR);
 	
 	FOVMin = 20.0f;
-	result = cameraFile->readIdFloat("FOVMin",FOVMin);
-//	gosASSERT(result == NO_ERR);
+	//result = cameraFile->readIdFloat("FOVMin",FOVMin);
+	//gosASSERT(result == NO_ERR);
 	
  	setClass(BASE_CAMERA);
 	
@@ -438,54 +438,7 @@ long Camera::init (FitIniFilePtr cameraFile )
 	dayFogColor = fogColor;
 	gosASSERT(result == NO_ERR);
 
-	result = cameraFile->readIdFloat("FogTransparency",fogTransparency);
-#if 0
-	if (result != NO_ERR)
-	{
-		/* This is an old file where FogColor includes the color of the sky showing through. */
-
-		/* arbitrary assumed daytime sky color */
-		static const float fDaySkyRed = 100.0f;
-		static const float fDaySkyGreen = 162.0f;
-		static const float fDaySkyBlue = 255.0f;
-
-		const float fDayFogRed = (float)((dayFogColor >> 16) & 0xff);
-		const float fDayFogGreen = (float)((dayFogColor >> 8) & 0xff);
-		const float fDayFogBlue = (float)((dayFogColor) & 0xff);
-
-		/* We assume that the fog color specified by the user is a combination of the diffuse
-		light scattered by the fog and the light from the sky showing through the fog. There's
-		no way to know how transparent the fog is meant to be without the user specifying it, 
-		but for now we'll assume the maximum transparency possible given the daytime fog
-		color and an assumed daytime sky color. */
-
-		float fFogTransparency = 1.0f;
-		if ((0.0f < fDaySkyRed) && (fDayFogRed / fDaySkyRed < fFogTransparency))
-		{
-			fFogTransparency = fDayFogRed / fDaySkyRed;
-		}
-		if ((0.0f < fDaySkyGreen) && (fDayFogGreen / fDaySkyGreen < fFogTransparency))
-		{
-			fFogTransparency = fDayFogGreen / fDaySkyGreen;
-		}
-		if ((0.0f < fDaySkyBlue) && (fDayFogBlue / fDaySkyBlue < fFogTransparency))
-		{
-			fFogTransparency = fDayFogBlue / fDaySkyBlue;
-		}
-
-		/* Here we subtract out the sky color component to get the actual color of the fog. */
-		int opaqueDayFogRed = fDayFogRed - fFogTransparency * fDaySkyRed;
-		int opaqueDayFogGreen = fDayFogGreen - fFogTransparency * fDaySkyGreen;
-		int opaqueDayFogBlue = fDayFogBlue - fFogTransparency * fDaySkyBlue;
-		gosASSERT(0 == ((~0xff) & opaqueDayFogRed));
-		gosASSERT(0 == ((~0xff) & opaqueDayFogGreen));
-		gosASSERT(0 == ((~0xff) & opaqueDayFogBlue));
-
-		dayFogColor = (opaqueDayFogRed << 16) + (opaqueDayFogGreen << 8) + opaqueDayFogBlue;
-		fogTransparency = fFogTransparency;
-	}
-	gosASSERT(result == NO_ERR);
-#endif
+	cameraFile->readIdFloat("FogTransparency",fogTransparency);
 
 	long userMin, userMax, baseTerrain;
 	cameraFile->readIdLong( "UserMin", userMin );
@@ -507,12 +460,6 @@ long Camera::init (FitIniFilePtr cameraFile )
 	terrainLightNight = false;
 	terrainLightCalc = true;
 	
-//	if (ready)
-//	{
-//		activate();
-//		update();
-//	}
-
 	return(NO_ERR);
 }
 
@@ -554,7 +501,6 @@ void Camera::getClosestVertex (Stuff::Vector2DOf<long> &screenPos, long &row, lo
 	VertexPtr topVertex = land->getVertexList();
 	unsigned long numVertices = land->getNumVertices();
 	VertexPtr closestVertex = NULL;
-	long whichVertex = 0;
 
 //
 // Redone all using integers and no square root.
@@ -570,7 +516,6 @@ void Camera::getClosestVertex (Stuff::Vector2DOf<long> &screenPos, long &row, lo
 		{
 			cd = dist;
 			closestVertex = topVertex;
-			whichVertex = i;
 		}
 		topVertex++;
 	}
@@ -730,7 +675,7 @@ inline bool overThisTile (TerrainQuadPtr tile, long mouseX, long mouseY)
 //---------------------------------------------------------------------------
 unsigned long Camera::inverseProject (Stuff::Vector2DOf<long> &screenPos, Stuff::Vector3D &point)
 {
-	if (turn < 4)
+	if (g_framesSinceMissionStart < 4)
 	{
 		point.x = point.y = point.z = 0.0f;
 		return 0;
@@ -950,8 +895,8 @@ void Camera::updateGoalVelocity (void)
 		Stuff::Vector3D velDiff;
 		velDiff.Subtract(goalVelocity,velocity);
 		velDiff /= goalVelTime;
-		velDiff *= g_deltaTime;
-		goalVelTime -= g_deltaTime;
+		velDiff *= g_frameTime;
+		goalVelTime -= g_frameTime;
 
 		if (goalVelTime < 0.0)
 			velocity = goalVelocity;
@@ -972,9 +917,9 @@ void Camera::updateGoalFOV (void)
 	{
 		float fovDiff = goalFOV - camera_fov;
 		fovDiff /= goalFOVTime;
-		fovDiff *= g_deltaTime;
+		fovDiff *= g_frameTime;
 		
- 		goalFOVTime -= g_deltaTime;
+ 		goalFOVTime -= g_frameTime;
 
 		if (goalFOVTime < 0.0)
 		{
@@ -998,13 +943,13 @@ void Camera::updateGoalRotation (void)
 	{
 		float goalProjectionAngle = goalRotation.x - projectionAngle;
 		goalProjectionAngle /= goalRotTime;
-		goalProjectionAngle *= g_deltaTime;
+		goalProjectionAngle *= g_frameTime;
 		
 		float goalCameraRotation = goalRotation.y - cameraRotation;
 		goalCameraRotation /= goalRotTime;
-		goalCameraRotation *= g_deltaTime;
+		goalCameraRotation *= g_frameTime;
 		
- 		goalRotTime -= g_deltaTime;
+ 		goalRotTime -= g_frameTime;
 
 		if (goalRotTime < 0.0)
 		{
@@ -1033,8 +978,8 @@ void Camera::updateGoalPosition (Stuff::Vector3D &pos)
 		Stuff::Vector3D posDiff;
 		posDiff.Subtract(goalPosition,pos);
 		posDiff /= goalPosTime;
-		posDiff *= g_deltaTime;
-		goalPosTime -= g_deltaTime;
+		posDiff *= g_frameTime;
+		goalPosTime -= g_frameTime;
 
 		if (goalPosTime < 0.0f)
 			pos = goalPosition;
@@ -1427,7 +1372,7 @@ void Camera::updateDaylight (bool bInitialize)
 		if (0xff < fogBlue) { fogBlue = 0xff; }
 		fogColor = (fogRed << 16) + (fogGreen << 8) + fogBlue;
 
-		dayLightTime += g_deltaTime;
+		dayLightTime += g_frameTime;
 	}
 }
 
@@ -1437,7 +1382,7 @@ void Camera::updateLetterboxAndFade (void)
 	//OK, if we are inMovieMode and we haven't finished letterboxing, finish it!
 	if (!startEnding && inMovieMode && (letterBoxTime != MaxLetterBoxTime))
 	{
-		letterBoxTime += g_deltaTime;
+		letterBoxTime += g_frameTime;
 		float letterBoxPercent = letterBoxTime / MaxLetterBoxTime;
 		if (letterBoxTime > MaxLetterBoxTime)
 		{
@@ -1452,7 +1397,7 @@ void Camera::updateLetterboxAndFade (void)
 	//Now, if we are in startEnding and we haven't finished DE-Letterboxing, finish it.
 	if (startEnding && inMovieMode && (letterBoxPos != 0.0f))
 	{
-		letterBoxTime -= g_deltaTime;
+		letterBoxTime -= g_frameTime;
 		float letterBoxPercent = letterBoxTime / MaxLetterBoxTime;
 		if (letterBoxTime < 0.0f)
 		{
@@ -1469,7 +1414,7 @@ void Camera::updateLetterboxAndFade (void)
 	// We only fades during movie Mode at present!!
 	if (inMovieMode && inFadeMode)
 	{
-		timeLeftToFade += g_deltaTime;
+		timeLeftToFade += g_frameTime;
 		float fadePercent = timeLeftToFade / startFadeTime;
 		if (timeLeftToFade > startFadeTime)
 		{
@@ -1576,7 +1521,7 @@ long Camera::update (void)
 	{
 		Stuff::Vector3D posOffset;
 		posOffset = velocity;
-		posOffset *= g_deltaTime;
+		posOffset *= g_frameTime;
 		
 		newPosition += posOffset;
 	}
@@ -1742,7 +1687,7 @@ void Camera::render (void)
 	eye->setLightColor(1,lightRGB);
 	eye->setLightIntensity(1,1.0);
 
-	if (active && turn > 1)
+	if (active && g_framesSinceMissionStart > 1)
 	{
 		land->render();								//render the Terrain
 
@@ -2086,7 +2031,7 @@ void Camera::setCameraOrigin (void)
 			actualPosition.y = translation.z;
 			actualPosition.z = translation.y - ELEVATION_BUFFER;
 			
-			if (land && (turn > 3) && (useLOSAngle))
+			if (land && (g_framesSinceMissionStart > 3) && (useLOSAngle))
 			{
 				//bool isLOS = CameraLineOfSight(actualPosition,position);
 				bool isLOS = actualPosition.z > (land->getTerrainElevation(actualPosition) + 75.0f);
@@ -2226,7 +2171,7 @@ void Camera::setPosition(Stuff::Vector3D newPosition, bool swoopy)
 			if (fabs(goalPositionZ - position.z) > 10.0f )
 			{
 				float offsetZ = goalPositionZ - position.z;
-				offsetZ *= 0.5f * g_deltaTime;
+				offsetZ *= 0.5f * g_frameTime;
 				position.z += offsetZ;
 			}
 	
@@ -2237,182 +2182,6 @@ void Camera::setPosition(Stuff::Vector3D newPosition, bool swoopy)
 			goalPositionZ = position.z = cameraShiftZ;
 		}
 	}
-
-#if 0 //Used to restrict camera to the diamond.  Not used Anymore!	
-	//--------------------------------------------------------------
-	// Use a different clip constant for the corner to clip them
-	// off diagonally!  Or the designers must wet them!!!!!
-	float maxVisual = Terrain::worldUnitsPerVertex * Terrain::blocksMapSide * Terrain::verticesBlockSide / 2;
-	float zoomOutClip = 550.0;
-	float zoomInClip = 375.0;
-	float MAX_CORNER_DISTANCE = 1300.0;
-	
-	Stuff::Vector3D cornerPos1(maxVisual,0,0), cornerPos2(0,maxVisual,0), cornerPos3(-maxVisual,0,0), cornerPos4(0,-maxVisual,0);
-	Stuff::Vector3D distance1, distance2, distance3, distance4;
-
-	distance1.Subtract(newPosition,cornerPos1);
-	distance2.Subtract(newPosition,cornerPos2);
-	distance3.Subtract(newPosition,cornerPos3);
-	distance4.Subtract(newPosition,cornerPos4);
-
-	float dist1 = distance1.GetLength();
-	float dist2 = distance2.GetLength();
-	float dist3 = distance3.GetLength();
-	float dist4 = distance4.GetLength();
-	
-	if (newScaleFactor <= 0.5)
-	{
-		float realMaxDistance = zoomOutClip + MAX_CORNER_DISTANCE;
-		float clipConstant = zoomOutClip;
-		if (dist1 < realMaxDistance)
-		{
-			clipConstant = dist1 - MAX_CORNER_DISTANCE;
-		}
-		else if (dist2 < realMaxDistance)
-		{
-			clipConstant = dist2 - MAX_CORNER_DISTANCE;
-		}
-		else if (dist3 < realMaxDistance)
-		{
-			clipConstant = dist3 - MAX_CORNER_DISTANCE;
-		}
-		else if (dist4 < realMaxDistance)
-		{
-			clipConstant = dist4 - MAX_CORNER_DISTANCE;
-		}
-		
-		if (clipConstant > 0.0)
-		{
-			zoomOutClip = MAX_CORNER_DISTANCE - (clipConstant / zoomOutClip * (MAX_CORNER_DISTANCE-zoomOutClip));
-		}
-		else
-		{
-			zoomOutClip = MAX_CORNER_DISTANCE;
-		}
-	}
-	else
-	{
-		float realMaxDistance = zoomInClip + MAX_CORNER_DISTANCE;
-		float clipConstant = zoomInClip;
-		if (dist1 < realMaxDistance)
-		{
-			clipConstant = dist1 - MAX_CORNER_DISTANCE;
-		}
-		else if (dist2 < realMaxDistance)
-		{
-			clipConstant = dist2 - MAX_CORNER_DISTANCE;
-		}
-		else if (dist3 < realMaxDistance)
-		{
-			clipConstant = dist3 - MAX_CORNER_DISTANCE;
-		}
-		else if (dist4 < realMaxDistance)
-		{
-			clipConstant = dist4 - MAX_CORNER_DISTANCE;
-		}
-		
-		if (clipConstant > 0.0)
-		{
-			zoomInClip = MAX_CORNER_DISTANCE - (clipConstant / zoomInClip * (MAX_CORNER_DISTANCE-zoomInClip));
-		}
-		else
-		{
-			zoomInClip = MAX_CORNER_DISTANCE;
-		}
-	}
-	
-	//--------------------------------------------------------------
-	// New camera clip code here.  Actually easy once thought out!
-	if (newScaleFactor <= 0.5)
-		maxVisual -= zoomOutClip;
-	else
-		maxVisual -= zoomInClip;
-		
-	float clipChk1 = newPosition.y - newPosition.x;
-	float clipChk2 = newPosition.y + newPosition.x;
-	
-	bool clipA = (clipChk1 > maxVisual);
-	bool clipB = (clipChk1 < -maxVisual);
-	bool clipC = (clipChk2 > maxVisual);
-	bool clipD = (clipChk2 < -maxVisual);
-	
-	if (!clipA && !clipB && !clipC && !clipD)
-		return;		//No worries.  Camera on MAP.
-		
-	//------------------------------------------------------------
-	// Simple checks first.  Off of the corner.  Force to corner.
-	if (clipA && clipD)
-	{
-		position.x = -maxVisual;
-		position.y = 0.0;
-		return;
-	}
-	
-	if (clipA && clipC)
-	{
-		position.x = 0.0;
-		position.y = maxVisual;
-		return;
-	}
-	
-	if (clipB && clipD)
-	{
-		position.x = 0;
-		position.y = -maxVisual;
-		return;
-	}
-	
-	if (clipB && clipC)
-	{
-		position.x = maxVisual;
-		position.y = 0;
-		return;
-	}
-	
-	//---------------------------------------------------
-	// Calc based on Single Clip value
-	if (clipA)
-	{
-		float newX = (newPosition.y + newPosition.x - maxVisual) / 2.0;
-		float newY = newX + maxVisual;
-		position.x = newX;
-		position.y = newY;
-		return;
-	}
-	
-	if (clipB)
-	{
-		float newX = (newPosition.y + newPosition.x + maxVisual) / 2.0;
-		float newY = newX - maxVisual;
-		position.x = newX;
-		position.y = newY;
-		return;
-	}
-	
-	if (clipC)
-	{
-		float newX = (-newPosition.y + newPosition.x + maxVisual) / 2.0;
-		float newY = -newX + maxVisual;
-		position.x = newX;
-		position.y = newY;
-		return;
-	}
-	
-	if (clipD)
-	{
-		float newX = (-newPosition.y + newPosition.x - maxVisual) / 2.0;
-		float newY = -newX - maxVisual;
-		position.x = newX;
-		position.y = newY;
-		return;
-	}
-
-#ifdef _DEBUG
-	bool CameraClipImpossible = FALSE;
-#endif
-
-	gosASSERT(CameraClipImpossible);
-#endif
 }
 
 //---------------------------------------------------------------------------

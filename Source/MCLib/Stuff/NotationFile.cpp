@@ -8,12 +8,13 @@
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
-Macro::Macro(MString *macro, MString *replace):
-	Plug(DefaultData)
+Macro::Macro(MString *macro, MString *replace)
+: Plug(DefaultData)
+, m_macro(*macro)
+, m_replacement(*replace)
+, m_inUse(false)
 {
-	m_macro = *macro;
-	m_replacement = *replace;
-	m_inUse = false;
+
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

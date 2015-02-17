@@ -85,10 +85,9 @@ long CSVFile::countCols (void)
 	
 	seek(0);		//Start at the top.
 	char tmp[2048];
-	char *currentChk = tmp;
 	
 	readLine((MemoryPtr)tmp,2047);
-	currentChk = strstr(tmp,",");
+	char* currentChk = strstr(tmp,",");
 	while (currentChk && (*currentChk != '\n') && (*currentChk != '\r'))
 	{
 		count++;
@@ -546,7 +545,7 @@ long CSVFile::floatToText (char *result, float num, unsigned long bufLen)
 long CSVFile::longToTextDec (char *result, long num, unsigned long bufLen)
 {
 	char temp[250];
-	sprintf(temp,"%d",num);
+	sprintf(temp,"%ld",num);
 
 	unsigned long numLength = strlen(temp);
 	if (numLength >= bufLen)
@@ -562,7 +561,7 @@ long CSVFile::longToTextDec (char *result, long num, unsigned long bufLen)
 long CSVFile::longToTextHex (char *result, long num, unsigned long bufLen)
 {
 	char temp[250];
-	sprintf(temp,"0x%x",num);
+	sprintf(temp,"0x%x",*((unsigned int*)&num));
 
 	unsigned long numLength = strlen(temp);
 	if (numLength >= bufLen)

@@ -429,22 +429,14 @@ bool
 
 	if (*current_position != '\\')
 	{
-	
-		if ((current_position + 1) != NULL)
+		if (strlen(current_position) > 2 && *(current_position + 1) == ':' && *(current_position + 2) == '\\')
 		{
-			if((current_position + 2) != NULL)
-			{
-				if ( *(current_position + 1) == ':' && *(current_position + 2) == '\\')
-				{
-					current_position += 2;
-				}
-			}
+			current_position += 2;
 		}
 	}
 
 	if (*current_position != '\\')
 		return false;
-
 
 	while((current_position != NULL))
 	{
@@ -481,30 +473,22 @@ bool
 			Check_Pointer(new_string);
 
 			strncpy(new_string, start_position, length);
-
 			new_string[length] = NULL;
 
 		}
 
 		Verify(new_string != NULL);
-
 		
 		if (!gos_DoesFileExist(new_string))
 		{
 			gos_CreateDirectory(new_string);
 		}
 
-
-
 		Check_Pointer(new_string);
-		delete new_string;
+		delete[] new_string;
 
 		current_position = next_slash;
 	}
 
-
-
-
 	return true;
-	
 }

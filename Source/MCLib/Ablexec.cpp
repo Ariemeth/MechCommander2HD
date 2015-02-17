@@ -632,11 +632,7 @@ void execute (SymTableNodePtr routineIdPtr) {
 					}
 				}
 				sprintf(errStr, " ABL endless state loop in %s [%s:%s] ", ModuleRegistry[CurModule->getHandle()].fileName, CurModule->getState()->name, CurModule->getPrevState()->name);
-				#if 0
-				ABL_Fatal(NumStateTransitions, errStr);
-				#else
 				NewStateSet = false;
-				#endif
 				}
 			else {
 				NewStateSet = false;

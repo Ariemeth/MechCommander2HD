@@ -114,7 +114,7 @@ void InfoWindow::init( FitIniFile& file )
 		}
 	}
 
-	memset( skillInfos, 0, sizeof( skillInfos ) );
+	memset( skillInfos, 0, sizeof( StaticInfo ) *  7);
 	memset( buttonData, 0, sizeof( buttonData ) );
 
 
@@ -390,32 +390,21 @@ void InfoWindow::render()
 		buttons[1].disable( 0 );
 
 		float physicalRange = buttons[1].location[0].y - buttons[0].location[2].y;
-		float buttonHeight = SCROLLBUTTONHEIGHT;
-
 		float RealRange = infoLength;
 
-		buttonHeight =  physicalRange * physicalRange/(physicalRange + RealRange);
-
+		float buttonHeight =  physicalRange * physicalRange/(physicalRange + RealRange);
 		if ( buttonHeight < SCROLLBUTTONHEIGHT )
 			buttonHeight = SCROLLBUTTONHEIGHT;
 
 		SCROLLMAX = buttons[1].location[0].y - buttonHeight - 2;
 		
-
-
-
 		v[2].x = v[3].x = SCROLLBUTTONX + SCROLLBUTTONWIDTH;
 		v[1].y = v[2].y = SCROLLBOTTOM;	
 		v[1].y = v[2].y = v[0].y + buttonHeight;
 
-	//	v[2].u = v[3].u = .1/256.f + (float)(SCROLLBUTTONU + ((float)SCROLLBUTTONWIDTH))/256.f;
-	//	v[1].v = v[2].v = .1/256.f + (float)(SCROLLBUTTONV + ((float)SCROLLBUTTONHEIGHT))/256.f;
-
 		gos_SetRenderState( gos_State_Texture, 0 );
 		gos_DrawQuads( v, 4 );
 	}
-
-
 
 	// draw the name of the unit
 	if ( pUnit )
@@ -529,12 +518,9 @@ void InfoWindow::update()
 
 		// if its in the thumbdrag thingie, save the y
 			float physicalRange = buttons[1].location[0].y - buttons[0].location[2].y;
-			float buttonHeight = SCROLLBUTTONHEIGHT;
-
 			float RealRange = infoLength;
 
-			buttonHeight =  physicalRange * physicalRange/(physicalRange + RealRange);
-
+			float buttonHeight =  physicalRange * physicalRange/(physicalRange + RealRange);
 			if ( buttonHeight < SCROLLBUTTONHEIGHT )
 				buttonHeight = SCROLLBUTTONHEIGHT;
 
@@ -707,9 +693,9 @@ void InfoWindow::drawScrollingStuff()
 		{
 			if ( !names[i] )
 				break;
-			char tmpName[256];
 			if ( ranges[i] == j )
 			{
+				char tmpName[256];
 				if ( curY > NAMETOP )
 				{
 					cLoadString( IDS_COMP_ABBR0 + names[i], tmpName, 255 );
@@ -769,7 +755,6 @@ void InfoWindow::drawScrollingStuff()
 	{
 		if ( count[curWeapon] != 255)
 		{
-			long color = 0xffc29b00;
 			//Neither the ecm, probe, sensors or JumpJets can ever REALLY be disabled. No matter what the setting is!!
 //			if (pUnit->inventory[count[curWeapon]].disabled) 
 //				color = 0xff7f7f7f;
@@ -779,6 +764,7 @@ void InfoWindow::drawScrollingStuff()
 
 			if ( curY > NAMETOP )
 			{
+				long color = 0xffc29b00;
 				componentFont.render( tmpName, COMPONENTLEFT, curY, SCROLLLEFT - COMPONENTLEFT, height, color, 0, 0 );
 			}
 	
@@ -981,7 +967,7 @@ void InfoWindow::drawSkillBar( int skill, float yVal, float height )
 	}
 
 	char buffer[32];
-	sprintf( buffer, "%ld", skill );
+	sprintf( buffer, "%d", skill );
 	componentFont.render( buffer, SKILLRIGHT+2, yVal, SCROLLLEFT - SKILLRIGHT - 2, SKILLHEIGHT, 0xff005392, 0, 0 );
 }
 

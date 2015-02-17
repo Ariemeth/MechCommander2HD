@@ -23,16 +23,7 @@ bool
 	UnitVector3D
 		d(0.8f,-0.6f,0.0f);
 
-#if 0
-	Test_Assumption(c.x == 0.6f && c.y == 0.0f && c.z == 0.8f);
-
-	Test_Assumption(c[2] == c.z);
-#endif
-
 	b = c;
-#if 0
-	Test_Assumption(b.x == c.x && b.y == c.y && b.z == c.z);
-#endif
 	Test_Assumption(Close_Enough(b,c));
 	Test_Assumption(b == c);
 

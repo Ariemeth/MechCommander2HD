@@ -112,7 +112,7 @@ aEdit::~aEdit()
 
 void aEdit::update()
 {
-	cursorTime += g_deltaTime;
+	cursorTime += g_frameTime;
 	if ( cursorTime > .5 )
 	{
 		bCursorVisible ^= 1;

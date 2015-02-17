@@ -93,7 +93,7 @@ int LogisticsMechIcon::init( FitIniFile& file )
 		char blockName[64];
 		for ( int i = 0; i < ICON_ANIM_COUNT; i++ )
 		{
-			sprintf( blockName, "Animation%ld", i );
+			sprintf( blockName, "Animation%d", i );
 			s_pTemplateIcon->animations[i].init( &file, blockName );
 		}
 	}
@@ -249,7 +249,7 @@ void LogisticsMechIcon::update()
 
 			bJustSelected = true;
 			if ( state != aListItem::SELECTED )
-				soundSystem->playDigitalSample( LOG_SELECT );
+				g_gameSoundSystem->playDigitalSample( LOG_SELECT );
 			state = aListItem::SELECTED;
 		}
 
@@ -261,7 +261,7 @@ void LogisticsMechIcon::update()
 			}
 			if ( state != aListItem::HIGHLITE )
 			{
-				soundSystem->playDigitalSample( LOG_HIGHLIGHTBUTTONS );
+				g_gameSoundSystem->playDigitalSample( LOG_HIGHLIGHTBUTTONS );
 			}
 			state = aListItem::HIGHLITE;
 		}

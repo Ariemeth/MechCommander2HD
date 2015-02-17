@@ -52,7 +52,7 @@ class TerrainObjectType : public ObjectType {
 
 	public:
 
-		char			subType;
+		char			terrainSubType;
 		float			damageLevel;
 		long			collisionOffsetX;
 		long			collisionOffsetY;
@@ -229,7 +229,7 @@ class TerrainObject : public GameObject {
 		virtual float getStatusRating (void);
 
 		long getSubType (void) {
-			return(((TerrainObjectTypePtr)getObjectType())->subType);
+			return(((TerrainObjectTypePtr)getObjectType())->terrainSubType);
 		}
 
 		virtual long kill (void) {

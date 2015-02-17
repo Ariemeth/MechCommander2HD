@@ -67,10 +67,10 @@ namespace Stuff {
 			const Radian &p,
 			const Radian &y,
 			const Radian &r
-		)
-			{pitch = p; yaw = y; roll = r;}
-		EulerAngles(const EulerAngles &a)
-			{pitch = a.pitch; yaw = a.yaw; roll = a.roll;}
+		) : pitch(p), yaw(y), roll(r)
+			{}
+		EulerAngles(const EulerAngles &a) : pitch(a.pitch), yaw(a.yaw), roll(a.roll)
+			{}
 		explicit EulerAngles(const YawPitchRoll &angles)
 			{*this = angles;}
 		explicit EulerAngles(const UnitQuaternion &quaternion)
@@ -205,10 +205,11 @@ namespace Stuff {
 			const Radian &y,
 			const Radian &p,
 			const Radian &r
-		)
-			{pitch = p; yaw = y; roll = r;}
-		YawPitchRoll(const YawPitchRoll &angles)
-			{pitch = angles.pitch; yaw = angles.yaw; roll = angles.roll;}
+		) : pitch(p), yaw(y), roll(r)
+			{}
+		YawPitchRoll(const YawPitchRoll &angles) 
+		: pitch(angles.pitch), yaw(angles.yaw), roll(angles.roll)
+			{}
 		explicit YawPitchRoll(const EulerAngles &angles)
 			{*this = angles;}
 		explicit YawPitchRoll(const UnitQuaternion &quaternion)
@@ -463,16 +464,6 @@ namespace Stuff {
  		//
 		// Template support
 		//
-
-#if 0
-		UnitQuaternion&
-			Lerp(
-				const UnitQuaternion& v1,
-				const UnitQuaternion& v2,
-				Scalar t
-			);
-#endif
-
 		UnitQuaternion&
 			Lerp(
 				const UnitQuaternion& p, 
@@ -519,26 +510,12 @@ namespace Stuff {
 				const Vector3D &end,
 				const Vector3D &start
 			);
-#if 0
-		UnitQuaternion&
-			Combine(
-				const EulerAngles& v1,
-				Scalar t1,
-				const EulerAngles& v2,
-				Scalar t2
-			);
-#endif
-
-
-
 
 		// JSE -------------------------------------------------------
 		// ---- UnitQuaternion Slerping and Splining routines 
 		// ---- USE AT OWN RISK!!!! 
 		// ---- This code is as of yet untested!!!
 		//------------------------------------------------------------
-
-		
 
 		UnitQuaternion
 			Squad(

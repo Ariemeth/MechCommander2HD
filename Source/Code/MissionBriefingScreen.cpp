@@ -137,7 +137,7 @@ void MissionBriefingScreen::update()
 		}
 	}
 
-	runTime += g_deltaTime;
+	runTime += g_frameTime;
 	
 	long selItem = missionListBox.GetSelectedItem( );
 	int ID = -1;
@@ -168,7 +168,7 @@ void MissionBriefingScreen::update()
 				camera.setObject( objectiveModels[ID], modelTypes[ID], modelColors[ID][0],
 					modelColors[ID][1], modelColors[ID][2] );
 				camera.setScale( modelScales[ID] );
-				soundSystem->playDigitalSample( LOG_VIDEOBUTTONS );
+				g_gameSoundSystem->playDigitalSample( LOG_VIDEOBUTTONS );
 				statics[35].showGUIWindow( 0 );
 			}
 			else
@@ -309,7 +309,7 @@ long	MissionBriefingScreen::getMissionTGA(const char* missionName)
 			// set up the texture
 			long tmpMapTextureHandle = mcTextureManager->textureFromMemory( (unsigned long*)(pHeader+1), gos_Texture_Solid, 0, bmpWidth );
 
-			delete mem;
+			delete[] mem;
 
 			return tmpMapTextureHandle;
 		}
@@ -380,7 +380,6 @@ void MissionBriefingScreen::begin()
 	fitFile.seekBlock( "Team0Objectives" );
 	unsigned long objectiveCount;
 	fitFile.readIdULong( "NumObjectives", objectiveCount );
-	bool bHasSecondary = 0;
 	int count = 0; 
 
 	fitFile.seekBlock( "Terrain" );
@@ -420,7 +419,6 @@ void MissionBriefingScreen::begin()
 
 					if ( j == 0 )
 					{
-						bHasSecondary = true;
 						if ( i == 0 )
 							addItem( IDS_MN_DIVIDER, 0xff005392, -1 );
 					}
@@ -447,7 +445,7 @@ void MissionBriefingScreen::begin()
 	fitFile.seekBlock( "MissionSettings" );
 
 	char blurb[4096];
-	result = fitFile.readIdString("Blurb", blurb, 4095 );
+	fitFile.readIdString("Blurb", blurb, 4095 );
 
 	bool tmpBool = false;
 	result = fitFile.readIdBoolean("BlurbUseResourceString", tmpBool);
@@ -466,7 +464,7 @@ void MissionBriefingScreen::begin()
 
 	int RP = LogisticsData::instance->getCBills();
 	char text[32];
-	sprintf( text, "%ld ", RP );
+	sprintf( text, "%d ", RP );
 	textObjects[RP_INDEX].setText( text );
 
 	// need to find a drop zone, because our designers were never convinced to place
@@ -475,7 +473,7 @@ void MissionBriefingScreen::begin()
 	while( true )
 	{
 		char blockName[32];
-		sprintf( blockName, "Part%ld", i );
+		sprintf( blockName, "Part%d", i );
 		i++;
 		if ( NO_ERR != fitFile.seekBlock( blockName ) )
 			break;

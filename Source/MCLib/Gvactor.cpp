@@ -1505,7 +1505,7 @@ void GVAppearance::debugUpdate (void)
 
 	velocity *= velMag * worldUnitsPerMeter;
 
-	velocity *= g_deltaTime;
+	velocity *= g_frameTime;
 
 	debugGVActorPosition += velocity;
 	debugGVActorPosition.z = land->getTerrainElevation(debugGVActorPosition);
@@ -1903,7 +1903,7 @@ bool GVAppearance::playDestruction (void)
 			shapeOrigin.BuildRotation(Stuff::EulerAngles(0.0f,0.0f,0.0f));
 			shapeOrigin.BuildTranslation(tPosition);
 			
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 			destructFX->Start(&info);
 			
 			return true;
@@ -2423,7 +2423,7 @@ void GVAppearance::updateGeometry (void)
 		tPosition.z = position.y;
 		
 		Stuff::OBB boundingBox;
-		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,&boundingBox);
+		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,&boundingBox);
 
 		bool result = destructFX->Execute(&info);
 		if (!result)
@@ -2454,7 +2454,7 @@ void GVAppearance::updateGeometry (void)
 		localResult.Multiply(localToWorld,shapeOrigin);
 		
  		Stuff::OBB boundingBox;
-		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&localResult,&boundingBox);
+		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&localResult,&boundingBox);
 		
 		waterWake->Execute(&info);
 	}
@@ -2495,7 +2495,7 @@ void GVAppearance::updateGeometry (void)
 			localToWorld.Multiply(gosFX::Effect_Against_Motion,effectRot);
 			localResult.Multiply(localToWorld,shapeOrigin);
 				
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&localResult,NULL);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&localResult,NULL);
 	
 			dustCloud->Start(&info);
 			dustCloudStart = true;
@@ -2524,7 +2524,7 @@ void GVAppearance::updateGeometry (void)
 		localResult.Multiply(localToWorld,shapeOrigin);
 		
  		Stuff::OBB boundingBox;
-		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&localResult,&boundingBox);
+		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&localResult,&boundingBox);
 		
 		dustCloud->Execute(&info);
 	}
@@ -2556,12 +2556,12 @@ void GVAppearance::updateGeometry (void)
 		*/
 		
  		Stuff::OBB boundingBox;
-		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,&boundingBox);
+		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,&boundingBox);
 		
 		activity->Execute(&info);
 	}
 	
-	sensorSpin += SPIN_RATE * g_deltaTime;
+	sensorSpin += SPIN_RATE * g_frameTime;
 	if (sensorSpin > 180)
 		sensorSpin -= 360;
 
@@ -2593,7 +2593,7 @@ long GVAppearance::update (bool animate)
 		{
 			if (nodeRecycle[i] > 0.0f)
 			{
-				nodeRecycle[i] -= g_deltaTime;
+				nodeRecycle[i] -= g_frameTime;
 				if (nodeRecycle[i] < 0.0f)
 					nodeRecycle[i] = 0.0f;
 			}
@@ -2603,8 +2603,8 @@ long GVAppearance::update (bool animate)
 	//Update flashing regardless of view!!!
 	if (duration > 0.0f)
 	{
-		duration -= g_deltaTime;
-		currentFlash -= g_deltaTime;
+		duration -= g_frameTime;
+		currentFlash -= g_frameTime;
 		if (currentFlash < 0.0f)
 		{
 			drawFlash ^= true;
@@ -2628,7 +2628,7 @@ long GVAppearance::update (bool animate)
 	{
 		//--------------------------------------------------------
 		// Make sure animation runs no faster than bdFrameRate fps.
-		float frameInc = gvFrameRate * g_deltaTime;
+		float frameInc = gvFrameRate * g_frameTime;
 		
 		//---------------------------------------
 		// Increment Frames -- Everything else!
@@ -2675,7 +2675,7 @@ long GVAppearance::update (bool animate)
 		gvShape->SetFrameNum(currentFrame);
 	}
 
-	if ((turn < 3) || inView)
+	if ((g_framesSinceMissionStart < 3) || inView)
 		updateGeometry();
 		
 	return TRUE;
@@ -2786,7 +2786,7 @@ void GVAppearance::startWaterWake (void)
 		localToWorld.Multiply(gosFX::Effect_Against_Motion,effectRot);
 		localResult.Multiply(localToWorld,shapeOrigin);
 			
- 		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&localResult,NULL);
+ 		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&localResult,NULL);
 
 		waterWake->Start(&info);
 
@@ -2861,7 +2861,7 @@ void GVAppearance::startActivity (long effectId, bool loop)
 		localResult.Multiply(localToWorld,shapeOrigin);
 		*/
 			
- 		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+ 		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 
 		activity->Start(&info);
 		

@@ -49,6 +49,7 @@
 #include <io.h>
 #include <sys\stat.h>
 
+// MCHD TODO: !!!MAGIC NUMBERS!!!
 #define COLOR_MAP_HEAP_SIZE				20480000
 #define COLOR_TXM_HEAP_SIZE				4096
 #define COLOR_MAP_TEXTURE_SIZE			256
@@ -984,9 +985,11 @@ inline bool textureIsOKFormat (const char *fileName)
 		if (((tgaHeader.image_type == UNC_TRUE) || (tgaHeader.image_type == RLE_TRUE)) &&
 			(tgaHeader.width == tgaHeader.height) &&
 			((tgaHeader.width == 32) ||
-			(tgaHeader.width == 64) ||
+			(tgaHeader.width == 64)  ||
 			(tgaHeader.width == 128) ||
-			(tgaHeader.width == 256)))
+			(tgaHeader.width == 256) ||
+			(tgaHeader.width == 512) ||
+			(tgaHeader.width == 1024)))
 			return true;
 
 		tgaFile.close();
@@ -1001,7 +1004,7 @@ void TerrainColorMap::resetDetailTexture (const char *fileName)
 	if (!textureIsOKFormat(fileName))
 	{
 		char msg[2048];
-		sprintf(msg,"Texture %s is not 24bit or 32bit, 32x32, 64x64, 128x128 or 256x256 TGA File.  Not loaded!",fileName);
+		sprintf(msg, "Texture %s is not 24bit or 32bit, 32x32, 64x64, 128x128, 256x256, 512x512, or 1024x1024 TGA File. Not loaded!", fileName);
 		MessageBox( NULL, msg, NULL, MBOK );
 		return;
 	}
@@ -1009,21 +1012,7 @@ void TerrainColorMap::resetDetailTexture (const char *fileName)
 	mcTextureManager->removeTextureNode (detailTextureNodeIndex);
 	detailTextureNodeIndex = 0xffffffff;
 
-#if 0
-	//Load up the detail texture.
-	// Detail texture is named same as colormap with .detail in name.
-	// if no file exists, no texture drawn.
-	char dName[1024];
-	sprintf(dName,"%s.detail",fileName);
-		
-	FullPathFileName detailFile;
-	detailFile.init(texturePath,dName,".tga");
-
-	if (fileExists(detailFile))		//Otherwise, its already 0xffffffff!!
-		detailTextureNodeIndex = mcTextureManager->loadTexture(detailFile,gos_Texture_Alpha,gosHint_DontShrink);
-#else
 	detailTextureNodeIndex = mcTextureManager->loadTexture(fileName,gos_Texture_Alpha,gosHint_DontShrink);
-#endif
 }
 
 //---------------------------------------------------------------------------
@@ -1038,23 +1027,7 @@ void TerrainColorMap::resetWaterTexture (const char *fileName)
 	}
 
 	mcTextureManager->removeTextureNode (waterTextureNodeIndex);
-	waterTextureNodeIndex = 0xffffffff;
-	
-#if 0
-	//load up the water texture.
-	// Water texture is named the same as the colormap with .water in name.
-	// If no file exists, no texture drawn!!
-	char dName[1024];
-	sprintf(dName,"%s.water",fileName);
-	
-	FullPathFileName waterFile;
-	waterFile.init(texturePath,dName,".tga");
-	
-	if (fileExists(waterFile))    //Otherwise, its already 0xffffffff!! 
-		waterTextureNodeIndex = mcTextureManager->loadTexture(waterFile,gos_Texture_Solid,0);
-#else
 	waterTextureNodeIndex = mcTextureManager->loadTexture(fileName,gos_Texture_Solid,0);
-#endif
 }
 
 //---------------------------------------------------------------------------
@@ -1075,7 +1048,7 @@ void TerrainColorMap::resetWaterDetailTextures (char *fileName)
 		{
 			strcpy(waterFile, fileName);
 			char dName[1024];
-			sprintf(dName,"%04d.tga",i);
+			sprintf(dName,"%04ld.tga",i);
 			char *subStringToBeReplaced = &(waterFile[strlen(waterFile)-strlen("0000.tga")]);
 			strcpy(subStringToBeReplaced, dName);
 		}

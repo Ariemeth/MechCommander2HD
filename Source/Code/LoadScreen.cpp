@@ -246,9 +246,9 @@ void LoadScreenWrapper::begin()
 void LoadScreenWrapper::update()
 {
 	if ( loadProgress > 99 )
-		soundSystem->playDigitalSample( LOAD_DOORS_OPENING );
+		g_gameSoundSystem->playDigitalSample( LOAD_DOORS_OPENING );
 	else if ( bFirstTime )
-		soundSystem->playDigitalSample( LOAD_DOORS_CLOSING );
+		g_gameSoundSystem->playDigitalSample( LOAD_DOORS_CLOSING );
 
 	 bFirstTime = 0;
 
@@ -387,7 +387,7 @@ void LoadScreen::init(FitIniFile& file, DWORD neverFlush)
 		animIndices = new int[animObjectsCount];
 		for ( int i= 0; i < animObjectsCount; i++ )
 		{
-			sprintf( blockName, "AnimObject%ld", i );
+			sprintf( blockName, "AnimObject%d", i );
 			file.seekBlock( blockName );
 			file.readIdString( "AnimationOut", blockName, 255 );
 			if ( strstr( blockName, "2" ) )

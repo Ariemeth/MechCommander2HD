@@ -139,7 +139,7 @@ void GameCamera::render (void)
 	theClipper->StartDraw(cameraOrigin, cameraToClip, fColor, &fColor, default_state, &z);
 	MidLevelRenderer::GOSVertex::farClipReciprocal = (1.0f-cameraToClip(2, 2))/cameraToClip(3, 2);
 
-	if (active && turn > 1)
+	if (active && g_framesSinceMissionStart > 1)
 	{
 		//----------------------------------------------------------
 		// Turn stuff on line by line until perspective is working.
@@ -164,7 +164,7 @@ void GameCamera::render (void)
 			
 		if (!drawOldWay && !inMovieMode)
 		{
-			if (compass && (turn > 3) && drawCompass)
+			if (compass && (g_framesSinceMissionStart > 3) && drawCompass)
 				compass->render(-1);		//Force this to zBuffer in front of everything
 		}
 	
@@ -191,7 +191,7 @@ void GameCamera::render (void)
 		gos_SetRenderState(	gos_State_ZWrite, 0);
 		gos_SetRenderState( gos_State_Perspective, 1);
 
-		if (compass && (turn > 3) && drawCompass)
+		if (compass && (g_framesSinceMissionStart > 3) && drawCompass)
 			compass->render();
 	}
 	
@@ -582,7 +582,7 @@ long GameCamera::update (void)
 	useFog = false;
 	useShadows = false;
 		
-  	if (compass && (turn > 3))
+  	if (compass && (g_framesSinceMissionStart > 3))
 	{
 		Stuff::Vector3D pos = getPosition();
    		compass->setObjectParameters(pos,0.0f,false,0,0);

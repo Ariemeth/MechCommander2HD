@@ -39,7 +39,7 @@ ComponentListItem::ComponentListItem( LogisticsComponent* pComp )
 	{
 		name.setText( pComponent->getName() );
 		char numericText[32];
-		sprintf( numericText, "%ld", pComponent->getCost() );
+		sprintf( numericText, "%d", pComponent->getCost() );
 		costText.setText(  numericText  );
 		sprintf( numericText, "%.0lf", pComponent->getHeat() );
 		heatText.setText( numericText );
@@ -110,7 +110,7 @@ int ComponentListItem::init( FitIniFile& file )
 		char animName[COMP_ANIMATION_COUNT][32];
 		for ( int i = 0; i < COMP_ANIMATION_COUNT; i++ )
 		{
-			sprintf( animName[i], "Animation%ld", i );
+			sprintf( animName[i], "Animation%d", i );
 			s_templateItem->animations[i].init( &file, animName[i] );
 		
 		}
@@ -209,15 +209,18 @@ void	ComponentListItem::update()
 
 	if ( state == aListItem::SELECTED ) 
 	{
-		if ( (userInput->isLeftClick() && isInside)
-			|| ( animations[0].getState() != aAnimGroup::PRESSED )
-			&& ComponentIconListBox::s_instance->pointInside( userInput->getMouseX(), userInput->getMouseY() ))
+		//if ( (userInput->isLeftClick() && isInside)
+		//	|| ( animations[0].getState() != aAnimGroup::PRESSED )
+		//	&& ComponentIconListBox::s_instance->pointInside( userInput->getMouseX(), userInput->getMouseY() ))
+		if ((userInput->isLeftClick() && isInside)
+			|| ((animations[0].getState() != aAnimGroup::PRESSED)
+			&& ComponentIconListBox::s_instance->pointInside(userInput->getMouseX(), userInput->getMouseY()))) // MCHD TODO: Is this working as intended?
 		{
 			setComponent();
 
 			if ( bCanAdd )
 			{
-				soundSystem->playDigitalSample( LOG_WRONGBUTTON );
+				g_gameSoundSystem->playDigitalSample( LOG_WRONGBUTTON );
 			}
 
 			::helpTextID = IDS_HELP_COMP0 + pComponent->getID();
@@ -277,7 +280,7 @@ void	ComponentListItem::update()
 				animations[i].setState( aAnimGroup::HIGHLIGHT );
 			}
 
-			soundSystem->playDigitalSample( LOG_HIGHLIGHTBUTTONS );
+			g_gameSoundSystem->playDigitalSample( LOG_HIGHLIGHTBUTTONS );
 
 		}
 		state = aListItem::HIGHLITE;
@@ -304,7 +307,7 @@ void	ComponentListItem::update()
 			&& ComponentIconListBox::s_instance->pointInside( userInput->getMouseX(), userInput->getMouseY() ) ) )
 		{
 			setComponent();
-			soundSystem->playDigitalSample( LOG_WRONGBUTTON );
+			g_gameSoundSystem->playDigitalSample( LOG_WRONGBUTTON );
 		}
 
 		for ( int i = 0; i < COMP_ANIMATION_COUNT; i++ )

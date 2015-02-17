@@ -134,10 +134,6 @@ void
 	}
 
 
-#if 0
-	Lighting(*shape->worldToShape, dInfo->activeLights, dInfo->nrOfActiveLights);
-#endif
-
 	if( Clip(dInfo->clippingFlags, allVerticesToDraw) )
 	{
 		sorter->AddEffect(this, dInfo->state);
@@ -151,10 +147,9 @@ static MLRClippingState theAnd, theOr, theTest;
 int 
 	MLRIndexedTriangleCloud::Clip(MLRClippingState clippingFlags, GOSVertexPool *vt)
 {
-	int	myNumberUsedClipVertex, myNumberUsedClipIndex, myNumberUsedClipLength;
+	int	myNumberUsedClipVertex, myNumberUsedClipLength;
 
 	myNumberUsedClipVertex = 0;
-	myNumberUsedClipIndex = 0;
 	myNumberUsedClipLength = 0;
 
 	Verify(*usedNrOfTriangles > 0);

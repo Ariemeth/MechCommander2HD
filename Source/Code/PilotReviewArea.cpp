@@ -71,7 +71,7 @@ long		SpecialtyListItem::s_itemCount = 0; // hack, we really don't want to delet
 
 PilotReviewScreen* PilotReviewScreen::instance = NULL;
 
-extern float g_deltaTime;
+extern float g_frameTime;
 
 #define RP_TEXTID	3
 #define HELP_TEXTID	2
@@ -259,7 +259,7 @@ int	PilotReviewScreen::handleMessage( unsigned long message, unsigned long who)
 		bDone = true;
 		exitAnim.begin();
 		beginFadeOut( 1.0 );
-		soundSystem->stopBettySample(); // don't want to carry droning on to next screen
+		g_gameSoundSystem->stopBettySample(); // don't want to carry droning on to next screen
 		return 1;
 	}
 
@@ -551,7 +551,7 @@ void PilotListBox::update()
 {
 	aObject::update();
 
-	timeSinceStart += g_deltaTime;
+	timeSinceStart += g_frameTime;
 	if ( timeSinceStart < 1.0 )
 		return;
 
@@ -644,7 +644,7 @@ void PilotListBox::update()
 
 	if ( newScroll )
 	{
-		scrollTime += g_deltaTime;
+		scrollTime += g_frameTime;
 		long delta = 140.f * scrollTime;
 		if ( delta + oldScroll < newScroll && delta + oldScroll < scrollBar->GetScrollMax() )
 			scrollBar->SetScroll( oldScroll + delta );
@@ -695,7 +695,7 @@ void	ActivePilotListItem::render()
 				{
 					if ( !medalIcons[i]->isShowing() ) // play sound when it shows up
 					{
-						soundSystem->playDigitalSample( LOG_PILOTMEDAL );
+						g_gameSoundSystem->playDigitalSample( LOG_PILOTMEDAL );
 					}
 					medalIcons[i]->showGUIWindow( true );
 					medalTexts[i]->showGUIWindow( true );
@@ -722,7 +722,7 @@ void	ActivePilotListItem::render()
 		if ( promotionText.getColor() == 0 && currentTime - timeOffset < .3
 			&& pilot->promotePilot() )
 		{
-			soundSystem->playDigitalSample( LOG_PROMOTED );
+			g_gameSoundSystem->playDigitalSample( LOG_PROMOTED );
 		}
 		promotionText.setColor( s_pilotPromotedAnim->getColor( currentTime -timeOffset ) );
 	}
@@ -781,11 +781,11 @@ void	ActivePilotListItem::render()
 	long y = globalY() + s_killIconRect->top();
 
 	int counter = 0;
-	int oldPossible = 2.0 * (currentTime - g_deltaTime - 1.5);
+	int oldPossible = 2.0 * (currentTime - g_frameTime - 1.5);
 	int numPossible = 2.0 * (currentTime - 1.5);
 	if ( currentTime - 1.5 < 0 )
 		numPossible = -1;
-	if (currentTime - 1.5 - g_deltaTime < 0 )
+	if (currentTime - 1.5 - g_frameTime < 0 )
 		oldPossible = -1;
 
 
@@ -795,7 +795,7 @@ void	ActivePilotListItem::render()
 	// when adding a new icon, play sound
 	if ( oldPossible != numPossible && numPossible < pilot->killedIcons.Count() )
 	{
-		soundSystem->playDigitalSample( LOG_KILLMARKER, Stuff::Vector3D(-9999.0f,-9999.0,-9999.0f), true );
+		g_gameSoundSystem->playDigitalSample( LOG_KILLMARKER, Stuff::Vector3D(-9999.0f,-9999.0,-9999.0f), true );
 	}
 
 	for ( EList< ForceGroupIcon*, ForceGroupIcon* >::EIterator iter = pilot->killedIcons.Begin();
@@ -1261,7 +1261,7 @@ void PilotListItem::begin()
 }
 void PilotListItem::update()
 {
-	currentTime += g_deltaTime;
+	currentTime += g_frameTime;
 }
 
 void PilotPromotionArea::init( FitIniFile& file )
@@ -1289,7 +1289,7 @@ void PilotPromotionArea::init( FitIniFile& file )
 	char buffer[32];
 	for ( int i = 0; i < 2; i++ )
 	{
-		sprintf( buffer, "PromoteGadgetLeftSkillMeter%ld", i );
+		sprintf( buffer, "PromoteGadgetLeftSkillMeter%d", i );
 		attributeMeters[i].init( &file, buffer );
 		attributeMeters[i].setAddedColorMax( 0xffffffff );
 		attributeMeters[i].setAddedColorMin( 0xffffffff );
@@ -1494,23 +1494,23 @@ void PilotPromotionArea::setPilot( LogisticsPilot* pPilot, PilotIcon* pIcon )
 	if ( rank > WARRIOR_RANK_ELITE )
 	{
 		maxSkill = NUM_SPECIALTY_SKILLS;
-		soundSystem->playBettySample( BETTY_PROMOACE );
+		g_gameSoundSystem->playBettySample( BETTY_PROMOACE );
 		
 	}
 	else if ( rank > WARRIOR_RANK_VETERAN )
 	{
 		maxSkill = FIRST_ACE_SPECIALTY;
-		soundSystem->playBettySample( BETTY_PROMOELI );
+		g_gameSoundSystem->playBettySample( BETTY_PROMOELI );
 	}
 	else if ( rank > WARRIOR_RANK_REGULAR )
 	{
 		maxSkill = FIRST_ELITE_SPECIALTY;
-		soundSystem->playBettySample( BETTY_PROMOVET );
+		g_gameSoundSystem->playBettySample( BETTY_PROMOVET );
 	}
 	else
 	{
 		maxSkill = FIRST_VETERAN_SPECIALTY;
-		soundSystem->playBettySample( BETTY_PROMOREG );
+		g_gameSoundSystem->playBettySample( BETTY_PROMOREG );
 	}
 
 	for ( i = 0; i < maxSkill; i++ )
@@ -1710,7 +1710,7 @@ void			SpecialtyListItem::init( FitIniFile* file )
 	for ( int i =0; i < 4; i++ )
 	{
 		s_skillIcons[i] = new aObject;
-		sprintf( buffer, "SkillTypeIcon%ld", i );
+		sprintf( buffer, "SkillTypeIcon%d", i );
 		s_skillIcons[i]->init( file, buffer );
 	}
 	s_description->init( file, "SkillDescriptionText" );

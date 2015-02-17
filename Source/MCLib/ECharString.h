@@ -78,13 +78,13 @@ public:
 	// the this pointer
 	void	Format( const ECSChar*, ... );
 
-	inline const ECharString& operator=( const ECSChar* );
-	inline const ECharString& operator=( const ECharString& );
-	inline const ECharString& operator=( ECSChar );
+	inline ECharString& operator=( const ECSChar* );
+	inline ECharString& operator=( const ECharString& );
+	inline ECharString& operator=( ECSChar );
 
-	inline const ECharString& operator+=( const ECSChar* );
-	inline const ECharString& operator+=( const ECharString& );
-	inline const ECharString& operator+=( ECSChar );
+	inline ECharString& operator+=( const ECSChar* );
+	inline ECharString& operator+=( const ECharString& );
+	inline ECharString& operator+=( ECSChar );
 
 	friend ECharString operator+( const ECharString&, const ECharString& );
 
@@ -284,7 +284,7 @@ inline void ECharString::Insert( int Start_Index, const ECharString& String )
 }
 
 /////////////////////////////////////////////////////////////////
-inline const ECharString& ECharString::operator=( const ECSChar* p_String )
+inline ECharString& ECharString::operator=( const ECSChar* p_String )
 {
 	ChecEBuffer();
 	Assign( p_String );
@@ -292,7 +292,7 @@ inline const ECharString& ECharString::operator=( const ECSChar* p_String )
 }
 
 /////////////////////////////////////////////////////////////////
-inline const ECharString& ECharString::operator=( const ECharString& Src )
+inline ECharString& ECharString::operator=( const ECharString& Src )
 {
 	if ( &Src != this )
 	{
@@ -305,7 +305,7 @@ inline const ECharString& ECharString::operator=( const ECharString& Src )
 }
 
 /////////////////////////////////////////////////////////////////
-inline const ECharString& ECharString::operator=( ECSChar Char )
+inline ECharString& ECharString::operator=( ECSChar Char )
 {
 	ChecEBuffer();
 
@@ -318,21 +318,21 @@ inline const ECharString& ECharString::operator=( ECSChar Char )
 }
 
 /////////////////////////////////////////////////////////////////
-inline const ECharString& ECharString::operator+=( const ECSChar* p_String )
+inline ECharString& ECharString::operator+=( const ECSChar* p_String )
 {
 	Insert( m_pBuffer->m_Data_Length, p_String );
 	return *this;
 }
 
 /////////////////////////////////////////////////////////////////
-inline const ECharString& ECharString::operator+=( const ECharString& String )
+inline ECharString& ECharString::operator+=( const ECharString& String )
 {
 	Insert( m_pBuffer->m_Data_Length, String );
 	return *this;
 }
 
 /////////////////////////////////////////////////////////////////
-inline const ECharString& ECharString::operator+=( ECSChar Char )
+inline ECharString& ECharString::operator+=( ECSChar Char )
 {
 	ECSChar Tmp[2];
 	Tmp[0] = Char;

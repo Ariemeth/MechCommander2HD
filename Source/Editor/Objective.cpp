@@ -569,7 +569,7 @@ bool CBooleanFlagIsSet::Read( FitIniFile* missionFile )
 	} else {
 		m_flagID = tmpECStr.Data();
 	}
-	result = sReadIdBoolean(missionFile, "Value", m_value);
+	sReadIdBoolean(missionFile, "Value", m_value);
 	return true;
 }
 
@@ -776,7 +776,8 @@ bool CPlayWAV::EditDialog() {
 			if (pathname.GetLength() > (CurrentDirectoryBufferLength - 1)) {
 				ret = _tcsnicmp(CurrentDirectoryBuffer, pathname.GetBuffer(0), CurrentDirectoryBufferLength - 1);
 			}
-			delete CurrentDirectoryBuffer; CurrentDirectoryBuffer = 0;
+			delete[] CurrentDirectoryBuffer; 
+			CurrentDirectoryBuffer = NULL;
 			if (0 == ret) {
 				m_pathname = (pathname.GetBuffer(0) + (CurrentDirectoryBufferLength - 1) + 1);
 				return true;
@@ -929,7 +930,7 @@ bool CSetBooleanFlag::Read( FitIniFile* missionFile )
 	} else {
 		m_flagID = tmpECStr.Data();
 	}
-	result = sReadIdBoolean(missionFile, "Value", m_value);
+	sReadIdBoolean(missionFile, "Value", m_value);
 	return true;
 }
 
@@ -1011,7 +1012,8 @@ bool CMakeNewTechnologyAvailable::EditDialog() {
 			if (pathname.GetLength() > (CurrentDirectoryBufferLength - 1)) {
 				ret = _tcsnicmp(CurrentDirectoryBuffer, pathname.GetBuffer(0), CurrentDirectoryBufferLength - 1);
 			}
-			delete CurrentDirectoryBuffer; CurrentDirectoryBuffer = 0;
+			delete[] CurrentDirectoryBuffer; 
+			CurrentDirectoryBuffer = NULL;
 			if (0 == ret) {
 				m_purchaseFilePathname = (pathname.GetBuffer(0) + (CurrentDirectoryBufferLength - 1) + 1);
 				return true;

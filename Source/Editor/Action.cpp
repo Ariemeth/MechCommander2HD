@@ -200,13 +200,10 @@ void ActionUndoMgr::Reset()
 //************************************************************************
 bool ActionUndoMgr::Undo()
 {
-	bool bRetVal = false;
-
 	gosASSERT( HaveUndo() );
-
-
+	
 	ACTION_LIST::EIterator iter = m_listUndoActions.Iterator( m_CurrentPos );
-	bRetVal = (*iter)->undo();
+	bool bRetVal = (*iter)->undo();
 	m_CurrentPos --;
 
 	return bRetVal;

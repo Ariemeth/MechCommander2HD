@@ -32,5 +32,6 @@ Source/*.exe
 Source/Data/savegame/**
 
 #TODO: WHAT???
+Source/Data/*.txm
 Source/Data/Textures/*.txm
 FinalBuild/Data/Textures/*.txm

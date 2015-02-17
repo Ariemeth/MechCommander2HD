@@ -84,10 +84,10 @@ void aButton::update()
 			if ( getParent() )
 				getParent()->handleMessage( aMSG_LEFTMOUSEDOWN, data.ID );
 
-			if ( state != DISABLED && state != HIDDEN )
-				g_soundSystem->playDigitalSample( clickSFX );
-			else
-				g_soundSystem->playDigitalSample( disabledSFX );
+			//if ( state != DISABLED && state != HIDDEN )
+			//	g_soundSystem->playDigitalSample( clickSFX );
+			//else
+			//	g_soundSystem->playDigitalSample( disabledSFX );
 
 		}
 		if (userInput->isLeftClick())
@@ -96,10 +96,10 @@ void aButton::update()
 			if ( getParent() && !messageOnRelease && pointInside(userInput->getMouseDragX(), userInput->getMouseDragY() ) )
 				getParent()->handleMessage( aMSG_LEFTMOUSEDOWN, data.ID );
 
-			if ( state != DISABLED )
-				g_soundSystem->playDigitalSample( clickSFX );
-			else
-				g_soundSystem->playDigitalSample( disabledSFX );
+			//if ( state != DISABLED )
+			//	g_soundSystem->playDigitalSample( clickSFX );
+			//else
+			//	g_soundSystem->playDigitalSample( disabledSFX );
 		}
 		else if ( userInput->getMouseLeftHeld() > holdTime && !messageOnRelease &&
 			pointInside(userInput->getMouseDragX(), userInput->getMouseDragY()) )
@@ -440,7 +440,7 @@ void aButton::init( FitIniFile& buttonFile, const char* str, HGOSFONT3D font )
 	int counter = 0;
 	while(true)
 	{
-		sprintf( finalName, "%s%ld", bmpName, counter );
+		sprintf( finalName, "%s%d", bmpName, counter );
 		if ( NO_ERR != buttonFile.seekBlock( finalName) )
 			break;
 
@@ -717,7 +717,7 @@ void aAnimButton::update( const aAnimation& animData )
 	}
 	
 	float fXcaleX = animData.getScaleX();
-	float fScaleY = animData.getScaleX();
+	float fScaleY = animData.getScaleY();
 
 	if ( fXcaleX != 1.0 && fScaleY != 1.0 )
 	{

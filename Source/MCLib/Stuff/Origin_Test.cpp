@@ -45,12 +45,6 @@ bool
 		 && t.y == q.y
 	);
 
-#if 0
-	b = Point3D(3.0f,2.0f,1.0f);
-	p = b;
-	Test_Assumption(p == Point3D(3.0f,2.0f,1.0f));
-#endif
-
 	return true;
 }
 

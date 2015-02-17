@@ -353,7 +353,7 @@ void ForceGroupBar::render()
 
 	if (forceNumFlashes)
 	{
-		forceFlashTime += g_deltaTime;
+		forceFlashTime += g_frameTime;
 		if ( forceFlashTime > .5f )
 		{
 			forceFlashTime = 0.0f;

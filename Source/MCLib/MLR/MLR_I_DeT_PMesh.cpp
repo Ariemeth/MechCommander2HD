@@ -78,13 +78,6 @@ MLR_I_DeT_PMesh::MLR_I_DeT_PMesh(
 	referenceState.SetPriority(MLRState::DefaultPriority);
 	referenceState2.SetPriority(MLRState::DefaultPriority);
 
-#if 0
-	referenceState.SetPriority(MLRState::DefaultPriority+1);
-
-	referenceState2.SetAlphaMode(MLRState::OneZeroMode);
-	referenceState.SetAlphaMode(MLRState::AlphaInvAlphaMode);
-#endif
-
 	detTextureVisible = true;
 
 	passes = 2;

@@ -41,7 +41,7 @@ void LogisticsDialog::begin()
 	exitAnim.end();
 	status = RUNNING;
 	bDone = 0;
-	soundSystem->playDigitalSample( LOG_MAINMENUBUTTON );
+	g_gameSoundSystem->playDigitalSample( LOG_MAINMENUBUTTON );
 
 
 	gos_KeyboardFlush();
@@ -852,10 +852,9 @@ void LogisticsSaveDialog::updateCampaignMissionInfo()
 		Assert( 0, 0, "coudln't find the campaign file\n" );
 	}
 
-	char fileName[256];
-
 	if ( NO_ERR == file.seekBlock( "Group0Mission0" ) )
 	{
+		char fileName[256];
 		if ( NO_ERR != file.readIdString( "FileName", fileName, 1023 ) )
 		{				
 			setMission( "" );
@@ -1843,10 +1842,10 @@ void LogisticsMapInfoDialog::setMap( const char* pFileName )
 			textObjects[1].setText( totalText );
 
 			char blurb[1024];
-			long result = file.readIdString("Blurb2", blurb, 1023 );
+			file.readIdString("Blurb2", blurb, 1023 );
 
 			bool tmpBool = false;
-			result = file.readIdBoolean("Blurb2UseResourceString", tmpBool);
+			long result = file.readIdBoolean("Blurb2UseResourceString", tmpBool);
 			if (NO_ERR == result && tmpBool )
 			{
 				unsigned long tmpInt = 0;

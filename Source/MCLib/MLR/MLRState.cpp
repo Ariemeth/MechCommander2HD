@@ -192,7 +192,6 @@ void
 		Check_Object(texture);
 
 		texture->SetHint(instance>>4);
-		instance &= 0xf;
 
 		SetTextureHandle(texture->GetTextureHandle());
 		Verify((GetTextureHandle()&7) == 1);

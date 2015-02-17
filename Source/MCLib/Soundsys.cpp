@@ -123,7 +123,7 @@ long SoundSystem::init (char *soundFileName)
 	for (long i=0;i<(long)numSoundBites;i++)
 	{
 		char biteBlock[20];
-		sprintf(biteBlock,"SoundBite%d",i);
+		sprintf(biteBlock,"SoundBite%ld",i);
 			
 		result = soundFile.seekBlock(biteBlock);
 		gosASSERT(result == NO_ERR);
@@ -479,7 +479,7 @@ void SoundSystem::update (void)
 			{
 				//------------------------------------------
 				// We are fading Down.
-				stream1Time += g_deltaTime;
+				stream1Time += g_frameTime;
 				if (stream1Time >= 0.0)
 				{
 					stream1Time = 0.0;
@@ -504,7 +504,7 @@ void SoundSystem::update (void)
 			{
 				//------------------------------------------
 				// We are fading Up.
-				stream1Time -= g_deltaTime;
+				stream1Time -= g_frameTime;
 				if (stream1Time <= 0.0)
 				{
 					stream1Time = 0.0;
@@ -531,7 +531,7 @@ void SoundSystem::update (void)
 			{
 				//------------------------------------------
 				// We are fading Down.
-				stream2Time += g_deltaTime;
+				stream2Time += g_frameTime;
 				if (stream2Time >= 0.0)
 				{
 					stream2Time = 0.0;
@@ -557,7 +557,7 @@ void SoundSystem::update (void)
 			{
 				//------------------------------------------
 				// We are fading Up.
-				stream2Time -= g_deltaTime;
+				stream2Time -= g_frameTime;
 				if (stream2Time <= 0.0)
 				{
 					stream2Time = 0.0;
@@ -634,7 +634,7 @@ void SoundSystem::update (void)
 	}
 
 	if (!g_gamePaused)
-		sensorBeepUpdateTime += g_deltaTime;
+		sensorBeepUpdateTime += g_frameTime;
 }
 
 //---------------------------------------------------------------------------
@@ -1082,13 +1082,11 @@ void SoundSystem::stopBettySample (void)
 {
 	if (bettyHandle)
 	{
-			gosAudio_SetChannelPlayMode(BETTY_CHANNEL, gosAudio_Stop);
-			gosAudio_DestroyResource(&bettyHandle);
-			soundHeap->Free(bettySoundBite);
-			bettySoundBite = NULL;
-			bettyHandle = NULL;
-
-
+		gosAudio_SetChannelPlayMode(BETTY_CHANNEL, gosAudio_Stop);
+		gosAudio_DestroyResource(&bettyHandle);
+		soundHeap->Free(bettySoundBite);
+		bettySoundBite = NULL;
+		bettyHandle = NULL;
 	}
 }
 
@@ -1096,7 +1094,7 @@ void SoundSystem::stopBettySample (void)
 //---------------------------------------------------------------------------
 void SoundSystem::setDigitalMasterVolume (byte volume)
 {
-	digitalMasterVolume = volume;
+	digitalMasterVolume = volume / 255.0f;
 }
 
 //---------------------------------------------------------------------------
@@ -1108,7 +1106,7 @@ long SoundSystem::getDigitalMasterVolume (void)
 //---------------------------------------------------------------------------
 void SoundSystem::setSFXVolume(unsigned char volume)
 {
-	sfxVolume = volume;
+	sfxVolume = volume / 255.0f;
 }
 
 //---------------------------------------------------------------------------
@@ -1120,7 +1118,7 @@ unsigned char SoundSystem::getSFXVolume(void)
 //---------------------------------------------------------------------------
 void SoundSystem::setRadioVolume(unsigned char volume)
 {
-	radioVolume = volume;
+	radioVolume = volume / 255.0f;
 }
 
 //---------------------------------------------------------------------------
@@ -1132,7 +1130,7 @@ unsigned char SoundSystem::getRadioVolume(void)
 //---------------------------------------------------------------------------
 void SoundSystem::setMusicVolume(unsigned char volume)
 {
-	musicVolume = volume;
+	musicVolume = volume / 255.0f;
 	if (stream1Active && stream1Handle)
 	{
 		gosAudio_SetChannelSlider( STREAM1CHANNEL,gosAudio_Volume, (digitalMasterVolume * musicVolume) );

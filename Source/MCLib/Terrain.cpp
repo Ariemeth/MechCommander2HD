@@ -458,11 +458,6 @@ long Terrain::init( unsigned long verticesPerMapSide, PacketFile* pakFile, unsig
 	clearMoverList();
 
 	//----------------------------------------------------------------------
-	// Calculate size of each mapblock
-	long blockSize = verticesBlockSide * verticesBlockSide;
-	blockSize *= sizeof(PostcompVertex);
-
-	//----------------------------------------------------------------------
 	// Create the MapBlock Manager and allocate its RAM
 	if ( !mapData )
 	{

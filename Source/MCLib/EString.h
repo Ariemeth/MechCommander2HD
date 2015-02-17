@@ -59,13 +59,13 @@ public:
 	// the this pointer
 	void	Format( const EChar*, ... );
 
-	inline const EString& operator=( const EChar* );
-	inline const EString& operator=( const EString& );
-	inline const EString& operator=( EChar );
+	inline EString& operator=( const EChar* );
+	inline EString& operator=( const EString& );
+	inline EString& operator=( EChar );
 
-	inline const EString& operator+=( const EChar* );
-	inline const EString& operator+=( const EString& );
-	inline const EString& operator+=( EChar );
+	inline EString& operator+=( const EChar* );
+	inline EString& operator+=( const EString& );
+	inline EString& operator+=( EChar );
 
 	friend EString operator+( const EString&, const EString& );
 
@@ -266,7 +266,7 @@ inline void EString::Insert( int Start_Index, const EString& String )
 }
 
 /////////////////////////////////////////////////////////////////
-inline const EString& EString::operator=( const EChar* p_String )
+inline EString& EString::operator=( const EChar* p_String )
 {
 	ChecEBuffer();
 	Assign( p_String );
@@ -274,7 +274,7 @@ inline const EString& EString::operator=( const EChar* p_String )
 }
 
 /////////////////////////////////////////////////////////////////
-inline const EString& EString::operator=( const EString& Src )
+inline EString& EString::operator=( const EString& Src )
 {
 	if ( &Src != this )
 	{
@@ -287,7 +287,7 @@ inline const EString& EString::operator=( const EString& Src )
 }
 
 /////////////////////////////////////////////////////////////////
-inline const EString& EString::operator=( EChar Char )
+inline EString& EString::operator=( EChar Char )
 {
 	ChecEBuffer();
 
@@ -300,21 +300,21 @@ inline const EString& EString::operator=( EChar Char )
 }
 
 /////////////////////////////////////////////////////////////////
-inline const EString& EString::operator+=( const EChar* p_String )
+inline EString& EString::operator+=( const EChar* p_String )
 {
 	Insert( m_pBuffer->m_Data_Length, p_String );
 	return *this;
 }
 
 /////////////////////////////////////////////////////////////////
-inline const EString& EString::operator+=( const EString& String )
+inline EString& EString::operator+=( const EString& String )
 {
 	Insert( m_pBuffer->m_Data_Length, String );
 	return *this;
 }
 
 /////////////////////////////////////////////////////////////////
-inline const EString& EString::operator+=( EChar Char )
+inline EString& EString::operator+=( EChar Char )
 {
 	EChar Tmp[2];
 	Tmp[0] = Char;

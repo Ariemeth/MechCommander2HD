@@ -99,7 +99,7 @@ void TerrainObjectType::init (void) {
 	objectTypeClass = TERRAINOBJECT_TYPE;
 	objectClass = TERRAINOBJECT;
 			
-	subType = TERROBJ_NONE;
+	terrainSubType = TERROBJ_NONE;
 	damageLevel = 0.0;
 	collisionOffsetX = 0;
 	collisionOffsetY = 0;
@@ -136,24 +136,24 @@ void TerrainObjectType::initMiscTerrObj (long objTypeNum) {
 	teamId = -1;
 
 	if (objTypeNum == ObjectTypeManager::bridgeTypeHandle) {
-		subType = TERROBJ_BRIDGE;
+		terrainSubType = TERROBJ_BRIDGE;
 		damageLevel = 100.0;
 		}
 	else if (objTypeNum == ObjectTypeManager::forestTypeHandle) {
-		subType = TERROBJ_FOREST;
+		terrainSubType = TERROBJ_FOREST;
 		damageLevel = 100.0;
 		fireTypeHandle = 1;
 		}
 	else if (objTypeNum == ObjectTypeManager::wallHeavyTypeHandle) {
-		subType = TERROBJ_WALL_HEAVY;
+		terrainSubType = TERROBJ_WALL_HEAVY;
 		damageLevel = 100.0;
 		}
 	else if (objTypeNum == ObjectTypeManager::wallMediumTypeHandle) {
-		subType = TERROBJ_WALL_MEDIUM;
+		terrainSubType = TERROBJ_WALL_MEDIUM;
 		damageLevel = 100.0;
 		}
 	else if (objTypeNum == ObjectTypeManager::wallLightTypeHandle) {
-		subType = TERROBJ_WALL_LIGHT;
+		terrainSubType = TERROBJ_WALL_LIGHT;
 		damageLevel = 100.0;
 		}
 	else
@@ -173,13 +173,13 @@ long TerrainObjectType::init (FilePtr objFile, unsigned long fileSize) {
 	
 	//----------------------------------------------
 	// Read in the data needed for the TerrainObject
-	subType = TERROBJ_NONE;
+	terrainSubType = TERROBJ_NONE;
 	result = bldgFile.seekBlock("TerrainObjectData");
 	if (result != NO_ERR) {
 		result = bldgFile.seekBlock("TreeData");
 		if (result != NO_ERR)
 			return(result);
-		subType = TERROBJ_TREE;
+		terrainSubType = TERROBJ_TREE;
 		objectClass = TREE;
 	}
 
@@ -242,7 +242,7 @@ bool TerrainObjectType::handleCollision (GameObjectPtr collidee, GameObjectPtr c
 	if (MPlayer && !MPlayer->isServer())
 		return(true);
 
-	switch (subType) {
+	switch (terrainSubType) {
 		case TERROBJ_NONE:
 			//-------------------------------------------------------
 			// The Building ceases to exist when its effect is done.
@@ -351,7 +351,7 @@ void TerrainObject::updateDebugWindow (GameDebugWindow* debugWindow) {
 		}
 	else
 		debugWindow->print("<no name>");
-	sprintf(s, "team: %d, handle: %d, partID: %d %s", getTeamId(), getHandle(), getPartId(), getFlag(OBJECT_FLAG_CAPTURABLE) ? "[C]" : " ");
+	sprintf(s, "team: %ld, handle: %ld, partID: %ld %s", getTeamId(), getHandle(), getPartId(), getFlag(OBJECT_FLAG_CAPTURABLE) ? "[C]" : " ");
 	debugWindow->print(s);
 	sprintf(s, "objType: %d", getObjectType()->whatAmI());
 	debugWindow->print(s);
@@ -394,7 +394,7 @@ bool TerrainObject::isVisible (void) {
 		isVisible = appearance->recalcBounds();
 	
 	if (isVisible) {
-		windowsVisible = turn;
+		windowsVisible = g_framesSinceMissionStart;
 		return(true);
 	}
 	return(false);
@@ -451,7 +451,7 @@ long TerrainObject::update (void) {
 
 		TerrainObjectTypePtr type = (TerrainObjectTypePtr)ObjectManager->getObjectType(typeHandle);
 
-		switch (type->subType) {
+		switch (type->terrainSubType) {
 			case TERROBJ_NONE:
 			case TERROBJ_TREE: 
 			{
@@ -489,15 +489,15 @@ long TerrainObject::update (void) {
 		{
 			if (fallRate == 0.0f)
 			{
-				if (soundSystem)
-					soundSystem->playDigitalSample(TREEFALL, getPosition(), true);
+				if (g_gameSoundSystem)
+					g_gameSoundSystem->playDigitalSample(TREEFALL, getPosition(), true);
 					
 				fallRate = TREE_FALL_RATE;
 			}
 			else
 				fallRate += TREE_FALL_ACCEL;
 				
-			pitchAngle -= (g_deltaTime * fallRate);
+			pitchAngle -= (g_frameTime * fallRate);
 			if (pitchAngle < -85.0f)
 			{
 				setFlag(OBJECT_FLAG_FALLEN,true);
@@ -511,7 +511,7 @@ long TerrainObject::update (void) {
 
 		if (inView)
 		{
-			windowsVisible = turn;
+			windowsVisible = g_framesSinceMissionStart;
 			appearance->update();
 
 			if (bldgDustPoofEffect && bldgDustPoofEffect->IsExecuted())
@@ -528,7 +528,7 @@ long TerrainObject::update (void) {
 				shapeOrigin.BuildTranslation(actualPosition);
 		
 				Stuff::OBB boundingBox;
-				gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,&boundingBox);
+				gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,&boundingBox);
 		
 				bool result = bldgDustPoofEffect->Execute(&info);
 				if (!result)
@@ -671,7 +671,7 @@ void TerrainObject::setDamage (long newDamage) {
 
 	TerrainObjectTypePtr type = (TerrainObjectTypePtr)getObjectType();
 
-	switch (type->subType) 
+	switch (type->terrainSubType) 
 	{
 		case TERROBJ_TREE:
 		case TERROBJ_NONE:
@@ -697,7 +697,7 @@ void TerrainObject::init (bool create, ObjectTypePtr objType) {
 
 	setFlag(OBJECT_FLAG_JUSTCREATED, true);
 
-	if (((TerrainObjectTypePtr)objType)->subType == TERROBJ_TREE)
+	if (((TerrainObjectTypePtr)objType)->terrainSubType == TERROBJ_TREE)
 	{
 		//-------------------------------------------------------------
 		// The appearance is initialized here using data from the type
@@ -763,7 +763,7 @@ void TerrainObject::init (bool create, ObjectTypePtr objType) {
 		setTangible(true);
 
 	objectClass = TERRAINOBJECT;
-	switch (((TerrainObjectTypePtr)objType)->subType) {
+	switch (((TerrainObjectTypePtr)objType)->terrainSubType) {
 		case TERROBJ_NONE:
 			if (((TerrainObjectTypePtr)objType)->getDamageLevel() == 0.0) {
 				//--------------------------------------------------------
@@ -813,7 +813,7 @@ long TerrainObject::handleWeaponHit (WeaponShotInfoPtr shotInfo, bool addMultipl
 	{
 		float curDamage = getDamage();
 		TerrainObjectTypePtr type = (TerrainObjectTypePtr)getObjectType();
-		switch (type->subType) 
+		switch (type->terrainSubType) 
 		{
 			case TERROBJ_NONE:
 				curDamage += shotInfo->damage;
@@ -868,7 +868,7 @@ long TerrainObject::handleWeaponHit (WeaponShotInfoPtr shotInfo, bool addMultipl
 							shapeOrigin.BuildRotation(Stuff::EulerAngles(0.0f,0.0f,0.0f));
 							shapeOrigin.BuildTranslation(actualPosition);
 							
-							gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+							gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 							bldgDustPoofEffect->Start(&info);
 						}
 					}
@@ -914,8 +914,8 @@ long TerrainObject::handleWeaponHit (WeaponShotInfoPtr shotInfo, bool addMultipl
 				{
 					type->createExplosion(position, 0, 0);
 					setStatus(OBJECT_STATUS_DESTROYED);
-					if (type->subType == TERROBJ_WALL_LIGHT)
-						soundSystem->playDigitalSample(BREAKINGFENCE, getPosition(), true);
+					if (type->terrainSubType == TERROBJ_WALL_LIGHT)
+						g_gameSoundSystem->playDigitalSample(BREAKINGFENCE, getPosition(), true);
 				}
 				setDamage(curDamage);
 			break;

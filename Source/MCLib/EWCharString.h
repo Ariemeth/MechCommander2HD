@@ -78,13 +78,13 @@ public:
 	// the this pointer
 	void	Format( const EWCSChar*, ... );
 
-	inline const EWCharString& operator=( const EWCSChar* );
-	inline const EWCharString& operator=( const EWCharString& );
-	inline const EWCharString& operator=( EWCSChar );
+	inline EWCharString& operator=( const EWCSChar* );
+	inline EWCharString& operator=( const EWCharString& );
+	inline EWCharString& operator=( EWCSChar );
 
-	inline const EWCharString& operator+=( const EWCSChar* );
-	inline const EWCharString& operator+=( const EWCharString& );
-	inline const EWCharString& operator+=( EWCSChar );
+	inline EWCharString& operator+=( const EWCSChar* );
+	inline EWCharString& operator+=( const EWCharString& );
+	inline EWCharString& operator+=( EWCSChar );
 
 	friend EWCharString operator+( const EWCharString&, const EWCharString& );
 
@@ -284,7 +284,7 @@ inline void EWCharString::Insert( int Start_Index, const EWCharString& String )
 }
 
 /////////////////////////////////////////////////////////////////
-inline const EWCharString& EWCharString::operator=( const EWCSChar* p_String )
+inline EWCharString& EWCharString::operator=( const EWCSChar* p_String )
 {
 	ChecEBuffer();
 	Assign( p_String );
@@ -292,7 +292,7 @@ inline const EWCharString& EWCharString::operator=( const EWCSChar* p_String )
 }
 
 /////////////////////////////////////////////////////////////////
-inline const EWCharString& EWCharString::operator=( const EWCharString& Src )
+inline EWCharString& EWCharString::operator=( const EWCharString& Src )
 {
 	if ( &Src != this )
 	{
@@ -305,7 +305,7 @@ inline const EWCharString& EWCharString::operator=( const EWCharString& Src )
 }
 
 /////////////////////////////////////////////////////////////////
-inline const EWCharString& EWCharString::operator=( EWCSChar Char )
+inline EWCharString& EWCharString::operator=( EWCSChar Char )
 {
 	ChecEBuffer();
 
@@ -318,21 +318,21 @@ inline const EWCharString& EWCharString::operator=( EWCSChar Char )
 }
 
 /////////////////////////////////////////////////////////////////
-inline const EWCharString& EWCharString::operator+=( const EWCSChar* p_String )
+inline EWCharString& EWCharString::operator+=( const EWCSChar* p_String )
 {
 	Insert( m_pBuffer->m_Data_Length, p_String );
 	return *this;
 }
 
 /////////////////////////////////////////////////////////////////
-inline const EWCharString& EWCharString::operator+=( const EWCharString& String )
+inline EWCharString& EWCharString::operator+=( const EWCharString& String )
 {
 	Insert( m_pBuffer->m_Data_Length, String );
 	return *this;
 }
 
 /////////////////////////////////////////////////////////////////
-inline const EWCharString& EWCharString::operator+=( EWCSChar Char )
+inline EWCharString& EWCharString::operator+=( EWCSChar Char )
 {
 	EWCSChar Tmp[2];
 	Tmp[0] = Char;

@@ -122,8 +122,6 @@ EditorObjectMgr::~EditorObjectMgr()
 		for( EList< Building, Building& >::EIterator buildIter = (*groupIter).buildings.Begin();
 			!buildIter.IsDone(); buildIter++ )
 		{
-			Building teste = (*buildIter);
-
 			if (  (*buildIter ).varNames )
 			{
 				for ( int i = 0; i < 16; i++ )
@@ -275,7 +273,7 @@ void EditorObjectMgr::init( const char* bldgListFileName, const char* objectFile
 			int fileSize = objectFile.getPacketSize();
 
 			FitIniFile bldgFile;
-			result = bldgFile.open(&objectFile, fileSize);
+			bldgFile.open(&objectFile, fileSize);
 
 			unsigned long lowTemplate, highTemplate;
 			bldgFile.readIdULong( "LowTemplate", lowTemplate );
@@ -292,9 +290,6 @@ void EditorObjectMgr::init( const char* bldgListFileName, const char* objectFile
 			char tmpBuf[2000];
 			strcpy(tmpBuf, "");
 			bldgFile.readIdString("Name", tmpBuf, 1000);
-			if (0 == strcmp(tmpBuf, "monsoon")) {
-				int i = 11;
-			}
 			bldgFile.close();
 		}
 
@@ -427,7 +422,6 @@ int EditorObjectMgr::ExtractNextString( unsigned char*& pFileLine, char* pBuffer
 	gosASSERT( i < bufferLength );
 	memcpy( pBuffer, pFileLine, i );
 	pBuffer[i] = NULL;
-	bufferLength = i + 1;
 	pFileLine += i + 1;
 
 	return i;
@@ -1738,7 +1732,7 @@ ObjectAppearance* EditorObjectMgr::getAppearance( EditorObjectMgr::Building* pBu
 
 ObjectAppearance* EditorObjectMgr::getAppearance( unsigned long group, unsigned long indexWithinGroup )
 {
-	gosASSERT( group >= 0 && group < groups.Count() );
+	gosASSERT( group < groups.Count() );
 
 	Group* pGroup = &groups[group];
 
@@ -1764,7 +1758,7 @@ bool  EditorObjectMgr::loadMechs( FitIniFile& file )
 	char buffer[256];
 	for ( int i = 1; i < count + 1; ++i )
 	{
-		sprintf( buffer, "Part%ld", i );
+		sprintf( buffer, "Part%d", i );
 		file.seekBlock( buffer );
 		unsigned long fitID;
 		file.readIdULong( "ObjectNumber",fitID );
@@ -1788,7 +1782,7 @@ bool  EditorObjectMgr::loadMechs( FitIniFile& file )
 		int j;
 		for (j = 0; j < ((Unit *)(pObject))->tmpNumAlternativeInstances; j += 1)
 		{
-			sprintf( buffer, "Part%ld", alternativeInstancesCounter );
+			sprintf( buffer, "Part%d", alternativeInstancesCounter );
 			file.seekBlock( buffer );
 			unsigned long fitID;
 			file.readIdULong( "ObjectNumber",fitID );
@@ -1961,7 +1955,7 @@ bool		EditorObjectMgr::saveMechs( FitIniFile& file )
 	UNIT_LIST::EIterator iter;
 	for ( iter = reorderedUnits.Begin(); !iter.IsDone(); counter++, iter++ )
 	{
-		sprintf( buffer, "Warrior%ld", counter );
+		sprintf( buffer, "Warrior%d", counter );
 		file.writeBlock( buffer );
 		// ARM
 		
@@ -2004,7 +1998,7 @@ bool		EditorObjectMgr::saveMechs( FitIniFile& file )
 		int i;
 		for (i = 0; i < (*iter)->pAlternativeInstances->Count(); i++)
 		{
-			sprintf( buffer, "Warrior%ld", alternativeInstancesCounter );
+			sprintf( buffer, "Warrior%d", alternativeInstancesCounter );
 			file.writeBlock( buffer );
 			(*((*iter)->pAlternativeInstances))[i].save( &file, alternativeInstancesCounter );
 			alternativeInstancesCounter += 1;
@@ -2432,7 +2426,7 @@ bool EditorObjectMgr::saveDropZones( FitIniFile& file )
 
 	for ( DROP_LIST::EIterator iter = dropZones.Begin(); !iter.IsDone(); iter++, counter++ )
 	{
-		sprintf( Header, "DropZone%ld", counter );
+		sprintf( Header, "DropZone%d", counter );
 		file.writeBlock( Header );
 		(*iter)->save( &file, counter );
 	}
@@ -2483,7 +2477,7 @@ bool EditorObjectMgr::loadDropZones( FitIniFile& file )
 
 	while( true )
 	{
-		sprintf( Header, "DropZone%ld", counter );
+		sprintf( Header, "DropZone%d", counter );
 		if ( NO_ERR != file.seekBlock( Header ) )
 			return counter > 0 ? true : false;
 

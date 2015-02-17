@@ -390,10 +390,8 @@ TypePtr term (void) {
 TypePtr simpleExpression (void) {
 
 	bool usedUnaryOp = false;
-	TokenCodeType unaryOp = TKN_PLUS;
 	
 	if ((curToken == TKN_PLUS) || (curToken == TKN_MINUS)) {
-		unaryOp = curToken;
 		usedUnaryOp = true;
 		getToken();
 	}

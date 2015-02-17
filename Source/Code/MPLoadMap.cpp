@@ -285,8 +285,6 @@ void MPLoadMap::seedFromCampaign()
 		findPath.init( savePath, finalStr, ".fit" );
 
 		EString newestFile;
-		long	groupCount = -1;
-		long	missionCount = -1;
 		FitIniFile tmpFile;
 
 		WIN32_FIND_DATA	findResult;
@@ -303,21 +301,19 @@ void MPLoadMap::seedFromCampaign()
 
 					 if ( NO_ERR == tmpFile.seekBlock( "General" ) )
 					 {
-						 long group, missions;
+						long groupCount = -1;
+						long group, missions;
 
 						tmpFile.readIdLong( "Group ", group );
 						if ( group > groupCount )
 						{
 							groupCount = group;
 							tmpFile.readIdLong( "CompletedMissions", missions );
-							missionCount = missions;
 							newestFile = findResult.cFileName;
 						}
 						else if ( group == groupCount )
 						{
 							tmpFile.readIdLong( "CompletedMissions", missions );
-							if ( missions > missionCount )
-								missionCount = missions;
 							newestFile = findResult.cFileName;
 						}
 					 }
@@ -357,7 +353,7 @@ void MPLoadMap::seedFromCampaign()
 					for ( int i = 0; i < group+1; i++ )
 					{
 						char blockName[64];
-						sprintf( blockName,  "Group%ld", i );
+						sprintf( blockName,  "Group%d", i );
 						if ( NO_ERR == campaignFile.seekBlock( blockName ) )
 						{
 							long count = missions;
@@ -368,7 +364,7 @@ void MPLoadMap::seedFromCampaign()
 
 							for ( int j = 0; j < count; j++ )
 							{
-								sprintf( blockName, "Group%ldMission%ld", i, j );
+								sprintf( blockName, "Group%dMission%d", i, j );
 								if ( NO_ERR == campaignFile.seekBlock( blockName ) )
 								{
 									char tmpFileName[255];
@@ -595,10 +591,10 @@ void MPLoadMap::updateMapInfo()
 
 			char blurb[1024];
 			blurb[0] = 0;
-			long result = file.readIdString("Blurb2", blurb, 1023 );
+			file.readIdString("Blurb2", blurb, 1023 );
 
 			bool tmpBool = false;
-			result = file.readIdBoolean("Blurb2UseResourceString", tmpBool);
+			long result = file.readIdBoolean("Blurb2UseResourceString", tmpBool);
 			if (NO_ERR == result && tmpBool )
 			{
 				unsigned long tmpInt = 0;

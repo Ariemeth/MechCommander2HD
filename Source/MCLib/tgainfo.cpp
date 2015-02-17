@@ -205,7 +205,7 @@ void tgaCopy (MemoryPtr dest, MemoryPtr src, long size)
 }
 
 //---------------------------------------------------------------------------
-static const int g_textureCache_BufferSize = 16384/*64*64*sizeof(DWORD)*/;
+static const int g_textureCache_BufferSize = 4 * 1024 * 1024;//16384/*64*64*sizeof(DWORD)*/;
 static BYTE g_textureCache_Buffer[g_textureCache_BufferSize];
 EString *g_textureCache_FilenameOfLastLoadedTexture = NULL;/*This is an (EString *) instead of an EString because apparently gos memory management has a problem with global static allocation of EStrings.*/
 static int g_textureCache_WidthOfLastLoadedTexture = 0;/*just to be sure*/

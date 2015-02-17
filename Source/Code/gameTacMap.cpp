@@ -129,7 +129,7 @@ bool GameTacMap::animate (long objectiveId, long nFlashes)
 
 void GameTacMap::render()
 {
-	if (turn < 2)		//Terrain not setup yet.  Left,Right,Top,Bottom are poopy!
+	if (g_framesSinceMissionStart < 2)		//Terrain not setup yet.  Left,Right,Top,Bottom are poopy!
 		return;
 
 	gos_VERTEX corners[5];
@@ -185,7 +185,7 @@ void GameTacMap::render()
 		//We are there.  Start flashing.
 		if ((objectiveAnimationId == count) && objectiveNumFlashes)
 		{
-			objectiveFlashTime += g_deltaTime;
+			objectiveFlashTime += g_frameTime;
 			if ( objectiveFlashTime > .5f )
 			{
 				objectiveFlashTime = 0.0f;
@@ -331,7 +331,7 @@ void GameTacMap::render()
 					if ( objClass == ARTILLERY )
 					{
 						// blink
-						s_lastBlinkTime += g_deltaTime;
+						s_lastBlinkTime += g_frameTime;
 						if ( s_lastBlinkTime > s_blinkLength )
 						{
 							colorBlip = 0;

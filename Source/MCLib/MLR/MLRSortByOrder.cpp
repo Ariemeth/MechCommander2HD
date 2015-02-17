@@ -233,14 +233,13 @@ void
 
 	Stuff::DynamicArrayOf<SortData*>
 		*priorityBucket;
-	Stuff::DynamicArrayOf<ToBeDrawnPrimitive*>
+	Stuff::DynamicArrayOf < ToBeDrawnPrimitive* >
 		*priorityBucketNotDrawn;
 
 	GOSVertex::farClipReciprocal = farClipReciprocal;
 
+	//	Limits::Max_Number_Primitives_Per_Frame + Max_Number_ScreenQuads_Per_Frame
 	int i, j, k;
-//	Limits::Max_Number_Primitives_Per_Frame + Max_Number_ScreenQuads_Per_Frame
-
 	MLRPrimitiveBase *primitive;
 	for(i=0;i<MLRState::PriorityCount;i++)
 	{

@@ -102,7 +102,6 @@ void DEBUGWINS_print (char* s, long window);
 
 void TriggerAreaManager::setHit (MoverPtr mover) {
 
-#if 1
 	for (long i = 0; i < MAX_TRIGGER_AREAS; i++) {
 		if (triggerAreas[i].type == TRIGGER_AREA_NONE)
 			continue;
@@ -136,33 +135,6 @@ void TriggerAreaManager::setHit (MoverPtr mover) {
 								break;
 						}
 	}
-#else
-	long areaHandle = map[mover->cellPositionRow / 3][mover->cellPositionCol / 3];
-	if (areaHandle > 0) {
-		switch (triggerAreas[areaHandle].type) {
-			case TRIGGER_AREA_MOVER:
-				if (triggerAreas[areaHandle].param > 0) {
-					if (mover->getWatchID() == triggerAreas[areaHandle].param)
-						triggerAreas[areaHandle].hit = true;
-					}
-				else
-					triggerAreas[areaHandle].hit = true;
-				break;
-			case TRIGGER_AREA_TEAM:
-				if (mover->getTeamId() == triggerAreas[areaHandle].param)
-					triggerAreas[areaHandle].hit = true;
-				break;
-			case TRIGGER_AREA_GROUP:
-				if (mover->getGroupId() == triggerAreas[areaHandle].param)
-					triggerAreas[areaHandle].hit = true;
-				break;
-			case TRIGGER_AREA_COMMANDER:
-				if (mover->getCommanderId() == triggerAreas[areaHandle].param)
-					triggerAreas[areaHandle].hit = true;
-				break;
-		}
-	}
-#endif
 }
 
 //***************************************************************************

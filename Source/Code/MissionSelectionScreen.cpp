@@ -124,7 +124,7 @@ void MissionSelectionScreen::update()
 {
 	if (!playedLogisticsTune)
 	{
-		soundSystem->playDigitalMusic(LogisticsData::instance->getCurrentMissionTune());
+		g_gameSoundSystem->playDigitalMusic(LogisticsData::instance->getCurrentMissionTune());
 		playedLogisticsTune = true;
 	}
 
@@ -142,23 +142,11 @@ void MissionSelectionScreen::update()
 	operationScreen.update();
 
 	long oldButton = -1;
-	int highlightButton = -1;
-
-	long mouseX = userInput->getMouseX();
-	long mouseY = userInput->getMouseY();
-
-	unsigned long highlightColor = 0;
 
 	for ( int i = 0; i < operationScreen.buttonCount; i++ )
 	{
 		if ( operationScreen.buttons[i].isShowing() )
 		{
-			if ( operationScreen.buttons[i].pointInside( mouseX, mouseY ) )
-			{
-				highlightButton = i;
-				highlightColor = operationScreen.buttons[i].getColor( );
-			}
-
 			if ( operationScreen.buttons[i].isPressed() && i != pressedButton )
 			{
 				handleMessage( 0, operationScreen.buttons[i].getID() );
@@ -178,8 +166,6 @@ void MissionSelectionScreen::update()
 	{
 		operationScreen.textObjects[0].setText( LogisticsData::instance->getMissionFriendlyName(
 			missionNames[pressedButton] ) );
-//		if ( highlightColor )
-//			operationScreen.textObjects[0].setColor( highlightColor );
 	}
 	else
 	{
@@ -392,7 +378,7 @@ void MissionSelectionScreen::setMission( int whichOne )
 	LogisticsData::instance->setCurrentMission( missionNames[whichOne] );
 
 	char text[64];
-	sprintf( text, "%ld ", LogisticsData::instance->getCBills() );
+	sprintf( text, "%d ", LogisticsData::instance->getCBills() );
 	textObjects[RP_TEXT].setText( text );
 
 

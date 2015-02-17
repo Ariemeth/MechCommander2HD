@@ -227,7 +227,7 @@ void ablSeedRandom (unsigned long seed) {
 void ablFatalCallback (long code, char* s) {
 
 	printf("\n");
-	printf(" FATAL: (%d) %s", code, s);
+	printf(" FATAL: (%ld) %s", code, s);
 	scanf("Press Any Key...");
 	exit(code);
 }

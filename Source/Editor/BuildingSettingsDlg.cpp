@@ -112,9 +112,6 @@ void BuildingSettingsDlg::applyChanges()
 	}
 
 	unsigned long base=0, color1=0, color2=0;
-	bool bBase = false;
-	bool bColor1 = false; 
-	bool bColor2 = false;
 
 	// now figure out the colors
 	CWnd* pWnd = GetDlgItem( IDC_BASE );
@@ -125,14 +122,9 @@ void BuildingSettingsDlg::applyChanges()
 
 		if ( tmpStr.GetLength() )
 		{
-			bBase = true;
-		
-
 			tmpStr.Replace( "0x", "" );
-			sscanf( tmpStr, "%x", &base );
-			base |= 0xff000000;
+			sscanf( tmpStr, "%x", (unsigned int*)&base );
 		}
-		
 	}
 
 	pWnd = GetDlgItem( IDC_HIGHLIGHT1 );
@@ -143,14 +135,9 @@ void BuildingSettingsDlg::applyChanges()
 
 		if ( tmpStr.GetLength() )
 		{
-			bColor1 = true;
-		
-
 			tmpStr.Replace( "0x", "" );
-			sscanf( tmpStr, "%x", &color1 );
-			color1 |= 0xff000000;
+			sscanf( tmpStr, "%x", (unsigned int*)&color1 );
 		}
-		
 	}
 	pWnd = GetDlgItem( IDC_HIGHLIGHT2 );
 	if ( pWnd )
@@ -160,14 +147,9 @@ void BuildingSettingsDlg::applyChanges()
 
 		if ( tmpStr.GetLength() )
 		{
-			bColor2 = true;
-		
-
 			tmpStr.Replace( "0x", "" );
-			sscanf( tmpStr, "%x", &color2 );
-			color2 |= 0xff000000;
+			sscanf( tmpStr, "%x", (unsigned int*)&color2 );
 		}
-		
 	}
 }
 
@@ -211,15 +193,12 @@ void BuildingSettingsDlg::OnSelchangeMech()
 	int group = m_Group.GetCurSel();
 	group = m_Group.GetItemData( group );
 
-	/*int indexInGroup =*/ m_Mech.GetCurSel();
+	m_Mech.GetCurSel();
 }
 
 void BuildingSettingsDlg::updateMemberVariables()
 {
-
 	long forest = -1;
-	bool bForests = true;
-
 	EditorObject* pEditorObject = units.GetHead();
 
 	m_Alignment = pEditorObject->getAlignment();
@@ -237,10 +216,7 @@ void BuildingSettingsDlg::updateMemberVariables()
 		if ( (*iter)->getForestID() != -1 )
 		{
 			if ( forest == -1 )
-				forest = (*iter)->getForestID();
-			else if ( forest != (*iter)->getForestID() )
-				bForests = false;
-
+				forest = (*iter)->getForestID()
 		}
 	}
 

@@ -46,9 +46,9 @@ unsigned long tglHeapSize = 256 * MEGABYTES_TO_BYTES;
 
 bool		  GeneralAlarm = 0;
 
-extern char FileMissingString[];
-extern char CDMissingString[];
-extern char MissingTitleString[];
+extern char g_FileMissingString[];
+extern char g_CDMissingString[];
+extern char g_MissingTitleString[];
 
 extern char g_cdInstallPath[];
 
@@ -179,13 +179,13 @@ void __stdcall DoGameLogic()
 	if (frameRate < Stuff::SMALL)
 		frameRate = 4.0f;
 
-	g_deltaTime = 1.0 / frameRate;
-	if (g_deltaTime > 0.25f)
-		g_deltaTime = 0.25f;
+	g_frameTime = 1.0 / frameRate;
+	if (g_frameTime > 0.25f)
+		g_frameTime = 0.25f;
 
 	userInput->update();
 
-	soundSystem->update();
+	g_gameSoundSystem->update();
 
 	pMechlopedia->update();
 
@@ -224,9 +224,9 @@ void __stdcall InitializeGameEngine()
 	//	strcpy(g_cdInstallPath,"..\\");
 	strcpy(g_cdInstallPath,".\\");
 
-	cLoadString(IDS_MC2_FILEMISSING,FileMissingString,511);
-	cLoadString(IDS_MC2_CDMISSING,CDMissingString,1023);
-	cLoadString(IDS_MC2_MISSING_TITLE,MissingTitleString,255);
+	cLoadString(IDS_MC2_FILEMISSING,g_FileMissingString,511);
+	cLoadString(IDS_MC2_CDMISSING,g_CDMissingString,1023);
+	cLoadString(IDS_MC2_MISSING_TITLE,g_MissingTitleString,255);
 
 	//--------------------------------------------------------------
 	// Start the SystemHeap and globalHeapList
@@ -354,7 +354,7 @@ void __stdcall InitializeGameEngine()
 				long fileNum = 0;
 				char fastFileId[10];
 				char fileName[100];
-				sprintf(fastFileId,"File%d",fileNum);
+				sprintf(fastFileId,"File%ld",fileNum);
 	
 				while (systemFile.readIdString(fastFileId,fileName,99) == NO_ERR)
 				{
@@ -363,7 +363,7 @@ void __stdcall InitializeGameEngine()
 						STOP(("Unable to startup fastfiles.  Probably an old one in the directory!!"));
 
 					fileNum++;
-					sprintf(fastFileId,"File%d",fileNum);
+					sprintf(fastFileId,"File%ld",fileNum);
 				}
 			}
 		}
@@ -450,11 +450,11 @@ void __stdcall InitializeGameEngine()
 
 
 	// now the sound system
-	soundSystem = new GameSoundSystem;
-	soundSystem->init();
-	((SoundSystem *)soundSystem)->init("sound");
-	g_soundSystem = soundSystem; // for things in the lib that use sound
-	soundSystem->playDigitalMusic( LOGISTICS_LOOP );
+	g_gameSoundSystem = new GameSoundSystem;
+	g_gameSoundSystem->init();
+	((SoundSystem *)g_gameSoundSystem)->init("sound");
+	g_soundSystem = g_gameSoundSystem; // for things in the lib that use sound
+	g_gameSoundSystem->playDigitalMusic( LOGISTICS_LOOP );
 
 	
 	pLogData = new LogisticsData;
@@ -479,8 +479,8 @@ void __stdcall TerminateGameEngine()
 	if ( userInput )
 		delete userInput;
 
-	if ( soundSystem )
-		delete soundSystem;
+	if ( g_gameSoundSystem )
+		delete g_gameSoundSystem;
 
 	if ( pLogData )
 		delete pLogData;

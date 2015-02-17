@@ -486,8 +486,7 @@ void TerrainQuad::setupTextures (void)
 	
 				vertex3D.z = ourCos + Terrain::waterElevation;
 			
-				bool clipData = false;
-				clipData = eye->projectZ(vertex3D,screenPos); 
+				bool clipData = eye->projectZ(vertex3D,screenPos); 
 				bool isVisible = Terrain::IsGameSelectTerrainPosition(vertex3D) || drawTerrainGrid;
 				if (!isVisible)
 				{
@@ -553,8 +552,7 @@ void TerrainQuad::setupTextures (void)
 				vertex3D.x = vertices[1]->vx;
 				vertex3D.y = vertices[1]->vy;
 				
-				bool clipData = false;
-				clipData = eye->projectZ(vertex3D,screenPos); 
+				bool clipData = eye->projectZ(vertex3D,screenPos); 
 				bool isVisible = Terrain::IsGameSelectTerrainPosition(vertex3D) || drawTerrainGrid;
 				if (!isVisible)
 				{
@@ -620,8 +618,7 @@ void TerrainQuad::setupTextures (void)
 				vertex3D.x = vertices[2]->vx;
 				vertex3D.y = vertices[2]->vy;
 			
-				bool clipData = false;
-				clipData = eye->projectZ(vertex3D,screenPos); 
+				bool clipData = eye->projectZ(vertex3D,screenPos); 
 				bool isVisible = Terrain::IsGameSelectTerrainPosition(vertex3D) || drawTerrainGrid;
 				if (!isVisible)
 				{
@@ -687,8 +684,7 @@ void TerrainQuad::setupTextures (void)
 				vertex3D.x = vertices[3]->vx;
 				vertex3D.y = vertices[3]->vy;
 				
-				bool clipData = false;
-				clipData = eye->projectZ(vertex3D,screenPos); 
+				bool clipData = eye->projectZ(vertex3D,screenPos); 
 				bool isVisible = Terrain::IsGameSelectTerrainPosition(vertex3D) || drawTerrainGrid;
 				if (!isVisible)
 				{
@@ -2917,12 +2913,9 @@ void TerrainQuad::drawLine (void)
 void TerrainQuad::drawLOSLine (void)
 {
 	long clipped1 = vertices[0]->clipInfo + vertices[1]->clipInfo + vertices[2]->clipInfo;
-	long clipped2 = vertices[0]->clipInfo + vertices[2]->clipInfo + vertices[3]->clipInfo;
-
 	if (uvMode == BOTTOMLEFT)
 	{
 		clipped1 = vertices[0]->clipInfo + vertices[1]->clipInfo + vertices[3]->clipInfo;
-		clipped2 = vertices[1]->clipInfo + vertices[2]->clipInfo + vertices[3]->clipInfo;
 	}
 
 	//------------------------------------------------------------

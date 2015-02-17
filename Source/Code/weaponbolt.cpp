@@ -365,7 +365,7 @@ bool WeaponBolt::isVisible (void)
 	bool isVisible = true;
 	if (isVisible)
 	{
-		windowsVisible = turn;
+		windowsVisible = g_framesSinceMissionStart;
 	}
 		
 	return(true);
@@ -395,7 +395,7 @@ long WeaponBolt::update (void)
 		//-------------------------------------------------------------------
 		// If we were just Created, play our sound Effect.
 		if (((WeaponBoltTypePtr)getObjectType())->fireSoundFX != 0)
-			soundSystem->playDigitalSample(((WeaponBoltTypePtr)getObjectType())->fireSoundFX, position, true);
+			g_gameSoundSystem->playDigitalSample(((WeaponBoltTypePtr)getObjectType())->fireSoundFX, position, true);
 			
 		laserPosition = position;
 		
@@ -469,7 +469,7 @@ long WeaponBolt::update (void)
 			localToWorld.Multiply(gosFX::Effect_Against_Motion,effectRot);
 			localResult.Multiply(localToWorld,shapeOrigin);
 			
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&localResult,NULL);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&localResult,NULL);
 			gosEffect->Start(&info);
 		}
 		
@@ -496,7 +496,7 @@ long WeaponBolt::update (void)
 			localToWorld.Multiply(gosFX::Effect_Into_Motion,effectRot);
 			localResult.Multiply(localToWorld,shapeOrigin);
 			
- 			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&localResult,NULL);
+ 			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&localResult,NULL);
 			muzzleEffect->Start(&info);
 		}
 		
@@ -522,7 +522,7 @@ long WeaponBolt::update (void)
 	//Update beamDuration
 	if (((WeaponBoltTypePtr)getObjectType())->isBeam)
 	{
-		timeLeft -= g_deltaTime;
+		timeLeft -= g_frameTime;
 		if (timeLeft >= 0.0f)
 		{
 			gosTextureHandle = mcTextureManager->get_gosTextureHandle(mcTextureHandle);
@@ -532,7 +532,7 @@ long WeaponBolt::update (void)
    			mcTextureManager->addTriangle(mcTextureHandle,MC2_ISEFFECTS|MC2_DRAWONEIN); 
 		}
 
-		startUV += ((WeaponBoltTypePtr)getObjectType())->uvAnimRate * g_deltaTime;
+		startUV += ((WeaponBoltTypePtr)getObjectType())->uvAnimRate * g_frameTime;
 	}
 	else if (!gosEffect && !((WeaponBoltTypePtr)getObjectType())->isBeam)
 	{
@@ -571,7 +571,7 @@ long WeaponBolt::update (void)
 				
 	Stuff::Vector3D laserVelocity;
 	float velMag = ((WeaponBoltTypePtr)getObjectType())->velocity;
-	velMag *= g_deltaTime;
+	velMag *= g_frameTime;
 		
 	laserVelocity.Subtract(targetPos,ownerPosition);
 	float distance = laserVelocity.x * laserVelocity.x + laserVelocity.y * laserVelocity.y;
@@ -585,7 +585,7 @@ long WeaponBolt::update (void)
 		if ( goalHeight > 0.0f )
 		{
 			float accel = -((WeaponBoltTypePtr)getObjectType())->arcHeight * 10.0f;
-			goalHeight += accel * g_deltaTime;
+			goalHeight += accel * g_frameTime;
 			if (goalHeight >= 0.0f)
 			{
 				laserVelocity.z = goalHeight;
@@ -636,7 +636,7 @@ long WeaponBolt::update (void)
 						shapeOrigin.BuildRotation(Stuff::EulerAngles(0.0f,0.0f,0.0f));
 						shapeOrigin.BuildTranslation(tPosition);
 						
-						gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+						gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 						hitEffect->Start(&info);
 					}
 					
@@ -677,7 +677,7 @@ long WeaponBolt::update (void)
 							shapeOrigin.BuildRotation(Stuff::EulerAngles(0.0f,0.0f,0.0f));
 							shapeOrigin.BuildTranslation(tPosition);
 							
-							gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+							gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 							waterMissEffect->Start(&info);
 						}
 							
@@ -703,7 +703,7 @@ long WeaponBolt::update (void)
 							shapeOrigin.BuildRotation(Stuff::EulerAngles(0.0f,0.0f,0.0f));
 							shapeOrigin.BuildTranslation(tPosition);
 							
-							gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+							gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 							missEffect->Start(&info);
 						}
 						
@@ -895,7 +895,7 @@ long WeaponBolt::update (void)
 						shapeOrigin.BuildRotation(Stuff::EulerAngles(0.0f,0.0f,0.0f));
 						shapeOrigin.BuildTranslation(tPosition);
 						
-						gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+						gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 						hitEffect->Start(&info);
 					}
 					
@@ -933,7 +933,7 @@ long WeaponBolt::update (void)
 							shapeOrigin.BuildRotation(Stuff::EulerAngles(0.0f,0.0f,0.0f));
 							shapeOrigin.BuildTranslation(tPosition);
 							
-							gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+							gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 							waterMissEffect->Start(&info);
 						}
 						
@@ -959,7 +959,7 @@ long WeaponBolt::update (void)
 							shapeOrigin.BuildRotation(Stuff::EulerAngles(0.0f,0.0f,0.0f));
 							shapeOrigin.BuildTranslation(tPosition);
 							
-							gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,NULL);
+							gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,NULL);
 							missEffect->Start(&info);
 						}
 						
@@ -1128,7 +1128,7 @@ long WeaponBolt::update (void)
 		if (isArcing)
 		{
 			laserVelocity.z = 0.0f;
-			tmpZ *= g_deltaTime;
+			tmpZ *= g_frameTime;
 		}
 		
 		if (laserVelocity.GetLength() != 0.0)
@@ -1181,7 +1181,7 @@ long WeaponBolt::update (void)
 		localResult.Multiply(localToWorld,shapeOrigin);
  
 		Stuff::OBB boundingBox;
-   		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&localResult,&boundingBox);
+   		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&localResult,&boundingBox);
 
 		bool result = gosEffect->Execute(&info);
 		if (!result)
@@ -1216,7 +1216,7 @@ long WeaponBolt::update (void)
 		localResult.Multiply(localToWorld,shapeOrigin);
 			
  		Stuff::OBB boundingBox;
-   		gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&localResult,&boundingBox);
+   		gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&localResult,&boundingBox);
 
 		bool result = muzzleEffect->Execute(&info);
 		if (!result)
@@ -1339,7 +1339,7 @@ long WeaponBolt::update (void)
 		
  	if (hitTarget)
 	{
-		hitLeft -= g_deltaTime;
+		hitLeft -= g_frameTime;
 		
 		if (gosEffect && (hitLeft < 0.0f))
 		{
@@ -1386,7 +1386,7 @@ long WeaponBolt::update (void)
 			shapeOrigin.BuildTranslation(tPosition);
 	
 			Stuff::OBB boundingBox;
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,&boundingBox);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,&boundingBox);
 	
 			bool result = hitEffect->Execute(&info);
 			if (!result)
@@ -1463,7 +1463,7 @@ long WeaponBolt::update (void)
 			shapeOrigin.BuildTranslation(tPosition);
 	
 			Stuff::OBB boundingBox;
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,&boundingBox);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,&boundingBox);
 	
 			bool result = missEffect->Execute(&info);
 			if (!result)
@@ -1540,7 +1540,7 @@ long WeaponBolt::update (void)
 			shapeOrigin.BuildTranslation(tPosition);
 	
 			Stuff::OBB boundingBox;
-			gosFX::Effect::ExecuteInfo info((Stuff::Time)scenarioTime,&shapeOrigin,&boundingBox);
+			gosFX::Effect::ExecuteInfo info((Stuff::Time)g_missionTime,&shapeOrigin,&boundingBox);
 	
 			bool result = waterMissEffect->Execute(&info);
 			if (!result)

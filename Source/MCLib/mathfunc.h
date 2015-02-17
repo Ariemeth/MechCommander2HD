@@ -121,38 +121,6 @@ inline long float2long (float val)
 	
 	long result = long(val);
 	return result;
-	
-#if 0
-	float point5 = 0.49f;
-	if (val < 0.0f)
-	{
-		__asm
-		{
-			fld		val
-			fadd	point5
-			fistp	result
-		}
-	}
-	else
-	{
-		__asm
-		{
-			fld		val
-			fsub	point5
-			fistp	result
-		}
-	}
-
-	return result;
-
-	if (val > 0.0f)
-		val -= 0.49999999f;
-	else
-		val += 0.49999999f;
-
-	val += 3 << 22;
-	return ((*(long*)&val)&0x007fffff) - 0x00400000;
-#endif
 }
 
 //---------------------------------------------------------------------------
