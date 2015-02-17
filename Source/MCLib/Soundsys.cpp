@@ -1087,8 +1087,6 @@ void SoundSystem::stopBettySample (void)
 			soundHeap->Free(bettySoundBite);
 			bettySoundBite = NULL;
 			bettyHandle = NULL;
-
-
 	}
 }
 
@@ -1096,7 +1094,7 @@ void SoundSystem::stopBettySample (void)
 //---------------------------------------------------------------------------
 void SoundSystem::setDigitalMasterVolume (byte volume)
 {
-	digitalMasterVolume = volume;
+	digitalMasterVolume = volume / 255.0f;
 }
 
 //---------------------------------------------------------------------------
@@ -1108,7 +1106,7 @@ long SoundSystem::getDigitalMasterVolume (void)
 //---------------------------------------------------------------------------
 void SoundSystem::setSFXVolume(unsigned char volume)
 {
-	sfxVolume = volume;
+	sfxVolume = volume / 255.0f;
 }
 
 //---------------------------------------------------------------------------
@@ -1120,7 +1118,7 @@ unsigned char SoundSystem::getSFXVolume(void)
 //---------------------------------------------------------------------------
 void SoundSystem::setRadioVolume(unsigned char volume)
 {
-	radioVolume = volume;
+	radioVolume = volume / 255.0f;
 }
 
 //---------------------------------------------------------------------------
@@ -1132,7 +1130,7 @@ unsigned char SoundSystem::getRadioVolume(void)
 //---------------------------------------------------------------------------
 void SoundSystem::setMusicVolume(unsigned char volume)
 {
-	musicVolume = volume;
+	musicVolume = volume / 255.0f;
 	if (stream1Active && stream1Handle)
 	{
 		gosAudio_SetChannelSlider( STREAM1CHANNEL,gosAudio_Volume, (digitalMasterVolume * musicVolume) );
@@ -1152,7 +1150,7 @@ unsigned char SoundSystem::getMusicVolume(void)
 //---------------------------------------------------------------------------
 void SoundSystem::setBettyVolume(unsigned char volume)
 {
-	bettyVolume = volume;
+	bettyVolume = volume / 255.0f;
 }
 
 //---------------------------------------------------------------------------
