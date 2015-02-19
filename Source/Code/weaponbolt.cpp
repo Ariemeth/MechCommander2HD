@@ -395,7 +395,7 @@ long WeaponBolt::update (void)
 		//-------------------------------------------------------------------
 		// If we were just Created, play our sound Effect.
 		if (((WeaponBoltTypePtr)getObjectType())->fireSoundFX != 0)
-			g_gameSoundSystem->playDigitalSample(((WeaponBoltTypePtr)getObjectType())->fireSoundFX, position, true);
+			g_soundSystem->playDigitalSample(((WeaponBoltTypePtr)getObjectType())->fireSoundFX, position, true);
 			
 		laserPosition = position;
 		

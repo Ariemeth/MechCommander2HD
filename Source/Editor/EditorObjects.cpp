@@ -32,7 +32,7 @@
 #include "resource.h"
 
 // ARM
-#include "../ARM/Microsoft.Xna.Arm.h"
+#include "..\ARM\Microsoft.Xna.Arm.h"
 using namespace Microsoft::Xna::Arm;
 extern IProviderEngine* armProvider;
 
@@ -47,7 +47,7 @@ long	Pilot::badCount = 0;
 void *EditorObject::operator new (size_t mySize)
 {
 	void *result = NULL;
-	result = systemHeap->Malloc(mySize);
+	result = g_systemHeap->Malloc(mySize);
 	
 	return(result);
 }
@@ -55,7 +55,7 @@ void *EditorObject::operator new (size_t mySize)
 //--------------------------------------------------------------------------------------
 void EditorObject::operator delete (void *us)
 {
-	systemHeap->Free(us);
+	g_systemHeap->Free(us);
 }
 
 //--------------------------------------------------------------------------------------
@@ -179,7 +179,7 @@ int EditorObject::getGroup() const
 void EditorObject::setAppearance( int Group, int indexInGroup )
 {
 	// make sure the thing has changed....
-	if ( Group != EditorObjectMgr::getGroup( id ) || indexInGroup != EditorObjectMgr::getIndexInGroup( id ) )
+	if ( Group != (int)EditorObjectMgr::getGroup( id ) || indexInGroup != (int)EditorObjectMgr::getIndexInGroup( id ) )
 	{
 		
 		AppearanceInfo* appearInfo2 = new AppearanceInfo();

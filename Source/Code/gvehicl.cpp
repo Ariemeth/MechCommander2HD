@@ -471,7 +471,7 @@ bool GroundVehicleType::handleCollision (GameObjectPtr collidee, GameObjectPtr c
 
 				//---------------------------------------------
 				if (!sameTeam && (collidee->getWindowsVisible() == g_framesSinceMissionStart))
-					g_gameSoundSystem->playDigitalSample(MECH_COLLIDE,collider->getPosition());
+					g_soundSystem->playDigitalSample(MECH_COLLIDE,collider->getPosition());
 
 				return(false);
 			}
@@ -506,7 +506,7 @@ bool GroundVehicleType::handleCollision (GameObjectPtr collidee, GameObjectPtr c
 
 				//---------------------------------------------
 				if (collidee->getWindowsVisible() == g_framesSinceMissionStart)
-					g_gameSoundSystem->playDigitalSample(MECH_COLLIDE,collidee->getPosition());
+					g_soundSystem->playDigitalSample(MECH_COLLIDE,collidee->getPosition());
 				return(false);
 			}
 		}
@@ -2079,7 +2079,7 @@ void GroundVehicle::updateMovement (void) {
 		startUpThisFrame = false;
 		setStatus(OBJECT_STATUS_SHUTDOWN);
 		control.settings.groundVehicle.throttle = 0;
-		g_gameSoundSystem->playDigitalSample(VEHICLE_POWERUP,getPosition());
+		g_soundSystem->playDigitalSample(VEHICLE_POWERUP,getPosition());
 		return;
 	}
 
@@ -2088,7 +2088,7 @@ void GroundVehicle::updateMovement (void) {
 	if (startUpThisFrame) {
 		startUpThisFrame = false;
 		setStatus(OBJECT_STATUS_NORMAL);
-		g_gameSoundSystem->playDigitalSample(VEHICLE_POWERDN,getPosition());
+		g_soundSystem->playDigitalSample(VEHICLE_POWERDN,getPosition());
 		control.settings.groundVehicle.throttle = 100;
 		return;
 	}
@@ -2953,7 +2953,7 @@ long GroundVehicle::setTeamId (long _teamId, bool setup)
 	if ((g_framesSinceMissionStart > 10) && ((GroundVehicleTypePtr)getObjectType())->resourcePoints && (_teamId == Team::home->getId()))
 	{
 		LogisticsData::instance->addResourcePoints(((GroundVehicleTypePtr)getObjectType())->resourcePoints);
-		g_gameSoundSystem->playBettySample(BETTY_RESOURCES);
+		g_soundSystem->playBettySample(BETTY_RESOURCES);
 	}
 
 	return result;	
@@ -3533,7 +3533,7 @@ long GroundVehicle::update (void)
 			else if (refitBuddyWID && (appearance->getCurrentGestureId() == 4))
 			{
 				appearance->startActivity(REPAIR_VEHICLE_EFFECT_ID,true);
-				g_gameSoundSystem->playDigitalSample(REPAIRBAY_FX,getPosition(),false);
+				g_soundSystem->playDigitalSample(REPAIRBAY_FX,getPosition(),false);
 			}
 			else
 			{
@@ -4258,7 +4258,7 @@ long GroundVehicle::handleWeaponHit (WeaponShotInfoPtr shotInfo, bool addMultipl
 		if ((mineLayer == 0) && (getCommanderId() == Commander::home->getId())) 
 		{
 		//	disable( POWER_USED_UP );
-			g_gameSoundSystem->playBettySample( BETTY_MINES_GONE );
+			g_soundSystem->playBettySample( BETTY_MINES_GONE );
 		}
 	}
 
@@ -5316,7 +5316,7 @@ bool  GroundVehicle::burnRefitPoints (float pointsToBurn)
 		{
 			armor[GROUNDVEHICLE_LOCATION_TURRET].curArmor = 0.f;
 			if (getCommanderId() == Commander::home->getId())
-				g_gameSoundSystem->playBettySample( BETTY_REPAIR_GONE );
+				g_soundSystem->playBettySample( BETTY_REPAIR_GONE );
 		}
 		return(true);
 	}

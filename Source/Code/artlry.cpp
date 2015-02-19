@@ -200,7 +200,7 @@ void IfaceCallStrike (long strikeID,
 		case ARTILLERY_SMALL:
 			if (playerStrike && Team::home->teamLineOfSight(strikeLocation,0.0f))
 			{
-				g_gameSoundSystem->playDigitalSample(MAPBUTTONS_GUI);
+				g_soundSystem->playDigitalSample(MAPBUTTONS_GUI);
 			}
 			break;
 	}
@@ -1033,10 +1033,10 @@ long Artillery::update (void)
 	
 	if ((info.strike.timeToImpact <= 5.5) && !getFlag(OBJECT_FLAG_WHOOSH)) 
 	{
-		if (g_gameSoundSystem && (type->nominalDamage > 0.0)) 
+		if (g_soundSystem && (type->nominalDamage > 0.0)) 
 		{
 			setFlag(OBJECT_FLAG_WHOOSH, true);
-			g_gameSoundSystem->playDigitalSample(INCOMING_AIRSTRIKE,position,true);
+			g_soundSystem->playDigitalSample(INCOMING_AIRSTRIKE,position,true);
 		}
 	}
 

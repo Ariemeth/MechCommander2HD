@@ -293,7 +293,7 @@ long Gate::update (void)
 			(ObjectManager->getByWatchID(parent)->getTeamId() != getTeamId())) 
 		{
 			if ((ObjectManager->getByWatchID(parent)->getTeamId() != Team::home->getId()) && (g_framesSinceMissionStart > 5) && (getTeamId() != -1))
-				g_gameSoundSystem->playBettySample(BETTY_BUILDING_RECAPTURED);
+				g_soundSystem->playBettySample(BETTY_BUILDING_RECAPTURED);
 
 			long parentTeamID = ObjectManager->getByWatchID(parent)->getTeamId();
 			setTeamId(parentTeamID, false);
@@ -426,7 +426,7 @@ void Gate::openGate (void)
 					appearance->setGesture(3);
 					closing = true;
 					closed = opened = opening = false;
-					g_gameSoundSystem->playDigitalSample(GATE_CLOSE,position,true);
+					g_soundSystem->playDigitalSample(GATE_CLOSE,position,true);
 				}
 				else	//Wait for done opening.
 				{
@@ -437,7 +437,7 @@ void Gate::openGate (void)
 			else if (animState == 2)	//Gate is Open.  Start it closing.
 			{
 				appearance->setGesture(3);
-				g_gameSoundSystem->playDigitalSample(GATE_CLOSE,position,true);
+				g_soundSystem->playDigitalSample(GATE_CLOSE,position,true);
 				
 				closing = TRUE;
 				closed = opening = opened = false;
@@ -466,14 +466,14 @@ void Gate::openGate (void)
 			if (animState == -1)	//Never Updated - Closed by default
 			{
 				appearance->setGesture(1);
-				g_gameSoundSystem->playDigitalSample(GATE_OPEN,position,true);
+				g_soundSystem->playDigitalSample(GATE_OPEN,position,true);
 				opening = true;
 				closed = closing = opened = false;
 			}
 			if (animState == 0)
 			{
 				appearance->setGesture(1);
-				g_gameSoundSystem->playDigitalSample(GATE_OPEN,position,true);
+				g_soundSystem->playDigitalSample(GATE_OPEN,position,true);
 				opening = true;
 				closed = closing = opened = false;
 			}
@@ -502,7 +502,7 @@ void Gate::openGate (void)
 				if (!appearance->getInTransition())
 				{
 					appearance->setGesture(1);
-					g_gameSoundSystem->playDigitalSample(GATE_OPEN,position,true);
+					g_soundSystem->playDigitalSample(GATE_OPEN,position,true);
 					
 					opening = true;
 					closed = closing = opened = false;

@@ -809,7 +809,7 @@ bool BattleMechType::handleCollision (GameObjectPtr collidee, GameObjectPtr coll
 
 				//---------------------------------------------
 				// Train will take care of administering damage from this collision...
-				g_gameSoundSystem->playDigitalSample(MECH_COLLIDE,collidee->getPosition());
+				g_soundSystem->playDigitalSample(MECH_COLLIDE,collidee->getPosition());
 				return(false);
 			}
 		}
@@ -942,7 +942,7 @@ bool BattleMechType::handleCollision (GameObjectPtr collidee, GameObjectPtr coll
 
 				//---------------------------------------------
 				if (!sameTeam && (collidee->getWindowsVisible() == g_framesSinceMissionStart))
-					g_gameSoundSystem->playDigitalSample(MECH_COLLIDE,collidee->getPosition());
+					g_soundSystem->playDigitalSample(MECH_COLLIDE,collidee->getPosition());
 
 				return(false);
 			}
@@ -978,7 +978,7 @@ bool BattleMechType::handleCollision (GameObjectPtr collidee, GameObjectPtr coll
 
 				//---------------------------------------------
 				if (collidee->getWindowsVisible() == g_framesSinceMissionStart)
-					g_gameSoundSystem->playDigitalSample(MECH_COLLIDE,collidee->getPosition());
+					g_soundSystem->playDigitalSample(MECH_COLLIDE,collidee->getPosition());
 				return(false);
 			}
 		}
@@ -3717,7 +3717,7 @@ bool BattleMech::updateJump (void) {
 		if (!playedJumpSFX)
 		{
 			playedJumpSFX = true;
-			g_gameSoundSystem->playDigitalSample(JUMPJETS,getPosition(),true);
+			g_soundSystem->playDigitalSample(JUMPJETS,getPosition(),true);
 		}
 		
 		/*
@@ -4635,9 +4635,9 @@ void BattleMech::updateMovement (void) {
 		if ((g_missionTime > 8.0) || (getTeam() == Team::home))
 		{
 			if (getMoveType() != MOVETYPE_AIR)
-				g_gameSoundSystem->playDigitalSample(POWERDOWN_SFX,getPosition());
+				g_soundSystem->playDigitalSample(POWERDOWN_SFX,getPosition());
 			else
-				g_gameSoundSystem->playDigitalSample(COPTER_POWERUP,getPosition());
+				g_soundSystem->playDigitalSample(COPTER_POWERUP,getPosition());
 		}
 
 		shutDownThisFrame = false;
@@ -4664,16 +4664,16 @@ void BattleMech::updateMovement (void) {
 			appearance->playEjection();
 			
 		if (getMoveType() != MOVETYPE_AIR)
-			g_gameSoundSystem->playDigitalSample(POWERUP_SFX,getPosition());
+			g_soundSystem->playDigitalSample(POWERUP_SFX,getPosition());
 		else
-			g_gameSoundSystem->playDigitalSample(COPTER_POWERDN,getPosition());
+			g_soundSystem->playDigitalSample(COPTER_POWERDN,getPosition());
 
 		startUpThisFrame = false;
 		shutDownThisFrame = false;
 		setStatus(OBJECT_STATUS_NORMAL);
 		control.settings.mech.throttle = maxThrottle;
 		if (!MPlayer && Team::home->isEnemy(getTeam()) && (getMoveType() != MOVETYPE_AIR))
-			g_gameSoundSystem->playBettySample(BETTY_POWERUP);
+			g_soundSystem->playBettySample(BETTY_POWERUP);
 		sensorSystem->setShutdown(false);
 		return;
 	}
@@ -5058,7 +5058,7 @@ void BattleMech::netUpdateMovement (void) {
 					sensorSystem->setShutdown(true);
 				}
 				if (bodyState != MECH_STATUSCHUNK_BODYSTATE_PARKED) {
-					g_gameSoundSystem->playDigitalSample(POWERDOWN_SFX,getPosition());
+					g_soundSystem->playDigitalSample(POWERDOWN_SFX,getPosition());
 					pilot->clearMoveOrders();
 					appearance->setGestureGoal(MECH_STATE_PARKED);
 					control.settings.mech.throttle = maxThrottle;
@@ -5073,7 +5073,7 @@ void BattleMech::netUpdateMovement (void) {
 				if (bodyState != MECH_STATUSCHUNK_BODYSTATE_STANDING) {
 				
 					if (bodyState == MECH_STATUSCHUNK_BODYSTATE_PARKED)
-						g_gameSoundSystem->playDigitalSample(POWERUP_SFX,getPosition());
+						g_soundSystem->playDigitalSample(POWERUP_SFX,getPosition());
 						
 					pilot->clearMoveOrders();
 					appearance->setGestureGoal(MECH_STATE_STANDING);
@@ -5637,14 +5637,14 @@ long BattleMech::update (void)
    	if (control.settings.mech.blowLeftArm) 
    	{
    		appearance->blowLeftArm();
-   		g_gameSoundSystem->playDigitalSample(CRITICAL_HIT_SFX,getPosition(),true);
+   		g_soundSystem->playDigitalSample(CRITICAL_HIT_SFX,getPosition(),true);
 		control.settings.mech.blowLeftArm = false;
    	}
 
    	if (control.settings.mech.blowRightArm)
    	{
    		appearance->blowRightArm();
-   		g_gameSoundSystem->playDigitalSample(CRITICAL_HIT_SFX,getPosition(),true);
+   		g_soundSystem->playDigitalSample(CRITICAL_HIT_SFX,getPosition(),true);
 		control.settings.mech.blowRightArm = false;
    	}
 	//----------------------------------------------------------------------
@@ -5990,7 +5990,7 @@ long BattleMech::update (void)
 
 		if (!playedHeloDestruct)
 		{
-			g_gameSoundSystem->playDigitalSample(HELICOPTER_DEATH,getPosition());
+			g_soundSystem->playDigitalSample(HELICOPTER_DEATH,getPosition());
 			playedHeloDestruct = true;
 		}
 

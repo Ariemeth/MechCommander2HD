@@ -1739,7 +1739,7 @@ long TG_Shape::MultiTransformShape (Stuff::Matrix4D *shapeToClip, Stuff::Point3D
 			redFinal = blueFinal = greenFinal = 0xff;	//Just max out its light.
 		}
 
-		// MCHD CHANGE (02/14/2015): BaseVertexColor removed
+		// MCHD CHANGE (02/14/15): BaseVertexColor removed
 
 		if (useVertexLighting && (Environment.Renderer != 3))
 		{

@@ -924,7 +924,7 @@ void MissionInterfaceManager::updateVTol()
 				if (!vehicleDropped[vtolNum] && (vTol[vtolNum]->currentFrame >= 145))
 				{
 					vehicleDropped[vtolNum] = true;
-					g_gameSoundSystem->playDigitalSample(VTOL_DROP,vPos[vtolNum]);
+					g_soundSystem->playDigitalSample(VTOL_DROP,vPos[vtolNum]);
 					
 					//OK, if this is another persons vtol, I probably shouldn't do this
 					// Glenn, what should it do?
@@ -1031,7 +1031,7 @@ void MissionInterfaceManager::updateVTol()
 					}
 
 					//Actually the Karnov Deploy Sound Effect!
-					g_gameSoundSystem->playDigitalSample(RADAR_HUM,vTol[vtolNum]->position,false);
+					g_soundSystem->playDigitalSample(RADAR_HUM,vTol[vtolNum]->position,false);
 				}
 				else if ((vTol[vtolNum]->getCurrentGestureId() == 0) && !mechRecovered[vtolNum] && mechToRecover[vtolNum] && !mechToRecover[vtolNum]->isDestroyed())
 				{
@@ -1332,7 +1332,7 @@ void MissionInterfaceManager::updateOldStyle( bool shiftDn, bool altDn, bool ctr
 		else if ( (controlGui.isAddingVehicle() && !paintingVtol[commanderID] && !canAddVehicle( wPos )) || 
 				(controlGui.isAddingSalvage() && !paintingVtol[commanderID] && !canRecover( wPos )))
 		{
-			g_gameSoundSystem->playDigitalSample( INVALID_GUI );
+			g_soundSystem->playDigitalSample( INVALID_GUI );
 			return;
 		}
 		else if ( controlGui.isAddingAirstrike() && !paintingVtol[commanderID] ) // if we're painting the vtol, carry on
@@ -1345,7 +1345,7 @@ void MissionInterfaceManager::updateOldStyle( bool shiftDn, bool altDn, bool ctr
 		{
 			if ( controlGui.isSelectingInfoObject() )
 			{
-				g_gameSoundSystem->playDigitalSample( INVALID_GUI );
+				g_soundSystem->playDigitalSample( INVALID_GUI );
 				controlGui.cancelInfo();
 			}
 			else if (Terrain::IsGameSelectTerrainPosition(wPos))
@@ -1438,7 +1438,7 @@ void MissionInterfaceManager::updateOldStyle( bool shiftDn, bool altDn, bool ctr
 					target->setSelected( true );
 				}
 				else
-					g_gameSoundSystem->playDigitalSample( INVALID_GUI );
+					g_soundSystem->playDigitalSample( INVALID_GUI );
 
 
 			}
@@ -1525,7 +1525,7 @@ void MissionInterfaceManager::updateAOEStyle(bool shiftDn, bool altDn, bool ctrl
 		else if ( (controlGui.isAddingVehicle() && !paintingVtol[commanderID] && !canAddVehicle( wPos )) || 
 				(controlGui.isAddingSalvage() && !paintingVtol[commanderID] && !canRecover( wPos )))
 		{
-			g_gameSoundSystem->playDigitalSample( INVALID_GUI );
+			g_soundSystem->playDigitalSample( INVALID_GUI );
 			return;
 		}
 		else if ( controlGui.isAddingAirstrike() && !paintingVtol[commanderID] ) // if we're painting the vtol, carry on
@@ -1538,7 +1538,7 @@ void MissionInterfaceManager::updateAOEStyle(bool shiftDn, bool altDn, bool ctrl
 		{
 			if ( controlGui.isSelectingInfoObject() )
 			{
-				g_gameSoundSystem->playDigitalSample( INVALID_GUI );
+				g_soundSystem->playDigitalSample( INVALID_GUI );
 				controlGui.cancelInfo();
 			}
 			else if (Terrain::IsGameSelectTerrainPosition(wPos))
@@ -1581,7 +1581,7 @@ void MissionInterfaceManager::updateAOEStyle(bool shiftDn, bool altDn, bool ctrl
 		else if ( target->getTeam() != Team::home && !target->isDisabled() )
 			doAttack();
 		else if (!bForcedShot && !bAimedShot)
-			g_gameSoundSystem->playDigitalSample( INVALID_GUI );
+			g_soundSystem->playDigitalSample( INVALID_GUI );
 	
 	}
 	else if ( selectClicked && !bGui )
@@ -1601,7 +1601,7 @@ void MissionInterfaceManager::updateAOEStyle(bool shiftDn, bool altDn, bool ctrl
 		else if ( (controlGui.isAddingVehicle() && !paintingVtol[commanderID] && !canAddVehicle( wPos )) || 
 				(controlGui.isAddingSalvage() && !paintingVtol[commanderID] && !canRecover( wPos )))
 		{
-			g_gameSoundSystem->playDigitalSample( INVALID_GUI );
+			g_soundSystem->playDigitalSample( INVALID_GUI );
 			return;
 		}
 		else if ( controlGui.isAddingAirstrike() && !paintingVtol[commanderID] ) // if we're painting the vtol, carry on
@@ -1661,7 +1661,7 @@ void MissionInterfaceManager::updateAOEStyle(bool shiftDn, bool altDn, bool ctrl
 		{	
 			// tried to select nothing
 			controlGui.cancelInfo();
-			g_gameSoundSystem->playDigitalSample( INVALID_GUI );
+			g_soundSystem->playDigitalSample( INVALID_GUI );
 		}
 	}
 }
@@ -1843,7 +1843,7 @@ void MissionInterfaceManager::doAttack()
 
 	if ( userInput->getKeyDown( s_waypointKey ) || !target )
 	{
-		g_gameSoundSystem->playDigitalSample( INVALID_GUI );
+		g_soundSystem->playDigitalSample( INVALID_GUI );
 		return; // don't do if in waypoint mode
 	}
 
@@ -1887,7 +1887,7 @@ void MissionInterfaceManager::doAttack()
 				{
 					if ( target->getCaptureBlocker(pMover) )
 					{
-						g_gameSoundSystem->playDigitalSample( INVALID_GUI );
+						g_soundSystem->playDigitalSample( INVALID_GUI );
 						return;
 					}
 				}
@@ -1896,7 +1896,7 @@ void MissionInterfaceManager::doAttack()
 					//Can't capture player has at least one support thing selected
 					// At least until design tells me what they REALLY want!
 					// -fs
-					g_gameSoundSystem->playDigitalSample( INVALID_GUI );
+					g_soundSystem->playDigitalSample( INVALID_GUI );
 					return;
 				}
 			}
@@ -1910,7 +1910,7 @@ void MissionInterfaceManager::doAttack()
 		tacOrder.moveParams.wayPath.mode[0] = controlGui.getWalk() ?  TRAVEL_MODE_SLOW : TRAVEL_MODE_FAST;
 	}
 	
-	g_gameSoundSystem->playDigitalSample(BUTTON5);
+	g_soundSystem->playDigitalSample(BUTTON5);
 
 	Team* pTeam = Team::home;
 	
@@ -1990,7 +1990,7 @@ int  MissionInterfaceManager::jump()
 {
 	if ( !canJump() )
 	{
-		g_gameSoundSystem->playDigitalSample( INVALID_GUI );
+		g_soundSystem->playDigitalSample( INVALID_GUI );
 		return 0;
 	}
 	
@@ -2031,13 +2031,13 @@ void MissionInterfaceManager::doJump()
 
 			controlGui.setDefaultSpeed();
 			
-			g_gameSoundSystem->playDigitalSample(BUTTON5);
+			g_soundSystem->playDigitalSample(BUTTON5);
 			controlGui.setDefaultSpeed();
 		}
 		else
 		{
 			userInput->setMouseCursor(mState_DONT);
-			g_gameSoundSystem->playDigitalSample( INVALID_GUI );
+			g_soundSystem->playDigitalSample( INVALID_GUI );
 		}
 		
 			
@@ -2045,7 +2045,7 @@ void MissionInterfaceManager::doJump()
 	else
 	{
 		userInput->setMouseCursor(mState_DONT);
-		g_gameSoundSystem->playDigitalSample( INVALID_GUI );
+		g_soundSystem->playDigitalSample( INVALID_GUI );
 	}
 	
 }
@@ -2093,7 +2093,7 @@ void MissionInterfaceManager::doGuard(GameObject* who)
 		controlGui.setDefaultSpeed();
 	}
 
-	g_gameSoundSystem->playDigitalSample(BUTTON5);
+	g_soundSystem->playDigitalSample(BUTTON5);
 }
 int MissionInterfaceManager::guard()
 {
@@ -2185,7 +2185,7 @@ int MissionInterfaceManager::aimLeg()
 				tacOrder.pack( NULL, NULL);
 				handleOrders( tacOrder );
 
-				g_gameSoundSystem->playDigitalSample(BUTTON5);
+				g_soundSystem->playDigitalSample(BUTTON5);
 
 				bAimedShot = true;
 				return 1;
@@ -2223,7 +2223,7 @@ int MissionInterfaceManager::aimArm()
 			tacOrder.pack( NULL, NULL);
 			handleOrders( tacOrder );
 
-			g_gameSoundSystem->playDigitalSample(BUTTON5);
+			g_soundSystem->playDigitalSample(BUTTON5);
 
 			bAimedShot = true;
 			return 1;
@@ -2275,7 +2275,7 @@ int MissionInterfaceManager::aimHead()
 				handleOrders( tacOrder );
 
 				bAimedShot = true;
-				g_gameSoundSystem->playDigitalSample(BUTTON5);
+				g_soundSystem->playDigitalSample(BUTTON5);
 			}
 			else if (!anySelectedWithoutAreaEffect())
 			{
@@ -2364,7 +2364,7 @@ int MissionInterfaceManager::bigAirStrike()
 
 	IfaceCallStrike (ARTILLERY_LARGE,&v,NULL);
 //	if ( !isPaused() )
-		g_gameSoundSystem->playSupportSample(SUPPORT_AIRSTRIKE);
+		g_soundSystem->playSupportSample(SUPPORT_AIRSTRIKE);
 	return 1;
 }
 int MissionInterfaceManager::smlAirStrike()
@@ -2373,7 +2373,7 @@ int MissionInterfaceManager::smlAirStrike()
 
 	IfaceCallStrike (ARTILLERY_SMALL,&v,NULL);
 //	if ( !isPaused() )
-		g_gameSoundSystem->playSupportSample(SUPPORT_AIRSTRIKE);
+		g_soundSystem->playSupportSample(SUPPORT_AIRSTRIKE);
 	return 1;
 }
 int MissionInterfaceManager::snsAirStrike()
@@ -2382,7 +2382,7 @@ int MissionInterfaceManager::snsAirStrike()
 
 	IfaceCallStrike (ARTILLERY_SENSOR,&v,NULL);
 //	if ( !isPaused() )
-		g_gameSoundSystem->playSupportSample(SUPPORT_PROBE);
+		g_soundSystem->playSupportSample(SUPPORT_PROBE);
 	return 1;
 }
 
@@ -3179,7 +3179,7 @@ void MissionInterfaceManager::doMove(const Stuff::Vector3D& pos)
 
 	handleOrders(tacOrder);
 	
-	g_gameSoundSystem->playDigitalSample(BUTTON5);
+	g_soundSystem->playDigitalSample(BUTTON5);
 
 	controlGui.setDefaultSpeed();
 }
@@ -3242,7 +3242,7 @@ int MissionInterfaceManager::forceShot()
 			tacOrder.attackParams.pursue = controlGui.getFireFromCurrentPos() ? false : true;
 			tacOrder.moveParams.wayPath.mode[0] = controlGui.getWalk() ?  TRAVEL_MODE_SLOW : TRAVEL_MODE_FAST;
 			
-			g_gameSoundSystem->playDigitalSample(BUTTON5);
+			g_soundSystem->playDigitalSample(BUTTON5);
 
 			if (target)
 				target->getAppearance()->flashBuilding(1.3f,0.2f,0xffff0000);
@@ -4386,23 +4386,23 @@ void MissionInterfaceManager::beginVtol (long supportID, long commanderID, Stuff
 		switch (vehicleID[commanderID])
 		{
 			case 120:	//Minelayer
-				g_gameSoundSystem->playSupportSample(SUPPORT_MINELAYER);
+				g_soundSystem->playSupportSample(SUPPORT_MINELAYER);
 			break;
 
 			case 182:	//Repair
-				g_gameSoundSystem->playSupportSample(SUPPORT_REPAIR);
+				g_soundSystem->playSupportSample(SUPPORT_REPAIR);
 			break;
 
 			case 393:	//Scout
-				g_gameSoundSystem->playSupportSample(SUPPORT_SCOUT);
+				g_soundSystem->playSupportSample(SUPPORT_SCOUT);
 			break;
 
 			case 147:	//Recovery
-				g_gameSoundSystem->playSupportSample(SUPPORT_RECOVER);
+				g_soundSystem->playSupportSample(SUPPORT_RECOVER);
 			break;
 
 			case 415:	//Artillery
-				g_gameSoundSystem->playSupportSample(SUPPORT_ARTILLERY);
+				g_soundSystem->playSupportSample(SUPPORT_ARTILLERY);
 
 			break;
 		}
@@ -4419,9 +4419,9 @@ void MissionInterfaceManager::beginVtol (long supportID, long commanderID, Stuff
 	}
 	
 	if (vehicleID[commanderID] != 147)
-		g_gameSoundSystem->playDigitalSample(VTOL_ANIMATE,newPos);
+		g_soundSystem->playDigitalSample(VTOL_ANIMATE,newPos);
 	else
-		g_gameSoundSystem->playDigitalSample(SALVAGE_CRAFT,newPos);
+		g_soundSystem->playDigitalSample(SALVAGE_CRAFT,newPos);
 	
 	vTol[commanderID]->setObjectParameters( newPos, 0, false, Team::home->id, 0);
 	eye->update();
@@ -4543,7 +4543,7 @@ void MissionInterfaceManager::doRepair(GameObject* who)
 
 	handleOrders( tacOrder );
 
-	g_gameSoundSystem->playDigitalSample(BUTTON5);
+	g_soundSystem->playDigitalSample(BUTTON5);
 	controlGui.setDefaultSpeed();
 }
 
@@ -4577,7 +4577,7 @@ void MissionInterfaceManager::doRepairBay(GameObject* who)
 
 	handleOrders( tacOrder );
 
-	g_gameSoundSystem->playDigitalSample(BUTTON5);
+	g_soundSystem->playDigitalSample(BUTTON5);
 	controlGui.setDefaultSpeed();
 }
 
@@ -4612,7 +4612,7 @@ int MissionInterfaceManager::togglePause()
 	else
 		bPausedWithoutMenu = 0;
 
-	g_gameSoundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
+	g_soundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
 		
 
 	if ( bPaused )
@@ -4746,14 +4746,14 @@ int MissionInterfaceManager::gotoNextNavMarker()
 
 				handleOrders(tacOrder);
 				
-				g_gameSoundSystem->playDigitalSample(BUTTON5);
+				g_soundSystem->playDigitalSample(BUTTON5);
 
 				return 1;
 			}
 		}
 
 	// if we got here there weren't any valid markers, play bad sound
-	g_gameSoundSystem->playDigitalSample( INVALID_GUI );
+	g_soundSystem->playDigitalSample( INVALID_GUI );
 	return 0;
 
 }
@@ -5270,10 +5270,10 @@ int MissionInterfaceManager::saveHotKeys( FitIniFile& file )
 	file.writeIdLong("WayPointKey", s_waypointKey);
 	for (int i = 0; i < s_numCommands; i++)
 	{
-		if (s_commands[i].hotKeyDescriptionText == -1) // MCHD CHANGE (02/14/2015): If the user can't change it, don't save it
+		if (s_commands[i].hotKeyDescriptionText == -1) // MCHD CHANGE (02/14/15): If the user can't change it, don't save it
 			continue;
 
-		file.writeIdLong( s_commands[i].name, s_commands[i].key );	// MCHD CHANGE (02/14/2015): Save the names	
+		file.writeIdLong( s_commands[i].name, s_commands[i].key );	// MCHD CHANGE (02/14/15): Save the names	
 	}
 
 	return 0;
@@ -5303,7 +5303,7 @@ int MissionInterfaceManager::loadHotKeys( FitIniFile& file )
 			if (s_chatCommandIndex == -1 && strcmp(s_commands[i].name, "AllChat") == 0 || strcmp(s_commands[i].name, "AllChat") == 0)
 				s_chatCommandIndex = i;
 
-			if (s_commands[i].hotKeyDescriptionText == -1) // MCHD CHANGE (02/14/2015): Don't try to read in permanently bound commands
+			if (s_commands[i].hotKeyDescriptionText == -1) // MCHD CHANGE (02/14/15): Don't try to read in permanently bound commands
 				continue;
 
 			if (file.readIdLong(s_commands[i].name, s_commands[i].key) == VARIABLE_NOT_FOUND)
@@ -5966,9 +5966,9 @@ void MissionInterfaceManager::Load (FitIniFilePtr file)
 		*/
 
 		if (vehicleID[commanderID] != 147)
-			g_gameSoundSystem->playDigitalSample(VTOL_ANIMATE,vPos[commanderID]);
+			g_soundSystem->playDigitalSample(VTOL_ANIMATE,vPos[commanderID]);
 		else
-			g_gameSoundSystem->playDigitalSample(SALVAGE_CRAFT,vPos[commanderID]);
+			g_soundSystem->playDigitalSample(SALVAGE_CRAFT,vPos[commanderID]);
 
 		Stuff::Vector3D newPos = vPos[commanderID];
 		float rotation = 0.f;  // this needs to be pointing 180 degrees from drop point

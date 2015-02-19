@@ -252,12 +252,12 @@ class UserInput
 
 		UserInput (void)
 		{
-			init();
+
 		}
 
 		~UserInput (void)
 		{
-			destroy();
+
 		}
 
 		void init (void)

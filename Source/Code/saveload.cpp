@@ -248,7 +248,7 @@ void Mission::save (const char *saveFileName)
 	__int64 driveSpace = gos_GetDriveFreeSpace(currentPath);
 	if (driveSpace < (5 * 1024 * 1024))
 	{
-		g_gameSoundSystem->playDigitalSample(INVALID_GUI);
+		g_soundSystem->playDigitalSample(INVALID_GUI);
 		return;
 	}
 

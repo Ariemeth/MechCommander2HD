@@ -10,7 +10,7 @@
 #include "ResourceStringSelectionDlg.h"
 
 #include "assert.h"
-#include "../MCLib/Utilities.h" /*for cLoadString*/
+#include "..\MCLib\Utilities.h" /*for cLoadString*/
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

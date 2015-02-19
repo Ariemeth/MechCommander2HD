@@ -48,7 +48,7 @@ bool g_gamePaused = false;
 bool g_invokeOptionsScreen = false;
 bool g_EULAShown = false;
 
-enum { DIFFICULTY_GREEN, DIFFICULTY_REGULAR, DIFFICULTY_VETERAN, DIFFICULTY_ELITE };	// MCHD CHANGE (02/02/2015): Added enumeration for difficulty
+enum { DIFFICULTY_GREEN, DIFFICULTY_REGULAR, DIFFICULTY_VETERAN, DIFFICULTY_ELITE };	// MCHD CHANGE (02/02/15): Added enumeration for difficulty
 long g_gameDifficulty = DIFFICULTY_GREEN;
 char g_missionName[1024];
 bool g_unlimitedAmmo = true;
@@ -57,11 +57,8 @@ extern char g_cdInstallPath[];			// MCHD TODO: Get rid of this
 bool g_loadInMissionSave = false;			// MCHD TODO: What exactly does this do? It looks like it loads a test mission whenever load is clicked...
 bool g_aborted = false;
 
-// Audio
-SoundSystem* g_soundSystem;
-
 // Rendering
-enum { RENDERER_DEFAULT, RENDERER_PRIMARY, RENDERER_SECONDARY, RENDERER_SOFTWARE };		// MCHD CHANGE - 02/02/2015 - Added enumeration for renderer; needs to change or go away
+enum { RENDERER_DEFAULT, RENDERER_PRIMARY, RENDERER_SECONDARY, RENDERER_SOFTWARE };		// MCHD CHANGE - 02/02/15 - Added enumeration for renderer; needs to change or go away
 long g_renderer = RENDERER_DEFAULT;
 long g_objectTextureSize = 128; // MCHD TODO: Move
 
@@ -99,9 +96,9 @@ bool initCombatLog = false;
 bool initBugLog = false;
 bool initLRMoveLog = false;
 
-extern char g_FileMissingString[];
+extern char g_fileMissingString[];
 extern char g_CDMissingString[];
-extern char g_MissingTitleString[];
+extern char g_missingTitleString[];
 char* g_ExceptionGameMsg = NULL;
 
 // GameOS
@@ -193,7 +190,7 @@ void UpdateGame()
 		{
 			if (MPlayer->startMission)
 			{
-				g_gameSoundSystem->playBettySample(BETTY_NEW_CAMPAIGN);
+				g_soundSystem->playBettySample(BETTY_NEW_CAMPAIGN);
 				MPlayer->waitingToStartMission = false;
 			}
 		}
@@ -217,7 +214,7 @@ void UpdateGame()
 
 	//----------------------------------------
 	// Update the Sound System for this frame
-	g_gameSoundSystem->update();
+	g_soundSystem->update();
 
 	//----------------------------------------
 	// Update all of the timers
@@ -275,15 +272,15 @@ void UpdateGame()
 			//if (MPlayer && MPlayer->isServer())
 			//	MPlayer->sendEndMission(1);
 			if (result < mis_PLAYER_DRAW)
-				g_gameSoundSystem->playBettySample(BETTY_MISSION_LOST);
+				g_soundSystem->playBettySample(BETTY_MISSION_LOST);
 			else if (result > mis_PLAYER_DRAW)
-				g_gameSoundSystem->playBettySample(BETTY_MISSION_WON);
+				g_soundSystem->playBettySample(BETTY_MISSION_WON);
 
 			//Gotta get rid of the mission textures before Heidi starts her stuff!
 			// No RAM otherwise in mc2_18.
 			mcTextureManager->flush(true);
 
-			// If the player g_aborted a multiplayer match, close the session and return to the main screen
+			// If the player aborted a multiplayer match, close the session and return to the main screen
 			if (MPlayer && g_aborted)
 			{
 				MPlayer->closeSession();
@@ -459,9 +456,9 @@ void Initialize()
 	if (testMem)
 		VirtualFree(testMem,0,MEM_RELEASE);
 
-	cLoadString(IDS_MC2_FILEMISSING,g_FileMissingString,511);
+	cLoadString(IDS_MC2_FILEMISSING,g_fileMissingString,511);
 	cLoadString(IDS_MC2_CDMISSING,g_CDMissingString,1023);
-	cLoadString(IDS_MC2_MISSING_TITLE,g_MissingTitleString,255);
+	cLoadString(IDS_MC2_MISSING_TITLE,g_missingTitleString,255);
 
 	//Check for sufficient hard Drive space on drive game is running from
 	char currentPath[1024];
@@ -605,7 +602,7 @@ void Initialize()
 #endif
 	
 	{
-		// MCHD CHANGE (02/14/2015): Not reading in heap size variables anymore
+		// MCHD CHANGE (02/14/15): Not reading in heap size variables anymore
 	
 #ifdef _DEBUG
 		long systemPathResult = 
@@ -700,7 +697,7 @@ void Initialize()
 			}
 		}
 			
-		// MCHD CHANGE (02/14/2015): Always use sound and music - user can set in options
+		// MCHD CHANGE (02/14/15): Always use sound and music - user can set in options
 
 		long result = systemFile->seekBlock("CameraSettings");
 		if (result == NO_ERR)
@@ -786,11 +783,10 @@ void Initialize()
 	}
 	
 	//--------------------------------------------------------------
-	// MCHD CHANGE (02/14/2015): Preferences loading block deleted - everything moved to g_userPreferences.load()
+	// MCHD CHANGE (02/14/15): Redundant option loading block deleted - everything moved to CPrefs::load()
 
 	// Load and apply options from "options.cfg"
 	g_userPreferences.load();
-	g_userPreferences.applyPrefs();
 	
 	//--------------------------------------------------
 	// Setup Mouse Parameter
@@ -882,10 +878,11 @@ void Initialize()
 	
 	//------------------------------------------------
 	// Give the Sound System a Whirl!
-	g_gameSoundSystem = new GameSoundSystem;
-	g_gameSoundSystem->init();
-	((SoundSystem *)g_gameSoundSystem)->init("sound");
-	g_soundSystem = g_gameSoundSystem; // for things in the lib that use sound
+	g_soundSystem = new GameSoundSystem;
+	g_soundSystem->init();
+	((SoundSystem *)g_soundSystem)->init("sound");
+
+	g_userPreferences.applyPrefs(); // MCHD CHANGE (02/18/15): Moved to after sound initialization because volume
 		
 	//-----------------------------------------------
 	// Only used by camera to retrieve screen coords.
@@ -1093,11 +1090,11 @@ void Terminate()
 
 	//-------------------------------------------------------------
 	// Shut down the soundSytem for a change!
-	if (g_gameSoundSystem)
+	if (g_soundSystem)
 	{
-		g_gameSoundSystem->destroy();
-		delete g_gameSoundSystem;
-		g_gameSoundSystem = NULL;
+		g_soundSystem->destroy();
+		delete g_soundSystem;
+		g_soundSystem = NULL;
 	}
 
 	//------------------------------------------------

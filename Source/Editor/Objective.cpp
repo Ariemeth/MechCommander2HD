@@ -20,7 +20,7 @@ Objective.cpp			: Implementation of the Objective component.
 #include "TextMessageDlg.h"
 #include "MCLibResource.h"
 #include "EditorInterface.h"
-#include "../resource.h"/*this is mc2res.dll's header file*/
+#include "..\resource.h"/*this is mc2res.dll's header file*/
 
 #include "EString.h"
 #include "ECharString.h"

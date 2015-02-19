@@ -259,7 +259,7 @@ int	PilotReviewScreen::handleMessage( unsigned long message, unsigned long who)
 		bDone = true;
 		exitAnim.begin();
 		beginFadeOut( 1.0 );
-		g_gameSoundSystem->stopBettySample(); // don't want to carry droning on to next screen
+		g_soundSystem->stopBettySample(); // don't want to carry droning on to next screen
 		return 1;
 	}
 
@@ -695,7 +695,7 @@ void	ActivePilotListItem::render()
 				{
 					if ( !medalIcons[i]->isShowing() ) // play sound when it shows up
 					{
-						g_gameSoundSystem->playDigitalSample( LOG_PILOTMEDAL );
+						g_soundSystem->playDigitalSample( LOG_PILOTMEDAL );
 					}
 					medalIcons[i]->showGUIWindow( true );
 					medalTexts[i]->showGUIWindow( true );
@@ -722,7 +722,7 @@ void	ActivePilotListItem::render()
 		if ( promotionText.getColor() == 0 && currentTime - timeOffset < .3
 			&& pilot->promotePilot() )
 		{
-			g_gameSoundSystem->playDigitalSample( LOG_PROMOTED );
+			g_soundSystem->playDigitalSample( LOG_PROMOTED );
 		}
 		promotionText.setColor( s_pilotPromotedAnim->getColor( currentTime -timeOffset ) );
 	}
@@ -795,7 +795,7 @@ void	ActivePilotListItem::render()
 	// when adding a new icon, play sound
 	if ( oldPossible != numPossible && numPossible < pilot->killedIcons.Count() )
 	{
-		g_gameSoundSystem->playDigitalSample( LOG_KILLMARKER, Stuff::Vector3D(-9999.0f,-9999.0,-9999.0f), true );
+		g_soundSystem->playDigitalSample( LOG_KILLMARKER, Stuff::Vector3D(-9999.0f,-9999.0,-9999.0f), true );
 	}
 
 	for ( EList< ForceGroupIcon*, ForceGroupIcon* >::EIterator iter = pilot->killedIcons.Begin();
@@ -1494,23 +1494,23 @@ void PilotPromotionArea::setPilot( LogisticsPilot* pPilot, PilotIcon* pIcon )
 	if ( rank > WARRIOR_RANK_ELITE )
 	{
 		maxSkill = NUM_SPECIALTY_SKILLS;
-		g_gameSoundSystem->playBettySample( BETTY_PROMOACE );
+		g_soundSystem->playBettySample( BETTY_PROMOACE );
 		
 	}
 	else if ( rank > WARRIOR_RANK_VETERAN )
 	{
 		maxSkill = FIRST_ACE_SPECIALTY;
-		g_gameSoundSystem->playBettySample( BETTY_PROMOELI );
+		g_soundSystem->playBettySample( BETTY_PROMOELI );
 	}
 	else if ( rank > WARRIOR_RANK_REGULAR )
 	{
 		maxSkill = FIRST_ELITE_SPECIALTY;
-		g_gameSoundSystem->playBettySample( BETTY_PROMOVET );
+		g_soundSystem->playBettySample( BETTY_PROMOVET );
 	}
 	else
 	{
 		maxSkill = FIRST_VETERAN_SPECIALTY;
-		g_gameSoundSystem->playBettySample( BETTY_PROMOREG );
+		g_soundSystem->playBettySample( BETTY_PROMOREG );
 	}
 
 	for ( i = 0; i < maxSkill; i++ )

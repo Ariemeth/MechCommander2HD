@@ -367,39 +367,39 @@ void SelectionBrush::render( int screenX, int screenY )
 }
 
 
-bool SelectionBrush::paintSmooth( Stuff::Vector3D& worldPos, int screenX, int screenY, int radius )
+bool SelectionBrush::paintSmooth(Stuff::Vector3D& worldPos, int screenX, int screenY, int radius)
 {
 	int minI = INT_MAX;
 	int maxI = 0;
 	int minJ = INT_MAX;
 	int maxJ = 0;
-	for ( int j = 0; j < land->realVerticesMapSide; ++j )
+	for (int j = 0; j < land->realVerticesMapSide; ++j)
 	{
-		for ( int i = 0; i < land->realVerticesMapSide; ++i )
+		for (int i = 0; i < land->realVerticesMapSide; ++i)
 		{
-			if ( land->isVertexSelected( j, i ) )
+			if (land->isVertexSelected(j, i))
 			{
-				if ( i > maxI )
+				if (i > maxI)
 					maxI = i;
-				if ( i < minI )
+				if (i < minI)
 					minI = i;
-				if ( j > maxJ )
+				if (j > maxJ)
 					maxJ = j;
-				if ( j < minJ )
+				if (j < minJ)
 					minJ = j;
 			}
 		}
 	}
 
-	if ( maxI == minI && maxJ == minJ )
+	if (maxI == minI && maxJ == minJ)
 	{
-		return paintSmoothArea( worldPos, screenX, screenY, (float)radius, (float)radius, minJ, minI );
+		return paintSmoothArea(worldPos, screenX, screenY, (float)radius, (float)radius, minJ, minI);
 	}
-	else 
-		return paintSmoothArea( worldPos, screenX, screenY, float((maxJ - minJ + 1)>>1), float((maxI - minI + 1)>>1),
-							minJ + ((maxJ - minJ)/2), minI + ((maxI - minI)/2) );
-
-	return false;
+	else
+	{
+		return paintSmoothArea(worldPos, screenX, screenY, float((maxJ - minJ + 1) >> 1), float((maxI - minI + 1) >> 1),
+			minJ + ((maxJ - minJ) / 2), minI + ((maxI - minI) / 2));
+	}
 }
 
 bool   SelectionBrush::paintSmoothArea( Stuff::Vector3D& worldPos, int screenX, int screenY, float radY, float radX,

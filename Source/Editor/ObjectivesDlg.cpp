@@ -260,7 +260,7 @@ void ObjectivesDlg::OnObjectivesMoveDownButton()
 		assert(0 != pSelectedObjective);
 
 		m_ModifiedObjectives.Delete(nSelectionIndex);
-		if (m_ModifiedObjectives.Count() -1 == nSelectionIndex) {
+		if ((int)m_ModifiedObjectives.Count() -1 == nSelectionIndex) {
 			m_ModifiedObjectives.Append(pSelectedObjective);
 		} else {
 			m_ModifiedObjectives.Insert(pSelectedObjective, nSelectionIndex + 1);

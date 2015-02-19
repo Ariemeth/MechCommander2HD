@@ -318,8 +318,8 @@ int	MainMenu::handleMessage( unsigned long what, unsigned long who )
 				endAnim.begin();
 				beginAnim.end();
 				endResult = NEXT;
-				g_gameSoundSystem->playDigitalSample( LOG_MAINMENUBUTTON );
-				g_gameSoundSystem->playDigitalMusic(LogisticsData::instance->getCurrentMissionTune());
+				g_soundSystem->playDigitalSample( LOG_MAINMENUBUTTON );
+				g_soundSystem->playDigitalMusic(LogisticsData::instance->getCurrentMissionTune());
 			}
 			}
 			break;
@@ -459,8 +459,8 @@ void MainMenu::update()
 	if (!musicStarted)
 	{
 		musicStarted = true;
-		g_gameSoundSystem->setMusicVolume( g_userPreferences.MusicVolume );
-		g_gameSoundSystem->playDigitalMusic(tuneId);
+		g_soundSystem->setMusicVolume( g_userPreferences.MusicVolume );
+		g_soundSystem->playDigitalMusic(tuneId);
 	}
 
 	if ( endAnim.isDone() )
@@ -599,7 +599,7 @@ void MainMenu::update()
 		{
 			if ( LogisticsOKDialog::instance()->getStatus() == LogisticsScreen::YES )
 			{
-				g_gameSoundSystem->playDigitalSample( LOG_EXITGAME );
+				g_soundSystem->playDigitalSample( LOG_EXITGAME );
 				gos_TerminateApplication();
 				promptToQuit = 0;
 
@@ -677,7 +677,7 @@ void MainMenu::update()
 				{
 					introOver = true;
 					userInput->mouseOn();
-					g_gameSoundSystem->playDigitalSample( LOG_MAINMENUBUTTON );
+					g_soundSystem->playDigitalSample( LOG_MAINMENUBUTTON );
 
 				}
 				else if ( !introOver )
@@ -687,7 +687,7 @@ void MainMenu::update()
 			{
 				background.update();
 				if ( !introOver )
-					g_gameSoundSystem->playDigitalSample( LOG_MAINMENUBUTTON );
+					g_soundSystem->playDigitalSample( LOG_MAINMENUBUTTON );
 
 				introOver = true;
 				userInput->mouseOn();

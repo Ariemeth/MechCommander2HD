@@ -126,7 +126,7 @@ public:
 		theClipper->StartDraw(cameraOrigin, cameraToClip, fColor, &fColor, default_state, &z);
 		MidLevelRenderer::GOSVertex::farClipReciprocal = (1.0f-cameraToClip(2, 2))/cameraToClip(3, 2);
 
-		if (active && turn > 1)
+		if (active && g_framesSinceMissionStart > 1)
 		{
 			if (theSky)
 				theSky->render(1);
@@ -149,7 +149,7 @@ public:
 
 			if (!drawOldWay)
 			{
-				if (compass && (turn > 3) && drawCompass)
+				if (compass && (g_framesSinceMissionStart > 3) && drawCompass)
 					compass->render(-1);		//Force this to zBuffer in front of everything
 			}
 
@@ -179,7 +179,7 @@ public:
 			gos_SetRenderState(	gos_State_ZWrite, 0);
 			gos_SetRenderState( gos_State_Perspective, 1);
 	
-			if (compass && (turn > 3) && drawCompass)
+			if (compass && (g_framesSinceMissionStart > 3) && drawCompass)
 				compass->render();
 		}
  	}
@@ -211,7 +211,7 @@ public:
 		Camera::NearPlaneDistance = MinNearPlane + ((MaxNearPlane - MinNearPlane) * altitudePercent);
 		Camera::FarPlaneDistance = MinFarPlane + ((MaxFarPlane - MinFarPlane) * altitudePercent);
 	
-		if (!compass && (turn > 3))	//Create it!
+		if (!compass && (g_framesSinceMissionStart > 3))	//Create it!
 		{
 			//Gotta check for the list too because a NEW map has no objects on it and this list
 			// Doesn't exist until objects are placed.  Strange but true...
@@ -228,7 +228,7 @@ public:
 			compass->init( appearanceType );
 		}
 		
-		if (!theSky && (turn > 3))
+		if (!theSky && (g_framesSinceMissionStart > 3))
 		{
 			//Startup the SKYBox
 			long appearanceType = (GENERIC_APPR_TYPE << 24);
@@ -262,12 +262,12 @@ public:
 		
 		long result = Camera::update();
 
-		if ((cameraLineChanged + 10) < turn)
+		if ((cameraLineChanged + 10) < g_framesSinceMissionStart)
 		{
 			if (userInput->getKeyDown(KEY_BACKSLASH) && !userInput->ctrl() && !userInput->alt() && !userInput->shift())
 			{
 				drawCompass ^= true;
-				cameraLineChanged = turn;
+				cameraLineChanged = g_framesSinceMissionStart;
 			}
 		}
 
@@ -275,7 +275,7 @@ public:
 		//Always recalc here or shadows never change in editor!!
 		forceShadowRecalc = true;
 
-		if (compass && (turn > 3))
+		if (compass && (g_framesSinceMissionStart > 3))
    		{
    	   		bool oldFog = useFog;
    			bool oldShadows = useShadows;

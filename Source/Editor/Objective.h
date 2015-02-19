@@ -101,14 +101,14 @@ public:
 	bool DoCommonEditDialog() {}
 	virtual condition_species_type Species() const = 0;
 	virtual bool Init() { return true; }
-	virtual bool Read( FitIniFile* missionFile ) { return true; }
-	virtual bool Save( FitIniFile* file ) { return true; }
+	virtual bool Read(FitIniFile* missionFile) { (void)missionFile; return true; }
+	virtual bool Save(FitIniFile* file) { (void)file; return true; }
 	virtual bool EditDialog() { return true; }
 	virtual void WriteAbl() {}
 	virtual EString Description() = 0;
 	virtual EString InstanceDescription() { EString retval; return retval; }
 	virtual void CastAndCopy(const CObjectiveCondition *pMaster) { (*this) = (*pMaster); }
-	virtual bool RefersTo(const EditorObject *pObj) { return false; }
+	virtual bool RefersTo(const EditorObject *pObj) { (void)pObj; return false; }
 	virtual bool NoteThePositionsOfObjectsReferenced() { return true; }
 	virtual bool RestoreObjectPointerReferencesFromNotedPositions() { return true; }
 };

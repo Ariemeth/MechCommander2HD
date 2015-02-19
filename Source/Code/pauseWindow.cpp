@@ -176,7 +176,7 @@ void PauseWindow::update()
 				if ( buttons[i].location[0].x >= lastX || lastX >= buttons[i].location[2].x
 				|| lastY <= buttons[i].location[0].y || lastY >= buttons[i].location[1].y )
 				{
-					g_gameSoundSystem->playDigitalSample( LOG_HIGHLIGHTBUTTONS );
+					g_soundSystem->playDigitalSample( LOG_HIGHLIGHTBUTTONS );
 				}
 
 				if ( buttons[i].state != ControlButton::PRESSED )
@@ -429,7 +429,7 @@ void PauseWindow::handleClick( int id )
 		break;
 	}
 
-	g_gameSoundSystem->playDigitalSample( sound );
+	g_soundSystem->playDigitalSample( sound );
 }
 
 bool PauseWindow::inRect( int mouseX, int mouseY )

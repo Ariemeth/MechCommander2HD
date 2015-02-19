@@ -416,7 +416,7 @@ long Mission::update (void)
 			}
 			lastTimeGetTime = currentTimeGetTime;
 
-			g_gameSoundSystem->clearIsPaused();
+			g_soundSystem->clearIsPaused();
 		}
 		else
 		{
@@ -424,7 +424,7 @@ long Mission::update (void)
 			DWORD currentTimeGetTime = timeGetTime();
 			lastTimeGetTime = currentTimeGetTime;
 
-			g_gameSoundSystem->setIsPaused();
+			g_soundSystem->setIsPaused();
 		}
 
 		//--------------------------------------------------
@@ -640,11 +640,11 @@ long Mission::update (void)
 		// Duane decided to switch the order for our conveniance.  Thanks!!
 		if ((terminationResult) && (terminationResult != -1) && (terminationResult < mis_PLAYER_DRAW))
 		{
-			g_gameSoundSystem->playDigitalMusic(WIN_TUNE_0);
+			g_soundSystem->playDigitalMusic(WIN_TUNE_0);
 		}
 		else if (terminationResult > mis_PLAYER_DRAW)
 		{
-			g_gameSoundSystem->playDigitalMusic(LOSE_TUNE_0);
+			g_soundSystem->playDigitalMusic(LOSE_TUNE_0);
 		}
 
 		if (showFrameRate)
@@ -3279,7 +3279,7 @@ void Mission::destroy (bool initLogistics)
 	mcTextureManager->flush();
 	mcTextureManager->freeVertices();
 
-	g_gameSoundSystem->purgeSoundSystem();
+	g_soundSystem->purgeSoundSystem();
 
 	missionFileName[0] = 0;
 	

@@ -9,7 +9,7 @@ MPHostGame.cpp			: Implementation of the MPHostGame component.
 #include "MPHostGame.h"
 #include "prefs.h"
 #include "IniFile.h"
-#include "../MCLib/UserInput.h"
+#include "..\MCLib\UserInput.h"
 #include "..\resource.h"
 #include "multplyr.h"
 

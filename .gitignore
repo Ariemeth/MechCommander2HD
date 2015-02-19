@@ -2,6 +2,8 @@
 **/Debug
 **/Profile
 **/Release
+**/Debug Editor
+**/Release Editor
 **/Retail
 
 #Exceptions

@@ -38,7 +38,7 @@ typedef enum {
 #include <objbase.h>
 
 // ARM
-#include "../ARM/Microsoft.Xna.Arm.h"
+#include "..\ARM\Microsoft.Xna.Arm.h"
 using namespace Microsoft::Xna::Arm;
 IProviderAsset * mapAsset = NULL;
 IProviderAsset * mechAsset = NULL;
@@ -669,7 +669,7 @@ bool EditorData::reassignHeightsFromTGA( const char* fileName, int min, int max 
 
 	tgaFile.seek(0);
 
-	MemoryPtr tgaData = (MemoryPtr)systemHeap->Malloc(tgaFile.fileSize());
+	MemoryPtr tgaData = (MemoryPtr)g_systemHeap->Malloc(tgaFile.fileSize());
 	gosASSERT(tgaData != NULL);
 
 	result = tgaFile.read(tgaData,tgaFile.fileSize());
@@ -748,7 +748,7 @@ bool EditorData::reassignHeightsFromTGA( const char* fileName, int min, int max 
 		}
 	}
 
-	systemHeap->Free(tgaData);
+	g_systemHeap->Free(tgaData);
 
 	// need to go through all of the buildings and put them at the right spots
 	EditorObjectMgr::instance()->adjustObjectsToNewTerrainHeights();
@@ -2167,7 +2167,7 @@ void EditorData::drawTacMap( BYTE* pDest, long dataSize, int tacMapSize )
 	 
 	tBMP = tacMapBmp;
 	// now draw on the Buildings and forests
-	TGARecs *tRecs = (TGARecs *)systemHeap->Malloc(sizeof(TGARecs) * 255);
+	TGARecs *tRecs = (TGARecs *)g_systemHeap->Malloc(sizeof(TGARecs) * 255);
 	memset(tRecs,0,sizeof(TGARecs) * 255);
 	
 	for( i = 0; i < land->realVerticesMapSide * MAPCELL_DIM; i++ )
@@ -2279,7 +2279,7 @@ void EditorData::drawTacMap( BYTE* pDest, long dataSize, int tacMapSize )
 						tgaFile.read((MemoryPtr)&header,sizeof(TGAFileHeader));
 						tgaFile.seek(0);
 						
-						tgaRAM = (MemoryPtr)systemHeap->Malloc(header.width * header.height * sizeof(DWORD));
+						tgaRAM = (MemoryPtr)g_systemHeap->Malloc(header.width * header.height * sizeof(DWORD));
 						
 						loadTGATexture (&tgaFile, tgaRAM, header.width, header.height);
 						
@@ -2360,12 +2360,12 @@ void EditorData::drawTacMap( BYTE* pDest, long dataSize, int tacMapSize )
 	{
 		if (tRecs[it].tgaData)
 		{
-			systemHeap->Free(tRecs[it].tgaData);
+			g_systemHeap->Free(tRecs[it].tgaData);
 			tRecs[it].tgaData = NULL;	
 		}
 	}
 	
-	systemHeap->Free(tRecs);
+	g_systemHeap->Free(tRecs);
 	tRecs = NULL;
 	
  	// now shrink 'er down

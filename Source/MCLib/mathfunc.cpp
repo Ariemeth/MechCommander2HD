@@ -3,7 +3,7 @@
 //===========================================================================//
 
 #ifndef STUFF_STUFF_HPP
-#include <stuff/stuff.hpp>
+#include <stuff\stuff.hpp>
 #endif
 
 #ifndef DSTD_H

@@ -720,8 +720,8 @@ const char* MissionBegin::update()
 
 		if ( pCurScreen->getStatus() != LogisticsScreen::RUNNING )
 		{
-			g_gameSoundSystem->stopBettySample(); // don't want to carry droning on to next screen
-			g_gameSoundSystem->stopSupportSample();
+			g_soundSystem->stopBettySample(); // don't want to carry droning on to next screen
+			g_soundSystem->stopSupportSample();
 			if ( pCurScreen->getStatus() == LogisticsScreen::NEXT )
 			{
 				pCurScreen->end();
@@ -755,7 +755,7 @@ const char* MissionBegin::update()
 
 					leftAnim.begin();
 					curScreenX++;
-					g_gameSoundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
+					g_soundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
 					animJustBegun = true;
 				}
 				else
@@ -777,7 +777,7 @@ const char* MissionBegin::update()
 				}
 				rightAnim.begin();
 				curScreenX--;
-				g_gameSoundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
+				g_soundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
 				animJustBegun = true;
 			}
 			else if ( pCurScreen->getStatus() == LogisticsScreen::DOWN )
@@ -787,7 +787,7 @@ const char* MissionBegin::update()
 					screens[curScreenX][curScreenY+1]->begin();
 				upAnim.begin();
 				curScreenY++;
-				g_gameSoundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
+				g_soundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
 				animJustBegun = true;
 			}
 			else if ( pCurScreen->getStatus() == LogisticsScreen::UP )
@@ -797,7 +797,7 @@ const char* MissionBegin::update()
 					screens[curScreenX][curScreenY-1]->begin();
 				downAnim.begin();
 				curScreenY--;
-				g_gameSoundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
+				g_soundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
 				animJustBegun = true;
 			}
 			else if ( pCurScreen->getStatus() == LogisticsScreen::MAINMENU )
@@ -817,7 +817,7 @@ const char* MissionBegin::update()
 					leftAnim.begin();
 					curScreenX++;
 					curScreenX++;
-					g_gameSoundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
+					g_soundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
 					animJustBegun = true;
 				}
 				else
@@ -833,7 +833,7 @@ const char* MissionBegin::update()
 				rightAnim.begin();
 				curScreenX--;
 				curScreenX--;
-				g_gameSoundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
+				g_soundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
 				animJustBegun = true;
 			}
 		} 
@@ -973,7 +973,7 @@ void MissionBegin::beginSplash( const char* playerName)
 
 		mainMenu->setDrawBackground( true );
 		mainMenu->begin();
-		g_gameSoundSystem->playDigitalSample( LOG_MAINMENUBUTTON );
+		g_soundSystem->playDigitalSample( LOG_MAINMENUBUTTON );
 		if (playerName)
 			mainMenu->setHostLeftDlg(playerName);
 	}

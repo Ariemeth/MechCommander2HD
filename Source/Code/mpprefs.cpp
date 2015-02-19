@@ -360,7 +360,7 @@ void MPPrefs::setColor( unsigned long color )
 	{
 		if (MPlayer->colors[players[i].baseColor[BASECOLOR_SELF]] == (long)color && i != MPlayer->commanderID)
 		{
-			g_gameSoundSystem->playDigitalSample(LOG_WRONGBUTTON);
+			g_soundSystem->playDigitalSample(LOG_WRONGBUTTON);
 			return;
 			
 		}

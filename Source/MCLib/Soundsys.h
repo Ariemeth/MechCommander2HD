@@ -149,7 +149,7 @@ class SoundSystem
 
 		float				sensorBeepUpdateTime;
 		
-		bool				g_gamePaused;								//Flag to tell me if game is paused
+		bool				gamePaused;								//Flag to tell me if game is paused
 
 	public:
 
@@ -225,7 +225,7 @@ class SoundSystem
 			
 			isRaining = oldRaining = 0;
 			sensorBeepUpdateTime = 0.0f;
-			g_gamePaused = false;
+			gamePaused = false;
 		}
 		
 		long init (char *soundFileName);
@@ -290,12 +290,12 @@ class SoundSystem
 		
 		void setIsPaused (void)
 		{
-			g_gamePaused = true;
+			gamePaused = true;
 		}
 		
 		void clearIsPaused (void)
 		{
-			g_gamePaused = false;
+			gamePaused = false;
 		}
 };
 

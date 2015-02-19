@@ -301,7 +301,7 @@ long Logistics::update (void)
 
 				bMovie = new MC2Movie;
 				bMovie->init(path,movieRect,true);
-				g_gameSoundSystem->playDigitalMusic(33);
+				g_soundSystem->playDigitalMusic(33);
 			}
 			else
 			{
@@ -310,7 +310,7 @@ long Logistics::update (void)
 				delete bMovie;
 				bMovie = NULL;
 
-				g_gameSoundSystem->playDigitalMusic(LogisticsData::instance->getCurrentMissionTune());
+				g_soundSystem->playDigitalMusic(LogisticsData::instance->getCurrentMissionTune());
 				userInput->mouseOn();	
 			}
 		}
@@ -822,7 +822,7 @@ int Logistics::DoBeginMission()
 // Networking startup code...		
 if (!MPlayer) {
 	logistics->setLogisticsState(log_DONE);
-	g_gameSoundSystem->playBettySample(BETTY_NEW_CAMPAIGN);
+	g_soundSystem->playBettySample(BETTY_NEW_CAMPAIGN);
 }
 
 #endif	//TEST_SHELL
@@ -878,7 +878,7 @@ void Logistics::playFullScreenVideo( const char* fileName )
 	bMovie = new MC2Movie;
 	bMovie->init(path,movieRect,true);
 
-	g_gameSoundSystem->stopDigitalMusic();
+	g_soundSystem->stopDigitalMusic();
 }
 
 void Logistics::setResultsHostLeftDlg( const char* pName )

@@ -249,7 +249,7 @@ void LogisticsMechIcon::update()
 
 			bJustSelected = true;
 			if ( state != aListItem::SELECTED )
-				g_gameSoundSystem->playDigitalSample( LOG_SELECT );
+				g_soundSystem->playDigitalSample( LOG_SELECT );
 			state = aListItem::SELECTED;
 		}
 
@@ -261,7 +261,7 @@ void LogisticsMechIcon::update()
 			}
 			if ( state != aListItem::HIGHLITE )
 			{
-				g_gameSoundSystem->playDigitalSample( LOG_HIGHLIGHTBUTTONS );
+				g_soundSystem->playDigitalSample( LOG_HIGHLIGHTBUTTONS );
 			}
 			state = aListItem::HIGHLITE;
 		}

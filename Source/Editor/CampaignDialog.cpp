@@ -10,9 +10,9 @@
 #include "CampaignData.h"
 #include "GroupDialog.h"
 #include "assert.h"
-#include "../MCLib/Utilities.h" /*for cLoadString*/
+#include "..\MCLib\Utilities.h" /*for cLoadString*/
 #include "UserTextEdit.h"
-#include "../MCLib/Paths.h"
+#include "..\MCLib\Paths.h"
 
 #if 0 /*gos doesn't like this */
 #ifdef _DEBUG

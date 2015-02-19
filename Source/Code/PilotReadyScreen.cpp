@@ -284,7 +284,7 @@ void PilotReadyScreen::render(int xOffset, int yOffset )
 	{
 		if ( !MPlayer && !LogisticsData::instance->isSingleMission() && LogisticsData::instance->newPilotsAvailable() )
 		{
-			g_gameSoundSystem->playBettySample( BETTY_NEW_PILOTS );
+			g_soundSystem->playBettySample( BETTY_NEW_PILOTS );
 			LogisticsData::instance->setNewPilotsAcknowledged();
 		}
 	}

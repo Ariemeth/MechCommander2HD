@@ -25,31 +25,32 @@ extern void InitWLib(void);
 
 
 // globals used for memory
-UserHeapPtr systemHeap = NULL;
-UserHeapPtr guiHeap = NULL;
+UserHeapPtr g_systemHeap = NULL;
+UserHeapPtr g_GUIHeap = NULL;
 
-float MaxMinUV = 8.0f;
+#define KILOBYTE_TO_BYTES 1024
+#define MEGABYTES_TO_BYTES (KILOBYTE_TO_BYTES * KILOBYTE_TO_BYTES)
+unsigned long g_systemHeapSize = 256 * MEGABYTES_TO_BYTES;
+unsigned long g_guiHeapSize = 4 * MEGABYTES_TO_BYTES;
+unsigned long g_missionHeapSize = 16 * MEGABYTES_TO_BYTES;
+unsigned long g_terrainHeapSize = 64 * MEGABYTES_TO_BYTES;
+unsigned long g_spriteHeapSize = 64 * MEGABYTES_TO_BYTES;
+unsigned long g_tglHeapSize = 256 * MEGABYTES_TO_BYTES;
+unsigned long g_maxVertexCount = 1000000;
 
 Stuff::MemoryStream *effectStream = NULL;
 
-unsigned long systemHeapSize = 8192000;
-unsigned long guiHeapSize = 1023999;
-unsigned long tglHeapSize = 65536000;
 
 DWORD BaseVertexColor = 0x00000000;		//This color is applied to all vertices in game as Brightness correction.
 
 long gammaLevel = 0;
 bool hasGuardBand = false;
-extern long terrainLineChanged; // the terrain uses this
-//extern float frameNum;	// tiny geometry needs this
 extern float frameRate; // tiny geometry needs this
 
 extern bool InEditor;
-extern char FileMissingString[];
-extern char CDMissingString[];
-extern char MissingTitleString[];
-
-extern char CDInstallPath[];
+extern char g_fileMissingString[];
+extern char g_CDMissingString[];
+extern char g_missingTitleString[];
 
 DWORD gosResourceHandle = 0;
 HGOSFONT3D gosFontHandle = 0;
@@ -64,20 +65,20 @@ char* ExceptionGameMsg = NULL; // some debugging thing I think
 
 bool quitGame = FALSE;
 
-bool gamePaused = FALSE;
+bool g_gamePaused = FALSE;
 
 bool reloadBounds = false;
 bool justResaveAllMaps = false;
 
 extern bool forceShadowBurnIn;
 // these globals are necessary for fast files for some reason
-FastFile 	**fastFiles = NULL;
-long 		numFastFiles = 0;
-long		maxFastFiles = 0;
+FastFile 	**g_fastFiles = NULL;
+long 		g_numFastFiles = 0;
+long		g_maxFastFiles = 0;
 
 #define MAX_SHAPES	0
 
-										//Heidi, turn this FALSE to turn Fog of War ON!
+										//Heidi, set this FALSE to turn Fog of War ON!
 extern unsigned char godMode;			//Can I simply see everything, enemy and friendly?
 
 void InitDW (void);
@@ -87,7 +88,7 @@ TimerManagerPtr timerManager = NULL;
 long FilterState = gos_FilterNone;
 
 extern long TERRAIN_TXM_SIZE;
-long ObjectTextureSize = 128;
+long g_objectTextureSize = 128;
 
 Editor* editor = NULL;
 
@@ -144,7 +145,7 @@ void UpdateRenderers()
 
 	globalFloatHelp->renderAll();
 
-	turn++;
+	g_framesSinceMissionStart++;
 
 	reloadBounds = false;
 
@@ -164,11 +165,11 @@ void DoGameLogic()
 
 	//-------------------------------------
 	// Get me the current frameRate.
-	// Convert to frameLength and any other timing stuff.
+	// Convert to g_frameTime and any other timing stuff.
 	if (frameRate < 4.0)
 		frameRate = 4.0;
 
-	frameLength = 1.0f / frameRate;
+	g_frameTime = 1.0f / frameRate;
 
 	bool doTransformMath = true;
 
@@ -216,9 +217,9 @@ void InitializeGameEngine()
 
 	gameResourceHandle = gos_OpenResourceDLL("editores.dll");
 
-	cLoadString(IDS_MC2_FILEMISSING,FileMissingString,511);
-	cLoadString(IDS_MC2_CDMISSING,CDMissingString,1023);
-	cLoadString(IDS_MC2_MISSING_TITLE,MissingTitleString,255);
+	cLoadString(IDS_MC2_FILEMISSING,g_fileMissingString,511);
+	cLoadString(IDS_MC2_CDMISSING,g_CDMissingString,1023);
+	cLoadString(IDS_MC2_MISSING_TITLE,g_missingTitleString,255);
 
 	char temp[256];
 	cLoadString( IDS_FLOAT_HELP_FONT, temp, 255 );
@@ -256,23 +257,6 @@ void InitializeGameEngine()
 		}
 	}
 
-   	//-------------------------------------------------------------
-   	// Find the CDPath in the registry and save it off so I can
-   	// look in CD Install Path for files.
-	//Changed for the shared source release, just set to current directory
-	//DWORD maxPathLength = 1023;
-	//gos_LoadDataFromRegistry("CDPath", CDInstallPath, &maxPathLength);
-	//if (!maxPathLength)
-	//	strcpy(CDInstallPath,"..\\");
-	strcpy(CDInstallPath,".\\");
-
-	long lastCharacter = strlen(CDInstallPath)-1;
-	if (CDInstallPath[lastCharacter] != '\\')
-	{
-		CDInstallPath[lastCharacter+1] = '\\';
-		CDInstallPath[lastCharacter+2] = 0;
-	}
-
 	//--------------------------------------------------------------
 	// Start the SystemHeap and globalHeapList
 	globalHeapList = new HeapList;
@@ -281,10 +265,10 @@ void InitializeGameEngine()
 	globalHeapList->init();
 	globalHeapList->update();		//Run Instrumentation into GOS Debugger Screen
 
-	systemHeap = new UserHeap;
-	gosASSERT(systemHeap != NULL);
+	g_systemHeap = new UserHeap;
+	gosASSERT(g_systemHeap != NULL);
 
-	systemHeap->init(systemHeapSize,"SYSTEM");
+	g_systemHeap->init(g_systemHeapSize, "SYSTEM");
 
 	Stuff::InitializeClasses();
 	MidLevelRenderer::InitializeClasses(1024);
@@ -316,7 +300,7 @@ void InitializeGameEngine()
 		STOP(("Could not find MC2.fx"));
 		
 	long effectsSize = effectFile.fileSize();
-	MemoryPtr effectsData = (MemoryPtr)systemHeap->Malloc(effectsSize);
+	MemoryPtr effectsData = (MemoryPtr)g_systemHeap->Malloc(effectsSize);
 	effectFile.read(effectsData,effectsSize);
 	effectFile.close();
 	
@@ -327,7 +311,7 @@ void InitializeGameEngine()
 
 	gos_PopCurrentHeap();
 
-	systemHeap->Free(effectsData);
+	g_systemHeap->Free(effectsData);
 
 	globalFloatHelp = new FloatHelp(MAX_FLOAT_HELPS);
 	//---------------------------------------------------------------------
@@ -356,10 +340,10 @@ void InitializeGameEngine()
 #ifdef _DEBUG
 		long systemBlockResult = 
 #endif
-		systemFile->seekBlock("systemHeap");
+		systemFile->seekBlock("g_systemHeap");
 		gosASSERT(systemBlockResult == NO_ERR);
 		{
-			long result = systemFile->readIdULong("systemHeapSize",systemHeapSize);
+			long result = systemFile->readIdULong("systemHeapSize",g_systemHeapSize);
 			gosASSERT(result == NO_ERR);
 		}
 
@@ -433,14 +417,14 @@ void InitializeGameEngine()
 		systemFile->seekBlock("FastFiles");
 		gosASSERT(fastFileResult == NO_ERR);
 		{
-			long result = systemFile->readIdLong("NumFastFiles",maxFastFiles);
+			long result = systemFile->readIdLong("NumFastFiles",g_maxFastFiles);
 			if (result != NO_ERR)
-				maxFastFiles = 0;
+				g_maxFastFiles = 0;
 
-			if (maxFastFiles)
+			if (g_maxFastFiles)
 			{
-				fastFiles = (FastFile **)malloc(maxFastFiles*sizeof(FastFile *));
-				memset(fastFiles,0,maxFastFiles*sizeof(FastFile *));
+				g_fastFiles = (FastFile **)malloc(g_maxFastFiles*sizeof(FastFile *));
+				memset(g_fastFiles,0,g_maxFastFiles*sizeof(FastFile *));
 
 				long fileNum = 0;
 				char fastFileId[10];
@@ -599,9 +583,9 @@ void InitializeGameEngine()
 			if (result != NO_ERR)
 				TERRAIN_TXM_SIZE = 64;
 
-			result = prefs->readIdLong("ObjectTextureRes",ObjectTextureSize);
+			result = prefs->readIdLong("ObjectTextureRes",g_objectTextureSize);
 			if (result != NO_ERR)
-				ObjectTextureSize = 128;
+				g_objectTextureSize = 128;
 
 			result = prefs->readIdLong("Brightness",gammaLevel);
 			if (result != NO_ERR)
@@ -634,7 +618,7 @@ void InitializeGameEngine()
  	//---------------------------------------------------------
 	// Start the Tiny Geometry Layer Heap.
 	TG_Shape::tglHeap = new UserHeap;
-	TG_Shape::tglHeap->init(tglHeapSize,"TinyGeom");
+	TG_Shape::tglHeap->init(g_tglHeapSize,"TinyGeom");
 
 		//Start up the TGL RAM pools.
 		colorPool 		= new TG_VertexPool;
@@ -829,12 +813,12 @@ void TerminateGameEngine()
 
 	//--------------------------------------------------------------
 	// End the SystemHeap and globalHeapList
-	if (systemHeap)
+	if (g_systemHeap)
 	{
-		systemHeap->destroy();
+		g_systemHeap->destroy();
 
-		delete systemHeap;
-		systemHeap = NULL;
+		delete g_systemHeap;
+		g_systemHeap = NULL;
 	}
 
 	if (globalHeapList)

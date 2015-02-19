@@ -66,14 +66,6 @@
 #include "gamesound.h"
 #endif
 
-//#ifndef SOUNDSYS_H
-//#include "soundsys.h"
-//#endif
-
-//#ifndef SOUNDS_H
-//#include "sounds.h"
-//#endif
-
 #ifndef COLLSN_H
 #include "collsn.h"
 #endif
@@ -126,14 +118,12 @@
 // GLOBALS
 extern long					SimpleMovePathRange;
 extern long					GroupMoveTrailLen[2];
-extern long		tileMulMAPCELL_DIM[MAX_MAP_CELL_WIDTH];
+extern long					tileMulMAPCELL_DIM[MAX_MAP_CELL_WIDTH];
 
 extern long					RamObjectWID;
 
 float						DelayedOrderTime = 1.0;
 float						GroupOrderGoalOffset = 127.0;
-
-//BaseObjectPtr				MoverRoster[MAX_MOVER_PART_ID - MIN_MOVER_PART_ID + 1];
 
 extern MoveMapPtr			PathFindMap[2/*NUM_PATHMAPS*/];
 long						goalMap[GOALMAP_CELL_DIM * GOALMAP_CELL_DIM];
@@ -6564,7 +6554,7 @@ bool Mover::refit (float pointsAvailable, float& pointsUsed, bool ammoOnly) {
 			if (getCommanderId() == Commander::home->getId()) 
 			{
 				getPilot()->radioMessage(RADIO_REFIT_DONE, TRUE);
-				g_gameSoundSystem->playBettySample(BETTY_REPAIR_COMPLETE);
+				g_soundSystem->playBettySample(BETTY_REPAIR_COMPLETE);
 				if (appearance)
 					appearance->startSmoking(-1);	//Turn the smoke off if we successfully repaired.
 			}
@@ -6576,7 +6566,7 @@ bool Mover::refit (float pointsAvailable, float& pointsUsed, bool ammoOnly) {
 		if (getCommanderId() == Commander::home->getId())
 		{
 			getPilot()->radioMessage(RADIO_REFIT_INCOMPLETE, TRUE);
-			g_gameSoundSystem->playBettySample( BETTY_REPAIR_GONE );
+			g_soundSystem->playBettySample( BETTY_REPAIR_GONE );
 		}
 		result = true;
 	}
@@ -6719,7 +6709,7 @@ bool Mover::recover (void) {
 			if (getCommanderId() == Commander::home->getId()) 
 			{
 				getPilot()->radioMessage(RADIO_REFIT_DONE, TRUE);
-				g_gameSoundSystem->playBettySample(BETTY_REPAIR_COMPLETE);
+				g_soundSystem->playBettySample(BETTY_REPAIR_COMPLETE);
 			}
 			result = true;
 		}
@@ -6730,8 +6720,8 @@ bool Mover::recover (void) {
 		if (getCommanderId() == Commander::home->getId())
 		{
 			getPilot()->radioMessage(RADIO_REFIT_INCOMPLETE, TRUE);
-			g_gameSoundSystem->playBettySample( BETTY_REPAIR_GONE );
-			g_gameSoundSystem->playBettySample(BETTY_REPAIR_INCOMPLETE);
+			g_soundSystem->playBettySample( BETTY_REPAIR_GONE );
+			g_soundSystem->playBettySample(BETTY_REPAIR_INCOMPLETE);
 		}
 		result = true;
 	}

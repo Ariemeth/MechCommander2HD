@@ -220,7 +220,7 @@ void	ComponentListItem::update()
 
 			if ( bCanAdd )
 			{
-				g_gameSoundSystem->playDigitalSample( LOG_WRONGBUTTON );
+				g_soundSystem->playDigitalSample( LOG_WRONGBUTTON );
 			}
 
 			::helpTextID = IDS_HELP_COMP0 + pComponent->getID();
@@ -280,7 +280,7 @@ void	ComponentListItem::update()
 				animations[i].setState( aAnimGroup::HIGHLIGHT );
 			}
 
-			g_gameSoundSystem->playDigitalSample( LOG_HIGHLIGHTBUTTONS );
+			g_soundSystem->playDigitalSample( LOG_HIGHLIGHTBUTTONS );
 
 		}
 		state = aListItem::HIGHLITE;
@@ -307,7 +307,7 @@ void	ComponentListItem::update()
 			&& ComponentIconListBox::s_instance->pointInside( userInput->getMouseX(), userInput->getMouseY() ) ) )
 		{
 			setComponent();
-			g_gameSoundSystem->playDigitalSample( LOG_WRONGBUTTON );
+			g_soundSystem->playDigitalSample( LOG_WRONGBUTTON );
 		}
 
 		for ( int i = 0; i < COMP_ANIMATION_COUNT; i++ )

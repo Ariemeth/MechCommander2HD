@@ -1536,7 +1536,7 @@ long TacticalOrder::status (MechWarriorPtr warrior) {
 						{
 							stage++;
 							time = g_missionTime;
-							g_gameSoundSystem->playDigitalSample( REPAIRBAY_FX, target->getPosition() );
+							g_soundSystem->playDigitalSample( REPAIRBAY_FX, target->getPosition() );
 						}
 						break;
 					case 3:	// do the deed

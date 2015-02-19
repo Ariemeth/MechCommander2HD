@@ -103,6 +103,7 @@ void TGAWnd::SetTGAFileName( const CString& str )
 
 void TGAWnd::SetTGAFileData( BYTE* data, int size )
 {
+	(void)size;
 	m_FileName = "";
 	m_bTGAChanged = true;
 

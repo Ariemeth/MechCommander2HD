@@ -9,7 +9,7 @@
 //include "CampaignEditor.h"
 #include "resource.h"
 #include "MissionDialog.h"
-#include "../MCLib/Paths.h"
+#include "..\MCLib\Paths.h"
 #include "Inifile.h"
 
 #ifdef _DEBUG

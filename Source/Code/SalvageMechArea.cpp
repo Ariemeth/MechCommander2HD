@@ -218,7 +218,7 @@ int	SalvageMechScreen::handleMessage( unsigned long message, unsigned long who)
 	{
 		bDone = true;
 		{
-			g_gameSoundSystem->stopBettySample(); // don't want to carry droning on to next screen
+			g_soundSystem->stopBettySample(); // don't want to carry droning on to next screen
 			if ( LogisticsData::instance->skipPilotReview() )
 			{
 				beginFadeOut(.5);
@@ -254,9 +254,9 @@ void SalvageMechScreen::update()
 		curCount = .00001f;
 		oldCBillsAmount = amount;
 		if ( previousAmount < 0 )
-			g_gameSoundSystem->playDigitalSample( WINDOW_OPEN );
+			g_soundSystem->playDigitalSample( WINDOW_OPEN );
 		else
-			g_gameSoundSystem->playDigitalSample( WINDOW_CLOSE );
+			g_soundSystem->playDigitalSample( WINDOW_CLOSE );
 	}
 	if ( curCount && curCount + g_frameTime < countDownTime  )
 	{
@@ -468,7 +468,7 @@ void SalvageListItem::update()
 			if ( userInput->isLeftClick() )
 			{
 				SalvageMechArea::instance->setMech( pVariant, psBlue, psGreen, psRed  );	
-				g_gameSoundSystem->playDigitalSample( LOG_WRONGBUTTON );
+				g_soundSystem->playDigitalSample( LOG_WRONGBUTTON );
 			}
 		}
 	}

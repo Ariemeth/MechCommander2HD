@@ -124,7 +124,7 @@ void MissionSelectionScreen::update()
 {
 	if (!playedLogisticsTune)
 	{
-		g_gameSoundSystem->playDigitalMusic(LogisticsData::instance->getCurrentMissionTune());
+		g_soundSystem->playDigitalMusic(LogisticsData::instance->getCurrentMissionTune());
 		playedLogisticsTune = true;
 	}
 

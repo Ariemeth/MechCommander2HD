@@ -203,15 +203,15 @@ void Weather::update (void)
 		rainLevel += (rainFactor * rainTrend);
 		
 		if (rainLevel > 3.0f)
-			g_gameSoundSystem->setIsRaining(RAIN1);
+			g_soundSystem->setIsRaining(RAIN1);
 		else if (rainLevel > 2.5f)
-			g_gameSoundSystem->setIsRaining(RAIN2);
+			g_soundSystem->setIsRaining(RAIN2);
 		else if (rainLevel > 2.0f)
-			g_gameSoundSystem->setIsRaining(RAIN3);
+			g_soundSystem->setIsRaining(RAIN3);
 		else if (rainLevel > 1.0f)
-			g_gameSoundSystem->setIsRaining(RAIN4);
+			g_soundSystem->setIsRaining(RAIN4);
 		else
-			g_gameSoundSystem->setIsRaining(0);
+			g_soundSystem->setIsRaining(0);
 		
 		//-------------------------------------------------------------------
 		// Check if its raining.  If not, check if it should.  If not, exit.
@@ -349,7 +349,7 @@ void Weather::update (void)
 			if ((thunderSFX != 0xffffffff) && (thunderTime <= 0.0f))
 			{
 				thunderTime = 0.0f;
-				g_gameSoundSystem->playDigitalSample(thunderSFX);
+				g_soundSystem->playDigitalSample(thunderSFX);
 				thunderSFX = 0xffffffff;
 			}
 			

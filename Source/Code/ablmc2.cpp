@@ -2600,8 +2600,8 @@ void execPlayDigitalMusic (void) {
 
 	long soundNum = ABLi_popInteger();
 
-	if (g_gameSoundSystem)
-		g_gameSoundSystem->playABLDigitalMusic(soundNum);
+	if (g_soundSystem)
+		g_soundSystem->playABLDigitalMusic(soundNum);
 		
 	ABLi_pushInteger(0);	
 }
@@ -2616,8 +2616,8 @@ void execStopMusic(void) {
 	//
 	//		Returns: None
 
-	if (g_gameSoundSystem)
-		g_gameSoundSystem->stopABLMusic();
+	if (g_soundSystem)
+		g_soundSystem->stopABLMusic();
 }
 
 //*****************************************************************************
@@ -2632,8 +2632,8 @@ void execPlaySoundEffect(void) {
 
 	long soundNum = ABLi_popInteger();
 	
-	if (g_gameSoundSystem)
-		g_gameSoundSystem->playABLSFX(soundNum);
+	if (g_soundSystem)
+		g_soundSystem->playABLSFX(soundNum);
 	ABLi_pushInteger(0);
 }
 
@@ -2719,7 +2719,7 @@ void execPlayBetty (void) {
 	//-----------------------------------------------
 	// Get the ID of the pilot whose speech this is
 	long messageIndex = ABLi_popInteger();
-	long result = g_gameSoundSystem->playBettySample(messageIndex);
+	long result = g_soundSystem->playBettySample(messageIndex);
 	
 	ABLi_pushInteger(result);
 }
@@ -2785,7 +2785,7 @@ void execGetSensorsActive (void)
 //*****************************************************************************
 void execGetCurrentMusicId (void) 
 {
-	ABLi_pushInteger(g_gameSoundSystem->getCurrentMusicId());
+	ABLi_pushInteger(g_soundSystem->getCurrentMusicId());
 }
 
 void execGetMissionTuneId (void)
@@ -5959,7 +5959,7 @@ void execIsPlayingVoiceOver(void)
 	//
 	// Returns a bool,  true if voiceover channel is active, false if not.
 
-	ABLi_pushBoolean(g_gameSoundSystem->isPlayingVoiceOver());
+	ABLi_pushBoolean(g_soundSystem->isPlayingVoiceOver());
 }
 
 //*****************************************************************************
@@ -5969,7 +5969,7 @@ void execStopVoiceOver(void)
 	//
 	// Returns a NOTHING
 
-	g_gameSoundSystem->stopSupportSample();
+	g_soundSystem->stopSupportSample();
 }
 
 //*****************************************************************************
@@ -6251,7 +6251,7 @@ void execPlayWave (void) {
 
 	char* fileName = ABLi_popCharPtr();
 	ABLi_popInteger();
-	g_gameSoundSystem->playSupportSample(-1, fileName);
+	g_soundSystem->playSupportSample(-1, fileName);
 	ABLi_pushInteger(0);
 }
 

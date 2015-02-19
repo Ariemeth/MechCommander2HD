@@ -1,7 +1,7 @@
 #ifndef ELIST_H
 #define ELIST_H
 
-// MCHD CHANGE (02/02/2015): Lightly optimized a few things, fixed a few bugs, 
+// MCHD CHANGE (02/02/15): Lightly optimized a few things, fixed a few bugs, 
 // disabled warning for placement new, and deleted useless comments.
 #pragma warning( disable : 4211 )
 
@@ -440,8 +440,8 @@ ELIST_TPL_DEF inline bool EList<ELIST_TPL_ARG>::operator==(const EList<ELIST_TPL
 	}
 
 	//	Iterate through both lists and check if they're equal
-	EIterator	List_Iter = rList.Begin();
-	EIterator	This_Iter = Begin();
+	EConstIterator	List_Iter = rList.Begin();
+	EConstIterator	This_Iter = Begin();
 	while(This_Iter != End())
 	{
 		if(List_Iter.Item() != This_Iter.Item())

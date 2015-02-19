@@ -623,7 +623,7 @@ long Turret::update (void)
 	{
 		if ( active ) // play this sound regardless of wether its a turret control or generator
 		{
-			g_gameSoundSystem->playBettySample( BETTY_GENERATOR_DESTROYED );
+			g_soundSystem->playBettySample( BETTY_GENERATOR_DESTROYED );
 		}
 		active = false;
 		setAwake(false);
@@ -640,7 +640,7 @@ long Turret::update (void)
 	{
 		// if building recaptured play a sound
 		if ((ObjectManager->getByWatchID(parent)->getTeamId() != Team::home->getId()) && (g_framesSinceMissionStart > 5) && (getTeamId() != -1))
-			g_gameSoundSystem->playBettySample(BETTY_BUILDING_RECAPTURED);
+			g_soundSystem->playBettySample(BETTY_BUILDING_RECAPTURED);
 
 		setTeamId(ObjectManager->getByWatchID(parent)->getTeam()->getId(),false);
 	}

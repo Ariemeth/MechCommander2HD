@@ -14,10 +14,7 @@
 #include "aListBox.h"
 #endif
 
-#include "soundSys.h"
-
-extern SoundSystem *g_soundSystem;
-
+#include "gamesound.h"
 #include "mclib.h"
 
 ///////////////////////////////////////////////////////////////////////////////

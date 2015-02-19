@@ -142,7 +142,7 @@ const char* ActionUndoMgr::GetUndoString()
 //***********************************************************************
 bool ActionUndoMgr::HaveRedo() const
 {
-	return m_CurrentPos + 1 != m_listUndoActions.Count();
+	return m_CurrentPos + 1 != (long)m_listUndoActions.Count();
 }
 
 //***********************************************************************

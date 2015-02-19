@@ -363,7 +363,7 @@ GoalObjectPtr GoalManager::addRegion (GoalObjectPtr parent, GoalLinkType linkTyp
 
 	GoalObjectPtr newRegion = newGoalObject();
 	newRegion->initRegion(name, minRow, minCol, maxRow, maxCol);
-	if (!parent) // MCHD CHANGE (02/14/2015): Removed addLink - it did nothing
+	if (!parent) // MCHD CHANGE (02/14/15): Removed addLink - it did nothing
 		goalObjects = newRegion;
 	return(newRegion);
 }
@@ -373,7 +373,7 @@ GoalObjectPtr GoalManager::addRegion (GoalObjectPtr parent, GoalLinkType linkTyp
 GoalObjectPtr GoalManager::addObject (GoalObjectPtr parent, GoalLinkType linkType, char* name, GameObjectPtr object) {
 
 	GoalObjectPtr newObject = newGoalObject();
-	// MCHD CHANGE (02/14/2015): Removed initObject and addLink - they did nothing
+	// MCHD CHANGE (02/14/15): Removed initObject and addLink - they did nothing
 	if (!parent)
 		goalObjects = newObject;
 	return(newObject);

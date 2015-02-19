@@ -790,7 +790,7 @@ void TerrainQuad::setupTextures (void)
 				lightg = eye->getLightGreen(lightIntensity);
 				lightb = eye->getLightBlue(lightIntensity);
 
-				// MCHD CHANGE (02/14/2015): BaseVertexColor removed
+				// MCHD CHANGE (02/14/15): BaseVertexColor removed
 
 				if (rainLightLevel < 1.0f)
 				{
@@ -933,7 +933,7 @@ void TerrainQuad::setupTextures (void)
 				lightg = eye->getLightGreen(lightIntensity);
 				lightb = eye->getLightBlue(lightIntensity);
 
-				// MCHD CHANGE (02/14/2015): BaseVertexColor removed
+				// MCHD CHANGE (02/14/15): BaseVertexColor removed
 
 				if (rainLightLevel < 1.0f)
 				{
@@ -1075,7 +1075,7 @@ void TerrainQuad::setupTextures (void)
 				lightg = eye->getLightGreen(lightIntensity);
 				lightb = eye->getLightBlue(lightIntensity);
 					
-				// MCHD CHANGE (02/14/2015): BaseVertexColor removed
+				// MCHD CHANGE (02/14/15): BaseVertexColor removed
 
 				if (rainLightLevel < 1.0f)
 				{
@@ -1217,7 +1217,7 @@ void TerrainQuad::setupTextures (void)
 				lightg = eye->getLightGreen(lightIntensity);
 				lightb = eye->getLightBlue(lightIntensity);
 					
-				// MCHD CHANGE (02/14/2015): BaseVertexColor removed
+				// MCHD CHANGE (02/14/15): BaseVertexColor removed
 
 				if (rainLightLevel < 1.0f)
 				{

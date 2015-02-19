@@ -12,7 +12,7 @@
 #include "EditorObjectMgr.h"
 #include "EditorInterface.h" // just for the undo manager
 
-#include "../Code/unitdesg.h" /* just for definition of MIN_TERRAIN_PART_ID and MAX_MAP_CELL_WIDTH */
+#include "..\Code\unitdesg.h" /* just for definition of MIN_TERRAIN_PART_ID and MAX_MAP_CELL_WIDTH */
 
 /////////////////////////////////////////////////////////////////////////////
 // BuildingSettingsDlg dialog
@@ -215,8 +215,8 @@ void BuildingSettingsDlg::updateMemberVariables()
 
 		if ( (*iter)->getForestID() != -1 )
 		{
-			if ( forest == -1 )
-				forest = (*iter)->getForestID()
+			if (forest == -1)
+				forest = (*iter)->getForestID();
 		}
 	}
 

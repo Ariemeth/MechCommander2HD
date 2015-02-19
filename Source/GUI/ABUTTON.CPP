@@ -6,10 +6,7 @@
 #include "aFont.h"
 #include "mclib.h"
 #include <windows.h>
-#include "soundSys.h"
-
-extern SoundSystem *g_soundSystem;
-
+#include "gamesound.h"
 
 aButton::aButton()
 {
@@ -84,10 +81,10 @@ void aButton::update()
 			if ( getParent() )
 				getParent()->handleMessage( aMSG_LEFTMOUSEDOWN, data.ID );
 
-			//if ( state != DISABLED && state != HIDDEN )
-			//	g_soundSystem->playDigitalSample( clickSFX );
-			//else
-			//	g_soundSystem->playDigitalSample( disabledSFX );
+			if ( state != DISABLED && state != HIDDEN )
+				g_soundSystem->playDigitalSample( clickSFX );
+			else
+				g_soundSystem->playDigitalSample( disabledSFX );
 
 		}
 		if (userInput->isLeftClick())
@@ -96,10 +93,10 @@ void aButton::update()
 			if ( getParent() && !messageOnRelease && pointInside(userInput->getMouseDragX(), userInput->getMouseDragY() ) )
 				getParent()->handleMessage( aMSG_LEFTMOUSEDOWN, data.ID );
 
-			//if ( state != DISABLED )
-			//	g_soundSystem->playDigitalSample( clickSFX );
-			//else
-			//	g_soundSystem->playDigitalSample( disabledSFX );
+			if (state != DISABLED)
+				g_soundSystem->playDigitalSample(clickSFX);
+			else
+				g_soundSystem->playDigitalSample(disabledSFX);
 		}
 		else if ( userInput->getMouseLeftHeld() > holdTime && !messageOnRelease &&
 			pointInside(userInput->getMouseDragX(), userInput->getMouseDragY()) )
@@ -605,7 +602,7 @@ void aAnimButton::update()
 					state = ENABLED;
 			}
 
-	//		g_soundSystem->playDigitalSample( clickSFX );
+			g_soundSystem->playDigitalSample( clickSFX );
 		}
 		else if ( state != PRESSED )
 		{

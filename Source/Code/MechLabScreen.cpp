@@ -680,7 +680,7 @@ void MechLabScreen::updateDiagramInput()
 						updateDiagram();
 					}
 					else
-						g_gameSoundSystem->playDigitalSample( LOG_WRONGBUTTON );
+						g_soundSystem->playDigitalSample( LOG_WRONGBUTTON );
 				}
 				else
 					pSelectedComponent = 0;
@@ -707,7 +707,7 @@ void MechLabScreen::updateDiagramInput()
 							selectFirstLBComponent();				
 					}
 					else
-						g_gameSoundSystem->playDigitalSample( LOG_WRONGBUTTON );
+						g_soundSystem->playDigitalSample( LOG_WRONGBUTTON );
 				}
 			}
 		
@@ -726,7 +726,7 @@ void MechLabScreen::updateDiagramInput()
 				{
 					pSelectedComponent = pComp;
 					setComponent( pComp );
-					g_gameSoundSystem->playDigitalSample( LOG_SELECT );
+					g_soundSystem->playDigitalSample( LOG_SELECT );
 					componentListBox.SelectItem( -1 );
 				}
 			}
@@ -745,7 +745,7 @@ void MechLabScreen::render(int xOffset, int yOffset)
 	{
 		if ( !MPlayer && !LogisticsData::instance->isSingleMission() && LogisticsData::instance->newWeaponsAvailable() )
 		{
-			g_gameSoundSystem->playBettySample( BETTY_NEW_WEAPONS );
+			g_soundSystem->playBettySample( BETTY_NEW_WEAPONS );
 			LogisticsData::instance->setNewWeaponsAcknowledged();
 		}
 	}
@@ -1659,9 +1659,9 @@ void MechLabScreen::updateDiagram()
 		curCount = .00001f;
 		oldCBillsAmount = costChange;
 		if ( previousAmount < 0 )
-			g_gameSoundSystem->playDigitalSample( WINDOW_OPEN );
+			g_soundSystem->playDigitalSample( WINDOW_OPEN );
 		else
-			g_gameSoundSystem->playDigitalSample( WINDOW_CLOSE );
+			g_soundSystem->playDigitalSample( WINDOW_CLOSE );
 	}
 
 

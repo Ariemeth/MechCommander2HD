@@ -16,7 +16,7 @@
 #endif
 
 #include <gameos.hpp>
-#include <stuff/stuff.hpp>
+#include <stuff\stuff.hpp>
 
 extern HGOSFONT3D gosFontHandle;
 extern float	gosFontScale;

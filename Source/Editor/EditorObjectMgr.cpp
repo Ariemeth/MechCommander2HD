@@ -82,7 +82,7 @@
 #include "assert.h"
 
 // ARM
-#include "../ARM/Microsoft.Xna.Arm.h"
+#include "..\ARM\Microsoft.Xna.Arm.h"
 using namespace Microsoft::Xna::Arm;
 
 EditorObjectMgr*	EditorObjectMgr::s_instance = NULL;
@@ -279,7 +279,7 @@ void EditorObjectMgr::init( const char* bldgListFileName, const char* objectFile
 			bldgFile.readIdULong( "LowTemplate", lowTemplate );
 			bldgFile.readIdULong( "HighTemplate", highTemplate );
 
-			bldg.impassability = (highTemplate << 32) | lowTemplate;
+			bldg.impassability = ((long long)highTemplate << 32) | lowTemplate;
 			bldgFile.readIdBoolean( "BlocksLineOfFire", bldg.blocksLineOfFire );
 			bldgFile.seekBlock("ObjectClass");				
 			bldgFile.readIdLong("ObjectTypeNum", bldg.objectTypeNum);
@@ -1390,7 +1390,7 @@ bool EditorObjectMgr::getBuildingFromID( int fitID, unsigned long& group, unsign
 				for( EList< Building, Building& >::EIterator buildIter = (*groupIter).buildings.Begin();
 					!buildIter.IsDone(); buildIter++ )
 					{
-						if ( (*buildIter).fitID == fitID &&
+						if ( (*buildIter).fitID == (unsigned int)fitID &&
 								( canBeMech || 
 									(*buildIter).type != GV_TYPE
 								 && (*buildIter).type != MECH_TYPE )  )
@@ -1843,7 +1843,7 @@ bool		EditorObjectMgr::saveMechs( FitIniFile& file )
 			}
 			for ( iter = unitsByPlayer[playerNum].Begin(); !iter.IsDone(); iter++ )
 			{
-				if (lowestSquadNum == (*iter)->getSquad())
+				if (lowestSquadNum == (int)(*iter)->getSquad())
 				{
 					break;
 				}

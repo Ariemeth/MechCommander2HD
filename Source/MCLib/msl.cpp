@@ -49,7 +49,7 @@
 
 #include <toolOS.hpp>
 
-#include "../ARM/Microsoft.Xna.Arm.h"
+#include "..\ARM\Microsoft.Xna.Arm.h"
 using namespace Microsoft::Xna::Arm;
 
 //-------------------------------------------------------------------------------

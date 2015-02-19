@@ -345,7 +345,6 @@ static int ConnectivityMaskToTextureMapping(int mask, Overlays currentbrush = IN
 		gosASSERT(0 == numOverlayTypes);
 		return texture(INVALID_OVERLAY, 0);
 	}
-	gosASSERT(false);
 }
 
 static int TextureToConnectivityMaskMapping(int iTexture) {

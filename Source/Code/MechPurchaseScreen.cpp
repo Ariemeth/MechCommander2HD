@@ -105,9 +105,9 @@ void MechPurchaseScreen::update()
 		curCount = .00001f;
 		oldCBillsAmount = amount;
 		if ( previousAmount < 0 )
-			g_gameSoundSystem->playDigitalSample( WINDOW_OPEN );
+			g_soundSystem->playDigitalSample( WINDOW_OPEN );
 		else
-			g_gameSoundSystem->playDigitalSample( WINDOW_CLOSE );
+			g_soundSystem->playDigitalSample( WINDOW_CLOSE );
 	}
 	if ( curCount && curCount + g_frameTime < countDownTime  )
 	{
@@ -222,7 +222,7 @@ void MechPurchaseScreen::render( int xOffset, int yOffset )
 	{
 		if ( !MPlayer && !LogisticsData::instance->isSingleMission() && LogisticsData::instance->newMechsAvailable() )
 		{
-			g_gameSoundSystem->playBettySample( BETTY_NEW_MECHS );
+			g_soundSystem->playBettySample( BETTY_NEW_MECHS );
 			LogisticsData::instance->setNewMechsAcknowledged();
 		}
 	}
@@ -470,14 +470,14 @@ int	MechPurchaseScreen::handleMessage( unsigned long what, unsigned long who )
 							int oldCount = LogisticsData::instance->getVariantsInInventory( pMech->getVariant(), true );
 							if ( NO_ERR == LogisticsData::instance->sellMech( pMech ) && ( oldCount < 2 ) )
 								((MechListBoxItem*)pItem)->resetMech( );
-							g_gameSoundSystem->playDigitalSample( LOG_SELECT );		
+							g_soundSystem->playDigitalSample( LOG_SELECT );		
 						}                                    
 					}
 				}
 
 				else
 					addSelectedMech();
-					g_gameSoundSystem->playDigitalSample( LOG_SELECT );		
+					g_soundSystem->playDigitalSample( LOG_SELECT );		
 				break;
 			case MB_MSG_REMOVE:
 				removeSelectedMech();

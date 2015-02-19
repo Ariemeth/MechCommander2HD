@@ -113,7 +113,8 @@ LRESULT EditorTacMap::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	/* if the left mouse button is not down, then we don't want focus */
 	CWnd *pCWnd = GetFocus();
 	HWND hwnd = ::GetFocus();
-	SHORT val = GetAsyncKeyState(VK_LBUTTON);
+	(void)pCWnd;
+	(void)hwnd;
 	if (/*(GetFocus() == this) &&*/ !(0x8000 && GetAsyncKeyState(VK_LBUTTON)))
 	{
 		ReleaseFocus();

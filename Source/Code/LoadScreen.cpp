@@ -246,9 +246,9 @@ void LoadScreenWrapper::begin()
 void LoadScreenWrapper::update()
 {
 	if ( loadProgress > 99 )
-		g_gameSoundSystem->playDigitalSample( LOAD_DOORS_OPENING );
+		g_soundSystem->playDigitalSample( LOAD_DOORS_OPENING );
 	else if ( bFirstTime )
-		g_gameSoundSystem->playDigitalSample( LOAD_DOORS_CLOSING );
+		g_soundSystem->playDigitalSample( LOAD_DOORS_CLOSING );
 
 	 bFirstTime = 0;
 

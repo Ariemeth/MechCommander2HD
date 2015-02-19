@@ -95,7 +95,7 @@ BOOL SelectTerrainTypeDlg::OnInitDialog()
 	if (ID_TERRAINS_BLUEWATER <= SelectedTerrainType()) {
 		int k;
 		for (k = 0; k < m_terrainTypeList.GetCount(); k++) {
-			if (SelectedTerrainType() == m_terrainTypeList.GetItemData(k)) {
+			if (SelectedTerrainType() == (long)m_terrainTypeList.GetItemData(k)) {
 				m_terrainTypeList.SetCurSel(k);
 				break;
 			}

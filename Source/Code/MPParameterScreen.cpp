@@ -10,7 +10,7 @@ MPParameterScreen.cpp			: Implementation of the MPParameterScreen component.
 #include "MPParameterScreen.h"
 #include "prefs.h"
 #include "IniFile.h"
-#include "../MCLib/UserInput.h"
+#include "..\MCLib\UserInput.h"
 #include "..\resource.h"
 #include "assert.h"
 #include "Multplyr.h"
@@ -416,7 +416,7 @@ int	MPParameterScreen::handleMessage( unsigned long message, unsigned long who)
 					{
 						if ( MPlayer->commanderID == playerParameters[i].getCommanderID() )
 						{
-							g_gameSoundSystem->playDigitalSample( LOG_WRONGBUTTON );
+							g_soundSystem->playDigitalSample( LOG_WRONGBUTTON );
 							return 0;
 						}
 						char str[256];
@@ -790,7 +790,7 @@ void MPParameterScreen::update()
 	if ( !bWaitingToStart && MPlayer->missionSettings.inProgress )
 	{
 		bWaitingToStart = true;
-		g_gameSoundSystem->playBettySample( BETTY_DEPLOY_MSG );
+		g_soundSystem->playBettySample( BETTY_DEPLOY_MSG );
 	}
 	else if ( !MPlayer->missionSettings.inProgress )
 	{
@@ -2083,7 +2083,7 @@ void	aPlayerParams::setData( const _MC2Player* data)
 	else
 	{
 		if ( ReadyButton.isPressed() )
-			g_gameSoundSystem->playDigitalSample( LOG_UNREADY );
+			g_soundSystem->playDigitalSample( LOG_UNREADY );
 		ReadyButton.press( 0 );
 	}
 

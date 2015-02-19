@@ -422,7 +422,7 @@ void ForceGroupIcon::click( bool shiftDn )
 		unit->setSelected( false );
 	}
 
-	g_gameSoundSystem->playDigitalSample( LOG_SELECT );
+	g_soundSystem->playDigitalSample( LOG_SELECT );
 }
 
 void ForceGroupIcon::init( )

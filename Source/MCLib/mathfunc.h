@@ -6,7 +6,7 @@
 #define MATHFUNC_H
 
 #ifndef STUFF_STUFF_HPP
-#include <stuff/stuff.hpp>
+#include <stuff\stuff.hpp>
 #endif
 
 // DESCRIBES A COORDINATE SYSTEM, OR FRAME OR REFERENCE

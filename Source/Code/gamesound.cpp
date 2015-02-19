@@ -24,7 +24,7 @@
 #endif
 
 //---------------------------------------------------------------------------
-GameSoundSystem *g_gameSoundSystem = NULL;
+GameSoundSystem *g_soundSystem = NULL;
 
 extern bool wave_ParseWaveMemory(MemoryPtr lpChunkOfMemory, MC2_WAVEFORMATEX** lplpWaveHeader, MemoryPtr* lplpWaveSamples,DWORD *lpcbWaveSize);
 

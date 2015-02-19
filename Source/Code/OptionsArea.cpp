@@ -8,12 +8,11 @@ OptionsArea.cpp			: Implementation of the OptionsArea component.
 
 #include "OptionsArea.h"
 #include "IniFile.h"
-#include "../MCLib/UserInput.h"
+#include "..\MCLib\UserInput.h"
 #include "..\resource.h"
 #include "prefs.h"
 #include "missionGui.h"
 #include "LogisticsDialog.h"
-#include "gameSound.h"
 #include "LoadScreen.h"
 #include "gamesound.h"
 #include "prefs.h"
@@ -57,8 +56,6 @@ OptionsArea.cpp			: Implementation of the OptionsArea component.
 #define WAYPT	0x20000000
 
 extern CPrefs g_userPreferences;
-extern SoundSystem *g_soundSystem;
-
 HotKeyListItem*	HotKeyListItem::s_item = NULL;
 
 OptionsXScreen::OptionsXScreen()
@@ -516,7 +513,7 @@ void OptionsGraphics::update()
 	else if ( userInput->isLeftClick() &&
 		resolutionList.pointInside( userInput->getMouseX(), userInput->getMouseY() ) )
 	{
-		g_gameSoundSystem->playDigitalSample( LOG_WRONGBUTTON );
+		g_soundSystem->playDigitalSample( LOG_WRONGBUTTON );
 	}
 	
 
@@ -687,14 +684,14 @@ void OptionsAudio::update()
 	g_userPreferences.RadioVolume = scrollBars[3].GetScrollPos();
 	g_userPreferences.BettyVolume = scrollBars[4].GetScrollPos();
 
-	//if (g_soundSystem) 
-	//{
-	//	g_soundSystem->setDigitalMasterVolume(g_userPreferences.DigitalMasterVolume);
-	//	g_soundSystem->setSFXVolume(g_userPreferences.sfxVolume);
-	//	g_soundSystem->setRadioVolume(g_userPreferences.RadioVolume);
-	//	g_soundSystem->setMusicVolume(g_userPreferences.MusicVolume);
-	//	g_soundSystem->setBettyVolume(g_userPreferences.BettyVolume);
-	//}
+	if (g_soundSystem) 
+	{
+		g_soundSystem->setDigitalMasterVolume(g_userPreferences.DigitalMasterVolume);
+		g_soundSystem->setSFXVolume(g_userPreferences.sfxVolume);
+		g_soundSystem->setRadioVolume(g_userPreferences.RadioVolume);
+		g_soundSystem->setMusicVolume(g_userPreferences.MusicVolume);
+		g_soundSystem->setBettyVolume(g_userPreferences.BettyVolume);
+	}
 }
 
 void OptionsAudio::begin()

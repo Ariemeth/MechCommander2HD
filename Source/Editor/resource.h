@@ -9,6 +9,7 @@
 #define MBOK                            1
 #define IDC_CHOOSE_UNIT_USING_POINTER_BUTTON 3
 #define IDC_ADD_POSSIBILITY             3
+#undef IDSAVE
 #define IDSAVE                          3
 #define IDC_REMOVE_POSSIBILITY          4
 #define IDLOAD                          4
@@ -36,12 +37,14 @@
 #define IDC_UNLINK                      120
 #define IDC_UP                          121
 #define IDC_HILLS                       122
+#undef IDC_HAND
 #define IDC_HAND                        123
 #define IDC_PAINT                       124
 #define IDC_ERASER                      125
 #define IDC_FLATTEN                     126
 #define IDC_HAMMER                      127
 #define IDC_WRENCH                      128
+#undef IDI_ICON1
 #define IDI_ICON1                       128
 #define IDC_TARGET                      129
 #define IDC_DROPZONE                    130
@@ -316,6 +319,7 @@
 #define IDC_NUM_RP_BUILDINGS_EDIT       1179
 #define IDC_RADIUS                      1180
 #define IDC_NUM_RP_BUILDINGS_SPIN       1180
+#undef IDC_DELETE
 #define IDC_DELETE                      1181
 #define IDC_DOWNLOAD_URL_EDIT           1181
 #define IDC_EDIT                        1182

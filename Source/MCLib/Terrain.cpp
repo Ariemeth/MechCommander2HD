@@ -727,7 +727,7 @@ long Terrain::update (void)
 			terrainTextures2->init(terrainName);
 	}
 
-	// MCHD CHANGE (02/14/2015): Removed because it was literally doing nothing.
+	// MCHD CHANGE (02/14/15): Removed because it was literally doing nothing.
 	
  	//---------------------------------------------------------------------
 	Terrain::mapData->update();

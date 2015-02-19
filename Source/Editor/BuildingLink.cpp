@@ -245,14 +245,14 @@ static bool isInView(const Point3D &position)
 	
 			Distance.Subtract(objPosition,eyePosition);
 			float eyeDistance = Distance.GetApproximateLength();
-			if (eyeDistance > Camera::MaxClipDistance)
+			if (eyeDistance > Camera::maxClipDistance)
 			{
 				//hazeFactor = 1.0f;
 				inView = false;
 			}
-			else if (eyeDistance > Camera::MinHazeDistance)
+			else if (eyeDistance > Camera::minHazeDistance)
 			{
-				Camera::HazeFactor = (eyeDistance - Camera::MinHazeDistance) * Camera::DistanceFactor;
+				Camera::HazeFactor = (eyeDistance - Camera::minHazeDistance) * Camera::DistanceFactor;
 				inView = true;
 			}
 			else

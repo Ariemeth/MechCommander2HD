@@ -369,7 +369,7 @@ void MechListBoxItem::update()
 	{
 		if ( userInput->isLeftClick() && isInside )
 		{
-			g_gameSoundSystem->playDigitalSample( LOG_WRONGBUTTON );	
+			g_soundSystem->playDigitalSample( LOG_WRONGBUTTON );	
 			setMech(); // need to call explicitly
 		}
 

@@ -674,7 +674,7 @@ long Carnage::update (void)
 			//------------------------------------------
 			// If just created, play our sound effect...
 			if (((ExplosionTypePtr)getObjectType())->soundEffectId != -1)
-				g_gameSoundSystem->playDigitalSample(((ExplosionTypePtr)getObjectType())->soundEffectId,position,true);
+				g_soundSystem->playDigitalSample(((ExplosionTypePtr)getObjectType())->soundEffectId,position,true);
 
 			if (((ExplosionTypePtr)getObjectType())->duration > 0.0f)
 			{

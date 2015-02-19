@@ -10,7 +10,7 @@
 #include "UserTextEdit.h"
 
 #include "assert.h"
-#include "../MCLib/Utilities.h" /*for cLoadString*/
+#include "..\MCLib\Utilities.h" /*for cLoadString*/
 #include "TextMessageDlg.h"
 #include "ResourceStringSelectionDlg.h"
 

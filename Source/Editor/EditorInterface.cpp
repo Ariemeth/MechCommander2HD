@@ -148,7 +148,7 @@ extern bool silentMode;
 // ARM
 extern char versionStamp[];
 
-#include "../ARM/Microsoft.Xna.Arm.h"
+#include "..\ARM\Microsoft.Xna.Arm.h"
 using namespace Microsoft::Xna::Arm;
 IProviderEngine * armProvider;
 
@@ -159,8 +159,8 @@ IProviderEngine * armProvider;
 // Frank at work!
 CameraPtr eye = NULL;
 
+long terrainLineChanged;
 extern bool drawTerrainTiles;
-extern long terrainLineChanged;
 extern bool drawTerrainOverlays;
 extern bool renderObjects;
 extern bool renderTrees;
@@ -169,7 +169,6 @@ extern bool drawLOSGrid;
 extern bool useClouds;
 extern bool	useFog;
 extern bool useShadows;
-extern bool useWaterInterestTexture;
 long lightState = 0;
 extern bool useFaceLighting;
 extern bool useVertexLighting;
@@ -1327,7 +1326,7 @@ void EditorInterface::handleKeyDown( int Key )
 
 	//----------------------
 	// Adjust for frameRate
-	float frameFactor = frameLength / baseFrameLength;
+	float frameFactor = g_frameTime / baseFrameLength;
 	float scrollFactor = scrollInc / eye->getScaleFactor() * frameFactor;
 
 	bool shiftDn = GetAsyncKeyState( KEY_LSHIFT ) ? true : false;
@@ -1390,32 +1389,32 @@ void EditorInterface::handleKeyDown( int Key )
 		if (GetAsyncKeyState(KEY_T) && ctrlDn && altDn && !shiftDn)
 		{
 			drawTerrainTiles ^= TRUE;
-			terrainLineChanged = turn;
+			terrainLineChanged = g_framesSinceMissionStart;
 		}
 		
 		if (GetAsyncKeyState(KEY_O) && ctrlDn && altDn && !shiftDn)
 		{
 			drawTerrainOverlays ^= TRUE;
-			terrainLineChanged = turn;
+			terrainLineChanged = g_framesSinceMissionStart;
 		}
 		
 		if (GetAsyncKeyState(KEY_S) && ctrlDn && altDn && !shiftDn)
 		{
 			renderObjects ^= TRUE;
-			terrainLineChanged = turn;
+			terrainLineChanged = g_framesSinceMissionStart;
 		}
 
 		if (GetAsyncKeyState(KEY_G) && ctrlDn && altDn && !shiftDn)
 		{
 			//drawTerrainGrid ^= TRUE;
 			OnViewShowpassabilitymap();
-			terrainLineChanged = turn;
+			terrainLineChanged = g_framesSinceMissionStart;
 		}
 
 		if (GetAsyncKeyState (KEY_L) && ctrlDn && altDn && !shiftDn)
 		{
 			drawLOSGrid ^= TRUE;
-			terrainLineChanged = turn;
+			terrainLineChanged = g_framesSinceMissionStart;
 		}
 
 		if (GetAsyncKeyState (KEY_Q) && ctrlDn && altDn && !shiftDn)
@@ -1426,44 +1425,38 @@ void EditorInterface::handleKeyDown( int Key )
 		if (GetAsyncKeyState(KEY_C) && ctrlDn && altDn && !shiftDn)
 		{
 			useClouds ^= true;
-			terrainLineChanged = turn;
+			terrainLineChanged = g_framesSinceMissionStart;
 		}
 
 		if (GetAsyncKeyState(KEY_F) && ctrlDn && altDn && !shiftDn)
 		{
 			useFog ^= true;
-			terrainLineChanged = turn;
+			terrainLineChanged = g_framesSinceMissionStart;
 		}
 
 		if (GetAsyncKeyState(KEY_P) && ctrlDn && altDn && !shiftDn)
 		{
 			//eye->usePerspective ^= true;
 			OnViewOrthographiccamera();
-			terrainLineChanged = turn;
+			terrainLineChanged = g_framesSinceMissionStart;
 		}
 
 		if (GetAsyncKeyState(KEY_R) && ctrlDn && altDn && !shiftDn)
 		{
 			reloadBounds = true;
-			terrainLineChanged = turn;
-		}
-
-		if (GetAsyncKeyState(KEY_V) && ctrlDn && altDn && !shiftDn)
-		{
-			useWaterInterestTexture ^= true;
-			terrainLineChanged = turn;
+			terrainLineChanged = g_framesSinceMissionStart;
 		}
 
 		if (GetAsyncKeyState(KEY_W) && ctrlDn && altDn && !shiftDn)
 		{
 			Terrain::mapData->recalcWater();
-			terrainLineChanged = turn;
+			terrainLineChanged = g_framesSinceMissionStart;
 		}
 		
 		if (GetAsyncKeyState(KEY_D) && ctrlDn && altDn && !shiftDn)
 		{
 			useShadows ^= true;
-			terrainLineChanged = turn;
+			terrainLineChanged = g_framesSinceMissionStart;
 		}
 	}
 
@@ -2044,7 +2037,7 @@ void EditorInterface::render()
 			int scrollUp = (PosY <= (screenScrollUp));
 			int scrollDn = (PosY >= (Height() - screenScrollDown));
 
-			float frameFactor = frameLength / baseFrameLength;
+			float frameFactor = g_frameTime / baseFrameLength;
 			float scrollFactor = scrollInc / eye->getScaleFactor() * frameFactor;
 
 
@@ -2956,7 +2949,7 @@ inline bool colorMapIsOKFormat (const char *fileName)
 		tgaFile.read((MemoryPtr)&tgaHeader,sizeof(TGAFileHeader));
 		if ((tgaHeader.image_type == UNC_TRUE) &&
 			(tgaHeader.width == tgaHeader.height) &&
-			(tgaHeader.width == localColorMapSizeCheck))
+			(tgaHeader.width == (short)localColorMapSizeCheck))
 			return true;
 
 		tgaFile.close();
@@ -3776,7 +3769,7 @@ void EditorInterface::OnPaint()
 	/* This hack is here because syncScrollBars() depends on the function
 	Camera::inverseProject(...) which, for some reason, doesn't return the correct value until
 	four frames have been drawn.*/
-	if (4 == turn)
+	if (4 == g_framesSinceMissionStart)
 	{
 		syncScrollBars();
 	}

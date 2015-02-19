@@ -33,9 +33,9 @@ void EnterWindowMode();
 void EnterFullScreenMode();
 void __stdcall ExitGameOS();
 
-char g_FileMissingString[512];
+char g_fileMissingString[512];
 char g_CDMissingString[1024];
-char g_MissingTitleString[256];
+char g_missingTitleString[256];
 //---------------------------------------------------------------------------
 //	class FastFile member functions
 //---------------------------------------------------------------------------
@@ -115,8 +115,8 @@ long FastFile::open (char* fName)
 				EnterWindowMode();
 
 				char data[2048];
-				sprintf(data,g_FileMissingString,fileName,g_CDMissingString);
-				DWORD result1 = MessageBox(NULL,data,g_MissingTitleString,MB_OKCANCEL | MB_ICONWARNING);
+				sprintf(data,g_fileMissingString,fileName,g_CDMissingString);
+				DWORD result1 = MessageBox(NULL,data,g_missingTitleString,MB_OKCANCEL | MB_ICONWARNING);
 				if (result1 == IDCANCEL)
 				{
 					ExitGameOS();
@@ -375,8 +375,8 @@ long FastFile::readFast (long fastFileHandle, void *bfr, long size)
 						EnterWindowMode();
 		
 						char data[2048];
-						sprintf(data,g_FileMissingString,fileName,g_CDMissingString);
-						DWORD result1 = MessageBox(NULL,data,g_MissingTitleString,MB_OKCANCEL | MB_ICONWARNING);
+						sprintf(data,g_fileMissingString,fileName,g_CDMissingString);
+						DWORD result1 = MessageBox(NULL,data,g_missingTitleString,MB_OKCANCEL | MB_ICONWARNING);
 						if (result1 == IDCANCEL)
 						{
 							ExitGameOS();
@@ -452,8 +452,8 @@ long FastFile::readFastRAW (long fastFileHandle, void *bfr, long size)
 				EnterWindowMode();
 
 				char data[2048];
-				sprintf(data,g_FileMissingString,fileName,g_CDMissingString);
-				DWORD result1 = MessageBox(NULL,data,g_MissingTitleString,MB_OKCANCEL | MB_ICONWARNING);
+				sprintf(data,g_fileMissingString,fileName,g_CDMissingString);
+				DWORD result1 = MessageBox(NULL,data,g_missingTitleString,MB_OKCANCEL | MB_ICONWARNING);
 				if (result1 == IDCANCEL)
 				{
 					ExitGameOS();

@@ -381,7 +381,7 @@ void MechBayScreen::update()
 	long mouseY = userInput->getMouseY();
 	if ( userInput->isLeftClick() && dropWeightMeter.pointInside( mouseX, mouseY ) )
 	{
-		g_gameSoundSystem->playDigitalSample( LOG_WRONGBUTTON );
+		g_soundSystem->playDigitalSample( LOG_WRONGBUTTON );
 	}
 	
 	// current drop weight
@@ -619,7 +619,7 @@ int	MechBayScreen::handleMessage( unsigned long message, unsigned long who )
 	case MB_MSG_ADD:
 		
 		addSelectedMech();
-		g_gameSoundSystem->playDigitalSample( LOG_SELECT );		
+		g_soundSystem->playDigitalSample( LOG_SELECT );		
 		break;
 
 	case MB_MSG_REMOVE:

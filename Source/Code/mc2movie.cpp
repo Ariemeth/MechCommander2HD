@@ -94,7 +94,7 @@ bool MC2Movie::update (void)
 	if (!soundStarted && separateWAVE)
 	{
 		soundStarted = true;
-		g_gameSoundSystem->playDigitalStream(waveName);
+		g_soundSystem->playDigitalStream(waveName);
 	}
 
 	if (
@@ -105,7 +105,7 @@ bool MC2Movie::update (void)
 			stillPlaying = false;
 
 			if (separateWAVE)
-				g_gameSoundSystem->stopSupportSample();
+				g_soundSystem->stopSupportSample();
 
 			return true;
 		}

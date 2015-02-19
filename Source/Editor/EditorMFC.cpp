@@ -140,6 +140,9 @@ BOOL EditorMFCApp::OnIdle(LONG lCount)
 	const CWnd *pW3 = CWnd::GetForegroundWindow();
 	const CWnd *pW4 = CWnd::GetActiveWindow();
 	const CWnd *pW5 = CWnd::GetFocus();
+	(void)pW2;
+	(void)pW4;
+	(void)pW5;
 
 	if (pW1 == pW3)
 	{

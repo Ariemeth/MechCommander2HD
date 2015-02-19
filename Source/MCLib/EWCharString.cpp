@@ -905,6 +905,10 @@ EWCharString operator+( const EWCharString& Begin_String, const EWCSChar* p_End_
 /////////////////////////////////////////////////////////////////
 EWCharString operator+( const EWCharString& Begin_String,  EWCSChar Char )
 {
+	EWCSChar Tmp[2];
+	Tmp[0] = Char;
+	Tmp[1] = 0;
+
 	return Begin_String + Char;
 }
 

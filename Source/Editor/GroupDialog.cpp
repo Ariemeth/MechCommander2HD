@@ -11,7 +11,7 @@
 #include "GroupDialog.h"
 #include "CampaignData.h"
 #include "MissionDialog.h"
-#include "../MCLib/Paths.h"
+#include "..\MCLib\Paths.h"
 #include "assert.h"
 
 #ifdef _DEBUG

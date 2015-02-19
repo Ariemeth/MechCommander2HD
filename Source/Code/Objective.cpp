@@ -1160,7 +1160,7 @@ EString CPlayWAV::InstanceDescription() {
 
 int CPlayWAV::Execute()
 {
-	g_gameSoundSystem->playDigitalStream(m_pathname.Data());
+	g_soundSystem->playDigitalStream(m_pathname.Data());
 	return true;
 }
 
@@ -1868,7 +1868,7 @@ objective_status_type CObjective::Status() {
 			m_changedStatus = true;
 			m_resolvedStatus = OS_FAILED;
 			if (!IsHiddenTrigger()) {
-				g_gameSoundSystem->playBettySample(BETTY_CANNOT_COMP_OBJ);
+				g_soundSystem->playBettySample(BETTY_CANNOT_COMP_OBJ);
 			}
 			action_list_type::EIterator it = m_failureActionList.Begin();
 			while (!it.IsDone()) {
@@ -1881,7 +1881,7 @@ objective_status_type CObjective::Status() {
 			m_changedStatus = true;
 			m_resolvedStatus = OS_SUCCESSFUL;
 			if (!IsHiddenTrigger()) {
-				g_gameSoundSystem->playBettySample(BETTY_OBJECTIVE_COMPLETE);
+				g_soundSystem->playBettySample(BETTY_OBJECTIVE_COMPLETE);
 			}
 			action_list_type::EIterator it = m_actionList.Begin();
 			while (!it.IsDone()) {

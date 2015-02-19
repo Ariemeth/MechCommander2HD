@@ -87,8 +87,7 @@ class GameSoundSystem : public SoundSystem
 		void removeCurrentMessage (void);
 };
 
-//---------------------------------------------------------------------------
-extern GameSoundSystem *g_gameSoundSystem;
+extern GameSoundSystem* g_soundSystem;
 
 //---------------------------------------------------------------------------
 #endif

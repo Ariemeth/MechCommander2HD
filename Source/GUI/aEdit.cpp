@@ -14,7 +14,7 @@ aEdit.cpp			: Implementation of the aEdit component of the GUI library.
 #include <windows.h>
 #include <mbstring.h>
 #include <winnls.h>
-#include "soundSys.h"
+#include "gamesound.h"
 #include "..\resource.h"
 
 #define ENTRY_MAX_CHARS 1000
@@ -24,8 +24,6 @@ aEdit.cpp			: Implementation of the aEdit component of the GUI library.
 static long acp = 0;
 static bool g_bUseLangDll;
 static gosIME_Appearance g_ia;
-
-extern SoundSystem *g_soundSystem;
 
 
 aEdit::aEdit(  )

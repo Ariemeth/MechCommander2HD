@@ -2274,8 +2274,8 @@ void				LogisticsData::startNewCampaign( const char* fileName )
 
 	setCurrentMission( missionNames[0] );
 
-	g_gameSoundSystem->setMusicVolume( g_userPreferences.MusicVolume );
-	g_gameSoundSystem->playDigitalMusic(missionInfo->getCurrentLogisticsTuneId());
+	g_soundSystem->setMusicVolume( g_userPreferences.MusicVolume );
+	g_soundSystem->playDigitalMusic(missionInfo->getCurrentLogisticsTuneId());
 }
 
 void LogisticsData::startMultiPlayer()

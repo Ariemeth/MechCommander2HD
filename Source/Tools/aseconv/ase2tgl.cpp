@@ -6,7 +6,7 @@
 
 #include "version.h" 
 
-#include "../../ARM/Microsoft.Xna.Arm.h"
+#include "..\..\ARM\Microsoft.Xna.Arm.h"
 using namespace Microsoft::Xna::Arm;
 
 HINSTANCE hInst = NULL;
@@ -37,7 +37,7 @@ IProviderEngine * armProvider = NULL;
 unsigned long g_systemHeapSize = 256 * MEGABYTES_TO_BYTES;
 unsigned long g_guiHeapSize = 4 * MEGABYTES_TO_BYTES;
 unsigned long g_terrainHeapSize = 16 * MEGABYTES_TO_BYTES; 
-unsigned long tglHeapSize = 16386000;
+unsigned long g_tglHeapSize = 16386000;
 
 FastFile 	**g_fastFiles = NULL;
 long 		g_numFastFiles = 0;
@@ -535,7 +535,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	//---------------------------------------------------------
 	// Start the Tiny Geometry Layer Heap.
 	TG_Shape::tglHeap = new UserHeap;
-	TG_Shape::tglHeap->init(tglHeapSize,"TinyGeom");
+	TG_Shape::tglHeap->init(g_tglHeapSize,"TinyGeom");
 
 	//--------------------------------------------------------------
 	// Read in System.CFG

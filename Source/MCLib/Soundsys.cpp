@@ -633,7 +633,7 @@ void SoundSystem::update (void)
 		}
 	}
 
-	if (!g_gamePaused)
+	if (!gamePaused)
 		sensorBeepUpdateTime += g_frameTime;
 }
 
@@ -1150,7 +1150,7 @@ unsigned char SoundSystem::getMusicVolume(void)
 //---------------------------------------------------------------------------
 void SoundSystem::setBettyVolume(unsigned char volume)
 {
-	bettyVolume = volume;
+	bettyVolume = volume / 255.0f;
 }
 
 //---------------------------------------------------------------------------

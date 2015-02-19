@@ -11,9 +11,9 @@ BOOL APIENTRY DllMain( HANDLE hModule,
                        LPVOID lpReserved
 					 )
 {
-	lpReserved;
-	ul_reason_for_call;
-	hModule;
+	(void)lpReserved;
+	(void)ul_reason_for_call;
+	(void)hModule;
     return TRUE;
 }
 

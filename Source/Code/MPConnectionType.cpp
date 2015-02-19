@@ -9,7 +9,7 @@ MPConnectionType.cpp			: Implementation of the MPConnectionType component.
 #include "MPConnectionType.h"
 #include "prefs.h"
 #include "IniFile.h"
-#include "../MCLib/UserInput.h"
+#include "..\MCLib\UserInput.h"
 #include "..\resource.h"
 #include "Multplyr.h"
 #include "Mechbayscreen.h"

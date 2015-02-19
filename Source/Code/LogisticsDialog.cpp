@@ -41,7 +41,7 @@ void LogisticsDialog::begin()
 	exitAnim.end();
 	status = RUNNING;
 	bDone = 0;
-	g_gameSoundSystem->playDigitalSample( LOG_MAINMENUBUTTON );
+	g_soundSystem->playDigitalSample( LOG_MAINMENUBUTTON );
 
 
 	gos_KeyboardFlush();

@@ -489,8 +489,8 @@ long TerrainObject::update (void) {
 		{
 			if (fallRate == 0.0f)
 			{
-				if (g_gameSoundSystem)
-					g_gameSoundSystem->playDigitalSample(TREEFALL, getPosition(), true);
+				if (g_soundSystem)
+					g_soundSystem->playDigitalSample(TREEFALL, getPosition(), true);
 					
 				fallRate = TREE_FALL_RATE;
 			}
@@ -915,7 +915,7 @@ long TerrainObject::handleWeaponHit (WeaponShotInfoPtr shotInfo, bool addMultipl
 					type->createExplosion(position, 0, 0);
 					setStatus(OBJECT_STATUS_DESTROYED);
 					if (type->terrainSubType == TERROBJ_WALL_LIGHT)
-						g_gameSoundSystem->playDigitalSample(BREAKINGFENCE, getPosition(), true);
+						g_soundSystem->playDigitalSample(BREAKINGFENCE, getPosition(), true);
 				}
 				setDamage(curDamage);
 			break;

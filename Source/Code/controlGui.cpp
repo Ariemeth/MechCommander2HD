@@ -376,12 +376,12 @@ void ControlGui::render( bool bPaused )
 			if ( time <= 120  && !twoMinWarningPlayed )
 			{
 				twoMinWarningPlayed = true;
-				g_gameSoundSystem->playBettySample( BETTY_TWO_MIN_LEFT );
+				g_soundSystem->playBettySample( BETTY_TWO_MIN_LEFT );
 			}
 			else if ( time <= 30 && !thirtySecondWarningPlayed )
 			{
 				thirtySecondWarningPlayed = true;
-				g_gameSoundSystem->playBettySample( BETTY_THIRTY_LEFT );
+				g_soundSystem->playBettySample( BETTY_THIRTY_LEFT );
 			}
 			else if ( time < 0)
 			{
@@ -687,7 +687,7 @@ void ControlGui::RenderObjectives()
 					if (!playedObjectiveClick[objectiveNum])
 					{
 						playedObjectiveClick[objectiveNum] = true;
-						g_gameSoundSystem->playDigitalSample(LOG_KILLMARKER);
+						g_soundSystem->playDigitalSample(LOG_KILLMARKER);
 					}
 				}
 
@@ -720,7 +720,7 @@ void ControlGui::RenderObjectives()
 					if (!playedObjectiveClick[objectiveNum])
 					{
 						playedObjectiveClick[objectiveNum] = true;
-						g_gameSoundSystem->playDigitalSample(LOG_KILLMARKER);
+						g_soundSystem->playDigitalSample(LOG_KILLMARKER);
 					}
 				}
 
@@ -973,7 +973,7 @@ void ControlGui::update( bool bPaused, bool bLOS )
 				if ( buttons[i].location[0].x > lastX || lastX > buttons[i].location[2].x
 				|| lastY < buttons[i].location[0].y || lastY > buttons[i].location[1].y )
 				{
-					g_gameSoundSystem->playDigitalSample( LOG_HIGHLIGHTBUTTONS );
+					g_soundSystem->playDigitalSample( LOG_HIGHLIGHTBUTTONS );
 				}
 			}
 			
@@ -1520,7 +1520,7 @@ void ControlGui::handleClick( int ID )
 	if ( !getButton( ID )->isEnabled() )
 	{
 		// need to play sound here
-		g_gameSoundSystem->playDigitalSample(INVALID_GUI);
+		g_soundSystem->playDigitalSample(INVALID_GUI);
 		return;
 	}
 
@@ -1640,14 +1640,14 @@ void ControlGui::handleClick( int ID )
 
 	}
 
-	g_gameSoundSystem->playDigitalSample( sound );
+	g_soundSystem->playDigitalSample( sound );
 }
 
 void ControlGui::doStop()
 {
 	TacticalOrder tacOrder;
 	tacOrder.init(ORDER_ORIGIN_PLAYER, TACTICAL_ORDER_STOP );
-	g_gameSoundSystem->playDigitalSample(BUTTON5);
+	g_soundSystem->playDigitalSample(BUTTON5);
 
 	Team* pTeam = Team::home;
 	
@@ -1773,7 +1773,7 @@ void ControlGui::updateVehicleTab(int mouseX, int mouseY, bool bLOS )
 				long lastY = mouseY - userInput->getMouseYDelta();
 				if (  vehicleButtons[i].location[0].x >= lastX || lastX >= vehicleButtons[i].location[2].x
 					|| lastY <= vehicleButtons[i].location[0].y || lastY >= vehicleButtons[i].location[1].y  )
-					g_gameSoundSystem->playDigitalSample( LOG_HIGHLIGHTBUTTONS );
+					g_soundSystem->playDigitalSample( LOG_HIGHLIGHTBUTTONS );
 			}
 		}
 
@@ -1927,14 +1927,14 @@ void ControlGui::handleVehicleClick( int ID )
 	if ( getButton( ID )->state & ControlButton::DISABLED ) // ignore disabled button
 	{	
 		// need to play sound here
-		g_gameSoundSystem->playDigitalSample(INVALID_GUI);
+		g_soundSystem->playDigitalSample(INVALID_GUI);
 		return;
 	}
 
 	if ((ID == STOP_VEHICLE) && paintingMyVtol)
 	{
 		//You cannot stop it once the VTOL is in flight, no matter what the button looks like.
-		g_gameSoundSystem->playDigitalSample(INVALID_GUI);
+		g_soundSystem->playDigitalSample(INVALID_GUI);
 		return;
 	}
 	
@@ -1963,7 +1963,7 @@ void ControlGui::handleVehicleClick( int ID )
 
 	}
 
-	g_gameSoundSystem->playDigitalSample( LOG_SELECT );
+	g_soundSystem->playDigitalSample( LOG_SELECT );
 
 
 	switch ( ID )
@@ -2884,7 +2884,7 @@ void	ControlGui::toggleHoldPosition()
 		setRange( FIRERANGE_OPTIMAL );
 	}
 	
-	g_gameSoundSystem->playDigitalSample( LOG_SELECT );
+	g_soundSystem->playDigitalSample( LOG_SELECT );
 
 	if (MPlayer && !MPlayer->isServer())
 		MPlayer->sendHoldPosition();

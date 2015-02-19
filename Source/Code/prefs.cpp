@@ -11,7 +11,6 @@
 #include "soundSys.h"
 #include "..\resource.h"
 
-extern SoundSystem *g_soundSystem;
 CPrefs CPrefs::originalSettings;
 
 CPrefs::CPrefs() {
@@ -220,7 +219,7 @@ int CPrefs::load( const char* pFileName ) {
 			if ( result != NO_ERR )
 				tutorials = true;
 
-			// MCHD CHANGE (02/14/2015): Moved the camera options into options.cfg
+			// MCHD CHANGE (02/14/15): Moved the camera options into options.cfg
 			useRealLOS = true; // MCHD TODO: Move this to debug options or something
 
 			// Camera options
@@ -353,7 +352,7 @@ int CPrefs::save() {
 			result = prefsFile->writeIdBoolean( "SaveTranscripts", saveTranscripts );
 			result = prefsFile->writeIdBoolean( "Tutorials", tutorials );
 
-			// MCHD CHANGE (02/14/2015): Moved camera stuff into options.cfg
+			// MCHD CHANGE (02/14/15): Moved camera stuff into options.cfg
 			result = prefsFile->writeIdFloat("MaxClipDistance", Camera::maxClipDistance);
 			result = prefsFile->writeIdFloat("MinHazeDistance", Camera::minHazeDistance);
 
@@ -383,24 +382,18 @@ int CPrefs::save() {
 }
 
 int CPrefs::applyPrefs(bool applyRes) {
-	if (g_gameSoundSystem) {
-		/*soundSystem doesn't seem to do anything*/
-		g_gameSoundSystem->setDigitalMasterVolume(this->DigitalMasterVolume);
-		g_gameSoundSystem->setSFXVolume(this->sfxVolume);
-		g_gameSoundSystem->setRadioVolume(this->RadioVolume);
-		g_gameSoundSystem->setMusicVolume(this->MusicVolume);
-		g_gameSoundSystem->setBettyVolume(this->BettyVolume);
+	if (g_soundSystem) 
+	{
+		g_soundSystem->setDigitalMasterVolume(this->DigitalMasterVolume);
+		g_soundSystem->setSFXVolume(this->sfxVolume);
+		g_soundSystem->setRadioVolume(this->RadioVolume);
+		g_soundSystem->setMusicVolume(this->MusicVolume);
+		g_soundSystem->setBettyVolume(this->BettyVolume);
 	}
 
-	//if (g_soundSystem) {
-	//	g_soundSystem->setDigitalMasterVolume(this->DigitalMasterVolume);
-	//	g_soundSystem->setSFXVolume(this->sfxVolume);
-	//	g_soundSystem->setRadioVolume(this->RadioVolume);
-	//	g_soundSystem->setMusicVolume(this->MusicVolume);
-	//	g_soundSystem->setBettyVolume(this->BettyVolume);
-	//}
+	// MCHD CHANGE (02/18/15): Duplicate sound system removed
 
-	// MCHD CHANGE (02/14/2015): Fuck globals - it all lives in CPrefs now
+	// MCHD CHANGE (02/14/15): Fuck globals - it all lives in CPrefs now
 
 	int bitDepth = this->bitDepth ? 32 : 16;
 
@@ -409,7 +402,7 @@ int CPrefs::applyPrefs(bool applyRes) {
 	Camera::maxClipDistance = 3000.0f + (2000.0f * fogPercent);
 	Camera::minHazeDistance	= 2000.0f + (2000.0f * fogPercent);
 
-	gameVisibleVertices = 256; // MCHD CHANGE (02/14/2015): Bumped this number up an arbitrary amount //30 + (30 * fogPercent);
+	gameVisibleVertices = 256; // MCHD CHANGE (02/14/15): Bumped this number up an arbitrary amount //30 + (30 * fogPercent);
 
 	if (land)
 	{

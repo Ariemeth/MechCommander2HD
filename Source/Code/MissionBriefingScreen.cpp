@@ -168,7 +168,7 @@ void MissionBriefingScreen::update()
 				camera.setObject( objectiveModels[ID], modelTypes[ID], modelColors[ID][0],
 					modelColors[ID][1], modelColors[ID][2] );
 				camera.setScale( modelScales[ID] );
-				g_gameSoundSystem->playDigitalSample( LOG_VIDEOBUTTONS );
+				g_soundSystem->playDigitalSample( LOG_VIDEOBUTTONS );
 				statics[35].showGUIWindow( 0 );
 			}
 			else

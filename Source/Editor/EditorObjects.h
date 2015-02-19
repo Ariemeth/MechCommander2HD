@@ -89,7 +89,7 @@ protected:
 		void *operator new (size_t mySize)
 		{
 			void *result = NULL;
-			result = systemHeap->Malloc(mySize);
+			result = g_systemHeap->Malloc(mySize);
 			
 			return(result);
 		
@@ -97,7 +97,7 @@ protected:
 
 		void operator delete (void *us)
 		{
-			systemHeap->Free(us);
+			g_systemHeap->Free(us);
 		}
 
 		AppearanceInfo& operator=( const AppearanceInfo& src );

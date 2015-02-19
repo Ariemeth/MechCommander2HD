@@ -765,7 +765,7 @@ long Building::update (void)
 		if (!GeneralAlarm && proximityTimer > 0.0f)
 		{
 			//Play something close by sound FX
-			g_gameSoundSystem->playDigitalSample(PING_SFX);
+			g_soundSystem->playDigitalSample(PING_SFX);
 			if (proximityTimer > ((BuildingTypePtr)getObjectType())->perimeterAlarmTimer)
 			{
 				//Set GeneralAlarm to TRUE.
@@ -894,7 +894,7 @@ long Building::update (void)
 	{
 		// if building recaptured play a sound
 		if ( (ObjectManager->getByWatchID(parent)->getTeamId() != Team::home->getId()) && (g_framesSinceMissionStart > 5) && (getTeamId() != -1))
-			g_gameSoundSystem->playBettySample(BETTY_BUILDING_RECAPTURED);
+			g_soundSystem->playBettySample(BETTY_BUILDING_RECAPTURED);
 		setTeamId(ObjectManager->getByWatchID(parent)->getTeam()->getId(),false);
 	}
 
@@ -948,7 +948,7 @@ long Building::setTeamId (long _teamId, bool setup)
 	{
 		SensorManager->addTeamSensor(teamId, sensorSystem);
 		if ( (g_framesSinceMissionStart > 5) && !isLookoutTower())
-			g_gameSoundSystem->playBettySample( BETTY_SENSOR_CAPTURED );
+			g_soundSystem->playBettySample( BETTY_SENSOR_CAPTURED );
 	}
 
 	static unsigned long highLight[8] = {0x00007f00, 0x0000007f, 0x007f0000};
@@ -962,11 +962,11 @@ long Building::setTeamId (long _teamId, bool setup)
 				MPlayer->sendReinforcement(((BuildingTypePtr)getObjectType())->resourcePoints, 0, "noname", commanderId, getPosition(), 6);
 				//MPlayer->playerInfo[commanderId].resourcePoints += ((BuildingTypePtr)getObjectType())->resourcePoints;
 			if (teamId == Team::home->getId())
-				g_gameSoundSystem->playBettySample(BETTY_RESOURCES);
+				g_soundSystem->playBettySample(BETTY_RESOURCES);
 		}
 		else {
 			LogisticsData::instance->addResourcePoints(((BuildingTypePtr)getObjectType())->resourcePoints);
-			g_gameSoundSystem->playBettySample(BETTY_RESOURCES);
+			g_soundSystem->playBettySample(BETTY_RESOURCES);
 		}
 	}
 
@@ -1632,7 +1632,7 @@ bool Building::burnRefitPoints(float pointsToBurn)
 
 	if (getDamage() >= getDamageLevel())
 	{
-		g_gameSoundSystem->playBettySample( BETTY_REPAIR_GONE );
+		g_soundSystem->playBettySample( BETTY_REPAIR_GONE );
 		return(false);
 	}
 
