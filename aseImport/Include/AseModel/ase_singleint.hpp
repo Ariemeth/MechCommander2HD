@@ -8,7 +8,7 @@ class Ase_SingleInt : AseGenericItem
 
 public:
     int getI();
-    void setI(int);
+    void setI(QString);
 private:
     int _X;
 };

@@ -6,7 +6,7 @@ class Ase_SingleFloat : AseGenericItem // Useful for TM_ROTATE_ANGLE
 {
     Q_OBJECT
 public:
-    void setF(double);
+    void setF(QString);
     double getF();
 
 private:

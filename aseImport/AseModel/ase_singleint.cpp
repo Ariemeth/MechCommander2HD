@@ -1,8 +1,8 @@
 #include "../Include/AseModel/ase_singleint.hpp"
 
-void Ase_SingleInt::setI(int dX)
+void Ase_SingleInt::setI(QString dX)
 {
-    _X = dX;
+    _X = dX.toInt();
 }
 
 int Ase_SingleInt::getI()

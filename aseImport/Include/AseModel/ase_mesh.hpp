@@ -1,5 +1,5 @@
-#ifndef ASE_MESH
-#define ASE_MESH
+#ifndef ASE_MESH_OBJECT
+#define ASE_MESH_OBJECT
 #include "ase_singleint.hpp"
 #include "ase_mesh_vertex.hpp"
 #include "ase_mesh_face.hpp"
@@ -34,5 +34,5 @@ public:
    QList<Ase_MeshNormal*>MeshNormals;
 };
 
-#endif // ASE_MESH
+#endif // ASE_MESH_OBJECT
 

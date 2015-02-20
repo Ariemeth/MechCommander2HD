@@ -1,5 +1,5 @@
-#ifndef ASE_NODE_TM
-#define ASE_NODE_TM
+#ifndef ASE_NODEM_TM
+#define ASE_NODEM_TM
 
 #include "ase_string.hpp"
 #include "ase_threeint.hpp"
@@ -19,11 +19,11 @@ public:
     Ase_ThreeFloat TM_Row3;
     Ase_ThreeFloat TM_Pos;
     Ase_ThreeFloat TM_RotAxis;
-    Ase_SingleFloat rotAngle;
-    Ase_ThreeFloat Scale;
-    Ase_ThreeFloat ScaleAxis;
-    Ase_SingleFloat ScaleAxisAng;
+    Ase_SingleFloat TM_RotAngle;
+    Ase_ThreeFloat TM_Scale;
+    Ase_ThreeFloat TM_ScaleAxis;
+    Ase_SingleFloat TM_ScaleAxisAng;
 };
 
-#endif // ASE_NODE_TM
+#endif // ASE_NODEM_TM
 
