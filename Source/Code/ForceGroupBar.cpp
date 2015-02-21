@@ -61,7 +61,6 @@ ForceGroupBar::~ForceGroupBar()
 	ForceGroupIcon::gosFontHandle  = NULL;
 }
 
-
 bool ForceGroupBar::flashJumpers (long numFlashes)
 {
 	forceNumFlashes = numFlashes;
@@ -145,8 +144,6 @@ void ForceGroupBar::update( )
 		helpTextHeaderID = IDS_FORCEGROUP_BAR;
 	 }
 
-
-
 	// unselect all if appropriate
 	if ( bSelect && !shiftDn && inRegion(screen.x, screen.y) 
 		&& !ControlGui::instance->isSelectingInfoObject() && (!ControlGui::instance->getRepair()
@@ -165,7 +162,6 @@ void ForceGroupBar::update( )
 		}
 	}
 
-	
 	// remove dead mechs
 	for ( int t = 0; t < iconCount; ++t )
 	{
@@ -189,7 +185,6 @@ void ForceGroupBar::update( )
 	{
 		icons[i]->setLocationIndex( i );
 	}
-	
 
 	for ( i = 0; i < iconCount; ++i )
 	{
@@ -256,7 +251,6 @@ void ForceGroupBar::update( )
 					 if ( MissionInterfaceManager::instance()->canRepair(icons[i]->unit ) )
 						MissionInterfaceManager::instance()->doRepair( icons[i]->unit );
 				 }
-				 
 
 				 else
 					 ControlGui::instance->setInfoWndMover( icons[i]->unit );	
@@ -275,19 +269,15 @@ void ForceGroupBar::update( )
 					{
 						
 						MissionInterfaceManager::selectForceGroup( j, true );
-
 					}
 				}				
 			}
-		
 		}
 		else
 			icons[i]->unit->setTargeted( 0 );
 		
 		icons[i]->update();
-		
 	}
-
 }
 
 bool ForceGroupBar::inRegion( int x, int y )
@@ -299,7 +289,6 @@ bool ForceGroupBar::inRegion( int x, int y )
 	}
 
 	return false;
-
 }
 
 void ForceGroupBar::render()
@@ -317,11 +306,9 @@ void ForceGroupBar::render()
 		else
 			maxUnits = 0;
 
-
 		if ( maxUnits > 16 )
 			maxUnits = 16;
 	}
-
 
 	for ( int i = 0; i < MAX_ICONS; i++ )
 	{
@@ -388,7 +375,6 @@ void ForceGroupBar::init( FitIniFile& file, StaticInfo* pCoverIcon )
 	file.readIdLong( "IconFont", fontID );
 	ForceGroupIcon::gosFontHandle->init( fontID );
 
-	
 	swapResolutions();
 
 	for ( int i = 0; i < 16; i++ )
@@ -403,8 +389,6 @@ void ForceGroupBar::swapResolutions()
 	
 	for ( int i = 0; i < iconCount; i++ )
 		icons[i]->swapResolutions(0);
-
-	
 }
 
 bool ForceGroupBar::setPilotVideo( const char* pVideo, MechWarrior* pPilot )
@@ -415,7 +399,6 @@ bool ForceGroupBar::setPilotVideo( const char* pVideo, MechWarrior* pPilot )
 		{
 			delete ForceGroupIcon::bMovie;
 			ForceGroupIcon::bMovie = NULL;
-			
 		}
 		else if ( ForceGroupIcon::pilotVideoTexture )
 			gos_DestroyTexture( ForceGroupIcon::pilotVideoTexture );

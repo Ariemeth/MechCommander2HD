@@ -8,9 +8,7 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef TXMCONV_H
 #include "txmconv.h"
-#endif
 
 //---------------------------------------------------------------------------
 long txmToTileLookup[DEFINED_TXMS] = 
@@ -999,6 +997,5 @@ long txmToTileLookup[DEFINED_TXMS] =
 // 250		= rough0005.tga
 // 251		= rough0006.tga
 // 252		= rough0007.tga
-
 
 //---------------------------------------------------------------------------

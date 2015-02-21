@@ -135,5 +135,4 @@ namespace Stuff {
 	inline UnitVector3D&
 		UnitVector3D::operator*=(const LinearMatrix4D &m)
 			{UnitVector3D src(*this); return Multiply(src, m);}
-
 }

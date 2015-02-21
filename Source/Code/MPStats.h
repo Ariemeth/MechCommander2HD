@@ -7,13 +7,8 @@ MPStats.h			: Interface for the MPStats component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef LOGISTICSSCREEN_H
 #include "LogisticsScreen.h"
-#endif
-
-#ifndef MULTPLYR_H
 #include "Multplyr.h"
-#endif
 
 //*************************************************************************************************
 struct _MC2Player;
@@ -37,9 +32,6 @@ class MPStatsEntry : public LogisticsScreen
 		long	getKillsX();
 		long	getLossesX();
 		long	overlayColor;
-
-		
-
 };
 
 class MPStatsResultsEntry : public LogisticsScreen
@@ -52,11 +44,7 @@ class MPStatsResultsEntry : public LogisticsScreen
 		void init( );
 		void setData( const _MC2Player*, unsigned long laurelColor, bool bShowScore );
 		long	overlayColor;
-
 };
-
-
-
 
 class MPStats: public LogisticsScreen
 {
@@ -88,9 +76,7 @@ class MPStats: public LogisticsScreen
 		bool				bHostLeftDlg;
 
 		// HELPER FUNCTIONS
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( MPStats.h )

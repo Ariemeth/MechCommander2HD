@@ -4,31 +4,12 @@
 //===========================================================================//
 
 #include "EditorObjects.h"
-
-#ifndef INIFILE_H
 #include "IniFile.h"
-#endif
-
-#ifndef OBJECTAPPEARANCE_H
 #include "Objectappearance.h"
-#endif
-
-#ifndef TERRAIN_H
 #include "Terrain.h"
-#endif
-
-#ifndef EDITOROBJECTMGR_H
 #include "EditorObjectMgr.h"
-#endif
-
-#ifndef BUILDINGLINK_H
 #include "BuildingLink.h"
-#endif
-
-#ifndef EDITORDATA_H
 #include "EditorData.h"
-#endif
-
 #include "resource.h"
 
 // ARM
@@ -80,7 +61,6 @@ EditorObject::EditorObject( const EditorObject& src )
 		forestId = src.forestId;
 		scale = src.scale;
 	}
-
 }
 
 EditorObject& EditorObject::operator=( const EditorObject& src )
@@ -203,8 +183,6 @@ void EditorObject::setAppearance( int Group, int indexInGroup )
 			
 				delete appearInfo;
 				appearInfo = NULL;
-			
-
 			}
 		}
 
@@ -246,7 +224,6 @@ unsigned long EditorObject::getColor() const
 	
 	default:
 		gosASSERT( false );
-
 	}
 
 	return 0xffffffff;
@@ -281,7 +258,6 @@ int	EditorObject::getSpecialType() const
 }
 
 //*************************************************************************************************
-
 
 Unit::Unit( int align )
 {
@@ -587,7 +563,6 @@ bool DropZone::save( FitIniFile* file, int number )
 		file->writeIdFloat( "OffsetX0", -142 );
 		file->writeIdFloat( "OffsetY0", 0 );
 		file->writeIdFloat( "Rotation0", 45);
-
 	}
 
 	return true;
@@ -738,14 +713,12 @@ Brain::Brain( const Brain& src )
 	cellType = (long *)malloc(sizeof(long) * numCells); 
 	cellData = (float *)malloc(sizeof(float) * numCells);
 
-
 	for (long i=0;i<numCells;i++)
 	{
 		cellNum[i] = src.cellNum[i];
 		cellType[i] = src.cellType[i];
 		cellData[i] = src.cellData[i];
 	}
-	
 }
 Brain& Brain::operator=( const Brain& src )
 {
@@ -777,7 +750,6 @@ Brain& Brain::operator=( const Brain& src )
 	}
 
 	return *this;
-	
 }
 
 void Pilot::save( FitIniFile* file, int bGoodGuy )
@@ -837,8 +809,6 @@ void Pilot::load( FitIniFile* file, int bGoodGuy )
 		Assert( 0, 0, "reassigning invalid pilot" );
 		info = bGoodGuy ? &s_GoodPilots[0] : &s_BadPilots[0];
 	}
-	
- 	
 }
 
 void Pilot::initPilots()
@@ -939,7 +909,6 @@ void Pilot::initPilots()
 
 		infos = s_BadPilots;
 		counter = &badCount;
-
 	}
 }
 
@@ -964,7 +933,6 @@ void Pilot::setName( const char* newName )
 	}
 
 	gosASSERT( 0 );
-
 }
 
 bool NavMarker::save( FitIniFile* file, int warriorNumber )
@@ -982,7 +950,6 @@ bool NavMarker::save( FitIniFile* file, int warriorNumber )
 NavMarker::NavMarker()
 {
 }
-
 
 //*************************************************************************************************
 // end of file ( EditorObjects.cpp )

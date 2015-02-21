@@ -10,13 +10,8 @@
 #ifndef ABLSCAN_H
 #define	ABLSCAN_H
 
-#ifndef ABLGEN_H
 #include "ablgen.h"
-#endif
-
-#ifndef ABLERR_H
 #include "ablerr.h"
-#endif
 
 //***************************************************************************
 
@@ -278,5 +273,4 @@ extern void (*ABLFatalCallback) (long code, char* s);
 //***************************************************************************
 	
 #endif
-
 

@@ -1,5 +1,4 @@
 
-
 /*************************************************************************************************\
 ChooseBuildingDlg.cpp			: Implementation of the ChooseBuildingDlg component.
 //---------------------------------------------------------------------------//
@@ -8,17 +7,13 @@ ChooseBuildingDlg.cpp			: Implementation of the ChooseBuildingDlg component.
 \*************************************************************************************************/
 
 #include "resource.h"
-
 #include <stdlib.h>
 #include <assert.h>
 #include "EString.h"
-
 #include "ChooseBuildingDlg.h"
 #include "Objective.h"
-
 #include "EditorInterface.h"
 #include "EditorObjectMgr.h"
-
 
 //-------------------------------------------------------------------------------------------------
 ChooseBuildingDlg::ChooseBuildingDlg( building_ptr_type &buildingPtr ):CDialog(IDD_CHOOSE_BUILDING)
@@ -174,13 +169,11 @@ void ChooseBuildingDlg::OnOK()
 	EndDialog(IDOK);
 }
 
-
 //-------------------------------------------------------------------------------------------------
 
 ChooseBuildingDlg::~ChooseBuildingDlg()
 {
 }
-
 
 //*************************************************************************************************
 // end of file ( ChooseBuildingDlg.cpp )

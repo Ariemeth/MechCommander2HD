@@ -13,22 +13,10 @@
 
 //---------------------------------------------------------------------------
 // Include files
-#ifndef APPEAR_H
 #include "appear.h"
-#endif
-
-#ifndef APPRTYPE_H
 #include "apprtype.h"
-#endif
-
-#ifndef MSL_H
 #include "msl.h"
-#endif
-
-#ifndef OBJECTAPPEARANCE_H
 #include "ObjectAppearance.h"
-#endif
-
 #include <gosFX\gosfxheaders.hpp>
 //**************************************************************************************
 #ifndef NO_ERR
@@ -161,7 +149,6 @@ class GVAppearanceType : public AppearanceType
 		{
 			return numSmokeNodes + numWeaponNodes + numFootNodes;
 		}
-
 };
 
 //***********************************************************************
@@ -282,7 +269,6 @@ class GVAppearance : public ObjectAppearance
 
 		virtual void flashBuilding (float duration, float flashDuration, DWORD color);
 
-		
 		void setFadeTable (MemoryPtr fTable)
 		{
 			fadeTable = fTable;
@@ -376,5 +362,4 @@ class GVAppearance : public ObjectAppearance
 //***************************************************************************
 
 #endif
-
 

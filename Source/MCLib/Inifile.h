@@ -13,17 +13,9 @@
 //---------------------------------------------------------------------------
 // Include files
 
-#ifndef DSTD_H
 #include "dstd.h"
-#endif
-
-#ifndef DINIFILE_H
 #include "dinifile.h"
-#endif
-
-#ifndef FILE_H
 #include "file.h"
-#endif
 
 //---------------------------------------------------------------------------
 // Macro Definitions
@@ -129,7 +121,6 @@ class FitIniFile : public File
 		
 		virtual long create (char* fName);
 		virtual long createWithCase( char* fName );
-
 
 		virtual void close (void);
 

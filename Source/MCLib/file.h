@@ -17,22 +17,10 @@
 //---------------------------------------------------------------------------
 // Include files
 
-#ifndef DSTD_H
 #include "dstd.h"
-#endif
-
-#ifndef DFILE_H
 #include "dfile.h"
-#endif
-
-#ifndef DFFILE_H
 #include "dffile.h"
-#endif
-
-#ifndef HEAP_H
 #include "heap.h"
-#endif
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <fcntl.h>
@@ -230,12 +218,9 @@ class File
 			
 			long addChild (FilePtr child);
 			void removeChild (FilePtr child);
-
 };
 
 //---------------------------------------------------------------------------
-
-
 
 //---------------------------------------------------------------------------
 #endif

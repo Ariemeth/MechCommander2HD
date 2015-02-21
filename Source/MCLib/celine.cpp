@@ -9,22 +9,10 @@
 //---------------------------------------------------------------------------
 // Include files
 
-#ifndef CELINE_H
 #include "celine.h"
-#endif
-
-#ifndef VPORT_H
 #include "vport.h"
-#endif
-
-#ifndef TGL_H
 #include "tgl.h"
-#endif
-
-#ifndef CLIP_H
 #include "clip.h"
-#endif
-
 #include <gameos.hpp>
 
 //---------------------------------------------------------------------------

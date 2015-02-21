@@ -10,34 +10,13 @@
 
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef GAMECAM_H
 #include "gamecam.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef MOVER_H
 #include "mover.h"
-#endif
-
-#ifndef MISSION_H
 #include "mission.h"
-#endif
-
-#ifndef TEAM_H
 #include "team.h"
-#endif
-
-#ifndef COMNDR_H
 #include "comndr.h"
-#endif
-
-#ifndef WEATHER_H
 #include "weather.h"
-#endif
-
 #include <MLR\MLR.hpp>
 
 //---------------------------------------------------------------------------
@@ -179,7 +158,6 @@ void GameCamera::render (void)
 		}
 
 		theClipper->RenderNow();		//Draw the FX
-
 
 		if (useNonWeaponEffects)
 			weather->render();				//Draw the weather

@@ -7,22 +7,10 @@ mechlopedia.h			: Interface for the mechlopedia component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef LOGISTICSSCREEN_H
 #include "LogisticsScreen.h"
-#endif
-
-#ifndef SIMPLECAMERA_H
 #include "SimpleCamera.h"
-#endif
-
-#ifndef ALISTBOX_H
 #include "aListBox.h"
-#endif
-
-#ifndef COMPONENTLISTBOX_H
 #include "SimpleComponentListBox.h"
-#endif
-
 #include "..\resource.h"
 
 class LogisticsChassis;
@@ -34,8 +22,6 @@ class LogisticsVehicle;
 CLASS DESCRIPTION
 mechlopedia:
 **************************************************************************************************/
-
-
 
 class Mechlopedia : public LogisticsScreen
 {
@@ -72,10 +58,7 @@ class Mechlopedia : public LogisticsScreen
 				aListBox*			groupListBox;
 				aListBox			descriptionListBox;
 				SimpleCamera		camera;
-
-	
 		};
-
 
 		class MechScreen : public SubScreen
 		{
@@ -112,7 +95,6 @@ class Mechlopedia : public LogisticsScreen
 
 			private:
 				aListBox			statsListBox;
-
 		};
 
 		class PersonalityScreen : public SubScreen
@@ -129,7 +111,6 @@ class Mechlopedia : public LogisticsScreen
 
 		private:
 				bool bIsHistory;
-				
 		};
 
 		class BuildingScreen : public SubScreen
@@ -145,12 +126,9 @@ class Mechlopedia : public LogisticsScreen
 
 		private:
 			ComponentListBox	compListBox;
-
 		};
-	
-	
-		// HELPER FUNCTIONS
 
+		// HELPER FUNCTIONS
 };
 
 /////////////////////////////////////////////////////
@@ -163,17 +141,12 @@ class MechlopediaListItem: public aAnimTextListItem
 
 		static void init( );
 
-
 	private:
 		aObject		bmp;
 		aAnimGroup	bmpAnim;
 
 		static	MechlopediaListItem* s_templateItem;
-
 };
-
-
-
 
 //*************************************************************************************************
 #endif  // end of file ( mechlopedia.h )

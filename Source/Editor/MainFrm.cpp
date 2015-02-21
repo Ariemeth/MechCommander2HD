@@ -7,9 +7,7 @@
 
 #include "stdafx.h"
 #include "EditorMFC.h"
-
 #include "MainFrm.h"
-
 
 /////////////////////////////////////////////////////////////////////////////
 // MainFrame
@@ -94,7 +92,6 @@ int MainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		CBRS_TOOLTIPS | CBRS_FLYBY);
 		*/
 
-
 	return 0;
 }
 
@@ -148,7 +145,6 @@ BOOL MainFrame::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* 
 	return CFrameWnd::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
 }
 
-
 LRESULT MainFrame::WindowProc(UINT message, WPARAM wParam, LPARAM lParam) 
 {
 	if ( message == WM_MOVE )
@@ -162,7 +158,6 @@ LRESULT MainFrame::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		LPARAM lNewParam = tmp.y << 16 | tmp.x;
 
 		EditorInterface::instance()->SendMessage( WM_MOVE, wParam, lNewParam );
-
 	}
 	return CFrameWnd::WindowProc(message, wParam, lParam);
 }

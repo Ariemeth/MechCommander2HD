@@ -2,30 +2,12 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef GOAL_H
 #include "goal.h"
-#endif
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef TERROBJ_H
 #include "terrobj.h"
-#endif
-
-#ifndef GATE_H
 #include "gate.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef BLDNG_H
 #include "bldng.h"
-#endif
-
 #include "heap.h"
 #include "mclib.h"
 
@@ -325,7 +307,6 @@ void GoalManager::build (void) {
 	}
 */
 //	calcRegions();
-
 
 /*
 	//--------------------------------------

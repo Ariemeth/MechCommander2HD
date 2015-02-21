@@ -7,13 +7,8 @@ aEdit.h			: Interface for the aEdit component of the GUI library.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef ASYSTEM_H
 #include "aSystem.h"
-#endif
-
-#ifndef ESTRING_H
 #include "EString.h"
-#endif
 
 //*************************************************************************************************
 //Entry field styles
@@ -42,7 +37,6 @@ class aEdit: public aObject
 
 		void	renderWithDropShadow();
 
-	
 		void getEntry(EString& str);
 		void setEntry(const EString& str, BYTE byHighlight = 0);
 		void limitEntry(int nNewLimit) { nLimit = nNewLimit; }
@@ -51,7 +45,6 @@ class aEdit: public aObject
 		void setTextColor( long color ){ textColor = color; }
 		void setSelectedColor( long color ){ selectedColor = color; }
 		bool hasFocus()const { return bFocus; }
-
 
 		void init( FitIniFile* file, const char* header );
 		long getHighlightColor( ) const { return highlightColor; }
@@ -94,7 +87,6 @@ class aEdit: public aObject
 
 		void	allowIME( bool bAllow ){ bAllowIME = bAllow; }
 
-
 	private:
 
 		aEdit( const aEdit& );
@@ -114,7 +106,6 @@ class aEdit: public aObject
 		void	handleKeyboard();
 
 		int charLength( int index );
-		
 
 		long cursorColor;
 		long highlightColor; // backdrop
@@ -135,9 +126,7 @@ class aEdit: public aObject
 		bool	bWierdChars;
 
 		bool bIMEInitialized;
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( aEdit.h )

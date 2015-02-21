@@ -7,17 +7,11 @@
 //
 //***************************************************************************
 
- 
 #ifndef ABLDBUG_H
 #define ABLDBUG_H
 
-#ifndef DABLDBUG_H
 #include "dabldbug.h"
-#endif
-
-#ifndef ABLENV_H
 #include "ablenv.h"
-#endif
 
 //***************************************************************************
 

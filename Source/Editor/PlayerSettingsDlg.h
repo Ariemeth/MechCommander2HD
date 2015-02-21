@@ -30,7 +30,6 @@ public:
 	int m_newDefaultTeam;
 	int m_numTeams;
 
-
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(PlayerSettingsDlg)

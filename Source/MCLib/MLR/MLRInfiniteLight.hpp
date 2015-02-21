@@ -57,5 +57,4 @@ namespace MidLevelRenderer {
 
 	protected:
 	};
-
 }

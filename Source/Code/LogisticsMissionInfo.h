@@ -7,10 +7,7 @@ LogisticsMissionInfo.h			: Interface for the LogisticsMissionInfo component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef ELIST_H
 #include "EList.h"
-#endif
-
 #include "EString.h"
 
 #define MAX_PLAYER_NAME_LENGTH 64
@@ -27,12 +24,10 @@ class LogisticsMissionInfo
 
 		LogisticsMissionInfo();
 		~LogisticsMissionInfo();
-		
-		
+
 		long init( FitIniFile& file ); // init campaign
 		void save( FitIniFile& file );
 		long load( FitIniFile& file );// init previously saved stuff
-
 
 		long getAvailableMissions( const char** missions, int& numberOfEm );
 		long getCurrentMissions( const char** missions, int& numberOfEm );
@@ -112,11 +107,8 @@ class LogisticsMissionInfo
 			currentMission = cMission;
 		}
 
-
-	
 	private:
 
-	
 		class MissionInfo
 		{
 		public:
@@ -150,7 +142,6 @@ class LogisticsMissionInfo
 		typedef EList<MissionInfo*, MissionInfo*> MISSION_LIST;
 		typedef EList< char*, char* > FILE_LIST;
 
-
 		class MissionGroup
 		{
 		public:
@@ -164,7 +155,6 @@ class LogisticsMissionInfo
 			bool	bigVideoShown;
 			bool	videoShown;
 		};
-
 
 		// DATA
 
@@ -193,13 +183,8 @@ class LogisticsMissionInfo
 		LogisticsMissionInfo::MissionInfo* getPreviousMission();
 		void readMissionInfo( FitIniFile& file, LogisticsMissionInfo::MissionInfo* pInfo );
 
-
-
-
 		// HELPER FUNCTIONS
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( LogisticsMissionInfo.h )

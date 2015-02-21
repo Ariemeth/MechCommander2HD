@@ -19,7 +19,6 @@ namespace MidLevelRenderer {
 	//###### MLRIndexedPolyMesh with color and lighting two texture layer  #####
 	//##########################################################################
 
-
 	class MLR_I_L_DeT_PMesh:
 		public MLR_I_C_DeT_PMesh
 	{
@@ -131,7 +130,6 @@ namespace MidLevelRenderer {
 		Stuff::DynamicArrayOf<Stuff::RGBAColor> litColors;
 		Stuff::DynamicArrayOf<Stuff::RGBAColor> *actualColors;
 #endif
-
 	};
 
 //	MLR_I_L_DeT_PMesh*

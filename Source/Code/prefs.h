@@ -5,10 +5,7 @@
 #ifndef PREFS_H
 #define PREFS_H
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
 
 class CPrefs {
 public:

@@ -180,7 +180,6 @@ bool
 		{
 			m_VOffset.SetCurve(0.0f);
 			PAUSE(("Warning: Curve \"VOffset\" in Effect \"%s\" Is Out of Range and has been Reset",(char *)m_name));
-
 		}
 			else
 		return false;
@@ -208,17 +207,13 @@ bool
 		{
 			m_UOffset.SetCurve(0.0f);
 			PAUSE(("Warning: Curve \"UOffset\" in Effect \"%s\" Is Out of Range and has been Reset",(char *)m_name));
-
 		}
 		else
 			return false;
 	}
 
-	
 	return	SpinningCloud__Specification::IsDataValid(fix_data);
-
 }
-
 
 //------------------------------------------------------------------------------
 //

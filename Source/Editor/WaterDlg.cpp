@@ -20,7 +20,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // WaterDlg dialog
 
-
 WaterDlg::WaterDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(WaterDlg::IDD, pParent)
 {
@@ -35,7 +34,6 @@ WaterDlg::WaterDlg(CWnd* pParent /*=NULL*/)
 	alphaShallow = 0;
 	//}}AFX_DATA_INIT
 }
-
 
 void WaterDlg::DoDataExchange(CDataExchange* pDX)
 {
@@ -52,7 +50,6 @@ void WaterDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_ALPHA_SHALLOW, alphaShallow);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(WaterDlg, CDialog)
 	//{{AFX_MSG_MAP(WaterDlg)

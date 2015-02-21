@@ -12,29 +12,12 @@
 #define MISSION_H
 //----------------------------------------------------------------------------------
 // Include Files
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef WARRIOR_H
 #include "warrior.h"
-#endif
-
-#ifndef MISSIONGUI_H
 #include "missiongui.h"
-#endif
-
-#ifndef OBJECTIVE_H
 #include "Objective.h"
-#endif
-
-#ifndef LOGISTICSMECH_H
 #include "logisticsmech.h"
-#endif
-
-#ifndef MULTPLYR_H
 #include "multplyr.h"
-#endif
 
 //----------------------------------------------------------------------------------
 // Macro Definitions
@@ -172,7 +155,6 @@ class Mission
 
 		static double					missionTerminationTime;
 
-										
 	public:								
 
 		static bool						terminationCounterStarted;
@@ -376,7 +358,6 @@ class Mission
 		{
 			return active;
 		}
-
 };
 
 //----------------------------------------------------------------------------------

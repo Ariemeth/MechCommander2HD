@@ -8,30 +8,14 @@
 
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef APPRTYPE_H
 #include "apprtype.h"
-#endif
-
-#ifndef GVACTOR_H
 #include "gvactor.h"
-#endif
-
-#ifndef MECH3D_H
 #include "mech3d.h"
-#endif
-
-#ifndef BDACTOR_H
 #include "bdactor.h"
-#endif
-
-#ifndef GENACTOR_H
 #include "genactor.h"
-#endif
-
 #include "cident.h"
 #include "inifile.h"
 #include "paths.h"
-
 #include <gameos.hpp>
 
 //---------------------------------------------------------------------------
@@ -197,7 +181,6 @@ void AppearanceTypeList::init (unsigned long heapSize)
 	appearanceHeap->init(heapSize,"APPEAR");
 
 	//No More sprite files.  Objects now have direct control over their appearances.
-	
 }
 
 //---------------------------------------------------------------------------
@@ -445,7 +428,6 @@ void AppearanceTypeList::destroy (void)
 		currentAppr->destroy();
 		currentAppr = nextPtr;
 	}
-	
 
 	head = last = NULL;
 	

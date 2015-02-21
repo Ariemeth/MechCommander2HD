@@ -3,12 +3,7 @@
 //===========================================================================//
 
 #include "mclib.h"
-
-#ifndef ASCROLL_H
 #include "ascroll.h"
-#endif
-
-
 
 aScrollBar::aScrollBar()
 {
@@ -71,7 +66,6 @@ void aScrollBar::destroy()
 {
 	aObject::destroy();
 }
-	
 
 void aScrollBar::render()
 {
@@ -100,7 +94,6 @@ void aScrollBar::SetScrollPos(float newPos)
 		newPos = scrollMax;
 	scrollPos = newPos;
 	ResizeAreas();	
-	
 }
 
 void aScrollBar::SetScroll( long newScrollPos )
@@ -115,7 +108,6 @@ void aScrollBar::SetScroll( long newScrollPos )
 		getParent()->handleMessage( aMSG_SCROLLTO, newScrollPos );
 	
 	SetScrollPos( newScrollPos );
-
 }
 void aScrollBar::update()
 {
@@ -149,9 +141,7 @@ void aScrollBar::update()
 		}
 		else if ( pointInside( mouseX, mouseY ) )
 		{
-	
-		
-				
+
 			if ( userInput->isLeftClick() || gos_GetKeyStatus(KEY_LMOUSE) == KEY_HELD
 				|| userInput->leftMouseReleased() )
 			{
@@ -191,23 +181,18 @@ void aScrollBar::update()
 						if( newScrollPos > scrollMax )
 							newScrollPos = scrollMax;
 
-						
-					
 						getParent()->handleMessage( aMSG_SCROLLTO, newScrollPos );
 						SetScrollPos( newScrollPos );
-
 					}
 
 					scrollTab.press( 0 );
-					
 				}
 			}
 		}
 
 		if ( userInput->leftMouseReleased() )
 			lastY = 0;
-		
-	
+
 	aObject::update();
 }
 
@@ -246,12 +231,10 @@ void aScrollBar::ResizeAreas(void)
 
 	scrollTab.resize( scrollTab.width(), scrollTabSize);
 
-
 	range = height() - topButton.height() - bottomButton.height() - scrollTab.height() - 6.f;	// one scrollwidth for buttons, one for tab. 2 for lines at either end.
 	position = range * scrollPos / scrollMax;	//	center of scroll tab;
 
 	scrollTab.moveTo( globalX() + 2, topButton.globalY() + topButton.height() + position + 1);
-
 }
 
 void aScrollBar::Enable( bool enable )
@@ -280,12 +263,10 @@ long mcScrollBar::init ( long xPos, long yPos, long w, long h  )
 	color = 0xff002F55; // outline color
 
 	topButton.init( file, "ScrollButton0" );
-	
-	
+
 	bottomButton.init( file, "ScrollButton1" );
 	bottomButton.moveTo( bottomButton.x(), h - bottomButton.height() - 2 );
-	
-	
+
 	scrollTab.init( file, "ScrollButton2" );
 	scrollTab.moveTo( scrollTab.x(), topButton.bottom() + 1 );
 
@@ -306,7 +287,6 @@ long mcScrollBar::init ( long xPos, long yPos, long w, long h  )
 	scrollTab.setTexture( (unsigned long)0 );
 
 	return 0;
-
 }
 
 void mcScrollBar::resize(long w, long h)
@@ -328,7 +308,6 @@ void mcScrollBar::setGreen()
 	scrollTab.regularColor = 0xff586300;
 
 	color = ( 0xff6E7C00 );
-
 }
 
 void mcScrollBar::setOrange()
@@ -342,7 +321,6 @@ void mcScrollBar::setOrange()
 	scrollTab.regularColor = 0xff9E5200;
 
 	color = ( 0xff43311C );
-
 }
 
 void mcScrollButton::render()

@@ -7,7 +7,6 @@
 #include "stdafx.h"
 #include "resource.h"
 #include "PlayerSettingsDlg.h"
-
 #include "EditorData.h"
 
 #ifdef _DEBUG
@@ -19,7 +18,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // PlayerSettingsDlg dialog
 
-
 PlayerSettingsDlg::PlayerSettingsDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(PlayerSettingsDlg::IDD, pParent)
 {
@@ -29,7 +27,6 @@ PlayerSettingsDlg::PlayerSettingsDlg(CWnd* pParent /*=NULL*/)
 	m_oldDefaultTeam = 0;
 	m_numTeams = 8/*hardcoded*/;
 }
-
 
 void PlayerSettingsDlg::DoDataExchange(CDataExchange* pDX)
 {
@@ -47,7 +44,6 @@ void PlayerSettingsDlg::DoDataExchange(CDataExchange* pDX)
 		m_newDefaultTeam = m_defaultTeamComboBox.GetCurSel();
 	}
 }
-
 
 BEGIN_MESSAGE_MAP(PlayerSettingsDlg, CDialog)
 	//{{AFX_MSG_MAP(PlayerSettingsDlg)

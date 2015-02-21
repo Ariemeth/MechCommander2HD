@@ -30,7 +30,6 @@ extern long SaveGameVersionNumber;
 #define DELETE_BUTTON 40
 #define MAP_STATIC 10
 
-
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -43,9 +42,7 @@ void LogisticsDialog::begin()
 	bDone = 0;
 	g_soundSystem->playDigitalSample( LOG_MAINMENUBUTTON );
 
-
 	gos_KeyboardFlush();
-
 }
 
 LogisticsDialog::LogisticsDialog()
@@ -65,10 +62,7 @@ void LogisticsDialog::end()
 	{
 		if ( textCount )
 			textObjects[0].font.init( oldFont );
-
 	}
-
-
 }
 
 void LogisticsDialog::setFont( int newFontResID )
@@ -94,7 +88,6 @@ void		LogisticsDialog::render()
 		if ( endTime )
 		{
 			color = interpolateColor( 0x00000000, 0x7f000000, time/endTime );
-			
 		}
 	}
 
@@ -105,12 +98,9 @@ void		LogisticsDialog::render()
 		if ( endTime )
 		{
 			color = interpolateColor( 0x7f000000, 0x00000000, time/endTime );
-			
-			
 		}
 	}
 
-	
 	GUI_RECT rect = { 0, 0, Environment.screenWidth, Environment.screenHeight };
 	drawRect( rect, color );
 	
@@ -129,7 +119,6 @@ void		LogisticsDialog::render()
 
 	LogisticsScreen::render( (int)xOffset, (int)yOffset );
 }
-
 
 //-------------------------------------------------------------------------------------------------
 
@@ -152,7 +141,6 @@ void		LogisticsDialog::update()
 			bFocus = true;
 	}
 
-
 	if ( enterAnim.isDone() )
 		LogisticsScreen::update();
 
@@ -164,7 +152,6 @@ void		LogisticsDialog::update()
 		handleMessage( 0, NO );
 	}
 
-	
 	if ( !bFocus && enterAnim.isDone() )
 	{
 		if ( gos_GetKeyStatus( KEY_RETURN ) == KEY_RELEASED )
@@ -173,11 +160,9 @@ void		LogisticsDialog::update()
 			{
 				if ( getButton( YES )->isEnabled() )
 					handleMessage( aMSG_LEFTMOUSEDOWN, YES );
-
 			}
 			else
 				handleMessage( aMSG_LEFTMOUSEDOWN, YES );
-			
 		}
 	}
 	if ( gos_GetKeyStatus( KEY_ESCAPE ) == KEY_RELEASED )
@@ -187,16 +172,11 @@ void		LogisticsDialog::update()
 				if ( getButton( NO )->isEnabled() )
 					handleMessage( aMSG_LEFTMOUSEDOWN, NO );
 			}
-
 		}
-	
-
-
 }
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-
 
 LogisticsOKDialog::LogisticsOKDialog(  )
 {
@@ -209,7 +189,6 @@ LogisticsOKDialog::~LogisticsOKDialog()
 }
 
 //-------------------------------------------------------------------------------------------------
-
 
 int LogisticsOKDialog::init( FitIniFile& file )
 {
@@ -227,7 +206,6 @@ int LogisticsOKDialog::init( FitIniFile& file )
 			s_instance->buttons[i].setMessageOnRelease();
 
 		s_instance->oldFont = s_instance->textObjects[0].font.getFontID();
-
 	}
 
 	return 0;
@@ -271,11 +249,9 @@ void				LogisticsOKDialog::setText( const char* mainText )
 	textObjects[0].setText( mainText );
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-
 
 LogisticsOneButtonDialog::LogisticsOneButtonDialog(  )
 {
@@ -288,7 +264,6 @@ LogisticsOneButtonDialog::~LogisticsOneButtonDialog()
 }
 
 //-------------------------------------------------------------------------------------------------
-
 
 int LogisticsOneButtonDialog::init( FitIniFile& file )
 {
@@ -306,12 +281,10 @@ int LogisticsOneButtonDialog::init( FitIniFile& file )
 			s_instance->buttons[i].setMessageOnRelease();
 
 		s_instance->oldFont = s_instance->textObjects[0].font.getFontID();
-
 	}
 
 	return 0;
 }
-
 
 //-------------------------------------------------------------------------------------------------
 
@@ -334,8 +307,6 @@ int LogisticsLegalDialog::init( FitIniFile& file )
 	return 0;
 }
 
-
-
 //-------------------------------------------------------------------------------------------------
 
 int LogisticsOneButtonDialog::handleMessage( unsigned long, unsigned long who )
@@ -354,14 +325,12 @@ void	LogisticsOneButtonDialog::setText( int textID, int CancelButton, int OKButt
 	textObjects[0].setText( textID );
 	buttons[0].setText( CancelButton );
 //	buttons[1].setText( OKButton );
-
 }
 
 void				LogisticsOneButtonDialog::setText( const char* mainText )
 {
 	textObjects[0].setText( mainText );
 }
-
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -411,7 +380,6 @@ int LogisticsSaveDialog::init( FitIniFile& file )
 		{
 			s_instance->edits[i].allowWierdChars( 0 );
 		}
-
 	}
 
 	s_instance->getButton( YES )->setPressFX( LOG_NEXTBACKBUTTONS );
@@ -451,13 +419,8 @@ void LogisticsSaveDialog::begin()
 
 	updateMissionInfo();
 
-
-
-	
 	LogisticsDialog::begin();
-
 }
-
 
 void LogisticsSaveDialog::beginLoad()
 {
@@ -480,7 +443,6 @@ void LogisticsSaveDialog::beginLoad()
 	edits[0].setEntry( "" );
 	edits[0].limitEntry( 20 );
 
-	
 	aListItem* pItem = gameListBox.GetItem( 0 );
 	if ( pItem )
 	{
@@ -492,7 +454,6 @@ void LogisticsSaveDialog::beginLoad()
 	updateMissionInfo();
 
 	LogisticsDialog::begin();
-
 }
 
 void LogisticsSaveDialog::beginCampaign()
@@ -518,10 +479,8 @@ void LogisticsSaveDialog::beginCampaign()
 		}
 	}
 
-
 	updateMissionInfo();
 }
-
 
 void LogisticsSaveDialog::initDialog( const char* path, bool bCampaign )
 {
@@ -625,7 +584,6 @@ bool LogisticsSaveDialog::isCorrectVersionSaveGame( char* fileName )
 		STOP((errorStr));
 	}
 
-	
 	long result = file.seekBlock( "Version" );
 	if (result != NO_ERR)
 		return false;
@@ -652,7 +610,6 @@ void LogisticsSaveDialog::readCampaignNameFromFile( char* fileName, char* result
 		Assert( 0, 0, errorStr );
 	}
 
-	
 	long result = file.seekBlock( "Campaign" );
 	Assert( result == NO_ERR, 0, "Coudln't find the mission settings block in the mission file" );
 
@@ -676,7 +633,6 @@ void LogisticsSaveDialog::end()
 	statics[MAP_STATIC].setTexture( ( unsigned long)0 );
 	bCampaign = 0;
 	LogisticsDialog::end();
-
 }
 void LogisticsSaveDialog::update()
 {
@@ -748,7 +704,6 @@ void LogisticsSaveDialog::update()
 	else
 		getButton( YES )->disable( false );
 
-
 	if ( bPromptOverwrite )
 	{
 		LogisticsOKDialog::instance()->update();
@@ -797,13 +752,11 @@ void LogisticsSaveDialog::update()
 					edits[0].setEntry( ((aTextListItem*)pItem)->getText() );
 					selectedName = ( ((aLocalizedListItem*)pItem)->getHiddenText() );
 				}
-
 		}
 		else if ( NO == LogisticsOKDialog::instance()->getStatus() )
 		{
 			bDeletePrompt = 0;
 		}
-	
 	}
 	
 	gameListBox.update();
@@ -838,7 +791,6 @@ void LogisticsSaveDialog::update()
 			}
 		}
 	}
-
 }
 
 void LogisticsSaveDialog::updateCampaignMissionInfo()
@@ -866,7 +818,6 @@ void LogisticsSaveDialog::updateCampaignMissionInfo()
 	}	
 	else
 		setMission( "" );
-
 }
 void LogisticsSaveDialog::updateMissionInfo()
 {
@@ -881,7 +832,6 @@ void LogisticsSaveDialog::updateMissionInfo()
 		updateCampaignMissionInfo();
 		return;
 	}
-
 
 	FullPathFileName fileName;
 	fileName.init( savePath, selectedName, ".fit" );
@@ -917,7 +867,6 @@ void LogisticsSaveDialog::updateMissionInfo()
 		else
 			statics[MAP_STATIC].setColor( 0 );
 
-
 		long cBills;
 		file.readIdLong( "CBills", cBills );
 		cLoadString( IDS_DIALOG_CBILLS, tmp2, 255 );
@@ -931,11 +880,9 @@ void LogisticsSaveDialog::updateMissionInfo()
 		char* timeStr = gos_GetFormattedTime( ptm->tm_hour, ptm->tm_min, ptm->tm_sec );
 		char* dateStr = gos_GetFormattedDate( 0, ptm->tm_year + 1900, ptm->tm_mon + 1, ptm->tm_mday );
 
-
 		cLoadString( IDS_DIALOG_TIME, tmp2, 255 );
 		sprintf( tmp, tmp2, dateStr, timeStr  );
 		strcat( real, tmp );
-
 
 		textObjects[2].setText( real );
 	}
@@ -944,8 +891,6 @@ void LogisticsSaveDialog::updateMissionInfo()
 		textObjects[2].setText( "" );
 		statics[MAP_STATIC].setColor( 0 );
 	}
-
-
 }
 
 void LogisticsSaveDialog::setMission( const char* fileName)
@@ -984,21 +929,17 @@ void LogisticsSaveDialog::setMission( const char* fileName)
 			}
 
 			textObjects[2].setText(missionName);
-
 		}
 		else
 		{
 			textObjects[2].setText( "" );
 		}
-
 	}
 	else
 	{
 		statics[MAP_STATIC].setColor( 0 );
 		textObjects[2].setText( "" );
-
 	}
-
 }
 void LogisticsSaveDialog::render()
 {
@@ -1025,7 +966,6 @@ void LogisticsSaveDialog::render()
 		if ( endTime )
 		{
 			color = interpolateColor( 0x00000000, 0x7f000000, time/endTime );
-			
 		}
 	}
 
@@ -1036,18 +976,14 @@ void LogisticsSaveDialog::render()
 		if ( endTime )
 		{
 			color = interpolateColor( 0x7f000000, 0x00000000, time/endTime );
-			
-			
 		}
 	}
 
 	if ( fadeOutTime )
 		color = 0;
 
-	
 	GUI_RECT rect = { 0, 0, Environment.screenWidth, Environment.screenHeight };
 	drawRect( rect, color );
-
 
 	if ( xOffset || yOffset )
 	{
@@ -1066,7 +1002,6 @@ void LogisticsSaveDialog::render()
 	{
 		LogisticsOKDialog::instance()->render();
 	}
-		
 }
 
 int	LogisticsSaveDialog::handleMessage( unsigned long what, unsigned long who )
@@ -1153,8 +1088,6 @@ int	LogisticsSaveDialog::handleMessage( unsigned long what, unsigned long who )
 		
 //-------------------------------------------------------------------------------------------------
 
-
-
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -1211,7 +1144,6 @@ void LogisticsVariantDialog::begin()
 	edits[0].setFocus(true);
 	edits[0].setEntry( "" );
 
-
 	initVariantList();
 	status = RUNNING;
 	bPromptOverwrite = 0;
@@ -1223,7 +1155,6 @@ void LogisticsVariantDialog::begin()
 	textObjects[1].setText( IDS_DIALOG_VARIANT_LIST );
 
 	buttons[2].setText( IDS_DIALOG_SAVE );
-
 
 	LogisticsDialog::begin();
 }
@@ -1237,7 +1168,6 @@ void LogisticsVariantDialog::beginTranscript()
 	bDeletePrompt = 0;
 	bTranscript = 1;
 
-
 	initTranscript();
 	
 	// change all the texts
@@ -1246,11 +1176,7 @@ void LogisticsVariantDialog::beginTranscript()
 
 	buttons[2].setText( IDS_DIALOG_SAVE );
 
-
 	LogisticsDialog::begin();
-
-
-	
 }
 
 void LogisticsVariantDialog::initTranscript()
@@ -1259,7 +1185,6 @@ void LogisticsVariantDialog::initTranscript()
 	sprintf(findString,"%s*.txt","data\\multiplayer\\transcripts\\");
 
 	gameListBox.removeAllItems( true );
-
 
 	WIN32_FIND_DATA	findResult;
 	HANDLE searchHandle = FindFirstFile(findString,&findResult); 
@@ -1275,12 +1200,10 @@ void LogisticsVariantDialog::initTranscript()
 				pEntry->setColor( edits[0].getColor() );
 				gameListBox.AddItem( pEntry );				
 			}				
-			
 		} while (FindNextFile(searchHandle,&findResult) != 0);
 	}
 
 	edits[0].setEntry( "" );
-
 }
 void LogisticsVariantDialog::initVariantList()
 {
@@ -1315,15 +1238,10 @@ void LogisticsVariantDialog::initVariantList()
 				edits[0].setEntry( ((aTextListItem*)pEntry)->getText() );
 				selectedName = ( ((aTextListItem*)pEntry)->getText() );
 				bValid = true;
-
 			}
-
 		}
-
 	}
-	
 }
-
 
 void LogisticsVariantDialog::end()
 {
@@ -1364,7 +1282,6 @@ void LogisticsVariantDialog::update()
 
 				DeleteFile( path );
 				initTranscript();
-
 			}
 			else
 			{
@@ -1381,12 +1298,10 @@ void LogisticsVariantDialog::update()
 		}
 
 		return;
-	
 	}
 
 	LogisticsDialog::update();
 
-	
 	gameListBox.update();
 
 	if ( userInput->isLeftClick()  )
@@ -1449,11 +1364,9 @@ void LogisticsVariantDialog::update()
 
 		else
 			buttons[0].disable( 0 );
-		
 	}
 	else
 		buttons[0].disable( 1 );
-
 }
 
 void LogisticsVariantDialog::render()
@@ -1467,7 +1380,6 @@ void LogisticsVariantDialog::render()
 		if ( endTime )
 		{
 			color = interpolateColor( 0x00000000, 0x7f000000, time/endTime );
-			
 		}
 	}
 
@@ -1478,15 +1390,11 @@ void LogisticsVariantDialog::render()
 		if ( endTime )
 		{
 			color = interpolateColor( 0x7f000000, 0x00000000, time/endTime );
-			
-			
 		}
 	}
 
-	
 	GUI_RECT rect = { 0, 0, Environment.screenWidth, Environment.screenHeight };
 	drawRect( rect, color );
-
 
 	float xOffset = 0;
 	float yOffset = 0 ;
@@ -1513,7 +1421,6 @@ void LogisticsVariantDialog::render()
 	{
 		LogisticsOKDialog::instance()->render();
 	}
-		
 }
 
 int	LogisticsVariantDialog::handleMessage ( unsigned long what, unsigned long who )
@@ -1571,7 +1478,6 @@ int	LogisticsVariantDialog::handleMessage ( unsigned long what, unsigned long wh
 		LogisticsOKDialog::instance()->begin();
 
 		bDeletePrompt = true;
-	
 	}
 
 	return 0;
@@ -1591,7 +1497,6 @@ void LogisticsAcceptVariantDialog::begin()
 
 	edits[0].allowIME( false );
 	edits[0].setFocus(true);
-
 
 	LogisticsDialog::begin();
 }
@@ -1629,13 +1534,11 @@ void LogisticsAcceptVariantDialog::update()
 
 			edits[0].getEntry( selectedName );
 			edits[0].setEntry( "" );
-		
 		}
 		else if ( NO == LogisticsOKDialog::instance()->getStatus() )
 		{
 			bDeletePrompt = 0;
 		}
-	
 	}
 	
 	gameListBox.update();
@@ -1678,7 +1581,6 @@ void LogisticsAcceptVariantDialog::update()
 	{
 		buttons[1].disable( 0 );
 	}
-
 }
 void LogisticsAcceptVariantDialog::render()
 {
@@ -1691,7 +1593,6 @@ void LogisticsAcceptVariantDialog::render()
 		if ( endTime )
 		{
 			color = interpolateColor( 0x00000000, 0x7f000000, time/endTime );
-			
 		}
 	}
 
@@ -1702,15 +1603,11 @@ void LogisticsAcceptVariantDialog::render()
 		if ( endTime )
 		{
 			color = interpolateColor( 0x7f000000, 0x00000000, time/endTime );
-			
-			
 		}
 	}
 
-	
 	GUI_RECT rect = { 0, 0, Environment.screenWidth, Environment.screenHeight };
 	drawRect( rect, color );
-
 
 	float xOffset = 0;
 	float yOffset = 0 ;
@@ -1730,12 +1627,10 @@ void LogisticsAcceptVariantDialog::render()
 
 	LogisticsScreen::render( (int)xOffset, (int)yOffset );
 
-
 	if ( bPromptOverwrite || bDeletePrompt )
 	{
 		LogisticsOKDialog::instance()->render();
 	}
-		
 }
 
 int LogisticsAcceptVariantDialog::init( FitIniFile& file )
@@ -1857,9 +1752,7 @@ void LogisticsMapInfoDialog::setMap( const char* pFileName )
 			}
 
 			textObjects[2].setText( blurb );
-
 		}
-
 }
 
 int LogisticsMapInfoDialog::init()
@@ -1873,7 +1766,6 @@ int LogisticsMapInfoDialog::init()
 		sprintf( buffer2, "couldn't open file %s", (char*)path );
 		Assert( 0, 0, buffer2 );
 		return false;	
-
 	}
 
 	LogisticsScreen::init( file, "Static", "Text", "Rect", "Button", "Edit" );		
@@ -1884,7 +1776,6 @@ int LogisticsMapInfoDialog::init()
 	exitAnim.init( &file, "" );
 
 	return 1;
-
 }
 
 int	LogisticsMapInfoDialog::handleMessage( unsigned long, unsigned long who )

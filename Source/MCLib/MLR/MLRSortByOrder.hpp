@@ -75,5 +75,4 @@ namespace MidLevelRenderer {
 		Stuff::DynamicArrayOf<SortAlpha*>  //, Max_Number_Primitives_Per_Frame + Max_Number_ScreenQuads_Per_Frame
 			alphaSort;
 	};
-
 }

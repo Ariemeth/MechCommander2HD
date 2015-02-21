@@ -8,58 +8,19 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef BDACTOR_H
 #include "bdactor.h"
-#endif
-
-#ifndef CAMERA_H
 #include "camera.h"
-#endif
-
-#ifndef DBASEGUI_H
 #include "dbasegui.h"
-#endif
-
-#ifndef CIDENT_H
 #include "cident.h"
-#endif
-
-#ifndef PATHS_H
 #include "paths.h"
-#endif
-
-#ifndef OBJSTATUS_H
 #include "objstatus.h"
-#endif
-
-#ifndef UTILITIES_H
 #include "utilities.h"
-#endif
-
-#ifndef INIFILE_H
 #include "inifile.h"
-#endif
-
-#ifndef ERR_H
 #include "err.h"
-#endif
-
-#ifndef TXMMGR_H
 #include "txmmgr.h"
-#endif
-
-#ifndef TIMING_H
 #include "timing.h"
-#endif
-
-#ifndef CELINE_H
 #include "celine.h"
-#endif
-
-#ifndef MOVE_H
 #include "move.h"
-#endif
-
 #include "..\Code\unitdesg.h" /* just for definition of MIN_TERRAIN_PART_ID and MAX_MAP_CELL_WIDTH */
 //******************************************************************************************
 extern float	worldUnitsPerMeter;
@@ -263,7 +224,6 @@ void BldgAppearanceType::init (char * fileName)
 		result = iniFile.readIdString("FileName",destructEffect,59);
 		if (result != NO_ERR)
 			STOP(("Could not Find DestructEffectName in building appearance INI file"));
-	
 	}
 	else
 	{
@@ -1431,7 +1391,6 @@ bool BldgAppearance::recalcBounds (void)
 		}
 	}
 
-	
 	return(inView);
 }
 
@@ -1688,7 +1647,6 @@ long BldgAppearance::render (long depthFixup)
 			}
 		}
 
- 			   
 //		selected = FALSE;
 //#define DRAW_BOX
 #ifdef DRAW_BOX
@@ -2065,8 +2023,7 @@ long BldgAppearance::update (bool animate)
 					
 				canTransition = true;		//Whenever we have completed one cycle or at last frame, OK to move on!
 			}
-			
-	
+
 			//--------------------------------------
 			//Check negative overflow of gesture
 			if (currentFrame < 0)
@@ -2671,7 +2628,6 @@ void BldgAppearance::markTerrain (_ScenarioMapCellInfo* pInfo, int type, int cou
 			}
 		}
 
-			
 		//-------------------------------------------------------------
 		// New way.  For each vertex in each shape, translate to world
 		for (i=0;i<bldgShape->GetNumShapes();i++)
@@ -3330,7 +3286,6 @@ void TreeAppearance::init (AppearanceTypePtr tree, GameObjectPtr obj)
 				OBBRadius = testRadius;
 		}
 
-		
 		appearType->boundsUpperLeftX = (-OBBRadius * 2.0);
 		appearType->boundsUpperLeftY = (-OBBRadius * 2.0);
 		   					 
@@ -3610,7 +3565,6 @@ bool TreeAppearance::recalcBounds (void)
 					Camera::HazeFactor = 0.0f;
 					inView = true;
 				}
-			
 			}
 			else
 			{
@@ -4262,6 +4216,5 @@ void TreeAppearance::destroy (void)
 
 	appearanceTypeList->removeAppearance(appearType);
 }
-
 
 //*****************************************************************************

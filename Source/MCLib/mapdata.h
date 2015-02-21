@@ -13,26 +13,11 @@
 //---------------------------------------------------------------------------
 // Include Files
 
-#ifndef DMAPDATA_H
 #include "dmapdata.h"
-#endif
-
-#ifndef HEAP_H
 #include "heap.h"
-#endif
-
-#ifndef PACKET_H
 #include "packet.h"
-#endif
-
-#ifndef VERTEX_H
 #include "vertex.h"
-#endif
-
-#ifndef QUAD_H
 #include "quad.h"
-#endif
-
 #include <stuff\stuff.hpp>
 
 //---------------------------------------------------------------------------

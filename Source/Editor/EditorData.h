@@ -5,18 +5,9 @@
 //===========================================================================//
 
 #include "mclib.h"
-
-#ifndef OBJECTIVE_H
 #include "Objective.h"
-#endif
-
-#ifndef ELIST_H
 #include "elist.h"
-#endif
-
-#ifndef ESTRING_H
 #include "EString.h"
-#endif
 
 static const int GAME_MAX_PLAYERS = 8;
 
@@ -355,9 +346,6 @@ class EditorData
 		bool m_waterTextureNeedsSaving;
 		bool m_waterDetailTextureNeedsSaving;
 };
-
-
-
 
 //*************************************************************************************************
 #endif  // end of file ( EditorData.h )

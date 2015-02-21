@@ -18,14 +18,8 @@
 //-------------------------------------------------------------------------------
 // Include Files
 
-#ifndef TGL_H
 #include "tgl.h"
-#endif
-
-#ifndef TXMMGR_H
 #include "txmmgr.h"
-#endif
-
 
 // ARM
 namespace Microsoft

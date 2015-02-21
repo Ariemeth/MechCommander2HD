@@ -1,5 +1,4 @@
 
-
 /*************************************************************************************************\
 TargetAreaDlg.cpp			: Implementation of the TargetAreaDlg component.
 //---------------------------------------------------------------------------//
@@ -8,16 +7,12 @@ TargetAreaDlg.cpp			: Implementation of the TargetAreaDlg component.
 \*************************************************************************************************/
 
 #include "resource.h"
-
 #include <stdlib.h>
 #include <assert.h>
 #include "EString.h"
-
 #include "TargetAreaDlg.h"
 #include "Objective.h"
-
 #include "EditorInterface.h"
-
 
 //-------------------------------------------------------------------------------------------------
 TargetAreaDlg::TargetAreaDlg( float &targetCenterX, float &targetCenterY, float &targetRadius ):CDialog(IDD_TARGET_AREA)
@@ -103,13 +98,11 @@ void TargetAreaDlg::OnOK()
 	EndDialog(IDOK);
 }
 
-
 //-------------------------------------------------------------------------------------------------
 
 TargetAreaDlg::~TargetAreaDlg()
 {
 }
-
 
 //*************************************************************************************************
 // end of file ( TargetAreaDlg.cpp )

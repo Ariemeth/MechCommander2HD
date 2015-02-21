@@ -13,17 +13,9 @@
 
 //---------------------------------------------------------------------------
 
-#ifndef DTURRET_H
 #include "dturret.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef TERROBJ_H
 #include "terrobj.h"
-#endif
 
 //---------------------------------------------------------------------------
 // Macro Definitions
@@ -309,6 +301,4 @@ class Turret : public TerrainObject {
 //***************************************************************************
 
 #endif
-
-
 

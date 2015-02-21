@@ -9,22 +9,14 @@ MPLoadMap.h			: Interface for the MPLoadMap component.
 
 //*************************************************************************************************
 
-#ifndef LOGISTICSDIALOG_H
 #include "LogisticsDialog.h"
-#endif
-
 #include "aSystem.h"
 #include "aListBox.h"
 #include "AttributeMeter.h"
 #include "SimpleCamera.h"
-
-#ifndef AANIM_H
 #include "aAnim.h"
-#endif
 
 class aButton;
-
-
 
 class MPLoadMap : public LogisticsDialog
 {
@@ -48,15 +40,10 @@ public:
 
 	static void			getMapNameFromFile( const char* pFileName, char* pBuffer, long bufferLength );
 
-
-
-
 private:
 	int indexOfButtonWithID(int id);
 	void seedDialog( bool bSeedSingle );
 	void seedFromCampaign();
-
-
 
 	aListBox				mapList;
 	aLocalizedListItem	templateItem;
@@ -65,17 +52,10 @@ private:
 
 	bool					bIsSingle;
 
-
-
 	void	updateMapInfo();
 	void	seedFromFile( const char* pFileName );
 	void	addFile( const char* pFileName, bool bSeedSingle );
-
-
-
 };
-
-
 
 //*************************************************************************************************
 #endif  // end of file ( MPLoadMap.h )

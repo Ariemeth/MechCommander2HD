@@ -22,7 +22,6 @@ aButton::aButton()
 
 	data.textAlign = 2;
 	holdTime = .5f;
-	
 }
 
 long aButton::init(long xPos, long yPos, long w, long h)
@@ -59,7 +58,6 @@ void aButton::copyData( const aButton& src )
 	}
 }
 
-
 void aButton::update()
 {
 	if ( !isShowing() )
@@ -67,7 +65,6 @@ void aButton::update()
 
 	long mouseX = userInput->getMouseX();
 	long mouseY = userInput->getMouseY();
-
 
 	if ( pointInside( mouseX, mouseY ) )
 	{
@@ -85,7 +82,6 @@ void aButton::update()
 				g_soundSystem->playDigitalSample( clickSFX );
 			else
 				g_soundSystem->playDigitalSample( disabledSFX );
-
 		}
 		if (userInput->isLeftClick())
 		{
@@ -152,7 +148,6 @@ void aButton::render()
 
 			gos_DrawQuads( location, 4 );
 
-
 		if ( data.textID && data.textFont )
 		{
 			char buffer[256];
@@ -196,14 +191,12 @@ void aButton::press(bool bPress)
 
 	state = bPress ? PRESSED : ENABLED;
 	makeUVs( location, state, data );	
-	
 }
 
 void aButton::makeAmbiguous( bool bAmbiguous )
 {
 	state = bAmbiguous ? AMBIGUOUS : ENABLED;
 	makeUVs( location, state, data );	
-
 }
 
 void aButton::disable( bool bDisable )
@@ -299,7 +292,6 @@ void aButton::init( FitIniFile& buttonFile, const char* str, HGOSFONT3D font )
 		return;
 	}
 
-
 	buttonFile.readIdLong( "ID", data.ID );
 	buttonFile.readIdString("FileName", data.fileName, 32 );
 
@@ -317,7 +309,6 @@ void aButton::init( FitIniFile& buttonFile, const char* str, HGOSFONT3D font )
 		data.textFont = aFont::loadFont( fontID, data.textSize );
 	else
 		data.textFont = 0;
-
 
 	long x, y, width, height;
 
@@ -349,8 +340,7 @@ void aButton::init( FitIniFile& buttonFile, const char* str, HGOSFONT3D font )
 		location[j].v = 0.f;
 		location[j].z = 0.f;
 	}
-		
-	
+
 	if ( 0 == textureHandle && data.fileName && strlen( data.fileName ) )
 	{
 		char file[256];
@@ -376,7 +366,6 @@ void aButton::init( FitIniFile& buttonFile, const char* str, HGOSFONT3D font )
 
 	if ( NO_ERR != buttonFile.readIdLong( "VNormal", data.stateCoords[0][1] ) )
 		data.stateCoords[0][1] = -1.f;
-
 
 	if ( NO_ERR != buttonFile.readIdLong( "UPressed", data.stateCoords[1][0] ) )
 		data.stateCoords[1][0] = -1.f;
@@ -411,7 +400,6 @@ void aButton::init( FitIniFile& buttonFile, const char* str, HGOSFONT3D font )
 
 	if ( data.textID )
 		buttonFile.readIdBoolean( "TextOutline", data.outlineText );
-
 
 	if ( NO_ERR == buttonFile.readIdLong( "XTextLocation", data.textRect.left ) )
 	{
@@ -450,12 +438,9 @@ void aButton::init( FitIniFile& buttonFile, const char* str, HGOSFONT3D font )
 		counter++;
 	}
 
-
 	buttonFile.seekBlock( str );
 	disable( 0 );
 	press( 0 );
-
-
 }
 
 aAnimButton::aAnimButton()
@@ -463,7 +448,6 @@ aAnimButton::aAnimButton()
 	animateText = 1;
 	animateBmp = 1;
 	bAnimateChildren = 1;
-
 }
 
 aAnimButton& aAnimButton::operator=( const aAnimButton& src)
@@ -489,7 +473,6 @@ void aAnimButton::copyData( const aAnimButton& src )
 		normalData = src.normalData;
 		toggleButton = src.toggleButton;
 		bAnimateChildren = src.bAnimateChildren;
-
 	}
 }
 void aAnimButton::destroy()
@@ -530,7 +513,6 @@ void aAnimButton::init( FitIniFile& file, const char* headerName, HGOSFONT3D fon
 	{
 		bAnimateChildren = bTmp;
 	}
-	
 }
 
 void aAnimButton::update()
@@ -571,7 +553,6 @@ void aAnimButton::update()
 				}	
 				
 				g_soundSystem->playDigitalSample( clickSFX );
-			
 			}
 			else
 			{
@@ -584,7 +565,6 @@ void aAnimButton::update()
 
 			if ( getParent() && !messageOnRelease && pointInside(userInput->getMouseDragX(), userInput->getMouseDragY() ) )
 				getParent()->handleMessage( aMSG_LEFTMOUSEDOWN, data.ID );			
-	
 		}
 		else if (userInput->getMouseLeftHeld() > holdTime && getParent() && !messageOnRelease
 			&& pointInside(userInput->getMouseDragX(), userInput->getMouseDragY()) )
@@ -615,7 +595,6 @@ void aAnimButton::update()
 			state = HIGHLIGHT;
 			makeUVs( location, state, data );	
 		}
-		
 	}
 	else if ( state == PRESSED   )
 	{
@@ -664,8 +643,6 @@ void aAnimButton::update()
 	highlightData.update();
 	pressedData.update();
 	normalData.update();
-
-
 }
 void aAnimButton::render()
 {
@@ -688,8 +665,6 @@ void aAnimButton::render()
 	{
 		update( normalData );
 	}
-
-
 }
 
 void aAnimButton::update( const aAnimation& animData )
@@ -733,8 +708,6 @@ void aAnimButton::update( const aAnimation& animData )
 		float newLeft = midX - scaleX;
 		float newTop = midY - scaleY;
 
-
-
 		moveToNoRecurse( newLeft, newTop );
 		resize( width() * scaleX, height() * scaleY );
 		aButton::render();
@@ -743,9 +716,6 @@ void aAnimButton::update( const aAnimation& animData )
 	}
 	else
 		aButton::render();
-
-
-
 }
 
 void aButton::move( float offsetX, float offsetY )
@@ -793,9 +763,4 @@ void aAnimButton::setAnimationInfo( aAnimation* normal, aAnimation* highlight,
 	else
 		disabledData.destroy();
 }
-
-
-
-
-
 

@@ -7,9 +7,7 @@ gameTacMap.h			: Interface for the gameTacMap component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef TACMAP_H
 #include "TacMap.h"
-#endif
 
 //*************************************************************************************************
 
@@ -39,7 +37,6 @@ class GameTacMap: public TacMap
 
 	// if the world coords do not lie on the map, they will be changed.
 	void worldToTacMap( Stuff::Vector3D& world, gos_VERTEX& tac );	
-
 
 	bool inRegion( int x, int y ){ return x > left && x < right && y > top && y < bottom; }
 	
@@ -75,9 +72,7 @@ class GameTacMap: public TacMap
 	long objectiveAnimationId;
 	long objectiveNumFlashes;
 	float objectiveFlashTime;
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( gameTacMap.h )

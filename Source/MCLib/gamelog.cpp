@@ -8,18 +8,9 @@
 
 //---------------------------------------------------------------------------
 // Include files
-#ifndef FILE_H
 #include <file.h>
-#endif
-
-#ifndef GAMELOG_H
 #include "gamelog.h"
-#endif
-
-#ifndef HEAP_H
 #include <heap.h>
-#endif
-
 #include <malloc.h>
 #include <stdlib.h>
 #include <stdio.h>

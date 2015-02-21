@@ -3,9 +3,7 @@
 //===========================================================================//
 
 #include "stdafx.h"
-
 #include "version.h" 
-
 #include "..\..\ARM\Microsoft.Xna.Arm.h"
 using namespace Microsoft::Xna::Arm;
 
@@ -212,8 +210,7 @@ long convertASE2TGL (char *file)
 				ProviderType_Primary);
 			iniAsset->AddProperty("Type", "Object Definition");
 			iniAsset->AddProperty("Version", "1.0");
-			
-			
+
 			TG_TypeMultiShape *shape = NULL;
 			
 			result = iniFile.seekBlock("TGLData");
@@ -453,7 +450,6 @@ long convertASE2TGL (char *file)
 			
 			iniAsset->Close();
 		}
-
 	} while (FindNextFile(searchHandle,&findResult) != 0);
 
 	FindClose(searchHandle);
@@ -651,7 +647,6 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	memset( listName, 0, sizeof(listName) );
 	ParseCommandLine(lpCmdLine);
 
-
 	// Initialize COM and create an instance of the InterfaceImplementation class:
 	CoInitialize(NULL);
 	armProvider = CreateProviderEngine("AseConv", versionStamp);
@@ -711,5 +706,4 @@ void GetGameOSEnvironment( char* CommandLine )
 
 	Environment.version					= versionStamp;
 }
-
 

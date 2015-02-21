@@ -198,7 +198,6 @@ namespace Stuff {
 		static bool
 			TestClass();
 	};
-
 }
 
 #include "AffineMatrix.hpp"

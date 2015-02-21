@@ -8,96 +8,36 @@
 //
 //***************************************************************************
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef WARRIOR_H
 #include "warrior.h"
-#endif`
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef GROUP_H
 #include "group.h"
-#endif
-
-#ifndef GAMELOG_H
 #include "gamelog.h"
-#endif
-
-#ifndef TEAM_H
 #include "team.h"
-#endif
-
-#ifndef COMNDR_H
 #include "comndr.h"
-#endif
-
-#ifndef MOVER_H
 #include "mover.h"
-#endif
-
-#ifndef MOVEMGR_H
 #include "movemgr.h"
-#endif
 
 #ifdef USE_MECHS
-#ifndef MECH_H
 #include "mech.h"
-#endif
+
 #endif
 
-#ifndef GVEHICL_H
 #include "gvehicl.h"
-#endif
-
-#ifndef BLDNG_H
 #include "bldng.h"
-#endif
-
-#ifndef GATE_H
 #include "gate.h"
-#endif
-
-#ifndef TURRET_H
 #include "turret.h"
-#endif
-
-#ifndef TACORDR_H
 #include "tacordr.h"
-#endif
-
-#ifndef RADIO_H
 #include "radio.h"
-#endif
-
-#ifndef MULTPLYR_H
 #include "multplyr.h"
-#endif
-
-#ifndef GOAL_H
 #include "goal.h"
-#endif
-
-#ifndef TURRET_H
 #include "turret.h"
-#endif
-
-#ifndef BLDNG_H
 #include "bldng.h"
-#endif
 
 #ifdef USE_ELEMENTALS
-#ifndef ELEMNTL_H
 #include "elemntl.h"
-#endif
+
 #endif
 
 #define	TESTING_WITH_PLAYER	1
@@ -197,7 +137,6 @@ char* SkillsTable[NUM_SKILLS] = {
 	"Gunnery"
 };
 
-
 //-----------------------------------------------
 // First column is ThreatRating, second column is
 // for Inner Sphere, third column is Clan...
@@ -239,8 +178,6 @@ float WarriorRankScale[NUM_WARRIOR_RANKS] = {
 	999.0
 };
 
-
-
 char *SpecialtySkillsTable[NUM_SPECIALTY_SKILLS] = {
 	"LightMechSpecialist",
 	"LaserSpecialist",
@@ -269,7 +206,6 @@ char *SpecialtySkillsTable[NUM_SPECIALTY_SKILLS] = {
 	"GaussSpecialist",
 	"SharpShooter",					//Sharpshooter specialty
 };
-
 
 SortListPtr		MechWarrior::sortList = NULL;
 long			MechWarrior::numWarriors = 0;
@@ -456,7 +392,6 @@ long TargetPriorityList::calcAction (MechWarriorPtr pilot, GameObjectPtr target)
 				return(TACTICAL_ORDER_ATTACK_OBJECT);
 			//else
 			//	return(TACTICAL_ORDER_CAPTURE)
-
 		}
 		}
 	else {
@@ -857,7 +792,6 @@ void MechWarrior::init (bool create) {
 		skillPoints[i] = 0.0;
 		originalSkills[i] = 0;
 		startingSkills[i] = 0;
-		
 	}
 	professionalism = 40;
 	professionalismModifier = 0;
@@ -1193,7 +1127,6 @@ long MechWarrior::init (FitIniFile* warriorFile) {
 	enableTacOrderQueue();
 
 	return NO_ERR;
-
 }
 						
 #define OLD_ACKNOWLEDGE_MSG		57
@@ -1870,7 +1803,6 @@ bool MechWarrior::underHomeCommand (void) {
 	if (myVehicle)
 		return(myVehicle->getCommanderId() == Commander::home->getId());
 	return(false);
-
 }
 
 //---------------------------------------------------------------------------
@@ -2006,7 +1938,6 @@ void MechWarrior::eject (void) {
 		radioMessage(RADIO_EJECTING);
 		status = WARRIOR_STATUS_EJECTED;
 	}
-
 
 	//------------------------------------------
 	// Warrior's vehicle immediately disabled...
@@ -2284,7 +2215,6 @@ long MechWarrior::getAttackers (unsigned long* attackerList, float seconds) {
 		if (attackers[i].lastTime >= earliestTime)
 			attackerList[count++] = attackers[i].WID;
 	return(count);
-	
 }
 
 //---------------------------------------------------------------------------
@@ -2353,7 +2283,6 @@ void MechWarrior::setLastTarget (GameObjectPtr target, bool obliterate, bool con
 	lastTargetTime = g_missionTime;
 	lastTargetObliterate = obliterate;
 	lastTargetConserveAmmo = conserveAmmo;
-
 }
 
 //---------------------------------------------------------------------------
@@ -2925,7 +2854,6 @@ long MechWarrior::calcMovePath (long selectionIndex, unsigned long moveParams) {
 				triggerAlarm(PILOT_ALARM_NO_MOVEPATH, LastMoveCalcErr);
 			}
 			return(LastMoveCalcErr);
-
 		}
 
 		bool faceTarget = (moveParams & MOVEPARAM_FACE_TARGET) != 0;
@@ -3489,7 +3417,6 @@ long MechWarrior::combatDecisionTree (void) {
 			break;
 		}
 
-
 	GameObjectPtr target = getLastTarget(); //getAttackTarget(ORDER_CURRENT);
 
 	//------------------------------------------------------------------------
@@ -3635,7 +3562,6 @@ long MechWarrior::combatDecisionTree (void) {
 	BOOL cantConserve = FALSE;	// report if we're asked to use ammo conservation and that's impossible
 	if (attackType == ATTACK_CONSERVING_AMMO)
 		cantConserve = TRUE;
-
 
 	bool firedWeapon = false;
 	if (myVehicle->canFireWeapons() && (weaponsStatusResult > 0)) {
@@ -4345,7 +4271,6 @@ void MechWarrior::clearCurTacOrder (bool updateTacOrder) {
 					orderState = ORDERSTATE_GENERAL;
 				}
 				break;
-
 		}
 		if (newTacOrder.code != TACTICAL_ORDER_NONE) {
 			Assert((moveOrders.path[0] != NULL) && (moveOrders.path[1] != NULL), 0, " bad warrior path ");
@@ -4393,8 +4318,6 @@ void MechWarrior::clearCurTacOrder (bool updateTacOrder) {
 		newTacOrderReceived[ORDERSTATE_PLAYER] = false;
 		newTacOrderReceived[ORDERSTATE_ALARM] = false;
 	}
-
-
 }
 
 //---------------------------------------------------------------------------
@@ -4437,7 +4360,6 @@ void MechWarrior::setGeneralTacOrder (TacticalOrder newTacOrder) {
 
 void MechWarrior::setPlayerTacOrder (TacticalOrder newTacOrder, bool fromQueue) {
 
-	
 	tacOrder[ORDERSTATE_PLAYER] = newTacOrder;
 	newTacOrderReceived[ORDERSTATE_PLAYER] = true;
 	curPlayerOrderFromQueue = fromQueue;
@@ -5749,7 +5671,6 @@ long MechWarrior::orderStop (bool unitOrder, bool setTacOrder) {
 //	if (origin == ORDER_ORIGIN_COMMANDER)
 //		setGeneralTacOrder(tacOrder);
 
-
 	getVehicle()->suppressionFire = 0;
 
 	return(tacOrder.status(this));
@@ -5824,7 +5745,6 @@ void MechWarrior::clearMovePath (long pathNum) {
 	if (moveOrders.path[pathNum]) 
 		moveOrders.path[pathNum]->clear();
 }
-
 
 long MechWarrior::orderMoveToObject (bool unitOrder, bool setTacOrder, long origin, GameObjectPtr target, long fromArea, long selectionIndex, unsigned long params) {
 
@@ -7164,9 +7084,7 @@ void MechWarrior::drawWaypointPath()
 
 			tmpPos = tacOrderQueue[i].point;
 		}
-
 	}
-
 }
 
 void MechWarrior::updateDrawWaypointPath()
@@ -7212,7 +7130,6 @@ void MechWarrior::setup (void) {
 		if (warriorList[i] == NULL)
 			Fatal(i, " MechWarrior.setup: NULL warrior ");
 	}
-
 }
 
 //---------------------------------------------------------------------------
@@ -7797,7 +7714,6 @@ void MechWarrior::initGoalManager (long poolSize) {
 	goalManager->build();
 	//--------------------------------------
 	// For now, process this map manually...
-
 }
 
 //---------------------------------------------------------------------------
@@ -8230,5 +8146,4 @@ bool MechWarrior::warriorInUse (char *warriorName)
 	return false;
 }
 //---------------------------------------------------------------------------
-
 

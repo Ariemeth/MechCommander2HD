@@ -10,7 +10,6 @@ LogisticsComponent.h			: Interface for the LogisticsComponent component.
 // forward declarations
 class File;
 
-
 class LogisticsComponent
 {
 	public:
@@ -68,7 +67,6 @@ class LogisticsComponent
 
  		WEAPON_RANGE getRangeType() const { return rangeType; }
 
-
 	private:
 
 		int ID; // index into csv
@@ -104,15 +102,7 @@ class LogisticsComponent
 		int extractString( char*& pFileLine, char* pBuffer, int bufferLength );
 		int extractInt( char*& pFileLine );
 		float extractFloat( char*& pFileLine );
-
-
-
-
-
-
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( LogisticsComponent.h )

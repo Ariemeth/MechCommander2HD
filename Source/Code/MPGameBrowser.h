@@ -9,28 +9,17 @@ MPGameBrowser.h			: Interface for the MPGameBrowser component.
 
 //*************************************************************************************************
 
-#ifndef LOGISTICSSCREEN_H
 #include "LogisticsScreen.h"
-#endif
-
 #include "aSystem.h"
 #include "aListBox.h"
 #include "AttributeMeter.h"
 #include "SimpleCamera.h"
-
 #include "multplyr.h"
-
-#ifndef AANIM_H
 #include "aAnim.h"
-#endif
-
-#ifndef MPHOSTGAME_H
 #include "MpHostGame.h"
-#endif
 
 class aButton;
 //struct _MC2Session;
-
 
 class aStyle3TextListItem : public aTextListItem
 {
@@ -58,7 +47,6 @@ public:
 	const char*		getText( int which );
 
 	const MC2Session* getSession (void) { return(&session); }
-
 
 	aGameListItem& operator=( const aGameListItem& );
 
@@ -93,7 +81,6 @@ public:
 	virtual void update();
 	virtual int			handleMessage( unsigned long, unsigned long );
 
-
 private:
 	int indexOfButtonWithID(int id);
 
@@ -111,8 +98,6 @@ private:
 	int						bSortUpward;
 	long					oldScrollPos;
 };
-
-
 
 //*************************************************************************************************
 #endif  // end of file ( MPGameBrowser.h )

@@ -12,74 +12,31 @@
 #include "mclib.h"
 #endif
 
-#ifndef TEAM_H
 #include "Team.h"
-#endif
-
-#ifndef CARNAGE_H
 #include "carnage.h"
-#endif
-
-#ifndef MOVE_H
 #include "move.h"
-#endif
-
-#ifndef COLLSN_H
 #include "collsn.h"
-#endif
-
-#ifndef MULTPLYR_H
 #include "multplyr.h"
-#endif
-
-#ifndef WARRIOR_H
 #include "warrior.h"
-#endif
 
 #ifdef USE_ELEMENTALS
-#ifndef ELEMNTL_H
 #include "elemntl.h"
-#endif
+
 #endif
 
 #ifdef USE_TACMAP
-#ifndef TERRMAP_H
 #include "terrmap.h"
-#endif
+
 #endif
 
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef CONTACT_H
 #include "contact.h"
-#endif
-
-#ifndef BLDNG_H
 #include "bldng.h"
-#endif
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
-
-#ifndef MISSION_H
 #include "mission.h"
-#endif
-
-#ifndef WEAPONFX_H
 #include "weaponfx.h"
-#endif
-
-#ifndef GAMELOG_H
 #include "gamelog.h"
-#endif
-
-#ifndef LOGISTICSDATA_H
 #include "LogisticsData.h"
-#endif
-
 #include "..\resource.h"
 
 #define BLIP_FRAME_RATE		0.067
@@ -247,7 +204,6 @@ long BuildingType::init (FilePtr objFile, unsigned long fileSize) {
 	result = bldgFile.readIdLong( "BuildingDescription", buildingDescriptionID );
 	if ( result != NO_ERR )
 		buildingDescriptionID = -1;
-
 
 	result = bldgFile.readIdLong( "BuildingDescription", buildingDescriptionID );
 	if ( result != NO_ERR )
@@ -783,8 +739,7 @@ long Building::update (void)
 			{
 				setTargeted( true );
 			}
-	
-			
+
 			appearance->setObjectParameters(position,((ObjectAppearance*)appearance)->rotation, drawFlags,getTeamId(),Team::getRelation(getTeamId(), Team::home->getId()));
 			bool inView = appearance->recalcBounds();
 	
@@ -910,7 +865,6 @@ long Building::update (void)
 		// This will make mission objectives cascade badly!
 		setAwake(false);
 	}
-
 
 	return(1);
 }
@@ -1104,7 +1058,6 @@ void Building::render (void) {
 		{
 			appearance->setObjectNameId(((BuildingTypePtr)getObjectType())->buildingTypeName);
 		}
-
 
 		windowsVisible = g_framesSinceMissionStart;
 		appearance->setVisibility(true,true);
@@ -1547,7 +1500,6 @@ long Building::handleWeaponHit (WeaponShotInfoPtr shotInfo, bool addMultiplayChu
 	
 	return(NO_ERR);
 }
-
 
 //---------------------------------------------------------------------------
 

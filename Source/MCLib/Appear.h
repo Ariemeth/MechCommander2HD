@@ -10,18 +10,9 @@
 #define APPEAR_H
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef DAPPEAR_H
 #include "dappear.h"
-#endif
-
-#ifndef DAPRTYPE_H
 #include "daprtype.h"
-#endif
-
-#ifndef FLOATHELP_H
 #include "floathelp.h"
-#endif
-
 #include <stuff\stuff.hpp>
 //---------------------------------------------------------------------------
 // Macro definitions
@@ -43,14 +34,12 @@
 extern FloatHelpPtr globalFloatHelp;
 extern unsigned long currentFloatHelp;
 
-
 // would have loved to make object flags, but it looks like we're out...
 #define DRAW_NORMAL						0x00
 #define DRAW_BARS						0x01
 #define DRAW_TEXT						0x02
 #define DRAW_BRACKETS					0x04
 #define DRAW_COLORED					0x08
-
 
 struct _ScenarioMapCellInfo;
 struct _GameObjectFootPrint;
@@ -173,7 +162,6 @@ class Appearance
 
 		void drawPilotName(char *text, unsigned long color ); // next line below drawTextHelp
 
-		
 		virtual bool recalcBounds (void)
 		{
 			//-------------------------------------------------------
@@ -360,7 +348,6 @@ class Appearance
 			return 0.0f;
 		}
 
-
 		virtual void setBrake (bool brake)
 		{
 		}
@@ -454,7 +441,6 @@ class Appearance
 
 		virtual void markLOS (bool clearIt = false)
 		{
-		
 		}
 		
 		virtual void scale (float scaleFactor)
@@ -524,7 +510,6 @@ class Appearance
 		
 		virtual void setLightsOut (bool lightFlag)
 		{
-		
 		}
 
 		virtual bool PerPolySelect (long mouseX, long mouseY)

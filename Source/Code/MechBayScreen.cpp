@@ -19,8 +19,6 @@ MechBayScreen.cpp			: Implementation of the MechBayScreen component.
 
 MechBayScreen* MechBayScreen::s_instance = NULL;
 
-
-
 MechBayScreen::MechBayScreen() : mechListBox( 1, 0 )
 {
 	pCurMech = NULL;
@@ -36,7 +34,6 @@ MechBayScreen::MechBayScreen() : mechListBox( 1, 0 )
 	dragLeft = 0;
 
 	helpTextArrayID = 13;
-
 }
 
 MechBayScreen::~MechBayScreen()
@@ -79,7 +76,6 @@ void MechBayScreen::init(FitIniFile* file)
 
 	int count = 0;
 
-	
 	long x = 0;
 	long y = 0;
 
@@ -103,12 +99,10 @@ void MechBayScreen::init(FitIniFile* file)
 	mechListBox.drawCBills( 0 );
 	mechListBox.setScrollBarOrange();
 
-
 	// initialize the attribute meeters
 	attributeMeters[0].init( file, "AttributeMeter0" );
 	attributeMeters[1].init( file, "AttributeMeter1" );
 	attributeMeters[2].init( file, "AttributeMeter2" );
-
 
 	dropWeightMeter.init( file, "DropWeightMeter" );
 	file->readIdLong( "RayCenterX", weightCenterX );
@@ -126,11 +120,8 @@ void MechBayScreen::init(FitIniFile* file)
 
 	mechCamera->init( rects[1].left(), rects[1].top(), rects[2].right(), rects[1].bottom() );
 
-	
-	
 	for ( int i= 0; i < buttonCount; i++ )
 		buttons[i].setMessageOnRelease();
-
 
 	textObjects[7].setText( "" );
 	textObjects[8].setText( "" );
@@ -144,7 +135,6 @@ void MechBayScreen::init(FitIniFile* file)
 		attributeMeters[i].setValue(0);
 	}
 	setMech( NULL, 0 );
-
 }
 
 void MechBayScreen::begin()
@@ -187,12 +177,9 @@ void MechBayScreen::begin()
 					MechListBoxItem* item = new MechListBoxItem( (*iter), 1 );
 					mechListBox.AddItem( item );
 				}
-
 			}
 		}
 
-	
-	
 	// reset the old mech to NULL to make sure everything gets set
 	
 	mechListBox.drawCBills( 0 );
@@ -235,7 +222,6 @@ void MechBayScreen::begin()
 			}
 		}
 	}
-	
 }
 void MechBayScreen::render(int xOffset, int yOffset)
 {
@@ -250,14 +236,10 @@ void MechBayScreen::render(int xOffset, int yOffset)
 	if ( !xOffset && !yOffset && pCurMech)
 		mechCamera->render();
 
-
-
 	for ( int i = 0; i < 3; i++ )
 	{
 		attributeMeters[i].render(xOffset, yOffset);
 	}
-
-
 
 	drawWeightMeter(xOffset, yOffset);
 
@@ -271,13 +253,8 @@ void MechBayScreen::render(int xOffset, int yOffset)
 	if ( MPlayer && ChatWindow::instance() )
 		ChatWindow::instance()->render(xOffset, yOffset);
 
-
-
-
 	if ( pDragMech )
 		dragIcon.render();
-
-
 }
 
 void MechBayScreen::drawWeightMeter(long xOffset, long yOffset)
@@ -354,10 +331,7 @@ void MechBayScreen::drawWeightMeter(long xOffset, long yOffset)
 			v[0].argb = v[1].argb = v[2].argb = interpolateColor( weightStartColor, weightEndColor, i * .05 );
 
 		gos_DrawTriangles( v, 3 );
-		
-
 	}
-
 
 	dropWeightMeter.render(xOffset, yOffset);
 }
@@ -392,7 +366,6 @@ void MechBayScreen::update()
 
 	sprintf( str, tmpStr, currentDropWeight, maxDropWeight );
 	textObjects[6].setText( str );
-
 
 	// update drag and drop
 	// must be done before Icon's are updated, or we can get out of sync
@@ -458,7 +431,6 @@ void MechBayScreen::update()
 					addWeightAmount = pDragMech->getMaxWeight();
 					addWeightAnim.begin();
 					removeWeightAnim.end();
-		
 				}
 				else
 				{
@@ -470,15 +442,12 @@ void MechBayScreen::update()
 					}
 					LogisticsData::instance->removeMechFromForceGroup( pDragMech, true );
 					reinitMechs();
-
 				}
 			}
 		
 			pDragMech = 0;
 		}
-
 	}
-
 
 	// update icon selection
 	int newSel = -1;
@@ -510,13 +479,11 @@ void MechBayScreen::update()
 		if ( oldSel != -1 )
 			pIcons[oldSel].select( 0 );
 		mechListBox.SelectItem( -1 );
-		
 	}
 	if ( removeMech != -1 )
 	{
 		 removeSelectedMech();
 	}
-
 
 	if ( !MPlayer || !ChatWindow::instance()->pointInside(userInput->getMouseX(), userInput->getMouseY()) )
 		LogisticsScreen::update();
@@ -529,7 +496,6 @@ void MechBayScreen::update()
 	else
 		getButton( MB_MSG_REMOVE )->disable(0);
 
-	
 	// update list box, 
 	oldSel = mechListBox.GetSelectedItem();
 	mechListBox.update();
@@ -565,8 +531,6 @@ void MechBayScreen::update()
 	else
 		getButton( MB_MSG_ADD )->disable(0);
 
-		
-
 	if ( MPlayer && ( !MPlayer->missionSettings.variants || !pCurMech ) )
 	{
 		getButton( MB_MSG_CHANGE_LOADOUT )->disable( true );
@@ -590,15 +554,8 @@ void MechBayScreen::update()
 		}
 	}
 
-
-
-
-
 	if ( MPlayer && ChatWindow::instance() )
 		ChatWindow::instance()->update();
-
-
-
 }
 
 int	MechBayScreen::handleMessage( unsigned long message, unsigned long who )
@@ -646,7 +603,6 @@ int	MechBayScreen::handleMessage( unsigned long message, unsigned long who )
 		break;
 	}
 
-
 	return 0;
 }
 
@@ -691,7 +647,6 @@ void MechBayScreen::addSelectedMech()
 			mechListBox.SelectItem( -1 );
 		}
 	}
-
 }
 
 void MechBayScreen::removeSelectedMech()
@@ -738,10 +693,7 @@ void MechBayScreen::removeSelectedMech()
 
 	if ( !forceGroupCount )
 		selectFirstViableLBMech();
-
-
 }
-
 
 void MechBayScreen::end()
 {
@@ -805,7 +757,6 @@ void MechBayScreen::setMech( LogisticsMech* pMech,  bool bCommandFromLB )
 		textObjects[9].setText( str );
 		attributeMeters[1].setValue( pCurMech->getSpeed()/MAX_SPEED_RANGE );
 
-
 		// jump
 		int jumpRange = pCurMech->getJumpRange();
 		sprintf( str, "%ld", jumpRange * 25 );
@@ -828,7 +779,6 @@ void MechBayScreen::setMech( LogisticsMech* pMech,  bool bCommandFromLB )
 		{
 			attributeMeters[i].setValue(0);
 		}
-
 	}
 }
 
@@ -840,13 +790,11 @@ void MechBayScreen::beginDrag( LogisticsMech* pMech )
 	if ( !pMech )
 		return;
 
-
 	// need to set the uv's of the mech icon
 	MechListBox::initIcon( pMech, dragIcon );
 
 	dragIcon.moveTo( userInput->getMouseX() - dragIcon.width() / 2, 
 			userInput->getMouseY() - dragIcon.height() / 2 );
-
 
 	pDragMech = pMech;
 
@@ -859,7 +807,6 @@ void MechBayScreen::beginDrag( LogisticsMech* pMech )
 		}
 		pDragMech = pMech;
 
-
 		if ( !LogisticsData::instance->canAddMechToForceGroup( pMech ) )
 		{
 			pDragMech = 0;
@@ -868,7 +815,6 @@ void MechBayScreen::beginDrag( LogisticsMech* pMech )
 
 		LogisticsData::instance->addMechToForceGroup( pMech, forceGroupCount+1 );
 		dragLeft = 0;
-		
 	}
 	else
 	{
@@ -901,14 +847,11 @@ void MechBayScreen::beginDrag( LogisticsMech* pMech )
 					pIcons[i].setPilot( NULL );
 				}
 
-
 				break;
 			}
-
 		}
 		dragLeft = 1;
 	}
-	
 }
 
 void MechBayScreen::reinitMechs()
@@ -916,7 +859,6 @@ void MechBayScreen::reinitMechs()
 	
 	int count = 0;
 
-	
 	int maxUnits = 12;
 
 	if ( MPlayer )
@@ -944,14 +886,12 @@ void MechBayScreen::reinitMechs()
 		}
 	}
 
-
 	forceGroupCount = 0;
 
 	// initialize both the inventory and icon lists
 	EList< LogisticsMech*, LogisticsMech* > mechList;
 	LogisticsData::instance->getInventory( mechList );
-	
-	
+
 	for ( EList< LogisticsMech*, LogisticsMech* >::EIterator iter = mechList.Begin();
 		!iter.IsDone(); iter++ )
 		{
@@ -968,7 +908,6 @@ void MechBayScreen::reinitMechs()
 				}
 				else 
 					(*iter)->setForceGroup( 0 );
-				
 			}
 		}
 }

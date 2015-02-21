@@ -629,8 +629,5 @@ namespace Stuff {
 				Radian *horizontal_fov,
 				Scalar *height_to_width
 			) const;
-
-
 	};
-
 }

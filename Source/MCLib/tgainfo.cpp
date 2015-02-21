@@ -8,12 +8,8 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef TGAINFO_H
 #include "tgainfo.h"
-#endif
-
 #include "EString.h"
-
 #include <string.h>
 #include <gameos.hpp>
 //---------------------------------------------------------------------------

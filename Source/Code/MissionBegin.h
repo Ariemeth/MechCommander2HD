@@ -102,9 +102,5 @@ class MissionBegin
 		float						buttonFlashTime;
 };
 
-
-
-
-
 //*************************************************************************************************
 #endif  // end of file ( MissionBegin.h )

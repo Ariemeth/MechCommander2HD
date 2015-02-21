@@ -15,9 +15,7 @@
 
 //--------------
 // Include Files
-#ifndef DSTD_H
 #include "dstd.h"
-#endif
 
 //--------------------------------
 // Structure and Class Definitions

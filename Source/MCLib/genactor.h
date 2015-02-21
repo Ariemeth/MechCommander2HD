@@ -13,21 +13,10 @@
 
 //---------------------------------------------------------------------------
 // Include files
-#ifndef APPEAR_H
 #include "appear.h"
-#endif
-
-#ifndef APPRTYPE_H
 #include "apprtype.h"
-#endif
-
-#ifndef MSL_H
 #include "msl.h"
-#endif
-
-#ifndef OBJECTAPPEARANCE_H
 #include "ObjectAppearance.h"
-#endif
 
 //**************************************************************************************
 #ifndef NO_ERR
@@ -243,6 +232,4 @@ class GenericAppearance : public ObjectAppearance
 //***************************************************************************
 
 #endif
-
-
 

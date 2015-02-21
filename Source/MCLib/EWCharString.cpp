@@ -27,12 +27,9 @@
 
 //***************************************************************
 
-
-
 #include <windows.h>
 #include <stdio.h>
 #include "EWCharString.h"
-
 #include <gameos.hpp>
 
 #ifdef UNICODE
@@ -48,7 +45,6 @@
 #define INT_SIZE_LENGTH 20
 extern int __ismbcodepage;
 #define _ISNOTMBCP  (__ismbcodepage == 0)
-
 
 static wchar_t * __cdecl wideRev (
         wchar_t * string
@@ -139,7 +135,6 @@ static long __cdecl atolong(
             return total;   /* return result, negated if necessary */
 }
 
-
 static char * __cdecl StrStr (
         const char * str1,
         const char * str2
@@ -166,7 +161,6 @@ static char * __cdecl StrStr (
         }
 
         return(NULL);
-
 }
 
 static char * __cdecl StrRev (
@@ -190,7 +184,6 @@ static char * __cdecl StrRev (
 
         return(start);
 }
-
 
 //***************************************************************
 
@@ -225,13 +218,10 @@ static char * __cdecl StrRev (
 #endif
 #endif
 
-
-
 const int EWCharString::INVALID_INDEX = -1;
 const int EWCharString::s_Alloc_Allign = 4;
 const int EWCharString::s_Force_Ansi =  0x10000;
 const int EWCharString::s_Force_Unicode = 0x20000;
-
 
 // keep around an empty buffer which all of our empty objects use
 EWCharString::EBuffer	EWCharString::EBuffer::s_Empty_Buffer = { 0, 0, 0 };
@@ -287,13 +277,8 @@ void	EWCharString::ChecEBufferDoRealloc()
 
 		memcpy( m_pBuffer + 1, p_Data, Cur_Length * sizeof( EWCSChar ) );
 		m_pBuffer->m_Data_Length = Cur_Length;
-
 	}
-
 }
-
-
-
 
 //***************************************************************
 
@@ -435,7 +420,6 @@ void EWCharString::Replace( int Start_Index, const EWCSChar* p_String )
 			m_pBuffer->m_Data_Length = Alloc_Length;
 
 			p_Old_Buffer->Release();		
-
 		}
 
 		// check to see if the p_String is null
@@ -443,9 +427,6 @@ void EWCharString::Replace( int Start_Index, const EWCSChar* p_String )
 		{
 			*(m_pBuffer->Data() + Start_Index) = 0;
 		}
-
-		
-
 	}	
 }
 
@@ -454,7 +435,6 @@ void EWCharString::Replace( int Start_Index, const EWCharString& String )
 {
 	Replace( Start_Index, String.m_pBuffer->Data() );
 }
-
 
 ///////////////////////////////////////////////////////////////
 void EWCharString::Insert( int Start_Index, const EWCSChar* p_String )
@@ -482,8 +462,7 @@ void EWCharString::Insert( int Start_Index, const EWCSChar* p_String )
 					(p_Tmp->m_Data_Length - Start_Index) * sizeof (EWCSChar) );
 		// write the string last in case we are writing over an old buffer
 		memcpy( m_pBuffer->Data() + Start_Index, p_String, Length * sizeof( EWCSChar ) );
-	
-		
+
 		m_pBuffer->m_Data_Length = Length + p_Tmp->m_Data_Length;
 
 		// Bill added - in some cases, removing some characters then inserting fewer
@@ -536,7 +515,6 @@ bool EWCharString::Remove( EWCharString& Sub_String )
 
 	return false;
 }
-
 
 ///////////////////////////////////////////////////////////////
 void EWCharString::Swap( EWCharString& Src )
@@ -649,7 +627,6 @@ void EWCharString::Format( const EWCSChar* p_Str, ... )
 					else
 						break;
 				}
-
 			}
 			gosASSERT( Precision >= 0);
 		}
@@ -818,7 +795,6 @@ void EWCharString::Format( const EWCSChar* p_Str, ... )
 				va_arg(Arg_List, __int64);
 				break;
 
-
 			default:
 				gosASSERT(false);  // unknown formatting option
 			}
@@ -843,12 +819,10 @@ void EWCharString::Format( const EWCSChar* p_Str, ... )
 	vsprintf(m_pBuffer->Data(), p_Str, Arg_List_Save);
 #endif
 
-
 	m_pBuffer->m_Data_Length = StrSize( m_pBuffer->Data() );
 
 	// clean up
 	va_end( Arg_List );
-	
 }
 
 /////////////////////////////////////////////////////////////////
@@ -877,7 +851,6 @@ EWCharString operator+( const EWCSChar* p_Begin_String,
 	Ret_String.m_pBuffer->m_Data_Length = Length + End_String.m_pBuffer->m_Data_Length;
 
 	return Ret_String;
-
 }
 
 /////////////////////////////////////////////////////////////////
@@ -899,7 +872,6 @@ EWCharString operator+( const EWCharString& Begin_String, const EWCSChar* p_End_
 	Ret_String.m_pBuffer->m_Data_Length = Length + Begin_String.m_pBuffer->m_Data_Length;
 
 	return Ret_String;
-
 }
 
 /////////////////////////////////////////////////////////////////
@@ -921,7 +893,6 @@ EWCharString operator+( const EWCSChar Char,  const  EWCharString& Begin_String 
 
 	return Tmp + Begin_String;
 }
-
 
 /////////////////////////////////////////////////////////////////
 int EWCharString::Compare( const EWCharString& Str_To_Compare, bool Case_Sensitive ) const
@@ -956,7 +927,6 @@ int EWCharString::Compare( const EWCSChar* p_String, bool Case_Sensitive ) const
 		return ( memcmp( m_pBuffer->Data(), p_String, Length ) );
 	}	
 	return (KStrCmp( m_pBuffer->Data(), p_String ) );
-	
 }
  	
 /////////////////////////////////////////////////////////////////
@@ -964,7 +934,6 @@ int EWCharString::Size() const 	// number of bytes
 {
 	return m_pBuffer->m_Data_Length * sizeof(EWCSChar);
 }
-
 
 /////////////////////////////////////////////////////////////////
 int EWCharString::Length() const	// number of characters
@@ -998,11 +967,9 @@ int EWCharString::Find( EWCSChar Char, int Start_Index ) const
 		}
 		
 		p_Tmp++;
-		
 	}
 
 	return INVALID_INDEX;
-
 }
 
 /////////////////////////////////////////////////////////////////
@@ -1027,12 +994,10 @@ int EWCharString::Find( const EWCSChar* p_Str_To_Find, int Start_Index ) const
 		Start_Index = 0;
 	}
 
-	
 	EWCSChar* p_Tmp = KStrStr( m_pBuffer->Data() + Start_Index, 
 							p_Str_To_Find );
 
 	return ( p_Tmp ? p_Tmp - m_pBuffer->Data() : INVALID_INDEX );
-
 }
 
 /////////////////////////////////////////////////////////////////
@@ -1054,7 +1019,6 @@ int EWCharString::ReverseFind ( EWCSChar Char, int End_Index ) const
 		
 		p_Tmp --;
 		End_Index --;
-	
 	}
 
 	return INVALID_INDEX;
@@ -1099,8 +1063,6 @@ EWCharString EWCharString::SubString( int Start_Index, int End_Index ) const
 	return Ret_String;
 }
 
-
-
 /////////////////////////////////////////////////////////////////
 unsigned short* EWCharString::CreateUNICODE() const
 {
@@ -1128,14 +1090,7 @@ char* 	EWCharString::CreateMBCS() const
 #endif
 
 	return p_Ret_String;
-
 }
-
-
-
- 	
-
-
 
 ///****************************************************************
 #ifdef K_UNICODE
@@ -1172,7 +1127,6 @@ const EWCharString& EWCharString::operator+=( char Char )
 
 	return *this;	
 }
-
 
 /////////////////////////////////////////////////////////////////
 EWCharString operator+( const EWCharString& Begin_String, char* p_End_String )
@@ -1517,9 +1471,6 @@ void EWCharString::Format( const char* p_Str, ... )
 
 	// clean up
 	va_end( Arg_List );
-	
-
-	
 }
 
 /////////////////////////////////////////////////////////////////
@@ -1566,12 +1517,7 @@ const EWCharString& EWCharString::operator=( char Char )
 	return operator=( Tmp );
 }
 
-
-
 #endif // Unicode
-
-
-
 
 //***************************************************************
 

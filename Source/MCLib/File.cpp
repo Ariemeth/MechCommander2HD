@@ -14,34 +14,15 @@
 
 //---------------------------------------------------------------------------
 // Include files
-#ifndef FILE_H
 #include "file.h"
-#endif
-
-#ifndef HEAP_H
 #include "heap.h"
-#endif
-
-#ifndef FFILE_H
 #include "ffile.h"
-#endif
-
-#ifndef PACKET_H
 #include "packet.h"
-#endif
-
-#ifndef FASTFILE_H
 #include "fastfile.h"
-#endif
-
-#ifndef UTILITIES_H
 #include "utilities.h"
-#endif
-
 #include <string.h>
 #include <io.h>
 #include <ctype.h>
-
 #include <windows.h>
 
 #ifndef _MBCS
@@ -528,8 +509,6 @@ long File::open(const char* buffer, int bufferLength )
 	}
 
 	return NO_ERR;
-
-
 }
 
 //---------------------------------------------------------------------------
@@ -750,7 +729,6 @@ long File::seek (long pos, long from)
 		}
 
 		logicalPosition = newPosition;
-
 	}
 	else if (fastFile)
 	{
@@ -1249,7 +1227,6 @@ long File::write (unsigned long pos, MemoryPtr buffer, long bytes)
 					return BAD_WRITE_ERR;
 				memcpy( fileImage + logicalPosition, buffer, bytes );
 				result = bytes;
-
 			}
 			else
 			{

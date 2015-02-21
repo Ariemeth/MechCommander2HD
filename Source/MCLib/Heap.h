@@ -14,16 +14,9 @@
 
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef DSTD_H
 #include "dstd.h"
-#endif
-
-#ifndef DHEAP_H
 #include "dheap.h"
-#endif
-
 #include <memory.h>
-
 #include <gameos.hpp>
 //---------------------------------------------------------------------------
 // Macro Definitions
@@ -131,7 +124,6 @@ class HeapManager
 		{
 			return committedSize;
 		}
-
 };
 
 //---------------------------------------------------------------------------
@@ -287,7 +279,6 @@ class HeapList
 			void dumpLog (void);
 
 			static void initializeStatistics();
-
 };
 
 //---------------------------------------------------------------------------

@@ -3,18 +3,12 @@
 //===========================================================================//
 
 #include <stdio.h>
-
-#ifndef FILE_H
 #include "file.h"
-#endif
-
 #include "vfx.h"
-
 #include <string.h>
 #include <gameos.hpp>
 
 unsigned char FindClosest( VFX_RGB* Palette, int r, int g, int b );
-
 
 //
 //
@@ -149,7 +143,6 @@ void InitAlphaLookup( VFX_RGB* Palette)
 	}
 }
 
-
 //
 //
 // 51% Green
@@ -182,5 +175,4 @@ unsigned char FindClosest( VFX_RGB* Palette, int r, int g, int b )
 	}
 	return Closest;
 }
-
 

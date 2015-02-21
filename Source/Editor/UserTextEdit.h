@@ -32,7 +32,6 @@ public:
 	CString	m_ResourceStringIDEdit;
 	//}}AFX_DATA
 
-
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CUserTextEdit)

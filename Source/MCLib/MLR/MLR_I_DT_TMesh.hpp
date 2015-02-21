@@ -15,7 +15,6 @@ namespace MidLevelRenderer {
 	//## MLRIndexedTriangleMesh with no color no lighting two texture layer  ###
 	//##########################################################################
 
-
 	class MLR_I_DT_TMesh:
 		public MLR_I_TMesh
 	{
@@ -123,7 +122,6 @@ namespace MidLevelRenderer {
 //			GetNumGOSVertices2UV()
 //				{ Check_Object(this); return numGOSVertices2uv; }
 
-
 		int
 			GetNumPasses();
 
@@ -169,5 +167,4 @@ namespace MidLevelRenderer {
 			MLRState*,
 			MLRState*
 		);
-
 }

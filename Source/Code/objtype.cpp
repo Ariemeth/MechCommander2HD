@@ -8,61 +8,20 @@
 
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef OBJTYPE_H
 #include "objtype.h"
-#endif
-
-#ifndef DOBJNUM_H
 #include "dobjnum.h"
-#endif
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef MECH_H
 #include "mech.h"
-#endif
-
-#ifndef GVEHICL_H
 #include "gvehicl.h"
-#endif
-
-#ifndef BLDNG_H
 #include "bldng.h"
-#endif
-
-#ifndef TERROBJ_H
 #include "terrobj.h"
-#endif
-
-#ifndef WEAPONBOLT_H
 #include "weaponbolt.h"
-#endif
-
-#ifndef CARNAGE_H
 #include "carnage.h"
-#endif
-
-#ifndef TURRET_H
 #include "turret.h"
-#endif
-
-#ifndef GATE_H
 #include "gate.h"
-#endif
-
-#ifndef ARTLRY_H
 #include "artlry.h"
-#endif
-
-#ifndef WEAPONFX_H
 #include "weaponfx.h"
-#endif
 
 //---------------------------------------------------------------------------
 
@@ -159,7 +118,6 @@ long ObjectType::init (FitIniFilePtr objFile) {
 	if (result != NO_ERR)
 		extentRadius = 0.0f;
 
-		
 	result = objFile->readIdLong("IconNumber", iconNumber);
 	if (result != NO_ERR)
 		iconNumber = -1;

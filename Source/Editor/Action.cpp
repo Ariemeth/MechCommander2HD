@@ -68,7 +68,6 @@ void ActionUndoMgr::AddAction( Action* pAction )
 
 	m_listUndoActions.Append( pAction );
 	m_CurrentPos = m_listUndoActions.Count() - 1;
-
 }// fun AddAction
 
 //***********************************************************************
@@ -132,7 +131,6 @@ const char* ActionUndoMgr::GetUndoString()
 	return strRet;
 }
 
-
 //***********************************************************************
 // Function:	HaveRedo
 // ParamsIn:	none
@@ -173,8 +171,6 @@ bool ActionUndoMgr::Redo()
 	ACTION_LIST::EIterator iter = m_listUndoActions.Iterator( m_CurrentPos );
 
 	return (*iter)->redo();
-
-
 }
 
 //************************************************************************
@@ -187,7 +183,6 @@ bool ActionUndoMgr::Redo()
 void ActionUndoMgr::Reset()
 {
 	EmptyUndoList();
-
 }
 
 //************************************************************************
@@ -240,8 +235,6 @@ bool ActionUndoMgr::ThereHasBeenANetChangeFromWhenLastSaved()
 	}
 }
 
-
-
 //-----------------------------------------------------------------------
 // Function:	ActionPaintTile::Redo
 // ParamsIn:	none
@@ -253,7 +246,6 @@ bool ActionPaintTile::redo()
 {
 	return doRedo();
 }
-
 
 bool ActionPaintTile::doRedo()
 { 
@@ -278,7 +270,6 @@ bool ActionPaintTile::doRedo()
 		(*iter).terrainData = terrain;
 		(*iter).textureData = texture;
 		(*iter).elevation = elv;
-
 	}
 
 	return true;
@@ -333,14 +324,11 @@ void ActionPaintTile::addChangedVertexInfo( int row, int column )
 		{
 			if ( row == (*iter).row && column == (*iter).column )
 				return;	
-
 		}
 
 	// if we made it here, it isn't in there already
 	VertexInfo info( row, column );
 	vertexInfoList.Append( info );
-
-
 }
 
 bool ActionPaintTile::getOldHeight( int row, int column, float& height )
@@ -369,13 +357,10 @@ VertexInfo::VertexInfo( long newRow, long newColumn )
 	elevation = land->getTerrainElevation( row, column );
 	terrainData = land->getTerrain( row, column );
 	textureData = land->getTexture( row, column );
-
 }
 
-
-#ifndef EDITOROBJECTMGR_H
 #include "EditorObjectMgr.h"
-#endif
+
 ModifyBuildingAction::~ModifyBuildingAction()
 {
 	for ( OBJ_INFO_PTR_LIST::EIterator iter = buildingCopyPtrs.Begin(); !iter.IsDone(); iter++)

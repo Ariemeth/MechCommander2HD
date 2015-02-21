@@ -587,5 +587,4 @@ namespace Stuff {
 		SortedChainIteratorOf<T, V>::~SortedChainIteratorOf()
 	{
 	}
-
 }

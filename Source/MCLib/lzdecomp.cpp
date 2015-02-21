@@ -40,7 +40,6 @@ MemoryPtr		LZOrigDOSBuf = NULL;		//original offset to start of src buffer
 char			LZHashBuffer[16384];
 char			LZOldSuffix = 0;			//Current Suffix Value found
 
-
 //-----------------------------
 
 //-------------------------------------------------------------------------------
@@ -247,7 +246,6 @@ send_bytes:
 		mov		LZCodeMask,ebx
 
 		jmp   	GetCode
-
 
 error:
 eof:

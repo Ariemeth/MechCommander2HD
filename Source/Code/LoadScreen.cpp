@@ -34,7 +34,6 @@ TGAFileHeader* LoadScreen::waitingForPlayersMemory = 0;
 LoadScreen* LoadScreenWrapper::enterScreen = NULL;
 LoadScreen* LoadScreenWrapper::exitScreen = NULL;
 
-
 extern volatile bool mc2IsInMouseTimer;
 extern volatile bool mc2IsInDisplayBackBuffer;
 
@@ -162,8 +161,6 @@ void LoadScreen::changeRes( FitIniFile& outFile )
 		char progressPath[256];
 		char progressBackgroundPath[256];
 
-
-
 		long result = outFile.seekBlock( "LoadingBar" );
 		gosASSERT( result == NO_ERR );
 
@@ -171,7 +168,6 @@ void LoadScreen::changeRes( FitIniFile& outFile )
 		outFile.readIdLong( "YLocation", yProgressLoc );
 		outFile.readIdString( "FileName", progressPath, 255 );
 		outFile.readIdString( "BackgroundFileName", progressBackgroundPath, 255);
-
 
 		File tgaFile;
 		FullPathFileName path;
@@ -289,7 +285,6 @@ void LoadScreenWrapper::render( int xOffset, int yOffset )
 		exitScreen->render( xOffset, yOffset );
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -377,9 +372,7 @@ void LoadScreen::init(FitIniFile& file, DWORD neverFlush)
 	file.seekBlock( "AnimationTop2Out" );
 	outAnims[4].init( &file, "" );
 
-
 	text.init( &file, "AnimObject18" );
-	
 
 	if ( animObjectsCount )
 	{
@@ -402,7 +395,6 @@ void LoadScreen::init(FitIniFile& file, DWORD neverFlush)
 				animIndices[i] = 3;
 		}
 	}
-
 }
 
 void LoadScreen::update()
@@ -502,7 +494,6 @@ void ProgressTimer(	RECT& WinRect,DDSURFACEDESC2& mouseSurfaceDesc )
 	long srcWidth = 0;
 	long srcDepth = 0;
 
-
 	if ( loadProgress > 0 && loadProgress < 100 )
 	{
 		destX = 0;
@@ -560,10 +551,8 @@ void ProgressTimer(	RECT& WinRect,DDSURFACEDESC2& mouseSurfaceDesc )
 		destRight = destRight > WinRect.right ? WinRect.right : destRight;
 		destBottom = destBottom > WinRect.bottom ? WinRect.top : destBottom;
 
-
 		srcWidth = LoadScreen::waitingForPlayersMemory->width;
 		srcDepth = LoadScreen::waitingForPlayersMemory->pixel_depth/8;
-
 	}
 	else
 		return;
@@ -572,7 +561,6 @@ void ProgressTimer(	RECT& WinRect,DDSURFACEDESC2& mouseSurfaceDesc )
 
 		long destWidth = destRight - destX;
 		long destHeight = destBottom - destY;
-
 
 		for ( int y = 0; y < destHeight; y++ )
 		{
@@ -608,7 +596,6 @@ void ProgressTimer(	RECT& WinRect,DDSURFACEDESC2& mouseSurfaceDesc )
 						*pDest++ = baseColorRed;
 						*pDest++ = baseColorGreen;
 						*pDest++ = baseColorBlue;
-
 					}
 					else if ( mouseSurfaceDesc.ddpfPixelFormat.dwRGBBitCount == 16 )
 					{
@@ -641,12 +628,9 @@ void ProgressTimer(	RECT& WinRect,DDSURFACEDESC2& mouseSurfaceDesc )
 							pDest++;
 						}
 					}
-
-
 				}
 			}
 }
-
 
 void LoadScreen::setupOutAnims()
 {

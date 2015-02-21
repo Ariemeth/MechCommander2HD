@@ -11,25 +11,11 @@
 #ifndef BLDNG_H
 #define BLDNG_H
 
-#ifndef DBLDNG_H
 #include "dbldng.h"
-#endif
-
-#ifndef TERROBJ_H
 #include "terrobj.h"
-#endif
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef OBJTYPE_H
 #include "objtype.h"
-#endif
-
-#ifndef DWARRIOR_H
 #include "dwarrior.h"
-#endif
 
 //---------------------------------------------------------------------------
 
@@ -100,7 +86,6 @@ class BuildingType : public ObjectType {
 		virtual void destroy (void);
 		
 		virtual GameObjectPtr createInstance (void);
-
 
 		virtual bool handleCollision (GameObjectPtr collidee, GameObjectPtr collider);
 
@@ -381,13 +366,9 @@ class Building : public TerrainObject
 		void Load (BuildingData *data);
 
 		void CopyTo (BuildingData *data);
-
 };
 
 #endif
 
 //***************************************************************************
-
-
-
 

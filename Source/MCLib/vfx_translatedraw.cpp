@@ -13,7 +13,6 @@ typedef struct
 	DWORD	ymin;
 	DWORD	xmax;
 	DWORD	ymax;
-
 } SHAPEHEADER;
 
 //
@@ -31,9 +30,6 @@ unsigned int lookaside;
 static unsigned int tempXmax,tempXmin;
 static unsigned int minX,minY,maxY,SkipLeft,NewWidth,StartofLine,StartofClip,EndofClip;
 static unsigned int lines,DestWidth,paneX0,paneX1,paneY0,paneY1;
-
-
-
 
 /*
 ;
@@ -277,9 +273,6 @@ EndPacket:
 	jnz lineLoop
 	jmp Exit
 
-
-
-
 ;
 ;
 ; Lines are clipped off the bottom of the clip window
@@ -358,14 +351,12 @@ clineLoop:
 	jnz cStringPacket
 	jnc cEndPacket
 
-
 //cSkipPacket:
 	xor ecx,ecx
 	mov cl,[esi]
 	inc esi
 	add edi,ecx
 	jmp clineLoop
-
 
 cRunPacket:
 	mov cl,[esi]
@@ -381,7 +372,6 @@ crp2:
 	dec al
 	jnz crp1
 	jmp clineLoop
-
 
 cStringPacket:
 	mov cl,[esi]
@@ -402,7 +392,6 @@ crp3a:
 	lea esi,[esi+eax-1]
 	jmp clineLoop
 
-
 cEndPacket:
 	mov eax,DestWidth
 	mov edi,StartofLine
@@ -420,15 +409,6 @@ cEndPacket:
 	jnz clineLoop
 
 	jmp Exit
-
-
-
-
-
-
-
-
-
 
 //
 //
@@ -640,9 +620,6 @@ aEndPacket:
 	jnz alineLoop
 	jmp Exit
 
-
-
-
 ;
 ;
 ; Lines are clipped off the bottom of the clip window
@@ -744,7 +721,6 @@ acrp2:
 	jnz acrp1
 	jmp aclineLoop
 
-
 acStringPacket:
 	mov ch,[esi]
 	inc esi
@@ -766,7 +742,6 @@ acrp3a:
 	lea esi,[esi+eax-1]
 	jmp aclineLoop
 
-
 acEndPacket:
 	mov eax,DestWidth
 	mov edi,StartofLine
@@ -783,47 +758,9 @@ acEndPacket:
 	mov lines,eax
 	jnz aclineLoop
 
-
 Exit:       
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 ;----------------------------------------------------------------------------
@@ -1144,9 +1081,6 @@ EndPacket:
 	pop ebp
 	jmp Exit
 
-
-
-
 ;
 ;
 ; Lines are clipped off the bottom of the clip window
@@ -1228,7 +1162,6 @@ clineLoop:
 	jnz cStringPacket
 	jnc cEndPacket
 
-
 //cSkipPacket:
 	xor ecx,ecx
 	mov cl,[esi]
@@ -1243,7 +1176,6 @@ clineLoop:
 	je clineLoop
 //END DEBUG
 	jmp	assertError	//clineLoop
-
 
 cRunPacket:
 	mov cl,[esi]
@@ -1260,7 +1192,6 @@ crp2:
 	dec al
 	jnz crp1
 	jmp clineLoop
-
 
 cStringPacket:
 	mov cl,[esi]
@@ -1281,7 +1212,6 @@ crp3a:
 	and eax,255
 	lea esi,[esi+eax-1]
 	jmp clineLoop
-
 
 cEndPacket:
 	mov edx,DestWidth
@@ -1308,7 +1238,6 @@ cEndPacket:
 	jnz clineLoop
 	pop ebp
 	jmp Exit
-
 
 //
 //
@@ -1526,9 +1455,6 @@ aEndPacket:
 	pop ebp
 	jmp Exit
 
-
-
-
 ;
 ;
 ; Lines are clipped off the bottom of the clip window
@@ -1636,7 +1562,6 @@ acrp2:
 	jnz acrp1
 	jmp aclineLoop
 
-
 acStringPacket:
 	xor ecx,ecx
 	mov cl,[esi]
@@ -1659,7 +1584,6 @@ acrp3a:
 	and eax,255
 	lea esi,[esi+eax-1]
 	jmp aclineLoop
-
 
 acEndPacket:
 	mov edx,DestWidth
@@ -1686,7 +1610,6 @@ acEndPacket:
 	jnz aclineLoop
 	pop ebp
 	jmp Exit
-
 
 assertError:
 	pop ebp
@@ -1725,8 +1648,4 @@ assertError:
 Exit:       
 	}
 }
-
-
-
-
 

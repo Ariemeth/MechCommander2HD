@@ -10,99 +10,34 @@
 // Include Files
 
 //=============
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef DOBJMGR_H
 #include "dobjmgr.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef OBJTYPE_H
 #include "objtype.h"
-#endif
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef BLDNG_H
 #include "bldng.h"
-#endif
-
-#ifndef UNITDESG_H
 #include "unitdesg.h"
-#endif
-
-#ifndef ARTLRY_H
 #include "artlry.h"
-#endif
-
-#ifndef TURRET_H
 #include "turret.h"
-#endif
-
-#ifndef GROUP_H
 #include "group.h"
-#endif
-
-#ifndef TEAM_H
 #include "team.h"
-#endif
-
-#ifndef COMNDR_H
 #include "comndr.h"
-#endif
-
-#ifndef MECH_H
 #include "mech.h"
-#endif
-
-#ifndef GVEHICL_H
 #include "gvehicl.h"
-#endif
-
-#ifndef TERROBJ_H
 #include "terrobj.h"
-#endif
-
-#ifndef WEAPONBOLT_H
 #include "weaponbolt.h"
-#endif
-
-#ifndef CARNAGE_H
 #include "carnage.h"
-#endif
-
-#ifndef LIGHT_H
 #include "light.h"
-#endif
-
-#ifndef GATE_H
 #include "gate.h"
-#endif
 
 #ifdef USE_ELEMENTALS
-#ifndef ELEMNTL_H
 #include "elemntl.h"
-#endif
+
 #endif
 
-#ifndef COLLSN_H
 #include "collsn.h"
-#endif
-
-#ifndef WEAPONFX_H
 #include "weaponfx.h"
-#endif
-
-#ifndef MISSION_H
 #include "mission.h"
-#endif
 
 #define BRIDGE_OBJTYPE				448
 #define MINE1						60
@@ -252,7 +187,6 @@ void GameObjectManager::init (void) {
 		Terrain::objBlockInfo[i].firstHandle = 0;
 		Terrain::objBlockInfo[i].numObjects = 0;
 	}
-
 }
 
 //---------------------------------------------------------------------------
@@ -835,7 +769,6 @@ void GameObjectManager::countTerrainObjects (PacketFile* terrainFile, long first
 
 	delete terrainObjectFile;
 	delete pBuffer;
-
 }
 
 void GameObjectManager::countObject( ObjDataLoader *data)
@@ -2349,7 +2282,6 @@ GameObjectPtr GameObjectManager::findObjectByMouse (long mouseX, long mouseY) {
 	obj = findMoverByMouse(mouseX, mouseY, -1, false);
 	if (obj)
 		return(obj);
-	
 
 	//-------------------------------------------------------------------------
 	// If we still haven't found anything, check everything (including terrain)
@@ -2834,7 +2766,6 @@ void GameObjectManager::updateAppearancesOnly( bool terrain, bool movers, bool o
 					vehicles[i]->getAppearance()->setInView( inView );
 				}
 		}
-
 	}
 
 	if (other) {

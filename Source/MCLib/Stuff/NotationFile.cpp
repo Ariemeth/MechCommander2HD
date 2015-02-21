@@ -14,7 +14,6 @@ Macro::Macro(MString *macro, MString *replace)
 , m_replacement(*replace)
 , m_inUse(false)
 {
-
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -799,7 +798,6 @@ void
 
 		Macro::AddValue(macro_tree, buffer, entry);
 	}
-
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

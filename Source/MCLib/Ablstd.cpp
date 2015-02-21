@@ -8,26 +8,11 @@
 //***************************************************************************
 
 #include <stdio.h>
-
-#ifndef ABLGEN_H
 #include "ablgen.h"
-#endif
-
-#ifndef ABLERR_H
 #include "ablerr.h"
-#endif
-
-#ifndef ABLSCAN_H
 #include "ablscan.h"
-#endif
-
-#ifndef ABLSYMT_H
 #include "ablsymt.h"
-#endif
-
-#ifndef ABLPARSE_H
 #include "ablparse.h"
-#endif
 
 //***************************************************************************
 

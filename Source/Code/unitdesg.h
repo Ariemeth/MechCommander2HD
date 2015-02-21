@@ -51,7 +51,6 @@
 #define	AlliedLance6			335
 #define	AlliedLance7			336
 
-
 #define	MIN_UNIT_PART_ID		1
 #define	MAX_UNIT_PART_ID		511
 

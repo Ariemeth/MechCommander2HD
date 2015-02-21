@@ -7,14 +7,9 @@ DamageBrush.h			: Interface for the DamageBrush component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef BRUSH_H
 #include "Brush.h"
-#endif
-
 #include "Action.h"
 #include "EditorObjects.h"
-
-
 
 //*************************************************************************************************
 
@@ -39,7 +34,6 @@ class DamageBrush: public Brush
 	private:
 		ModifyBuildingAction* pAction;
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( DamageBrush.h )

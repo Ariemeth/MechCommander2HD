@@ -22,8 +22,6 @@ MechListBoxItem* MechListBoxItem::s_templateItem = NULL;
 bool MechListBox::s_DrawCBills = true;
 bool MechListBoxItem::bAddCalledThisFrame = 0;
 
-
-
 MechListBox::MechListBox( bool bDel, bool bInclude  )
 {
 	bDeleteIfNoInventory = bDel;
@@ -71,7 +69,6 @@ void MechListBox::update()
 				i--;
 				disableItemsThatCanNotGoInFG();
 
-
 				// find better thing to select if necessary
 				if ( itemSelected >= itemCount || itemSelected == -1 
 					|| items[itemSelected]->getState() == aListItem::DISABLED
@@ -86,12 +83,10 @@ void MechListBox::update()
 								SelectItem( j );
 								break;
 							}
-						
 					}
 					else
 						itemSelected = -1;					
 				}
-				
 			}
 		}
 	}
@@ -107,13 +102,10 @@ LogisticsMech* MechListBox::getCurrentMech()
 	return 0;
 }
 
-
-
 int MechListBox::init()
 {
 	if ( MechListBoxItem::s_templateItem )
 		return 0;
-
 
 	char path[256];
 	strcpy( path, artPath );
@@ -175,7 +167,6 @@ MechListBoxItem::MechListBoxItem( LogisticsMech* pRefMech, long count )
 	sprintf( text, "%ld", mechCount );
 	countText.setText( text );
 
-
 	MechListBox::initIcon( pRefMech, mechIcon );
 
 	variantName.setText( pMech->getName() );
@@ -197,7 +188,6 @@ MechListBoxItem::MechListBoxItem( LogisticsMech* pRefMech, long count )
 	//	addChild( &outline );
 
 	bDim = 0;
-
 }
 
 MechListBoxItem::~MechListBoxItem()
@@ -255,9 +245,7 @@ void MechListBoxItem::init( FitIniFile& file )
 			sprintf( blockName, "Animation%d", i );
 			s_templateItem->animations[0][i].init( &file, blockName );
 		}
-		
 	}
-
 }
 
 void MechListBoxItem::assignAnimation( FitIniFile& file, long& curAnim )
@@ -337,11 +325,9 @@ void MechListBoxItem::update()
 		
 		if ( animTime > 1.0f )
 			animTime = 0.f;
-		
 	}
 
 	bool isInside = pointInside( userInput->getMouseX(), userInput->getMouseY() );
-
 
 	for ( int i = 0; i < ANIMATION_COUNT; i++ )
 		animations[bOrange][i].update();
@@ -357,13 +343,11 @@ void MechListBoxItem::update()
 		if ( userInput->isLeftDrag() &&
 			pointInside( userInput->getMouseDragX(), userInput->getMouseDragY() ) )
 			startDrag();
-
 	}
 	else if ( state == aListItem::HIGHLITE )
 	{
 		for ( int i = 0; i < ANIMATION_COUNT; i++ )
 			animations[bOrange][i].setState( aAnimGroup::HIGHLIGHT );
-
 	}
 	else if ( state == aListItem::DISABLED &&  isShowing() )
 	{
@@ -388,8 +372,6 @@ void MechListBoxItem::update()
 	aObject::update();
 }
 
-
-
 void MechListBoxItem::render()
 {
 	if ( !MechListBox::s_DrawCBills )
@@ -401,9 +383,7 @@ void MechListBoxItem::render()
 	{
 		costText.showGUIWindow( 1 );
 		costIcon.showGUIWindow( 1 );
-
 	}
-
 
 	for ( int i = 0; i < this->pNumberOfChildren; i++ )
 	{
@@ -417,12 +397,9 @@ void MechListBoxItem::render()
 					long color = animations[bOrange][index].getCurrentColor( animations[bOrange][index].getState());
 					pChildren[i]->setColor( color );
 				}
-
-				
 			}
 		}
 		pChildren[i]->render();
-
 	}
 
 	if ( bDim )
@@ -436,14 +413,12 @@ void MechListBoxItem::render()
 
 	line.setColor(animations[bOrange][2].getCurrentColor(animations[bOrange][2].getState()));
 	line.render(location[0].x, location[0].y);
-
 }
 
 void MechListBoxItem::setMech()
 {
 	MechBayScreen::instance()->setMech( pMech );
 	MechPurchaseScreen::instance()->setMech( pMech, true );
-	
 }
 
 void MechListBoxItem::startDrag()
@@ -490,7 +465,6 @@ void MechListBox::initIcon( LogisticsMech* pMech, aObject& mechIcon )
 
 	mechIcon.setFileWidth(256.f);
 	mechIcon.setUVs( u, v, u2, v2 );
-
 }
 
 long MechListBox::AddItem(aListItem* itemString)
@@ -544,10 +518,8 @@ long MechListBox::AddItem(aListItem* itemString)
 				return InsertItem( itemString, i );
 			}
 		}
-
 	}
 
-	
 	return aListBox::AddItem( itemString );
 }
 
@@ -561,7 +533,6 @@ void	MechListBox::dimItem( LogisticsMech* pMech, bool bDim )
 				((MechListBoxItem*)items[i])->bDim = bDim;	
 			}
 		}
-		
 }
 
 void MechListBox::undimAll()
@@ -570,7 +541,6 @@ void MechListBox::undimAll()
 	{
 			
 			((MechListBoxItem*)items[i])->bDim = 0;	
-		
 	}
 }
 
@@ -657,11 +627,7 @@ void MechListBox::setOrange( bool bNewOrange )
 		scrollBar->setOrange( );
 	else
 		scrollBar->setGreen();
-
 }
-
-
-
 
 //*************************************************************************************************
 // end of file ( MechListBox.cpp )

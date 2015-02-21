@@ -8,20 +8,11 @@
 
 //---------------------------------------------------------------------------
 // Include files
-#ifndef FFILE_H
 #include "ffile.h"
-#endif
-
-#ifndef UTILITIES_H
 #include "utilities.h"
-#endif
-
 #include "lz.h"
-
 #include "zlib.h"
-
 #include <windows.h>
-
 #include <string.h>
 #include <gameos.hpp>
 

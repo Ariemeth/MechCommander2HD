@@ -17,7 +17,6 @@ OptionsScreenWrapper:
 #include "aSystem.h"
 #include "aListBox.h"
 
-
 class OptionsXScreen;
 
 class OptionsScreenWrapper
@@ -47,12 +46,7 @@ class OptionsScreenWrapper
 
 		OptionsXScreen*		pOptionsScreen;
 		bool		isActive;
-
 };
-
-
-
-
 
 //*************************************************************************************************
 #endif  // end of file ( OptionsScreenWrapper.h )

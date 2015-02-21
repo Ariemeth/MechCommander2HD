@@ -12,7 +12,6 @@
 #include <algorithm>
 #include "celine.h"
 
-
 BuildingLink::BuildingLink( const EditorObject* pParent )
 {
 	gosASSERT( pParent );
@@ -55,8 +54,6 @@ void BuildingLink::CopyData( const BuildingLink& Src )
 	}
 }
 
-
-
 bool BuildingLink::AddChild( const EditorObject* pObject )
 {
 	int ID = pObject->getID();
@@ -81,14 +78,12 @@ bool BuildingLink::AddChild( const EditorObject* pObject )
 	children.Append( tmp );
 
 	return true;
-
 }
 
 int BuildingLink::GetLinkCount( ) const
 {
 	return children.Count();
 }
-
 
 const Stuff::Vector3D& BuildingLink::GetParentPosition() const
 {
@@ -100,7 +95,6 @@ bool BuildingLink::HasChild( const EditorObject* pObject ) const
 	int ID = pObject->getID();
 	pObject->getPosition();
 
-	
 	for( EList< Info, const Info& >::EConstIterator iter = children.Begin();
 		!iter.IsDone(); iter++ )
 	{
@@ -145,7 +139,6 @@ bool BuildingLink::TypeCanBeParent( const EditorObject* pObject )
 	};
 
 	return false;
-
 }
 bool BuildingLink::CanLink( const EditorObject* pParent, const EditorObject* pChild  )
 {
@@ -291,7 +284,6 @@ static bool isInView(const Point3D &position)
 		}
 	}
 
-	
 	return(inView);
 }
 
@@ -354,9 +346,7 @@ void BuildingLink::render()
 			p1 = p2;
 			p1IsInView = p2IsInView;
 		}
-
 	}
-	
 }
 
 void	BuildingLink::SetParentAlignment( int alignment )
@@ -397,7 +387,4 @@ void	BuildingLink::SetParentPosition( const Stuff::Vector3D& pos )
 {
 	parent.pos = pos;
 }
-
-
-
 

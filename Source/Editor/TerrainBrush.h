@@ -7,9 +7,7 @@ TerrainBrush.h		: Interface for the TerrainBrush component. used to paint textur
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef BRUSH_H
 #include "Brush.h"
-#endif
 #include "Action.h"
 
 class TerrainBrush: public Brush
@@ -69,8 +67,6 @@ class TerrainBrush: public Brush
 
 		virtual Action* applyToSelection();
 
-
-
 	private:
 
 		// SUPPRESS THESE!
@@ -83,7 +79,6 @@ class TerrainBrush: public Brush
 
 		ActionPaintTile* pAction;
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( TerrainBrush.h )

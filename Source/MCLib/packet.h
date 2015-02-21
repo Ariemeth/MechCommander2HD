@@ -11,17 +11,9 @@
 //---------------------------------------------------------------------------
 // Include Files
 
-#ifndef DPACKET_H
 #include "dpacket.h"
-#endif
-
-#ifndef FILE_H
 #include "file.h"
-#endif
-
-#ifndef LZ_H
 #include "lz.h"
-#endif
 
 //---------------------------------------------------------------------------
 // Macro Definitions
@@ -129,7 +121,6 @@ class PacketFile : public File
 		long insertPacket (long packet, MemoryPtr buffer, long nbytes, unsigned char p_type = ANY_PACKET_TYPE);
 		long writePacket (long packet, MemoryPtr buffer);
 };
-
 
 //---------------------------------------------------------------------------
 #endif

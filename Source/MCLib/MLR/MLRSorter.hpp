@@ -62,12 +62,9 @@ namespace MidLevelRenderer {
 		int texture2;
 	};
 
-
 	class MLRPrimitiveBase;
 
-
 #define CalDraw	
-
 
 #ifdef CalDraw
 	struct ToBeDrawnPrimitive {
@@ -206,5 +203,4 @@ namespace MidLevelRenderer {
 		Stuff::Scalar
 			farClipReciprocal;
 	};
-
 }

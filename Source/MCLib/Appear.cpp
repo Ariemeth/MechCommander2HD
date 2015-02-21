@@ -8,29 +8,12 @@
 
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef APPEAR_H
 #include "appear.h"
-#endif
-
-#ifndef CAMERA_H
 #include "camera.h"
-#endif
-
-#ifndef APPRTYPE_H
 #include "apprtype.h"
-#endif
-
-#ifndef DBASEGUI_H
 #include "dbasegui.h"
-#endif
-
-#ifndef CELINE_H
 #include "celine.h"
-#endif
-
-#ifndef CEVFX_H
 #include "cevfx.h"
-#endif
 
 //#ifndef FONT_H
 //#include "Font.h"
@@ -67,7 +50,6 @@ void Appearance::drawTextHelp (char *text, unsigned long color)
 	Stuff::Vector4D moveHere;
 	moveHere = screenPos;
 
-
 	gos_TextSetAttributes (gosFontHandle, 0, gosFontScale, false, true, false, false);
 	gos_TextStringLength(&width,&height,text);
 
@@ -89,7 +71,6 @@ void Appearance::drawPilotName(char *text, unsigned long color )
 	DWORD width, height;
 	Stuff::Vector4D moveHere;
 	moveHere = screenPos;
-
 
 	gos_TextSetAttributes(gosFontHandle, 0, gosFontScale, false, true, true, false); // MCHD CHANGE (02/17/15): Made hover text bold
 	gos_TextStringLength(&width,&height,text);
@@ -344,8 +325,7 @@ void Appearance::drawSelectBrackets (DWORD color)
 		LineElement newElement(pos1,pos2,color,NULL,-1);
 		newElement.draw();
 	}
-	
-	
+
  	pos1.x = br.x;
 	pos1.y = br.y;
 	pos1.z = br.z;

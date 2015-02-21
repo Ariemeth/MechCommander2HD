@@ -361,5 +361,4 @@ namespace Stuff {
 		ChainIteratorOf<T>::~ChainIteratorOf()
 	{
 	}
-
 }

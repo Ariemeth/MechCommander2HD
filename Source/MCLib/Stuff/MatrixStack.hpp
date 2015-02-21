@@ -89,5 +89,4 @@ namespace Stuff {
 		operator Matrix4D&()
 			{Check_Object(this); return *Peek();}
 	};
-
 }

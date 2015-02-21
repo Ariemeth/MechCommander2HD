@@ -13,15 +13,8 @@
 void memclear(void *Dest,int Length);
 void memfill(void *Dest,int Length);
 
-
-
-
-
-
-
 extern enum { CPU_UNKNOWN, CPU_PENTIUM, CPU_MMX, CPU_KATMAI } Processor;
 static _int64 fillnum=-1;
-
 
 //
 // Instead of using memset(x,0,x) - use this function
@@ -89,10 +82,6 @@ doalign1:
 done:
 		}
 };
-
-
-
-
 
 //
 // Instead of using memset(x,0xff,x) - use this function
@@ -175,10 +164,4 @@ bool RollDice (long percent)
 {
 	return (((rand()*100)>>15) < percent);			// Optimized the % out
 }
-
-
-
-
-
-
 

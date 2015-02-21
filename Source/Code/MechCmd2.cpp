@@ -13,7 +13,6 @@
 #include <Stuff\stuff.hpp>
 #include <MLR\MLR.hpp>
 #include <GosFX\gosfxheaders.hpp>
-
 #include "..\resource.h"
 #include "mclib.h"
 #include "mission.h"
@@ -306,7 +305,6 @@ void UpdateGame()
 				DebugGameObject[i] = NULL;
 				DebugWindow[i + 1]->clear();
 			}
-
 		}
 	}
 	// If the user is on a menu
@@ -1466,7 +1464,6 @@ long textToLong (char *num)
 		}
 	}
 
-	
 	return(result);
 }
 
@@ -1865,7 +1862,6 @@ void initDialogs()
 	}
 
 	LogisticsOneButtonDialog::init(file);
-
 }
 
 //---------------------------------------------------------------------------
@@ -1966,7 +1962,6 @@ void DEBUGWINS_removeGameObject(GameObjectPtr obj) {
 			DebugGameObject[i] = NULL;
 			DebugWindow[1 + i]->clear();
 		}
-
 }
 
 //---------------------------------------------------------------------------

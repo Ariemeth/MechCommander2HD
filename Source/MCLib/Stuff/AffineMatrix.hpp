@@ -625,7 +625,6 @@ namespace Stuff {
 				Check_Object(this);
 				return *this;
 			}
-
 }
 
 namespace MemoryStreamIO {
@@ -642,5 +641,4 @@ namespace MemoryStreamIO {
 			const Stuff::AffineMatrix4D *input
 		)
 			{return stream->WriteBytes(input, sizeof(*input));}
-
 }

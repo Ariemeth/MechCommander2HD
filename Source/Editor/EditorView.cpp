@@ -21,13 +21,11 @@ EditorView::~EditorView()
 {
 }
 
-
 BEGIN_MESSAGE_MAP(EditorView,CWnd )
 	//{{AFX_MSG_MAP(EditorView)
 	ON_WM_PAINT()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
-
 
 /////////////////////////////////////////////////////////////////////////////
 // EditorView message handlers
@@ -48,11 +46,9 @@ BOOL EditorView::PreCreateWindow(CREATESTRUCT& cs)
 void EditorView::OnPaint() 
 {
 	CPaintDC dc(this); // device context for painting
-	
-	
+
 	// Do not call CWnd::OnPaint() for painting messages
 }
-
 
 LRESULT EditorView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam) 
 {

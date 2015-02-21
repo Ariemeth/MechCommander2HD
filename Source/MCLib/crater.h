@@ -10,15 +10,8 @@
 #define CRATER_H
 //---------------------------------------------------------------------
 // Include Files
-#ifndef HEAP_H
 #include "heap.h"
-#endif
-
-#ifndef PACKET_H
 #include "packet.h"
-#endif
-
-
 #include <stuff\stuff.hpp>
 
 //---------------------------------------------------------------------

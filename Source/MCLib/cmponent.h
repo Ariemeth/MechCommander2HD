@@ -12,14 +12,8 @@
 #define CMPONENT_H
 
 //---------------------------------------------------------------------------
-#ifndef INIFILE_H
 #include "inifile.h"
-#endif
-
-#ifndef ERR_H
 #include "err.h"
-#endif
-
 #include <string.h>
 
 #ifndef _MBCS

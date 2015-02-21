@@ -39,7 +39,6 @@ void LogisticsPilotListBox::update()
 			i--;
 		}
 	}
-
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -48,9 +47,6 @@ LogisticsPilotListBoxItem::~LogisticsPilotListBoxItem()
 {
 	removeAllChildren( 0 );
 }
-
-
-
 
 LogisticsPilotListBoxItem::LogisticsPilotListBoxItem( LogisticsPilot* pNewPilot )
 {
@@ -99,10 +95,6 @@ LogisticsPilotListBoxItem::LogisticsPilotListBoxItem( LogisticsPilot* pNewPilot 
 	rankIcon.setUVs( rank * 15, 96, rank * 15 + 15, 96 + 15 );
 	
 	LogisticsPilotListBox::makeUVs( pPilot, icon );
-
-
-	
-	
 }
 int LogisticsPilotListBoxItem::init( FitIniFile* file )
 {
@@ -110,8 +102,6 @@ int LogisticsPilotListBoxItem::init( FitIniFile* file )
 		s_templateItem = new LogisticsPilotListBoxItem( NULL );
 
 	memset( s_templateItem->pChildAnimations, 0, sizeof( aAnimGroup* ) * PILOT_LIST_BOX_CHILD_COUNT );
-
-
 
 	s_templateItem->nameText.init( file, "Text0" );
 	setAnimation( *file, 0 );
@@ -138,7 +128,6 @@ int LogisticsPilotListBoxItem::init( FitIniFile* file )
 	s_templateItem->pilotOutline.init( file, "Rect1" );
 	setAnimation( *file, 5 );
 
-
 	return 0;
 }
 
@@ -155,13 +144,10 @@ void LogisticsPilotListBoxItem::setAnimation( FitIniFile& file, int whichOne )
 				s_templateItem->pChildAnimations[whichOne] = atoi( &animationText[i] );
 				return;
 			}
-				
 		}
 	}
 
 	s_templateItem->pChildAnimations[whichOne] = -1;
-
-
 }
 
 void LogisticsPilotListBoxItem::render()
@@ -175,18 +161,14 @@ void LogisticsPilotListBoxItem::render()
 		pChildren[i]->setColor( newColor, 1 );
 		pChildren[i]->render();
 	}
-		
 
 /*	long newColor = animations[pChildAnimations[4]].getCurrentColor( (aAnimGroup::STATE)state );		
 	outline.setColor(newColor);
 	outline.render( location[0].x, location[0].y );
 
-	
 	newColor = animations[pChildAnimations[5]].getCurrentColor( (aAnimGroup::STATE)state );
 	line.setColor( newColor );
 	line.render( location[0].x, location[0].y );*/
-	
-
 }
 
 void LogisticsPilotListBoxItem::update()
@@ -243,7 +225,6 @@ void LogisticsPilotListBoxItem::update()
 	aObject::update();
 }
 
-
 void LogisticsPilotListBox::makeUVs( LogisticsPilot* pPilot, aObject& icon )
 {
 	icon = LogisticsPilotListBoxItem::s_templateItem->icon;
@@ -270,7 +251,6 @@ void LogisticsPilotListBox::makeUVs( LogisticsPilot* pPilot, aObject& icon )
 
 	icon.setFileWidth(256.f);
 	icon.setUVs( u, v, u2, v2 );
-
 }
 
 long LogisticsPilotListBox::AddItem( aListItem* pNewItem )
@@ -313,13 +293,11 @@ long LogisticsPilotListBox::AddItem( aListItem* pNewItem )
 					}
 				}
 			}
-
 		} 
 	}
 
 	// if we got here
 	return aListBox::AddItem( pNewItem );
-
 }
 
 void LogisticsPilotListBox::removePilot( LogisticsPilot* pPilot )

@@ -46,7 +46,6 @@ public:
 
 	float		bounds[4];
 
-
 private:
 
 	ObjectAppearance*	pObject;
@@ -59,6 +58,5 @@ private:
 	bool				bIsInMission;
 	float				shapeScale;
 };
-
 
 #endif

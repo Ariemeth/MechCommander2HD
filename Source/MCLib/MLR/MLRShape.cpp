@@ -132,7 +132,6 @@ MLRShape::MLRShape(
 			default:
 			{
 
-
 				RegisteredClass::ClassID class_id;
 				*stream >> class_id;
 				MLRPrimitiveBase::ClassData* class_data =
@@ -268,12 +267,10 @@ MLRShape::~MLRShape()
 		allPrimitives[i] = NULL;
 
 		pt->DetachReference();
-
 	}
 
 	Verify(referenceCount==0);
 }
-
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
@@ -511,7 +508,6 @@ int
 		gos_PopCurrentHeap();
 	}
 
-
 	int i;
 
 	for(i=numPrimitives;i>nr;i--)
@@ -598,7 +594,6 @@ void
 		allPrimitives[i]->Transform(mat);
 	}
 }
-
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //

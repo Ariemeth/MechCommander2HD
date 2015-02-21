@@ -40,9 +40,7 @@ enum Medals
 	DAVION_MEDAL = 14,
 	STEINER_MEDAL = 15,
 	MAX_MEDAL
-
 };
-
 
 class LogisticsPilot
 {
@@ -51,7 +49,6 @@ class LogisticsPilot
 		int init( char* fileName );
 		LogisticsPilot();
 		~LogisticsPilot();
-
 
 		const EString&  getName() const { return name; }
 		const EString&	 getAudio() const { return audio; }
@@ -90,8 +87,6 @@ class LogisticsPilot
 		bool		promotePilot();
 		int			turnAverageIntoRank( float avg);
 
-
-
 		static		const char* getSkillText( int skillID );
 		const EString&	getFileName(){ return fileName; }
 
@@ -109,14 +104,10 @@ class LogisticsPilot
 		const bool*			getNewMedalArray() const{ return medalsLastMission;}
 		const bool*			getMedalArray() const{ return medals;}
 
-
 		void		clearIcons();
 
-		
 		unsigned long	id;
 		EList< ForceGroupIcon*, ForceGroupIcon* >	killedIcons;
-
-
 
 	private:
 		EString		name;
@@ -147,13 +138,9 @@ class LogisticsPilot
 		bool		medals[MAX_MEDAL];
 		bool		medalsLastMission[MAX_MEDAL];
 
-
 		// last second hack
 		friend class LogisticsData;
-
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( LogisticsPilot.h )

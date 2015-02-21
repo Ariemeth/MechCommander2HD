@@ -8,17 +8,9 @@ MissionSelectionScreen.h : Header file for mission selection
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef LOGISTICSSCREEN_H
 #include "LogisticsScreen.h"
-#endif
-
-#ifndef ALISTBOX_H
 #include "aListBox.h"
-#endif
-
-#ifndef MC2movie_H
 #include "mc2movie.h"
-#endif
 
 class FitIniFile;
 
@@ -37,7 +29,6 @@ public:
 	virtual void update();
 	void	init( FitIniFile* file );
 	virtual int			handleMessage( unsigned long, unsigned long );
-
 
 private:
 
@@ -61,10 +52,6 @@ private:
 	long				pressedButton;
 
 	bool				bStop;
-
-
-
-
 };
 
 #endif

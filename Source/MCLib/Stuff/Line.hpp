@@ -70,5 +70,4 @@ namespace Stuff {
 				int *axis
 			);
 	};
-
 }

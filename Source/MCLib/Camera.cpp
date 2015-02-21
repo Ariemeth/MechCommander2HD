@@ -8,41 +8,15 @@
 
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef CAMERA_H
 #include "camera.h"
-#endif
-
-#ifndef TERRAIN_H
 #include "terrain.h"
-#endif
-
-#ifndef VERTEX_H
 #include "vertex.h"
-#endif
-
-#ifndef CRATER_H
 #include "crater.h"
-#endif
-
-#ifndef TERRTXM_H
 #include "terrtxm.h"
-#endif
-
-#ifndef CIDENT_H
 #include "cident.h"
-#endif
-
-#ifndef PATHS_H
 #include "paths.h"
-#endif
-
-#ifndef TIMING_H
 #include "timing.h"
-#endif
-
-#ifndef USERINPUT_H
 #include "userinput.h"
-#endif
 
 extern void AG_ellipse_draw(PANE *pane, LONG xc, LONG yc, LONG width, LONG height, LONG color);
 extern void AG_ellipse_fill(PANE *pane, LONG xc, LONG yc, LONG width, LONG height, LONG color);
@@ -67,7 +41,6 @@ long topCtrlUpd = 0;
 
 extern long scenarioEndTurn;
 extern float actualTime;
-
 
 #define TABLE_ENTRY_SIZE		256
 #define SCALE_LEVELS			7
@@ -171,7 +144,6 @@ const float CAM_THRESHOLD = 150.0f;
 // Camera Class
 //---------------------------------------------------------------------------
 
-	
 //---------------------------------------------------------------------------
 long Camera::init (FitIniFilePtr cameraFile )
 {
@@ -355,7 +327,6 @@ long Camera::init (FitIniFilePtr cameraFile )
 		lightDirection.z = sin(lightPitch * DEGREES_TO_RADS);
 	}
 
-	
 	result = cameraFile->readIdFloat("NewScale",newScaleFactor);
 	gosASSERT(result == NO_ERR);
 
@@ -886,7 +857,6 @@ unsigned long Camera::inverseProject (Stuff::Vector2DOf<long> &screenPos, Stuff:
 	return(0);
 }
 
-
 //---------------------------------------------------------------------------
 void Camera::updateGoalVelocity (void)
 {
@@ -1184,7 +1154,6 @@ void Camera::updateDaylight (bool bInitialize)
 				fLightRed = R * 255.0f;
 				fLightGreen = G * 255.0f;
 				fLightBlue = B * 255.0f;
-
 
 				/* Basically I'm using an arbitrary harcoded formula (which may need some
 				tweaking) to approximate the sky color as it progresses to sunset. For more
@@ -2805,7 +2774,6 @@ bool Camera::save( FitIniFile* file )
 	file->writeIdUChar( "TerrainShadowGreen", terrainShadowGreen );
 	file->writeIdUChar( "TerrainShadowRed", terrainShadowRed );
 
-	
 	file->writeIdUChar( "DayLightRed", dayLightRed );
 	file->writeIdUChar( "DayLightGreen", dayLightGreen );
 	file->writeIdUChar( "DayLightBlue", dayLightBlue );
@@ -2855,7 +2823,6 @@ bool Camera::save( FitIniFile* file )
 	file->writeIdLong( "BaseTerrain", baseTerrain );
 
 	return true;
-
 }
 
 float Camera::getFarClipDistance()

@@ -40,7 +40,6 @@ namespace MidLevelRenderer {
 			GetLightType() 
 				{ Check_Object(this); return LookUpLight; }
 
-
 		virtual void
 			LightVertex(const MLRVertexData&);
 
@@ -115,5 +114,4 @@ namespace MidLevelRenderer {
 		Stuff::LinearMatrix4D
 			shapeToWorld;
 	};
-
 }

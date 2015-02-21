@@ -131,7 +131,6 @@ namespace Stuff {
 	inline UnitQuaternion&
 		UnitQuaternion::operator=(const Origin3D& p)
 			{return operator=(p.angularPosition);}
-
 }
 
 namespace MemoryStreamIO {
@@ -148,5 +147,4 @@ namespace MemoryStreamIO {
 			const Stuff::Origin3D *input
 		)
 			{return stream->WriteBytes(input, sizeof(*input));}
-
 }

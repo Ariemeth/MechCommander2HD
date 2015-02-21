@@ -9,66 +9,28 @@
 
 //----------------------------------------------------------------------------------
 // Include Files
-#ifndef LOGISTICS_H
 #include "logistics.h"
-#endif
 
 #ifndef TEST_SHELL
-#ifndef MISSION_H
 #include "mission.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "ObjMgr.h"
-#endif
-
-#ifndef TEAM_H
 #include "Team.h"
-#endif
-
-#ifndef COMNDR_H
 #include "comndr.h"
-#endif
-
-#ifndef MISSIONGUI_H
 #include "MissionGui.h"
-#endif
-
-#ifndef MECH_H
 #include "Mech.h"
-#endif
-
-#ifndef MULTPLYR_H
 #include "multplyr.h"
-#endif
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
-
-#ifndef PREFS_H
 #include "prefs.h"
-#endif
+
 extern CPrefs g_userPreferences;
 
-#ifndef GAMECAM_H
 #include "gamecam.h"
-#endif
 
 #endif /*TEST_SHELL*/
 
-#ifndef SOUNDS_H
 #include "sounds.h"
-#endif
-
-#ifndef MISSIONBEGIN_H
 #include "MissionBegin.h"
-#endif
-
-#ifndef MECHICON_H
 #include "MechIcon.h"
-#endif
-
 #include "MissionResults.h"
 #include "paths.h"
 
@@ -83,13 +45,10 @@ extern bool g_aborted;
 #include "..\resource.h"
 void DEBUGWINS_print (char* s, long window = 0);
 
-
 //----------------------------------------------------------------------------------
 //class Logistics
 Logistics *logistics = NULL;
 
-
-		
 //----------------------------------------------------------------------------------
 void Logistics::destroy (void)
 {
@@ -169,7 +128,6 @@ void Logistics::start (long startMode)
 					missionResults->begin();
 					logisticsState = log_RESULTS;
 				}
-
 			}
 			else if ( !g_dbgLoadMission )
 			{
@@ -209,7 +167,6 @@ void Logistics::start (long startMode)
 				FitIniFile saveFile;
 				saveFile.open("data\\missions\\save.fit", CREATE);
 				LogisticsData::instance->save( saveFile );
-		
 			}
 
 			active = TRUE;
@@ -221,7 +178,6 @@ void Logistics::start (long startMode)
 				missionBegin->beginSplash();
 				missionBegin->init();
 			}
-
 		}
 		break;
 
@@ -239,7 +195,6 @@ void Logistics::start (long startMode)
 			setLogisticsState( log_SPLASH );
 			userInput->mouseOn();
 			userInput->setMouseCursor( mState_NORMAL );
-
 		}
 		break;
 	}
@@ -364,7 +319,6 @@ long Logistics::update (void)
 							playFullScreenVideo( videoName );
 						}
 					}
-				
 			}
 			else if ( MPlayer )
 			{
@@ -382,9 +336,6 @@ long Logistics::update (void)
 				}
 				else
 					missionBegin->restartMPlayer(NULL);
-
-
-				
 			}
 			else
 				g_quitGame = true;
@@ -393,7 +344,6 @@ long Logistics::update (void)
 	//Used to start mission from command line, bypassing logistics
 	else if (logisticsState == log_STARTMISSIONFROMCMDLINE)
 	{
-		
 	}
 	else if ( logisticsState != log_DONE )
 	{
@@ -701,8 +651,6 @@ int _stdcall Logistics::beginMission(void*, int, void*[])
 					}
 				}
 			}
-					
-
 		}
 		
 		CompressedMech mechData;
@@ -713,7 +661,6 @@ int _stdcall Logistics::beginMission(void*, int, void*[])
 			mission->destroy();
 			return(0);
 		}
-
 		}
 	else if (missionLoadType == MISSION_LOAD_SP_LOGISTICS) {
 		EList< LogisticsMech*, LogisticsMech* > list;
@@ -736,7 +683,6 @@ int _stdcall Logistics::beginMission(void*, int, void*[])
 		data.baseColor = g_userPreferences.baseColor;
 		data.highlightColor1 = g_userPreferences.highlightColor;
 		data.highlightColor2 = g_userPreferences.highlightColor;
-		
 
 		strcpy( data.pilotFileName, "pmw00031" );
 		strcpy( data.brainFileName, "pbrain" );
@@ -828,7 +774,6 @@ if (!MPlayer) {
 #endif	//TEST_SHELL
 
 	return 0;
-
 }
 
 void Logistics::initializeLogData()
@@ -848,8 +793,7 @@ void Logistics::initializeLogData()
 			unsigned long base, highlight1, highlight2;
 			((Mech3DAppearance*)pMover->getAppearance())->getPaintScheme( highlight1, 
 				highlight2, base );
-			
-			
+
 			if ( pMover->getObjectType()->getObjectTypeClass() == BATTLEMECH_TYPE )
 			{
 				LogisticsVariant* pVar = LogisticsData::instance->getVariant( ((BattleMech*)pMover)->variantName );

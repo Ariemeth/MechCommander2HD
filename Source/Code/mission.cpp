@@ -10,112 +10,37 @@
 
 //----------------------------------------------------------------------------------
 // Include Files
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef MISSION_H
 #include "mission.h"
-#endif
 
 //#ifndef MOVE_H
 //#include "move.h"
 //#endif
 
-#ifndef MOVEMGR_H
 #include "movemgr.h"
-#endif
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
-
-#ifndef SOUNDS_H
 #include "sounds.h"
-#endif
-
-#ifndef COLLSN_H
 #include "collsn.h"
-#endif
-
-#ifndef CMPONENT_H
 #include "cmponent.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef MOVER_H
 #include "mover.h"
-#endif
-
-#ifndef MECH_H
 #include "mech.h"
-#endif
-
-#ifndef GVEHICL_H
 #include "gvehicl.h"
-#endif
-
-#ifndef CONTACT_H
 #include "contact.h"
-#endif
-
-#ifndef TEAM_H
 #include "team.h"
-#endif
-
-#ifndef COMNDR_H
 #include "comndr.h"
-#endif
-
-#ifndef GROUP_H
 #include "group.h"
-#endif
-
-#ifndef GAMECAM_H
 #include "gamecam.h"
-#endif
-
-#ifndef MULTPLYR_H
 #include "multplyr.h"
-#endif
-
-#ifndef WEAPONFX_H
 #include "weaponfx.h"
-#endif
-
-#ifndef WEATHER_H
 #include "weather.h"
-#endif
-
-#ifndef GATE_H
 #include "gate.h"
-#endif
-
-#ifndef LOGISTICSDATA_H
 #include "logisticsdata.h"
-#endif
-
-#ifndef LOGISTICSPILOT_H
 #include "logisticsPilot.h"
-#endif
-
-#ifndef GAMELOG_H
 #include "gamelog.h"
-#endif
-
-#ifndef CELLIP_H
 #include "cellip.h"
-#endif
-
-#ifndef PREFS_H
 #include "prefs.h"
-#endif
-
 #include "..\resource.h"
-
 #include <GameOS.hpp>
 
 //----------------------------------------------------------------------------------
@@ -287,7 +212,6 @@ extern __int64 MCTimeGUILoad 			;
 extern __int64 x1;
 
 extern __int64 x;
-
 
 #else
 #define ProfileTime(x,y)	y;
@@ -463,7 +387,6 @@ long Mission::update (void)
 		land->clearObjVerticesActive();
 		land->terrainTextures->update();
 
-
 		ProfileTime(MCTimeTerrainGeometry,land->geometry());
 
 		if ( missionInterface->isPaused() && !MPlayer )
@@ -580,7 +503,6 @@ long Mission::update (void)
 							terminationResult = mis_PLAYER_WIN_BIG;
 						else
 							terminationResult = mis_PLAYER_LOST_BIG;
-
 					}
 				}
 				else if (1 <= Team::home->objectives.Count()) 
@@ -1389,10 +1311,8 @@ long Mission::addMover (MoverInitData* moveSpec, LogisticsMech* mechData)
 
 		if (otherCount != totalComponents)
 			STOP(("Heidi's getComponentCount does not agree with count returned from getComponents"));
-
 	}
-	
-	
+
 	((BattleMechPtr)mMech)->resetComponents(totalComponents,componentList);
 	
 	return moverHandle;
@@ -1538,13 +1458,11 @@ bool Mission::calcComplexDropZones(char* missionName, char dropZoneCID[MAX_MC_PL
 				}
 				index--;
 			}
-
 	}
 
 	missionFile->close();
 	delete missionFile;
 	missionFile = NULL;
-
 
 	return(true);
 }
@@ -2072,7 +1990,6 @@ void Mission::init(char *missionName, long loadType, long dropZoneID, Stuff::Vec
 	ObjectManager->init("object2", 716799, 3072000);
 	gosASSERT(result == NO_ERR);
 
-	
 	//-----------------------------------------------------------------
 	// Start the collision detection system. -- Doesn't need objects?
 	ObjectManager->initCollisionSystem(missionFile);
@@ -2149,7 +2066,6 @@ void Mission::init(char *missionName, long loadType, long dropZoneID, Stuff::Vec
 	PathFindMap[SECTOR_PATHMAP]->forestCost = forestMoveCost;
 	PathFindMap[SIMPLE_PATHMAP]->forestCost = forestMoveCost;
 	PathManager = new MovePathManager;
-
 
 	loadProgress = 40.0f;
 
@@ -2303,7 +2219,6 @@ void Mission::init(char *missionName, long loadType, long dropZoneID, Stuff::Vec
 			result = MechWarrior::warriorList[i]->loadBrainParameters(missionFile, i);
 			//Assert(result == NO_ERR, result, " Could not load Warrior Brain Parameters ");
 		}
-				
 	}	
 	
 #ifdef LAB_ONLY
@@ -2595,7 +2510,6 @@ void Mission::init(char *missionName, long loadType, long dropZoneID, Stuff::Vec
 
 			float increment = 5.0f/(numParts + 1);
 			loadProgress += increment;
-
 		}
 	}
 
@@ -2873,7 +2787,6 @@ void Mission::init(char *missionName, long loadType, long dropZoneID, Stuff::Vec
 
 	loadProgress = 100.0;
 
-	
 	//MechWarrior::initGoalManager(200);
 
 	if (tempSpecialAreaFootPrints) {
@@ -3027,7 +2940,6 @@ void Mission::initTGLForMission()
 	useFog = true;
 	useShadows = g_userPreferences.useShadows;
 }
-
 
 //----------------------------------------------------------------------------------
 void Mission::destroy (bool initLogistics)
@@ -3460,7 +3372,5 @@ void Mission::setObjectivePos (long objectiveNum, float realX, float realY, floa
 	}
 }
 
-
 //---------------------------------------------------------------------------
-
 

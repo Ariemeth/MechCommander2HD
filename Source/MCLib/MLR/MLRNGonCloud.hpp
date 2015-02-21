@@ -19,7 +19,6 @@ namespace MidLevelRenderer {
 	//#####################    MLRNGonCloud    #############################
 	//##########################################################################
 
-
 	class MLRNGonCloud:
 		public MLREffect
 	{

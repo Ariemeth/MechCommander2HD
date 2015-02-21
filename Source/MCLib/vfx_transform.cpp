@@ -11,9 +11,7 @@ void AG_shape_draw (PANE *pane, void *shape_table,LONG shape_number, LONG hotX, 
 void AG_shape_translate_fill (PANE *pane, void *shape_table,LONG shape_number, LONG hotX, LONG hotY);
 extern unsigned int lookaside;
 
-
 int SqrtCount=0;
-
 
 typedef unsigned int DWORD;
 typedef struct
@@ -25,7 +23,6 @@ typedef struct
 	DWORD	ymin;
 	DWORD	xmax;
 	DWORD	ymax;
-
 } SHAPEHEADER;
 
 //
@@ -48,8 +45,6 @@ static signed int X,Y,X1;
 
 static PANE tempPANE;
 static WINDOW tempWINDOW;
-
-
 
 void AG_shape_transform( PANE *globalPane, void *shapeTable, LONG frameNum, LONG hotX, LONG hotY, void *tempBuffer, LONG reverse, LONG scaleUp )
 {
@@ -75,9 +70,7 @@ void AG_shape_transform( PANE *globalPane, void *shapeTable, LONG frameNum, LONG
 	sub eax,ebx
 	inc eax
 	mov maxY,eax
-
 	}
-
 
 tempWINDOW.buffer=(UBYTE*)tempBuffer;
 tempWINDOW.x_max=maxX-1;
@@ -120,9 +113,6 @@ AG_shape_draw ( &tempPANE, shapeTable, frameNum, -X, -Y );
 	}
 }
 
-
-
-
 void AG_shape_translate_transform( PANE *globalPane, void *shapeTable, LONG frameNum, LONG hotX, LONG hotY,void *tempBuffer, LONG reverse, LONG scaleUp )
 {
 
@@ -147,9 +137,7 @@ void AG_shape_translate_transform( PANE *globalPane, void *shapeTable, LONG fram
 	sub eax,ebx
 	inc eax
 	mov maxY,eax
-
 	}
-
 
 tempWINDOW.buffer=(UBYTE*)tempBuffer;
 tempWINDOW.x_max=maxX-1;
@@ -191,13 +179,6 @@ AG_shape_translate_fill ( &tempPANE, shapeTable, frameNum, -X, -Y );
 			CopySprite( globalPane, tempBuffer, hotX+(X>>1), hotY+(Y>>1), maxX, maxY, reverse, scaleUp );
 	}
 }
-
-
-
-
-
-
-
 
 void CopySprite( PANE *pane, void *texture, int X, int Y, int Width, int Height, int Flip, int ScaleUp )
 {
@@ -390,7 +371,6 @@ SKIPME1:
 	jnz tl1
 	jmp Done
 
-
 DoFlip:
 	test ebx,ebx
 	jnz FlipNormal
@@ -494,23 +474,6 @@ done:
 	}
 	return;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 ;
@@ -754,9 +717,6 @@ EndPacket:
 	jnz lineLoop
 	jmp Exit
 
-
-
-
 ;
 ;
 ; Lines are clipped off the bottom of the clip window
@@ -836,7 +796,6 @@ clineLoop:
 	jnz cStringPacket
 	jnc cEndPacket
 
-
 //cSkipPacket:
 	xor ecx,ecx
 	mov al,[esi]
@@ -854,7 +813,6 @@ crp2a:
 	jnz crp1a
 	jmp clineLoop
 
-
 cRunPacket:
 	mov cl,[esi]
 	inc esi
@@ -869,7 +827,6 @@ crp2:
 	dec al
 	jnz crp1
 	jmp clineLoop
-
 
 cStringPacket:
 	mov cl,[esi]
@@ -889,7 +846,6 @@ crp3a:
 	and eax,255
 	lea esi,[esi+eax-1]
 	jmp clineLoop
-
 
 cEndPacket:
 	mov edx,DestWidth
@@ -918,17 +874,6 @@ cEndPacket:
 Exit:       
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 ;----------------------------------------------------------------------------
@@ -1225,9 +1170,6 @@ EndPacket:
 	pop ebp
 	jmp Exit
 
-
-
-
 ;
 ;
 ; Lines are clipped off the bottom of the clip window
@@ -1309,7 +1251,6 @@ clineLoop:
 	jnz cStringPacket
 	jnc cEndPacket
 
-
 //cSkipPacket:
 	mov al,[esi]
 	inc esi
@@ -1326,7 +1267,6 @@ crp2a:
 	jnz crp1a
 	jmp clineLoop
 
-
 cRunPacket:
 	mov cl,[esi]
 	inc esi
@@ -1342,7 +1282,6 @@ crp2:
 	dec al
 	jnz crp1
 	jmp clineLoop
-
 
 cStringPacket:
 	mov cl,[esi]
@@ -1363,7 +1302,6 @@ crp3a:
 	and eax,255
 	lea esi,[esi+eax-1]
 	jmp clineLoop
-
 
 cEndPacket:
 	mov edx,DestWidth
@@ -1393,8 +1331,4 @@ cEndPacket:
 Exit:       
 	}
 }
-
-
-
-
 

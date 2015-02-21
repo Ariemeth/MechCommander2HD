@@ -9,9 +9,7 @@
 #include "aFont.h"
 #include "aAnim.h"
 
-
 class FitIniFile;
-
 
 class aButton : public aObject
 {
@@ -32,9 +30,7 @@ public:
 	void	setHoldTime( float newTime ) { holdTime = newTime; }
 
 	virtual bool		pointInside(long xPos, long yPos) const;
-	
 
-	
 	void press( bool );
 	void toggle();
 	
@@ -65,9 +61,6 @@ public:
 		HIDDEN
 	};
 
-	
-
-	
 protected:
 
 	struct	aButtonData
@@ -101,14 +94,11 @@ protected:
 	long			clickSFX;
 	long			highlightSFX;
 	long			disabledSFX;
-	
 
 	static void makeUVs( gos_VERTEX* vertices, int State, aButtonData& data );
 
 	private:
 		void	copyData( const aButton& src );
-
-	
 };
 
 class aAnimButton : public aButton
@@ -128,7 +118,6 @@ public:
 	void setAnimationInfo( aAnimation* normal, aAnimation* highlight,
 								  aAnimation* pressed, aAnimation* disabled );
 
-
 	void animateChildren( bool bAnimate ){ bAnimateChildren = bAnimate; }
 
 private:
@@ -146,9 +135,6 @@ private:
 	bool		bAnimateChildren;
 
 	void copyData( const aAnimButton& src );
-
-
-
 };
 
 #endif

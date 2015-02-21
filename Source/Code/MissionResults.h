@@ -18,7 +18,6 @@ MissionResults:
 #include "aListBox.h"
 #include "mpStats.h"
 
-
 class SalvageMechScreen;
 class MechIcon;
 class BattleMech;
@@ -56,12 +55,7 @@ class MissionResults
 		bool					bPilotStarted;
 
 		friend class Logistics;
-
 };
-
-
-
-
 
 //*************************************************************************************************
 #endif  // end of file ( MissionResults.h )

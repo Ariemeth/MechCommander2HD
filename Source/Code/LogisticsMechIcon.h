@@ -85,14 +85,7 @@ private:
 
 	void renderObject( aObject& obj, long color, long xOffset, long yOffset );
 	static void assignAnimation( FitIniFile& file, long& number );
-
-
-
-
-	
-	
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( LogisticsMechIcon.h )

@@ -10,7 +10,6 @@
 #include "LogisticsPilot.h"
 #include "LogisticsErrors.h"
 #include "LogisticsData.h"
-
 #include "warrior.h"
 #include "..\resource.h"
 #include "MechIcon.h"
@@ -18,8 +17,6 @@
 
 char	LogisticsPilot::skillTexts[NUM_SPECIALTY_SKILLS][255] = {0};
 extern char* SpecialtySkillsTable[NUM_SPECIALTY_SKILLS];
-
-
 
 LogisticsPilot::LogisticsPilot()
 {
@@ -48,15 +45,10 @@ LogisticsPilot::LogisticsPilot()
 	}
 
 	memset( medals, 0, sizeof( bool ) * MAX_MEDAL );
-
-
-	
-
 }
 
 LogisticsPilot::~LogisticsPilot()
 {
-	
 }
 
 int LogisticsPilot::init( char* pilotFileName )
@@ -93,7 +85,6 @@ int LogisticsPilot::init( char* pilotFileName )
 	if (result != NO_ERR)
 		photoIndex = 0;
 
-	
 	result = pilotFile.readIdLong( "Rank", rank );
 	gosASSERT( result == 0 );
 //	result = pilotFile.readIdULong( "ID", id );
@@ -137,7 +128,6 @@ int LogisticsPilot::init( char* pilotFileName )
 	rank = turnAverageIntoRank( (gunnery + piloting)/2.f );
 
 	return 0;
-
 }
 
 const char* LogisticsPilot::getSkillText( int skillID )
@@ -156,14 +146,11 @@ const char* LogisticsPilot::getSkillText( int skillID )
 //	skillTexts[skillID] = tmp;
 	
 	return skillTexts[skillID];
-
-	
 }
 
 int	LogisticsPilot::getNumberMissions() const
 {
 	return missionsCompleted;
-
 }
 
 long LogisticsPilot::save( FitIniFile& file, long which )
@@ -196,7 +183,6 @@ long LogisticsPilot::save( FitIniFile& file, long which )
 		sprintf( buffer, "SpecialtySkill%ld", i );
 		file.writeIdBoolean( buffer, specialtySkills[i] );
 	}
-
 
 	return 0;
 }
@@ -235,7 +221,6 @@ long LogisticsPilot::load( FitIniFile& file )
 	}
 
 	rank = turnAverageIntoRank((gunnery + piloting)/2.f);
-
 
 	return 0;
 }
@@ -279,7 +264,6 @@ long LogisticsPilot::update( MechWarrior* pWarrior )
 	}
 
 	setUsed( 1 );
-
 
 	pWarrior->updateMissionSkills();
 
@@ -358,7 +342,6 @@ long LogisticsPilot::update( MechWarrior* pWarrior )
 	{
 		if ( !medals[PURPLE_HEART] )
 			medalsLastMission[PURPLE_HEART] = true;
-
 
 		medals[PURPLE_HEART] = true;
 	}
@@ -474,13 +457,11 @@ long LogisticsPilot::update( MechWarrior* pWarrior )
 		{
 			specialtySkills[i] = true;
 		}
-
 	}
 
 #endif
 	return 0;
 }
-
 
 bool	LogisticsPilot::promotePilot()
 {
@@ -491,7 +472,6 @@ bool	LogisticsPilot::promotePilot()
 
 	float newAvg = (gunnery + piloting)/2.f;
 
-	
 	int oldRank = turnAverageIntoRank( oldAvg );
 	int newRank = turnAverageIntoRank( newAvg );
 
@@ -557,7 +537,6 @@ int	LogisticsPilot::getSpecialtySkills( const char** array, int& count )
 	}
 
 	return 0;
-
 }
 
 int		LogisticsPilot::getSpecialtySkills( int* array, int& count )
@@ -578,9 +557,7 @@ int		LogisticsPilot::getSpecialtySkills( int* array, int& count )
 	}
 
 	return 0;
-
 }
-		
 
 void	LogisticsPilot::setSpecialtySkill( int skill, bool set )
 {
@@ -592,8 +569,6 @@ void	LogisticsPilot::setSpecialtySkill( int skill, bool set )
 
 	specialtySkills[skill] = set;
 }
-
-
 
 //*************************************************************************************************
 // end of file ( LogisticsPilot.cpp )

@@ -11,13 +11,8 @@
 
 //---------------------------------------------------------------------------
 
-#ifndef OBJSTATUS_H
 #include "objstatus.h"
-#endif
-
-#ifndef DOBJCLASS_H
 #include "dobjclass.h"
-#endif
 
 #ifndef NO_ERR
 #define NO_ERR		0
@@ -146,5 +141,4 @@ typedef struct _WeaponShotInfo* WeaponShotInfoPtr;
 //
 //
 //---------------------------------------------------------------------------
-
 

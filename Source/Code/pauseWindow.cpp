@@ -54,7 +54,6 @@ PauseWindow::PauseWindow()
 	wasDragging = 0;
 	objectivesAlreadyOn = 0;
 	bPromptToQuit = bPromptToAbort = 0;
-
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -93,7 +92,6 @@ void PauseWindow::update()
 			if ( LogisticsOKDialog::instance()->isDone() )
 				bPromptToQuit = bPromptToAbort = 0;
 		}		
-		
 	}
 	
 	long mouseX = userInput->getMouseX();
@@ -103,14 +101,12 @@ void PauseWindow::update()
 	bool bShift, bCtrl, bAlt;
 	MissionInterfaceManager::instance()->getHotKey( OBJECTVIES_COMMAND_KEY, key, bShift, bCtrl, bAlt );
 
-	
 	// hack, mission gui message isn't getting here...
 	if ( gos_GetKeyStatus( key ) != KEY_HELD 
 		&& gos_GetKeyStatus( key ) == KEY_PRESSED )
 	{
 		buttons[OBJECTIVES].toggle(); // big big hack.
 	}
-
 
 	if ( currentTime != 0 )
 	{
@@ -148,7 +144,6 @@ void PauseWindow::update()
 				statics[i].move( delta, 0 );				
 			}
 
-
 			for ( i = 0; i < 2; i++ )
 			{
 				float dif = backgrounds[i].right - backgrounds[i].left;
@@ -157,8 +152,6 @@ void PauseWindow::update()
 			}
 		}
 	}
-
-
 
 	for ( int i = 0; i < buttonCount; i++ )
 	{
@@ -222,15 +215,12 @@ void PauseWindow::update()
 			}
 		}
 
-	
 		for ( i = 0; i < 2; i++ )
 		{
 			float dif = backgrounds[i].right - backgrounds[i].left;
 			backgrounds[i].left = .5 + currentPos;
 			backgrounds[i].right = .5 + currentPos + dif;
 		}
-
-		
 	}
 
 	wasDragging = userInput->wasLeftDrag();
@@ -249,7 +239,6 @@ void PauseWindow::update()
 	{
 		buttons[OPTIONS].disable( true );
 	}
-	
 }
 
 void PauseWindow::render()
@@ -269,21 +258,17 @@ void PauseWindow::render()
 		statics[i].render();
 	}	
 
-
 	char buffer[256];
 	cLoadString( IDS_GAMEPAUSED, buffer, 256 );
 	headerFont.render( buffer, backgrounds[1].left, backgrounds[1].top, 
 		backgrounds[1].right - backgrounds[1].left,
 		backgrounds[1].bottom - backgrounds[1].top,
 		0xff5c96c2, 0, 3 );
-		
 
 	if ( bPromptToQuit || bPromptToAbort )
 	{
 		LogisticsOKDialog::instance()->render();
 	}
-
-
 }
 
 void PauseWindow::init( FitIniFile& file )
@@ -304,7 +289,6 @@ void PauseWindow::init( FitIniFile& file )
 	buttonData = 0;
 	buttons = 0;
 	statics = 0;
-		
 
 	if ( buttonCount )
 	{
@@ -357,8 +341,6 @@ void PauseWindow::init( FitIniFile& file )
 //		backgrounds[1].top += ControlGui::hiResOffsetY;
 //		backgrounds[1].bottom += ControlGui::hiResOffsetY;
 	}
-
-
 }
 
 void PauseWindow::handleClick( int id )
@@ -436,7 +418,6 @@ bool PauseWindow::inRect( int mouseX, int mouseY )
 {
 	return ( mouseX >= backgrounds[0].left && mouseX <= backgrounds[0].right &&
 		 mouseY >= backgrounds[0].top && mouseY <= backgrounds[0].bottom );
-
 }
 
 void PauseWindow::end()

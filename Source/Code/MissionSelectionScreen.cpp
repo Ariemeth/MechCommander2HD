@@ -50,7 +50,6 @@ MissionSelectionScreen::~MissionSelectionScreen()
 
 //-------------------------------------------------------------------------------------------------
 
-
 void MissionSelectionScreen::init( FitIniFile* file )
 {
 	LogisticsScreen::init( *file, "CMStatic", "CMTextEntry", "CMRect", "CMButton" );
@@ -70,8 +69,6 @@ void MissionSelectionScreen::init( FitIniFile* file )
 	getButton( MN_MSG_PLAY )->setHighlightFX( LOG_DIGITALHIGHLIGHT );
 	getButton( MN_MSG_STOP )->setHighlightFX( LOG_DIGITALHIGHLIGHT );
 	getButton( MN_MSG_PAUSE )->setHighlightFX( LOG_DIGITALHIGHLIGHT );
-
-
 }
 
 void MissionSelectionScreen::render(int xOffset, int yOffset )
@@ -114,10 +111,7 @@ void MissionSelectionScreen::render(int xOffset, int yOffset )
 			bMovie->render();
 	}
 
-
 	operationScreen.render( xOffset, yOffset );
-
-
 }
 
 void MissionSelectionScreen::update()
@@ -178,9 +172,6 @@ void MissionSelectionScreen::update()
 	}
 	else
 		buttons[5].showGUIWindow( 0 );
-
-	
-
 }
 
 void MissionSelectionScreen::begin()
@@ -211,8 +202,6 @@ void MissionSelectionScreen::begin()
 	operationScreen.moveTo( rects[MAP_RECT].left(), 
 							rects[MAP_RECT].top() );
 
-
-	
 	str = LogisticsData::instance->getCurrentVideoFileName();
 	if ( str && strlen( str ) )
 	{
@@ -273,7 +262,6 @@ void MissionSelectionScreen::begin()
 			if ( !LogisticsData::instance->getMissionAvailable( missionNames[i] ) )
 				operationScreen.buttons[i].disable( true );
 
-
 			else
 			{
 				operationScreen.buttons[i].disable( false );
@@ -283,7 +271,6 @@ void MissionSelectionScreen::begin()
 					handleMessage( 0, MSG_FIRST_MISSION + i );
 					bPressed = 1;
 					pressedButton = i;
-
 				}
 				if ( !bPressed && !selMissionName.Length()  )
 				{
@@ -294,7 +281,6 @@ void MissionSelectionScreen::begin()
 				}
 			}
 		}
-
 	}
 
 	for ( ; i < operationScreen.buttonCount; i++ )
@@ -361,7 +347,6 @@ int MissionSelectionScreen::handleMessage( unsigned long msg, unsigned long who 
 			getButton( who )->press(true);
 		}
 
-
 		break;
 
 	case MB_MSG_MAINMENU:
@@ -370,7 +355,6 @@ int MissionSelectionScreen::handleMessage( unsigned long msg, unsigned long who 
 	}
 
 	return 0;
-
 }
 
 void MissionSelectionScreen::setMission( int whichOne )
@@ -381,23 +365,19 @@ void MissionSelectionScreen::setMission( int whichOne )
 	sprintf( text, "%d ", LogisticsData::instance->getCBills() );
 	textObjects[RP_TEXT].setText( text );
 
-
 	updateListBox(); 
-
 }
 
 void MissionSelectionScreen::updateListBox()
 {
 	missionDescriptionListBox.removeAllItems( true );
 
-	
 	aTextListItem* pEntry = new aTextListItem( IDS_MN_LB_FONT );
 	pEntry->resize( missionDescriptionListBox.width() - missionDescriptionListBox.getScrollBarWidth() - 2,
 		pEntry->height() );
 	pEntry->setText( IDS_MN_DIVIDER );
 	pEntry->setColor( 0xffC66600 );
 	missionDescriptionListBox.AddItem( pEntry );
-
 
 	pEntry = new aTextListItem( IDS_MN_LB_FONT );
 	pEntry->resize( missionDescriptionListBox.width() - missionDescriptionListBox.getScrollBarWidth() - 2,
@@ -420,15 +400,7 @@ void MissionSelectionScreen::updateListBox()
 	pEntry->setColor( 0xffC66600 );
 	pEntry->sizeToText();
 	missionDescriptionListBox.AddItem( pEntry );
-
-
-
-
-
-
-
 }
-
 
 //*************************************************************************************************
 // end of file ( MissionSelectionScreen.cpp )

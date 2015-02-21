@@ -10,54 +10,18 @@
 
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef GATE_H
 #include "gate.h"
-#endif
-
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef SOUNDS_H
 #include "sounds.h"
-#endif
-
-#ifndef MOVE_H
 #include "move.h"
-#endif
-
-#ifndef COLLSN_H
 #include "collsn.h"
-#endif
-
-#ifndef TIMING_H
 #include "timing.h"
-#endif
-
-#ifndef MECH_H
 #include "mech.h"
-#endif
-
-#ifndef GVEHICL_H
 #include "gvehicl.h"
-#endif
-
-#ifndef MULTPLYR_H
 #include "multplyr.h"
-#endif
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
-
-#ifndef WEAPONFX_H
 #include "weaponfx.h"
-#endif
-
-#ifndef TEAM_H
 #include "team.h"
-#endif
-
 #include "..\resource.h"
 #include <stdio.h>
 
@@ -149,7 +113,6 @@ long GateType::init (FilePtr objFile, unsigned long fileSize)
 	result = bldgFile.readIdLong( "BuildingDescription", buildingDescriptionID );
 	if ( result != NO_ERR )
 			buildingDescriptionID = -1;
-
 
 	result = bldgFile.readIdBoolean("BlocksLineOfFire",blocksLineOfFire);
 	if (result != NO_ERR)
@@ -399,7 +362,6 @@ void Gate::blowAnyOffendingObject (void)
 
 //---------------------------------------------------------------------------
 
-
 void Gate::openGate (void)
 {
 	if (!isDestroyed())
@@ -624,7 +586,6 @@ void Gate::render (void)
 		{
 			appearance->setObjectNameId(((GateTypePtr)getObjectType())->gateTypeName);
 		}
-
 
 		windowsVisible = g_framesSinceMissionStart;
 		appearance->setVisibility(true,true);

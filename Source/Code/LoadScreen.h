@@ -7,21 +7,14 @@ LoadScreen.h			: Interface for the LoadScreen component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef LOGISTICSSCREEN_H
 #include "LogisticsScreen.h"
-#endif
-
-#ifndef AANIM_H
 #include "aAnim.h"
-#endif
 
 struct TGAFileHeader;
 class FitIniFile;
 
 struct tagRECT;
 struct _DDSURFACEDESC2;
-
-
 
 //*************************************************************************************************
 class LoadScreen;
@@ -51,7 +44,6 @@ public:
 	bool				bFirstTime;
 };
 
-
 class LoadScreen: public LogisticsScreen
 {
 	public:
@@ -69,14 +61,11 @@ class LoadScreen: public LogisticsScreen
 		void setupOutAnims();
 
 		static void changeRes(FitIniFile& file);
-		
-
 
 	private:
 
 		LoadScreen( const LoadScreen& src );
 		LoadScreen& operator=( const LoadScreen& oadScreen );
-
 
 		static TGAFileHeader*	progressTextureMemory;
 		static TGAFileHeader*	progressBackground;
@@ -99,10 +88,7 @@ class LoadScreen: public LogisticsScreen
 		aAnimation	inAnims[5];
 		aText		text;
 		int*		animIndices;
-
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( LoadScreen.h )

@@ -31,7 +31,6 @@ public:
 	float	m_end;
 	//}}AFX_DATA
 
-
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(FogDlg)
@@ -51,6 +50,5 @@ protected:
 
 	CBrush brush;
 };
-
 
 #endif  // end of file ( FogDlg.h )

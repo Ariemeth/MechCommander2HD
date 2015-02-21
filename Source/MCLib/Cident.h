@@ -12,14 +12,8 @@
 //---------------------------------------------------------------------------
 // Include files
 
-#ifndef DSTD_H
 #include "dstd.h"
-#endif
-
-#ifndef DIDENT_H
 #include "dident.h"
-#endif
-
 #include <string.h>
 
 //---------------------------------------------------------------------------

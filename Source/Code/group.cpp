@@ -8,41 +8,15 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef GROUP_H
 #include "group.h"
-#endif
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef MOVER_H
 #include "mover.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef GVEHICL_H
 #include "gvehicl.h"
-#endif
-
-#ifndef UNITDESG_H
 #include "unitdesg.h"
-#endif
-
-#ifndef TACORDR_H
 #include "tacordr.h"
-#endif
-
-#ifndef MOVE_H
 #include "move.h"
-#endif
 
 //---------------------------------------------------------------------------
 

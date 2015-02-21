@@ -28,7 +28,6 @@ public:
 	float	m_WaterTilingFactor;
 	//}}AFX_DATA
 
-
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(TilingFactorsDialog)

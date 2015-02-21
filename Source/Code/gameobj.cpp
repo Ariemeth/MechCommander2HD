@@ -8,69 +8,22 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef CARNAGE_H
 #include "carnage.h"
-#endif
-
-#ifndef TEAM_H
 #include "team.h"
-#endif
-
-#ifndef OBJTYPE_H
 #include "objtype.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef DOBJNUM_H
 #include "dobjnum.h"
-#endif
-
-#ifndef MOVE_H
 #include "move.h"
-#endif
-
-#ifndef CMPONENT_H
 #include "cmponent.h"
-#endif
-
-#ifndef CONTACT_H
 #include "contact.h"
-#endif
-
-#ifndef UNITDESG_H
 #include "unitdesg.h"
-#endif
-
-#ifndef MULTPLYR_H
 #include "multplyr.h"
-#endif
-
-#ifndef MOVER_H
 #include "mover.h"
-#endif
-
-#ifndef TURRET_H
 #include "turret.h"
-#endif
-
-#ifndef GAMELOG_H
 #include "gamelog.h"
-#endif
-
-#ifndef COMNDR_H
 #include "comndr.h"
-#endif
 
 //---------------------------------------------------------------------------
 extern GameLog* CombatLog;
@@ -225,7 +178,6 @@ void WeaponFireChunk::operator delete (void* us) {
 
 	g_systemHeap->Free(us);
 }
-	
 
 //---------------------------------------------------------------------------
 
@@ -717,7 +669,6 @@ void WeaponFireChunk::pack (GameObjectPtr attacker) {
 		Assert(false, numMissiles, errMsg);
 	}
 #endif
-
 }
 
 //---------------------------------------------------------------------------
@@ -1991,7 +1942,6 @@ void GameObject::destroy (void) {
 
 	//Never need to call this.  Heap destruct will get this!!
 //	ObjectManager->removeObjectType(typeHandle);
-
 }
 
 //---------------------------------------------------------------------------
@@ -2222,7 +2172,4 @@ void GameObject::Load (GameObjectData *data)
 }
 
 //***************************************************************************
-
-
-
 

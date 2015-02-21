@@ -91,7 +91,6 @@ namespace Stuff {
 		static bool
 			TestClass();
 	};
-
 }
 
 namespace MemoryStreamIO {
@@ -108,5 +107,4 @@ namespace MemoryStreamIO {
 			const Stuff::Motion3D *input
 		)
 			{return stream->WriteBytes(input, sizeof(*input));}
-
 }

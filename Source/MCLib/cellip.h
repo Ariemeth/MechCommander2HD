@@ -11,16 +11,9 @@
 //---------------------------------------------------------------------------
 // Include files
 
-#ifndef CELEMENT_H
 #include "celement.h"
-#endif
-
-#ifndef VFX_H
 #include "vfx.h"
-#endif
-
 #include "utilities.h"
-
 #include <stuff\stuff.hpp>
 //---------------------------------------------------------------------------
 class EllipseElement : public Element

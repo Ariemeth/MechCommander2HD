@@ -339,5 +339,4 @@ namespace Stuff {
 		SafeChainIteratorOf<T>::~SafeChainIteratorOf()
 	{
 	}
-
 }

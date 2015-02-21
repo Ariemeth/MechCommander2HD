@@ -12,18 +12,9 @@
 #ifndef USERINPUT_H
 #define USERINPUT_H
 
-#ifndef DSTD_H
 #include "dstd.h"
-#endif
-
-#ifndef MATHFUNC_H
 #include "mathfunc.h"
-#endif
-
-#ifndef UTILITIES_H
 #include "Utilities.h"
-#endif
-
 #include <string.h>
 #include <gameos.hpp>
 
@@ -99,7 +90,6 @@
 
 #define mouseFrameRate		0.10
 
-
 //---------------------------------------------------------------------------
 class MouseCursorData
 {
@@ -141,8 +131,7 @@ class MouseCursorData
 			memset( numFrames, 0, sizeof( numFrames ) );
 			memset( frameLengths, 0, sizeof( frameLengths ) );
 		}
-		
-		
+
 		long getNumFrames (long state)
 		{
 			if ((state >= 0) && (state < numCursors))
@@ -166,8 +155,7 @@ class MouseCursorData
 				
 			return 0;
 		}
-		
-				
+
 		void initCursors (char *cursorFile);
 };
 
@@ -216,9 +204,6 @@ class UserInput
 		float mouseLeftHeldTime;					//How long the mouse has been down
 		float mouseRightHeldTime;					//How long the mouse has been down
 
-
-
-
 		long lastLeftMouseButtonState;			//Last Left Mouse Button State
 		long lastRightMouseButtonState;			//Last Right Mouse Button State
 		long lastMiddleMouseButtonState;		//Last Middle Mouse Button State
@@ -252,12 +237,10 @@ class UserInput
 
 		UserInput (void)
 		{
-
 		}
 
 		~UserInput (void)
 		{
-
 		}
 
 		void init (void)

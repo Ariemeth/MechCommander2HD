@@ -18,7 +18,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // NewSingleMission dialog
 
-
 NewSingleMission::NewSingleMission(CWnd* pParent /*=NULL*/)
 	: CDialog(NewSingleMission::IDD, pParent)
 {
@@ -27,7 +26,6 @@ NewSingleMission::NewSingleMission(CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
 }
 
-
 void NewSingleMission::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -35,7 +33,6 @@ void NewSingleMission::DoDataExchange(CDataExchange* pDX)
 		// NOTE: the ClassWizard will add DDX and DDV calls here
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(NewSingleMission, CDialog)
 	//{{AFX_MSG_MAP(NewSingleMission)
@@ -55,7 +52,6 @@ void NewSingleMission::OnLoadMission()
 void NewSingleMission::OnNewmission() 
 {
 	EndDialog( ID_NEWMISSION );
-	
 }
 
 void NewSingleMission::OnCancel() 

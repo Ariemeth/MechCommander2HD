@@ -15,14 +15,8 @@ MechIcon.cpp			: Implementation of the MechIcon component.
 #include "controlgui.h"
 #include "gamesound.h"
 #include <windows.h>
-
-#ifndef MISSION_H
 #include "mission.h"
-#endif
-
-#ifndef MULTPLYR_H
 #include "multplyr.h"
-#endif
 
 TGAFileHeader *MechIcon::s_MechTextures = NULL;
 TGAFileHeader *VehicleIcon::s_VehicleTextures = NULL;
@@ -33,7 +27,6 @@ StaticInfo*		ForceGroupIcon::jumpJetIcon = NULL;
 MC2MoviePtr	ForceGroupIcon::bMovie = NULL;
 unsigned long	ForceGroupIcon::pilotVideoTexture = 0;
 MechWarrior*	ForceGroupIcon::pilotVideoPilot = NULL;
-
 
 #define HEALTH_BAROFFSET 12.0f * Environment.screenHeight/600.f
 #define HEALTH_BARLENGTH 31.0f * Environment.screenWidth/600.f
@@ -49,7 +42,6 @@ const long		PilotIcon::DEAD_PILOT_INDEX = 27;
 unsigned long	PilotIcon::s_pilotTextureHandle = 0;
 unsigned long	PilotIcon::s_pilotTextureWidth = 0;
 long			ForceGroupIcon::pilotTextTop[17] = {0};
-
 
 long		ForceGroupIcon::damageColors[4][3] =
 		{ 194 << 16 | 229 << 8 | 255 | 0xff << 24,	92 << 16 | 150 << 8 | 194 | 0xff << 24, 0 << 16 | 83 << 8 | 146 | 0xff << 24,
@@ -70,7 +62,6 @@ long		ForceGroupIcon::ForceGroupColors[11] = {
 		0xffFF8A00,
 		0xff0091FF,
 		0xff505050
-
  };
 
 ForceGroupIcon::AnimationInfo ForceGroupIcon::animationInfos[NUM_DEATH_INFOS] = 
@@ -81,7 +72,6 @@ ForceGroupIcon::AnimationInfo ForceGroupIcon::animationInfos[NUM_DEATH_INFOS] =
 	5.35f, 0x7fff0000,
 	6.0f, 0xff000000,
 	6.5f, 0xff000000
-
 };
 
 unsigned long	ForceGroupIcon::s_textureHandle[5] = { -1, -1, -1, -1, -1 };
@@ -141,12 +131,10 @@ ForceGroupIcon::ForceGroupIcon(  )
 		}
 	}
 
-	
 	Assert( bFound, bFound, "out of space for icon textures" );
 
 	deathAnimationTime = 0.0;
 	msgPlayTime = 0.0f;
-	
 }
 
 void ForceGroupIcon::resetResolution(bool bForce)
@@ -250,7 +238,6 @@ void ForceGroupIcon::init( FitIniFile& file, int which )
 	top     += ControlGui::hiResOffsetY;
 	bottom  += ControlGui::hiResOffsetY;
 
-
 	pilotLocation[which][0] = left;
 	pilotLocation[which][1] = top;
 	pilotLocation[which][2] = right;
@@ -290,10 +277,7 @@ void ForceGroupIcon::init( FitIniFile& file, int which )
 		jumpJetIcon = new StaticInfo;
 
 	jumpJetIcon->init( file, "JumpJetIcon", 0, 0 );
-
-	
 }
-
 
 void MechIcon::setDrawBack( bool bSet)
 {
@@ -312,7 +296,6 @@ void MechIcon::setDrawBack( bool bSet)
 		}
 	}
 
-	
 	int iconsPerLine = ((int)s_textureMemory->width/(int)unitIconX);
 	int iconsPerPage = ((int)s_textureMemory->width/(int)unitIconY);
 	long textureIndex = 0;
@@ -335,11 +318,9 @@ void MechIcon::setDrawBack( bool bSet)
 		s_textureHandle[textureIndex] = gos_NewTextureFromMemory( gos_Texture_Alpha, ".tga", (unsigned char*)s_textureMemory, size, 0 );
 	}
 
-	
 	// now need to make a copy of the data
 	TEXTUREPTR textureData;
 	gos_LockTexture( s_textureHandle[textureIndex], 0, 0, &textureData );
-
 
 	unsigned long* pDestData, *pDestRow = textureData.pTexture + offsetY * textureData.Width + offsetX;
 	char* pTmp = (char*)s_MechTextures + sizeof ( TGAFileHeader );
@@ -392,9 +373,7 @@ void MechIcon::setDrawBack( bool bSet)
 		pDestRow += textureData.Width;
 	}
 
-
 	gos_UnLockTexture( s_textureHandle[textureIndex] );
-
 }
 bool ForceGroupIcon::inRegion( int x, int y )
 {
@@ -461,12 +440,9 @@ bool MechIcon::initTextures()
 		BYTE* pTmp = (BYTE*)(s_MechTextures + 1);
 
 		flipTopToBottom (pTmp, s_MechTextures->pixel_depth, s_MechTextures->width, s_MechTextures->height );
-
 	}
 
 	return true;
-
-
 }
 
 bool MechIcon::init( Mover* pMover )
@@ -483,8 +459,6 @@ bool MechIcon::init( Mover* pMover )
 	pilotIcon.setPilot( pMover->getPilot() );
 
 	return bRetVal;
-
-
 }
 
 bool MechIcon::init( long whichIndex )
@@ -494,7 +468,6 @@ bool MechIcon::init( long whichIndex )
 	int pixelDepth = s_MechTextures->pixel_depth/8; 
 	if ( pixelDepth != 4 )
 		PAUSE(("Texture for MechIcon not 32-bit"));
-
 
 	int iconsPerLine = ((int)s_textureMemory->width/(int)unitIconX);
 	int iconsPerPage = ((int)s_textureMemory->width/(int)unitIconY);
@@ -523,7 +496,6 @@ bool MechIcon::init( long whichIndex )
 	char* pTmp = (char*)s_MechTextures + sizeof ( TGAFileHeader );
 	unsigned long* pSrcRow = (unsigned long*)pTmp;
 
-
 	offsetY = 0;
 	offsetX = whichIndex * unitIconX;
 
@@ -545,9 +517,7 @@ bool MechIcon::init( long whichIndex )
 		pDestRow += textureData.Width;
 	}
 
-
 	gos_UnLockTexture( s_textureHandle[textureIndex] );
-
 
 	for ( int i = 0; i < 5; ++i )
 	{
@@ -563,8 +533,6 @@ bool MechIcon::init( long whichIndex )
 	memset( backDamage, 0, 8 );
 
 	return true;
-
-	
 }
 
 void MechIcon::update()
@@ -623,7 +591,6 @@ void MechIcon::update()
 	else if ( backTmp < .6 )
 		rearDamage[6] = 1;
 
-
 	tmp = unit->armor[MECH_ARMOR_LOCATION_LTORSO].curArmor/(float)unit->armor[MECH_ARMOR_LOCATION_LTORSO].maxArmor;
 	if ( !bDrawBack )
 	{
@@ -634,7 +601,6 @@ void MechIcon::update()
 	else
 	{
 		backTmp = unit->armor[MECH_ARMOR_LOCATION_RLTORSO].curArmor/(float)unit->armor[MECH_ARMOR_LOCATION_RLTORSO].maxArmor;
-
 	}
 
 	if (bMovie)
@@ -667,7 +633,6 @@ void MechIcon::update()
 	else if ( backTmp < .5 )
 		rearDamage[5] = 1;
 
-
 	tmp = unit->armor[MECH_ARMOR_LOCATION_RTORSO].curArmor/(float)unit->armor[MECH_ARMOR_LOCATION_RTORSO].maxArmor;
 	if ( !bDrawBack )
 	{
@@ -699,7 +664,6 @@ void MechIcon::update()
 		rearDamage[4] = 2;
 	else if ( backTmp < .4 )
 		rearDamage[4] = 1;
-
 
 	armor = unit->armor[MECH_ARMOR_LOCATION_LLEG];
 	tmp = armor.curArmor/(float)armor.maxArmor;
@@ -771,7 +735,6 @@ void MechIcon::update()
 		backDamage[7] = .5 + (float)((rratio * backDamage[4] + lratio * backDamage[5] + backDamage[6]))/(lratio + rratio + 1.f);
 		doDraw( rearDamage, backDamage, -1, backDamageIndex );
 	}
-
 }
 
 void MechIcon::doDraw( char* newDamage, char* oldDamage, unsigned long handle, unsigned long index )
@@ -833,7 +796,6 @@ void MechIcon::doDraw( char* newDamage, char* oldDamage, unsigned long handle, u
 				redVal = (tmp >> 16) & 0x000000ff;
 				redVal += i;
 				newColors[p] = ( tmp & 0xff00ffff ) | (redVal << 16);
-
 			}
 			
 			// look through the entire bitmap, changing old colors to new colors
@@ -854,7 +816,6 @@ void MechIcon::doDraw( char* newDamage, char* oldDamage, unsigned long handle, u
 						}
 					}
 					pChange++;
-
 				}
 				pLine += textureData.Width;				
 			}
@@ -863,8 +824,6 @@ void MechIcon::doDraw( char* newDamage, char* oldDamage, unsigned long handle, u
 		}
 		oldDamage[i] = newDamage[i];
 	}
-
-
 }
 
 bool IsDbcsString(const char* pszString)
@@ -879,7 +838,6 @@ bool IsDbcsString(const char* pszString)
 	return false;
 }
 
-
 void ForceGroupIcon::render()
 {
 	// here I draw the text
@@ -893,14 +851,12 @@ void ForceGroupIcon::render()
 			forceGroup = i;
 	}
 
-	
 	// draw little colored background
 	if ( forceGroup == 0 )
 		forceGroup = 10;
 	int color = forceGroup == -1 ? ForceGroupColors[10] : ForceGroupColors[forceGroup-1];
 	float health = unit->getAppearance()->barStatus;
 
-	
 	// draw pilotName
 	
 	GUI_RECT tmpRect = { textArea[locationIndex].left, textArea[locationIndex].top, textArea[locationIndex].right, textArea[locationIndex].bottom };
@@ -923,8 +879,6 @@ void ForceGroupIcon::render()
 
 	drawEmptyRect( pilotRect[locationIndex], 0xff002f55, 0xff002f55 );
 
-
-
 	// if has jumpjets, draws jump jet icon
 	if ( unit->canJump() )
 	{
@@ -932,9 +886,6 @@ void ForceGroupIcon::render()
 		jumpJetIcon->render( );
 		jumpJetIcon->move( -selectionRect[locationIndex].left, -selectionRect[locationIndex].bottom );
 	}
-	
-
-
 
 	if ( pilotVideoPilot == unit->getPilot()  )
 	{
@@ -980,12 +931,10 @@ void ForceGroupIcon::render()
 		}
 	}
 
-
 	if ( unit && (unit->getStatus () == OBJECT_STATUS_SHUTDOWN) )
 	{
 		drawRect( selectionRect[locationIndex], 0xaa000000 );
 	}
-
 
 	// if selected, draw white rectangle
 	if ( unit->getSelected() )
@@ -1014,8 +963,6 @@ void ForceGroupIcon::render()
 	{
 		drawDeathEffect();
 	}
-
-
 }
 
 void ForceGroupIcon::renderUnitIcon( float left, float top, float right, float bottom )
@@ -1042,7 +989,6 @@ void ForceGroupIcon::renderUnitIcon( float left, float top, float right, float b
 	gos_SetRenderState( gos_State_Filter, gos_FilterNone);
 	gos_SetRenderState( gos_State_AlphaTest, true);
 
-
 	bmpLocation[locationIndex][0].u = bmpLocation[locationIndex][1].u = u;
 	bmpLocation[locationIndex][2].u = bmpLocation[locationIndex][3].u = u + uDelta;
 	bmpLocation[locationIndex][0].v = bmpLocation[locationIndex][3].v = v;
@@ -1056,8 +1002,6 @@ void ForceGroupIcon::renderUnitIcon( float left, float top, float right, float b
 
 	gos_DrawTriangles( bmpLocation[locationIndex], 3 );
 	gos_DrawTriangles( &bmpLocation[locationIndex][2], 3 );
-			
-
 }
 
 void ForceGroupIcon::renderUnitIconBack( float left, float top, float right, float bottom )
@@ -1100,13 +1044,11 @@ void ForceGroupIcon::renderUnitIconBack( float left, float top, float right, flo
 
 	gos_DrawTriangles( vertices, 3 );
 	gos_DrawTriangles( &vertices[2], 3 );
-	
 }
 void ForceGroupIcon::renderPilotIcon( float left, float top, float right, float bottom )
 {
 	pilotIcon.render( left, top, right, bottom );
 }
-
 
 bool VehicleIcon::init( Mover* pMover )
 {
@@ -1124,7 +1066,6 @@ bool VehicleIcon::init( Mover* pMover )
 
 		setIconVariables();
 
-		
 		if ( NO_ERR != file.open( path ) )
 		{
 			Assert( 0, 0, "Couldn't open the vehicle parts" );
@@ -1138,7 +1079,6 @@ bool VehicleIcon::init( Mover* pMover )
 		BYTE* pTmp = (BYTE*)(s_VehicleTextures + 1); 
 
 		flipTopToBottom (pTmp, s_VehicleTextures->pixel_depth, s_VehicleTextures->width, s_VehicleTextures->height );
-
 	}
 
 	pilotIcon.setTextureIndex( 26 );
@@ -1165,7 +1105,6 @@ bool VehicleIcon::init( Mover* pMover )
 		row = row % iconsPerPage;
 	}
 
-	
 	long offsetX =  column * unitIconX;
 	long offsetY = row * unitIconY;
 	
@@ -1175,11 +1114,9 @@ bool VehicleIcon::init( Mover* pMover )
 		s_textureHandle[texIndex] = gos_NewTextureFromMemory( gos_Texture_Alpha, ".tga", (unsigned char*)s_textureMemory, size, 0 );
 	}
 
-
 	TEXTUREPTR textureData;
 	gos_LockTexture( s_textureHandle[texIndex], 0, 0, &textureData );
 
-	
 	unsigned long* pDestData, *pDestRow = textureData.pTexture + offsetY * textureData.Width + offsetX;
 	char* pTmp = (char*)s_VehicleTextures + sizeof ( TGAFileHeader );
 	unsigned long* pSrcRow = (unsigned long*)pTmp;
@@ -1207,11 +1144,9 @@ bool VehicleIcon::init( Mover* pMover )
 		pDestRow += textureData.Width;
 	}
 
-
 	gos_UnLockTexture( s_textureHandle[texIndex] );
 	
 	unit = pMover;
-
 
 	for ( int i = 0; i < 5; ++i )
 	{
@@ -1226,7 +1161,6 @@ bool VehicleIcon::init( Mover* pMover )
 	memset( damage, 0, 5 );
 
 	return true;
-
 }
 
 void VehicleIcon::update()
@@ -1263,7 +1197,6 @@ void VehicleIcon::update()
 	else if ( tmp < .6 )
 		newDamage[2] = 1;
 
-
 	tmp = unit->armor[GROUNDVEHICLE_LOCATION_RIGHT].curArmor/(float)unit->armor[GROUNDVEHICLE_LOCATION_RIGHT].maxArmor;
 
 	if ( tmp < .1 )
@@ -1282,7 +1215,6 @@ void VehicleIcon::update()
 	else if ( tmp < .6 )
 		newDamage[4] = 1;
 
-
 	for ( int i = 0; i < 5; ++i )
 	{
 		if ( newDamage[i] != damage[i] )
@@ -1298,7 +1230,6 @@ void VehicleIcon::update()
 				yIndex = yIndex % iconsPerPage;
 			}
 
-			
 			TEXTUREPTR textureData;
 			gos_LockTexture( s_textureHandle[texIndex], 0, 0, &textureData );
 
@@ -1326,10 +1257,8 @@ void VehicleIcon::update()
 				redVal = (tmp >> 16) & 0x000000ff;
 				redVal += i;
 				newColors[p] = ( tmp & 0xff00ffff ) | (redVal << 16);
-
 			}
-			
-	
+
 			for ( int k = 0; k < unitIconY; ++k )
 			{
 				pChange = pLine;
@@ -1346,7 +1275,6 @@ void VehicleIcon::update()
 						}
 					}
 					pChange++;
-
 				}
 				pLine += textureData.Width;				
 			}
@@ -1370,8 +1298,7 @@ void ForceGroupIcon::drawBar( float barStatus )
 		color = SB_YELLOW;
 	else 
 		color = SB_RED;*/
-		
-	
+
 	GUI_RECT rect = { healthBar[locationIndex].left, healthBar[locationIndex].top,healthBar[locationIndex].left + barLength, healthBar[locationIndex].bottom };
 	drawRect( rect, color );
 	drawEmptyRect( healthBar[locationIndex],  color, color & 0x7f7f7f );
@@ -1384,7 +1311,6 @@ int ForceGroupIcon::sort( const void* p1, const void* p2 )
 
 	bool bv1 = dynamic_cast<VehicleIcon*>(m1) ? 1 : 0;
 	bool bv2 = dynamic_cast<VehicleIcon*>(m2) ? 1 : 0;
-
 
 	for ( int i = 1; i < 10; ++i )
 	{
@@ -1405,7 +1331,6 @@ int ForceGroupIcon::sort( const void* p1, const void* p2 )
 		return -1;
 	else if ( bv1 && !bv2 )
 		return 1;
-	
 
 	int w1 = m1->unit->getTonnage();
 	int w2 = m2->unit->getTonnage();
@@ -1521,7 +1446,6 @@ void ForceGroupIcon::setIconVariables()
 			unitIconX = 40;
 			unitIconY = 48;
 			break;
-
 	}
 
 	curScreenWidth = Environment.screenWidth;
@@ -1558,7 +1482,6 @@ PilotIcon::PilotIcon()
 		s_pilotTextureWidth = textureData.Width;
 		gos_UnLockTexture( gosID );
 	}
-
 }
 
 void PilotIcon::render( float left, float top, float right, float bottom ) 
@@ -1589,13 +1512,11 @@ void PilotIcon::render( float left, float top, float right, float bottom )
 	pilotLocation[1].v = pilotLocation[2].v = (yLocation + pilotIconY)/s_pilotTextureWidth+ (.1f/s_pilotTextureWidth);
 	pilotLocation[4] = pilotLocation[0];
 
-
 	int gosID = mcTextureManager->get_gosTextureHandle( s_pilotTextureHandle );
 	gos_SetRenderState( gos_State_Texture, gosID );
 	// here I need to draw the pilot icon
 	gos_DrawTriangles( pilotLocation, 3 );
 	gos_DrawTriangles( &pilotLocation[2], 3 );
-
 }
 
 void PilotIcon::setPilot( MechWarrior* pWarrior )
@@ -1640,7 +1561,6 @@ void PilotIcon::swapResolutions( bool bForce)
 		s_pilotTextureWidth = textureData.Width;
 		gos_UnLockTexture( gosID );
 	}
-
 }
 
 //*************************************************************************************************

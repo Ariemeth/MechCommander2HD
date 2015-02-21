@@ -15,45 +15,16 @@
 //---------------------------------------------------------------------------
 // Include Files
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef DOBJTYPE_H
 #include "dobjtype.h"
-#endif
-
-#ifndef DAPPEAR_H
 #include "dappear.h"
-#endif
-
-#ifndef DCONTACT_H
 #include "dcontact.h"
-#endif
-
-#ifndef DTEAM_H
 #include "dteam.h"
-#endif
-
-#ifndef DWARRIOR_H
 #include "dwarrior.h"
-#endif
-
-#ifndef MECHCLASS_H
 #include "mechclass.h"
-#endif
-
-#ifndef DGAMEOBJ_H
 #include "dgameobj.h"
-#endif
-
-#ifndef DCARNAGE_H
 #include "dcarnage.h"
-#endif
-
-#ifndef MOVE_H
 #include "move.h"
-#endif
 
 #ifndef STUFF_HPP
 #include <stuff\stuff.hpp>
@@ -99,7 +70,6 @@ typedef struct _WeaponShotInfo {
 	void operator = (_WeaponShotInfo copy) {
 		init(copy.attackerWID, copy.masterId, copy.damage, copy.hitLocation, copy.entryAngle);
 	}
-	
 } WeaponShotInfo;
 
 //---------------------------------------------------------------------------
@@ -645,7 +615,6 @@ class GameObject {
 			return(-1);
 		}
 
-
 		virtual long write (FilePtr objFile)
 		{
 			return NO_ERR;
@@ -744,7 +713,6 @@ class GameObject {
 
 		virtual void setPowerSupply (GameObjectPtr power)
 		{
-		
 		}
 		
 		//----------------------
@@ -816,7 +784,6 @@ class GameObject {
 				setSelected( true ); // reset flags
 
 			setDrawColored( set );
-
 		}
 
 		virtual bool getTargeted(void) {
@@ -1146,13 +1113,4 @@ class GameObject {
 //---------------------------------------------------------------------------
 
 #endif
-
-
-
-
-
-
-
-
-
 

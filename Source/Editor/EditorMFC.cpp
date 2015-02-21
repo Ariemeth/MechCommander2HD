@@ -7,7 +7,6 @@
 
 #include "stdafx.h"
 #include "EditorMFC.h"
-
 #include "MainFrm.h"
 #include "MFCPlatform.hpp"
 
@@ -51,7 +50,6 @@ BOOL EditorMFCApp::InitInstance()
 	MainFrame* pFrame = new MainFrame;
 	m_pMainWnd = pFrame;
 
-
 	// create and load the frame with its resources
 
 	pFrame->LoadFrame(IDR_EDITOR_MENU/*, WS_OVERLAPPED |WS_CAPTION | WS_SYSMENU | FWS_ADDTOTITLE*/  );
@@ -70,10 +68,6 @@ BOOL EditorMFCApp::InitInstance()
 
 /////////////////////////////////////////////////////////////////////////////
 // EditorMFCApp message handlers
-
-
-
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CAboutDlg dialog used for App About
@@ -131,7 +125,6 @@ void EditorMFCApp::OnAppAbout()
 /////////////////////////////////////////////////////////////////////////////
 // EditorMFCApp message handlers
 
-
 BOOL EditorMFCApp::OnIdle(LONG lCount) 
 {
 	const CWnd *pW1 = this->GetMainWnd();
@@ -155,7 +148,6 @@ BOOL EditorMFCApp::OnIdle(LONG lCount)
 
 	return 1;
 }
-
 
 int EditorMFCApp::ExitInstance() 
 {

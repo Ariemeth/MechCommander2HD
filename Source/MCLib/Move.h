@@ -13,30 +13,12 @@
 
 //--------------
 // Include Files
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef DMOVEMGR_H
 #include "dmovemgr.h"
-#endif
-
-#ifndef TERRAIN_H
 #include "terrain.h"
-#endif
-
-#ifndef DOBJCLASS_H
 #include "dobjclass.h"
-#endif
-
-#ifndef DOBJBLCK_H
 #include "dobjblck.h"
-#endif
-
-#ifndef DGAMELOG_H
 #include "dgamelog.h"
-#endif
-
 #include <gameos.hpp>
 
 //***************************************************************************
@@ -184,9 +166,7 @@ typedef enum {
 #define	MAX_CELL_COORDS					5000
 #define	FILL_STACK_SIZE					810000
 
-
 //***************************************************************************
-
 
 #pragma pack(1)
 
@@ -491,7 +471,6 @@ typedef struct _MapCell {
 		if (set)
 			data |= MAPCELL_BUILD_NOT_SET_MASK;
 	}
-
 } MapCell;
 
 typedef MapCell* MapCellPtr;
@@ -839,10 +818,8 @@ typedef MissionMap* MissionMapPtr;
 
 //***************************************************************************
 
-
 class MovePath;
 typedef MovePath* MovePathPtr;
-
 
 //---------------------------------------------------------------------------
 #define	MAX_STEPS_PER_MOVEPATH 200
@@ -959,7 +936,6 @@ class MovePath {
 };
 
 //******************************************************************************************
-
 
 //******************************************************************************************
 #define	GLOBAL_FLAG_SPECIAL_IMPOSSIBLE	0x80

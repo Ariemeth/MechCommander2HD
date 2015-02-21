@@ -2,26 +2,11 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef MC2MOVIE_H
 #include "mc2movie.h"
-#endif
-
-#ifndef TXMMGR_H
 #include "txmmgr.h"
-#endif
-
-#ifndef FILE_H
 #include "file.h"
-#endif
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
-
-#ifndef PREFS_H
 #include "prefs.h"
-#endif
-
 #include "..\resource.h"
 #include <gameos.hpp>
 
@@ -128,7 +113,6 @@ void MC2Movie::render (void)
 {
 	if (!stillPlaying)
 		return;
-
 }
 
 //--

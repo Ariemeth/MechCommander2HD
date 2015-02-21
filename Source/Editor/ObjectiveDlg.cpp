@@ -7,7 +7,6 @@
 #include "stdafx.h"
 #include "resource.h"
 #include "ObjectiveDlg.h"
-
 #include "assert.h"
 #include "EditorInterface.h"
 #include "ResourceStringSelectionDlg.h"
@@ -24,7 +23,6 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 // ObjectiveDlg dialog
-
 
 ObjectiveDlg::ObjectiveDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(ObjectiveDlg::IDD, pParent)
@@ -56,7 +54,6 @@ ObjectiveDlg::ObjectiveDlg(CWnd* pParent /*=NULL*/)
 	nFailureConditionSpeciesSelectionIndex = -1;
 	nFailureActionSpeciesSelectionIndex = -1;
 }
-
 
 void ObjectiveDlg::DoDataExchange(CDataExchange* pDX)
 {
@@ -92,7 +89,6 @@ void ObjectiveDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_OBJECTIVE_RESET_STATUS_FLAG_EDITBOX, m_ResetStatusFlagIDEdit);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(ObjectiveDlg, CDialog)
 	//{{AFX_MSG_MAP(ObjectiveDlg)
@@ -363,7 +359,6 @@ void ObjectiveDlg::SaveDialogValues() {
 			base |= 0xff000000;
 			m_ModifiedObjective.BaseColor( base );
 		}
-		
 	}
 
 	pWnd = GetDlgItem( IDC_HIGHLIGHT1 );
@@ -379,7 +374,6 @@ void ObjectiveDlg::SaveDialogValues() {
 			highlight1 |= 0xff000000;
 			m_ModifiedObjective.HighlightColor( highlight1 );
 		}
-		
 	}
 
 	pWnd = GetDlgItem( IDC_HIGHLIGHT2 );
@@ -395,7 +389,6 @@ void ObjectiveDlg::SaveDialogValues() {
 			highlight2 |= 0xff000000;
 			m_ModifiedObjective.HighlightColor2( highlight2 );
 		}
-		
 	}
 
 	int group = m_modelGroup.GetCurSel();
@@ -411,7 +404,6 @@ void ObjectiveDlg::SaveDialogValues() {
 	}
 	else 
 		m_ModifiedObjective.ModelID( -1 );
-	
 }
 
 BOOL ObjectiveDlg::OnInitDialog() 
@@ -424,7 +416,6 @@ BOOL ObjectiveDlg::OnInitDialog()
 	const char** pGroups = new const char*[groupCount];
 		
 	pMgr->getBuildingGroupNames(pGroups, groupCount);
-
 
 	for ( int i = 0; i < groupCount; ++i )
 	{
@@ -698,32 +689,25 @@ void ObjectiveDlg::OnSelchangeGroup()
 		m_Mech.AddString( MechNames[i] );
 	}
 
-
 	m_Mech.SetCurSel( 0 );	
-	
 }
 
 void ObjectiveDlg::OnBaseedit2() 
 {
 	CWnd* pWnd = GetDlgItem( IDC_BASE2 );
 	DoColorBox( pWnd );
-
-	
 }
 
 void ObjectiveDlg::OnHighilight2edit2() 
 {
 	CWnd* pWnd = GetDlgItem( IDC_HIGHLIGHT2 );
 	DoColorBox( pWnd );
-
-	
 }
 
 void ObjectiveDlg::OnHighlight1edit() 
 {
 	CWnd* pWnd = GetDlgItem( IDC_HIGHLIGHT1 );
 	DoColorBox( pWnd );
-	
 }
 
 void ObjectiveDlg::DoEditColorChange( long ID )
@@ -750,25 +734,21 @@ void ObjectiveDlg::DoEditColorChange( long ID )
 		GetDlgItem( ID )->SetWindowText( text );
 
 	GetDlgItem( ID )->RedrawWindow( );
-	
 }
 
 void ObjectiveDlg::OnChangeHighlight1() 
 {
 	DoEditColorChange( IDC_HIGHLIGHT1 );
-	
 }
 
 void ObjectiveDlg::OnChangeHighlight2() 
 {
 	DoEditColorChange( IDC_HIGHLIGHT2 );
-	
 }
 
 void ObjectiveDlg::OnChangeBase2() 
 {
 	DoEditColorChange( IDC_BASE2 );
-	
 }
 
 void ObjectiveDlg::DoColorBox( CWnd* pWnd )
@@ -784,7 +764,6 @@ void ObjectiveDlg::DoColorBox( CWnd* pWnd )
 		sscanf( tmpStr, "%x", (unsigned int *)&base );
 		base &= 0x00ffffff;
 
-
 		CColorDialog dlg( reverseRGB(base), NULL, this );
 		if (IDOK == dlg.DoModal() )
 		{
@@ -795,8 +774,6 @@ void ObjectiveDlg::DoColorBox( CWnd* pWnd )
 		}
 	}
 }
-
-
 
 HBRUSH ObjectiveDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor) 
 {
@@ -820,7 +797,6 @@ HBRUSH ObjectiveDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		baseBrush.CreateSolidBrush( base );
 		pDC->SetBkColor( base );
 
-		
 		if ( ((base & 0xff) + ( (base & 0xff00)>>8 ) + ( (base & 0xff0000)>>16 ))/3 < 85 )
 			pDC->SetTextColor( 0x00ffffff );
 
@@ -862,7 +838,6 @@ HBRUSH ObjectiveDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		base &= 0x00ffffff;
 		base = reverseRGB( base );
 
-		
 		if ( brush2.m_hObject )
 			brush2.DeleteObject();
 
@@ -875,8 +850,6 @@ HBRUSH ObjectiveDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		return (HBRUSH)brush2.m_hObject;
 	}
 
-		
-	
 	return hbr;
 }
 

@@ -34,7 +34,6 @@ public:
 	CString	m_forestName;
 	//}}AFX_DATA
 
-
 	//{{AFX_VIRTUAL(BuildingSettingsDlg)
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support

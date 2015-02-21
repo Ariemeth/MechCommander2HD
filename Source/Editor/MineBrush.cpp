@@ -10,7 +10,6 @@ MineBrush.cpp			: Implementation of the MineBrush component.
 #include "EditorObjectMgr.h"
 #include "Move.h"
 
-
 bool MineBrush::beginPaint()
 {
 	if ( !pAction )
@@ -133,9 +132,6 @@ void MineBrush::MineAction::AddChangedTileMineInfo( CTileMineInfo& info )
 
 		mineInfoList.Append( info );
 }
-
-
-
 
 //*************************************************************************************************
 // end of file ( MineBrush.cpp )

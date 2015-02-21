@@ -9,8 +9,6 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-
-
 //
 // A pointer to this structure is the handle to the database
 //

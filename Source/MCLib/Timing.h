@@ -9,9 +9,7 @@
 #define TIMING_H
 //----------------------------------------------------------------------------------
 // Include Files
-#ifndef DSTD_H
 #include "dstd.h"
-#endif
 
 //----------------------------------------------------------------------------------
 extern bool		g_gamePaused;			//Is the game paused?
@@ -167,7 +165,6 @@ typedef struct _MC_SYSTEMTIME
 	DWORD dwMilliseconds;
 
 	void copyFromSystemTime (void *systemTime);
-
 } MC_SYSTEMTIME;
 
 DWORD MCTiming_GetTimeZoneInforation(void *timeData);

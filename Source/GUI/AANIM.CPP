@@ -64,7 +64,6 @@ void aAnimation::copyData( const aAnimation& src )
 	}
 }
 
-
 long	aAnimation::init(FitIniFile* file, const char* headerName)
 {
 	EString strToCheck = headerName;
@@ -126,12 +125,9 @@ long	aAnimation::init(FitIniFile* file, const char* headerName)
 						infos[i].scaleY = 1.0f;
 					}
 				}
-
-
 			}
 			else
 				infos[i].scaleY = infos[i].scaleX;
-
 		}
 	}
 	
@@ -220,7 +216,6 @@ float	aAnimation::getXDelta() const
 	}
 
 	return delta;
-
 }
 
 float	aAnimation::getYDelta() const
@@ -257,7 +252,6 @@ float	aAnimation::getYDelta() const
 	}
 
 	return delta;
-
 }
 
 float	aAnimation::getScaleX() const
@@ -293,7 +287,6 @@ float	aAnimation::getScaleX() const
 	}
 
 	return curScale;
-
 }
 
 float	aAnimation::getScaleY() const
@@ -329,9 +322,7 @@ float	aAnimation::getScaleY() const
 	}
 
 	return curScale;
-
 }
-
 
 unsigned long aAnimation::getColor(  ) const
 {
@@ -378,8 +369,6 @@ unsigned long aAnimation::getColor( float time ) const
 		float percent = tmpTime/totalTime;
 
 		return interpolateColor( color1, color2, percent );
-		
-	
 	}
 	else if ( infos )
 	{
@@ -387,7 +376,6 @@ unsigned long aAnimation::getColor( float time ) const
 	}
 
 	return color;
-
 }
 
 void aAnimation::setReferencePoints( float X, float Y )
@@ -472,7 +460,6 @@ void aAnimGroup::setState( aAnimGroup::STATE newState )
 		if ( newState != NORMAL )
 			animations[curState].begin();
 	}
-
 }
 
 aAnimGroup::STATE aAnimGroup::getState() const

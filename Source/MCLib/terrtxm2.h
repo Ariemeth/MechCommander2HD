@@ -12,17 +12,9 @@
 #define TERRTXM2_H
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef QUAD_H
 #include "quad.h"
-#endif
-
-#ifndef TXMMGR_H
 #include "txmmgr.h"
-#endif
-
-#ifndef INIFILE_H
 #include "inifile.h"
-#endif
 
 //---------------------------------------------------------------------------
 // Macro Definitions

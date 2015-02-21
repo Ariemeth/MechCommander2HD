@@ -7,21 +7,15 @@ InfoWindow.h			: Interface for the InfoWindow component.
 //===========================================================================//
 \*************************************************************************************************/
 #include "mclib.h"
-
-#ifndef CONTROLGUI_H
 #include "controlGui.h"
-#endif
 
 class Mover;
 class ForceGroupIcon;
 
-#ifndef AFONT_H
 #include "aFont.h"
-#endif
 
 #define SCROLLUP	1
 #define SCROLLDOWN	2
-
 
 //*************************************************************************************************
 
@@ -129,11 +123,7 @@ class InfoWindow
 		static void init( FitIniFile& file );
 
 		static InfoWindow* s_instance;
-
-
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( InfoWindow.h )

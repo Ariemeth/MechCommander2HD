@@ -23,7 +23,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CGroupDialog dialog
 
-
 CGroupDialog::CGroupDialog(CWnd* pParent /*=NULL*/)
 	: CDialog(CGroupDialog::IDD, pParent)
 {
@@ -35,7 +34,6 @@ CGroupDialog::CGroupDialog(CWnd* pParent /*=NULL*/)
 	m_NumMissionsToCompleteEdit = 0;
 	//}}AFX_DATA_INIT
 }
-
 
 void CGroupDialog::DoDataExchange(CDataExchange* pDX)
 {
@@ -50,7 +48,6 @@ void CGroupDialog::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_GR_NUM_MISSIONS_TO_COMPLETE_EDIT, m_NumMissionsToCompleteEdit);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(CGroupDialog, CDialog)
 	//{{AFX_MSG_MAP(CGroupDialog)

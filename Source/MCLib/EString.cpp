@@ -5,9 +5,7 @@
 //===========================================================================//
 #include <windows.h>
 #include "EString.h"
-
 #include <gameos.hpp>
-
 #include <stdio.h>
 
 #ifdef UNICODE
@@ -21,11 +19,9 @@
 #pragma warning( push )
 #pragma warning( disable:4100 )
 
-
 #define INT_SIZE_LENGTH 20
 extern int __ismbcodepage;
 #define _ISNOTMBCP  (__ismbcodepage == 0)
-
 
 static wchar_t * __cdecl wideRev (
         wchar_t * string
@@ -116,7 +112,6 @@ static long __cdecl atolong(
             return total;   /* return result, negated if necessary */
 }
 
-
 static char * __cdecl StrStr (
         const char * str1,
         const char * str2
@@ -143,7 +138,6 @@ static char * __cdecl StrStr (
         }
 
         return(NULL);
-
 }
 
 static char * __cdecl StrRev (
@@ -167,7 +161,6 @@ static char * __cdecl StrRev (
 
         return(start);
 }
-
 
 //***************************************************************
 
@@ -202,13 +195,10 @@ static char * __cdecl StrRev (
 #endif
 #endif
 
-
-
 const int EString::INVALID_INDEX = -1;
 const int EString::s_Alloc_Allign = 4;
 const int EString::s_Force_Ansi =  0x10000;
 const int EString::s_Force_Unicode = 0x20000;
-
 
 // keep around an empty buffer which all of our empty objects use
 EString::EBuffer	EString::EBuffer::s_Empty_Buffer = { 0, 0, 0 };
@@ -264,13 +254,8 @@ void	EString::ChecEBufferDoRealloc()
 
 		memcpy( m_pBuffer + 1, p_Data, Cur_Length * sizeof( EChar ) );
 		m_pBuffer->m_Data_Length = Cur_Length;
-
 	}
-
 }
-
-
-
 
 //***************************************************************
 
@@ -421,7 +406,6 @@ void EString::Replace( int Start_Index, const EChar* p_String )
 			m_pBuffer->m_Data_Length = Alloc_Length;
 
 			p_Old_Buffer->Release();		
-
 		}
 
 		// check to see if the p_String is null
@@ -429,9 +413,6 @@ void EString::Replace( int Start_Index, const EChar* p_String )
 		{
 			*(m_pBuffer->Data() + Start_Index) = 0;
 		}
-
-		
-
 	}	
 }
 
@@ -440,7 +421,6 @@ void EString::Replace( int Start_Index, const EString& String )
 {
 	Replace( Start_Index, String.m_pBuffer->Data() );
 }
-
 
 ///////////////////////////////////////////////////////////////
 void EString::Insert( int Start_Index, const EChar* p_String )
@@ -468,8 +448,7 @@ void EString::Insert( int Start_Index, const EChar* p_String )
 					(p_Tmp->m_Data_Length - Start_Index) * sizeof (EChar) );
 		// write the string last in case we are writing over an old buffer
 		memcpy( m_pBuffer->Data() + Start_Index, p_String, Length * sizeof( EChar ) );
-	
-		
+
 		m_pBuffer->m_Data_Length = Length + p_Tmp->m_Data_Length;
 
 		// Bill added - in some cases, removing some characters then inserting fewer
@@ -522,7 +501,6 @@ bool EString::Remove( EString& Sub_String )
 
 	return false;
 }
-
 
 ///////////////////////////////////////////////////////////////
 void EString::Swap( EString& Src )
@@ -635,7 +613,6 @@ void EString::Format( const EChar* p_Str, ... )
 					else
 						break;
 				}
-
 			}
 			gosASSERT( Precision >= 0);
 		}
@@ -804,7 +781,6 @@ void EString::Format( const EChar* p_Str, ... )
 				va_arg(Arg_List, __int64);
 				break;
 
-
 			default:
 				gosASSERT(false);  // unknown formatting option
 			}
@@ -829,12 +805,10 @@ void EString::Format( const EChar* p_Str, ... )
 	vsprintf(m_pBuffer->Data(), p_Str, Arg_List_Save);
 #endif
 
-
 	m_pBuffer->m_Data_Length = StrSize( m_pBuffer->Data() );
 
 	// clean up
 	va_end( Arg_List );
-	
 }
 
 /////////////////////////////////////////////////////////////////
@@ -863,7 +837,6 @@ EString operator+( const EChar* p_Begin_String,
 	Ret_String.m_pBuffer->m_Data_Length = Length + End_String.m_pBuffer->m_Data_Length;
 
 	return Ret_String;
-
 }
 
 /////////////////////////////////////////////////////////////////
@@ -885,7 +858,6 @@ EString operator+( const EString& Begin_String, const EChar* p_End_String )
 	Ret_String.m_pBuffer->m_Data_Length = Length + Begin_String.m_pBuffer->m_Data_Length;
 
 	return Ret_String;
-
 }
 
 /////////////////////////////////////////////////////////////////
@@ -907,7 +879,6 @@ EString operator+( const EChar Char,  const  EString& Begin_String )
 
 	return Tmp + Begin_String;
 }
-
 
 /////////////////////////////////////////////////////////////////
 int EString::Compare( const EString& Str_To_Compare, bool Case_Sensitive ) const
@@ -951,10 +922,8 @@ int EString::Compare( const EChar* p_String, bool Case_Sensitive ) const
 			else
 				return -1;
 		}
-		
 	}	
 	return (KStrCmp( m_pBuffer->Data(), p_String ) );
-	
 }
  	
 /////////////////////////////////////////////////////////////////
@@ -962,7 +931,6 @@ int EString::Size() const 	// number of bytes
 {
 	return m_pBuffer->m_Data_Length * sizeof(EChar);
 }
-
 
 /////////////////////////////////////////////////////////////////
 int EString::Length() const	// number of characters
@@ -998,11 +966,9 @@ int EString::Find( EChar Char, int Start_Index ) const
 		}
 		
 		p_Tmp++;
-		
 	}
 
 	return INVALID_INDEX;
-
 }
 
 /////////////////////////////////////////////////////////////////
@@ -1027,12 +993,10 @@ int EString::Find( const EChar* p_Str_To_Find, int Start_Index ) const
 		Start_Index = 0;
 	}
 
-	
 	EChar* p_Tmp = KStrStr( m_pBuffer->Data() + Start_Index, 
 							p_Str_To_Find );
 
 	return ( p_Tmp ? p_Tmp - m_pBuffer->Data() : INVALID_INDEX );
-
 }
 
 /////////////////////////////////////////////////////////////////
@@ -1054,7 +1018,6 @@ int EString::ReverseFind ( EChar Char, int End_Index ) const
 		
 		p_Tmp --;
 		End_Index --;
-	
 	}
 
 	return INVALID_INDEX;
@@ -1099,8 +1062,6 @@ EString EString::SubString( int Start_Index, int End_Index ) const
 	return Ret_String;
 }
 
-
-
 /////////////////////////////////////////////////////////////////
 unsigned short* EString::CreateUNICODE() const
 {
@@ -1128,14 +1089,7 @@ char* 	EString::CreateMBCS() const
 #endif
 
 	return p_Ret_String;
-
 }
-
-
-
- 	
-
-
 
 ///****************************************************************
 #ifdef K_UNICODE
@@ -1172,7 +1126,6 @@ const EString& EString::operator+=( char Char )
 
 	return *this;	
 }
-
 
 /////////////////////////////////////////////////////////////////
 EString operator+( const EString& Begin_String, char* p_End_String )
@@ -1517,9 +1470,6 @@ void EString::Format( const char* p_Str, ... )
 
 	// clean up
 	va_end( Arg_List );
-	
-
-	
 }
 
 /////////////////////////////////////////////////////////////////
@@ -1565,8 +1515,6 @@ const EString& EString::operator=( char Char )
 
 	return operator=( Tmp );
 }
-
-
 
 #endif // Unicode
 

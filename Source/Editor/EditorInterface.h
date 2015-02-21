@@ -6,29 +6,12 @@
 
 #pragma warning( disable : 4786 )
 
-
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef ACTION_H
 #include "Action.h"
-#endif
-
-#ifndef EDITOROBJECTMGR_H
 #include "EditorObjectMgr.h"
-#endif
-
-#ifndef EDITORDATA_H
 #include "EditorData.h"
-#endif
-
-#ifndef EDITORTACMAP_H
 #include "EditorTacMap.h"
-#endif
-
 #include "Objective.h"
-
 #include "stdafx.h"
 
 // forward declarations
@@ -56,7 +39,6 @@ namespace Microsoft
 
 extern Microsoft::Xna::Arm::IProviderEngine * armProvider;
 
-
 //--------------------------------------------------------------------------------------
 //
 // Mech Commander 2 -- Copyright (c) 1998 FASA Interactive
@@ -72,8 +54,6 @@ extern Microsoft::Xna::Arm::IProviderEngine * armProvider;
 class EditorInterface : public CWnd
 {
 private:
-	
-	
 
 public:
 
@@ -187,7 +167,6 @@ public:
 		DECLARE_MESSAGE_MAP()
 
 	afx_msg void OnCommand(WPARAM wParam);
-	
 
 private:
 
@@ -312,8 +291,6 @@ private:
 	bool bThisIsInitialized;
 };
 
-
-
 class Editor // simply holds everything else
 {
 public:
@@ -333,7 +310,6 @@ public:
 
 	void resaveAll();		//Used by autoBuild to automagically resave all maps with correct data.	
 };
-
 
 class TeamsAction : public Action
 {

@@ -11,10 +11,7 @@
 #define FLOATHELP_H
 //--------------------------
 // Include Files
-#ifndef DBASEGUI_H
 #include "dbasegui.h"
-#endif
-
 #include <gameos.hpp>
 #include <stuff\stuff.hpp>
 

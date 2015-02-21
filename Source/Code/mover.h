@@ -11,57 +11,19 @@
 #ifndef MOVER_H
 #define MOVER_H
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef CONTACT_H
 #include "contact.h"
-#endif
-
-#ifndef DMOVER_H
 #include "dmover.h"
-#endif
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef OBJTYPE_H
 #include "objtype.h"
-#endif
-
-#ifndef MOVE_H
 #include "move.h"
-#endif
-
-#ifndef DOBJNUM_H
 #include "dobjnum.h"
-#endif
-
-#ifndef CMPONENT_H
 #include "cmponent.h"
-#endif
-
-#ifndef WARRIOR_H
 #include "warrior.h"
-#endif
-
-#ifndef DGROUP_H
 #include "dgroup.h"
-#endif
-
-#ifndef TRIGGER_H
 #include "trigger.h"
-#endif
-
-#ifndef DTEAM_H
 #include "dteam.h"
-#endif
-
-#ifndef DCOMNDR_H
 #include "comndr.h"
-#endif
 
 extern float metersPerWorldUnit;
 
@@ -436,7 +398,6 @@ typedef struct _CriticalSpace {
 		inventoryID = copy.inventoryID;
 		hit = copy.hit;
 	}
-
 } CriticalSpace;
 
 //------------------------------------------------------------------------------------------
@@ -578,7 +539,6 @@ class StatusChunk {
 
 		bool equalTo (StatusChunkPtr chunk);
 };
-
 
 //---------------------------------------------------------------------------
 
@@ -737,9 +697,7 @@ typedef struct _MoverData : public GameObjectData
 	DWORD				psRed;
 	DWORD				psBlue;
 	DWORD				psGreen;
-
 } MoverData;
-
 
 typedef enum {
 	MOVETYPE_GROUND,
@@ -841,7 +799,6 @@ class Mover : public GameObject {
 		bool				suppressionFire;				// is this guy permanently shooting at ground
 		char				prevTeamId;
 		char				prevCommanderId;
-		
 
 		// Update Info
 		long				pilotCheckModifier;
@@ -943,7 +900,6 @@ class Mover : public GameObject {
 		static unsigned long holdFireIconHandle;
 		
 		static TriggerAreaManager* triggerAreaMgr;
-
 
 		bool				pathLocks;						//For movers which can be stepped on.  They do NOT lock!
 		bool				isOnGui;						//For movers which start out on player team but not on gui.  Like raven in 0103
@@ -1468,7 +1424,6 @@ class Mover : public GameObject {
 						  long numValidAreas,
 						  short* validAreas,
 						  unsigned long moveParams);
-								   
 
 		virtual long calcMovePath (MovePathPtr path,
 								   long pathType,
@@ -1726,7 +1681,6 @@ class Mover : public GameObject {
 
 		virtual SensorSystem* getSensorSystem(){ return sensorSystem; }
 
-		
 		static long loadGameSystem (FitIniFilePtr mechFile, float visualRange);
 
 		bool isCloseToFirstTacOrder( Stuff::Vector3D& pos );
@@ -1743,7 +1697,6 @@ class Mover : public GameObject {
 
 		virtual void startShutDown (void)
 		{
-		
 		}
 		
 		virtual bool isMech (void)

@@ -14,7 +14,6 @@
 #include "ChatWindow.h"
 #include "gameSound.h"
 
-
 #define MAP_INDEX 32
 #define BUTTON_TEXT 34
 #define VIDEO_SCREEN 33
@@ -23,7 +22,6 @@
 #define MN_MSG_PLAY 80
 #define MN_MSG_STOP 82
 #define MN_MSG_PAUSE 81
-
 
 MissionBriefingScreen::MissionBriefingScreen(  )
 {
@@ -50,7 +48,6 @@ MissionBriefingScreen::~MissionBriefingScreen()
 
 //-------------------------------------------------------------------------------------------------
 
-
 void MissionBriefingScreen::init( FitIniFile* file )
 {
 	LogisticsScreen::init( *file, "Static", "Text", "Rect", "Button" );
@@ -69,8 +66,6 @@ void MissionBriefingScreen::init( FitIniFile* file )
 	getButton( MN_MSG_PAUSE )->showGUIWindow( 0 );
 	camera.init( statics[VIDEO_SCREEN].left(), statics[VIDEO_SCREEN].top(), 
 		statics[VIDEO_SCREEN].right(), statics[VIDEO_SCREEN].bottom() );
-
-
 }
 
 void MissionBriefingScreen::render(int xOffset, int yOffset )
@@ -94,11 +89,6 @@ void MissionBriefingScreen::render(int xOffset, int yOffset )
 
 	if ( MPlayer && ChatWindow::instance() )
 		ChatWindow::instance()->render(xOffset, yOffset);
-
-
-
-	
-
 }
 
 void MissionBriefingScreen::update()
@@ -107,7 +97,6 @@ void MissionBriefingScreen::update()
 	if ( MPlayer || LogisticsData::instance->isSingleMission() )
 	{
 		getButton( MB_MSG_PREV )->disable( true );
-
 	}
 	else
 		getButton( MB_MSG_PREV )->disable( false );
@@ -133,7 +122,6 @@ void MissionBriefingScreen::update()
 					}
 				}
 			}
-	
 		}
 	}
 
@@ -148,7 +136,6 @@ void MissionBriefingScreen::update()
 	if ( selItem != -1 && oldSel != selItem )
 	{
 		bClicked = true;
-		
 
 		// set old selections back to white
 		for ( int i= 0; i < missionListBox.GetItemCount(); i++ )
@@ -182,10 +169,7 @@ void MissionBriefingScreen::update()
 			if ( objectiveButtons[ID] )
 				objectiveButtons[ID]->setColor( 0xffff0000 );
 		}
-
-		
 	}
-	
 
 	if ( !bClicked && runTime > 3.0 ) // every second switch selection until user clicks
 	{
@@ -221,7 +205,6 @@ void MissionBriefingScreen::update()
 		}
 
 		missionListBox.SelectItem( selItem );
-		
 
 		if ( selItem != -1 )
 		{
@@ -260,10 +243,6 @@ void MissionBriefingScreen::update()
 
 		ChatWindow::instance()->update();
 	 }
-
-
-
-	
 }
 
 long	MissionBriefingScreen::getMissionTGA(const char* missionName)
@@ -316,8 +295,6 @@ long	MissionBriefingScreen::getMissionTGA(const char* missionName)
 	}
 
 	return 0;
-
-
 }
 
 void MissionBriefingScreen::begin()
@@ -333,12 +310,10 @@ void MissionBriefingScreen::begin()
 	// need to set up all pertinent mission info
 	EString missionName = LogisticsData::instance->getCurrentMission();
 
-
 	long tmpMapTextureHandle = getMissionTGA(missionName);
 	statics[MAP_INDEX].setTexture( tmpMapTextureHandle );
 	statics[MAP_INDEX].setUVs( 0, 127, 127, 0 );
 	statics[MAP_INDEX].setColor( 0xffffffff );
-
 
 	// need to get all the objectives and stuff
 	FullPathFileName fitPath;
@@ -369,7 +344,6 @@ void MissionBriefingScreen::begin()
 		char missionName[256];
 		fitFile.readIdString("MissionName", missionName, 255);
 		addLBItem(missionName, 0xff005392, -1);
-
 	}
 
 	addItem(IDS_MN_DIVIDER, 0xff005392, -1);
@@ -459,7 +433,6 @@ void MissionBriefingScreen::begin()
 		}
 	}
 
-
 	addLBItem( blurb, 0xff005392, -1 );
 
 	int RP = LogisticsData::instance->getCBills();
@@ -497,7 +470,6 @@ void MissionBriefingScreen::begin()
 
 	statics[BUTTON_TEXT].showGUIWindow( 0 );
 	status = RUNNING;
-
 }
 
 void MissionBriefingScreen::setupDropZone( float fX, float fY, float mapWidth, float mapHeight )
@@ -520,8 +492,6 @@ void MissionBriefingScreen::setupDropZone( float fX, float fY, float mapWidth, f
 
 	dropZoneButton.moveTo( xLoc, yLoc );
 	dropZoneButton.showGUIWindow( true );
-
-
 }
 
 void MissionBriefingScreen::addObjectiveButton( float fX, float fY, int count, int priority,
@@ -532,8 +502,6 @@ void MissionBriefingScreen::addObjectiveButton( float fX, float fY, int count, i
 	{
 		count += 12;
 	}
-
-
 
 	float bmpX = statics[MAP_INDEX].width();
 	float bmpY = statics[MAP_INDEX].height();
@@ -604,7 +572,6 @@ int MissionBriefingScreen::addLBItem( const char* text, unsigned long color, int
 	pEntry->sizeToText();
 	pEntry->forceToTop(true);
 	return missionListBox.AddItem( pEntry );
-
 }
 
 int  MissionBriefingScreen::addItem( int ID, unsigned long color, int LBid)
@@ -617,16 +584,13 @@ int  MissionBriefingScreen::addItem( int ID, unsigned long color, int LBid)
 	pEntry->setText( ID );
 	pEntry->setColor( color );
 	return missionListBox.AddItem( pEntry );
-
 }
-
 
 void MissionBriefingScreen::end()
 {
 //	statics[MAP_INDEX].setTexture( (long)0 );
 // 	statics[MAP_INDEX].setColor( 0 );
 	camera.setMech( NULL );
-
 }
 
 int MissionBriefingScreen::handleMessage( unsigned long msg, unsigned long who )
@@ -655,11 +619,7 @@ int MissionBriefingScreen::handleMessage( unsigned long msg, unsigned long who )
 	}
 
 	return 0;
-
 }
-
-
-
 
 //*************************************************************************************************
 // end of file ( MissionBriefingScreen.cpp )

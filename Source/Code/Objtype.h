@@ -13,17 +13,9 @@
 
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef DOBJTYPE_H
 #include "dobjtype.h"
-#endif
-
-#ifndef DGAMEOBJ_H
 #include "dgameobj.h"
-#endif
 
 #ifndef STUFF_HPP
 #include <stuff\stuff.hpp>

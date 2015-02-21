@@ -12,38 +12,14 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef TXMMGR_H
 #include "txmmgr.h"
-#endif
-
-#ifndef TGAINFO_H
 #include "tgainfo.h"
-#endif
-
-#ifndef FILE_H
 #include "file.h"
-#endif
-
-#ifndef TIMING_H
 #include "timing.h"
-#endif
-
-#ifndef CAMERA_H
 #include "camera.h"
-#endif
-
-#ifndef LZ_H
 #include "lz.h"
-#endif
-
-#ifndef CIDENT_H
 #include "cident.h"
-#endif
-
-#ifndef PATHS_H
 #include "paths.h"
-#endif
-
 #include <gameos.hpp>
 #include <MLR\MLR.hpp>
 #include <GosFX\gosfxheaders.hpp>
@@ -792,7 +768,6 @@ void MC_TextureManager::renderLists (void)
 		}
 	}
 
-
 	gos_SetRenderState( gos_State_ZCompare, 1);
 	if (Environment.Renderer != 3)
 	{
@@ -1356,7 +1331,6 @@ DWORD MC_TextureManager::copyTexture( DWORD texNodeID )
 	}
 
 	return -1;
-
 }
 //----------------------------------------------------------------------
 // MC_TextureNode

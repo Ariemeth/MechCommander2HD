@@ -119,7 +119,6 @@ void LogisticsData::initComponents()
 	strcpy( componentPath, objectPath );
 	strcat( componentPath, "compbas.csv" );
 
-	
 	File componentFile;
 #ifdef _DEBUG
 	int result = 
@@ -130,7 +129,6 @@ void LogisticsData::initComponents()
 	BYTE* data = new BYTE[componentFile.getLength()];
 
 	componentFile.read( data, componentFile.getLength() );
-
 
 	File dataFile;
 	dataFile.open( (char*)data, componentFile.getLength() );
@@ -145,7 +143,6 @@ void LogisticsData::initComponents()
 
 	int		Ammo[512];
 	memset( Ammo, 0, sizeof ( int ) * 512 );
-
 
 	LogisticsComponent tmpComp;
 	int counter = 0;
@@ -192,7 +189,6 @@ void LogisticsData::initPilots()
 	strcpy( pilotPath, objectPath );
 	strcat( pilotPath, "pilots.csv" );
 
-	
 	File pilotFile;
 	pilotFile.open( pilotPath );
 
@@ -216,7 +212,6 @@ void LogisticsData::initPilots()
 			pilots.DeleteTail();
 
 		id++;
-
 	}
 }
 
@@ -225,7 +220,6 @@ void LogisticsData::initVariants()
 	char variantPath[256];
 	strcpy( variantPath, artPath );
 	strcat( variantPath, "buildings.csv" );
-
 
 	CSVFile variantFile;
 	variantFile.open( variantPath );
@@ -241,7 +235,6 @@ void LogisticsData::initVariants()
 		sprintf( errorStr, "couldn't open file %s", (char*)pakPath );
 		Assert( 0, 0, errorStr );
 	}
-
 
 	char variantFileName[256];
 	char variantFullPath[1024];
@@ -284,7 +277,6 @@ void LogisticsData::initVariants()
 			
 			i++;
 			continue;
-
 		}
 		
 		float scale;
@@ -330,7 +322,6 @@ void LogisticsData::initVariants()
 		}
 
 		i++;
-
 	}
 }
 
@@ -354,20 +345,15 @@ void LogisticsData::addVehicle( long fitID, PacketFile& objectFile, float scale 
 	}
 }
 
-
 //*************************************************************************************************
 void LogisticsData::RegisterFunctions()
 {
-	
-
 }
 
 //*************************************************************************************************
 void LogisticsData::UnRegisterFunctions()
 {
-
 }
-
 
 int LogisticsData::getAvailableComponents( LogisticsComponent** pComps, int& maxCount )
 {
@@ -384,15 +370,12 @@ int LogisticsData::getAvailableComponents( LogisticsComponent** pComps, int& max
 				else 
 					retVal = NEED_BIGGER_ARRAY;
 				++i;
-
-				
 			}
 		}
 
 	maxCount = i;
 
 	return retVal; 
-
 }
 int	LogisticsData::getAllComponents( LogisticsComponent** pComps, int& maxCount )
 {
@@ -413,9 +396,6 @@ int	LogisticsData::getAllComponents( LogisticsComponent** pComps, int& maxCount 
 
 	return retVal; 
 }
-
-
-
 
 int LogisticsData::getPurchasableMechs( LogisticsVariant** array, int& count )
 {
@@ -441,11 +421,7 @@ int LogisticsData::getPurchasableMechs( LogisticsVariant** array, int& count )
 	}
 
 	return retVal;
-
 }
-
-
-
 
 int LogisticsData::purchaseMech( LogisticsVariant* pVariant )
 {
@@ -479,10 +455,7 @@ int LogisticsData::canPurchaseMech( LogisticsVariant* pVar )
 	}
 
 	return NOT_ENOUGH_RESOURCE_POINTS;
-
 }
-
-
 
 int LogisticsData::sellMech( LogisticsMech* pVar )
 {
@@ -546,8 +519,6 @@ int LogisticsData::removeVariant( const char* varName )
 	return 0;
 }
 
-
-
 int LogisticsData::createInstanceID( LogisticsVariant* pVar )
 {
 	int count = -1;
@@ -590,9 +561,6 @@ LogisticsMech*	LogisticsData::getMech( int ID )
 	return NULL;
 }
 
-
-
-
 int LogisticsData::addMechToForceGroup( LogisticsMech* pMech, int slot )
 {
 	if ( !pMech )
@@ -632,7 +600,6 @@ int		LogisticsData::removeMechFromForceGroup( int slot )
 	}
 
 	return -1;
-
 }
 
 LogisticsMech*		LogisticsData::getMechWithoutForceGroup( LogisticsMech* pMech )
@@ -645,7 +612,6 @@ LogisticsMech*		LogisticsData::getMechWithoutForceGroup( LogisticsMech* pMech )
 			if ( (*iter)->getVariant() == pMech->getVariant() && !(*iter)->getForceGroup() )
 			{
 				return (*iter);
-				
 			}
 		}
 	
@@ -702,10 +668,7 @@ LogisticsPilot* LogisticsData::getFirstAvailablePilot()
 	}
 
 	return NULL;
-
 }
-
-
 
 // GetAvailableMissions( char** missionNames, long& count )
 int LogisticsData::getAvailableMissions( const char** missionNames, long& count )
@@ -723,9 +686,6 @@ int LogisticsData::getAvailableMissions( const char** missionNames, long& count 
 	count= numberOfEm;
 	
 	return 0;
-
-
-
 }
 
 int LogisticsData::getCurrentMissions( const char** missionNames, long& count )
@@ -745,16 +705,12 @@ int LogisticsData::getCurrentMissions( const char** missionNames, long& count )
 	count= numberOfEm;
 	
 	return 0;
-
-
-
 }
 
 bool LogisticsData::getMissionAvailable(const char* missionName)
 {
 	return missionInfo->getMissionAvailable(missionName);
 }
-
 
 // SetCurrentMission( char* missionName )
 int LogisticsData::setCurrentMission(const char* missionName)
@@ -770,9 +726,6 @@ int LogisticsData::setCurrentMission(const char* missionName)
 
 		removeDeadWeight();
 	}
-
-
-	
 
 	return result;
 }
@@ -800,7 +753,6 @@ int		LogisticsData::setCurrentMission(const EString& missionName)
 	return setCurrentMission((const char*)missionName);
 }
 
-
 void	LogisticsData::getForceGroup( EList<LogisticsMech*, LogisticsMech*>& newList )
 {
 	int count = 0;
@@ -826,7 +778,6 @@ void	LogisticsData::getInventory( EList<LogisticsMech*, LogisticsMech*>& newList
 		newList.Append( (*iter) );
 	}
 }
-
 
 void	LogisticsData::addMechToInventory( LogisticsVariant* pVar, LogisticsPilot* pPilot, int ForceGroup,
 										  bool bSubtractPts)
@@ -951,8 +902,6 @@ const char*	LogisticsData::getBestPilot( long mechWeight )
 	
 	pPilots[0]->setUsed( true );
 	return pPilots[0]->getFileName();
-
-
 }
 
 bool		LogisticsData::gotPilotsLeft()
@@ -987,7 +936,6 @@ bool		LogisticsData::gotPilotsLeft()
 	}
 
 	return 0;
-
 }
 
 int LogisticsData::comparePilots( LogisticsPilot* p1, LogisticsPilot* p2, long weight )
@@ -1008,8 +956,6 @@ int LogisticsData::comparePilots( LogisticsPilot* p1, LogisticsPilot* p2, long w
 					return 1;
 			}
 		 }
-
-
 
 	if ( p1->getRank() > p2->getRank() )
 		return 1;
@@ -1032,8 +978,6 @@ int LogisticsData::comparePilots( LogisticsPilot* p1, LogisticsPilot* p2, long w
 		return -1;
 
 	return 0;
-
-
 }
 
 long	LogisticsData::save( FitIniFile& file )
@@ -1093,12 +1037,10 @@ void LogisticsData::clearVariants()
 			iter --;
 			delete *tmpIter;
 			variants.Delete( tmpIter );
-	
 		}
 		else
 			iter--;
 	}
-		
 }
 
 long	LogisticsData::load( FitIniFile& file )
@@ -1197,7 +1139,6 @@ long	LogisticsData::load( FitIniFile& file )
 	}
 
 	updateAvailability();
-
 
 	//Start finding the Leaks
 	//g_systemHeap->dumpRecordLog();
@@ -1303,8 +1244,6 @@ long LogisticsData::loadMech( FitIniFile& file, int& count )
 	return -1; // failed in finding the variant
 }
 
-
-
 void	LogisticsData::setMissionCompleted( )
 {
 #ifndef VIEWER
@@ -1362,7 +1301,6 @@ void	LogisticsData::setMissionCompleted( )
 						addMechToInventory( pVar, ForceGroupCount++, pPilot, base, highlight1, highlight2 );
 						if ( pPilot )
 							pPilot->setUsed( true );
-
 					}
 				}
 				else // mech was recovered during the mission
@@ -1380,7 +1318,6 @@ void	LogisticsData::setMissionCompleted( )
 							addMechToInventory( pVariant, ForceGroupCount++, pPilot, base, highlight1, highlight2 );
 							if ( pPilot )
 								pPilot->setUsed( true );
-
 						}
 					}
 				}
@@ -1390,7 +1327,6 @@ void	LogisticsData::setMissionCompleted( )
 					pPilot->update( pMover->getPilot() );
 //					if ( pMover->isDestroyed() || pMover->isDisabled() )
 //						pPilot->setUsed( false );
-
 				}
 			}
 		}
@@ -1495,7 +1431,6 @@ long LogisticsData::updateAvailability()
 		(*pIter).setAvailable( 0 );
 	}
 
-
 	// make sure its around and you can open it 
 	FitIniFile file;
 	if ( NO_ERR != file.open( (char*)(const char*)purchaseFileName ) )
@@ -1532,8 +1467,6 @@ long LogisticsData::updateAvailability()
 
 			available[component] = 1;
 		}
-
-
 	}
 
 	// go through comonent list, and set 'em
@@ -1550,7 +1483,6 @@ long LogisticsData::updateAvailability()
 	const char* pFileNames[512];
 	long count = 512;
  	missionInfo->getAdditionalPurachaseFiles( pFileNames, count );
-
 
 	// reset all variants to unavailable
 	for ( VARIANT_LIST::EIterator vIter = variants.Begin(); !vIter.IsDone(); vIter++ )
@@ -1573,8 +1505,6 @@ long LogisticsData::updateAvailability()
 			(*cIter).setAvailable( 0 );
 		}
 	}
-
-
 
 	// go through each variant, and see if it's available
 	char chassisFileName[255];
@@ -1643,7 +1573,6 @@ long LogisticsData::updateAvailability()
 			{
 				(*pIter).setAvailable( true );
 			}
-
 		}
 	}
 
@@ -1654,16 +1583,12 @@ long LogisticsData::updateAvailability()
 			newPilotAvailableCount++;
 	}
 
-
 	if ( oldPilotAvailableCount != newPilotAvailableCount && newPilotAvailableCount > oldPilotAvailableCount )
 		bNewPilots = true;
 	else
 		bNewPilots = 0;
 
-
-
 	return 0;
-
 }
 
 void LogisticsData::appendAvailability(const char* pFileName, bool* availableArray )
@@ -1715,9 +1640,7 @@ void LogisticsData::appendAvailability(const char* pFileName, bool* availableArr
 			{
 				(*pIter).setAvailable( true );
 				bNewPilots = true;
-				
 			}
-
 		}
 	}
 
@@ -1839,11 +1762,9 @@ int LogisticsData::getCurrentDropWeight() const
 		{
 			retVal += (*iter)->getMaxWeight();
 		}
-
 	}
 
 	return retVal;
-
 }
 
 bool	LogisticsData::canAddMechToForceGroup( LogisticsMech* pMech )
@@ -1873,17 +1794,13 @@ bool	LogisticsData::canAddMechToForceGroup( LogisticsMech* pMech )
 			{
 				fgCount ++;
 			}
-
-
 	}
 
 	if ( fgCount >= maxUnits )
 		return 0;
 
-
 	return (pMech->getMaxWeight() + getCurrentDropWeight() <= getMaxDropWeight() ) ? 1 : 0;
 }
-
 
 int LogisticsData::getVariantsInInventory( LogisticsVariant* pVar, bool bIncludeForceGroup )
 {
@@ -1897,11 +1814,9 @@ int LogisticsData::getVariantsInInventory( LogisticsVariant* pVar, bool bInclude
 				retVal ++;
 			}
 		}
-
 	}
 
 	return retVal;
-
 }
 
 int		LogisticsData::getChassisVariants( const LogisticsChassis* pChassis, 
@@ -1921,8 +1836,6 @@ int		LogisticsData::getChassisVariants( const LogisticsChassis* pChassis,
 				else 
 					retVal = NEED_BIGGER_ARRAY;
 				++i;
-
-				
 			} 
 		}
 
@@ -1930,7 +1843,6 @@ int		LogisticsData::getChassisVariants( const LogisticsChassis* pChassis,
 
 	return retVal; 
 }
-
 
 int LogisticsData::setMechToModify( LogisticsMech* pMech )
 {
@@ -2191,7 +2103,6 @@ bool	LogisticsData::canDeleteVariant( const char* name )
 		return 0;
 
 	return 1;
-
 }
 
 int LogisticsData::cancelMechModfications()
@@ -2225,7 +2136,6 @@ const char*			LogisticsData::getCurrentMissionDescription()
 	return missionInfo->getCurrentMissionDescription();
 }
 
-
 const char*				LogisticsData::getCurrentMissionFriendlyName( )
 {
 	return missionInfo->getCurrentMissionFriendlyName();
@@ -2240,7 +2150,6 @@ const char*				LogisticsData::getMissionFriendlyName(const char* missionName)
 {
 /	return missionInfo->getMaxTeams( );
 }*/
-
 
 void				LogisticsData::startNewCampaign( const char* fileName )
 {
@@ -2334,7 +2243,6 @@ void LogisticsData::startMultiPlayer()
 		ChatWindow::init();
 	}
 #endif
-
 }
 void				LogisticsData::setPurchaseFile( const char* fileName )
 {
@@ -2342,9 +2250,7 @@ void				LogisticsData::setPurchaseFile( const char* fileName )
 	if ( MPlayer )
 		clearInventory();
 	updateAvailability();
-
 }
-
 
 int					LogisticsData::getCBills() 
 { 
@@ -2400,9 +2306,7 @@ int		LogisticsData::getEncyclopediaMechs( const LogisticsVariant** pChassis, int
 				retVal = NEED_BIGGER_ARRAY;
 
 			count++;
-
 		}
-
 	}
 
 	return retVal;
@@ -2424,14 +2328,11 @@ int	LogisticsData::getHelicopters( const LogisticsVariant** pChassis, int& count
 				retVal = NEED_BIGGER_ARRAY;
 
 			count++;
-
 		}
-
 	}
 
 	return retVal;
 }
-
 
 int		LogisticsData::getVehicles( const LogisticsVehicle** pChassis, int& count )
 {
@@ -2446,14 +2347,10 @@ int		LogisticsData::getVehicles( const LogisticsVehicle** pChassis, int& count )
 				retVal = NEED_BIGGER_ARRAY;
 
 			count++;
-
-		
-
 	}
 
 	return retVal;
 }
-
 
 LogisticsVehicle*	LogisticsData::getVehicle( const char* pName )
 {
@@ -2489,7 +2386,6 @@ int LogisticsData::addBuilding( long fitID, PacketFile& objectFile, float scale 
 		file.readIdString( "AppearanceName", bldg.fileName, 63 );
 		file.readIdLong( "EncyclopediaID", bldg.encycloID );
 
-
 		bool bIsTurret = 0;
 
 		if ( NO_ERR != file.seekBlock( "BuildingData" ) )
@@ -2523,7 +2419,6 @@ int LogisticsData::addBuilding( long fitID, PacketFile& objectFile, float scale 
 				file.readIdLong( weaponNameStr, bldg.componentIDs[i] );
 				sprintf( weaponNameStr, "WeaponType%ld", i+1 );
 			}
-			
 		}
 		else
 		{
@@ -2535,8 +2430,6 @@ int LogisticsData::addBuilding( long fitID, PacketFile& objectFile, float scale 
 		
 		bldg.scale = scale;
 		buildings.Append( bldg );
-
-		
 	}
 
 	return 0;
@@ -2568,7 +2461,6 @@ LogisticsData::Building*			LogisticsData::getBuilding( int nameID )
 	return NULL;
 }
 
-
 //*************************************************************************************************
 int					LogisticsData::getBuildings( Building** bdgs, int& count )
 {
@@ -2589,17 +2481,13 @@ int					LogisticsData::getBuildings( Building** bdgs, int& count )
 		count++;
 	}
 
-
 	return retVal;
-	
 }
 
 const EString&	LogisticsData::getCampaignName() const
 { 
 	return missionInfo->getCampaignName();
 }
-
-
 
 bool				LogisticsData::campaignOver() 
 { 
@@ -2714,7 +2602,6 @@ void				LogisticsData::setVideoShown()
 {
 	if ( missionInfo )
 		missionInfo->setVideoShown();
-
 }
 void	LogisticsData::setPilotUnused( const char* pName )
 {
@@ -2726,8 +2613,6 @@ void	LogisticsData::setPilotUnused( const char* pName )
 			break;
 		}
 	}
-
-
 }
 
 void LogisticsData::setCurrentMissionNum (long cMission)

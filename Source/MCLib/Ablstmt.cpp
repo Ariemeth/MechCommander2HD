@@ -8,30 +8,12 @@
 //***************************************************************************
 
 #include <stdio.h>
-
-#ifndef ABLGEN_H
 #include "ablgen.h"
-#endif
-
-#ifndef ABLERR_H
 #include "ablerr.h"
-#endif
-
-#ifndef ABLSCAN_H
 #include "ablscan.h"
-#endif
-
-#ifndef ABLSYMT_H
 #include "ablsymt.h"
-#endif
-
-#ifndef ABLPARSE_H
 #include "ablparse.h"
-#endif
-
-#ifndef ABLEXEC_H
 #include "ablexec.h"
-#endif
 
 //***************************************************************************
 
@@ -219,7 +201,6 @@ void forStatement (void) {
 		// If we end up adding a CHAR type, this line needs to be changed...
 		if ((forType != IntegerTypePtr) && /*(forType != CharTypePtr) &&*/ (forType->form != FRM_ENUM))
 			syntaxError(ABL_ERR_SYNTAX_INCOMPATIBLE_TYPES);
-	
 		}
 	else {
 		syntaxError(ABL_ERR_SYNTAX_MISSING_IDENTIFIER);
@@ -454,7 +435,6 @@ long caseLabelCount = 0;
 	// Patch up the case branch address markers...
 	while (caseEndChain)
 		caseEndChain = fixupAddressMarker(caseEndChain);
-
 }
 
 //***************************************************************************

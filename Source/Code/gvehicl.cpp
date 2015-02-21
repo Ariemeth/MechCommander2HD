@@ -5,112 +5,41 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef MOVER_H
 #include "mover.h"
-#endif
-
-#ifndef COLLSN_H
 #include "collsn.h"
-#endif
-
-#ifndef GVEHICL_H
 #include "gvehicl.h"
-#endif
-
-#ifndef MECH_H
 #include "mech.h"
-#endif
-
-#ifndef MOVE_H
 #include "move.h"
-#endif
 
 #ifdef MISSION_H
 #include "mission.h"
 #endif
 
-#ifndef CMPONENT_H
 #include "cmponent.h"
-#endif
-
-#ifndef WARRIOR_H
 #include "warrior.h"
-#endif
-
-#ifndef WEAPONFX_H
 #include "weaponfx.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef WEAPONBOLT_H
 #include "weaponbolt.h"
-#endif
-
-#ifndef SOUNDS_H
 #include "sounds.h"
-#endif
 
 #ifdef USE_ELEMENTALS
-#ifndef ELEMNTL_H
 #include <elemntl.h>
-#endif
+
 #endif
 
-#ifndef MULTPLYR_H
 #include "multplyr.h"
-#endif
-
-#ifndef GROUP_H
 #include "group.h"
-#endif
-
-#ifndef UNITDESG_H
 #include "unitdesg.h"
-#endif
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
-
-#ifndef TEAM_H
 #include "team.h"
-#endif
-
-#ifndef CONTACT_H
 #include "contact.h"
-#endif
-
-#ifndef MISSION_H
 #include "mission.h"
-#endif
-
-#ifndef GAMELOG_H
 #include "gamelog.h"
-#endif
-
-#ifndef ARTLRY_H
 #include "artlry.h"
-#endif
-
-#ifndef LOGISTICSDATA_H
 #include "LogisticsData.h"
-#endif
-
-#ifndef COMNDR_H
 #include "comndr.h"
-#endif
-
 #include "..\resource.h"
 
 extern unsigned long		NextIdNumber;
@@ -173,7 +102,6 @@ float vehicleTurnRate[110] =
 //---------------------------------------------------------------------------
 // Game System Tweakable Data
 //---------------------------------------------------------------------------
-
 
 extern long TargetMoveModifierTable[5][2];
 
@@ -432,7 +360,6 @@ bool GroundVehicleType::handleCollision (GameObjectPtr collidee, GameObjectPtr c
 			if (!((MoverPtr)collidee)->pathLocks && !sameTeam)
 			{
 				collide = true;			//Something steppable
-				
 			}
 
 			if (collide) {
@@ -453,7 +380,6 @@ bool GroundVehicleType::handleCollision (GameObjectPtr collidee, GameObjectPtr c
 					// Adjust my velocity and direction...
 					collidee->rotate(90.0);
 					((MoverPtr)collidee)->bounceToAdjCell();
-
 				}
 
 				//---------------------------------------------
@@ -914,7 +840,6 @@ long GroundVehicle::init (FitIniFile* vehicleFile)
 	if ( result != NO_ERR )
 		iconPictureIndex = 0;
 
-
 	result = vehicleFile->readIdFloat("CurTonnage", tonnage);
 	if (result != NO_ERR)
 		return(result);
@@ -930,11 +855,8 @@ long GroundVehicle::init (FitIniFile* vehicleFile)
 		cLoadString( IDS_MFDVEHICLE_PRINTSTRING, buffer, 256 );
 
 		sprintf( longName, buffer, name, tonnage );
-
 	}
 
-	
-	
 	char cStatus = 0;
 	result = vehicleFile->readIdChar("Status", cStatus);
 	if (result != NO_ERR)
@@ -1210,7 +1132,6 @@ long GroundVehicle::calcCV (bool calcMax) {
 		if (maxMoveSpeed <= TargetMoveModifierTable[i][0])
 			break;
 	defensiveBR += (TargetMoveModifierTable[i][1] * 10);
-
 
 	//---------------
 	// Heat Factor...
@@ -1579,7 +1500,6 @@ void GroundVehicle::calcThrottleLimits (long& minThrottle, long& maxThrottle) {
 		maxThrottle = float2long(maxThrottle*InclineThrottleMultiplier[chassis][1]);
 		minThrottle = float2long(minThrottle*InclineThrottleMultiplier[chassis][1]);
 	}
-	
 }
 
 //---------------------------------------------------------------------------
@@ -1662,7 +1582,6 @@ void GroundVehicle::updateMoveStateGoal (void) {
 		if (!hasTarget && (path->numStepsWhenNotPaused == 0))
 			pilot->setMoveStateGoal(MOVESTATE_FORWARD);
 	}
-
 }
 
 //---------------------------------------------------------------------------
@@ -2206,7 +2125,6 @@ bool GroundVehicle::netUpdateMovePath (float& newRotate, char& newThrottleSettin
 									newRotate = -maxRate;
 							}
 						}
-						
 						}
 					else if (moveStateGoal == MOVESTATE_REVERSE) {
 						//---------------------------------------------------
@@ -2269,7 +2187,6 @@ bool GroundVehicle::netUpdateMovePath (float& newRotate, char& newThrottleSettin
 							// Try to attain current goal speed...
 							newThrottleSetting = -100;
 						}
-
 						}
 					else if (moveStateGoal == MOVESTATE_PIVOT_FORWARD) {
 						//---------------------------------------------------
@@ -3282,7 +3199,6 @@ long GroundVehicle::update (void)
 	if (!emergencyStop)
 		velMag = velocityMag;
 
-
 	if (withdrawing && !inView && (pilot->getStatus() != WARRIOR_STATUS_WITHDRAWN))
 		getObjectType()->handleDestruction(this, NULL);
 
@@ -3810,8 +3726,6 @@ void GroundVehicle::render (void)
 			}
 		}
 	}
-	
-	
 }
 
 //----------------------------------------------------------------------------------
@@ -5184,7 +5098,6 @@ float maxRear, curRear, armorRear, maxTurret, curTurret, armorTurret, armorEffec
 		};
 		
 		pilotEffect = pilotWoundTable[float2long(getPilot()->getWounds())];
-		
 
 		result = weaponEffect * armorEffect * pilotEffect * extraEffect;
 		return result;
@@ -5323,7 +5236,6 @@ bool  GroundVehicle::burnRefitPoints (float pointsToBurn)
 	else
 		return(false);
 }
-
 
 //***************************************************************************
 

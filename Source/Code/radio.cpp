@@ -10,21 +10,10 @@
 
 //------------------------------------------------------------------------------------------
 // Include Files
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef RADIO_H
 #include "radio.h"
-#endif
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
-
-#ifndef MOVER_H
 #include "mover.h"
-#endif
 
 //------------------------------------------------------------------------------------------
 PacketFilePtr 		Radio::noiseFile = NULL;

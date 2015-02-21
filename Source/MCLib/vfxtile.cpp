@@ -11,13 +11,8 @@
 
 //-----------------------------------------------------------
 // Include Files
-#ifndef DSTD_H
 #include "dstd.h"
-#endif
-
-#ifndef VFX_H
 #include "vfx.h"
-#endif
 
 static unsigned long pwXMax,count;		// Must be static for assembly optimizations
 static unsigned char *FadeTable;		// Must be static for assembly optimizations
@@ -277,7 +272,6 @@ DoFade1:	mov ebx,pwXMax
 done:
 			pop ebp
 		}
-
 	}
 	else
 //
@@ -460,7 +454,6 @@ long VFX_shape_resolution(void *shape_table, LONG shape_number)
 				mov esi,shape_table
                 add esi,8                       //skip to offsets
 
-                
                 mov eax,shape_number            //point to shape offset ptr 
                 shl eax,3                       //mul eax by sizeof 2 longs
                 add esi,eax                     
@@ -578,7 +571,6 @@ long VFX_shape_count (void *shape_table)
 	return countResult;
 }
 
-
 //;----------------------------------------------------------------------------
 //;
 //; int cdecl VFX_line_draw (PANE *panep, int x0, int y0, int x1, int y1,
@@ -691,7 +683,6 @@ LONG VFX_line_draw (PANE *panep, LONG x0, LONG y0,
 	__asm
 	{
 		cld
-
 	}
 
 	//Clip Pane to Window Routine
@@ -946,7 +937,6 @@ clip_loop:
 
                 test    dl,dh
                 jnz     ReturnReject
-
 
         // dispatch to appropriate clipper
     
@@ -1456,7 +1446,6 @@ Xmaj_y1_hi:
                 mov     x1_,eax
     
                 jmp     clip_loop
-
 
 Accept:
 
@@ -2708,12 +2697,10 @@ exit1:
 ReturnOffPane:
                 mov     eax,-3
                 ret
-				
 			}
 			
 			return(result);
 }
-
 
 //----------------------------------------------------------------------------
 //

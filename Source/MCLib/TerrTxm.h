@@ -10,17 +10,9 @@
 #define TERRTXM_H
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef DTERRTXM_H
 #include "dterrtxm.h"
-#endif
-
-#ifndef MAPDATA_H
 #include "mapdata.h"
-#endif
-
-#ifndef TXMMGR_H
 #include "txmmgr.h"
-#endif
 
 //---------------------------------------------------------------------------
 // Macro Definitions

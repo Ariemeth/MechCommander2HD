@@ -163,7 +163,6 @@ MLR_I_PMesh*
 	return mesh;
 }
 
-
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 void
@@ -305,7 +304,6 @@ void
 	{
 		*iPtr = 1;
 	}
-
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -455,7 +453,6 @@ void
 			LightMapLighting(lights[i]);
 		}
 	}
-
 }
 
 RGBAColor errorColor;
@@ -1193,7 +1190,6 @@ MLRShape*
 		subdivide (coords, v[0], v[1], v[2], icoInfo.depth, nrTri, icoInfo.radius);
 
 		mesh->SetSubprimitiveLengths(lengths, nrTri);
-
 
 		if(icoInfo.indexed==true)
 		{

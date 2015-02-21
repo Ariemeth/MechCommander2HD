@@ -10,34 +10,13 @@
 
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef WEAPONBOLT_H
 #include "weaponbolt.h"
-#endif
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef WEAPONFX_H
 #include "weaponfx.h"
-#endif
-
-#ifndef MULTPLYR_H
 #include "multplyr.h"
-#endif
-
-#ifndef MISSION_H
 #include "mission.h"
-#endif
-
 #include <gameos.hpp>
 
 //---------------------------------------------------------------------------
@@ -620,7 +599,6 @@ long WeaponBolt::update (void)
 							hotSpot = target->appearance->getHitNodeLeft();
 						else
 							hotSpot = target->appearance->getHitNodeRight(); 
-
 					}
 
 					if (hitEffect && hitEffect->IsExecuted())
@@ -754,7 +732,6 @@ long WeaponBolt::update (void)
 							{
 								weaponShot.hitLocation = 0;		//Make it a head shot!
 							}
-							
 						}
 					}
 					
@@ -1225,7 +1202,6 @@ long WeaponBolt::update (void)
 			delete muzzleEffect;
 			muzzleEffect = NULL;
 		}
-
    	}
 
 	if (!hitTarget && !((WeaponBoltTypePtr)getObjectType())->isBeam)
@@ -2011,7 +1987,6 @@ void WeaponBolt::render (void)
 			lq4Vertices[2].v		= 0.999999f;
 			lq4Vertices[2].argb		= alphaMode + ((WeaponBoltTypePtr)getObjectType())->middleRGB;
 
-	
 			if (drawOldWay)
 			{
  				//------------------------

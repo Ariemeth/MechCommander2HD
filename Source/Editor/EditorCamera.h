@@ -7,17 +7,9 @@ EditorCamera.h			: Interface for the EditorCamera component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef CAMERA_H
 #include "Camera.h"
-#endif
-
-#ifndef EDITOROBJECTMGR_H
 #include "EditorObjectMgr.h"
-#endif
-
-#ifndef OBJSTATUS_H
 #include "objstatus.h"
-#endif
 
 //*************************************************************************************************
 
@@ -95,7 +87,6 @@ public:
 		calculateProjectionConstants();
 	
 		TG_Shape::SetViewport(viewMulX,viewMulY,viewAddX,viewAddY);
-	
 
 		globalScaleFactor = getScaleFactor();
 		globalScaleFactor *= viewMulX / Environment.screenWidth;		//Scale Mechs to ScreenRES
@@ -314,8 +305,6 @@ public:
 
 		return result;
 	}
-
-
 };
 
 //*************************************************************************************************

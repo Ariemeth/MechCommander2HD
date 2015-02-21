@@ -7,17 +7,9 @@ LogisticsDialog.h			: Interface for the LogisticsDialog component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef LOGISTICSSCREEN_H
 #include "LogisticsScreen.h"
-#endif
-
-#ifndef AANIM_H
 #include "AAnim.h"
-#endif
-
-#ifndef ALISTBOX_H
 #include "aListBox.h"
-#endif
 
 //*************************************************************************************************
 
@@ -41,16 +33,12 @@ public:
 
 		LogisticsDialog();
 
-
-
-
 protected:
 
 		aAnimation	enterAnim;
 		aAnimation	exitAnim;
 		bool		bDone;
 		int								oldFont;
-
 };
 
 class LogisticsOKDialog : public LogisticsDialog
@@ -59,9 +47,7 @@ class LogisticsOKDialog : public LogisticsDialog
 
 		static LogisticsOKDialog* instance(){ return s_instance; }
 
-
 		LogisticsOKDialog();
-		
 
 		virtual int			handleMessage( unsigned long, unsigned long );
 
@@ -72,14 +58,11 @@ class LogisticsOKDialog : public LogisticsDialog
 		void				setText(const char* mainText, int OKButton, int CancelButton);
 		void				setText(const char* mainText);
 
-
-
 	private:
 
 		LogisticsOKDialog( const LogisticsOKDialog& src );
 		virtual ~LogisticsOKDialog();
 		LogisticsOKDialog& operator=( const LogisticsOKDialog& ogisticsDialog );
-
 
 		static LogisticsOKDialog*		s_instance;
 
@@ -92,9 +75,7 @@ class LogisticsOneButtonDialog : public LogisticsDialog
 
 		static LogisticsOneButtonDialog* instance(){ return s_instance; }
 
-
 		LogisticsOneButtonDialog();
-		
 
 		virtual int			handleMessage( unsigned long, unsigned long );
 
@@ -103,14 +84,11 @@ class LogisticsOneButtonDialog : public LogisticsDialog
 		void				setText( int textID, int CancelButton, int OKButton );
 		void				setText( const char* mainText );
 
-
-
 	protected:
 
 		LogisticsOneButtonDialog( const LogisticsOneButtonDialog& src );
 		virtual ~LogisticsOneButtonDialog();
 		LogisticsOneButtonDialog& operator=( const LogisticsOneButtonDialog& ogisticsDialog );
-
 
 		static LogisticsOneButtonDialog*		s_instance;
 
@@ -135,17 +113,13 @@ private:
 	static LogisticsLegalDialog*		s_instance;
 
 	 friend void endDialogs();
-
 };
-
-
 
 class LogisticsSaveDialog : public LogisticsDialog
 {
 	public:
 
 		static LogisticsSaveDialog* instance(){ return s_instance; }
-
 
 		LogisticsSaveDialog();
 
@@ -161,8 +135,6 @@ class LogisticsSaveDialog : public LogisticsDialog
 		virtual int			handleMessage( unsigned long, unsigned long );
 
 		const EString& getFileName( ){ return selectedName; }
-
-
 
 	private:
 
@@ -182,8 +154,6 @@ class LogisticsSaveDialog : public LogisticsDialog
 		void	readCampaignNameFromFile( char* fileName, char* resultName, long len );
 		bool	isCorrectVersionSaveGame( char *fileName );
 
-
-
 		bool	bPromptOverwrite;
 		bool	bDeletePrompt;
 		bool	bLoad;
@@ -191,10 +161,8 @@ class LogisticsSaveDialog : public LogisticsDialog
 
 		void updateMissionInfo();
 		aLocalizedListItem templateItem;
-		
 
 	 friend void endDialogs();
-
 };
 
 class LogisticsVariantDialog : public LogisticsDialog
@@ -216,8 +184,6 @@ public:
 
 		const EString& getFileName( ){ return selectedName; }
 
-
-
 protected:
 
 		static LogisticsVariantDialog*		s_instance;
@@ -228,10 +194,8 @@ protected:
 		bool	bDeletePrompt;
 		bool	bTranscript;
 
-
 		void	initVariantList();
 		void	initTranscript();
-
 
 		aAnimTextListItem templateItem;
 
@@ -255,7 +219,6 @@ private:
 
 	EString		selectedName;
 	bool		bNameUsedPrompt;
-
 };
 
 class LogisticsMapInfoDialog : public LogisticsDialog
@@ -271,14 +234,7 @@ public:
 		virtual int			handleMessage( unsigned long, unsigned long );
  
 private:
-
-		
-
 };
-
-
-
-
 
 //*************************************************************************************************
 #endif  // end of file ( LogisticsDialog.h )

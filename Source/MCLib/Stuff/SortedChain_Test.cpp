@@ -189,7 +189,6 @@ bool
 			testPlug1 = iterator1.Find(i);
 			testPlug2 = iterator2.Find(i);
 
-
 			Test_Assumption( testPlug1->value == i );
 			Test_Assumption( testPlug2->value == i );
 

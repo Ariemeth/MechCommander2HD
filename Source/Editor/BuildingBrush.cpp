@@ -7,23 +7,10 @@ BuildingBrush.cpp	: Implementation of the BuildingBrush component.
 \*************************************************************************************************/
 
 #include "BuildingBrush.h"
-
-#ifndef EDITOROBJECTMGR_H
 #include "EditorObjectMgr.h"
-#endif
-
-#ifndef TERRAIN_H
 #include "Terrain.h"
-#endif
-
-#ifndef EDITOROBJECTS_H
 #include "EditorObjects.h"
-#endif
-
-#ifndef EDITORINTERFACE_H
 #include "EditorInterface.h"
-#endif
-
 #include "resource.h"
 
 BuildingBrush::BuildingBrush( int Group, int IndexInGroup, int Alignment )
@@ -176,7 +163,6 @@ bool BuildingBrush::BuildingAction::redo()
 	}
 
 	return bRetVal;
-
 }
 
 void BuildingBrush::BuildingAction::addBuildingInfo(EditorObject& info)

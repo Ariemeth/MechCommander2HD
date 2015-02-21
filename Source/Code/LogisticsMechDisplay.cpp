@@ -21,9 +21,7 @@ LogisticsMechDisplay::LogisticsMechDisplay(  )
 
 //-------------------------------------------------------------------------------------------------
 
-
 //-------------------------------------------------------------------------------------------------
-
 
 //-------------------------------------------------------------------------------------------------
 
@@ -32,16 +30,12 @@ void LogisticsMechDisplay::update()
 	componentListBox.update();
 	LogisticsScreen::update();
 
-
 	mechCamera.update();
-
-
 }
 
 //-------------------------------------------------------------------------------------------------
 LogisticsMechDisplay::~LogisticsMechDisplay()
 {
-
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -62,14 +56,9 @@ void LogisticsMechDisplay::render(int xOffset, int yOffset)
 	}
 	
 	LogisticsScreen::render( xOffset, yOffset );
-
-
-
-
 }
 
 //-------------------------------------------------------------------------------------------------
-
 
 int	LogisticsMechDisplay::init( )
 {
@@ -94,14 +83,10 @@ int	LogisticsMechDisplay::init( )
 		attributeMeters[i].init( &file, blockName );
 	}
 
-	
 	componentListBox.init( rects[0].left(), rects[0].top(),
 		rects[0].width(), rects[0].height() );
 
-
 	return 1;
-
-
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -139,7 +124,6 @@ void LogisticsMechDisplay::setMech( LogisticsMech* pMech, bool bFromLB )
 				attributeMeters[1].setValue( pCurMech->getSpeed()/MAX_SPEED_RANGE);
 				attributeMeters[2].setValue( pCurMech->getJumpRange() * 25 / MAX_JUMP_RANGE);
 
-				
 				EString fileName = pMech->getFileName();
 				int index = fileName.Find( '.' );
 				fileName = fileName.Left( index );
@@ -149,7 +133,6 @@ void LogisticsMechDisplay::setMech( LogisticsMech* pMech, bool bFromLB )
 				mechCamera.setScale( pMech->getVariant()->getChassis()->getScale() );
 				
 				componentListBox.setMech( pCurMech->getVariant() );
-
 			}
 			else
 			{
@@ -165,7 +148,6 @@ void LogisticsMechDisplay::setMech( LogisticsMech* pMech, bool bFromLB )
 			}
 		}
 }
-
 
 //*************************************************************************************************
 // end of file ( LogisticsMechDisplay.cpp )

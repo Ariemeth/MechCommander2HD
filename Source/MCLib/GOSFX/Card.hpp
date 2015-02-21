@@ -40,11 +40,9 @@ namespace gosFX
 
 		void 
 			BuildDefaults();
-	
 
 		bool 
 			IsDataValid(bool fix_data=false);
-
 
 		static Card__Specification*
 			Make(

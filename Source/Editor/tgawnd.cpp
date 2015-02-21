@@ -9,7 +9,6 @@
 #include "TGAWnd.h"
 #include "TGAInfo.h"
 
-
 /////////////////////////////////////////////////////////////////////////////
 // TGAWnd
 
@@ -95,9 +94,6 @@ void TGAWnd::SetTGAFileName( const CString& str )
 
 		m_pBmi->bmiHeader.biHeight = -header.height;
 		m_pBmi->bmiHeader.biWidth = header.width;
-
-		
-
 	}
 }
 
@@ -111,17 +107,13 @@ void TGAWnd::SetTGAFileData( BYTE* data, int size )
 
 	header = (TGAFileHeader*)data;
 
-
-	
 	if ( m_pImage && (m_pBmi->bmiHeader.biWidth != - header->width || m_pBmi->bmiHeader.biHeight != header->height) )
 	{
 		free( m_pImage );
 		m_pImage = NULL;
-		
 	}
 	if ( !m_pImage )
 		m_pImage = (char *) malloc( header->width * header->height * 4 );		
-
 
 	if ( header->image_type == UNC_TRUE )
 	{	
@@ -129,14 +121,8 @@ void TGAWnd::SetTGAFileData( BYTE* data, int size )
 			
 		m_pBmi->bmiHeader.biHeight = -header->height;
 		m_pBmi->bmiHeader.biWidth = header->width;
-
-		
-
 	}
-
 }
-
-
 
 BEGIN_MESSAGE_MAP(TGAWnd, CStatic)
 	//{{AFX_MSG_MAP(TGAWnd)

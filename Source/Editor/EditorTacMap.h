@@ -9,10 +9,7 @@
 //
 
 #include "resource.h"
-
-#ifndef TGAWND_H
 #include "TacMapTGA.h"
-#endif
 
 /////////////////////////////////////////////////////////////////////////////
 // EditorTacMap dialog

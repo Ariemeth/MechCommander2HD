@@ -26,17 +26,9 @@
 #define MISSIONGUI_H
 //--------------------------------------------------------------------------------------
 // Include Files
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef MOVER_H
 #include "mover.h"
-#endif
-
-#ifndef CONTROLGUI_H
 #include "ControlGui.h"
-#endif
 
 class KeyboardRef;
 enum COMMAND_KEY_INDEX
@@ -47,8 +39,6 @@ enum COMMAND_KEY_INDEX
 	EJECT_COMMAND_INDEX = 27,
 	OBJECTVIES_COMMAND_KEY = 59,
 	INFO_COMMAND_INDEX = 64
-	
-	
 };
 //--------------------------------------------------------------------------------------
 // Externs
@@ -306,7 +296,6 @@ public:
 		bool canJumpToWPos();
 		void doDrag(bool bGui);
 
-
 		int attackShort();
 		int attackMedium();
 		int attackLong();
@@ -378,7 +367,6 @@ public:
 		int	handleChatKey();
 		int	handleTeamChatKey();
 
-
 		bool makePatrolPath();
 		
 		int bigAirStrike();
@@ -449,8 +437,6 @@ public:
 		long	makeRunCursor( bool bLineOfSite );
 		void	updateRollovers();
 
-
-
 		void	addAirstrike();
 		void	addVehicle( const Stuff::Vector3D& pos );
 		void	updateTarget(bool bCursorIsInGui);
@@ -458,17 +444,12 @@ public:
 
 		long	calcRotation();
 
-
-
 		void	swapResolutions();
-		
 
 		bool	canSalvage( GameObject* pMover );
 		bool	selectionIsHelicopters( );
 		void	drawHotKey( const char* string, const char* descStr, long x, long y );
 		void	drawHotKeys();
-
-
 
 		Stuff::Vector3D makeAirStrikeTarget( const Stuff::Vector3D& pos );
 

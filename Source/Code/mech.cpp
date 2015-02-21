@@ -8,124 +8,56 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef MECH_H
 #include "mech.h"
-#endif
-
-#ifndef GVEHICL_H
 #include "gvehicl.h"
-#endif
-
-#ifndef MISSION_H
 #include "mission.h"
-#endif
-
-#ifndef CMPONENT_H
 #include "cmponent.h"
-#endif
-
-#ifndef WARRIOR_H
 #include "warrior.h"
-#endif
-
-#ifndef WEAPONBOLT_H
 #include "weaponbolt.h"
-#endif
 
 #ifdef USE_DEBRIS
-#ifndef DEBRIS_H
 #include "debris.h"
-#endif
+
 #endif
 
 #ifdef USE_JETS
-#ifndef JET_H
 #include <jet.h>
-#endif
+
 #endif
 
-#ifndef TACORDR_H
 #include "tacordr.h"
-#endif
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
-
-#ifndef SOUNDS_H
 #include "sounds.h"
-#endif
-
-#ifndef COLLSN_H
 #include "collsn.h"
-#endif
-
-#ifndef WEAPONFX_H
 #include "weaponfx.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef MULTPLYR_H
 #include "multplyr.h"
-#endif
 
 #ifdef OBJTYPE_H
 #include "objtype.h"
 #endif
 
-#ifndef TEAM_H
 #include "team.h"
-#endif
-
-#ifndef MECH3D_H
 #include "mech3d.h"
-#endif
-
-#ifndef GROUP_H
 #include "group.h"
-#endif
-
-#ifndef UNITDESG_H
 #include "unitdesg.h"
-#endif
 
 #ifdef USE_ELEMENTALS
-#ifndef ELEMNTL_H
 #include <elemntl.h>
-#endif
+
 #endif
 
-#ifndef CONTACT_H
 #include "contact.h"
-#endif
 
 #ifndef TURRET_h
 #include "turret.h"
 #endif
 
-#ifndef GAMEOLOG_H
 #include "gamelog.h"
-#endif
-
-#ifndef COMNDR_H
 #include "comndr.h"
-#endif
-
-#ifndef LOGISTICSDATA_H
 #include "LogisticsData.h"
-#endif
-
 #include "..\resource.h"
 
 //--------
@@ -1399,7 +1331,6 @@ long BattleMech::init (DWORD variantNum)
 	mechFile->readLong(10,5,chassisBR);
 
 	mechFile->readFloat(3,5,tonnage);
-
 
 	mechFile->readLong(5,2,descID);
 
@@ -3103,7 +3034,6 @@ long BattleMech::init (FitIniFile* mechFile) {
 			body[curLocation].criticalSpaces[curSpace].inventoryID = spaceData[0];
 			body[curLocation].criticalSpaces[curSpace].hit = spaceData[1] ? true : false;
 
-
 			if (spaceData[0] < 255)
 			{
 #ifdef _DEBUG
@@ -3743,7 +3673,6 @@ bool BattleMech::updateJump (void) {
 				if (maxRate < turnRate)
 					maxRate = turnRate;
 			}
-						
 		}
 		*/
 		
@@ -4848,7 +4777,6 @@ bool BattleMech::netUpdateMovePath (float& newRotate, char& newThrottleSetting, 
 									}
 								}
 							}
-
 							}
 						else if (moveStateGoal == MOVESTATE_REVERSE) {
 							//---------------------------------------------------
@@ -4941,7 +4869,6 @@ bool BattleMech::netUpdateMovePath (float& newRotate, char& newThrottleSetting, 
 								newThrottleSetting = pilot->calcMoveSpeedThrottle(getBodyState(), control.settings.mech.throttle);
 								//newThrottleSetting = data->throttleSetting + 10;
 							}
-
 							}
 						else if (moveStateGoal == MOVESTATE_PIVOT_FORWARD) {
 							//---------------------------------------------------
@@ -6156,8 +6083,7 @@ long BattleMech::update (void)
 	appearance->updateFootprints();
 	
 	float barStatus = getTotalEffectiveness();
-	
-	
+
 	DWORD color = 0xff7f7f7f;
 	if ((teamId > -1) && (teamId < 8)) {
 		if (getTeam()->isFriendly(Team::home))
@@ -6395,7 +6321,6 @@ float BattleMech::relFacingTo (Stuff::Vector3D goal, long bodyLocation) {
 	//else if (relFacing > 180)
 	//	relFacing -= 360.0;
 	return(relFacing);
-
 }
 
 //---------------------------------------------------------------------------
@@ -7579,7 +7504,6 @@ long BattleMech::handleWeaponHit (WeaponShotInfoPtr shotInfo, bool addMultiplayC
 	else
 		setThreatRating(-1);
 
-
 	//-----------------------------------------------------
 	// If this mech was destroyed, let the attacker know...
 	if (!alreadyDisabled && isDisabled()) {
@@ -8406,7 +8330,6 @@ long BattleMech::handleWeaponFire (long weaponIndex,
 						// Now, cancel the tac order...
 						//pilot->clearCurTacOrder();
 					}
-
 				}
 			}
 			}
@@ -8556,7 +8479,6 @@ long BattleMech::handleWeaponFire (long weaponIndex,
 
 	return(NO_ERR);
 }
-
 
 //---------------------------------------------------------------------------
 
@@ -8833,7 +8755,6 @@ void BattleMech::CopyTo (MechData *data)
 	else
 		data->sensorOK											= false;
 
-																													 
 	data->numJumpJets                                           = numJumpJets;                                         
 	data->lastJumpTime                                          = lastJumpTime;                                        
 	data->inJump                                                = inJump;                                              

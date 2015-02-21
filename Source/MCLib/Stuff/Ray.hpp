@@ -118,5 +118,4 @@ namespace Stuff {
 			Scalar *time,
 			bool *constant
 		);
-
 }

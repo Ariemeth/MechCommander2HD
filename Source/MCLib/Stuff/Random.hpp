@@ -80,5 +80,4 @@ namespace Stuff {
 		Die(int sides);
 		operator int();	// returns 1 .. dieSides
 	};
-
 }

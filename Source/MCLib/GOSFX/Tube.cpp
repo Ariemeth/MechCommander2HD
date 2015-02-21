@@ -194,7 +194,6 @@ void
 	BuildTemplate();
 }
 
-
 //------------------------------------------------------------------------------
 //
 bool 
@@ -207,7 +206,6 @@ bool
 		{
 			m_maxProfileCount=2;
 				PAUSE(("Warning: Value \"maxProfileCount\" in Effect \"%s\" Is Out of Range and has been Reset",(char *)m_name));
-
 		}
 			else
 			return false;
@@ -221,7 +219,6 @@ bool
 		m_pScale.m_seeded = false;
 		m_pScale.m_seedCurve.SetCurve(1.0f);
 		PAUSE(("Warning: Curve \"pScale\" in Effect \"%s\" Is Out of Range and has been Reset",(char *)m_name));
-
 		}
 			else
 		return false;
@@ -251,7 +248,6 @@ bool
 		m_pVOffset.m_seeded = false;
 		m_pVOffset.m_seedCurve.SetCurve(1.0f);
 		PAUSE(("Warning: Curve \"VOffset\" in Effect \"%s\" Is Out of Range and has been Reset",(char *)m_name));
-
 		}
 		else
 			return false;
@@ -281,12 +277,10 @@ bool
 		m_pUOffset.m_seeded = false;
 		m_pUOffset.m_seedCurve.SetCurve(1.0f);
 		PAUSE(("Warning: Curve \"UOffset\" in Effect \"%s\" Is Out of Range and has been Reset",(char *)m_name));
-		
 		}
 		else
 			return false;
 	}
-
 
 	return Effect__Specification::IsDataValid(fix_data);
 }

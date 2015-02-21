@@ -11,7 +11,6 @@ PointerSelectObjectDlg.h		: Interface for the PointerSelectObjectDlg component.
 #include "Objective.h"
 #include "stdafx.h"
 
-
 class PointerSelectObjectDlg: public CDialog
 {
 private:
@@ -35,7 +34,6 @@ private:
 
 	CButton *m_pButton;
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( PointerSelectObjectDlg.h )

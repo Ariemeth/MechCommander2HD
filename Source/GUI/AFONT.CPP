@@ -28,7 +28,6 @@ long aFont::init( const char* newFontName )
 		size = atoi( pStr + 1 );
 	}
 
-
 	strcpy( path, "assets\\graphics\\" );
 	strcat( path, fontName );
 	_strlwr( path );
@@ -38,7 +37,6 @@ long aFont::init( const char* newFontName )
 		return 0;
 
 	return FONT_NOT_LOADED;
-
 }
 
 long aFont::init( long resourceID )
@@ -54,13 +52,10 @@ long aFont::init( long resourceID )
 	return FONT_NOT_LOADED;
 }
 
-
 aFont::~aFont()
 {
 	destroy();
 }
-
-
 
 unsigned long aFont::height( ) const
 {
@@ -74,9 +69,7 @@ void	aFont::getSize( unsigned long& width, unsigned long& height, const char* pT
 {
 	gos_TextSetAttributes (gosFont, 0, size, false, true, false, false);
 	gos_TextStringLength(&width,&height,pText);
-
 }
-
 
 unsigned long aFont::height( const char* st, int areaWidth ) const
 {
@@ -93,7 +86,6 @@ unsigned long aFont::height( const char* st, int areaWidth ) const
 
 		gosASSERT( strlen( st) < 2048 );
 
-		
 		char pLine[2048]; // should be more than adequate
 
 		char* pLastWord = (char*)st;
@@ -101,7 +93,6 @@ unsigned long aFont::height( const char* st, int areaWidth ) const
 		char* pTmpLine = (char*)pLine;
 
 		int numberOfWordsPerLine = 0;
-
 
 		bool bHasSpaces = true;
 		if (  !strstr( st, " " ) )
@@ -136,12 +127,8 @@ unsigned long aFont::height( const char* st, int areaWidth ) const
 							pTmpLine = pLine;
 							curLineWidth = 0;
 							numberOfWordsPerLine = 0;
-
 						}
-
 					}
-					
-				
 				}
 			}
 
@@ -172,13 +159,11 @@ unsigned long aFont::height( const char* st, int areaWidth ) const
 					pTmp = pLastWord - 1;
 					curLineWidth = 0;
 					numberOfWordsPerLine = 0;
-
 				}
 		
 				pLastWord = pTmp;
 				numberOfWordsPerLine++;
 			}
-
 
 			*pTmpLine = *pTmp;
 			if ( isleadbyte( *pTmpLine ) )
@@ -230,7 +215,6 @@ void aFont::destroy()
 	gosFont = 0;
 	resID = 0;
 	fontName[0] = 0;
-
 }
 
 void aFont::render( const char* text, int xPos, int yPos, int areaWidth, int areaHeight, 
@@ -269,7 +253,6 @@ void aFont::render( const char* text, int xPos, int yPos, int areaWidth, int are
 	
 	gos_TextSetPosition( xPos, yPos );
 	gos_TextDraw( text );	
-
 }
 
 HGOSFONT3D aFont::loadFont( long resourceID, long& size )

@@ -349,7 +349,6 @@ namespace Stuff {
 		fstp		st(1)
 
 		fstp        dword ptr [eax]			//	x
-
 	}
 #else
 				x = v.x*m(0,0) + v.y*m(1,0) + v.z*m(2,0) + m(3,0);
@@ -467,7 +466,6 @@ namespace Stuff {
 		fstp		st(1)
 
 		fstp        dword ptr [eax]			//	x
-
 	}
 #else
 				x = v.x*m(0,0) + v.y*m(1,0) + v.z*m(2,0) + m(3,0);
@@ -565,5 +563,4 @@ namespace Stuff {
 		static bool
 			TestClass();
 	};
-
 }

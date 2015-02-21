@@ -136,7 +136,6 @@ void
 	//
 	*stream >> renderState >> renderDeltaMask >> renderPermissionMask;
 	*stream >> processState >> processDeltaMask >> processPermissionMask;
-	
 
 #ifdef OLDFOG
 		*stream >> nearFog >> farFog;

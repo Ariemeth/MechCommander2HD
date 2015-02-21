@@ -8,29 +8,12 @@
 //===========================================================================//
 
 // Include Files
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef COLLSN_H
 #include "collsn.h"
-#endif
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef OBJTYPE_H
 #include "objtype.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef MOVE_H
 #include "move.h"
-#endif
 
 //------------------------------------------------------------------------------
 // Static globals
@@ -42,7 +25,6 @@ unsigned long CollisionSystem::gridRadius = 0;
 unsigned long CollisionSystem::xGridSize = 0;
 unsigned long CollisionSystem::yGridSize = 0;
 unsigned long CollisionSystem::maxCollisions = 0;
-
 
 //------------------------------------------------------------------------------
 // class CollisionGrid 
@@ -380,7 +362,6 @@ void CollisionGrid::checkGrid (GameObjectPtr obj1, CollisionGridNodePtr area)
 				(obj1->getObjectClass() == TREE) && (obj2->getObjectClass() == TURRET) ||
 				(obj1->getObjectClass() == EXPLOSION) && (obj2->getObjectClass() == EXPLOSION))
 			{
-				
 			}
 			else
 			{
@@ -529,7 +510,6 @@ void CollisionSystem::detectCollision (GameObjectPtr obj1, GameObjectPtr obj2)
 	   		// further for Honor Bound.
 			checkExtents(obj1,obj2,timeOfClosest);
 	   	}
-		
 	}
 }
 
@@ -649,7 +629,6 @@ void CollisionSystem::checkExtents (GameObjectPtr obj1, GameObjectPtr obj2, floa
 	}
 }
 
-
 //------------------------------------------------------------------------------
 float CollisionSystem::timeToImpact (GameObjectPtr obj1, GameObjectPtr obj2)
 {
@@ -731,7 +710,6 @@ float CollisionSystem::timeToImpact (GameObjectPtr obj1, GameObjectPtr obj2)
 				// If collision happened.  May not need to go any
 				// further for Honor Bound.
 				return(timeOfClosest);
-				
 			}
 		}
 	}

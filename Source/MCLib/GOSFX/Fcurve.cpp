@@ -25,7 +25,6 @@ gosFX::Curve::IsComplex()
 		m_type==e_ConstantSplineType	||
 		m_type==e_SplineSplineType	||
 		m_type==e_SplineLinearType;		
-	
 }
 
 void
@@ -96,7 +95,6 @@ gosFX::Curve::Save(Stuff::MemoryStream *stream)
 	default:
 		break;
 	}
-	
 }
 
 void
@@ -170,7 +168,6 @@ void
 	default:
 		break;
 	}
-
 }
 
 void 
@@ -240,7 +237,6 @@ gosFX::Curve::SetSeedFlagIfComplex(bool vflag)
 	default:
 		break;
 	}
-	
 }
 
 int 
@@ -312,9 +308,6 @@ gosFX::Curve::GetSeedFlagIfComplex()
 	}
 	return -1;
 }
-
-
-
 
 Stuff::Scalar 
 gosFX::Curve::ExpensiveCompute(Stuff::Scalar tme,int curvenum)
@@ -563,7 +556,6 @@ gosFX::Curve::ExpensiveComputeRange(
 	default:
 		break;
 	}
-	
 }
 
 void 
@@ -665,9 +657,7 @@ gosFX::Curve::ExpensiveComputeRange(
 	default:
 		break;
 	}
-	
 }
-
 
 Stuff::Scalar 
 gosFX::Curve::Mid(int curvenum)
@@ -739,7 +729,6 @@ gosFX::Curve::TranslateTo(Stuff::Scalar pos,int curvenum)
 			y1+=delta;
 			slp=(*SCurve)[key].m_slope;
 			(*SCurve)[SCurve->GetKeyCount()-1].SetLinearKey(x1,y1,y1+slp*0.1f,0.1f);
-			
 		}
 		break;
 		
@@ -826,7 +815,6 @@ gosFX::Curve::TranslateTo(Stuff::Scalar pos,int curvenum)
 	default:
 		break;
 	}
-	
 }
 
 void 
@@ -873,8 +861,7 @@ gosFX::Curve::TranslateBy(Stuff::Scalar delta,int curvenum)
 		{
 			ComplexCurve *SCurve=(ComplexCurve *)this;
 			Stuff::Scalar x1,x2,y1,y2;
-			
-			
+
 			for(int key=0;key<SCurve->GetKeyCount()-1;key++)
 			{
 				x1=(*SCurve)[key].m_time;
@@ -890,7 +877,6 @@ gosFX::Curve::TranslateBy(Stuff::Scalar delta,int curvenum)
 			y1=SCurve->ComputeValue(x1,0.0f);
 			y1+=delta;
 			(*SCurve)[SCurve->GetKeyCount()-1].SetLinearKey(x1,y1,y1,1.0f);
-			
 		}
 		break;
 		
@@ -977,7 +963,6 @@ gosFX::Curve::TranslateBy(Stuff::Scalar delta,int curvenum)
 	default:
 		break;
 	}
-	
 }
 
 void 
@@ -1034,8 +1019,7 @@ gosFX::Curve::AxisScale(Stuff::Scalar sfactor,Stuff::Scalar axis,int curvenum)
 		{
 			ComplexCurve *SCurve=(ComplexCurve *)this;
 			Stuff::Scalar x1,x2,y1,y2;
-			
-			
+
 			for(int key=0;key<SCurve->GetKeyCount()-1;key++)
 			{
 				x1=(*SCurve)[key].m_time;
@@ -1051,7 +1035,6 @@ gosFX::Curve::AxisScale(Stuff::Scalar sfactor,Stuff::Scalar axis,int curvenum)
 			y1=SCurve->ComputeValue(x1,0.0f);
 			y1=axis+(y1-axis)*sfactor;
 			(*SCurve)[SCurve->GetKeyCount()-1].SetLinearKey(x1,y1,y1,1.0f);
-			
 		}
 		break;
 		
@@ -1138,9 +1121,7 @@ gosFX::Curve::AxisScale(Stuff::Scalar sfactor,Stuff::Scalar axis,int curvenum)
 	default:
 		break;
 	}
-	
 }
-
 
 gosFX::Curve * 
 gosFX::Curve::GetSubCurve(int curvenum)
@@ -1247,8 +1228,6 @@ gosFX::Curve::GetSubCurve(int curvenum)
 	}
 	return NULL;
 }
-
-
 
 //##########################################################################
 //########################    ConstantCurve    #############################
@@ -1902,9 +1881,6 @@ gosFX::ComplexCurve::ComputeRange(
 	Min_Clamp(dt, 0.0f);
 	key->ComputeRange(low, hi, dt);
 
-
-
-	
 	//
 	//------------------------------------
 	// Now deal with the preceeding frames

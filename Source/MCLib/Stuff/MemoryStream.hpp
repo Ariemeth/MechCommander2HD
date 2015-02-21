@@ -33,7 +33,6 @@ namespace Stuff {
 
 	const int Empty_Bit_Buffer=-20;
 
-
 	class MemoryStream :
 		public RegisteredClass
 	{
@@ -73,7 +72,6 @@ namespace Stuff {
 			DWORD stream_size,
 			DWORD initial_offset=0
 		);
-
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Class Data Support
@@ -213,7 +211,6 @@ namespace Stuff {
 		void
 			WriteLine(char *buffer);
 
-
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Bit operators  
 	//
@@ -237,7 +234,6 @@ namespace Stuff {
 		MemoryStream&
 			WriteBit(const bool &bit_value);
 
-		
 		MemoryStream&
 			ReadBits(int *ptr, DWORD number_of_bits)
 				{
@@ -253,7 +249,6 @@ namespace Stuff {
 					Check_Object(this); Check_Pointer(ptr);
 					*ptr = 0; return ReadUnsafeBits(ptr, number_of_bits);
 				}
-
 
 		MemoryStream&
 			ReadBits(WORD *ptr, DWORD number_of_bits)
@@ -279,7 +274,6 @@ namespace Stuff {
 					*ptr = 0.0; return ReadUnsafeBits(ptr, number_of_bits);
 				}
 
-
 		MemoryStream&
 			ReadBits(double *ptr, DWORD number_of_bits)
 				{
@@ -288,14 +282,9 @@ namespace Stuff {
 					*ptr = 0.0; return ReadUnsafeBits(ptr, number_of_bits);
 				}
 
-
 		MemoryStream&
 			WriteBits(const void *ptr, DWORD number_of_bits);
-		
-		
-		
-	
-		
+
 		MemoryStream&
 			ReadBitsToScaledInt(int &number, int min, int max,  DWORD number_of_bits);
 		
@@ -307,7 +296,6 @@ namespace Stuff {
 		
 		MemoryStream&
 			WriteScaledFloatToBits(const float &number, float min, float max,  DWORD number_of_bits);
-
 
 		void
 			ByteAlign();
@@ -439,7 +427,6 @@ namespace Stuff {
 		bool
 			ownsStream;
 	};
-
 }
 
 namespace MemoryStreamIO {
@@ -575,5 +562,4 @@ namespace MemoryStreamIO {
 			Stuff::MemoryStream* stream,
 			const Stuff::MemoryStream* input_stream
 		);
-
 }

@@ -8,22 +8,10 @@ EditorObjectMgr.h	: Interface for the EditorObjectMgr component.  This thing hol
 //===========================================================================//
 \*************************************************************************************************/
 
-
-
-#ifndef ELIST_H
 #include "Elist.h"
-#endif
-
-#ifndef EDITOROBJECTS_H
 #include "EditorObjects.h"
-#endif
-
-#ifndef FOREST_H
 #include "Forest.h"
-#endif
-
 #include "mclib.h"
-
 
 class ObjectAppearance;
 class AppearanceType;
@@ -90,7 +78,6 @@ public:
 		}
 	};
 
-	
 	EditorObjectMgr();  // should only be one of these
 	~EditorObjectMgr();
 
@@ -153,7 +140,6 @@ public:
 
 	int			getUnitGroupCount() const;
 	void		getUnitGroupNames( const char** names, int* IDs, int& numberOfNames ) const;
-
 
 	bool		save( PacketFile&  file, int whichPacket );
 	bool		load( PacketFile&  file, int whichPacket );
@@ -296,9 +282,7 @@ public:
 		int  getType( unsigned long group, unsigned long indexWithinGroup );
 		void getRandomTreeFromGroup( int treeGroup, int& group, int& index );
 
-
 		void doForest( const Forest& forest );
-
 
 		unsigned long nextAvailableSquadNum;
 

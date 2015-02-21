@@ -12,10 +12,7 @@ MPHostGame.cpp			: Implementation of the MPHostGame component.
 #include "..\MCLib\UserInput.h"
 #include "..\resource.h"
 #include "multplyr.h"
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
 
 #define CHECK_BUTTON 200
 
@@ -26,7 +23,6 @@ static const int OK_BUTTON_ID = 1000001;
 static const int CANCEL_BUTTON_ID = 1000002;
 
 extern CPrefs g_userPreferences;
-
 
 MPHostGame::MPHostGame()
 {
@@ -73,7 +69,6 @@ void MPHostGame::init()
 	file.seekBlock( "OutAnim" );
 	exitAnim.init( &file, "" );
 
-
 	if ( buttonCount )
 	{
 		for ( int i = 0; i < buttonCount; i++ )
@@ -90,12 +85,10 @@ void MPHostGame::init()
 
 	edits[0].allowIME( false );
 
-
 /*	long tmpX, tmpY;
 	file.seekBlock( "ComboBox0" );
 	file.readIdLong( "XLocation", tmpX );
 	file.readIdLong( "YLocation", tmpY );
-
 
 	char tmpStr[256];
 	file.readIdString( "FileName", tmpStr, 255 );
@@ -135,7 +128,6 @@ void MPHostGame::init()
 	numPlayersDropList.EditBox().limitEntry( 1 );
 	numPlayersDropList.EditBox().setNumeric( 1 );
 	numPlayersDropList.setReadOnly( 0 );*/ 
-
 }
 
 void MPHostGame::begin()
@@ -144,7 +136,6 @@ void MPHostGame::begin()
 	LogisticsDialog::begin();
 	bShowDlg = 0;
 }
-
 
 void MPHostGame::end()
 {
@@ -171,8 +162,6 @@ void MPHostGame::render(int xOffset, int yOffset )
 	{
 		LogisticsOneButtonDialog::instance()->render();
 	}
-
-	
 }
 
 void MPHostGame::render()
@@ -202,12 +191,9 @@ int	MPHostGame::handleMessage( unsigned long message, unsigned long who)
 			LogisticsOneButtonDialog::instance()->setFont( IDS_MP_CONNECT_ERROR_NO_CONNECTION_FONT );
 			bShowDlg = true;
 		}
-
 	}
 
-
 	return 0;
-
 }
 
 bool MPHostGame::isDone()
@@ -229,7 +215,6 @@ void MPHostGame::update()
 	}
 	LogisticsDialog::update();
 
- 
 	helpTextID = 0;
 	helpTextHeaderID = 0;
 
@@ -238,19 +223,13 @@ void MPHostGame::update()
 
 	long len = tmp.Length();
 
-
 	if ( len >= 1)
 	{
 		getButton( YES )->disable( false );
 	}
 	else
 		getButton( YES )->disable( true );
-
-
-
 }
-
-
 
 long aStyle5TextListItem::init( FitIniFile* file, const char* blockName )
 {
@@ -304,8 +283,6 @@ void aStyle5TextListItem::render()
 }
 
 //////////////////////////////////////////////
-
-
 
 //*************************************************************************************************
 // end of file ( MPHostGame.cpp )

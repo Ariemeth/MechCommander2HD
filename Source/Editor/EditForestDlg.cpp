@@ -13,10 +13,8 @@
 #include "ForestDlg.h"
 #include "malloc.h"
 
-
 /////////////////////////////////////////////////////////////////////////////
 // EditForestDlg dialog
-
 
 EditForestDlg::EditForestDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(EditForestDlg::IDD, pParent)
@@ -26,7 +24,6 @@ EditForestDlg::EditForestDlg(CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
 }
 
-
 void EditForestDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -35,7 +32,6 @@ void EditForestDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_NAME, m_Name);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(EditForestDlg, CDialog)
 	//{{AFX_MSG_MAP(EditForestDlg)
@@ -100,7 +96,6 @@ void EditForestDlg::OnDelete()
 		EditorObjectMgr::instance()->removeForest( ID );
 		m_fileList.DeleteString( index );
 	}
-	
 }
 
 void EditForestDlg::OnLoad() 
@@ -119,11 +114,7 @@ void EditForestDlg::OnLoad()
 
 		int index = m_fileList.AddString( str );
 		m_fileList.SetItemData( index, ID );
-		
 	}
-
-	
-	
 }
 
 BOOL EditForestDlg::OnInitDialog() 
@@ -134,7 +125,6 @@ BOOL EditForestDlg::OnInitDialog()
 	{
 	   m_fileList.DeleteString( i );
 	}
-
 
 	Forest** pForests = NULL;
 	long count = 0;
@@ -151,7 +141,6 @@ BOOL EditForestDlg::OnInitDialog()
 		cLoadString( IDS_UNNAMDE_FOREST, name, 255 );
 		char final[256];
 
-
 		for ( int i = 0; i < count; i++ )
 		{
 			const char* pName = pForests[i]->getName();
@@ -164,8 +153,6 @@ BOOL EditForestDlg::OnInitDialog()
 				pName = "?";
 			}
 			 index = m_fileList.AddString( pName );
-
-			 
 
 			m_fileList.SetItemData( index, pForests[i]->getID() );
 		}
@@ -196,10 +183,8 @@ void EditForestDlg::OnSave()
 				m_fileList.SetItemData( index, ID );
 				m_fileList.SetCurSel( index );
 			}
-
 		}
 	}
-	
 }
 
 void EditForestDlg::OnRename() 
@@ -218,7 +203,6 @@ void EditForestDlg::OnRename()
 		m_fileList.SetItemData( index, ID );
 		m_fileList.SetCurSel( index );
 	}
-
 }
 
 void EditForestDlg::OnSelchangeListFiles() 
@@ -231,6 +215,4 @@ void EditForestDlg::OnSelchangeListFiles()
 		m_Name = pOldForest->getName();
 		UpdateData( false );
 	}
-
-	
 }

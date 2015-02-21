@@ -19,7 +19,6 @@ namespace MidLevelRenderer {
 	//#### MLRIndexedPolyMesh with no color no lighting w/ detail texture  #####
 	//##########################################################################
 
-
 	class MLR_Terrain:
 		public MLR_I_DeT_TMesh
 	{
@@ -101,5 +100,4 @@ namespace MidLevelRenderer {
 			MLRState*,
 			MLRState*
 		);
-
 }

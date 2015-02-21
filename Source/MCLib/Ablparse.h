@@ -10,17 +10,9 @@
 #ifndef ABLPARSE_H
 #define	ABLPARSE_H
 
-#ifndef ABLGEN_H
 #include "ablgen.h"
-#endif
-
-#ifndef ABLSYMT_H
 #include "ablsymt.h"
-#endif
-
-#ifndef ABLERR_H
 #include "ablerr.h"
-#endif
 
 //***************************************************************************
 

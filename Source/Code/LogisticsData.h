@@ -10,7 +10,6 @@ LogisticsData.h			: Interface for the LogisticsData component.  This thing holds
 
 #include "stuff\stuff.hpp"
 #include <EList.h>
-
 #include "LogisticsMech.h"
 #include "LogisticsComponent.h"
 #include "LogisticsPilot.h"
@@ -53,7 +52,6 @@ public:
 	LogisticsVariant*	getVariant( const char* pCSVFileNaem, int VariantNum );
 	int					removeVariant( const char* varName );
 
-
 	LogisticsMech*		getMech( int ID );
 	LogisticsMech*		getMech( const char* MechName, const char* pilotName );
 	LogisticsMech*		getMechWithoutForceGroup( LogisticsMech* clone );
@@ -61,14 +59,10 @@ public:
 	void				addMechToInventory( LogisticsVariant* pVar, LogisticsPilot* pPilot, int ForceGrup,
 											bool bSubtractPts = 0);
 
-
-
-
 	int createInstanceID( LogisticsVariant* pVar );
 	LogisticsPilot*		getFirstAvailablePilot();
 	void				getForceGroup( EList<LogisticsMech*, LogisticsMech*>& newList );
 	void				getInventory( EList<LogisticsMech*, LogisticsMech*>& newList );
-
 
 	void				removeMechsInForceGroup(); // takes mechs that are in the force group out of the inventory
 	void				addMechToInventory( LogisticsVariant* pVar,
@@ -83,7 +77,6 @@ public:
 	int					removeMechFromForceGroup( int slot );
 
 	bool				canAddMechToForceGroup( LogisticsMech* pMech );
-
 
 	long				save( FitIniFile& file );
 	long				load( FitIniFile& file );
@@ -127,7 +120,6 @@ public:
 	int					getVehicles( const LogisticsVehicle**, int& count );
 	LogisticsVehicle*	getVehicle( const char* pName );
 
-
 	int					setMechToModify( LogisticsMech* pVariant );
 	LogisticsMech*		getMechToModify( ){ return currentlyModifiedMech; }
 	int					acceptMechModifications( const char* pNewVariantName );
@@ -154,9 +146,6 @@ public:
 	int					acceptMechModificationsUseOldVariant( const char* name );
 
 	const EString&		getCampaignName() const;
-
-
-
 
 	int					setCurrentMission(const char* missionName);
 
@@ -199,9 +188,6 @@ public:
 	bool				getVideoShown();
 	void				setVideoShown();
 
-
-
-
 	struct Building
 	{
 		long nameID;
@@ -211,9 +197,6 @@ public:
 		char fileName[64];
 		float scale;
 	};
-
-
-
 
 private:
 
@@ -236,18 +219,13 @@ private:
 	BUILDING_LIST									buildings;
 	
 	LogisticsMissionInfo*							missionInfo;
-	
 
 	LogisticsMech*									currentlyModifiedMech;
 	LogisticsVariant*								oldVariant;
-	
-	
+
 	int												resourcePoints; // C-Bills for buying mechs
 
 	long	loadVariant( FitIniFile& file );
-
-
-	
 
 	// HELPERS
 	void RegisterFunctions();
@@ -261,14 +239,7 @@ private:
 	int  addBuilding( long fitID, PacketFile& objectFile, float scale );
 	void removeDeadWeight();
 	void clearVariants();
-
-
-
-
-	
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( LogisticsData.h )

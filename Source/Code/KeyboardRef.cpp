@@ -60,19 +60,16 @@ int KeyboardRef::init()
 	default:
 		gosASSERT( !"Invalid resolution" );
 		return -1;
-
 	}
 
 	FitIniFile file;
 	file.open( path );
-
 
 	LogisticsScreen::init( file, "Static", "Text", "Rect", "Button" );
 
 	listBox.init( rects[2].left(), rects[2].top(), rects[2].width(), rects[2].height() );
 
 	file.close();
-
 
 	path.init( artPath, "mcui_keyref_entry", ".fit" );
 	file.open( path );
@@ -81,7 +78,6 @@ int KeyboardRef::init()
 	listItemTemplate2.init( file, "Text1" );
 
 	buttons[0].setMessageOnRelease( );
-
 
 	return true;
 }
@@ -170,9 +166,6 @@ void KeyboardRef::reseed( MissionInterfaceManager::Command* commands )
 			listBox.AddItem( item );
 
 			item->moveTo( xVal + listBox.left(), yVal );
-
-
-
 		}
 	}
 }
@@ -181,8 +174,6 @@ int	KeyboardRef::handleMessage( unsigned long who, unsigned long )
 {
 	return MissionInterfaceManager::instance()->toggleHotKeys();
 }
-
-
 
 //*************************************************************************************************
 // end of file ( KeyboardRef.cpp )

@@ -7,13 +7,8 @@ FlattenBrush.h			: Interface for the FlattenBrush component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef BRUSH_H
 #include "Brush.h"
-#endif
-
-#ifndef ACTION_H
 #include "Action.h"
-#endif
 
 //*************************************************************************************************
 
@@ -38,14 +33,11 @@ class FlattenBrush: public Brush
 		Action* applyHeightToSelection( float height );
 		float	getAverageHeightOfSelection( );
 
-
 	private:
 
 		ActionPaintTile*	pCurAction;
 		void flattenVertex( int row, int col, float val );
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( FLATTENBRUSH_H.h )

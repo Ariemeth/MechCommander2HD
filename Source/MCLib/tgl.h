@@ -12,14 +12,8 @@
 #define TGL_H
 //-------------------------------------------------------------------------------
 // Include Files
-#ifndef HEAP_H
 #include "heap.h"
-#endif
-
-#ifndef FILE_H
 #include "file.h"
-#endif
-
 #include <stuff\stuff.hpp>
 #include <gameos.hpp>
 
@@ -37,7 +31,6 @@ typedef struct _TG_TypeVertex
 	Stuff::Point3D	position;				//Position of vertex relative to base position of shape.
 	Stuff::Vector3D normal;					//Vertex Normal
 	DWORD    		aRGBLight;				//Vertex Light and Alpha
-
 } TG_TypeVertex;
 
 typedef  TG_TypeVertex* TG_TypeVertexPtr;
@@ -93,7 +86,6 @@ typedef struct _TG_UVData
 	float			v1;
 	float			u2;
 	float			v2;
-
 } TG_UVData;
 
 typedef  TG_UVData* TG_UVDataPtr;
@@ -257,7 +249,6 @@ typedef struct _TG_Light
 		falloff = (farDistance - length) * oneOverDistance;
 		return true;
 	}
-
 } TG_Light;
 
 typedef  TG_Light *TG_LightPtr;
@@ -300,7 +291,6 @@ typedef struct _TG_Animation
 	
 	void SaveBinaryCopy (File *binFile);
 	void LoadBinaryCopy (File *binFile);
-	
 } TG_Animation;
 
 typedef TG_Animation *TG_AnimationPtr;
@@ -330,7 +320,6 @@ typedef struct _TG_ShapeRec
 
 		return *this;
 	}
-	
 } TG_ShapeRec;
 
 typedef TG_ShapeRec *TG_ShapeRecPtr;
@@ -476,7 +465,6 @@ class TG_TypeNode
 		
  		virtual void LoadBinaryCopy (File &binFile);
 		virtual void SaveBinaryCopy (File &binFile);
-
 };
 
 typedef TG_TypeNode* TG_TypeNodePtr;

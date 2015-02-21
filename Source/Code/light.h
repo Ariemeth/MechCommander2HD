@@ -13,21 +13,10 @@
 
 //---------------------------------------------------------------------------
 
-#ifndef DCARNAGE_H
 #include "dcarnage.h"
-#endif
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef OBJTYPE_H
 #include "objtype.h"
-#endif
 
 //---------------------------------------------------------------------------
 /*
@@ -103,7 +92,4 @@ class Light : public GameObject {
 //***************************************************************************
 
 #endif
-
-
-
 

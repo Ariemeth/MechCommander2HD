@@ -12,14 +12,8 @@
 #define MC2MOVIE_H
 
 //--------------------------------------------------------------------------
-#ifndef DSTD_H
 #include "dstd.h"
-#endif
-
-#ifndef HEAP_H
 #include "heap.h"
-#endif
-
 #include <windows.h>
 
 //--------------------------------------------------------------------------

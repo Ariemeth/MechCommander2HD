@@ -13,22 +13,11 @@
 //---------------------------------------------------------------------------
 // Include Files
 
-#ifndef DGATE_H
 #include "dgate.h"
-#endif
-
-#ifndef OBJTYPE_H
 #include "objtype.h"
-#endif
-
-#ifndef TERROBJ_H
 #include "terrobj.h"
-#endif
-
-#ifndef DMOVER_H
 #include "dmover.h"
-#endif
-					
+
 //---------------------------------------------------------------------------
 // Macro Definitions
 
@@ -283,7 +272,4 @@ class Gate : public TerrainObject
 
 //---------------------------------------------------------------------------
 #endif
-
-
-
 

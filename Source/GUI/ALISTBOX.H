@@ -9,21 +9,10 @@
 #define	TOO_MANY_ITEMS			0xEEEE0001
 #define ITEM_OUT_OF_RANGE		0xEEEE0002
 
-#ifndef ASCROLL_H
 #include "aScroll.h"
-#endif
-
-#ifndef AEDIT_H
 #include "aEdit.h"
-#endif
-
-#ifndef AFONT_H
 #include "aFont.h"
-#endif
-
-#ifndef ESTRING_H
 #include "EString.h"
-#endif
 
 class aListItem : public aObject
 {
@@ -36,7 +25,6 @@ public:
 		HIGHLITE,
 		PRESSED_HIGHLITE,
 		DISABLED,
-
 	};
 
 	virtual void update(){ aObject::update(); }
@@ -52,8 +40,6 @@ public:
 
 	virtual bool isChecked() { return false; }
 	virtual void setCheck( bool ){}
-
-	
 
 protected:
 	
@@ -86,14 +72,11 @@ protected:
 	aTextListItem() {}
 	void init( long fontResID );
 
-
 	aFont		font;
 	EString		text;
 	long		alignment;
 
 	bool		bForceToTop;
-
-
  };
 
 class aAnimTextListItem : public aTextListItem
@@ -116,7 +99,6 @@ protected:
 
 	aAnimGroup	animInfo;
 	void CopyData( const aAnimTextListItem& src );
-
 };
 
 class aLocalizedListItem : public aAnimTextListItem
@@ -132,11 +114,7 @@ public:
 protected:
 
 	EString				hiddenText;
-
 };
-
-
-
 
 class aListBox : public aObject
 {
@@ -162,7 +140,6 @@ public:
 	long				SelectItem(long itemNumber);
 	bool				IsScrollActive(void) {return scrollActive;};
 	long				ActivateScrollbar(void);
-
 
 	aListItem*			GetItem(long itemNumber);
 	long				GetItemCount(){ return itemCount; }
@@ -207,10 +184,8 @@ protected:
 	int			disabledSFX;
 	int			topSkip;
 
-
 	void		scroll( int amount );
 };
-
 
 /* Note that items in an aDropList items do not have to be aTextListItems, whereas in an
 aComboBox they do (well, selectable items do).*/
@@ -248,7 +223,6 @@ public:
 
 	aDropList& operator=( const aDropList& );
 
-
 protected:
 	aRect*			rects;
 	long			rectCount;
@@ -261,9 +235,7 @@ protected:
 
 	long			textLeft;
 	long			textTop;
-
 };
-
 
 class aComboBox : public aObject
 {
@@ -288,7 +260,6 @@ public:
 	long				AddItem( const char* text, unsigned long color );
 	long				GetSelectedItem() const { return selectionIndex; }
 
-
 	aComboBox& operator=( const aComboBox& );
 
 	aEdit &EditBox() { return entry; }
@@ -305,11 +276,8 @@ protected:
 	float		listBoxMaxHeight;
 	int				selectionIndex;
 
-
 	aComboBox( const aComboBox& );
 	aAnimTextListItem	templateItem;
 };
-
-
 
 #endif

@@ -111,6 +111,5 @@ namespace MidLevelRenderer {
 	protected:
 		Stuff::Scalar
 			innerRadius, outerRadius, oneOverDistance;
-
 	};
 }

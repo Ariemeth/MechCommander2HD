@@ -97,7 +97,6 @@ DWORD MidLevelRenderer::PolysClippedButInside;
 DWORD MidLevelRenderer::PolysClippedButOnePlane;
 DWORD MidLevelRenderer::PolysClippedButGOnePlane;
 
-
 bool MidLevelRenderer::ConvertToTriangleMeshes = true;
 bool MidLevelRenderer::PerspectiveMode = true;
 

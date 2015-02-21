@@ -1,5 +1,4 @@
 
-
 /*************************************************************************************************\
 DlgFileOpen.cpp			: Implementation of the DlgFileOpen component.
 //---------------------------------------------------------------------------//
@@ -7,7 +6,6 @@ DlgFileOpen.cpp			: Implementation of the DlgFileOpen component.
 //===========================================================================//
 \*************************************************************************************************/
 #include "stdafx.h"
-
 #include "DlgFileOpen.h"
 
 #ifndef TOOLOS_HPP
@@ -15,10 +13,8 @@ DlgFileOpen.cpp			: Implementation of the DlgFileOpen component.
 #endif
 
 #include "resource.h"
-
 #include <stdlib.h>
 #include <string.h>
-
 
 BEGIN_MESSAGE_MAP(DlgFileOpen,CDialog )
 	//{{AFX_MSG_MAP(DlgFileOpen)
@@ -62,16 +58,13 @@ void DlgFileOpen::Init()
 	}
 
 	strcpy( fileName, m_directory );
-
 }
-
 
 void DlgFileOpen::OnCancel()
 {
 	//EndDialog(IDCANCEL);
 	EndDialog(IDCANCEL);
 }
-
 
 void DlgFileOpen::OnOK()
 {
@@ -96,13 +89,11 @@ void DlgFileOpen::OnOK()
 	CDialog::OnOK();
 }
 
-
 //-------------------------------------------------------------------------------------------------
 
 DlgFileOpen::~DlgFileOpen()
 {
 }
-
 
 //*************************************************************************************************
 // end of file ( DlgFileOpen.cpp )

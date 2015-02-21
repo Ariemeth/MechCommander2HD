@@ -4,30 +4,15 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef LOGISTICSSCREEN_H
 #include "LogisticsScreen.h"
-#endif
-
-#ifndef ALISTBOX_H
 #include "aListBox.h"
-#endif
-
-#ifndef ABUTTON_H
 #include "aButton.h"
-#endif
-
-#ifndef MISSION_H
 #include "Mission.h"
-#endif
-
-#ifndef SIMPLECAMERA_H
 #include "SimpleCamera.h"
-#endif
 
 #define MN_MSG_PLAY 80
 #define MN_MSG_STOP 82
 #define MN_MSG_PAUSE 81
-
 
 //*************************************************************************************************
 
@@ -49,10 +34,7 @@ class MissionBriefingScreen: public LogisticsScreen
 	void	init( FitIniFile* file );
 	virtual int			handleMessage( unsigned long, unsigned long );
 
-
 	static long	getMissionTGA(const char* missionName);
-
-
 
 	private:
 
@@ -70,19 +52,11 @@ class MissionBriefingScreen: public LogisticsScreen
 											   float mapWidth, float mapHeight, bool display );
 	void		setupDropZone( float fX, float fY, float mapWidth, float mapHeight );
 
-
 	float		runTime;
 	bool		bClicked;
 
-
 	SimpleCamera	camera;
-
-
-
-
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( MissionBriefingScreen.h )

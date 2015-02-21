@@ -18,7 +18,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // ViewConditionOrActionDlg dialog
 
-
 ViewConditionOrActionDlg::ViewConditionOrActionDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(ViewConditionOrActionDlg::IDD, pParent)
 {
@@ -27,7 +26,6 @@ ViewConditionOrActionDlg::ViewConditionOrActionDlg(CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
 }
 
-
 void ViewConditionOrActionDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -35,7 +33,6 @@ void ViewConditionOrActionDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_VIEW_CONDITION_OR_ACTION_EDIT, m_Edit);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(ViewConditionOrActionDlg, CDialog)
 	//{{AFX_MSG_MAP(ViewConditionOrActionDlg)

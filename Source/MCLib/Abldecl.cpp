@@ -10,30 +10,12 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-#ifndef ABLGEN_H
 #include "ablgen.h"
-#endif
-
-#ifndef ABLERR_H
 #include "ablerr.h"
-#endif
-
-#ifndef ABLSCAN_H
 #include "ablscan.h"
-#endif
-
-#ifndef ABLSYMT_H
 #include "ablsymt.h"
-#endif
-
-#ifndef ABLPARSE_H
 #include "ablparse.h"
-#endif
-
-#ifndef ABLEXEC_H
 #include "ablexec.h"
-#endif
 
 //***************************************************************************
 
@@ -114,7 +96,6 @@ TokenCodeType followIndexesList[] = {
 	TKN_EOF,
 	TKN_NONE
 };
-
 
 //***************************************************************************
 // MISC. routines
@@ -474,7 +455,6 @@ TypePtr doType (void) {
 				syntaxError(ABL_ERR_SYNTAX_NOT_A_TYPE_IDENTIFIER);
 				return(NULL);
 			}
-
 			}
 			break;
 		case TKN_LPAREN:
@@ -727,7 +707,4 @@ void varOrFieldDeclarations (SymTableNodePtr routineIdPtr, long offset) {
 }
 
 //***************************************************************************
-
-
-
 

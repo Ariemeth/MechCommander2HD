@@ -13,7 +13,6 @@ MechBayScreen.h : Header file for mech selection
 #include "MechListBox.h"
 #include "SimpleComponentListBox.h"
 
-
 class LogisticsMech;
 class LogisticsMechIcon;
 class SimpleCamera;
@@ -21,7 +20,6 @@ class SimpleCamera;
 #define ICON_COUNT		12
 #define ICON_COUNT_X	4
 #define ICON_COUNT_Y	3
-
 
 #define MB_MSG_NEXT 50
 #define MB_MSG_PREV 51
@@ -31,7 +29,6 @@ class SimpleCamera;
 #define MB_MSG_CHANGE_LOADOUT 55
 #define MB_MSG_BUY_SELL 56
 #define MB_MSG_MAINMENU	57
-
 
 class MechBayScreen : public LogisticsScreen
 {
@@ -52,7 +49,6 @@ public:
 	void setMech( LogisticsMech* pMech, bool bCommandFromLB = true );	
 	void beginDrag( LogisticsMech* pMech );
 
-	
 private:
 
 	LogisticsMech*		pCurMech;
@@ -87,7 +83,6 @@ private:
 	void drawWeightMeter(long xOffset, long yOffset);
 	void reinitMechs();
 
-
 	MechBayScreen( const MechBayScreen& );
 	MechBayScreen& operator=( const MechBayScreen& );
 
@@ -95,10 +90,6 @@ private:
 	bool				selectFirstFGItem();
 	bool				selectFirstViableLBMech();
 	LogisticsMech*		getFGSelMech();
-
-
-
-
 };
 
 #endif

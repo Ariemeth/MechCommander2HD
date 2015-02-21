@@ -12,37 +12,14 @@
 #define	CONTACT_H
 
 //---------------------------------------------------------------------------
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef DCONTACT_H
 #include "dcontact.h"
-#endif
-
-#ifndef DGAMEOBJ_H
 #include "dgameobj.h"
-#endif
-
-#ifndef DMOVER_H
 #include "dmover.h"
-#endif
-
-#ifndef DOBJTYPE_H
 #include "dobjtype.h"
-#endif
-
-#ifndef DWARRIOR_H
 #include "dwarrior.h"
-#endif
-
-#ifndef DTEAM_H
 #include "dteam.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
 
 //***************************************************************************
 
@@ -254,7 +231,6 @@ class SensorSystem {
 };
 
 //---------------------------------------------------------------------------
-
 
 #define	MAX_SENSORS_PER_TEAM MAX_MOVERS
 

@@ -186,5 +186,4 @@ namespace MidLevelRenderer {
 	private:
 		int	numPrimitives;
 	};
-
 }

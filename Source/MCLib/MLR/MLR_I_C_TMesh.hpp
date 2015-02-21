@@ -15,7 +15,6 @@ namespace MidLevelRenderer {
 	//#### MLRIndexedTriMesh with no color no lighting one texture layer  #####
 	//##########################################################################
 
-
 	class MLR_I_C_TMesh:
 		public MLR_I_TMesh
 	{
@@ -161,5 +160,4 @@ namespace MidLevelRenderer {
 			IcoInfo&,
 			MLRState*
 		);
-
 }

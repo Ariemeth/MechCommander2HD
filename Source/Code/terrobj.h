@@ -11,22 +11,10 @@
 #ifndef TERROBJ_H
 #define TERROBJ_H
 
-#ifndef DTERROBJ_H
 #include "dterrobj.h"
-#endif
-
-#ifndef OBJTYPE_H
 #include "objtype.h"
-#endif
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef DCARNAGE_H
 #include "dcarnage.h"
-#endif
-
 #include <gosFX\gosfxheaders.hpp>
 //---------------------------------------------------------------------------
 // Macro Definitions
@@ -314,6 +302,4 @@ class TerrainObject : public GameObject {
 
 //---------------------------------------------------------------------------
 #endif
-
-
 

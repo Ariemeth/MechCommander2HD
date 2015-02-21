@@ -50,7 +50,6 @@
 
 #define SHAPE_FILE_VERSION '01.1' // 1.10 backwards for big-endian compare
 
-
 //
 // MetaWare support
 //
@@ -462,5 +461,4 @@ extern void VFX_illuminate_polygon(PANE *pane, FIXED16 dither_amount,
 #endif
 
 #endif
-
 

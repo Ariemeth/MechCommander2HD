@@ -39,7 +39,6 @@ public:
 	void setPilot( LogisticsPilot* pPilot );
 	void setMech( LogisticsMech* pMech );
 	void addSelectedPilot();
-	
 
 private:
 
@@ -65,7 +64,6 @@ private:
 
 	static	PilotReadyScreen*	s_instance;
 
-
 	void removeSelectedPilot();
 	
 	void putBackPilot( LogisticsPilot* pPilot );
@@ -75,9 +73,6 @@ private:
 	PilotReadyScreen& operator=( const PilotReadyScreen& );
 
 	float				launchFadeTime;
-
-
-
 };
 
 #endif

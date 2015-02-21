@@ -8,66 +8,21 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef TURRET_H
 #include "turret.h"
-#endif
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
-
-#ifndef SOUNDS_H
 #include "sounds.h"
-#endif
-
-#ifndef MOVE_H
 #include "move.h"
-#endif
-
-#ifndef COLLSN_H
 #include "collsn.h"
-#endif
-
-#ifndef MECH_H
 #include "mech.h"
-#endif
-
-#ifndef GVEHICL_H
 #include "gvehicl.h"
-#endif
-
-#ifndef CARNAGE_H
 #include "carnage.h"
-#endif
-
-#ifndef TEAM_H
 #include "team.h"
-#endif
-
-#ifndef WEAPONFX_H
 #include "weaponfx.h"
-#endif
-
-#ifndef WEAPONBOLT_H
 #include "weaponbolt.h"
-#endif
-
-#ifndef MULTPLYR_H
 #include "multplyr.h"
-#endif
-
-#ifndef MISSION_H
 #include "mission.h"
-#endif
-
-#ifndef GAMELOG_H
 #include "gamelog.h"
-#endif
-
 #include "..\resource.h"
 //***************************************************************************
 
@@ -308,8 +263,7 @@ bool TurretType::handleCollision (GameObjectPtr collidee, GameObjectPtr collider
 			break;
 		}
 	}
-	
-	
+
 	return(true);
 }
 
@@ -554,7 +508,6 @@ long Turret::update (void)
 		calcFireRanges();
 	}
 
-		
 	//--------------------------------------
 	// Turret is Dead.  React Appropriately
 	// Just do not call any of the fire routines
@@ -1366,8 +1319,7 @@ void Turret::fireWeapon (GameObjectPtr target, long weaponId) {
 				break;
 			}
 		}
-			
-		
+
 		bool LOS = lineOfSight(target,getAppearRadius());
 		if (!LOS && indirectFireWeapon)
 			LOS = getTeam()->teamLineOfSight(target->getPosition(),target->getAppearRadius());
@@ -2004,7 +1956,6 @@ long Turret::handleWeaponFire (long weaponIndex,
 //---------------------------------------------------------------------------
 
 void Turret::lightOnFire (float timeToBurn) {
-
 }
 
 //---------------------------------------------------------------------------
@@ -2020,7 +1971,6 @@ void Turret::renderShadows (void)
 	
 	setSelected(false);		//ALWAYS reset the selected flags.  GUI needs this to work!
 	setTargeted( false );	//ALWAYS do it here, too!  Otherwise things may draw FUNNY!
-
 }	
 
 //---------------------------------------------------------------------------
@@ -2063,7 +2013,6 @@ void Turret::render (void)
 			appearance->setObjectNameId(((TurretTypePtr)getObjectType())->turretTypeName);
 		}
 
-
 		windowsVisible = g_framesSinceMissionStart;
 		appearance->setVisibility(true,true);
 		appearance->render();
@@ -2071,7 +2020,6 @@ void Turret::render (void)
 	
 	setSelected(false);		//ALWAYS reset the selected flags.  GUI needs this to work!
 	setTargeted( false );	//ALWAYS do it here, too!  Otherwise things may draw FUNNY!
-
 }
 
 //---------------------------------------------------------------------------
@@ -2147,7 +2095,6 @@ void Turret::init (bool create, ObjectTypePtr _type) {
 
 	if (type->getExtentRadius() > 0.0)
 		setFlag(OBJECT_FLAG_TANGIBLE, true);
-	
 
 	tonnage = type->baseTonnage;
 	explDamage = type->explDmg;

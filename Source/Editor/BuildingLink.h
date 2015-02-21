@@ -40,7 +40,6 @@ public:
 
 	void	render();
 
-
 private:
 	 struct Info
 	 {
@@ -52,13 +51,10 @@ private:
 	 Info	parent;
 	 EList< Info, const Info& > children;
 
-
 	 // Helper function
 	 void CopyData( const BuildingLink& );
 
 	 friend class EditorObjectMgr;
 };
-
-
 
 #endif// BUILDINGLINK_H

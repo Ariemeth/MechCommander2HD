@@ -9,14 +9,8 @@
 //---------------------------------------------------------------------------
 // Include files
 
-#ifndef CELEMENT_H
 #include "celement.h"
-#endif
-
-#ifndef HEAP_H
 #include "heap.h"
-#endif
-
 #include <gameos.hpp>
 
 //---------------------------------------------------------------------------

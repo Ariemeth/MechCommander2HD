@@ -8,61 +8,20 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef ARTLRY_H
 #include "artlry.h"
-#endif
-
-#ifndef TEAM_H
 #include "team.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef MOVE_H
 #include "move.h"
-#endif
-
-#ifndef CARNAGE_H
 #include "carnage.h"
-#endif
-
-#ifndef COLLSN_H
 #include "collsn.h"
-#endif
-
-#ifndef TURRET_H
 #include "turret.h"
-#endif
-
-#ifndef TERRAIN_H
 #include "terrain.h"
-#endif
-
-#ifndef COMNDR_H
 #include "comndr.h"
-#endif
-
-#ifndef MISSION_H
 #include "mission.h"
-#endif
-
-#ifndef GATE_H
 #include "gate.h"
-#endif
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
-
-#ifndef MULTPLYR_H
 #include "multplyr.h"
-#endif
 
 //---------------------------------------------------------------------------
 
@@ -515,7 +474,6 @@ long ArtilleryType::init (FilePtr objFile, unsigned long fileSize) {
 		result = miFile.readIdLong("MinArtilleryHeadRange",minArtilleryHeadRange);
 		if (result != NO_ERR)
 			minArtilleryHeadRange = 5.0;
-
 	}
 	else
 	{
@@ -863,7 +821,6 @@ long Artillery::update (void)
 
 	ArtilleryTypePtr type = (ArtilleryTypePtr)getObjectType();
 
-	
 	recalcBounds(eye);		//Are we even visible?
 	if (inView)
 	{

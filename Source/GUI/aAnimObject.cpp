@@ -30,7 +30,6 @@ aAnimObject& aAnimObject::operator =( const aAnimObject& src )
 	return *this;
 }
 
-
 int aAnimObject::init( FitIniFile* file, const char* blockName, DWORD neverFlush )
 {
 	aObject::init( file, blockName, neverFlush );
@@ -65,15 +64,12 @@ void aAnimObject::render( )
 		return;
 	long color = animInfo.getColor();
 
-
 	float xNewOffset = animInfo.getXDelta()+.5f;
 	float yNewOffset =	animInfo.getYDelta()+.5f;
 
 	move( xNewOffset, yNewOffset );
 
-
 	setColor( color );
-
 
 	float fScaleX = animInfo.getScaleX();
 	float fScaleY = animInfo.getScaleY();
@@ -95,8 +91,6 @@ void aAnimObject::render( )
 		float newLeft = midX - scaleX;
 		float newTop = midY - scaleY;
 
-
-
 		moveToNoRecurse( newLeft, newTop );
 		resize( fScaleX * width(), fScaleY * height() );
 		aObject::render();
@@ -113,10 +107,6 @@ void aAnimObject::end()
 {
 	animInfo.end();
 }
-
-
-
-
 
 //*************************************************************************************************
 // end of file ( aAnimObject.cpp )

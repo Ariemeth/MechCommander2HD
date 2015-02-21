@@ -68,8 +68,6 @@ class LogisticsMech
 
 		LogisticsVariant* getVariant() { return pVariant; }
 
-	
-
 	private:
 		LogisticsVariant* pVariant;
 
@@ -88,9 +86,7 @@ class LogisticsMech
 		// suppress these puppies
 		LogisticsMech();
 		LogisticsMech& operator=( const LogisticsMech& );
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( LogisticsMech.h )

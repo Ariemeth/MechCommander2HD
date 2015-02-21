@@ -76,7 +76,6 @@ void GameTacMap::update()
 	float width = right - left;
 	float height = bottom - top;
 
-
 	if ( !inRegion(screen.x, screen.y) )
 		return;
 
@@ -110,7 +109,6 @@ void GameTacMap::update()
 
 		MissionInterfaceManager::instance()->doMove(world);
 	}
-
 }
 
 bool GameTacMap::animate (long objectiveId, long nFlashes)
@@ -144,7 +142,6 @@ void GameTacMap::render()
 	gos_SetRenderState( gos_State_ZCompare, 0 );
 	gos_SetRenderState( gos_State_Texture, textureHandle );
 
-
 	for ( int i = 0; i < 4; ++i )
 	{
 		corners[i].rhw = 1.0f;
@@ -152,7 +149,6 @@ void GameTacMap::render()
 		corners[i].frgb = 0;
 		corners[i].z = 0.0f;
 	}
-
 
 	corners[0].x = corners[2].x = left;
 	corners[1].x = corners[3].x = right;
@@ -170,7 +166,6 @@ void GameTacMap::render()
 	
 	gos_DrawTriangles( corners, 3 );
 	gos_DrawTriangles( &corners[1], 3 );
-
 
 	Stuff::Vector2DOf<long> screen;
 	Stuff::Vector4D 		nScreen;
@@ -210,7 +205,6 @@ void GameTacMap::render()
 		count++;
 	}
 
-	
 	// this is the little viewing rect
 
 	// Routine that InverseProjects is slightly less accurate but an order of magnitude faster.
@@ -311,7 +305,6 @@ void GameTacMap::render()
 				unsigned long colorBlip = pSensor->owner->getSelected() ? 0xff4bff4b : 0xff00cc00;
 				unsigned long colorRing = 0xff00cc00;
 
-			
 				if ( pSensor->owner->getTeam()->isNeutral( Team::home ) )
 				{
 					colorBlip = pSensor->owner->getSelected() ? 0xff4c4cff : 0xff0000ff;
@@ -338,7 +331,6 @@ void GameTacMap::render()
 							colorRing = 0;
 							s_lastBlinkTime = 0.f;
 						}
-
 					}
 
 					colors[count] = colorBlip;
@@ -347,7 +339,6 @@ void GameTacMap::render()
 					selected[count] = 0;
 					positions[count] = pSensor->owner->getPosition();
 					count++;
-
 				}
 			}
 		}
@@ -397,7 +388,6 @@ void GameTacMap::render()
 				//Not on our side.  Draw by contact status
 				colorBlip = mover->getSelected() ? 0xffff3f3f : 0xffff0000;
 				colorRing = 0xffff0000;
-				
 			}
 			else
 				continue;
@@ -408,7 +398,6 @@ void GameTacMap::render()
 			selected[count] = mover->getSelected();
 			positions[count] = mover->getPosition();
 			count++;
-
 		}
 	}
 
@@ -428,9 +417,6 @@ void GameTacMap::render()
 		}
 		bSel = 1;
 	}
-
-
-
 }
 
 void GameTacMap::worldToTacMap( Stuff::Vector3D& world, gos_VERTEX& tac )
@@ -502,14 +488,11 @@ void GameTacMap::drawSensor( const Stuff::Vector3D& pos, float radius, long colo
 	radii.x = 2.0f * float2long(radius+.5);
 	radii.y = 2.0f * float2long(radius+.5);
 
-
 	EllipseElement circle( center, radii, color, 0 ); 
 	GUI_RECT rect = { left, top, right, bottom };
 	circle.setClip( rect );
 
 	circle.draw();
-
-
 }
 
 void GameTacMap::drawBlip( const Stuff::Vector3D& pos, long color, int type )
@@ -537,8 +520,6 @@ void GameTacMap::drawBlip( const Stuff::Vector3D& pos, long color, int type )
 		triangle[i].v = 0.f;
 	}
 
-	
-
 	worldToTacMap( (Stuff::Vector3D&)pos, triangle[0] );
 	triangle[0].x -= 2.f;
 	triangle[1].x = triangle[0].x;
@@ -559,8 +540,6 @@ void GameTacMap::setPos( const GUI_RECT& newPos )
 	top = newPos.top;
 	bottom = newPos.bottom;
 }
-
-
 
 //*************************************************************************************************
 // end of file ( TacMap.cpp )

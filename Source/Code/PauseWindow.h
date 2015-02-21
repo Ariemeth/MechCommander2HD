@@ -14,10 +14,7 @@ class StaticInfo;
 class FitIniFile;
 
 #include "utilities.h"
-
-#ifndef AFONT_H
 #include "aFont.h"
-#endif
 
 /**************************************************************************************************
 CLASS DESCRIPTION
@@ -28,7 +25,6 @@ struct MoveInfo
 	float time; // in seconds
 	float position; // x pixels
 };
-
 
 class PauseWindow
 {
@@ -84,9 +80,7 @@ class PauseWindow
 
 		bool		bPromptToQuit;
 		bool		bPromptToAbort;
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( PauseWindow.h )

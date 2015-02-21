@@ -15,7 +15,6 @@ MPStats.cpp			: Implementation of the MPStats component.
 
 #define MP_STATS_SAVE	400
 
-
 MPStats::MPStats(  )
 {
 	helpTextArrayID = 8;
@@ -29,8 +28,6 @@ MPStats::~MPStats()
 {
 }
 
-
-
 int MPStats::init()
 {
 	FitIniFile file;
@@ -42,7 +39,6 @@ int MPStats::init()
 		sprintf( buffer2, "couldn't open file %s", (char*)path );
 		Assert( 0, 0, buffer2 );
 		return false;	
-
 	}
 
 	LogisticsScreen::init( file, "Static", "Text", "Rect", "Button", "Edit" );	
@@ -72,7 +68,6 @@ int __cdecl sortStats( const void* pPlayer1, const void* pPlayer2 )
 	MC2Player* player1 = *(MC2Player**)pPlayer1;
 	MC2Player* player2 = *(MC2Player**)pPlayer2;
 
-	
 	if ( player1->rank > player2->rank )
 		return 1;
 	else if ( (player1)->rank < (player2)->rank )
@@ -83,7 +78,6 @@ int __cdecl sortStats( const void* pPlayer1, const void* pPlayer2 )
 
 	//else if ( (player1)->losses > (player2)->losses )
 	//	return 1;
-
 
 	return 0;
 }
@@ -102,10 +96,8 @@ void MPStats::begin()
 	status = RUNNING;
 	beginFadeIn( .5 );
 
-
 	for ( int i = 0; i < MAX_MC_PLAYERS; i++ )
 		entries[i].showGUIWindow( 0 );
-
 
 	statics[15].setColor( 0 );
 
@@ -130,9 +122,6 @@ void MPStats::begin()
 	cLoadString( IDS_MP_LM_MAP_LIST_MAX_PLAYERS, text, 255 );
 	sprintf( text2, text, numPlayers );
 	textObjects[7].setText( text2 );
-
-
-
 }
 
 int MPStats::handleMessage( unsigned long what, unsigned long who )
@@ -142,7 +131,6 @@ int MPStats::handleMessage( unsigned long what, unsigned long who )
 		LogisticsVariantDialog::instance()->beginTranscript();
 
 		bSavingStats = true;
-
 	}
 
 	else if ( who == MB_MSG_NEXT )
@@ -156,7 +144,6 @@ int MPStats::handleMessage( unsigned long what, unsigned long who )
 
 	return 1;
 }
-
 
 void MPStats::render( int xOffset, int yOffset )
 {
@@ -179,8 +166,6 @@ void MPStats::render( int xOffset, int yOffset )
 	{
 		LogisticsOneButtonDialog::instance()->render();
 	}
-
-
 }
 
 void MPStats::update()
@@ -207,14 +192,11 @@ void MPStats::update()
 		bool scoreShown[MAX_MC_PLAYERS]; // keep track of whose shown the score
 		memset( scoreShown, 0, sizeof( bool ) * MAX_MC_PLAYERS );
 
-
 		unsigned long winnerColor = 0xffFFCC00; // gold
 		if ( winnerCount > 1 )
 			winnerColor = 0xffA6A6A6;
 
 		qsort( sorted, playerCount, sizeof( MC2Player*), sortStats );
-
-	
 
 		for ( int i = 0; i < MAX_MC_PLAYERS; i++ )
 		{
@@ -252,7 +234,6 @@ void MPStats::update()
 			if ( LogisticsVariantDialog::instance()->isDone() )
 				bSavingStats = 0;
 		}
-
 	}
 	else if ( bHostLeftDlg )
 	{
@@ -268,7 +249,6 @@ void MPStats::update()
 
 	if ( ChatWindow::instance() )
 		ChatWindow::instance()->update();
-
 }
 
 void MPStats::setHostLeftDlg( const char* hostName )
@@ -297,7 +277,6 @@ void MPStatsEntry::render( int x, int y )
 {
 
 	LogisticsScreen::render( x, y );
-	
 }
 
 MPStatsEntry::~MPStatsEntry()
@@ -315,7 +294,6 @@ void MPStatsEntry::init()
 		sprintf( buffer2, "couldn't open file %s", (char*)path );
 		Assert( 0, 0, buffer2 );
 		return;	
-
 	}
 
 	LogisticsScreen::init( file, "Static", "Text", "Rect", "Button", "Edit" );	
@@ -323,9 +301,6 @@ void MPStatsEntry::init()
 	aObject::init( rects[2].left(), rects[2].top(), rects[5].right() - rects[0].left(), rects[2].height() );
 
 	overlayColor = 0; 
-
-
-
 }
 
 void MPStatsEntry::setData(const MC2Player* data, bool bShowScore )
@@ -383,12 +358,7 @@ void MPStatsEntry::setData(const MC2Player* data, bool bShowScore )
 
 		sprintf( team, "%ld", data->losses );
 		textObjects[4].setText( team );
-
 	}
-
-
-
-
 }
 
 long MPStatsEntry::	getPlayerHeadingX()
@@ -407,7 +377,6 @@ long MPStatsEntry::	getLossesX()
 {
 	return textObjects[2].globalX();
 }
-
 
 //*************************************************************************************************
 MPStatsResultsEntry::MPStatsResultsEntry()
@@ -440,14 +409,11 @@ void MPStatsResultsEntry::init()
 		sprintf( buffer2, "couldn't open file %s", (char*)path );
 		Assert( 0, 0, buffer2 );
 		return;	
-
 	}
 
 	LogisticsScreen::init( file, "Static", "Text", "Rect", "Button", "Edit" );	
 
 	aObject::init( 0, 0, rects[0].width(), rects[0].height() );
-
-
 }
 
 void MPStatsResultsEntry::setData(const MC2Player* data, unsigned long laurelColor, bool bShowScore )
@@ -459,7 +425,6 @@ void MPStatsResultsEntry::setData(const MC2Player* data, unsigned long laurelCol
 		overlayColor = 0x7f000000;
 	else
 		overlayColor = 0;
-
 
 	long color = MPlayer->colors[data->baseColor[BASECOLOR_TEAM]];
 	long textColor = 0xff000000;
@@ -489,7 +454,6 @@ void MPStatsResultsEntry::setData(const MC2Player* data, unsigned long laurelCol
 
 	sprintf( text, "%ld", data->losses );
 	textObjects[2].setText( text );
-
 
 	sprintf( text, "%ld", data->teamSelected + 1);
 	textObjects[5].setText( text );
@@ -525,10 +489,7 @@ void MPStatsResultsEntry::setData(const MC2Player* data, unsigned long laurelCol
 			statics[0].setUVs( 0, 32, 32, 0 );
 		}
 	}
-
-
 }
-
 
 //*************************************************************************************************
 // end of file ( MPStats.cpp )

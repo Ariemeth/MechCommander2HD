@@ -72,17 +72,13 @@ class LogisticsScreen : public aObject
 	virtual void  moveTo( long xPos, long yPos );
 	virtual void  move( long xPos, long yPos );
 
-
 	bool	inside( long x, long y);
 
 	void	beginFadeIn( float fNewTime ){ fadeInTime = fNewTime; fadeOutTime = fadeTime = 0.f; }
 	void	beginFadeOut( float fNewTime ) { fadeInTime = 0.f; fadeOutTime = fNewTime; fadeTime = 0.f; }
 
-
 	void	clear(); // remove everything
 
-
-	
 	aObject*			statics;
 	aRect*				rects;
 	long				rectCount;
@@ -104,7 +100,6 @@ class LogisticsScreen : public aObject
 	float				fadeOutTime;
 	float				fadeTime;
 
-
 	protected:
 
 	long				status;
@@ -115,13 +110,7 @@ class LogisticsScreen : public aObject
 
 	void copyData( const LogisticsScreen& );
 	void destroy();
-
-
-
-
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( LogisticsScreen.h )

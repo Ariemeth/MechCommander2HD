@@ -13,14 +13,8 @@
 //---------------------------------------------------------------------------
 // Include files
 
-#ifndef CSVFILE_H
 #include "csvfile.h"
-#endif
-
-#ifndef HEAP_H
 #include "heap.H"
-#endif
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -248,10 +242,8 @@ long CSVFile::textToLong (char *num)
 		}
 	}
 
-	
 	return(result);
 }
-
 
 //---------------------------------------------------------------------------
 short CSVFile::textToShort (char *num)
@@ -303,7 +295,6 @@ short CSVFile::textToShort (char *num)
 	
 	return(result);
 }
-
 
 //---------------------------------------------------------------------------
 char CSVFile::textToChar (char *num)
@@ -407,7 +398,6 @@ unsigned long CSVFile::textToULong (char *num)
 	return(result);
 }
 
-
 //---------------------------------------------------------------------------
 unsigned short CSVFile::textToUShort (char *num)
 {
@@ -458,7 +448,6 @@ unsigned short CSVFile::textToUShort (char *num)
 	
 	return(result);
 }
-
 
 //---------------------------------------------------------------------------
 unsigned char CSVFile::textToUChar (char *num)
@@ -710,7 +699,6 @@ long CSVFile::seekRowCol (DWORD row, DWORD col)
 			currentChk = strstr(currentChk,",");
 			if ( currentChk ) // if we increment to one, bad things happen
 				currentChk++;
-
 		}
 	}
 	

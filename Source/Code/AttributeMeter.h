@@ -38,7 +38,6 @@ class AttributeMeter
 	void showGUIWindow( bool show ){ bShow = show; }
 	bool pointInside(long mouseX, long mouseY) const;
 
-
 	private:
 
 	GUI_RECT	outsideRect;
@@ -59,7 +58,6 @@ class AttributeMeter
 
 	long helpID;
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( AttributeMeter.h )

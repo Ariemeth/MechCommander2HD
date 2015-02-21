@@ -8,34 +8,13 @@
 
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef TERRTXM_H
 #include "terrtxm.h"
-#endif
-
-#ifndef MATHFUNC_H
 #include "mathfunc.h"
-#endif
-
-#ifndef CIDENT_H
 #include "cident.h"
-#endif
-
-#ifndef PATHS_H
 #include "paths.h"
-#endif
-
-#ifndef INIFILE_H
 #include "inifile.h"
-#endif
-
-#ifndef TGAINFO_H
 #include "tgainfo.h"
-#endif
-
-#ifndef TERRAIN_H
 #include "terrain.h"
-#endif
-
 #include "windows.h"
 
 //---------------------------------------------------------------------------
@@ -371,7 +350,6 @@ long TerrainTextures::init (char *fileName, char *baseName)
 				details[i].baseTXMIndex = detailTextureIndex;
 		}
 	}
-
 
 	return(NO_ERR);
 }
@@ -769,7 +747,6 @@ long TerrainTextures::setOverlay (DWORD overlayInfo)
 				case 16:
 					index = index - 8;
 					break;
-
 				}
 			}
 			
@@ -795,7 +772,6 @@ long TerrainTextures::getOverlayHandle( Overlays id, int Offset )
 	}
 	
 	return(txmHandle);
-
 }
 
 void TerrainTextures::getOverlayInfoFromHandle( long handle, Overlays& id, unsigned long& Offset )
@@ -884,7 +860,6 @@ void TerrainTextures::combineTxm (MemoryPtr dest, DWORD binNumber, long type, lo
 				*dest = value;
 				dest++;
 				combineRAM++;
-
 
 				combValue = combPercent * float(*combineRAM);
 				destValue = destPercent * float(*dest);
@@ -1030,8 +1005,7 @@ void TerrainTextures::combineOverlayTxm (MemoryPtr dest, long type, long mipLeve
 				*dest = value;
 				dest++;
 				combineRAM++;
-	
-	
+
 				combValue = combPercent * float(*combineRAM);
 				destValue = destPercent * float(*dest);
 				combValue += destValue;
@@ -1187,7 +1161,6 @@ long TerrainTextures::createTransition (DWORD typeInfo, DWORD overlayInfo)
 					sprintf(mipPath,"%s%d\\",texturePath,(TERRAIN_TXM_SIZE>>2));
 					mipSize = (TERRAIN_TXM_SIZE>>2);
 					break;
-
 
 				case 3:
 					sprintf(mipPath,"%s%d\\",texturePath,(TERRAIN_TXM_SIZE>>3));

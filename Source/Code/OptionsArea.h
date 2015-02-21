@@ -8,21 +8,14 @@ OptionsArea.h			: Interface for the OptionsArea component.
 \*************************************************************************************************/
 
 //*************************************************************************************************
-#ifndef LOGISTICSSCREEN_H
 #include "LogisticsScreen.h"
-#endif
-
-#ifndef SIMPLECAMERA_H
 #include "SimpleCamera.h"
-#endif
-
 #include "aListBox.h"
 #include "AttributeMeter.h"
 
 class aButton;
 
 class CPrefs;
-
 
 class OptionsXScreen : public LogisticsScreen
 {
@@ -41,7 +34,6 @@ public:
 
 	bool				bDone;
 
-
 private:
 
 	int indexOfButtonWithID(int id);
@@ -49,8 +41,6 @@ private:
 	LogisticsScreen*		tabAreas[4];
 	int						curTab;
 	bool			bShowWarning;
-
-
 };
 
 class ScrollX : public aObject
@@ -80,7 +70,6 @@ private:
 
 	void ResizeAreas();
 
-	 
 	aButton*		buttons[3];
 	float			scrollMax;
 	float			scrollPos;
@@ -88,7 +77,6 @@ private:
 	float			pageInc;
 
 	long			lastX;
-
 };
 
 class OptionsGraphics : public LogisticsScreen
@@ -108,7 +96,6 @@ private:
 	aDropList		resolutionList;
 	aDropList		cardList;
 	bool			bExpanded;
-
 };
 
 class OptionsAudio : public LogisticsScreen
@@ -126,7 +113,6 @@ class OptionsAudio : public LogisticsScreen
 	private:
 
 		ScrollX		scrollBars[5];
-
 };
 
 class OptionsHotKeys : public LogisticsScreen
@@ -145,7 +131,6 @@ private:
 
 	static void makeKeyString( long hotKey, char* buffer );
 	static int makeInputKeyString( long& hotKey, char* buffer );
-
 
 	aListBox		hotKeyList;
 	bool			bShowDlg;
@@ -201,12 +186,7 @@ private:
 	long		command;
 
 	static		HotKeyListItem* s_item;
-	
 };
-
-
-
-
 
 //*************************************************************************************************
 #endif  // end of file ( OptionsArea.h )

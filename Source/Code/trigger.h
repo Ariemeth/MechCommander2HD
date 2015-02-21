@@ -9,13 +9,8 @@
 #ifndef TRIGGER_H
 #define TRIGGER_H
 
-#ifndef TERRAIN_H
 #include "terrain.h"
-#endif
-
-#ifndef DMOVER_H
 #include "dmover.h"
-#endif
 
 //#ifndef DSTD_H
 //#include "dstd.h"
@@ -82,7 +77,6 @@ class TriggerAreaManager {
 
 		void setHit (MoverPtr mover);
 };
-
 
 //---------------------------------------------------------------------------
 #endif

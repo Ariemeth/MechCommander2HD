@@ -6,8 +6,6 @@ extern char AlphaTable[];
 static unsigned int SourceWidth,tWidth,tHeight,DestWidth;			// Used for code optimizing
 static _int64 xmask=-1;
 
-
-
 //
 //
 // Draws a status bar
@@ -164,10 +162,6 @@ lp3:
 	}
 }
 
-
-
-
-
 //
 //
 // Writes a single pixel
@@ -181,8 +175,6 @@ void AG_pixel_write (PANE *pane, LONG x, LONG y, ULONG color)
 	if( X>pane->x0 && X<pane->x1 && Y>pane->y0 && Y<pane->y1 )
 		*(pane->window->buffer + X + Y*(pane->window->x_max+1))=(unsigned char)color;
 }
-
-
 
 //
 //
@@ -328,11 +320,8 @@ mt1:	movq mm1,[edi+ecx]		;Desitination background
 		psrlq mm0,mm5
 		jnz mt1
 
-
 		add edi,ecx
 		lea esi,[eax+ecx]
-
-
 
 mt5a:	add ebp,edx
 		jz mt7
@@ -461,6 +450,4 @@ done:
 	}
 	return 0;
 }
-
-
 

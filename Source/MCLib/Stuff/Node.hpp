@@ -53,5 +53,4 @@ namespace Stuff {
 		virtual void
 			ReleaseLinkHandler(Socket*, Plug*);
 	};
-
 }

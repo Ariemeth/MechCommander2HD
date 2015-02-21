@@ -6,100 +6,31 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
 #include "crtdbg.h"
-
-#ifndef MULTPLYR_H
 #include "multplyr.h"
-#endif
-
-#ifndef TEAM_H
 #include "team.h"
-#endif
-
-#ifndef MOVER_H
 #include "mover.h"
-#endif
-
-#ifndef TURRET_H
 #include "turret.h"
-#endif
-
-#ifndef MISSION_H
 #include "mission.h"
-#endif
-
-#ifndef MECH_H
 #include "mech.h"
-#endif
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef LOGISTICSDATA_H
 #include "LogisticsData.h"
-#endif
-
-#ifndef BLDNG_H
 #include "bldng.h"
-#endif
-
-#ifndef TERROBJ_H
 #include "terrobj.h"
-#endif
-
-#ifndef MOVE_H
 #include "move.h"
-#endif
-
-#ifndef GROUP_H
 #include "group.h"
-#endif
-
-#ifndef COMNDR_H
 #include "comndr.h"
-#endif
-
-#ifndef CARNAGE_H
 #include "carnage.h"
-#endif
-
-#ifndef ARTLRY_H
 #include "artlry.h"
-#endif
-
-#ifndef CONTROLGUI_H
 #include "controlGui.h"
-#endif
-
-#ifndef LOGISTICS_H
 #include "logistics.h"
-#endif
-
 #include "MissionBegin.h"
-
-#ifndef PREFS_H
 #include "Prefs.h"
-#endif
-
-#ifndef MISSIONGUI_H
 #include "missiongui.h"
-#endif
-
-#ifndef GAMELOG_H
 #include "gamelog.h"
-#endif
-
 #include "dplay8.h"
-
 #include "MPParameterScreen.h"
 
 //#ifndef VERSION_H
@@ -119,9 +50,7 @@ extern bool whackTimer;
 void CancelBool(long value);
 #endif
 
-#ifndef MPPREFS_H
 #include "mpprefs.h"
-#endif
 
 #ifdef USE_STRING_RESOURCES
 extern HINSTANCE thisInstance;
@@ -207,13 +136,11 @@ bool StartupNetworking (void) {
 //-----------------------------------------------------------------------------
 
 void ResetNetworking (void) {
-
 }
 
 //-----------------------------------------------------------------------------
 
 void ShutdownNetworking (void) {
-
 }
 
 //***************************************************************************
@@ -240,14 +167,12 @@ void WorldChunk::buildMine (long worldCellR,
 							long teamId,
 							long mineState,
 							long explosionType) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void WorldChunk::buildTerrainFire (GameObjectPtr object,
 								   long seconds) {
-
 }
 
 //---------------------------------------------------------------------------
@@ -256,14 +181,12 @@ void WorldChunk::buildArtillery (long commanderId,
 								 long artilleryType,
 								 Stuff::Vector3D location,
 								 long seconds) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void WorldChunk::buildMissionScriptMessage (long messageCode,
 											long messageParam) {
-
 }
 
 //---------------------------------------------------------------------------
@@ -271,43 +194,36 @@ void WorldChunk::buildMissionScriptMessage (long messageCode,
 void WorldChunk::buildPilotKillStat (
 									 long moverIndex,
 									 long vehicleClass) {
-
 }
 
 //--------------------------------------------------------------------------
 
 void WorldChunk::buildScore (long commanderID, long score) {
-
 }
 
 //--------------------------------------------------------------------------
 
 void WorldChunk::buildKillLoss (long killerCID, long loserCID) {
-
 }
 
 //--------------------------------------------------------------------------
 
 void WorldChunk::buildCaptureBuilding (BuildingPtr building, long newCommanderID) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void WorldChunk::buildEndMission (void) {
-
 }
 
 //--------------------------------------------------------------------------
 
 void WorldChunk::pack (void) {
-
 }
 
 //---------------------------------------------------------------------------
 		
 void WorldChunk::unpack (void) {
-
 }
 
 //---------------------------------------------------------------------------
@@ -341,7 +257,6 @@ void MultiPlayer::operator delete (void* us) {
 //---------------------------------------------------------------------------
 
 void MultiPlayer::init (void) {
-
 }
 
 //---------------------------------------------------------------------------
@@ -354,7 +269,6 @@ long MultiPlayer:: setup (void) {
 //---------------------------------------------------------------------------
 
 void MultiPlayer::initUpdateFrequencies() {
-
 }
 
 //---------------------------------------------------------------------------
@@ -395,30 +309,25 @@ bool MultiPlayer::hostSession (char* sessionName, char* playerName, long mxPlaye
 //---------------------------------------------------------------------------
 
 void MultiPlayer::updateSessionData (MC2SessionData* sessionData) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::setLocked (bool set) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::setInProgress (bool set) {
-
 }
 //---------------------------------------------------------------------------
 
 void MultiPlayer::setCancelled (bool set) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::addTeamScore (long teamID, long score) {
-
 }
 
 //---------------------------------------------------------------------------
@@ -438,7 +347,6 @@ long MultiPlayer::closeSession (void) {
 //-----------------------------------------------------------------------------
 
 void MultiPlayer::leaveSession (void) {
-
 }
 
 //-----------------------------------------------------------------------------
@@ -501,13 +409,11 @@ bool MultiPlayer::launchBrowser (const char* link) {
 //-----------------------------------------------------------------------------
 
 void MultiPlayer::initParametersScreen (void) {
-
 }
 
 //-----------------------------------------------------------------------------
 
 void MultiPlayer::setDefaultPlayerInfo (void) {
-
 }
 
 //-----------------------------------------------------------------------------
@@ -529,19 +435,16 @@ long MultiPlayer::setNextFreeColor (long commanderID) {
 //-----------------------------------------------------------------------------
 
 void MultiPlayer::setPlayerBaseColor (long commanderID, long colorIndex) {
-
 }
 
 //-----------------------------------------------------------------------------
 
 void MultiPlayer::setPlayerTeam (long commanderID, long teamID) {
-
 }
 
 //-----------------------------------------------------------------------------
 
 void MultiPlayer::setColor (long colorIndex, long commanderID) {
-
 }
 
 //-----------------------------------------------------------------------------
@@ -556,7 +459,6 @@ const MC2Player* MultiPlayer::getPlayers (long& playerCount) {
 //-----------------------------------------------------------------------------
 
 void MultiPlayer::logMessage (NETMESSAGE* message, bool sent) {
-
 }
 
 //-----------------------------------------------------------------------------
@@ -566,7 +468,6 @@ void MultiPlayer::sendMessage (NETPLAYER player,
 							   int dataSize,
 							   bool guaranteed,
 							   bool toSelf) {
-
 }
 
 //-----------------------------------------------------------------------------
@@ -586,13 +487,11 @@ long MultiPlayer::joinGame (char* ipAddress, char* sessionName, char* playerName
 //-----------------------------------------------------------------------------
 
 void MultiPlayer::addToLocalMovers (MoverPtr mover) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::removeFromLocalMovers (MoverPtr mover) {
-
 }
 
 //---------------------------------------------------------------------------
@@ -611,31 +510,26 @@ void MultiPlayer::addToMoverRoster (MoverPtr mover) {
 //---------------------------------------------------------------------------
 
 void MultiPlayer::removeFromMoverRoster (MoverPtr mover) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::addToPlayerMoverRoster (long playerCommanderID, MoverPtr mover) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::removeFromPlayerMoverRoster (MoverPtr mover) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::addToTurretRoster (TurretPtr turret) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::initSpecialBuildings (char commandersToLoad[8][3]) {
-
 }
 
 //***************************************************************************
@@ -736,7 +630,6 @@ long MultiPlayer::addWeaponHitChunk (GameObjectPtr target, WeaponShotInfoPtr sho
 //---------------------------------------------------------------------------
 
 void MultiPlayer::grabWeaponHitChunks (unsigned long* packedChunkBuffer, long numChunks) {
-
 }
 
 //---------------------------------------------------------------------------
@@ -744,97 +637,81 @@ void MultiPlayer::grabWeaponHitChunks (unsigned long* packedChunkBuffer, long nu
 //---------------------------------------------------------------------------
 
 void MultiPlayer::sendPlayerInfo (NETPLAYER receiver) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::sendPlayerCID (NETPLAYER receiver, unsigned char subType, char CID) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::sendPlayerUpdate (NETPLAYER receiver, long stage, long newCommanderID) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::sendMissionSettingsUpdate (NETPLAYER receiver) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::sendChat (NETPLAYER receiver, char team, char* chatMessage) {
-
 }
 
 void MultiPlayer::sendPlayerActionChat(NETPLAYER receiver, const char* playerName, unsigned long resID )
 {
 }
 
-
 //---------------------------------------------------------------------------
 
 void MultiPlayer::sendPlayerCheckIn (void) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::sendPlayerSetup (void) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::sendPlayerInsignia (char* insigniaFileName, unsigned char* insigniaData, long dataSize) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::sendMissionSetup (NETPLAYER receiver, long subType, CompressedMech* mechData) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::setServer (NETPLAYER player, char playerIPAddress[16]) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::sendStartMission (void) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::sendEndMission (long result) {
-
 }
 
 //---------------------------------------------------------------------------
 extern MoverPtr BringInReinforcement (long vehicleID, long rosterIndex, long commanderID, Stuff::Vector3D pos, bool exists);
 
 void MultiPlayer::sendReinforcement (long vehicleID, long rosterIndex, char pilotName[16], long commanderID, Stuff::Vector3D pos, unsigned char stage) {
-
 }
 
 //-----------------------------------------------------------------------------
 
 void MultiPlayer::sendNewServer (void) {
-
 }
 
 //-----------------------------------------------------------------------------
 
 void MultiPlayer::sendLeaveSession (char subType, char commanderID) {
-
 }
 
 //-----------------------------------------------------------------------------
@@ -846,13 +723,11 @@ void MultiPlayer::sendPlayerOrder (TacticalOrderPtr tacOrder,
 								   long numGroups,
 								   MoverGroupPtr* groupList,
    								   bool queuedOrder) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::sendHoldPosition (void) {
-
 }
 
 //---------------------------------------------------------------------------
@@ -861,56 +736,46 @@ void MultiPlayer::sendPlayerMoverGroup (long groupId,
 										long numMovers,
 										MoverPtr* moverList,
 										long point) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::sendPlayerArtillery (long strikeType, Stuff::Vector3D location, long seconds) {
-
 }
-
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::sendMoverUpdate (void) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::sendTurretUpdate (void) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::sendMoverWeaponFireUpdate (void) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::sendTurretWeaponFireUpdate (void) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::sendMoverCriticalUpdate (void) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::sendWeaponHitUpdate (void) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::sendWorldUpdate (void) {
-
 }
 
 //---------------------------------------------------------------------------
@@ -918,139 +783,116 @@ void MultiPlayer::sendWorldUpdate (void) {
 //---------------------------------------------------------------------------
 
 void MultiPlayer::handleChat (NETPLAYER sender, MCMSG_Chat* msg) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::handleMissionSettingsUpdate (NETPLAYER sender, MCMSG_MissionSettingsUpdate* msg) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::handlePlayerCID (NETPLAYER sender, MCMSG_PlayerCID* msg) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::handlePlayerUpdate (NETPLAYER sender, MCMSG_PlayerUpdate* msg) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::handleMissionSetup (NETPLAYER sender, MCMSG_MissionSetup* msg) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::handlePlayerInfo (NETPLAYER sender, MCMSG_PlayerInfo* msg) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::handlePlayerCheckIn (NETPLAYER sender, MCMSG_PlayerCheckIn* msg) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::handlePlayerSetup (NETPLAYER sender, MCMSG_PlayerSetup* msg) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::handlePlayerInsignia (NETPLAYER sender, MCMSG_PlayerInsignia* msg) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::handleStartMission (NETPLAYER sender) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::handleEndMission (NETPLAYER sender, MCMSG_EndMission* msg) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::handleReinforcement (NETPLAYER sender, MCMSG_Reinforcement* msg) {
-
 }
 
 //-----------------------------------------------------------------------------
 
 void MultiPlayer::handleNewServer (NETPLAYER sender, MCMSG_NewServer* msg) {
-
 }
 
 //-----------------------------------------------------------------------------
 
 void MultiPlayer::handleLeaveSession (NETPLAYER sender, MCMSG_LeaveSession* msg) {
-
 }
 
 //-----------------------------------------------------------------------------
 
 void MultiPlayer::handleHoldPosition (NETPLAYER sender, MCMSG_HoldPosition* msg) {
-
 }
 
 //-----------------------------------------------------------------------------
 
 void MultiPlayer::handlePlayerOrder (NETPLAYER sender, MCMSG_PlayerOrder* msg) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::handlePlayerMoverGroup (NETPLAYER sender, MCMSG_PlayerMoverGroup* msg) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::handlePlayerArtillery (NETPLAYER sender, MCMSG_PlayerArtillery* msg) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::handleMoverUpdate (NETPLAYER sender, MCMSG_MoverUpdate* msg) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::handleTurretUpdate (NETPLAYER sender, MCMSG_TurretUpdate* msg) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::handleMoverWeaponFireUpdate (NETPLAYER sender, MCMSG_MoverWeaponFireUpdate* msg) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::handleTurretWeaponFireUpdate (NETPLAYER sender, MCMSG_TurretWeaponFireUpdate* msg) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::handleMoverCriticalUpdate (NETPLAYER sender, MCMSG_MoverCriticalUpdate* msg) {
-
 }
 
 //---------------------------------------------------------------------------
@@ -1058,25 +900,21 @@ void MultiPlayer::handleMoverCriticalUpdate (NETPLAYER sender, MCMSG_MoverCritic
 extern bool FromMP;
 
 void MultiPlayer::handleWeaponHitUpdate (NETPLAYER sender, MCMSG_WeaponHitUpdate* msg) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::handleWorldUpdate (NETPLAYER sender, MCMSG_WorldUpdate* msg) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::handlePlayerLeftSession (NETPLAYER leftPlayer) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::handleTerminateSession (void) {
-
 }
 
 //---------------------------------------------------------------------------
@@ -1096,7 +934,6 @@ bool MultiPlayer::processGameMessage (NETMESSAGE* msg) {
 //---------------------------------------------------------------------------
 
 void MultiPlayer::processMessages (void) {
-
 }
 
 //-----------------------------------------------------------------------------
@@ -1104,7 +941,6 @@ void MultiPlayer::processMessages (void) {
 //-----------------------------------------------------------------------------
 
 void MultiPlayer::buildMoverRosterRLE (void) {
-
 }
 
 //---------------------------------------------------------------------------
@@ -1131,7 +967,6 @@ int __cdecl sortPlayerRanks (const void* player1, const void* player2) {
 //-----------------------------------------------------------------------------
 
 void MultiPlayer::calcPlayerRanks (void) {
-
 }
 
 //-----------------------------------------------------------------------------
@@ -1151,22 +986,17 @@ bool MultiPlayer::allPlayersReady (void) {
 //---------------------------------------------------------------------------
 
 void MultiPlayer::switchServers (void) {
-
 }
-
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::calcDropZones (char dropZonesCID[MAX_MC_PLAYERS], char hqs[MAX_TEAMS]) {
-
 }
 
 //---------------------------------------------------------------------------
 
 void MultiPlayer::initStartupParameters (bool fresh) {
-
 }
-
 
 //---------------------------------------------------------------------------
 extern char* GetTime();
@@ -1181,7 +1011,6 @@ long MultiPlayer::saveTranscript (const char* fileName, bool debugging) {
 //---------------------------------------------------------------------------
 
 void MultiPlayer::destroy (void) {
-
 }
 
 //---------------------------------------------------------------------------
@@ -1193,6 +1022,5 @@ void MultiPlayer::getChatMessages( char** buffer, long* playerIDs, long& count )
 void MultiPlayer::redistributeRP( )
 {
 }
-
 
 //***************************************************************************

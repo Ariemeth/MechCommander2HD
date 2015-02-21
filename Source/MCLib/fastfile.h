@@ -5,13 +5,8 @@
 // Global Fast File Header. 
 //
 
-#ifndef DSTD_H
 #include "dstd.h"
-#endif
-
-#ifndef FFILE_H
 #include "ffile.h"
-#endif
 
 //-----------------------------------------------------------------------------------
 // MechCommander's File classes understand how to deal with the FastFile, once open.
@@ -23,5 +18,4 @@ extern void FastFileFini (void);
 extern FastFile *FastFileFind (char *fname, long &fastFileHandle);
 extern DWORD elfHash (char *name);
 //-----------------------------------------------------------------------------------
-
 

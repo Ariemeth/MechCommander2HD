@@ -136,7 +136,6 @@ MLRLightMap::~MLRLightMap()
 {
 	Check_Object(this);
 	Check_Object(stream);
-
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -257,7 +256,6 @@ void
 					}
 					gos_vertices = vertexPool->GetActualVertexPool();
 					numGOSVertices = 0;
-
 				}
 				currentState = lightmapState;
 			}
@@ -529,7 +527,6 @@ void
 							Set_Statistic(PolysClippedButGOnePlane, PolysClippedButGOnePlane+1);
 			#endif
 
-
 							ClipData2 srcPolygon, dstPolygon;
 							int dstBuffer = 1;
 
@@ -747,7 +744,6 @@ void
 										dstPolygon.texCoords = clipBuffer[dstBuffer].texCoords.GetData();
 										dstPolygon.clipPerVertex = clipBuffer[dstBuffer].clipPerVertex.GetData();
 										dstPolygon.length = 0;
-
 									}
 
 									mask = mask << 1;
@@ -802,7 +798,6 @@ void
 
 							numGOSVertices+=3;
 						}
-
 					}
 				}
 			}
@@ -1086,7 +1081,6 @@ void
 							Set_Statistic(PolysClippedButGOnePlane, PolysClippedButGOnePlane+1);
 			#endif
 
-
 							ClipData2 srcPolygon, dstPolygon;
 							int dstBuffer = 1;
 
@@ -1322,7 +1316,6 @@ void
 										dstPolygon.colors = clipBuffer[dstBuffer].colors.GetData();
 										dstPolygon.clipPerVertex = clipBuffer[dstBuffer].clipPerVertex.GetData();
 										dstPolygon.length = 0;
-
 									}
 
 									mask = mask << 1;
@@ -1376,7 +1369,6 @@ void
 
 							numGOSVertices+=3;
 						}
-
 					}
 				}
 			}
@@ -1408,7 +1400,6 @@ void
 			sorter->AddSortRawData(sd);
 		}
 	}
-
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1549,7 +1540,6 @@ MLRShape*
 
 				texCoords = (Vector2DScalar *)stream->GetPointer();
 				stream->AdvancePointer(stride*sizeof(Vector2DScalar));
-
 
 				for(i=0;i<stride;i++,numGOSVertices++)
 				{

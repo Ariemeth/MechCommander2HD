@@ -133,5 +133,4 @@ namespace MidLevelRenderer {
 
 		MLRTexturePool *thePool;
 	};
-
 }

@@ -104,7 +104,6 @@ namespace Stuff {
 		void
 			Save();
 
-
 		//
 		// GetNumberOfRecords - Returns the number of records in the database
 		//
@@ -134,5 +133,4 @@ namespace Stuff {
 		MString
 			m_fileName;
 	};
-
 }

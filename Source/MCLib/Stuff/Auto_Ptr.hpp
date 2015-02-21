@@ -8,7 +8,6 @@
 
 #include "Stuff.hpp"
 
-
 namespace Stuff
 {
 
@@ -23,7 +22,6 @@ namespace Stuff
 // stores the ownership bits in the unused bits of the pointer data member.
 // It also allows you to specify whether or not to use array deletion;
 // this also is stored in the extra bits of the pointer.
-
 
 	template <class T>
 	class Auto_Ptr
@@ -238,8 +236,6 @@ namespace Stuff
 	{
 		return (a.GetPointer() == b);
 	}
-
 }; // namespace Stuff
-
 
 #endif // Auto_Ptr_HPP

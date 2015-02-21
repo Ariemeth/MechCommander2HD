@@ -364,7 +364,6 @@ bool
 		STOP(("Bad switch"));
 	}
 
-
 	//
 	//-----------------------------------------------------------------------
 	// The dividing plane will coincide with the mean point and have a normal

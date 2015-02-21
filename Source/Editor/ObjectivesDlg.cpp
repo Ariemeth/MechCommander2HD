@@ -8,7 +8,6 @@
 #include "stdafx.h"
 #include "resource.h"
 #include "ObjectivesDlg.h"
-
 #include "assert.h"
 #include "EditorInterface.h"
 
@@ -20,10 +19,8 @@ static char THIS_FILE[] = __FILE__;
 #endif
 #endif /*gos doesn't like this */
 
-
 /////////////////////////////////////////////////////////////////////////////
 // ObjectivesDlg dialog
-
 
 ObjectivesDlg::ObjectivesDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(ObjectivesDlg::IDD, pParent)
@@ -35,7 +32,6 @@ ObjectivesDlg::ObjectivesDlg(CWnd* pParent /*=NULL*/)
 	nSelectionIndex = -1;
 }
 
-
 void ObjectivesDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -46,7 +42,6 @@ void ObjectivesDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_OBJECTIVES_TEAM_EDIT, m_TeamEdit);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(ObjectivesDlg, CDialog)
 	//{{AFX_MSG_MAP(ObjectivesDlg)

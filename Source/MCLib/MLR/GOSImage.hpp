@@ -13,9 +13,7 @@
 	#include <GameOS.hpp>
 #endif
 
-#ifndef TXMMGR_H
 #include "txmmgr.h"
-#endif
 
 namespace MidLevelRenderer {
 
@@ -108,5 +106,4 @@ namespace MidLevelRenderer {
 		DWORD mcTextureNodeIndex;
 		TEXTUREPTR ptr;
 	};
-
 }

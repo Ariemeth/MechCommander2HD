@@ -19,7 +19,6 @@ DragTool::~DragTool()
 {
 }
 
-
 bool DragTool::beginPaint()
 {
 	lastX = lastY = -1;
@@ -46,7 +45,6 @@ bool DragTool::paint( Stuff::Vector3D& worldPos, int screenX, int screenY  )
 
 	return true;
 }
-
 
 //*************************************************************************************************
 // end of file ( DragTool.cpp )

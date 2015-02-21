@@ -12,10 +12,7 @@
 #define VERTEX_H
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef DVERTEX_H
 #include "dvertex.h"
-#endif
-
 #include <stuff\stuff.hpp>
 
 //---------------------------------------------------------------------------
@@ -121,7 +118,6 @@ class Vertex
 
 			lightRGB = fogRGB = 0xffffffff;
 			calcThisFrame = false;
-			
 		}
 
 		Vertex (void)

@@ -29,7 +29,6 @@ class MapSizeDlg: public CDialog
 		int mapSize;
 };
 
-
 //*************************************************************************************************
 #endif  // end of file ( TerrainDlg.h )
 

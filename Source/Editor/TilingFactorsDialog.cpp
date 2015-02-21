@@ -18,7 +18,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // TilingFactorsDialog dialog
 
-
 TilingFactorsDialog::TilingFactorsDialog(CWnd* pParent /*=NULL*/)
 	: CDialog(TilingFactorsDialog::IDD, pParent)
 {
@@ -29,7 +28,6 @@ TilingFactorsDialog::TilingFactorsDialog(CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
 }
 
-
 void TilingFactorsDialog::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -39,7 +37,6 @@ void TilingFactorsDialog::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_TILING_FACTORS_WATER_EDIT, m_WaterTilingFactor);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(TilingFactorsDialog, CDialog)
 	//{{AFX_MSG_MAP(TilingFactorsDialog)

@@ -206,5 +206,4 @@ namespace Stuff {
 		Socket
 	      	*socket;
 	};
-
 }

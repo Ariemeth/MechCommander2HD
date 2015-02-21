@@ -15,17 +15,9 @@
 //---------------------------------------------------------------------------
 // Include files
 
-#ifndef DSTD_H
 #include "dstd.h"
-#endif
-
-#ifndef DFILE_H
 #include "dfile.h"
-#endif
-
-#ifndef DGAMELOG_H
 #include "dgamelog.h"
-#endif
 
 //---------------------------------------------------------------------------
 
@@ -89,7 +81,6 @@ class GameLog {
 
 		static GameLogPtr getNewFile (void);
 };
-
 
 //---------------------------------------------------------------------------
 #endif

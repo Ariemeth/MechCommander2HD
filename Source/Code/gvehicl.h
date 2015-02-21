@@ -11,46 +11,19 @@
 #ifndef GVEHICL_H
 #define GVEHICL_H
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef MOVER_H
 #include "mover.h"
-#endif
-
-#ifndef DGVEHICL_H
 #include "dgvehicl.h"
-#endif
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef OBJTYPE_H
 #include "objtype.h"
-#endif
-
-#ifndef DOBJNUM_H
 #include "dobjnum.h"
-#endif
-
-#ifndef CMPONENT_H
 #include "cmponent.h"
-#endif
-
-#ifndef WARRIOR_H
 #include "warrior.h"
-#endif
-
-#ifndef MECHCLASS_H
 #include "mechclass.h"
-#endif
 
 #ifdef USE_ELEMENTALS
-#ifndef DELEMNTL_H
 #include <delemntl.h>
-#endif
+
 #endif
 
 extern float metersPerWorldUnit;
@@ -220,7 +193,6 @@ typedef struct _GroundVehicleData : public MoverData
 
 	bool				sensorOK;
 	bool				isVehiclePilot;
-
 } GroundVehicleData;
 
 class GroundVehicle : public Mover {
@@ -394,7 +366,6 @@ class GroundVehicle : public Mover {
 			{
 				if (armor[curLocation].curArmor > maxArmorLocation)
 					maxArmorLocation = armor[curLocation].curArmor;
-
 			}
 
 			return maxArmorLocation + 1;	//Always assume you need one point more than the best armor to be sure.

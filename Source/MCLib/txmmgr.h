@@ -20,14 +20,8 @@
 #ifndef TXMMGR_H
 #define TXMMGR_H
 
-#ifndef DSTD_H
 #include "dstd.h"
-#endif
-
-#ifndef HEAP_H
 #include "heap.h"
-#endif
-
 #include <string.h>
 #include <gameos.hpp>
 //----------------------------------------------------------------------
@@ -86,7 +80,6 @@ typedef struct _MC_VertexArrayNode
 	}
 
 	void destroy (void);							//Frees all blocks, free GOS_TextureHandle, blank all data.
-
 } MC_VertexArrayNode;
 
 //----------------------------------------------------------------------
@@ -150,7 +143,6 @@ typedef struct _MC_TextureNode
 	void markBlock (DWORD blockNum);
 	
 	DWORD get_gosTextureHandle (void);				//If texture is not in VidRAM, cache a texture out and cache this one in.
-
 } MC_TextureNode;
 
 //---------------------------------------------------------------------------
@@ -695,7 +687,6 @@ class MC_TextureManager
 			
 			return true;
 		}
-		
 };
 
 //----------------------------------------------------------------------

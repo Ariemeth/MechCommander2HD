@@ -26,10 +26,8 @@ class TerrainDlg: public CDialog
 		virtual BOOL OnInitDialog(){ Init(); return true; }
 		void OnOK();
 
-
 		int terrain;
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( TerrainDlg.h )

@@ -10,53 +10,17 @@
 
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef TERRAIN_H
 #include "terrain.h"
-#endif
-
-#ifndef VERTEX_H
 #include "vertex.h"
-#endif
-
-#ifndef CAMERA_H
 #include "camera.h"
-#endif
-
-#ifndef TERRTXM_H
 #include "terrtxm.h"
-#endif
-
-#ifndef DBASEGUI_H
 #include "dbasegui.h"
-#endif
-
-#ifndef CIDENT_H
 #include "cident.h"
-#endif
-
-#ifndef PATHS_H
 #include "paths.h"
-#endif
-
-#ifndef USERINPUT_H
 #include "userinput.h"
-#endif
-
-#ifndef TIMING_H
 #include "timing.h"
-#endif
-
-#ifndef PACKET_H
 #include "Packet.h"
-#endif
-
-#ifndef INIFILE_H
-#include "FitIniFile.h"
-#endif
-
-#ifndef TGAINFO_H
 #include "tgainfo.h"
-#endif
 
 //---------------------------------------------------------------------------
 // Static Globals
@@ -392,7 +356,6 @@ long Terrain::init( unsigned long verticesPerMapSide, PacketFile* pakFile, unsig
 
 	percent += percentRange/5.f;
 
-
 	if ( !pakFile && !realVerticesMapSide )
 		return NO_ERR;
 
@@ -426,12 +389,10 @@ long Terrain::init( unsigned long verticesPerMapSide, PacketFile* pakFile, unsig
 
 	percent += percentRange/5.f;
 
-
 	mapTopLeft3d.x = -worldUnitsMapSide / 2.0f;
 	mapTopLeft3d.y = worldUnitsMapSide / 2.0f;
 
 	percent += percentRange/5.f;
-
 
 	//----------------------------------------------------------------------
 	// Setup number of blocks
@@ -472,7 +433,6 @@ long Terrain::init( unsigned long verticesPerMapSide, PacketFile* pakFile, unsig
 
 	percent += percentRange/5.f;
 
-	
 	//----------------------------------------------------------------------
 	// Create the VertexList
 	numberVertices = 0;
@@ -525,8 +485,6 @@ void Terrain::resetVisibleVertices (long maxVisibleVertices)
 	quadList = (TerrainQuadPtr)terrainHeap->Malloc(sizeof(TerrainQuad) * visibleVerticesPerSide * visibleVerticesPerSide);
 	gosASSERT(quadList != NULL);
 	memset(quadList,0,sizeof(TerrainQuad) * visibleVerticesPerSide * visibleVerticesPerSide);
-
-	
 }
 
 //---------------------------------------------------------------------------
@@ -1261,7 +1219,6 @@ long Terrain::save( PacketFile* fileName, int whichPacket, bool quickSave )
 	return mapData->save( fileName, whichPacket ); 
 }
 
-
 //-----------------------------------------------------
 bool Terrain::save( FitIniFile* fitFile )
 {
@@ -1271,7 +1228,6 @@ bool Terrain::save( FitIniFile* fitFile )
 #endif
 	fitFile->writeBlock( "Water" );
 	gosASSERT( result > 0 );
-
 
 	fitFile->writeIdFloat( "Elevation", mapData->waterDepth );
 	fitFile->writeIdFloat( "Frequency", waterFreq );
@@ -1329,7 +1285,6 @@ bool Terrain::load( FitIniFile* fitFile )
 	fitFile->readIdUChar( "Threshold", fractalThreshold);
 
 	return true;
-
 }
 
 //---------------------------------------------------------------------------

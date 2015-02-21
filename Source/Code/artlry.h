@@ -13,22 +13,10 @@
 
 //---------------------------------------------------------------------------
 
-#ifndef DARTLRY_H
 #include "dartlry.h"
-#endif
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef OBJTYPE_H
 #include "objtype.h"
-#endif
-
-#ifndef CONTACT_H
 #include "contact.h"
-#endif
-
 #include <gosFX\gosfxheaders.hpp>
 //***************************************************************************
 
@@ -186,7 +174,6 @@ typedef struct _ArtilleryData : public GameObjectData
 	bool				bombRunStarted;
 	bool				inView;
 	Stuff::Vector3D		iFacePosition;
-
 } ArtilleryData;
 
 class Artillery : public GameObject 
@@ -212,8 +199,7 @@ class Artillery : public GameObject
 		bool				inView;
 
 		Stuff::Vector3D		iFacePosition;
-		
-		
+
 	//Member Functions
 	//-----------------
 		public:
@@ -341,6 +327,4 @@ extern void IfaceCallStrike (long strikeID,
 
 //---------------------------------------------------------------------------
 #endif
-
-
 

@@ -14,25 +14,11 @@
 //--------------
 // Include Files
 
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef DGROUP_H
 #include "dgroup.h"
-#endif
-
-#ifndef DWARRIOR_H
 #include "dwarrior.h"
-#endif
-
-#ifndef DMOVER_H
 #include "dmover.h"
-#endif
-
-#ifndef DTACORDR_H
 #include "dtacordr.h"
-#endif
 
 //***************************************************************************
 
@@ -337,7 +323,6 @@ class TacticalOrder {
 		}
 
 		void debugString (MechWarriorPtr pilot, char* s);
-
 };
 
 //***************************************************************************

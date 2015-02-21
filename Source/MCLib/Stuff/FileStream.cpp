@@ -423,7 +423,6 @@ bool
 
 	Check_Pointer(directory_path);
 
-
 	const char *start_position = directory_path;
 	const char *current_position = directory_path;
 
@@ -474,7 +473,6 @@ bool
 
 			strncpy(new_string, start_position, length);
 			new_string[length] = NULL;
-
 		}
 
 		Verify(new_string != NULL);

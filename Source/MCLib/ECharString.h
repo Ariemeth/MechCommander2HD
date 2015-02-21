@@ -31,8 +31,6 @@
 
 //***************************************************************
 
-
-
 #ifdef UNICODE
 #define ECSChar unsigned short
 #else
@@ -139,7 +137,6 @@ public:
 
 	int ReverseFind ( ECSChar, int End_Index = ECharString::INVALID_INDEX) const;
 
-	
 	// we are going to treat this object as a TCHAR array, so we 
 	// don't have to worry about #of chars versus #of bytes
 	ECharString SubString( int Start_Index, int End_Index ) const;
@@ -198,11 +195,9 @@ public:
 
 	int Find( char, int Start_Index = ECharString::INVALID_INDEX) const;
 
-
 #endif // Unicode 
 
 private:
-
 
 	// helper functions
 
@@ -215,7 +210,6 @@ private:
 
 	// sets the buffer, reallocs if necessary
 	void	Assign( const ECSChar* p_Str );
-
 
 	static  inline  unsigned short*	ToUnicode( unsigned short* Buffer, const unsigned char* p_Str, int Num_Chars  );
 	static	inline	int	StrSize( const ECSChar* p_Str );
@@ -237,14 +231,11 @@ private:
 	static const int s_Alloc_Allign;
 	static const int s_Force_Ansi;
 	static const int s_Force_Unicode;
-
 };
 
 //***************************************************************
 
 // inlines
-
-
 
 /////////////////////////////////////////////////////////////////
 inline void	ECharString::ChecEBuffer()
@@ -275,7 +266,6 @@ inline void	ECharString::Empty()
 	m_pBuffer->Release();
 	m_pBuffer =  EBuffer::s_p_Empty_Buffer;
 }
-
 
 /////////////////////////////////////////////////////////////////
 inline void ECharString::Insert( int Start_Index, const ECharString& String )
@@ -436,7 +426,6 @@ inline const ECSChar& ECharString::operator[](int Index) const
 inline bool ECharString::operator<( const ECharString& Greater_String ) const
 {
 	return ( 0 > Compare( Greater_String, true));
-	
 }
 
 /////////////////////////////////////////////////////////////////
@@ -463,7 +452,6 @@ inline bool operator<=( const ECSChar* p_Lesser_String,
 						const ECharString& Greater_String )
 {
 	return ( 0 < Greater_String.Compare( p_Lesser_String, true ) ); 
-					 
 }
 
 /////////////////////////////////////////////////////////////////
@@ -471,7 +459,6 @@ inline bool ECharString::operator<=( const ECSChar* p_Greater_String ) const
 {
 	return ( 1 > Compare( p_Greater_String, true ) ); 
 }
-
 
 /////////////////////////////////////////////////////////////////
 inline bool ECharString::operator>( const ECharString& Lesser_String ) const
@@ -511,8 +498,6 @@ inline bool ECharString::operator>=( const ECSChar* p_Lesser_String ) const
 	return ( -1 < Compare( p_Lesser_String, true ) );
 }
 
-
-
 //***************************************************************
 
 /* restore UNICODE, K_UNICODE and MBCS to their previous state */
@@ -535,7 +520,6 @@ inline bool ECharString::operator>=( const ECSChar* p_Lesser_String ) const
 #endif /* def _MBCS_WAS_PREVIOUSLY_DEFINED___ECHARSTRING_H */
 
 //***************************************************************
-
 
 #endif //ECharString_H_
 

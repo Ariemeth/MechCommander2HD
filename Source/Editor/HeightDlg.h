@@ -33,14 +33,11 @@ class HeightDlg: public CDialog
 		void SetMax( int newMax ){ max = newMax; }
 		virtual BOOL OnInitDialog(){ Init(); return TRUE; }
 
-
 	private:
 
 		int min;
 		int max;
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( HeightDlg.h )

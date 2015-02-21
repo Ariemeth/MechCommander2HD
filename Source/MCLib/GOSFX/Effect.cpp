@@ -186,7 +186,6 @@ void
 	m_maximumChildSeed.SetCurve(1.0f);
 }
 
-
 //------------------------------------------------------------------------------
 //
 
@@ -201,7 +200,6 @@ if(minv<0.0f)
 	{
 		m_lifeSpan.SetCurve(1.0f);
 	PAUSE(("Warning: Curve \"lifespan\" in Effect \"%s\" Is Out of Range and has been Reset",(char *)m_name));
-
 	}
 	else
 		return false;
@@ -383,7 +381,6 @@ gosFX::Effect::Effect(
 	m_lastRan = -1.0f;
 	m_localToParent = Stuff::LinearMatrix4D::Identity;
 }
-
 
 //------------------------------------------------------------------------------
 //

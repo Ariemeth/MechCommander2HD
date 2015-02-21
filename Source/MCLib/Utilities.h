@@ -9,9 +9,7 @@
 #include <gameos.hpp>
 #include <string.h>
 
-
 class FitIniFile;
-
 
 class StaticInfo
 {
@@ -45,8 +43,6 @@ public:
 	unsigned long textureWidth; // textures are square
 };
 
-
-
 typedef struct _GUI_RECTd
 {
 	long left;
@@ -55,10 +51,8 @@ typedef struct _GUI_RECTd
 	long bottom;
 } GUI_RECT;
 
-
 void drawEmptyRect( const GUI_RECT& rect, unsigned long leftBorderColor = 0xffffffff,
 	 unsigned long rightBorderColor = 0xff000000 );
-
 
 void drawRect( const GUI_RECT& rect, unsigned long color );
 
@@ -73,15 +67,12 @@ void drawShadowText( long colorTop, long colorShadow, HGOSFONT3D font,
 					long left, long top, long right, long bottom, bool proportional, const char* text, bool bold, float scale,
 					long xOffset, long yOffset);
 
-
-
 long interpolateColor( long color1, long color2, float percent );
 
 inline long reverseRGB( long oldVal ) 
 {
 	return ( (oldVal & 0xff000000) | ((oldVal & 0xff0000) >> 16) | (oldVal & 0xff00) | ((oldVal & 0xff) << 16) );
 }
-
 
 //-------------------------------------------------------
 // Replaces the WINDOWS version because it is a lie!
@@ -91,9 +82,6 @@ inline long reverseRGB( long oldVal )
 // Replace with GOS String Resource get when available
 // Replaced.  Andy wants us to call everytime.  Will try and see if practical.
 extern DWORD gosResourceHandle;
-
-
-
 
 inline int cLoadString(
   unsigned int uID,             // resource identifier

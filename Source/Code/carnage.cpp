@@ -8,46 +8,16 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef CARNAGE_H
 #include "carnage.h"
-#endif
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
-
-#ifndef BLDNG_H
 #include "bldng.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef MULTPLYR_H
 #include "multplyr.h"
-#endif
-
-#ifndef WEAPONFX_H
 #include "weaponfx.h"
-#endif
-
-#ifndef TURRET_H
 #include "turret.h"
-#endif
-
-#ifndef GATE_H
 #include "gate.h"
-#endif
-
-#ifndef MISSION_H
 #include "mission.h"
-#endif
-
 #include <gameos.hpp>
 
 //---------------------------------------------------------------------------
@@ -420,9 +390,7 @@ bool ExplosionType::handleCollision (GameObjectPtr collidee, GameObjectPtr colli
 						shot.hitLocation = 0;
 						collider->handleWeaponHit(&shot, (MPlayer != NULL));
 						damageLeft -= chunkSize;
-
 					}
-							
 					}
 					break;
 
@@ -484,7 +452,6 @@ void Carnage::init (CarnageEnumType _carnageType)
 	carnageType = _carnageType;
 	if (carnageType == CARNAGE_FIRE) 
 	{
-	
 	}
 	else if (carnageType == CARNAGE_EXPLOSION) 
 	{

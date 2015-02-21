@@ -15,40 +15,15 @@
 
 //-------------------------------------------------------------------------------
 // Include Files
-#ifndef MSL_H
 #include "msl.h"
-#endif
-
-#ifndef CIDENT_H
 #include "cident.h"
-#endif
-
-#ifndef PATHS_H
 #include "paths.h"
-#endif
-
-#ifndef MATHFUNC_H
 #include "mathfunc.h"
-#endif
-
-#ifndef CAMERA_H
 #include "camera.h"
-#endif
-
-#ifndef CELINE_H
 #include "celine.h"
-#endif
-
-#ifndef DBASEGUI_H
 #include "dbasegui.h"
-#endif
-
-#ifndef TIMING_H
 #include "timing.h"
-#endif
-
 #include <toolOS.hpp>
-
 #include "..\ARM\Microsoft.Xna.Arm.h"
 using namespace Microsoft::Xna::Arm;
 
@@ -994,8 +969,6 @@ Stuff::Vector3D TG_MultiShape::GetShapeVertexInEditor(long shapeNum, long vertex
 		}
 		
 		result = vertexPos;
-
-
 	}
 	
 	return result;

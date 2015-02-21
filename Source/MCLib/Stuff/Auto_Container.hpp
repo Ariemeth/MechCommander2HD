@@ -10,8 +10,6 @@
 #include "Auto_Ptr.hpp"
 #include "Noncopyable.hpp"
 
-
-
 namespace Stuff
 {
 	template <class pointed_to, class container_type>
@@ -124,7 +122,5 @@ namespace Stuff
 		container_type m_Container;
 	};
 };
-
-
 
 #endif // AUTO_CONTAINER_HPP

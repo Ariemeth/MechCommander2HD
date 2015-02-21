@@ -34,7 +34,6 @@ public:
 	int		m_SelfRepairBehavior;
 	//}}AFX_DATA
 
-
 	//{{AFX_VIRTUAL(UnitSettingsDlg)
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support

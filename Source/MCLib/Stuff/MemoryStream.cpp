@@ -337,7 +337,6 @@ void
 	currentBit = 0;
 }
 
-
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 MemoryStream&
@@ -353,7 +352,6 @@ MemoryStream&
 		//SPEW(("jerryeds", "READ : %x", workingBitBuffer));
 		currentBit = 0;
 	}	
-
 
 	Verify(currentBit >= 0);
 	Verify(currentBit <  8);
@@ -393,8 +391,7 @@ MemoryStream&
 	Verify(currentBit <  8);
 
 	workingBitBuffer |= (int_bit_value << currentBit);
-	
-	
+
 	currentBit++;
 	if (currentBit > 7)
 	{
@@ -404,11 +401,8 @@ MemoryStream&
 		currentBit = 0;
 	}
 
-
-
 	return *this;
 }
-
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
@@ -442,7 +436,6 @@ MemoryStream&
 		// empy out destination
 		*dest = 0x00;
 
-
 		int total_bits_to_be_read = 8;
 		Max_Clamp(total_bits_to_be_read, bits_remaining);
 		
@@ -457,10 +450,8 @@ MemoryStream&
 		
 		// remove any bits from the next set that tagged along
 		*dest &= bit_mask;
-		
 
 		currentBit += bits_in_first_source_byte;
-
 
 		if (currentBit == 8)
 		{
@@ -483,20 +474,15 @@ MemoryStream&
 				// bit location.  Then combine it with the destination
 				*dest |= ((workingBitBuffer & bit_mask) << bits_in_first_source_byte);
 
-
 				currentBit = bits_in_second_source_byte;
 			}
 		}
 
-
 		bits_remaining -= total_bits_to_be_read;
-
-
 	}
 
 	Verify(currentBit >= 0);
 	Verify(currentBit < 8);
-
 
 	return *this;
 }
@@ -512,7 +498,6 @@ MemoryStream&
 {
 	Check_Object(this);
 	Check_Pointer(ptr);
-
 
 	if (currentBit == Empty_Bit_Buffer)
 	{
@@ -569,8 +554,6 @@ MemoryStream&
 	}
 	return *this;
 }
-
-
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
@@ -694,7 +677,6 @@ DynamicMemoryStream::DynamicMemoryStream(const DynamicMemoryStream &otherStream)
 	currentPosition = streamStart + otherStream.GetBytesUsed();
 	ownsStream = true;
 }
-
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //

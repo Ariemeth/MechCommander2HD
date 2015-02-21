@@ -21,7 +21,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CMissionDialog dialog
 
-
 CMissionDialog::CMissionDialog(CWnd* pParent /*=NULL*/)
 	: CDialog(CMissionDialog::IDD, pParent)
 {
@@ -37,7 +36,6 @@ CMissionDialog::CMissionDialog(CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
 }
 
-
 void CMissionDialog::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -52,7 +50,6 @@ void CMissionDialog::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_MI_SELECTION_SCREEN, m_SelectionScreenCheck );
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(CMissionDialog, CDialog)
 	//{{AFX_MSG_MAP(CMissionDialog)

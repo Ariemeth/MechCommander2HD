@@ -226,7 +226,6 @@ Vector4D&
 		fstp		st(1)
 
 		fstp        dword ptr [edi]			//	x
-
 	}
 #else
 	x = v.x*m(0,0) + v.y*m(1,0) + v.z*m(2,0) + m(3,0);

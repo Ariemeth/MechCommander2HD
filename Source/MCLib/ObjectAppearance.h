@@ -8,17 +8,9 @@ ObjectAppearance.h	: Interface for the ObjectAppearance component, building and 
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef APPEARANCE_H
 #include "Appear.h"
-#endif
-
-#ifndef DSTD_H
 #include "dstd.h"
-#endif
-
-#ifndef OBJSTATUS_H
 #include "objstatus.h"
-#endif
 
 //*************************************************************************************************
 
@@ -66,7 +58,6 @@ class ObjectAppearance: public Appearance
 		long										pilotNameID;
 		char										pilotName[32];
 
-
 		long										paintScheme;
 		MemoryPtr									fadeTable;
 
@@ -97,17 +88,13 @@ class ObjectAppearance: public Appearance
 		long	highlightColor;
 		ObjectAppearance(){	highlightColor = 0; damage = 0; lightIntensity = rotation = 0.0; selected = 0; pilotName[0] = 0;}
 
-
 		/*
 	private:
 
 		ObjectAppearance( const ObjectAppearance& bjectAppearance );
 		ObjectAppearance& operator=( const ObjectAppearance& bjectAppearance );
 		*/
-
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( ObjectAppearance.h )

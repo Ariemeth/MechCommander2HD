@@ -8,7 +8,6 @@
 #include "stdafx.h"
 #include "resource.h"
 #include "UserTextEdit.h"
-
 #include "assert.h"
 #include "..\MCLib\Utilities.h" /*for cLoadString*/
 #include "TextMessageDlg.h"
@@ -23,7 +22,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CUserTextEdit dialog
 
-
 CUserTextEdit::CUserTextEdit(CWnd* pParent /*=NULL*/)
 	: CDialog(CUserTextEdit::IDD, pParent)
 {
@@ -36,7 +34,6 @@ CUserTextEdit::CUserTextEdit(CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
 }
 
-
 void CUserTextEdit::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -45,7 +42,6 @@ void CUserTextEdit::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_USER_TEXT_EDIT_RESOURCE_STRING_ID_EDIT, m_ResourceStringIDEdit);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(CUserTextEdit, CDialog)
 	//{{AFX_MSG_MAP(CUserTextEdit)

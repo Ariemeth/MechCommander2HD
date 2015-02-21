@@ -44,7 +44,6 @@ void MissionResults::begin()
 	if ( g_soundSystem )
 		g_soundSystem->stopSupportSample();
 
-
 	if ( !MPlayer )
 	{
 		char path[256];
@@ -95,7 +94,6 @@ void MissionResults::begin()
 		if ( !mpStats.staticCount )
 		{
 			mpStats.init();
-
 		}
 
 		if ( mpStats.getStatus() != LogisticsScreen::RUNNING )
@@ -107,7 +105,6 @@ void MissionResults::begin()
 
 void MissionResults::init()
 {
-
 }
 
 void MissionResults::end()
@@ -164,7 +161,6 @@ void MissionResults::update()
 				bDone = true;
 			}
 		}
-
 	}
 	if ( pPilotScreen && bPilotStarted)
 	{
@@ -177,8 +173,6 @@ void MissionResults::update()
 			// take this out!
 		 
 			bDone = true;
-
-
 
 			//Also should stop the support sample here. 
 			g_soundSystem->stopSupportSample();

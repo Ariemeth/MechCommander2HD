@@ -11,10 +11,7 @@ MPSetupArea.cpp			: Implementation of the MPSetupArea component.
 #include "IniFile.h"
 #include "..\MCLib\UserInput.h"
 #include "..\resource.h"
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
 
 #define CHECK_BUTTON 200
 
@@ -207,8 +204,6 @@ void MPSetupXScreen::init(FitIniFile* file)
 
 	unitNameComboBox.setFocus( false );
 	playerNameComboBox.setFocus( false );
-
-
 }
 
 void MPSetupXScreen::begin()
@@ -241,7 +236,6 @@ void MPSetupXScreen::begin()
 	bPaintSchemeInitialized = false;
 	//mechCamera.getObjectAppearance()->resetPaintScheme(baseColor, stripeColor, 0xfff0f0f0);
 }
-
 
 void MPSetupXScreen::end()
 {
@@ -361,7 +355,6 @@ int	MPSetupXScreen::handleMessage( unsigned long message, unsigned long who)
 	}
 
 	return 0;
-
 }
 
 bool MPSetupXScreen::isDone()
@@ -385,7 +378,6 @@ void MPSetupXScreen::update()
 		{
 			handleMessage( buttons[i].getID(), buttons[i].getID() );
 		}
-
 	}
 	*/
 
@@ -420,8 +412,6 @@ void MPSetupXScreen::updateMPSetup()
 {
 }
 
-
-
 aColorPicker::aColorPicker()
 {
 	color0 = 0xffffffff;
@@ -450,9 +440,6 @@ long aColorPicker::init(long xPos, long yPos,long w, long h )
 	addChild( &tab1ColorRect );
 	addChild( &tab1ColorOutlineRect );
 	addChild( &tab1text );
-
-	
-
 
 	return (NO_ERR);
 }
@@ -697,7 +684,6 @@ void aColorPicker::setColor1(int color)
 	tab1ColorRect.setColor(color);
 }
 
-
 long aStyle1TextListItem::init( FitIniFile* file, const char* blockName )
 {
 	file->seekBlock( blockName );
@@ -749,7 +735,6 @@ void aStyle1TextListItem::render()
 	aTextListItem::render();
 }
 
-
 long aInsigniaListItem::init( FitIniFile* file, const char* blockName )
 {
 	file->seekBlock( blockName );
@@ -799,8 +784,6 @@ void aInsigniaListItem::update()
 }
 
 //////////////////////////////////////////////
-
-
 
 //*************************************************************************************************
 // end of file ( MPSetupArea.cpp )

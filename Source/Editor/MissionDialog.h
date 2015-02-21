@@ -33,7 +33,6 @@ public:
 	BOOL	m_SelectionScreenCheck;
 	//}}AFX_DATA
 
-
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CMissionDialog)

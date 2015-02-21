@@ -8,29 +8,12 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef TGL_H
 #include "tgl.h"
-#endif
-
-#ifndef CLIP_H
 #include "clip.h"
-#endif
-
-#ifndef TIMING_H
 #include "timing.h"
-#endif
-
-#ifndef TERRAIN_H
 #include "terrain.h"
-#endif
-
-#ifndef CAMERA_H
 #include "camera.h"
-#endif
-
-#ifndef TXMMGR_H
 #include "txmmgr.h"
-#endif
 
 //-------------------------------------------------------------------------------
 // Include Files
@@ -866,7 +849,6 @@ long TG_TypeShape::ParseASEFile (BYTE *aseBuffer, char *fileName)
 				matLid = (numTextures/2) - 1;
 
 			listOfTypeTriangles[i].localTextureHandle = matLid;
-
 		}
 
 		listOfTypeTriangles[i].renderStateFlags = 0;		//No Flags yet.
@@ -1719,11 +1701,9 @@ long TG_Shape::MultiTransformShape (Stuff::Matrix4D *shapeToClip, Stuff::Point3D
    		}
    		else if (startVLight == 0xffff0000)		//Hot Red -- Blink this light.
    		{
-   		
    		}
    		else if (startVLight == 0xff0000ff)		//Hot Blue -- Blink this light.
    		{
-   		
    		}
    		else if (startVLight & 0x00ffffff)		//Some other kind of light, just add it in.
    		{

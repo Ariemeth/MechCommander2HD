@@ -39,9 +39,7 @@ void LogisticsMech::setVariant( LogisticsVariant* pVar )
 {
 	pVariant = pVar;
 	ID = ( LogisticsData::instance->createInstanceID( pVar ) << 24 | pVar->getID() );
-
 }
-
 
 long LogisticsMech::save( FitIniFile& file, long counter )
 {

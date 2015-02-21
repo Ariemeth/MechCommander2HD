@@ -73,5 +73,4 @@ namespace Stuff {
 		SafeIterator *nextIterator;
 		SafeIterator *prevIterator;
 	};
-
 }

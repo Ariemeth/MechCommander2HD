@@ -2,18 +2,9 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef ASYSTEM_H
 #include "aSystem.h"
-#endif
-
-#ifndef AFONT_H
 #include "aFont.h"
-#endif
-
-#ifndef ALISTBOX_H
 #include "aListBox.h"
-#endif
-
 #include "gamesound.h"
 #include "mclib.h"
 
@@ -34,7 +25,6 @@ aListBox::aListBox()
 	clickSFX = LOG_SELECT;
 	highlightSFX = LOG_DIGITALHIGHLIGHT;
 	disabledSFX = LOG_WRONGBUTTON;
-
 }
 
 long aListBox::init(long xPos, long yPos,long w, long h )
@@ -72,9 +62,7 @@ void aListBox::init( FitIniFile* file, const char* blockName )
 	file->readIdLong( "HelpCaption", helpHeader );
 	file->readIdLong( "HelpDesc", helpID );
 
-
 	init( x, y, width, height );
-
 }
 
 void aListBox::destroy()
@@ -110,7 +98,6 @@ void aListBox::removeAllItems( bool bDelete )
 
 	if ( scrollBar )
 		scrollBar->SetScroll( 0 );
-
 }
 
 void aListBox::update()
@@ -120,10 +107,8 @@ void aListBox::update()
 		if ( scrollBar )
 			scrollBar->update();
 
-
 		int prevCheck = GetCheckedItem();
 		int newCheck = -1;
-
 
 		int iSel = -1;
 		int iHighlight = -1;
@@ -153,7 +138,6 @@ void aListBox::update()
 				}
 			}
 			scrollBar->update();
-
 		}
 
 		for ( int i = 0; i < itemCount; i++ )
@@ -203,7 +187,6 @@ void aListBox::update()
 				items[i]->setState( aListItem::ENABLED );
 
 			items[i]->update();
-
 		}
 
 		for ( i = 0; i < itemCount; i++ )
@@ -219,13 +202,8 @@ void aListBox::update()
 			items[prevCheck]->setCheck( 0 );
 		}
 	}
-
-	
-
-
 }
 
-	
 int aListBox::handleMessage( unsigned long message, unsigned long who )
 {
 	switch ( message )
@@ -269,8 +247,6 @@ void aListBox::setScrollPos( int pos )
 	scrollBar->SetScroll( pos );
 }
 
-
-
 void aListBox::render()
 {
 	if ( showWindow )
@@ -288,7 +264,6 @@ void aListBox::render()
 
 		long topHeight = 0;
 		long bottomHeight = 0;
-
 
 		bool bItemOutOfRange = 0;
 		for ( int i = 0; i < itemCount; i++ )
@@ -342,8 +317,6 @@ void aListBox::render()
 
 			scrollBar->render();
 		}
-
-			
 	}
 }
 
@@ -361,7 +334,6 @@ long aListBox::AddItem(aListItem* add)
 	if (itemCount >= MAX_LIST_ITEMS)
 		return TOO_MANY_ITEMS;
 
-	
 	float lastX = globalX() + add->globalX();
 	float lastY = globalY() + topSkip;
 	
@@ -379,8 +351,6 @@ long aListBox::AddItem(aListItem* add)
 		add->resize( add->width() +  shrink, add->height() );
 	}
 
-
-
 	if ( scrollBar )
 	{
 		int itemsTotalHeight = 0;
@@ -394,7 +364,6 @@ long aListBox::AddItem(aListItem* add)
 				scrollBar->SetScroll( 0 );
 				scrollBar->SetScrollMax( 0 );
 			}
-			 
 	}
 
 	return itemCount - 1;
@@ -437,7 +406,6 @@ long	aListBox::InsertItem(aListItem* itemString, long where)
 
 	itemCount++;
 
-
 	if ( scrollBar )
 	{
 		int itemsTotalHeight = 0;
@@ -448,9 +416,7 @@ long	aListBox::InsertItem(aListItem* itemString, long where)
 				scrollBar->SetScrollMax( itemsTotalHeight - scrollBar->height() );
 			else
 				scrollBar->SetScrollMax( 0 );
-			
 	}
-
 
 	return where;
 }
@@ -516,8 +482,7 @@ long aListBox::SelectItem(long itemNumber)
 	{
 		items[i]->deselect();
 	}
-	
-	
+
 	itemSelected = itemNumber;
 	if ( itemSelected > -1 )
 	{
@@ -536,7 +501,6 @@ long aListBox::SelectItem(long itemNumber)
 		}
 	}
 
-	
 	return NO_ERR;
 }
 
@@ -549,14 +513,12 @@ void	aListBox::enableAllItems()
 	}
 }
 
-
 aListItem* aListBox::GetItem(long itemNumber)
 {
 	if (itemNumber >= itemCount)
 		return NULL;
 
 	return items[itemNumber];
-	
 }	
 
 void aListBox::scroll( int amount )
@@ -614,7 +576,6 @@ bool				aListBox::pointInScrollBar( long mouseX, long mouseY )
 	return 0;
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // aDropList methods
 ///////////////////////////////////////////////////////////////////////////////
@@ -665,7 +626,6 @@ aDropList& aDropList::operator=( const aDropList& src)
 	listBox.init( rects[2].globalX(), rects[2].globalY(), rects[2].width(), listBoxMaxHeight );
 	listBox.setOrange(true);
 
-
 	addChild( &expandButton );
 	expandButton = src.expandButton;
 
@@ -676,7 +636,6 @@ aDropList& aDropList::operator=( const aDropList& src)
 
 	return *this;
 }
-
 
 long aDropList::init( FitIniFile* file, const char* blockName )
 {
@@ -747,7 +706,6 @@ long aDropList::init( FitIniFile* file, const char* blockName )
 
 	selectionIndex = -1;
 	templateItem.init( *file );
-
 
 	return 0;
 }
@@ -870,15 +828,12 @@ void aDropList::update()
 			{
 				listBox.showGUIWindow(false);
 				rects[2].showGUIWindow(false);
-
 			}
 		}
-
 	}
 
 	ListBox().setHelpID( helpID );
 }
-
 
 int aDropList::handleMessage( unsigned long message, unsigned long who )
 {
@@ -950,10 +905,7 @@ long	aDropList::SelectItem(long item)
 	rects[2].showGUIWindow(false);
 	selectionIndex = item;
 	return listBox.SelectItem(item);
-
  }
-
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // aComboBox methods
@@ -1047,7 +999,6 @@ long aComboBox::init( FitIniFile* file, const char* blockName )
 	expandButton.setHighlightFX( LOG_DIGITALHIGHLIGHT );
 	expandButton.setDisabledFX( LOG_WRONGBUTTON );
 
-
 	listBoxMaxHeight = rects[2].height();
 	//rects[2].resize(rects[2].width(), entry.height());
 	listBox.init( rects[2].globalX(), rects[2].globalY(), rects[2].width(), listBoxMaxHeight );
@@ -1084,10 +1035,7 @@ long	aComboBox::SelectItem(long item)
 	rects[2].showGUIWindow(false);
 	selectionIndex = item;
 	return listBox.SelectItem(item);
-
  }
-
-
 
 void aComboBox::destroy()
 {
@@ -1173,7 +1121,6 @@ void aComboBox::update()
 	ListBox().setHelpID( helpID );
 }
 
-
 int aComboBox::handleMessage( unsigned long message, unsigned long who )
 {
 	{
@@ -1239,8 +1186,6 @@ long				aComboBox::AddItem( const char* text, unsigned long color )
 	pItem->setColor( color );
 	return AddItem( pItem );
 }
-
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // aTextListItem methods
@@ -1324,8 +1269,6 @@ void aTextListItem::sizeToText()
 	// assume the width is right and we need to make the height different
 	unsigned long height = font.height( text, width() );
 	resize( width(), height );
-
-	
 }
 
 void aTextListItem::init( FitIniFile& file, const char* blockName )
@@ -1345,7 +1288,6 @@ void aTextListItem::init( FitIniFile& file, const char* blockName )
 	file.readIdLong( "Color", color );
 	setColor( color );
 }
-
 
 //////////////////////////////////////////////////////////////////
 
@@ -1387,7 +1329,6 @@ void aAnimTextListItem::init( FitIniFile& file, const char* blockName )
 		animInfo.init( &file, animationSt );
 }
 
-
 void aAnimTextListItem::CopyData( const aAnimTextListItem& src )
 {
 	animInfo = src.animInfo;
@@ -1405,7 +1346,6 @@ void aAnimTextListItem::render()
 	setColor( color );
 
 	aTextListItem::render();
-	
 }
 
 void aAnimTextListItem::update()
@@ -1457,7 +1397,4 @@ void aLocalizedListItem::render()
 	aTextListItem::setColor((unsigned long)color);
 	aTextListItem::render();
 }
-
-
-
 

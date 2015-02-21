@@ -40,7 +40,6 @@ namespace MidLevelRenderer {
 			GetLightType() 
 				{ Check_Object(this); return SpotLight; }
 
-
 	//
 	// spotlight spread.  This value is only valid if the light had falloff
 	//
@@ -93,5 +92,4 @@ namespace MidLevelRenderer {
 			tanSpreadAngle,
 			cosSpreadAngle;
 	};
-
 }

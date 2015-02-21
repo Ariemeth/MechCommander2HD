@@ -12,9 +12,7 @@
 #define CLOUDS_H
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef DCAMERA_H
 #include "dcamera.h"
-#endif
 
 #ifndef GAMEOS_HPP
 #include <gameos.hpp>

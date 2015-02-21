@@ -13,10 +13,7 @@
 #ifndef RESIZEIMAGE_H
 #define RESIZEIMAGE_H
 
-#ifndef DSTD_H
 #include "dstd.h"
-#endif
-
 #include <malloc.h>
 #include <memory.h>
 #include <math.h>

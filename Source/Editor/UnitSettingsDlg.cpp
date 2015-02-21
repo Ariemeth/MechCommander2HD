@@ -12,7 +12,6 @@
 #include "EditorObjectMgr.h"
 #include "EditorInterface.h" // just for the undo manager
 
-
 /////////////////////////////////////////////////////////////////////////////
 // UnitSettingsDlg dialog
 
@@ -29,7 +28,6 @@ UnitSettingsDlg::UnitSettingsDlg( EList< Unit*, Unit* >& newList/*=NULL*/, Actio
 	pAction = NULL;
 }
 
-
 void UnitSettingsDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -43,7 +41,6 @@ void UnitSettingsDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Radio(pDX, IDC_SELF_REPAIR1, m_SelfRepairBehavior);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(UnitSettingsDlg, CDialog)
 	//{{AFX_MSG_MAP(UnitSettingsDlg)
@@ -80,7 +77,6 @@ void UnitSettingsDlg::OnSelchangeGroup()
 		{
 			m_Mech.AddString( MechNames[i] );
 		}
-
 
 		m_Mech.SetCurSel( 0 );	
 }
@@ -121,7 +117,6 @@ void UnitSettingsDlg::OnChangeHighlight1()
 		GetDlgItem( IDC_HIGHLIGHT1 )->SetWindowText( text );
 
 	GetDlgItem( IDC_HIGHLIGHT1 )->RedrawWindow( );
-	
 }
 
 void UnitSettingsDlg::OnHighlight1edit() 
@@ -155,7 +150,6 @@ void UnitSettingsDlg::OnChangeHighlight2()
 		GetDlgItem( IDC_HIGHLIGHT2 )->SetWindowText( text );
 
 	GetDlgItem( IDC_HIGHLIGHT2 )->RedrawWindow( );
-	
 }
 
 void UnitSettingsDlg::OnChangeBase() 
@@ -182,14 +176,12 @@ void UnitSettingsDlg::OnChangeBase()
 		GetDlgItem( IDC_BASE )->SetWindowText( text );
 
 	GetDlgItem( IDC_BASE )->RedrawWindow( );
-		
 }
 
 void UnitSettingsDlg::OnBaseedit() 
 {
 	CWnd* pWnd = GetDlgItem( IDC_BASE );
 	DoColorBox( pWnd );
-
 }
 
 void UnitSettingsDlg::DoColorBox( CWnd* pWnd )
@@ -204,7 +196,6 @@ void UnitSettingsDlg::DoColorBox( CWnd* pWnd )
 		long base;
 		sscanf( tmpStr, "%x", (unsigned int *)&base );
 		base &= 0x00ffffff;
-
 
 		CColorDialog dlg( reverseRGB(base), NULL, this );
 		if (IDOK == dlg.DoModal() )
@@ -242,7 +233,6 @@ void UnitSettingsDlg::applyChanges()
 					(*iter)->setVariant( variant );
 				}
 			}
-
 		}
 	}
 
@@ -313,13 +303,11 @@ void UnitSettingsDlg::applyChanges()
 		if ( tmpStr.GetLength() )
 		{
 			bBase = true;
-		
 
 			tmpStr.Replace( "0x", "" );
 			sscanf( tmpStr, "%x", (unsigned int *)&base );
 			base |= 0xff000000;
 		}
-		
 	}
 
 	pWnd = GetDlgItem( IDC_HIGHLIGHT1 );
@@ -331,13 +319,11 @@ void UnitSettingsDlg::applyChanges()
 		if ( tmpStr.GetLength() )
 		{
 			bColor1 = true;
-		
 
 			tmpStr.Replace( "0x", "" );
 			sscanf( tmpStr, "%x", (unsigned int *)&color1 );
 			color1 |= 0xff000000;
 		}
-		
 	}
 	pWnd = GetDlgItem( IDC_HIGHLIGHT2 );
 	if ( pWnd )
@@ -348,13 +334,11 @@ void UnitSettingsDlg::applyChanges()
 		if ( tmpStr.GetLength() )
 		{
 			bColor2 = true;
-		
 
 			tmpStr.Replace( "0x", "" );
 			sscanf( tmpStr, "%x", (unsigned int *)&color2 );
 			color2 |= 0xff000000;
 		}
-		
 	}
 
 	if ( bBase && bColor1 && bColor2 )
@@ -363,7 +347,6 @@ void UnitSettingsDlg::applyChanges()
 		{
 			(*iter)->setColors( base, color1, color2 );
 		}
-
 	}
 }
 
@@ -439,7 +422,6 @@ HBRUSH UnitSettingsDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		baseBrush.CreateSolidBrush( base );
 		pDC->SetBkColor( base );
 
-		
 		if ( ((base & 0xff) + ( (base & 0xff00)>>8 ) + ( (base & 0xff0000)>>16 ))/3 < 85 )
 			pDC->SetTextColor( 0x00ffffff );
 
@@ -481,7 +463,6 @@ HBRUSH UnitSettingsDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		base &= 0x00ffffff;
 		base = reverseRGB( base );
 
-		
 		if ( brush2.m_hObject )
 			brush2.DeleteObject();
 
@@ -494,8 +475,6 @@ HBRUSH UnitSettingsDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		return (HBRUSH)brush2.m_hObject;
 	}
 
-		
-	
 	// TODO: Return a different brush if the default is not desired
 	return hbr;
 }
@@ -548,7 +527,6 @@ int UnitSettingsDlg::getPossibilityIndex()
 	return -1;
 }
 
-
 void UnitSettingsDlg::updateMemberVariables()
 {
 	// now need to check all of the colors
@@ -557,7 +535,6 @@ void UnitSettingsDlg::updateMemberVariables()
 	bool	bBase = true;
 	bool	bHighlight = true;
 	bool	bHighlight2 = true;
-
 
 	Unit* pUnit = units.GetHead();
 
@@ -644,7 +621,6 @@ void UnitSettingsDlg::updateMemberVariables()
 	const char** pGroups = new const char*[groupCount];
 	int*		 groupIDs = new int[groupCount];
 
-	
 	m_Group.ResetContent();
 	
 	pMgr->getUnitGroupNames(pGroups, groupIDs, groupCount);
@@ -746,7 +722,6 @@ void UnitSettingsDlg::updateMemberVariables()
 		}
 	}
 
-
 	Pilot::PilotInfo* pInfo = Pilot::s_BadPilots;
 	long* count = &Pilot::badCount;
 	if ( (m_Alignment == 0) || (!EditorData::instance->IsSinglePlayer()) )
@@ -767,7 +742,6 @@ void UnitSettingsDlg::updateMemberVariables()
 		}
 	}
 
-
 	Pilot* pPilot = pUnit->getPilot();
 
 	const char* defaultPilot = pPilot->info->fileName;
@@ -785,7 +759,6 @@ void UnitSettingsDlg::updateMemberVariables()
 		}
 	}
 
-	
 	if ( defaultPilot )
 	{
 		int index;
@@ -855,12 +828,9 @@ void UnitSettingsDlg::OnAlign1( UINT whichID )
 		}
 	}
 
-	
 	if ( defaultPilot )
 	{
 		int  index = m_Pilot.FindString( -1, defaultPilot );
 		m_Pilot.SetCurSel( index );
 	}
-
-	
 }

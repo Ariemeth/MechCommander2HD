@@ -106,6 +106,3 @@ class GameDebugWindow {
 
 #endif
 
-
-
-

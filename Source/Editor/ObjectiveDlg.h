@@ -13,7 +13,6 @@
 
 #include "resource.h"
 #include "stdafx.h"
-
 #include "Objective.h"
 
 /////////////////////////////////////////////////////////////////////////////
@@ -90,7 +89,6 @@ public:
 	CString	m_ResetStatusFlagIDEdit;
 	//}}AFX_DATA
 
-
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(ObjectiveDlg)
@@ -137,8 +135,6 @@ protected:
 	CBrush		baseBrush;
 	CBrush		brush1;
 	CBrush		brush2;
-
-
 };
 
 //{{AFX_INSERT_LOCATION}}

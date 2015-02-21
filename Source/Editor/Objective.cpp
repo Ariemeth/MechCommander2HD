@@ -7,7 +7,6 @@ Objective.cpp			: Implementation of the Objective component.
 \*************************************************************************************************/
 
 #include "terrain.h"
-
 #include "Objective.h"
 #include "ObjectiveDlg.h"
 #include "ObjectivesDlg.h"
@@ -21,14 +20,9 @@ Objective.cpp			: Implementation of the Objective component.
 #include "MCLibResource.h"
 #include "EditorInterface.h"
 #include "..\resource.h"/*this is mc2res.dll's header file*/
-
 #include "EString.h"
 #include "ECharString.h"
-
-#ifndef INIFILE_H
 #include "IniFile.h"
-#endif
-
 #include <assert.h>
 
 static bool ESLoadString(int resourceID, EString &targetStr) {
@@ -1421,9 +1415,6 @@ bool CObjective::Read( FitIniFile* missionFile, int objectiveNum, int version )
 			m_modelID = -1;
 	}
 
-	
-
-
 	int numConditions = 0;
 	result = sReadIdWholeNum(missionFile, "NumConditions", numConditions);
 	if (NO_ERR != result) { return false; }
@@ -1564,7 +1555,6 @@ bool CObjective::Save( FitIniFile* file, int objectiveNum )
 		pName = EditorObjectMgr::instance()->getFileName( ID );
 		type = (ID >> 24) & 0xff;
 		scale = EditorObjectMgr::instance()->getScale( ID );
-
 	}
 	file->writeIdString( "ObjectiveModel", pName );
 	file->writeIdLong( "ModelType", type );
@@ -1574,8 +1564,6 @@ bool CObjective::Save( FitIniFile* file, int objectiveNum )
 	file->writeIdULong( "ModelID Version", 2 );
 	file->writeIdLong( "ModelID", m_modelID );
 	file->writeIdFloat( "ModelScale", scale );
-
-	
 
 	{
 		int i = 0;

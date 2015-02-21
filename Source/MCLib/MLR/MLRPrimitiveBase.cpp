@@ -14,7 +14,6 @@ int clipTrick[6][2] =
 	{ 2, 1}
 };
 
-
 //#############################################################################
 //#########################    ClipPolygon2    ############################
 //#############################################################################
@@ -135,7 +134,6 @@ void
 	delete clipExtraColors;
 	Unregister_Object(clipExtraLength);
 	delete clipExtraLength;
-
 
 	Unregister_Object(DefaultData);
 	delete DefaultData;

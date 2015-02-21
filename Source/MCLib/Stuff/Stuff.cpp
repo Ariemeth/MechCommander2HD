@@ -100,13 +100,11 @@ void
 		TraceManager::InitializeClass();
 	#endif
 
-
 	//
 	//------------------------------------
 	// Build the quatenion fast lerp table
 	//------------------------------------
 	//
-	
 
 	UnitQuaternion::InitializeClass();
 

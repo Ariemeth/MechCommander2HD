@@ -5,13 +5,11 @@ FogDlg.cpp			: Implementation of the FogDlg component.
 //===========================================================================//
 \*************************************************************************************************/
 
-
 #include "FogDlg.h"
 #include "resource.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // FogDlg dialog
-
 
 FogDlg::FogDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(FogDlg::IDD, pParent)
@@ -25,7 +23,6 @@ FogDlg::FogDlg(CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
 }
 
-
 void FogDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -37,7 +34,6 @@ void FogDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_END, m_end);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(FogDlg, CDialog)
 	//{{AFX_MSG_MAP(FogDlg)

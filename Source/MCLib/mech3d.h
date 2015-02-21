@@ -14,18 +14,9 @@
 #define MECH3D_H
 //-------------------------------------------------------------------------------
 // Include Files
-#ifndef APPRTYPE_H
 #include "apprtype.h"
-#endif
-
-#ifndef OBJECTAPPEARANCE_H
 #include "objectappearance.h"
-#endif
-
-#ifndef MSL_H
 #include "msl.h"
-#endif
-
 #include <gosFX\gosfxheaders.hpp>
 //-------------------------------------------------------------------------------
 // Structs used by layer.
@@ -127,7 +118,6 @@ class Mech3DAppearanceType: public AppearanceType
 		long						numWeaponNodes;
 		long						numFootNodes;
 		NodeData					*nodeData;
-
 
 		static TG_TypeMultiShapePtr	SensorSquareShape;
 
@@ -284,7 +274,6 @@ typedef struct _MechAppearanceData
 	bool						isDusting;
 	bool						fallDust;
 	bool						isHelicopter;
-
 } MechAppearanceData;
 
 class Mech3DAppearance: public ObjectAppearance
@@ -487,7 +476,6 @@ class Mech3DAppearance: public ObjectAppearance
 		}
 
 		void flashBuilding (float dur, float fDuration, DWORD color);
-
 
 		virtual bool isJumpSetup (void)
 		{
@@ -780,7 +768,6 @@ class Mech3DAppearance: public ObjectAppearance
 
 		virtual Stuff::Vector3D getNodeIdPosition (long nodeId);
 };
-
 
 //-------------------------------------------------------------------------------
 

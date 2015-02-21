@@ -27,7 +27,6 @@ public:
 	float	m_MinEdit;
 	//}}AFX_DATA
 
-
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(SelectSlopeDialog)

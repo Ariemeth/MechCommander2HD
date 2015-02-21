@@ -18,7 +18,6 @@ PilotReadyScreen.cpp			: Implementation of the PilotReadyScreen component.
 
 PilotReadyScreen* PilotReadyScreen::s_instance = NULL;
 
-
 #define PR_MSG_ADD 62
 #define PR_MSG_REMOVE 63
 #define PR_MSG_MAIN 64
@@ -37,7 +36,6 @@ PilotReadyScreen::PilotReadyScreen()
 	status = PAUSED;
 	helpTextArrayID = 13;
 	mechSelected = 0;
-
 }
 
 PilotReadyScreen::~PilotReadyScreen()
@@ -72,7 +70,6 @@ void PilotReadyScreen::init(FitIniFile* file)
 
 	int count = 0;
 
-	
 	long x = 0;
 	long y = 0;
 
@@ -97,7 +94,6 @@ void PilotReadyScreen::init(FitIniFile* file)
 	int mechCount[256];
 	memset( mechCount, 0, sizeof ( int ) * 256 );
 
-
 	// initialize the attribute meeters
 	attributeMeters[0].init( file, "AttributeMeter0" );
 	attributeMeters[1].init( file, "AttributeMeter1" );
@@ -107,7 +103,6 @@ void PilotReadyScreen::init(FitIniFile* file)
 
 	pilotListBox.init( rects[0].left(), rects[0].top(),
 						rects[0].width(), rects[0].height() );
-
 
 	FullPathFileName tmpPath;
 	tmpPath.init( artPath, "mcl_pr_availablepilotentry", ".fit" );
@@ -156,8 +151,6 @@ void PilotReadyScreen::init(FitIniFile* file)
 		file->readIdLong( "top", medalLocations[i].top );
 		file->readIdLong( "bottom", medalLocations[i].bottom );
 	}
-
-
 }
 
 void PilotReadyScreen::begin()
@@ -194,17 +187,14 @@ void PilotReadyScreen::begin()
 			pIcons[i].disable( 1 );
 		else
 			pIcons[i].disable( 0 );
-
 	}
 	
 	if ( getButton( MB_MSG_MAINMENU ) )
 		getButton( MB_MSG_MAINMENU )->setPressFX( -1 );
 
 	int bHasPilot = -1;
-	
 
 		// update pilot use here... things can get screwed up.
-	
 
 		pilotListBox.removeAllItems( true );
 
@@ -216,7 +206,6 @@ void PilotReadyScreen::begin()
 		{
 			pilots[i]->setUsed(0);
 		}
-
 
 		for ( EList< LogisticsMech*, LogisticsMech* >::EIterator iter = mechList.Begin();
 		!iter.IsDone(); iter++ )
@@ -244,8 +233,6 @@ void PilotReadyScreen::begin()
 			}
 		}
 
-
-
 		status = RUNNING;
 
 		if ( bHasPilot != -1 )
@@ -264,8 +251,6 @@ void PilotReadyScreen::begin()
 
 			pIcons[0].select( true );
 		}
-
-	
 }
 
 void PilotReadyScreen::end()
@@ -278,7 +263,6 @@ void PilotReadyScreen::render(int xOffset, int yOffset )
 	pilotListBox.move( xOffset, yOffset );
 	pilotListBox.render();
 	pilotListBox.move( -xOffset, -yOffset );
-
 
 	if ( !xOffset && !yOffset )
 	{
@@ -294,10 +278,8 @@ void PilotReadyScreen::render(int xOffset, int yOffset )
 		attributeMeters[i].render( xOffset, yOffset );
 	}
 
-
 	if ( pCurPilot )
 		rankIcons[pCurPilot->getRank()].render(xOffset, yOffset);
-
 
 	for ( i = 0; i < 4; i++ )
 		skillIcons[i].render(xOffset, yOffset);
@@ -305,13 +287,11 @@ void PilotReadyScreen::render(int xOffset, int yOffset )
 	for ( i = 0; i < MAX_MEDAL; i++ )
 		medalIcons[i].render(xOffset, yOffset);
 
-
 	LogisticsScreen::render( xOffset, yOffset );
 	for ( i = 0; i < ICON_COUNT; i++ )
 	{
 		pIcons[i].render( xOffset, yOffset );
 	}
-
 
 	if ( mechSelected )
 	{
@@ -337,9 +317,7 @@ void PilotReadyScreen::render(int xOffset, int yOffset )
 
 	if ( pDragPilot )
 		dragIcon.render();
-
 }
-
 
 void PilotReadyScreen::update()
 {
@@ -360,7 +338,6 @@ void PilotReadyScreen::update()
 
 		for ( int i = 0; i < 4; i++ )
 			skillIcons[i].update();
-		
 
 		// desel icons if necessary
 		bool bAllFull = 1;
@@ -378,7 +355,6 @@ void PilotReadyScreen::update()
 
 			bool bInside = pIcons[i].pointInside( userInput->getMouseX(), userInput->getMouseY() ); 
 
-			
 			if ( userInput->isLeftDoubleClick() && bInside && pIcons[i].getMech() )
 			{
 				removeSelectedPilot();
@@ -424,7 +400,6 @@ void PilotReadyScreen::update()
 
 		long curSel = newSel == -1 ? oldSel : newSel;
 
-	
 		if ( !MPlayer || !ChatWindow::instance()->pointInside(userInput->getMouseX(), userInput->getMouseY()) )
 			LogisticsScreen::update();
 
@@ -439,7 +414,6 @@ void PilotReadyScreen::update()
 			mechDisplay.update();
 		}
 
-		
 		if ( !bAllFull ) // disable the next button until all have pilots
 		{
 			buttons[1].disable( 1 );
@@ -459,7 +433,6 @@ void PilotReadyScreen::update()
 			buttons[2].disable( 1 );
 		}
 
-
 		if ( ( newSel == -1 && oldSel == -1 )|| !pIcons[curSel].getPilot())
 		{
 			// disable the remove button
@@ -468,11 +441,9 @@ void PilotReadyScreen::update()
 		else
 			buttons[3].disable(0);
 
-
 		for ( i = 0; i < MAX_MEDAL; i++ ) // so we get rollovers
 			medalIcons[i].update();
 
-		
 		// update drag and drop
 		if ( pDragPilot )
 		{
@@ -490,25 +461,18 @@ void PilotReadyScreen::update()
 					break;
 				}
 			}
-		
 
 			if ( userInput->leftMouseReleased(  ) )
 			{
 				endDrag(pSelIcon);	
 			}
-
 		}
 
 		pilotListBox.update();
-
-	
 	}
 
 	if ( MPlayer && ChatWindow::instance() )
 		ChatWindow::instance()->update();
-
-
-
 }
 
 int	PilotReadyScreen::handleMessage( unsigned long message, unsigned long who )
@@ -533,7 +497,6 @@ int	PilotReadyScreen::handleMessage( unsigned long message, unsigned long who )
 			pilotListBox.SelectItem( -1 );
 
 			launchFadeTime = .0001f;
-
 		}
 		else
 			status = NEXT;
@@ -556,7 +519,6 @@ int	PilotReadyScreen::handleMessage( unsigned long message, unsigned long who )
 		status = MAINMENU;
 		break;
 	}
-
 
 	return 0;
 }
@@ -591,7 +553,6 @@ void PilotReadyScreen::addSelectedPilot()
 						bFound = true;
 						break;
 					}
-
 				}
 			}
 
@@ -609,7 +570,6 @@ void PilotReadyScreen::addSelectedPilot()
 					}
 				}
 			}
-
 		}
 	}
 
@@ -623,8 +583,6 @@ void PilotReadyScreen::addSelectedPilot()
 			setPilot( pPilot );
 		}
 	}
-
-
 }
 
 void PilotReadyScreen::removeSelectedPilot()
@@ -670,16 +628,12 @@ void PilotReadyScreen::removeSelectedPilot()
 							}
 						}
 					}
-
 				}
-
 			}
 
-			
 			return;
 		}
 	}
-
 }
 
 void PilotReadyScreen::beginDrag( LogisticsPilot* pPilot )
@@ -692,7 +646,6 @@ void PilotReadyScreen::beginDrag( LogisticsPilot* pPilot )
 		LogisticsPilotListBox::makeUVs( pPilot, dragIcon );
 
 	launchFadeTime = 0.f;
-
 }
 
 void PilotReadyScreen::endDrag( LogisticsMechIcon* pIcon  )
@@ -705,7 +658,6 @@ void PilotReadyScreen::endDrag( LogisticsMechIcon* pIcon  )
 		pIcon->setPilot( pDragPilot );
 
 		pilotListBox.removePilot( pDragPilot );
-
 	}
 	else
 	{
@@ -713,9 +665,7 @@ void PilotReadyScreen::endDrag( LogisticsMechIcon* pIcon  )
 	}
 
 	pDragPilot = 0;
-
 }
-
 
 void PilotReadyScreen::putBackPilot( LogisticsPilot* pPilot )
 {
@@ -729,7 +679,6 @@ void PilotReadyScreen::putBackPilot( LogisticsPilot* pPilot )
 	}
 	LogisticsPilotListBoxItem* pItem = new LogisticsPilotListBoxItem( pPilot );
 	pilotListBox.AddItem( pItem );
-
 }
 
 void PilotReadyScreen::setPilot( LogisticsPilot* pPilot )
@@ -804,8 +753,6 @@ void PilotReadyScreen::setPilot( LogisticsPilot* pPilot )
 				
 				skillIcons[i].setColor( 0xffffffff );
 				skillIcons[i].setHelpID( skillIDs[i] + IDS_SPECIALTY_HELP1 );
-
-
 			}
 			else
 			{
@@ -813,7 +760,6 @@ void PilotReadyScreen::setPilot( LogisticsPilot* pPilot )
 				skillIcons[i].setColor( 0 );
 				skillIcons[i].setHelpID( 0 );
 			}
-
 		}
 
 		for( ; i < 4; i++ )
@@ -839,8 +785,6 @@ void PilotReadyScreen::setPilot( LogisticsPilot* pPilot )
 				medalIcons[i].showGUIWindow( 0 );
 			}
 		}
-
-
 	}
 	else
 	{
@@ -848,7 +792,6 @@ void PilotReadyScreen::setPilot( LogisticsPilot* pPilot )
 			textObjects[i].setText( "" );
 
 		statics[staticCount-1].setColor( 0 );
-
 	}
 }
 

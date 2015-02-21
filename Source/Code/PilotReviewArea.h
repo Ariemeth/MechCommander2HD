@@ -23,7 +23,6 @@ CLASS DESCRIPTION
 PilotReviewARea:
 **************************************************************************************************/
 
-
 // holds the dead and active pilots
 class PilotListBox : public aListBox
 {
@@ -73,7 +72,6 @@ private:
 	aAnimation				exitAnim;
 };
 
-
 // base class for dead, and active pilot list box items
 class PilotListItem : public aListItem
 {
@@ -92,9 +90,7 @@ public:
 protected:
 	float	currentTime;
 	bool	bDone;
-
 };
-
 
 // list box item for dead pilots
 class DeadPilotListItem : public PilotListItem
@@ -133,9 +129,6 @@ private:
 
 	PilotIcon*			liveIcon;
 	PilotIcon*			deadIcon;
-
-
-	
 };
 
 // pilots that weren't killed
@@ -154,7 +147,6 @@ public:
 	static long			s_totalWidth;
 
 	float				flashTime();
-
 
 protected:
 
@@ -199,7 +191,6 @@ protected:
 	aText		promotionText;
 	aText		medalAwardedText;
 
-	
 	PilotIcon*	pilotIcon;
 	LogisticsPilot* pilot;
 
@@ -207,7 +198,6 @@ protected:
 	bool		promotionShown;
 
 	long		medalCount;
-
 };
 
 class PilotPromotionArea : public LogisticsScreen
@@ -241,10 +231,7 @@ private:
 	PilotIcon*		pilotIcon;
 	aAnimation		selSkillAnim;
 	long			lastCheck;
-
 };
-
-
 
 // specialty skills each show up in here
 class SpecialtyListItem : public aListItem
@@ -287,12 +274,7 @@ private:
 	int					ID;
 
 	friend class PilotPromotionArea;
-
-	
 };
-
-
-
 
 //*************************************************************************************************
 #endif  // end of file ( PilotReview.h )

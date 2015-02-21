@@ -10,17 +10,9 @@
 #ifndef ABLSYMT_H
 #define ABLSYMT_H
 
-#ifndef ABLGEN_H
 #include "ablgen.h"
-#endif
-
-#ifndef ABLSCAN_H
 #include "ablscan.h"
-#endif
-
-#ifndef DABLENV_H
 #include "dablenv.h"
-#endif
 
 //***************************************************************************
 
@@ -209,7 +201,6 @@ typedef struct _Type {
 		//} record;
 	} info;
 } Type;	
-
 
 //***************************************************************************
 

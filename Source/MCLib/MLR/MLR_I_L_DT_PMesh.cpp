@@ -119,7 +119,6 @@ MLR_I_L_DT_PMesh*
 	return mesh;
 }
 
-
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 void
@@ -332,7 +331,6 @@ MLRShape*
 
 		mesh->SetSubprimitiveLengths(lengths, nrTri);
 
-
 		if(icoInfo.indexed==true)
 		{
 			uniquePoints = 1;
@@ -457,7 +455,6 @@ MLRShape*
 						1.0f
 					);
 				normals[i].Normalize(collapsedCoords[i]);
-
 			}
 		}
 		else

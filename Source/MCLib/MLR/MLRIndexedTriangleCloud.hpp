@@ -19,7 +19,6 @@ namespace MidLevelRenderer {
 	//##################    MLRIndexedTriangleCloud    #########################
 	//##########################################################################
 
-
 	class MLRIndexedTriangleCloud:
 		public MLRTriangleCloud
 	{

@@ -132,5 +132,4 @@ namespace MidLevelRenderer {
 		unsigned short *gos_indices;
 		unsigned short	numGOSIndices;
 	};
-
 }

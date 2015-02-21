@@ -35,7 +35,6 @@ Action* FlattenBrush::endPaint()
 		{
 			delete pCurAction;
 			pRetAction = NULL;
-
 		}
 	}
 
@@ -84,7 +83,6 @@ Action* FlattenBrush::applyToSelection()
 	float height = getAverageHeightOfSelection();
 
 	return applyHeightToSelection( height );
-
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -108,7 +106,6 @@ float FlattenBrush::getAverageHeightOfSelection( )
 	height /= count;
 
 	return height;
-
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -128,7 +125,6 @@ Action* FlattenBrush::applyHeightToSelection( float height )
 	}
 
 	return endPaint();
-
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -160,7 +156,6 @@ void FlattenBrush::flattenVertex( int row, int col, float val )
 	}
 #endif /*flattening without "area effect"*/
 }
-
 
 //*************************************************************************************************
 // end of file ( FlattenBrush.cpp )

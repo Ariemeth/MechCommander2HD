@@ -29,7 +29,6 @@ MissionBegin.cpp			: Implementation of the MissionBegin component.
 #include "MPPrefs.h"
 #include "ChatWindow.h"
 #include "LogisticsMechIcon.h"
-
 #include "prefs.h"
 extern CPrefs g_userPreferences;
 
@@ -60,7 +59,6 @@ MissionBegin::MissionBegin()
 	bMultiplayer = 0;
 	animJustBegun = 0;
 	placeHolderScreen = NULL;
-
 }
 
 MissionBegin::~MissionBegin()
@@ -239,7 +237,6 @@ void MissionBegin::begin()
 	mainMenu->begin();
 	file.close();
 
-	
 	// initialize mission selection
 	pMissionSelectionScreen = new MissionSelectionScreen();
 	strcpy( path, artPath );
@@ -252,7 +249,6 @@ void MissionBegin::begin()
 		return;
 	}
 
-	
 	pMissionSelectionScreen->init( &file );	
 	file.close();
 
@@ -296,7 +292,6 @@ void MissionBegin::begin()
 	rightAnim.init( &file, "" );
 	file.close();
 
-
 	// initialize pilot ready
 	strcpy( path, artPath );
 	strcat( path, "mcl_pr_layout.fit" );
@@ -308,14 +303,11 @@ void MissionBegin::begin()
 		return;	
 	}
 
-
-
 	// initialize pilot ready
 	pPilotSelectionScreen = new PilotReadyScreen;
 	pPilotSelectionScreen->init( &file );
 
 	file.close();
-
 
 	// initalize purchase pilot
 	pPurchaseMechScreen = new MechPurchaseScreen;
@@ -388,12 +380,8 @@ void MissionBegin::begin()
 				if ( singlePlayerScreens[i][j]->getButton(MB_MSG_MAINMENU) )
 					singlePlayerScreens[i][j]->getButton(MB_MSG_MAINMENU)->setPressFX( LOG_MAINMENUBUTTON );
 			}
-			
 		}
 	}
-
-
-
 
 	for (i = 0; i < 5/*dim screen X*/; i+=1)
 	{
@@ -405,7 +393,6 @@ void MissionBegin::begin()
 	}
 
 	pMissionSelectionScreen->begin();
-
 }
 
 void MissionBegin::init()
@@ -499,7 +486,6 @@ const char* MissionBegin::update()
 					screens[curScreenX][curScreenY]->begin();
 				}
 				return LogisticsData::instance->getCurrentBigVideo();
-
 			}
 			else if ( LogisticsScreen::MULTIPLAYERRESTART == mainMenu->getStatus() )
 			{
@@ -540,7 +526,6 @@ const char* MissionBegin::update()
 				curScreenY = 1;
 				screens[curScreenX][curScreenY]->beginFadeIn( 1.0 );
 				screens[curScreenX][curScreenY]->begin();
-			
 			}
 			if ( screens[curScreenX][curScreenY] && curScreenX != -1  )
 			{
@@ -551,7 +536,6 @@ const char* MissionBegin::update()
 				bSplash = true;
 				mainMenu->begin();
 			}
-				
 		}
 		return NULL;
 	}
@@ -561,7 +545,6 @@ const char* MissionBegin::update()
 	downAnim.update();
 	upAnim.update();
 
-	
 	LogisticsScreen*		pCurScreen = screens[curScreenX][curScreenY];
 	if ( pCurScreen )
 	{
@@ -717,7 +700,6 @@ const char* MissionBegin::update()
 			(curScreenX == 4 ||( MPlayer && curScreenX == 3 )) )
 			bReadyToLoad = true;
 
-
 		if ( pCurScreen->getStatus() != LogisticsScreen::RUNNING )
 		{
 			g_soundSystem->stopBettySample(); // don't want to carry droning on to next screen
@@ -752,7 +734,6 @@ const char* MissionBegin::update()
 						screens[curScreenX+1][curScreenY]->begin();
 					}
 
-
 					leftAnim.begin();
 					curScreenX++;
 					g_soundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
@@ -762,8 +743,6 @@ const char* MissionBegin::update()
 				{
 					bDone = true;
 				}
-
-				
 			}
 			else if ( pCurScreen->getStatus() == LogisticsScreen::PREVIOUS )
 			{
@@ -842,7 +821,6 @@ const char* MissionBegin::update()
 		bDone = true;
 
 	return NULL;
-
 }
 
 void MissionBegin::render()
@@ -856,7 +834,6 @@ void MissionBegin::render()
 	if ( curScreenX > -1 && curScreenY > -1 )
 	{
 		pCurScreen = screens[curScreenX][curScreenY];
-
 	}
 
 	long xOtherOffset = 0;
@@ -874,7 +851,6 @@ void MissionBegin::render()
 		mainMenu->render();		
 		return;
 	}
-
 
 	if ( pCurScreen /*&& pCurScreen->getStatus() == LogisticsScreen::RUNNING*/ )
 	{
@@ -925,7 +901,6 @@ void MissionBegin::render()
 			pOtherScreen = screens[curScreenX+1][curScreenY];
 			if ( pOtherScreen == placeHolderScreen )
 				pOtherScreen = screens[curScreenX+2][curScreenY];
-
 		}
 
 		if ( curScreenX == 4 ) // don't scroll last screen
@@ -940,11 +915,7 @@ void MissionBegin::render()
 			if ( pOtherScreen )
 				pOtherScreen->render( xOtherOffset, yOtherOffset );
 			pCurScreen->render( xOffset, yOffset );
-
 		}
-
-	
-
 	}
 
 	animJustBegun = false;
@@ -959,7 +930,6 @@ void MissionBegin::beginSplash( const char* playerName)
 		if ( pCurScreen )
 			pCurScreen->end();
 	}
-
 
 	bSplash = true;
 	curScreenX = 0;
@@ -984,7 +954,6 @@ void MissionBegin::beginMPlayer()
 	// already set up
 	if ( multiplayerScreens[0][1] )
 		return;
-
 
 		//multiplayer setup screens
 	MPConnectionType*		pMPConnectionType = NULL;
@@ -1048,7 +1017,6 @@ void MissionBegin::beginMPlayer()
 	pMPGameBrowser->init( &file );
 	file.close();
 
-
 	// initalize MP prefs
 	MPPrefs* pMPPrefs = new MPPrefs;
 
@@ -1081,14 +1049,11 @@ void MissionBegin::beginMPlayer()
 	pMLoadScreen->init( file );
 	file.close();
 
-
-	
 	pMPConnectionType->ppConnectionScreen = (void **)(&(screens[1][1]));
 	pMPConnectionType->pLocalBrowserScreen = pMPGameBrowser;
 	pMPConnectionType->pDirectTcpipScreen = pMPGameBrowser;
 	pMPConnectionType->pMPPlaceHolderScreen = placeHolderScreen;
 
-	
 	multiplayerScreens[0][1] = pMPConnectionType;
 	multiplayerScreens[1][1] = pMPGameBrowser;
 	multiplayerScreens[2][1] = pMPParameterScreen;
@@ -1096,7 +1061,6 @@ void MissionBegin::beginMPlayer()
 	multiplayerScreens[2][0] = pMPPrefs;
 
 	pMPPrefs->initColors();
-	
 
 	{
 		for ( int i = 0; i < 4; i++ )
@@ -1113,7 +1077,6 @@ void MissionBegin::beginMPlayer()
 					if ( multiplayerScreens[i][j]->getButton(MB_MSG_MAINMENU) )
 						multiplayerScreens[i][j]->getButton(MB_MSG_MAINMENU)->setPressFX( LOG_MAINMENUBUTTON );
 				}
-				
 			}
 		}
 	}
@@ -1121,7 +1084,6 @@ void MissionBegin::beginMPlayer()
 
 void MissionBegin::setUpMultiplayerLogisticsScreens()
 {
-
 
 	for (int i = 0; i < 5/*dim screen X*/; i+=1)
 	{
@@ -1133,7 +1095,6 @@ void MissionBegin::setUpMultiplayerLogisticsScreens()
 	}
 	curScreenX = 0;
 	curScreenY = 1;
-
 }
 
 void MissionBegin::setToMissionBriefing()
@@ -1148,7 +1109,6 @@ void MissionBegin::setToMissionBriefing()
 		if ( screens[curScreenX][curScreenY] )
 			screens[curScreenX][curScreenY]->begin();
 	}
-
 }
 
 void MissionBegin::restartMPlayer( const char* playerName )
@@ -1179,9 +1139,6 @@ void MissionBegin::restartMPlayer( const char* playerName )
 				((MPParameterScreen*)screens[curScreenX][curScreenY])->setHostLeftDlg(playerName);
 			}
 		}
-
-
-
 }
 
 void MissionBegin::beginZone()
@@ -1196,8 +1153,6 @@ void MissionBegin::beginZone()
 	mainMenu->skipIntro();
 
 	ChatWindow::init();
-
-
 }
 void MissionBegin::beginAtConnectionScreen()
 {
@@ -1221,6 +1176,4 @@ void MissionBegin::beginAtConnectionScreen()
 	LogisticsData::instance->startMultiPlayer();
 
 	ChatWindow::init();
-
-
 }

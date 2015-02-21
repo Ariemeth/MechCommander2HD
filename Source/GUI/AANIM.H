@@ -16,8 +16,6 @@ public:
 	~aAnimation();
 	aAnimation( const aAnimation& );
 
-	
-
 	aAnimation& operator=( const aAnimation& src );
 
 	long	init(FitIniFile* file, const char* prependName);
@@ -48,9 +46,6 @@ public:
 	float	getCurrentTime() { return currentTime; }
 	float	getMaxTime();
 
-	
-
-
 protected:
 	
 	float currentTime;
@@ -78,9 +73,6 @@ protected:
 	private:
 
 	void copyData( const aAnimation&  );
-
-
-
 };
 
 // animations for the states we use everywhere
@@ -112,17 +104,12 @@ public:
 
 	void update();
 
-
-
-
 private:
-
 
 	aAnimation		animations[MAX_ANIMATION_STATE];
 
 	STATE			curState;
 };
-
 
 #endif
 

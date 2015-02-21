@@ -11,17 +11,9 @@
 #define COLLSN_H
 //------------------------------------------------------------------------------
 // Include Files
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef DCOLLSN_H
 #include "dcollsn.h"
-#endif
-
-#ifndef DGAMEOBJ_H
 #include "dgameobj.h"
-#endif
 
 //------------------------------------------------------------------------------
 // Macro Definitions

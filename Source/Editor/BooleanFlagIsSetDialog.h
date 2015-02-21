@@ -27,7 +27,6 @@ public:
 	CString	m_FlagID;
 	//}}AFX_DATA
 
-
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CBooleanFlagIsSetDialog)

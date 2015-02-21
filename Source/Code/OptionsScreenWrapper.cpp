@@ -10,7 +10,6 @@ OptionsScreenWrapper.cpp			: Implementation of the OptionsScreenWrapper componen
 #include "McLib.h"
 #include "OptionsArea.h"
 
-
 OptionsScreenWrapper::OptionsScreenWrapper()
 {
 	pOptionsScreen = 0;
@@ -49,7 +48,6 @@ void OptionsScreenWrapper::begin()
 
 void OptionsScreenWrapper::init()
 {
-
 }
 
 void OptionsScreenWrapper::destroy()

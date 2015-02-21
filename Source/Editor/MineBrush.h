@@ -7,14 +7,9 @@ MineBrush.h			: Interface for the MineBrush component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef BRUSH_H
 #include "Brush.h"
-#endif
-
 #include "Action.h"
 #include "EditorObjects.h"
-
-
 
 //*************************************************************************************************
 
@@ -37,11 +32,9 @@ class MineBrush: public Brush
 
 	private:
 
-
 		class MineAction : public Action
 		{
 		public:
-
 
 			virtual ~MineAction(){}
 			virtual bool redo();
@@ -60,7 +53,6 @@ class MineBrush: public Brush
 
 		MineAction* pAction;
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( MineBrush.h )

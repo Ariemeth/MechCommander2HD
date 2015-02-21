@@ -32,7 +32,6 @@ void SingleValueDlg::Init()
 	((CEdit*)GetDlgItem( IDC_HEIGHT ))->SetWindowText( minTxt );
 	((CStatic*)GetDlgItem( IDC_TEXT ))->SetWindowText( staticText );
 	SetWindowText( caption );
-
 }
 
 void SingleValueDlg::OnOK()
@@ -69,11 +68,7 @@ void SingleValueDlg::Update()
 
 	((CEdit*)GetDlgItem( IDC_HEIGHT ))->SetWindowText( minTxt );
 	((CStatic*)GetDlgItem( IDC_TEXT ))->SetWindowText( staticText );
-
-
 }
-
-
 
 //*************************************************************************************************
 // end of file ( HeightDlg.cpp )

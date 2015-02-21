@@ -8,18 +8,9 @@
 
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef PACKET_H
 #include "packet.h"
-#endif
-
-#ifndef HEAP_H
 #include "heap.h"
-#endif
-
-#ifndef LZ_H
 #include "lz.h"
-#endif
-
 #include "zlib.h"
 
 #ifndef _MBCS
@@ -155,7 +146,6 @@ long PacketFile::afterOpen (void)
 
 		if (firstCheck == PACKET_FILE_VERSION && !usesCheckSum)
 		{
-			
 		}
 		else
 		{
@@ -399,7 +389,6 @@ long PacketFile::readPackedPacket (long packet, unsigned char *buffer)
 					read(buffer,packetSize);
 				}
 				break;
-
 			}
 		}
 	}

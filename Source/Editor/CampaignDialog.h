@@ -46,7 +46,6 @@ public:
 	CString	m_NameResourceStringIDEdit;
 	//}}AFX_DATA
 
-
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CCampaignDialog)

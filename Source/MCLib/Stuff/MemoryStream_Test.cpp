@@ -23,23 +23,17 @@ bool
 	MemoryStream::TestClass()
 {
 
-
 	SPEW((GROUP_STUFF_TEST, "Starting MemoryStream Single BitPacking Test..."));
 	Test_Assumption(SingeBitStreamTest(100));
 	SPEW((GROUP_STUFF_TEST, "Complete MemoryStream Single BitPacking Test!"));
-
 
 	SPEW((GROUP_STUFF_TEST, "Starting MemoryStream MultipleBitPacking Test..."));
 	//Test_Assumption(MultipleBitStreamTest(100));
 	SPEW((GROUP_STUFF_TEST, "Complete MemoryStream MultipleBitPacking Test!"));
 
-
 	SPEW((GROUP_STUFF_TEST, "Starting MemoryStream Int/Float BitPacking Test..."));
 	Test_Assumption(FloatIntBitStreamTest(1000));
 	SPEW((GROUP_STUFF_TEST, "Complete MemoryStream Int/Float BitPacking Test!"));
-
-
-
 
 	return true;
 };
@@ -55,7 +49,6 @@ bool SingeBitStreamTest(int total_sections_to_write)
 	bool *comp_array_of_bools = new bool[total_sections_to_write];
 	Register_Pointer(comp_array_of_bools);
 
-	
 	for (int i = 0; i < total_sections_to_write; ++i)
 	{
 		int random = Random::GetLessThan(10);
@@ -68,9 +61,7 @@ bool SingeBitStreamTest(int total_sections_to_write)
 		{
 			source_array_of_bools[i] = false;
 		}
-
 	}
-
 
 	// calculate total byte depth.
 	int total_number_of_bytes = (int)(total_sections_to_write/8.0f);
@@ -80,18 +71,15 @@ bool SingeBitStreamTest(int total_sections_to_write)
 		total_number_of_bytes += 1;
 	}
 
-	
 	BYTE *big_byte_array = new BYTE[total_number_of_bytes];
 	Register_Pointer(big_byte_array);
 	
 	MemoryStream bit_stream(big_byte_array, total_number_of_bytes);
 
-
 	for (i = 0; i < total_sections_to_write; ++i)
 	{
 		bit_stream.WriteBit(source_array_of_bools[i]);
 	}
-
 
 	bit_stream.ByteAlign();
 	bit_stream.Rewind();
@@ -101,12 +89,10 @@ bool SingeBitStreamTest(int total_sections_to_write)
 		bit_stream.ReadBit(comp_array_of_bools[i]);
 	}
 
-
 	for (i = 0; i < total_sections_to_write; ++i)
 	{
 		Verify(source_array_of_bools[i] == comp_array_of_bools[i]);
 		Test_Assumption(source_array_of_bools[i] == comp_array_of_bools[i]);
-		
 	}
 
 	Unregister_Pointer(big_byte_array);
@@ -118,12 +104,10 @@ bool SingeBitStreamTest(int total_sections_to_write)
 	Unregister_Pointer(comp_array_of_bools);
 	delete[] comp_array_of_bools;
 
-
 	return true;
 }
 //
 //#############################################################################
-
 
 template <class T> class MinMaxHolderOf
 	{
@@ -137,7 +121,6 @@ template <class T> class MinMaxHolderOf
 
 		MinMaxHolderOf()
 		{
-		
 		}
 	};
 
@@ -145,7 +128,6 @@ MinMaxHolderOf<int>::MinMaxHolderOf()
 {
 	minValue = -Random::GetInt();
 	maxValue = Random::GetInt();
-
 
 	int ramp = Random::GetLessThan(10)+1;
 	ramp *= ramp;
@@ -160,8 +142,6 @@ MinMaxHolderOf<int>::MinMaxHolderOf()
 	}
 
 	value = (int)((Random::GetFraction() * (maxValue - minValue))+minValue);
-
-	
 }
 
 //#############################################################################
@@ -173,17 +153,11 @@ MinMaxHolderOf<float>::MinMaxHolderOf()
 	maxValue = Random::GetFraction();
 
 	value = (Random::GetFraction() * (maxValue - minValue))+minValue;
-
-	
-
-
 }
 //#############################################################################
 
-
 bool FloatIntBitStreamTest(int total_sections_to_write)
 {
-
 
 	// just to make this test interesting I will misalign the stream by one byte every number
 	int total_bits = 0;
@@ -218,8 +192,6 @@ bool FloatIntBitStreamTest(int total_sections_to_write)
 	MinMaxHolderOf<float> *float_min_max = new MinMaxHolderOf<float>[total_sections_to_write];
 	Register_Pointer(float_min_max);
 
-
-
 	for (int i = 0; i < total_sections_to_write; ++i)
 	{
 		int random = Random::GetLessThan(10);
@@ -243,17 +215,12 @@ bool FloatIntBitStreamTest(int total_sections_to_write)
 		Test_Assumption(float_bit_depth[i] <= 32);
 		Test_Assumption(int_bit_depth[i] <= 32);
 
-
 		total_bits += float_bit_depth[i];
 		total_bits += int_bit_depth[i];
-		
-
 	}
 
 	// add in the bools
 	total_bits += total_sections_to_write;
-
-
 
 	// calculate total byte depth.
 	int total_number_of_bytes = (int)(total_bits/8.0f);
@@ -263,12 +230,10 @@ bool FloatIntBitStreamTest(int total_sections_to_write)
 		total_number_of_bytes += 1;
 	}
 
-	
 	BYTE *big_byte_array = new BYTE[total_number_of_bytes];
 	Register_Pointer(big_byte_array);
 	
 	MemoryStream bit_stream(big_byte_array, total_number_of_bytes);
-
 
 	for (i = 0; i < total_sections_to_write; ++i)
 	{
@@ -281,7 +246,6 @@ bool FloatIntBitStreamTest(int total_sections_to_write)
 		//write bit
 		bit_stream.WriteBit(source_array_of_bools[i]);
 	}
-
 
 	bit_stream.ByteAlign();
 	bit_stream.Rewind();
@@ -311,21 +275,16 @@ bool FloatIntBitStreamTest(int total_sections_to_write)
 		convert_float_array[i] = Scaled_Float_From_Bits(buffer, float_min_max[i].minValue, float_min_max[i].maxValue, float_bit_depth[i]);
 	}
 
-
-
 	for (i = 0; i < total_sections_to_write; ++i)
 	{
 		Verify(convert_int_array[i] == comp_int_array[i]);
 		Verify(convert_float_array[i] == comp_float_array[i]);
-
-		
 
 		Test_Assumption(convert_int_array[i] == comp_int_array[i]);
 		Test_Assumption(convert_float_array[i] == comp_float_array[i]);
 
 		Test_Assumption(source_array_of_bools[i] == comp_array_of_bools[i]);
 	}
-
 
 	Unregister_Pointer(int_min_max);
 	delete[] int_min_max;
@@ -360,7 +319,6 @@ bool FloatIntBitStreamTest(int total_sections_to_write)
 	Unregister_Pointer(comp_array_of_bools);
 	delete[] comp_array_of_bools;
 
-
 	return true;
 }
 //
@@ -369,9 +327,6 @@ bool FloatIntBitStreamTest(int total_sections_to_write)
 bool MultipleBitStreamTest(int total_sections_to_write)
 {
 
-	
-
-	
 	int *bit_depth = new int[total_sections_to_write];
 	Register_Pointer(bit_depth);
 	
@@ -394,7 +349,6 @@ bool MultipleBitStreamTest(int total_sections_to_write)
 		Test_Assumption(bit_depth[i] < 65);
 		Test_Assumption(bit_depth[i] > 0);
 
-
 		//SPEW((GROUP_STUFF_TEST, "%d ---- Bit Depth : %d", i, bit_depth[i]));
 
 		bits_to_write[i] = 0x00;
@@ -402,7 +356,6 @@ bool MultipleBitStreamTest(int total_sections_to_write)
 
 		BYTE *byte_array = Cast_Pointer(BYTE *, &bits_to_write[i]);
 
-		
 		int number_of_bytes = (int)(bit_depth[i]/8.0f);
 		int remainder_bits = bit_depth[i] - (number_of_bytes*8);
 
@@ -411,13 +364,11 @@ bool MultipleBitStreamTest(int total_sections_to_write)
 			number_of_bytes += 1;
 		}
 
-
 		for (int byte_count = 0; byte_count < number_of_bytes; ++byte_count)
 		{
 			byte_array[byte_count] = (BYTE)Random::GetLessThan(256);
 			//byte_array[byte_count] = 0xff;
 		}
-
 
 		// mask off unused bits...
 		if (remainder_bits != 0)
@@ -425,7 +376,6 @@ bool MultipleBitStreamTest(int total_sections_to_write)
 			byte_array[number_of_bytes-1] = (BYTE)(byte_array[number_of_bytes-1] >> (8-remainder_bits));
 		}
 	}
-
 
 	// calculate total byte depth.
 	int total_number_of_bytes = (int)(total_bit_depth/8.0f);
@@ -435,10 +385,8 @@ bool MultipleBitStreamTest(int total_sections_to_write)
 		total_number_of_bytes += 1;
 	}
 
-
 	BYTE *big_byte_array = new BYTE[total_number_of_bytes];
 	Register_Pointer(big_byte_array);
-
 
 	MemoryStream bit_stream(big_byte_array, total_number_of_bytes);
 
@@ -453,13 +401,11 @@ bool MultipleBitStreamTest(int total_sections_to_write)
 
 		total_bits_written += bit_depth[i];
 		int total_bytes_written = (int)(total_bits_written/8.0f);
-		
 
 		// one is in the pipe so it doesn't count
 		int stream_bytes_written = bit_stream.GetBytesUsed();
 
 		Test_Assumption(total_bytes_written == stream_bytes_written);
-
 	}
 
 	Test_Assumption(bit_depth_test == 0);
@@ -476,12 +422,10 @@ bool MultipleBitStreamTest(int total_sections_to_write)
 		int total_bytes_read = (int)(total_bits_read/8.0f);
 		//int total_remainder_bits_read = total_bits_read - (total_bytes_read*8);
 
-
 		// one is in the pipe so it doesn't count
 		int stream_bytes_read = bit_stream.GetBytesUsed() - 1;
 
 		Test_Assumption(total_bytes_read == stream_bytes_read);
-
 	}
 
 	for (i = 0; i < total_sections_to_write; ++i)
@@ -498,8 +442,6 @@ bool MultipleBitStreamTest(int total_sections_to_write)
 		for (int byte_count = 0; byte_count < 8; ++byte_count)
 		{
 			//Test_Assumption(source_byte_array == copy_byte_array);
-
-			
 
 			for (int bit_count = 7; bit_count > -1; --bit_count)
 			{
@@ -528,11 +470,8 @@ bool MultipleBitStreamTest(int total_sections_to_write)
 				}
 			}
 
-			
 			MString value = " ";
 			text += value;
-			
-
 		}
 
 		SPEW((GROUP_STUFF_TEST, "%s", (const char *)text));
@@ -568,12 +507,9 @@ bool MultipleBitStreamTest(int total_sections_to_write)
 				}
 			}
 
-			
 			MString value = " ";
 			text += value;
-
 		}
-
 
 		SPEW((GROUP_STUFF_TEST, "%s", (const char *)text));
 
@@ -582,7 +518,6 @@ bool MultipleBitStreamTest(int total_sections_to_write)
 		{
 		
 			SPEW((GROUP_STUFF_TEST, "%02x +", source_byte_array[byte_count]));
-
 		}
 
 		SPEW((GROUP_STUFF_TEST, ""));
@@ -592,7 +527,6 @@ bool MultipleBitStreamTest(int total_sections_to_write)
 		{
 		
 			SPEW((GROUP_STUFF_TEST, "%02x +", copy_byte_array[byte_count]));
-
 		}
 
 		for (byte_count = 0; byte_count < 8; ++byte_count)
@@ -600,13 +534,9 @@ bool MultipleBitStreamTest(int total_sections_to_write)
 			Test_Assumption(source_byte_array[byte_count] == copy_byte_array[byte_count]);
 		}
 
-
 		SPEW((GROUP_STUFF_TEST, ""));
-
-
 	}
 
-	
 	Unregister_Pointer(big_byte_array);
 	delete[] big_byte_array;
 

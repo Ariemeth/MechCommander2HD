@@ -5,7 +5,6 @@
 #ifndef ASCROLL_H
 #define ASCROLL_H
 
-
 #include "aSystem.h"
 #include "aButton.h"
 
@@ -73,9 +72,6 @@ private:
 
 	aAnimation		orangeInfo[4];
 	aAnimation		greenInfo[4];
-	
 };
-
-
 
 #endif

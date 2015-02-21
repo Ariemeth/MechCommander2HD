@@ -7,17 +7,11 @@ MechListBox.h			: Interface for the MechListBox component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef ALISTBOX_H
 #include "aListBox.h"
-#endif
-
-#ifndef AANIM_H
 #include "aAnim.h"
-#endif
 
 class FitIniFile;
 class LogisticsMech;
-
 
 //*************************************************************************************************
 
@@ -46,9 +40,6 @@ public:
 	bool		bOrange;
 	static bool	bAddCalledThisFrame;
 
-
-
-	
 private:
 
 	static MechListBoxItem* s_templateItem;
@@ -84,14 +75,10 @@ private:
 	void startDrag();
 	static void assignAnimation( FitIniFile& file, long& curAnimation );
 
-
 	bool bDim;
 
 	float animTime;
-
-
 };
-
 
 class MechListBox: public aListBox
 {
@@ -99,7 +86,6 @@ public:
 
 	MechListBox(bool deleteIfNoInventory, bool bIncludeForceGroup);
 
-	
 	void	setScrollBarOrange();
 	void	setScrollBarGreen();
 
@@ -123,9 +109,6 @@ public:
 
 	void	setOrange( bool bOrange );
 
-
-	
-
 private:
 
 	static bool	s_DrawCBills;
@@ -139,12 +122,7 @@ private:
 	bool		bIncludeForceGroup;
 
 	bool		bOrange;
-
-
-	
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( MechListBox.h )

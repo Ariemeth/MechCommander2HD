@@ -15,14 +15,8 @@
 //--------------
 // Include Files
 
-#ifndef HEAP_H
 #include "heap.h"
-#endif
-
-#ifndef PQUEUE_H
 #include "pqueue.h"
-#endif
-
 #include <gameos.hpp>
 //***************************************************************************
 // Class PriorityQueue

@@ -11,75 +11,28 @@
 #ifndef WARRIOR_H
 #define	WARRIOR_H
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef MOVE_H
 #include "move.h"
-#endif
-
-#ifndef DMOVEMGR_H
 #include "dmovemgr.h"
-#endif
-
-#ifndef DWARRIOR_H
 #include "dwarrior.h"
-#endif
-
-#ifndef DGAMEOBJ_H
 #include "dgameobj.h"
-#endif
-
-#ifndef DMOVER_H
 #include "dmover.h"
-#endif
-
-#ifndef DMECH_H
 #include "dmech.h"
-#endif
-
-#ifndef MECHCLASS_H
 #include "mechclass.h"
-#endif
-
-#ifndef DGVEHICL_H
 #include "dgvehicl.h"
-#endif
-
-#ifndef DTEAM_H
 #include "dteam.h"
-#endif
-
-#ifndef DCOMNDR_H
 #include "dcomndr.h"
-#endif
-
-#ifndef TACORDR_H
 #include "tacordr.h"
-#endif
-
-#ifndef DRADIO_H
 #include "dradio.h"
-#endif
-
-#ifndef MECH3D_H
 #include "mech3d.h"
-#endif
-
-#ifndef DGOAL_H
 #include "dgoal.h"
-#endif
 
 #ifdef USE_MOVERGROUPS
-#ifndef DGROUP_H
 #include "dgroup.h"
-#endif
+
 #endif
 
-#ifndef DGAMELOG_H
 #include "dgamelog.h"
-#endif
 
 extern float g_missionTime;
 
@@ -231,14 +184,12 @@ typedef enum {
 	NUM_SPECIALTY_SKILLS
 } SpecialtySkill;
 
-
 enum SpecialtySkillType
 {
 	WEAPON_SPECIALTY = 0,
 	CHASSIS_SPECIALTY = 1,
 	RANGE_SPECIALTY = 2,
 	OTHER_SPECIALTY = 3
-
 };
 
 #define FIRST_REGULAR_SPECIALTY	0
@@ -326,7 +277,6 @@ typedef struct {
 	float				lastMessageTime;		// time of last message (of any type)
 } RadioLog;
 
-
 //---------------------------------------------------------------------------
 
 #define	MAX_TARGET_PRIORITIES	20
@@ -398,8 +348,6 @@ class TargetPriorityList {
 
 //---------------------------------------------------------------------------
 
-
-
 //---------------------------------------------------------------------------
 
 typedef enum {
@@ -462,7 +410,6 @@ typedef struct _MoveOrders {
 	bool						run;
 
 	void init (void);
-
 } MoveOrders;
 
 typedef struct _SaveableMoveOrders {
@@ -578,8 +525,6 @@ typedef struct _SaveableMoveOrders {
 		orders.waitForPointTime = waitForPointTime;
 		orders.run = run;
 	}
-
-
 } SaveableMoveOrders;
 
 typedef struct _AttackOrders {
@@ -594,7 +539,6 @@ typedef struct _AttackOrders {
 	float						targetTime;
 
 	void init (void);
-
 } AttackOrders;
 
 typedef struct _SituationOrders {
@@ -612,7 +556,6 @@ typedef struct _SituationOrders {
 	GameObjectWatchID			guardObjectWID;
 
 	void init (void);
-
 } SituationOrders;
 
 //------------------------------------------------------------------------------------------
@@ -974,7 +917,6 @@ class MechWarrior {
 		void update (void);
 
 		void updateMissionSkills();
-
 
 		char* getName (void) {
 			return(name);
@@ -2060,7 +2002,6 @@ class MechWarrior {
 		bool isCloseToFirstTacOrder( Stuff::Vector3D& pos );
 
 		BldgAppearance* getWayPointMarker( const Stuff::Vector3D& pos, char* name );
-
 
 		void setDebugString (long stringNum, char* s) {
 			if ((stringNum > -1) && (stringNum < NUM_PILOT_DEBUG_STRINGS))

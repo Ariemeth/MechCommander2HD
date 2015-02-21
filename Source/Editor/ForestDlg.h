@@ -9,10 +9,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-
-#ifndef FOREST_H
 #include "Forest.h"
-#endif
 
 class ForestDlg : public CDialog
 {
@@ -57,8 +54,6 @@ public:
 	afx_msg void OnEditChanged( UINT nID );
 	afx_msg void OnSliderChanged( UINT id, NMHDR * pNotifyStruct, LRESULT * result );
 
-
-
 protected:
 
 	//{{AFX_MSG(ForestDlg)
@@ -70,6 +65,5 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
-
 
 #endif // 

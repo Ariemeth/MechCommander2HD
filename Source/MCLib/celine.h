@@ -11,14 +11,8 @@
 //---------------------------------------------------------------------------
 // Include files
 
-#ifndef CELEMENT_H
 #include "celement.h"
-#endif
-
-#ifndef VFX_H
 #include "vfx.h"
-#endif
-
 #include <stuff\stuff.hpp>
 //---------------------------------------------------------------------------
 class LineElement : public Element

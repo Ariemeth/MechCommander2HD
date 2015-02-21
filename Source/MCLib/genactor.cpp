@@ -8,57 +8,19 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef GENACTOR_H
 #include "genactor.h"
-#endif
-
-#ifndef CAMERA_H
 #include "camera.h"
-#endif
-
-#ifndef DBASEGUI_H
 #include "dbasegui.h"
-#endif
-
-#ifndef CIDENT_H
 #include "cident.h"
-#endif
-
-#ifndef PATHS_H
 #include "paths.h"
-#endif
-
-#ifndef OBJSTATUS_H
 #include "objstatus.h"
-#endif
-
-#ifndef UTILITIES_H
 #include "utilities.h"
-#endif
-
-#ifndef INIFILE_H
 #include "inifile.h"
-#endif
-
-#ifndef ERR_H
 #include "err.h"
-#endif
-
-#ifndef TXMMGR_H
 #include "txmmgr.h"
-#endif
-
-#ifndef TIMING_H
 #include "timing.h"
-#endif
-
-#ifndef CELINE_H
 #include "celine.h"
-#endif
-
-#ifndef MOVE_H
 #include "move.h"
-#endif
 
 //******************************************************************************************
 extern float	worldUnitsPerMeter;
@@ -136,7 +98,6 @@ void GenericAppearanceType::init (char * fileName)
 		genDmgShape = NULL;
 	}
 
-		
 	//--------------------------------------------------------------------
 	// Load Animation Information.
 	// We can load up to 10 Animation States.
@@ -204,7 +165,6 @@ void GenericAppearanceType::init (char * fileName)
 	{
 		strcpy(rotationalNodeId,"NONE");
 	}
-
 }
 
 //----------------------------------------------------------------------------
@@ -746,7 +706,6 @@ bool GenericAppearance::recalcBounds (void)
 		}
 	}
 
-	
 	return(inView);
 }
 
@@ -827,7 +786,6 @@ long GenericAppearance::render (long depthFixup)
 			cLoadString(objectNameId, tmpString, 254);
 
 			drawTextHelp(tmpString, color);
-	
 		}
 		
 //		selected = FALSE;
@@ -1110,8 +1068,7 @@ long GenericAppearance::update (bool animate)
 					
 				canTransition = true;		//Whenever we have completed one cycle or at last frame, OK to move on!
 			}
-			
-	
+
 			//--------------------------------------
 			//Check negative overflow of gesture
 			if (currentFrame < 0)

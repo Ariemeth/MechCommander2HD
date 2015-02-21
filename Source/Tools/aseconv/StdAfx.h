@@ -29,10 +29,8 @@
 #include <msl.h>
 #include <camera.h>
 #include <mech3d.h>
-
 #include <gameos.hpp>
 #include <mfcplatform.hpp>
-
 #include "..\..\resource.h"
 
 //{{AFX_INSERT_LOCATION}}

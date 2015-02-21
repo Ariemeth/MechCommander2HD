@@ -229,5 +229,4 @@ namespace Stuff {
 		ChainOf<Page*>
 			m_pages;
 	};
-
 }

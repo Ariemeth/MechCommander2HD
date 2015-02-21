@@ -8,7 +8,6 @@
 //				
 //***************************************************************
 
-
 //***************************************************************
 #ifdef UNICODE
 #define EChar unsigned short
@@ -120,7 +119,6 @@ public:
 
 	int ReverseFind ( EChar, int End_Index = EString::INVALID_INDEX) const;
 
-	
 	// we are going to treat this object as a TCHAR array, so we 
 	// don't have to worry about #of chars versus #of bytes
 	EString SubString( int Start_Index, int End_Index ) const;
@@ -180,11 +178,9 @@ public:
 
 	int Find( char, int Start_Index = EString::INVALID_INDEX) const;
 
-
 #endif // Unicode 
 
 private:
-
 
 	// helper functions
 
@@ -197,7 +193,6 @@ private:
 
 	// sets the buffer, reallocs if necessary
 	void	Assign( const EChar* p_Str );
-
 
 	static  inline  unsigned short*	ToUnicode( unsigned short* Buffer, const unsigned char* p_Str, int Num_Chars  );
 	static	inline	int	StrSize( const EChar* p_Str );
@@ -219,14 +214,11 @@ private:
 	static const int s_Alloc_Allign;
 	static const int s_Force_Ansi;
 	static const int s_Force_Unicode;
-
 };
 
 //***************************************************************
 
 // inlines
-
-
 
 /////////////////////////////////////////////////////////////////
 inline void	EString::ChecEBuffer()
@@ -257,7 +249,6 @@ inline void	EString::Empty()
 	m_pBuffer->Release();
 	m_pBuffer =  EBuffer::s_p_Empty_Buffer;
 }
-
 
 /////////////////////////////////////////////////////////////////
 inline void EString::Insert( int Start_Index, const EString& String )
@@ -418,7 +409,6 @@ inline const EChar& EString::operator[](int Index) const
 inline bool EString::operator<( const EString& Greater_String ) const
 {
 	return ( 0 > Compare( Greater_String, true));
-	
 }
 
 /////////////////////////////////////////////////////////////////
@@ -445,7 +435,6 @@ inline bool operator<=( const EChar* p_Lesser_String,
 						const EString& Greater_String )
 {
 	return ( 0 < Greater_String.Compare( p_Lesser_String, true ) ); 
-					 
 }
 
 /////////////////////////////////////////////////////////////////
@@ -453,7 +442,6 @@ inline bool EString::operator<=( const EChar* p_Greater_String ) const
 {
 	return ( 1 > Compare( p_Greater_String, true ) ); 
 }
-
 
 /////////////////////////////////////////////////////////////////
 inline bool EString::operator>( const EString& Lesser_String ) const
@@ -492,9 +480,6 @@ inline bool EString::operator>=( const EChar* p_Lesser_String ) const
 {
 	return ( -1 < Compare( p_Lesser_String, true ) );
 }
-
-
-
 
 #endif //EString_H_
 

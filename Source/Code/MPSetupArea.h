@@ -9,21 +9,14 @@ MPSetupArea.h			: Interface for the MPSetupArea component.
 
 //*************************************************************************************************
 
-#ifndef LOGISTICSSCREEN_H
 #include "LogisticsScreen.h"
-#endif
-
 #include "aSystem.h"
 #include "aListBox.h"
 #include "AttributeMeter.h"
 #include "SimpleCamera.h"
-
-#ifndef AANIM_H
 #include "aAnim.h"
-#endif
 
 class aButton;
-
 
 class aColorPicker : public aObject
 {
@@ -131,8 +124,6 @@ private:
 	SimpleCamera		mechCamera;
 	bool bPaintSchemeInitialized;
 };
-
-
 
 //*************************************************************************************************
 #endif  // end of file ( MPSetupArea.h )

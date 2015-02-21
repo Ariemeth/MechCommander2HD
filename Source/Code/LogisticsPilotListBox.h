@@ -7,9 +7,7 @@ LogisticsPilotListBox.h			: Interface for the LogisticsPilotListBox component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef ALISTBOX_H
 #include "aListBox.h"
-#endif
 
 class LogisticsPilot;
 
@@ -20,7 +18,6 @@ CLASS DESCRIPTION
 LogisticsPilotListBox:
 **************************************************************************************************/
 #define PILOT_LIST_BOX_CHILD_COUNT 7
-
 
 class LogisticsPilotListBoxItem : public aListItem
 {
@@ -53,10 +50,8 @@ private:
 
 	static void setAnimation( FitIniFile& file, int whichOne );
 
-
 	friend class LogisticsPilotListBox;
 };
-
 
 class LogisticsPilotListBox: public aListBox
 {
@@ -76,9 +71,7 @@ class LogisticsPilotListBox: public aListBox
 		LogisticsPilotListBox( const LogisticsPilotListBox& src );
 		
 		// HELPER FUNCTIONS
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( LogisticsPilotListBox.h )

@@ -284,5 +284,4 @@ namespace Stuff {
 		PlugIteratorOf<T>::~PlugIteratorOf()
 	{
 	}
-
 }

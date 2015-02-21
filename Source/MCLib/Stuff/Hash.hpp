@@ -398,5 +398,4 @@ namespace Stuff {
 		HashIteratorOf<T, V>::~HashIteratorOf()
 	{
 	}
-
 }

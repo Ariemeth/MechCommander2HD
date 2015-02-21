@@ -188,7 +188,6 @@ namespace MidLevelRenderer {
 		indicesAlignment=32-( (int)indices.GetData() & 31 );
 	}
 
-
 	inline void
 		GOSVertexPool::Reset()
 	{
@@ -198,5 +197,4 @@ namespace MidLevelRenderer {
 		lastUsedIndex = 0;
 		MLRVertexLimitReached = false;
 	}
-
 }

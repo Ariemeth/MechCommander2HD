@@ -259,7 +259,6 @@ namespace Stuff {
 		radius = obb.sphereRadius;
 		return *this;
 	}
-
 }
 
 namespace MemoryStreamIO {
@@ -276,5 +275,4 @@ namespace MemoryStreamIO {
 			const Stuff::OBB *input
 		)
 			{return stream->WriteBytes(input, sizeof(*input));}
-
 }

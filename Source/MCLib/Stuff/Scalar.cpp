@@ -70,7 +70,6 @@ void
 	}
 }
 
-
 DWORD
 	Stuff::Scaled_Float_To_Bits(float in, float min, float max, int bits)
 {
@@ -80,21 +79,17 @@ DWORD
 	Verify(min < max);
 	Verify(in <= max);
 	Verify(in >= min);
-	
 
 	unsigned int biggest_number = (0xffffffff>>(32-bits));
 	float local_in =  in - min;
 	float range = (max-min);
 
-	
 	DWORD return_value = (DWORD)((local_in/range) * (float)biggest_number);
 	
 	Verify((DWORD)return_value >= 0x00000000);
 	Verify((DWORD)return_value <= (DWORD)biggest_number);
 
-
 	return return_value;
-
 }
 
 float
@@ -105,7 +100,6 @@ float
 
 	Verify(min < max);
 
-
 	in &= (0xffffffff>>(32-bits));
 
 	unsigned int biggest_number = (0xffffffff>>(32-bits));
@@ -113,7 +107,6 @@ float
 	float ratio = in/(float)biggest_number;
 	float range = (max-min);
 	float return_value = (ratio * range)+min;
-
 
 	return return_value;
 }
@@ -133,14 +126,12 @@ DWORD
 	int local_in =  in - min;
 	int range = (max-min);
 
-	
 	DWORD return_value = (DWORD)(((float)local_in/(float)range) * (float)biggest_number);
 	
 	Verify((DWORD)return_value >= 0x00000000);
 	Verify((DWORD)return_value < (DWORD)biggest_number);
 
 	return return_value;
-
 }
 
 int
@@ -151,7 +142,6 @@ int
 
 	Verify(min < max);
 
-
 	unsigned int biggest_number = (0xffffffff>>(32-bits));
 
 	float ratio = (float)in/(float)biggest_number;
@@ -160,5 +150,4 @@ int
 
 	return return_value;
 }
-
 

@@ -5,10 +5,8 @@
 #include <windows.h>
 #include <stdio.h>
 #include "msodw.h"
-
 #include "utilities.h"
 #include "..\resource.h"
-
 #include <gameos.hpp>
 
 long _stdcall ProcessException( EXCEPTION_POINTERS* ep );

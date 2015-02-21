@@ -24,7 +24,6 @@ DynamicArrayOf<RGBAColor>
 DynamicArrayOf<int>
 	*MLRNGonCloud::clipExtraLength;
 
-
 MLRNGonCloud::ClassData*
 	MLRNGonCloud::DefaultData = NULL;
 
@@ -150,7 +149,6 @@ int
 	Scalar a=0.0f, bc0, bc1;
 #endif
 
-	
 	Check_Object(vt);
 	gos_vertices = vt->GetActualVertexPool();
 	Check_Pointer(gos_vertices);
@@ -491,7 +489,6 @@ int
 				srcPolygon.clipPerVertex = &clipPerVertex[j];							
 				srcPolygon.flags = 0;
 
-
 				srcPolygon.colors = specialClipColors.GetData();
 
 				srcPolygon.length = numOfVertices;
@@ -610,7 +607,6 @@ int
 
 								DoCleanClipTrick(dstPolygon.coords[dstPolygon.length], l);
 
-
 								//
 								//----------------------------------------------------------
 								// If there are colors, lerp them in screen space for now as
@@ -657,7 +653,6 @@ int
 	//						dstPolygon.texCoords = clipBuffer[dstBuffer].texCoords.GetData();
 							dstPolygon.clipPerVertex = clipBuffer[dstBuffer].clipPerVertex.GetData();
 							dstPolygon.length = 0;
-
 						}
 
 						mask = mask << 1;

@@ -171,5 +171,4 @@ namespace MidLevelRenderer {
 		Stuff::MString
 			lightName;
 	};
-
 }

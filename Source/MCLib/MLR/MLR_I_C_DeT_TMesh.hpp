@@ -15,7 +15,6 @@ namespace MidLevelRenderer {
 	//###### MLRIndexedTriMesh with color no lighting and detail texture #######
 	//##########################################################################
 
-
 	class MLR_I_C_DeT_TMesh:
 		public MLR_I_DeT_TMesh
 	{
@@ -146,5 +145,4 @@ namespace MidLevelRenderer {
 			MLRState*,
 			MLRState*
 		);
-
 }

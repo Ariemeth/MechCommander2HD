@@ -40,7 +40,6 @@ void
 	Register_Object(clipExtraTexCoords2);
 	clipExtraTexCoords2->SetLength(Limits::Max_Number_Vertices_Per_Mesh);
 
-
 	texCoords2 = new DynamicArrayOf<Vector2DScalar>;
 	Register_Object(texCoords2);
 	texCoords2->SetLength(Limits::Max_Number_Vertices_Per_Mesh);
@@ -128,7 +127,6 @@ MLR_I_DT_PMesh*
 
 	return mesh;
 }
-
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
@@ -405,7 +403,6 @@ MLRShape*
 		subdivide (coords, v[0], v[1], v[2], icoInfo.depth, nrTri, icoInfo.radius);
 
 		mesh->SetSubprimitiveLengths(lengths, nrTri);
-
 
 		if(icoInfo.indexed==true)
 		{

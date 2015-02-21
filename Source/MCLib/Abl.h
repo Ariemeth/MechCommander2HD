@@ -10,25 +10,11 @@
 #ifndef ABL_H
 #define	ABL_H
 
-#ifndef ABLGEN_H
 #include "ablgen.h"
-#endif
-
-#ifndef ABLEXEC_H
 #include "ablexec.h"
-#endif
-
-#ifndef ABLSYMT_H
 #include "ablsymt.h"
-#endif
-
-#ifndef ABLENV_H
 #include "ablenv.h"
-#endif
-
-#ifndef ABLDBUG_H
 #include "abldbug.h"
-#endif
 
 //***************************************************************************
 

@@ -220,5 +220,4 @@ namespace Stuff {
 				Stuff::DynamicArrayOf<Stuff::Point3D> &points
 			);
 	};
-
 }

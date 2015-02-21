@@ -134,7 +134,6 @@ class WeaponEffects
 			
 			return -1;
 		}
-	
 };
 
 extern WeaponEffects *weaponEffects;

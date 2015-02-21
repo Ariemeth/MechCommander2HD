@@ -11,14 +11,8 @@
 #define LOGISTICS_H
 //----------------------------------------------------------------------------------
 // Include Files
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef MC2movie_H
 #include "mc2movie.h"
-#endif
-
 #include "LogisticsData.h"
 
 //----------------------------------------------------------------------------------
@@ -32,13 +26,11 @@
 class MissionResults;
 class MissionBegin;
 
-
 //----------------------------------------------------------------------------------
 class Logistics
 {
 	protected:
-	
-		
+
 		bool							active;						//Am I currently in control?
 		
 		long							logisticsState;
@@ -46,7 +38,6 @@ class Logistics
 		
 		LogisticsData					logisticsData;
 
-		
 		MissionResults*					missionResults;
 		MissionBegin*					missionBegin;
 	
@@ -103,10 +94,7 @@ class Logistics
 
 		MC2MoviePtr	bMovie;
 
-
 	private:
-
-		
 
 		void initializeLogData();
 		bool		bMissionLoaded;

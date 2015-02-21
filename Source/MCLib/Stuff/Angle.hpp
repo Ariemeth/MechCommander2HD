@@ -330,7 +330,6 @@ namespace Stuff {
 				Check_Pointer(this); Check_Object(&pair);
 				angle = Arctan(pair.sine, pair.cosine); return *this;
 			}
-
 }
 
 namespace MemoryStreamIO {
@@ -347,5 +346,4 @@ namespace MemoryStreamIO {
 			const Stuff::Radian *input
 		)
 			{return stream->WriteBytes(input, sizeof(*input));}
-
 }

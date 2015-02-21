@@ -11,19 +11,11 @@
 
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef HEAP_H
 #include "heap.h"
-#endif
-
-#ifndef FILE_H
 #include "file.h"
-#endif
-
 #include <windows.h>
 #include <imagehlp.h>
-
 #include <gameos.hpp>
-
 #include <tchar.h>
 #include <stdio.h>             // For sprintf
 #include <string.h>            // For strchr
@@ -253,7 +245,6 @@ long HeapManager::decommitHeap (unsigned long decommitSize)
 	
 	return NO_ERR;
 }
-
 
 /////////////////////////////////////////////////////////////
 
@@ -796,7 +787,6 @@ ULine3:											//End of Unlink code
 		mov		eax,blockOffs
 		jmp		short Alloc_Done
 	}
-	
 
 UnlinkNormal:
 
@@ -813,7 +803,6 @@ UnlinkNormal:
 		mov		[edi].blockSize,eax
 		mov		[edi].upperBlock,ebx
 	}
-	
 
 	//-------------------------------------------------------------------------------------
 	//SORT Routine
@@ -992,7 +981,6 @@ __Done:
 		mov		eax,edi
 		jmp		short Alloc_Done
 	}
-	
 
 //-----------------------------------------error handling
 
@@ -1018,7 +1006,6 @@ Alloc_Overflow:
 	{
     	mov     eax,ALLOC_OVERFLOW
 	}
-	
 
 Alloc_error:
 
@@ -1033,8 +1020,6 @@ Alloc_error:
 #else
 		jmp		noFatal
 #endif
-
-
 	}
 
 	memCoreLeft = totalCoreLeft();
@@ -1172,7 +1157,6 @@ long UserHeap::Free (void *memBlock)
 #ifdef _DEBUG
 		sub		blockOffs,4	 					//extra return pointer
 #endif
-		
 	}
 
 	//merge this block with lower one if possible
@@ -1785,7 +1769,6 @@ DoneML:
 	{
 		mov		result,al						//Move eax into result
 	}
-	
 
 	firstNearBlock = localFirst;
 

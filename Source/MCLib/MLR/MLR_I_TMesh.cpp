@@ -267,7 +267,6 @@ void
 	{
 		*iPtr = 1;
 	}
-
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -427,7 +426,6 @@ void
 			Stop_Timer(LightMap_Light_Time);
 		}
 	}
-
 }
 
 extern RGBAColor errorColor;

@@ -7,10 +7,7 @@ MechPurchaseScreen.h			: Interface for the MechPurchaseScreen component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef LOGISTICSSCREEN_H
 #include "LogisticsScreen.h"
-#endif
-
 #include "MechListBox.h"
 #include "LogisticsMech.h"
 #include "EList.h"
@@ -58,13 +55,10 @@ class MechPurchaseScreen: public LogisticsScreen
 
 		bool				acceptPressed;
 
-
 		static MechPurchaseScreen* s_instance;
-
 
 		bool				dragStartLeft;
 
-		
 		typedef EList<LogisticsMech, LogisticsMech > MECH_LIST;	
 		MECH_LIST		prevInventory;
 
@@ -75,7 +69,6 @@ class MechPurchaseScreen: public LogisticsScreen
 
 		float				flashTime;
 
-
 	// HELPER FUNCTIONS
 
 		void addSelectedMech();
@@ -84,11 +77,7 @@ class MechPurchaseScreen: public LogisticsScreen
 		void removeMech( LogisticsMech* pMech );
 		void endDrag();
 		bool selectFirstBuyableMech();
-
-
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( MechPurchaseScreen.h )

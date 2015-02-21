@@ -9,14 +9,8 @@
 //===========================================================================//
 
 //******************************************************************************************
-#ifndef CMPONENT_H
 #include "cmponent.h"
-#endif
-
-#ifndef HEAP_H
 #include "heap.h"
-#endif
-
 #include "utilities.h"
 //******************************************************************************************
 
@@ -163,7 +157,6 @@ long MasterComponent::initEXCEL (char* dataLine, float baseSensorRange) {
 				criticalSpacesReq[location] = atoi(field);
 		}
 			field = strtok(NULL, ",");
-
 	}
 
 	int ammoType = WEAPON_AMMO_NONE;
@@ -653,7 +646,6 @@ long MasterComponent::loadMasterList (char* fileName, long listSize, float baseS
 	// Special Component Data
 	char dataLine[512];
 	long lineLength;
-	
 
 	lineLength = componentFile.readLine((MemoryPtr)dataLine, 511);
 
@@ -671,7 +663,6 @@ long MasterComponent::loadMasterList (char* fileName, long listSize, float baseS
 
 	return(NO_ERR);
 }
-
 
 //---------------------------------------------------------------------------
 long MasterComponent::saveMasterList (char* fileName, long listSize, float baseSensorRange) 

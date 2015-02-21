@@ -9,13 +9,9 @@
 //---------------------------------------------------------------------------
 // Include files
 
-#ifndef CIDENT_H
 #include "cident.h"
-#endif
-
 #include "heap.h"
 #include <ctype.h>
-
 #include "windows.h"
 
 #ifndef _MBCS
@@ -55,7 +51,6 @@ void FullPathFileName::init (char * dir_path, const char * name, char * ext)
 	total_length += strlen(name);
 	total_length += strlen(ext);
 	total_length++;
-
 
 	fullName = (char *)g_systemHeap->Malloc(total_length);
 	gosASSERT(fullName != NULL);

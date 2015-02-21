@@ -7,17 +7,9 @@
 
 //---------------------------------------------------------------------------
 // Include files
-#ifndef SOUNDSYS_H
 #include "soundsys.h"
-#endif
-
-#ifndef SOUNDS_H
 #include "sounds.h"
-#endif
-
-#ifndef CAMERA_H
 #include "camera.h"
-#endif
 
 //---------------------------------------------------------------------------
 #define MAX_SENSOR_UPDATE_TIME		(5.0f)	//Seconds
@@ -301,7 +293,6 @@ bool wave_ParseWaveMemory(MemoryPtr lpChunkOfMemory, MC2_WAVEFORMATEX** lplpWave
               return TRUE;
             }
           break;
-
         } // End case
 
       // Move the pointer through the chunk of memory
@@ -799,7 +790,6 @@ long SoundSystem::playBettySample (unsigned long bettySampleId)
 		lastBettyId = bettySampleId;
 		channelInUse[ourChannel] = TRUE;
 
-
 		long result = bettyDataFile->seekPacket(bettySampleId);
 		if (result != NO_ERR)
 			return(-1);
@@ -1089,7 +1079,6 @@ void SoundSystem::stopBettySample (void)
 		bettyHandle = NULL;
 	}
 }
-
 
 //---------------------------------------------------------------------------
 void SoundSystem::setDigitalMasterVolume (byte volume)

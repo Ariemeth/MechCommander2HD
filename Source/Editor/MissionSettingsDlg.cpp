@@ -9,7 +9,6 @@
 #include "resource.h"
 #include "MissionSettingsDlg.h"
 #include "assert.h"
-
 #include "EditorData.h" /* just for definition of GAME_MAX_PLAYERS */
 #include "ResourceStringSelectionDlg.h"
 #include "..\MCLib\Utilities.h" /*for cLoadString*/
@@ -28,7 +27,6 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 // MissionSettingsDlg dialog
-
 
 MissionSettingsDlg::MissionSettingsDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(MissionSettingsDlg::IDD, pParent)
@@ -71,7 +69,6 @@ MissionSettingsDlg::MissionSettingsDlg(CWnd* pParent /*=NULL*/)
 	m_MissionNameResourceStringIDEdit = _T("");
 	//}}AFX_DATA_INIT
 }
-
 
 void MissionSettingsDlg::DoDataExchange(CDataExchange* pDX)
 {
@@ -118,7 +115,6 @@ void MissionSettingsDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_MISSION_NAME_RESOURCE_STRING_ID_EDIT, m_MissionNameResourceStringIDEdit);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(MissionSettingsDlg, CDialog)
 	//{{AFX_MSG_MAP(MissionSettingsDlg)

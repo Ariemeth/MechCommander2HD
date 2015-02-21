@@ -37,7 +37,6 @@ namespace MidLevelRenderer {
 			GetLightType() 
 				{ Check_Object(this); return AmbientLight; }
 
-
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Class Data Support
 	//
@@ -54,5 +53,4 @@ namespace MidLevelRenderer {
 
 	protected:
 	};
-
 }

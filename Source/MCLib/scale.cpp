@@ -7,26 +7,11 @@
 
 //---------------------------------------------------------------------------
 // Include files
-#ifndef DSTD_H
 #include "dstd.h"
-#endif
-
-#ifndef HEAP_H
 #include "heap.h"
-#endif
-
-#ifndef VPORT_H
 #include "vport.h"
-#endif
-
-#ifndef VFX_H
 #include "vfx.h"
-#endif
-
-#ifndef CAMERA_H
 #include "camera.h"
-#endif
-
 #include <math.h>
 #include <gameos.hpp>
 

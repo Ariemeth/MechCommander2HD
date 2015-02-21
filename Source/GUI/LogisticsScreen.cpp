@@ -18,7 +18,6 @@ extern long helpTextID;
 extern long helpTextHeaderID;
 extern float g_frameTime;
 
-
 LogisticsScreen::LogisticsScreen()
 {
 	statics = 0;
@@ -30,12 +29,9 @@ LogisticsScreen::LogisticsScreen()
 	staticCount = rectCount = buttonCount = textCount = editCount = animObjectsCount = 0;
 
 	helpTextArrayID = -1;
-	
-	
+
 	fadeInTime = fadeOutTime= fadeTime = 0;
 	fadeOutMaxColor = 0xff000000;
-
-	
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -48,7 +44,6 @@ LogisticsScreen::~LogisticsScreen()
 void LogisticsScreen::destroy()
 {
 	clear();	
-
 }
 
 void	LogisticsScreen::clear()
@@ -86,8 +81,6 @@ void	LogisticsScreen::clear()
 	animObjectsCount= 0;
 }
 
-
-
 //-------------------------------------------------------------------------------------------------
 
 void LogisticsScreen::init( FitIniFile& file, const char* staticName, const char* textName, const char* rectName,
@@ -115,7 +108,6 @@ void LogisticsScreen::init( FitIniFile& file, const char* staticName, const char
 					sprintf( blockName, "%s%d", staticName, i );
 					statics[i].init( &file, blockName );			
 				}
-				
 			}
 		}
 	}
@@ -141,7 +133,6 @@ void LogisticsScreen::init( FitIniFile& file, const char* staticName, const char
 		}
 	}
 
-	
 	// init buttons
 	if ( buttonName )
 	{
@@ -161,7 +152,6 @@ void LogisticsScreen::init( FitIniFile& file, const char* staticName, const char
 					addChild( &buttons[i] );
 				}
 			}
-		
 		}
 	}
 
@@ -183,7 +173,6 @@ void LogisticsScreen::init( FitIniFile& file, const char* staticName, const char
 					sprintf( blockName, "%s%d", textName, i );
 					textObjects[i].init( &file, blockName );
 				}
-				
 			}
 		}
 	}
@@ -205,7 +194,6 @@ void LogisticsScreen::init( FitIniFile& file, const char* staticName, const char
 					sprintf( blockName, "%s%d", editName, i );
 					edits[i].init( &file, blockName );
 				}
-				
 			}
 		}
 	}
@@ -226,7 +214,6 @@ void LogisticsScreen::init( FitIniFile& file, const char* staticName, const char
 					sprintf( blockName, "%s%d", animObjectName, i );
 					animObjects[i].init( &file, blockName, neverFlush );
 				}
-				
 			}
 		}
 	}
@@ -325,10 +312,7 @@ void LogisticsScreen::update()
 //	}
 
 	helpTextID = 0;
-
-
 }
-
 
 //-------------------------------------------------------------------------------------------------
 void LogisticsScreen::render()
@@ -341,7 +325,6 @@ void LogisticsScreen::render()
 			( (rects[i].getColor() & 0xff000000) == 0xff000000 ) )
 			rects[i].render();
 	}
-
 
 	for ( i = 0; i < staticCount; i++ )
 		statics[i].render();
@@ -359,7 +342,6 @@ void LogisticsScreen::render()
 			rects[i].render();
 	}
 
-
 	for ( i = 0; i < buttonCount; i++ )
 		buttons[i].render();
 
@@ -373,8 +355,6 @@ void LogisticsScreen::render()
 
 	for ( i = 0; i < animObjectsCount; i++ )
 		animObjects[i].render();
-
-
 
 	if ( fadeOutTime )
 	{
@@ -390,8 +370,6 @@ void LogisticsScreen::render()
 		GUI_RECT rect = { 0,0, Environment.screenWidth, Environment.screenHeight };
 		drawRect( rect, color );
 	}
-	
-
 }
 
 long LogisticsScreen::getStatus()
@@ -424,7 +402,6 @@ void LogisticsScreen::render( int xOffset, int yOffset )
 			rects[i].move( -xOffset, -yOffset );
 		}
 	}
-
 
 	for ( i = 0; i < staticCount; i++ )
 	{
@@ -496,10 +473,6 @@ void LogisticsScreen::render( int xOffset, int yOffset )
 		GUI_RECT rect = { 0,0, Environment.screenWidth, Environment.screenHeight };
 		drawRect( rect, color );
 	}
-
-
-
-
 }
 
 LogisticsScreen::LogisticsScreen( const LogisticsScreen& src )
@@ -573,7 +546,6 @@ void LogisticsScreen::copyData( const LogisticsScreen& src )
 			for ( int i = 0; i < editCount; i++ )
 				edits[i] = src.edits[i];
 		}
-
 	}
 }
 
@@ -584,7 +556,6 @@ void  LogisticsScreen::moveTo( long xPos, long yPos )
 
 	aObject::init( xPos, yPos, 800, 600 );
 
-
 	move( xOffset, yOffset );
 }
 
@@ -594,7 +565,6 @@ void  LogisticsScreen::move( long xOffset, long yOffset )
 	{
 		rects[i].move( xOffset, yOffset );
 	}
-
 
 	for ( i = 0; i < staticCount; i++ )
 	{
@@ -616,9 +586,7 @@ void  LogisticsScreen::move( long xOffset, long yOffset )
 
 	for ( i = 0; i < animObjectsCount; i++ )
 		animObjects[i].move( xOffset, yOffset );
-
 }
-
 
 bool	LogisticsScreen::inside( long x, long y)
 {
@@ -665,9 +633,6 @@ void LogisticsScreen::begin()
 
 	gos_KeyboardFlush();
 }
-
-
-
 
 //*************************************************************************************************
 // end of file ( LogisticsScreen.cpp )

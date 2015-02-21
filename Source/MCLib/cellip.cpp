@@ -9,17 +9,9 @@
 //---------------------------------------------------------------------------
 // Include files
 
-#ifndef CELLIP_H
 #include "cellip.h"
-#endif
-
-#ifndef VPORT_H
 #include "vport.h"
-#endif
-
-#ifndef TXMMGR_H
 #include "txmmgr.h"
-#endif
 
 unsigned long EllipseElement::s_textureHandle = 0;
 //---------------------------------------------------------------------------
@@ -48,7 +40,6 @@ EllipseElement::EllipseElement (Stuff::Vector2DOf<long> &cntr, Stuff::Vector2DOf
 	location[1].v = location[2].v = 1.0f;
 
 	location[4] = location[0];
-
 }
 	
 //---------------------------------------------------------------------------
@@ -65,7 +56,6 @@ void EllipseElement::draw (void)
 	gos_SetRenderState( gos_State_Specular, 0);
 	gos_SetRenderState( gos_State_Fog, 0);
 
-	
 	if ( clip.left != 0 || clip.right != 0 || clip.top != 0 || clip.bottom != 0 )
 	{
 		gos_VERTEX newLocation[4];
@@ -111,12 +101,9 @@ void EllipseElement::draw (void)
 	else
 	{
 
-
 		gos_DrawTriangles( location, 3 );
 		gos_DrawTriangles( &location[2], 3 );
 	}
-
-	
 }
 
 void EllipseElement::init()

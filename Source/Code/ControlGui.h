@@ -8,46 +8,20 @@ ControlGui.h			: Interface for the ControlGui component.  This thing holds the t
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef GAMETACMAP_H
 #include "GameTacMap.h"
-#endif
-
-#ifndef FORCEGROUPBAR_H
 #include "ForceGroupBar.h"
-#endif
-
-#ifndef MOVER_H
 #include "mover.h"
-#endif
-
-#ifndef UTILITIES_H
 #include "Utilities.h"
-#endif
-
-#ifndef PAUSEWINDOW_H
 #include "PauseWindow.h"
-#endif
-
-#ifndef AFONT_H
 #include "aFont.h"
-#endif
-
-#ifndef AEDIT_H
 #include "aEdit.h"
-#endif
-
-#ifndef MC2movie_H
 #include "mc2movie.h"
-#endif
-
-#ifndef MPSTATS_H
 #include "MPStats.h"
-#endif
+
 class CObjective;
 class InfoWindow;
 class PauseWindow;
 //*************************************************************************************************
-
 
 #define LAST_VEHICLE MAX_VEHICLE - LARGE_AIRSTRIKE
 #define OBJECTVE_MOVE_COUNT 2
@@ -58,7 +32,6 @@ class PauseWindow;
 CLASS DESCRIPTION
 ControlGui:
 **************************************************************************************************/
-
 
 struct	ButtonData
 {
@@ -77,7 +50,6 @@ struct	ButtonData
 	int				fileHeight;
 	unsigned long	textureHandle;
 	bool			textureRotated;
-	
 };
 
 class ControlButton
@@ -103,7 +75,6 @@ class ControlButton
 	static void initButtons( FitIniFile& file, long buttonCount, 
 			ControlButton* buttons, ButtonData* buttonData, const char* str, aFont* font = 0 );
 
-
 	enum States
 	{
 		ENABLED = 0,
@@ -112,9 +83,7 @@ class ControlButton
 		AMBIGUOUS,
 		HIDDEN
 	};
-
 };
-
 
 class ControlGui
 {
@@ -199,7 +168,6 @@ class ControlGui
 			GUARDTOWER,
 			CUR_RANGE, // fire from right where I AM
 			LAST_COMMAND
-
 		};
 
 		enum VehicleCommands
@@ -275,7 +243,6 @@ class ControlGui
 
 		void	setRolloverHelpText( unsigned long textID );
 
-
 		void	setChatText( const char* playerName, const char* message, unsigned long backgroundColor, 
 			unsigned long textColor );
 		void	toggleChat( bool setTeamOnly );
@@ -320,7 +287,6 @@ class ControlGui
 		static const char*	vehicleNames[5];
 		static long			vehicleIDs[5];
 		static const char*	vehiclePilots[5];
-
 
 		static long			vehicleCosts[LAST_VEHICLE];
 
@@ -436,9 +402,7 @@ class ControlGui
 
 			return NULL;
 		}
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( ControlGui.h )

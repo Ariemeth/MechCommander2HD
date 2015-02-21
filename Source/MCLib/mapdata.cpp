@@ -10,21 +10,10 @@
 
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef MAPDATA_H
 #include "mapdata.h"
-#endif
-
-#ifndef TERRAIN_H
 #include "terrain.h"
-#endif
-
-#ifndef CAMERA_H
 #include "camera.h"
-#endif
-
-#ifndef TIMING_H
 #include "timing.h"
-#endif
 
 //---------------------------------------------------------------------------
 // c'tors for postCompVertex
@@ -66,7 +55,6 @@ PostcompVertex::PostcompVertex()
 	localRGBLight = 0;
 	terrainType = 0;
 	selected = 0;
-
 }
 
 //---------------------------------------------------------------------------
@@ -369,7 +357,6 @@ void MapData::setVertexHeight( int VertexIndex, float Val )
 	blocks[VertexIndex].elevation = Val;
 }
 
-
 //---------------------------------------------------------------------------
 float MapData::getVertexHeight( int VertexIndex )
 {
@@ -512,8 +499,7 @@ void MapData::calcLight (void)
 			triVect[1].x = Terrain::worldUnitsPerVertex;
 			triVect[1].y = 0.0;
 			triVect[1].z = (v3->getElevation() - v0->getElevation()) * ContrastEnhance;
-			
-		
+
 			normals[2].Cross(triVect[0],triVect[1]);
 			gosASSERT(normals[2].z > 0.0);
 			
@@ -945,7 +931,6 @@ unsigned long MapData::getTexture( long indexY, long indexX )
 	
 	long index = indexX + indexY * Terrain::realVerticesMapSide;
 	return blocks[index].textureData;
-
 }
 
 //---------------------------------------------------------------------------
@@ -956,7 +941,6 @@ float MapData::terrainElevation( long indexY, long indexX )
 	
 	long index = indexX + indexY * Terrain::realVerticesMapSide;
 	return blocks[index].elevation;
-
 }
 
 //---------------------------------------------------------------------------
@@ -1020,7 +1004,6 @@ void MapData::setTerrain( long indexY, long indexX, int Type )
 			pVertex1->textureData += txmResult;
 		}
 	}
-
 }
 
 //---------------------------------------------------------------------------
@@ -1033,8 +1016,6 @@ long MapData::getTerrain( long tileR, long tileC )
 	long index = tileC + tileR * Terrain::realVerticesMapSide;
 
 	return blocks[index].terrainType;
-
-
 }
 
 //---------------------------------------------------------------------------
@@ -1046,7 +1027,6 @@ void MapData::getOverlay( long tileR, long tileC, Overlays& type, unsigned long&
 	long index = tileC + tileR * Terrain::realVerticesMapSide;
 
 	Terrain::terrainTextures->getOverlayInfoFromHandle( blocks[index].textureData, type, Offset );
-
 }
 //---------------------------------------------------------------------------
 long MapData::getOverlayTile (long block, long vertex)
@@ -1367,7 +1347,6 @@ float MapData::terrainLight (Stuff::Vector3D &position)
 						(pVertex2->vertexNormal.z * dist2) +
 						(pVertex3->vertexNormal.z * dist3) +
 						(pVertex4->vertexNormal.z * dist4);
-
 
 	if ( distWeight > Stuff::SMALL )
 		weightedNormal /= distWeight;
@@ -1842,7 +1821,6 @@ void MapData::selectVertex( unsigned long tileRow, unsigned long tileCol, bool b
 	else
 		hasSelection --;
 
-
 	if ( hasSelection < 0 )
 		hasSelection = 0;
 }
@@ -1855,7 +1833,6 @@ bool MapData::isVertexSelected( unsigned long tileRow, unsigned long tileCol )
 
 	unsigned long index = tileRow * Terrain::realVerticesMapSide + tileCol;
 	return blocks[index].selected ? true : false;
-
 }
 
 //---------------------------------------------------------------------------

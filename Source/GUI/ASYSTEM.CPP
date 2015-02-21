@@ -9,11 +9,8 @@
 #include "paths.h"
 #include "userInput.h"
 
-
 long helpTextID = 0;
 long helpTextHeaderID = 0;
-
-
 
 void aObject::update()
 {
@@ -28,7 +25,6 @@ void aObject::update()
 	for ( int i = 0; i < pNumberOfChildren; i++ )
 		pChildren[i]->update();
 }
-
 
 // base class aObject methods
 
@@ -104,14 +100,12 @@ void aObject::init(FitIniFile* file, const char* blockName, DWORD neverFlush)
 
 	file->readIdLong( "HelpCaption", helpHeader );
 	file->readIdLong( "HelpDesc", helpID );
-	
 
 	if ( NO_ERR == file->readIdString( "fileName", fileName, 32 ) )
 	{
 
 		bool bAlpha = 0;
 		file->readIdBoolean( "Alpha", bAlpha );
-
 
 		if ( !textureHandle )
 		{
@@ -175,7 +169,6 @@ void aObject::init(FitIniFile* file, const char* blockName, DWORD neverFlush)
 		location[2].v = (v + vHeight)/(float)fileWidth + (.1f / (float)fileWidth);;
 		location[3].v = (v + vHeight)/(float)fileWidth + (.1f / (float)fileWidth);;
 	}
-
 }
 
 void aObject::destroy()
@@ -190,16 +183,12 @@ void aObject::destroy()
 			mcTextureManager->removeTexture( gosID );
 	}
 
-
 	if (pParent)
 	{
 		pParent->removeChild(this);
 	}
 	pParent = NULL;
-	
 }
-
-
 
 bool aObject::pointInside(long mouseX, long mouseY) const
 {
@@ -229,7 +218,6 @@ bool aObject::rectIntersect(const GUI_RECT& testRect) const
 		return (FALSE);
 }
 
-
 aObject* aObject::findObject(long xPos, long yPos)
 {
 	aObject* target;
@@ -250,13 +238,10 @@ aObject* aObject::findObject(long xPos, long yPos)
 	return NULL;
 }
 
-
 void aObject::setParent(aObject* p)
 {
 	pParent = p;
 }
-
-
 
 long aObject::numberOfChildren() const
 {
@@ -304,8 +289,6 @@ void aObject::removeChild(aObject* c)
 	}
 }
 
-
-
 aObject* aObject::child(long w)
 {
 	if (w > pNumberOfChildren - 1)
@@ -323,7 +306,6 @@ float aObject::height() const
 {
 	return location[2].y - location[0].y;
 }
-
 
 float aObject::x() const
 {
@@ -368,7 +350,6 @@ void aObject::moveTo(long xPos, long yPos )
 	float offsetY = yPos - location[0].y;
 	
 	move( offsetX, offsetY );
-
 }
 
 void aObject::moveToNoRecurse(long xPos, long yPos )
@@ -378,9 +359,7 @@ void aObject::moveToNoRecurse(long xPos, long yPos )
 	float offsetY = yPos - location[0].y;
 	
 	moveNoRecurse( offsetX, offsetY );
-
 }
-
 
 void aObject::move( float offsetX, float offsetY )
 {
@@ -423,7 +402,6 @@ void aObject::render()
 		gos_SetRenderState( gos_State_ZCompare, 0 );
 		gos_SetRenderState( gos_State_ZWrite, 0 );
 
-
 		gos_DrawQuads( location, 4 );
 
 		for ( int i = 0; i < pNumberOfChildren; i++ )
@@ -460,7 +438,6 @@ void	aObject::setTexture( const char* fileName )
 	}
 	else
 		fileWidth = 256; // guess
-
 }
 
 void	aObject::setTexture(unsigned long newHandle )
@@ -484,11 +461,7 @@ void	aObject::setTexture(unsigned long newHandle )
 		fileWidth = textureData.Width;
 		gos_UnLockTexture( gosID );
 	}
-
-	
-
 }
-
 
 void aObject::setColor( unsigned long newColor, bool bRecurse )
 {
@@ -513,8 +486,6 @@ void	aObject::setUVs( float u1, float v1, float u2, float v2 )
 	location[2].u = location[3].u = u2/fileWidth + (.1f / (float)fileWidth);
 	location[0].v = location[3].v = v1/fileWidth + (.1f / (float)fileWidth);
 	location[1].v = location[2].v = v2/fileWidth + (.1f / (float)fileWidth);
-
-	
 }
 
 void aObject::removeAllChildren( bool bDelete)
@@ -543,12 +514,9 @@ void aObject::copyData( const aObject& src )
 		fileWidth = src.fileWidth;
 		showWindow = src.showWindow;
 
-	
 		pNumberOfChildren = 0; // not copying the kids.
 		ID = src.ID;
 	}
-
-
 }
 
 aObject::aObject( const aObject& src )
@@ -562,10 +530,8 @@ aObject& aObject::operator=( const aObject& src )
 
 	return *this;
 }
-	
 
 /////////////////////////////////////////////////////////////
-
 
 aRect::aRect()
 {
@@ -591,7 +557,6 @@ void aRect::render( long x, long y )
 
 	long color = getColor();
 	bOutline ? drawEmptyRect( tmpRect, color, color ) : drawRect( tmpRect, color );
-
 }
 
 void aRect::init( FitIniFile* file, const char* blockName )
@@ -602,7 +567,6 @@ void aRect::init( FitIniFile* file, const char* blockName )
 		sprintf( errorStr, "couldn't find block %s in file %s", blockName, file->getFilename() );
 		Assert( 0, 0, errorStr );
 	}
-
 
 	long left;
 	if ( NO_ERR == file->readIdLong( "left", 	left ) )
@@ -663,7 +627,6 @@ GUI_RECT aRect::getGlobalGUI_RECT()
 	return rect;
 }
 
-	
 //////////////////////////////////////////////////////////
 
 aText::aText()
@@ -704,8 +667,6 @@ void aText::init( FitIniFile* file, const char* header )
 	file->readIdLong( "Color", color );
 	for ( int i = 0; i < 4; i++ )
 		location[i].argb = color;
-
-	
 
 	file->readIdLong( "Alignment", alignment );
 
@@ -802,13 +763,8 @@ bool aText::pointInside(long xPos, long yPos) const
 		 top <= mouseY &&
 		 top + height >= mouseY )
 		 return true;
-	
 	}
 
 	return aObject::pointInside( xPos, yPos );
-
-
 }
-
-
 

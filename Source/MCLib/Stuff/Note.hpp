@@ -166,5 +166,4 @@ namespace Stuff {
 		void
 			TestInstance() const;
 	};
-
 }

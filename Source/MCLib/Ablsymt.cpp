@@ -10,26 +10,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#ifndef ABLGEN_H
 #include "ablgen.h"
-#endif
-
-#ifndef ABLERR_H
 #include "ablerr.h"
-#endif
-
-#ifndef ABLSYMT_H
 #include "ablsymt.h"
-#endif
-
-#ifndef ABLSCAN_H
 #include "ablscan.h"
-#endif
-
-#ifndef ABLENV_H
 #include "ablenv.h"
-#endif
 
 //***************************************************************************
 

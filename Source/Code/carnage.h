@@ -15,18 +15,9 @@
 
 //---------------------------------------------------------------------------
 
-#ifndef DCARNAGE_H
 #include "dcarnage.h"
-#endif
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef OBJTYPE_H
 #include "objtype.h"
-#endif
-
 #include <gosFX\gosfxheaders.hpp>
 //***************************************************************************
 typedef union _CarnageInfo 
@@ -316,7 +307,4 @@ class ExplosionType : public ObjectType
 #endif
 
 //***************************************************************************
-
-
-
 

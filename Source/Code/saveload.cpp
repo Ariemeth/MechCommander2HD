@@ -10,108 +10,32 @@
 
 //----------------------------------------------------------------------------------
 // Include Files
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef MISSION_H
 #include "mission.h"
-#endif
-
-#ifndef MOVEMGR_H
 #include "movemgr.h"
-#endif
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
-
-#ifndef SOUNDS_H
 #include "sounds.h"
-#endif
-
-#ifndef COLLSN_H
 #include "collsn.h"
-#endif
-
-#ifndef CMPONENT_H
 #include "cmponent.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef MOVER_H
 #include "mover.h"
-#endif
-
-#ifndef MECH_H
 #include "mech.h"
-#endif
-
-#ifndef GVEHICL_H
 #include "gvehicl.h"
-#endif
-
-#ifndef CONTACT_H
 #include "contact.h"
-#endif
-
-#ifndef TEAM_H
 #include "team.h"
-#endif
-
-#ifndef COMNDR_H
 #include "comndr.h"
-#endif
-
-#ifndef GROUP_H
 #include "group.h"
-#endif
-
-#ifndef GAMECAM_H
 #include "gamecam.h"
-#endif
-
-#ifndef MULTPLYR_H
 #include "multplyr.h"
-#endif
-
-#ifndef WEAPONFX_H
 #include "weaponfx.h"
-#endif
-
-#ifndef WEATHER_H
 #include "weather.h"
-#endif
-
-#ifndef GATE_H
 #include "gate.h"
-#endif
-
-#ifndef LOGISTICSDATA_H
 #include "logisticsdata.h"
-#endif
-
-#ifndef LOGISTICSPILOT_H
 #include "logisticsPilot.h"
-#endif
-
-#ifndef GAMELOG_H
 #include "gamelog.h"
-#endif
-
-#ifndef CELLIP_H
 #include "cellip.h"
-#endif
-
-#ifndef LOADSCREEN_H
 #include "loadscreen.h"
-#endif
-
 #include "prefs.h"
-
 #include "..\resource.h"
 #include <GameOS.hpp>
 #include <ddraw.h>
@@ -615,7 +539,6 @@ void Part::Load (FitIniFilePtr file, long partNum)
 	result = file->readIdULong("VariantNum",variantNum);
 	if (result != NO_ERR)
 		STOP(("Part %d VeriantNum missing from In-Mission Save",partNum));
-
 }
 
 void Mission::load (const char *loadFileName)

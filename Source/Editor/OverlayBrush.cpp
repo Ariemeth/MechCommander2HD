@@ -575,6 +575,5 @@ Action*  OverlayBrush::endPaint()
 	return pRetAction;
 }
 
-
 //*************************************************************************************************
 // end of file ( OverlayBrush.cpp )

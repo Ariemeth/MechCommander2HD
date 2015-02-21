@@ -11,13 +11,8 @@
 //---------------------------------------------------------------------------
 // Include files
 
-#ifndef CELEMENT_H
 #include "celement.h"
-#endif
-
-#ifndef VFX_H
 #include "vfx.h"
-#endif
 
 //---------------------------------------------------------------------------
 struct PolyElementData
@@ -36,7 +31,6 @@ struct PolyElementData
 	long	    width;					//Width of texture
 	long		height;					//Height of texture
 	char		*hazePalette;			//Translucency/haze table
-
 
 	void init (void)
 	{

@@ -3,82 +3,28 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef BDACTOR_H
 #include "bdActor.h"
-#endif
-
 #include "EditorObjectMgr.h"
-
-
-#ifndef FILE_H
 #include "File.h"
-#endif
-
-#ifndef UTILITIES_H
 #include "Utilities.h"
-#endif
-
-#ifndef TERRAIN_H
 #include "Terrain.h"
-#endif
-
-#ifndef ERR_H
 #include "Err.h"
-#endif
-
-#ifndef CAMERA_H
 #include "Camera.h"
-#endif
-
-#ifndef PATHS_H
 #include "Paths.h"
-#endif
-
-#ifndef CIDENT_H
 #include "cident.h"
-#endif
-
-#ifndef PACKET_H
 #include "Packet.h"
-#endif
-
-#ifndef CAMERA_H
 #include "camera.h"
-#endif
-
-#ifndef BDACTOR_H
 #include "bdActor.h"
-#endif
-
-#ifndef MECH3D_H
 #include "Mech3d.h"
-#endif
-
-#ifndef MESSAGEBOX_H
 #include "MessageBox.h"
-#endif
-
-#ifndef APPRTYPE_H
 #include "apprtype.h"
-#endif
-
-#ifndef TACMAP_H
 #include "tacMap.h"
-#endif
-
-#ifndef EDITORDATA_H
 #include "EditorData.h"
-#endif
-
 #include "resource.h"
-
 #include "McLibResource.h"
-
 #include "BuildingLink.h"
 #include "Utilities.h"
-
 #include "malloc.h"
-
 #include "assert.h"
 
 // ARM
@@ -159,7 +105,6 @@ void EditorObjectMgr::clear()
 				delete pMech;
 			}
 
-			
 		buildings.Clear();
 		units.Clear();
 
@@ -192,7 +137,6 @@ void EditorObjectMgr::clear()
 	}
 
 	forests.Clear();
-
 }
 
 //*************************************************************************************************
@@ -209,12 +153,10 @@ void EditorObjectMgr::init( const char* bldgListFileName, const char* objectFile
 
 	long result = objectFile.open( const_cast< char* >(objectFileName) );
 	gosASSERT(result == NO_ERR);
-		
 
 	while( lstFile.getLogicalPosition() < lstFile.getLength() )
 	{
-		
-		
+
 		lstFile.readLine( buffer, 512 );
 
 		if ( !strlen( (char*)buffer ) )
@@ -293,7 +235,6 @@ void EditorObjectMgr::init( const char* bldgListFileName, const char* objectFile
 			bldgFile.close();
 		}
 
-			
 		// extract the special type type
 		if ( ExtractNextString( pCur,  tmpBuffer, bufferLength ) )
 		{
@@ -369,10 +310,8 @@ void EditorObjectMgr::init( const char* bldgListFileName, const char* objectFile
 				}
 				else
 					bldg.varNames[i] = NULL;
-
 			}
 		}
-
 
 		if ( bldg.specialType == DROPZONE )
 		{
@@ -402,8 +341,6 @@ void EditorObjectMgr::init( const char* bldgListFileName, const char* objectFile
 	}
 }
 
-
-
 int EditorObjectMgr::ExtractNextString( unsigned char*& pFileLine, char* pBuffer, int bufferLength )
 {
 	for ( int i = 0; i < 512; ++i )
@@ -425,7 +362,6 @@ int EditorObjectMgr::ExtractNextString( unsigned char*& pFileLine, char* pBuffer
 	pFileLine += i + 1;
 
 	return i;
-
 }
 
 //---------------------------------------------------------------------------
@@ -476,7 +412,6 @@ long textToLong (const char *num)
 		}
 	}
 
-	
 	return(result);
 }
 
@@ -507,7 +442,6 @@ float EditorObjectMgr::ExtractNextFloat( unsigned char*& pFileLine )
 
 	return -1;
 }
-
 
 //-------------------------------------------------------------------------------------------------
 bool EditorObjectMgr::canAddBuilding( const Stuff::Vector3D& position,
@@ -575,7 +509,6 @@ EditorObject* EditorObjectMgr::addDropZone( const Stuff::Vector3D& position, int
 
 	pLast->appearInfo->appearance = pAppear;
 
-	
 	land->worldToCell( position, pLast->cellRow, pLast->cellColumn );
 	pLast->id = DROPZONE << 24 | -1<< 16 | -1 << 8;
 
@@ -625,7 +558,6 @@ EditorObject* EditorObjectMgr::getObjectAtPosition( const Stuff::Vector3D& posit
 					return (*iter);
 				}
 			}
-
 		}
 
 		for( UNIT_LIST::EIterator mIter = units.Begin();
@@ -650,7 +582,6 @@ EditorObject* EditorObjectMgr::getObjectAtPosition( const Stuff::Vector3D& posit
 					return (*mIter);
 				}
 			}
-
 		}
 
 	for ( DROP_LIST::EIterator dIter = dropZones.Begin(); !dIter.IsDone(); dIter++ )
@@ -662,9 +593,7 @@ EditorObject* EditorObjectMgr::getObjectAtPosition( const Stuff::Vector3D& posit
 		if ( screenPos.x >= tmpPos.x - 3 && screenPos.x <= tmpPos.x + 3 && screenPos.y <= tmpPos.y + 3 &&
 			screenPos.y >= tmpPos.y -3 )
 			return *dIter;
-
 	}
-
 
 	return NULL;
 }
@@ -718,7 +647,6 @@ EditorObject* EditorObjectMgr::getObjectAtLocation( float x, float y )
 
 	return NULL;
 }
-
 
 //-------------------------------------------------------------------------------------------------
 EditorObject* EditorObjectMgr::addBuilding( const Stuff::Vector3D& position, unsigned long group,
@@ -775,7 +703,6 @@ EditorObject* EditorObjectMgr::addBuilding( const Stuff::Vector3D& position, uns
 	info->appearance()->teamId = isAlignable( info->id ) ? alignment : EDITOR_TEAMNONE;
 	if ( scale != 1.0 )
 		info->appearance()->scale( scale );
-
 
 	return info;
 }
@@ -839,12 +766,10 @@ bool	EditorObjectMgr::deleteBuilding( const EditorObject* pInfo )
 				dropZones.Delete( dIter );
 				return true;
 			}		
-	
 	}
 
 	return false;
 }
-
 
 //*************************************************************************************************
 int EditorObjectMgr::getBuildingGroupCount() const
@@ -1054,9 +979,7 @@ void EditorObjectMgr::render()
 			Rect.bottom = screen.y + 3;
 			Rect.right = screen.x + 3;
 			drawRect( Rect, (*dIter)->isVTol() ? 0xff0000ff : 0xffffff00 );
-			
 		}
-
 }
 
 //*************************************************************************************************
@@ -1175,7 +1098,6 @@ bool EditorObjectMgr::save( PacketFile& PakFile, int whichPacket )
 
 			file.writeLong( (*iter)->appearance()->damage );
 
-			
 			file.writeLong( (*iter)->appearance()->teamId );
 			BuildingLink* pLink = getLinkWithChild(*iter);
 			if ( pLink )
@@ -1287,7 +1209,6 @@ bool EditorObjectMgr::load( PacketFile& PakFile, int whichPacket )
 		if ( damage )
 			((EditorObject*)pInfo)->appearance()->setDamage(1);
 
-		
 		pInfo->appearance()->teamId = file.readLong();
 		//Most everything can have an alignment now
 		// -fs  6/14/2000
@@ -1325,15 +1246,12 @@ bool EditorObjectMgr::load( PacketFile& PakFile, int whichPacket )
 				pLink->AddChild( pInfo );
 				links.Append( pLink );       
 			}
-
-
 		}
 		// forest stuff
 		pInfo->setForestID( file.readLong() - 1 );
 		long scale = file.readLong();
 		if ( pInfo->getForestID() != -1 )
 			pInfo->setScale( scale );
-
 	}
 
 	LINK_LIST linksToDelete;
@@ -1366,13 +1284,10 @@ bool EditorObjectMgr::load( PacketFile& PakFile, int whichPacket )
 	{
 		deleteLink( *iter );
 	}
-	
-
 
 	free( pBuffer );
 
 	return true;
-
 }
 
 //*************************************************************************************************
@@ -1413,18 +1328,15 @@ int	EditorObjectMgr::getFitID( int id ) const
 	return groups[getGroup(id)].buildings[getIndexInGroup(id)].fitID;
 }
 
-
 //*************************************************************************************************
 bool EditorObjectMgr::getBlocksLineOfFire( int id ) const
 {
 	return groups[getGroup(id)].buildings[getIndexInGroup(id)].blocksLineOfFire;
-
 }
 //*************************************************************************************************
 bool EditorObjectMgr::getIsHoverCraft( int id ) const
 {
 	return groups[getGroup(id)].buildings[getIndexInGroup(id)].isHoverCraft;
-
 }
 //*************************************************************************************************
 __int64	EditorObjectMgr::getImpassability( int id )
@@ -1497,10 +1409,7 @@ void EditorObjectMgr::select( const Stuff::Vector4D& pos1, const Stuff::Vector4D
 				(*dIter)->appearance()->selected = true;
 				selectedObjects.AddUnique(*dIter);
 			}
-			
 		}
-			 
-
 }
 
 void EditorObjectMgr::select( EditorObject &object, bool bSelect )
@@ -1539,7 +1448,6 @@ void EditorObjectMgr::unselectAll()
 
 		selectedObjects.Clear();
 }
-
 
 bool EditorObjectMgr::hasSelection()
 {
@@ -1665,7 +1573,6 @@ void EditorObjectMgr::deleteSelectedObjects()
 			}
 			else
 				dIter--;
-		
 		}
 
 		selectedObjects.Clear();
@@ -1692,7 +1599,6 @@ void EditorObjectMgr::adjustObjectsToNewTerrainHeights()
 		(*uIter)->appearance()->position.z = Z;
 		(*uIter)->appearance()->update();
 	}
-
 }
 
 ObjectAppearance* EditorObjectMgr::getAppearance( EditorObjectMgr::Building* pBuilding )
@@ -1722,12 +1628,10 @@ ObjectAppearance* EditorObjectMgr::getAppearance( EditorObjectMgr::Building* pBu
 	else
 		appearance = new TreeAppearance;
 
-
 	appearance->init( pBuilding->appearanceType );
 	appearance->setObjectNameId( pBuilding->nameID );
 
 	return appearance;
-
 }
 
 ObjectAppearance* EditorObjectMgr::getAppearance( unsigned long group, unsigned long indexWithinGroup )
@@ -1740,7 +1644,6 @@ ObjectAppearance* EditorObjectMgr::getAppearance( unsigned long group, unsigned 
 	Building* pBuilding = &pGroup->buildings[indexWithinGroup];
 
 	return getAppearance( pBuilding );
-	
 }
 
 bool  EditorObjectMgr::loadMechs( FitIniFile& file )
@@ -1801,7 +1704,6 @@ bool  EditorObjectMgr::loadMechs( FitIniFile& file )
 	}
 
 	return true;
-	
 }
 
 bool		EditorObjectMgr::saveMechs( FitIniFile& file )
@@ -1936,7 +1838,6 @@ bool		EditorObjectMgr::saveMechs( FitIniFile& file )
 		}
 	}
 
-
 	file.writeIdULong( "NumWarriors", units.Count() );
 
 	if (!justResaveAllMaps && (units.Count() > 104))
@@ -1993,7 +1894,6 @@ bool		EditorObjectMgr::saveMechs( FitIniFile& file )
 		}
 		file.writeIdLongArray("IndicesOfAlternatives", IndicesOfAlternatives, 15);
 
-
 		alternativeInstancesCounter += 1;
 		int i;
 		for (i = 0; i < (*iter)->pAlternativeInstances->Count(); i++)
@@ -2004,7 +1904,6 @@ bool		EditorObjectMgr::saveMechs( FitIniFile& file )
 			alternativeInstancesCounter += 1;
 		}
 	}
-
 
 	// you should be able to get the force groups frm the units themselves 
 	file.writeBlock( "Teams" );
@@ -2048,7 +1947,6 @@ bool		EditorObjectMgr::saveMechs( FitIniFile& file )
 	}
 
 	return true;
-
 }
 
 bool EditorObjectMgr::saveForests( FitIniFile& file ) 
@@ -2125,7 +2023,6 @@ long EditorObjectMgr::createForest( const Forest& forest )
 	doForest( *pForest );
 
 	return ID;
-
 }
 
 void EditorObjectMgr::editForest( long& oldID, const Forest& forest )
@@ -2165,7 +2062,6 @@ void EditorObjectMgr::editForest( long& oldID, const Forest& forest )
 
 	doForest( *(*iter) );
 	land->unselectAll();
-	
 }
 
 void EditorObjectMgr::removeForest( const Forest& forest )
@@ -2235,8 +2131,6 @@ void EditorObjectMgr::doForest( const Forest& forest )
 			probabilities[i] = probabilities[i-1] + probabilities[i];
 		}
 	}
-
-
 
 	float r2 = forest.radius; // temporary... calc real radius at some point
 	r2 *= r2; // square it
@@ -2340,7 +2234,6 @@ void EditorObjectMgr::doForest( const Forest& forest )
 							}
 						}
 					}
-
 				}
 			}
 		}
@@ -2412,12 +2305,8 @@ void EditorObjectMgr::getRandomTreeFromGroup( int treeGroup, int& group, int& in
 					treeCount++;
 				}
 			}
-
 	}
-
-
 }
-
 
 bool EditorObjectMgr::saveDropZones( FitIniFile& file )
 {
@@ -2494,14 +2383,11 @@ bool EditorObjectMgr::loadDropZones( FitIniFile& file )
 		addDropZone( pos, 0, bVTol );
 
 		counter++;
-
 	}
 
 	// no need to read in nav markers, they are saved in the building file as well
 
 	return true;
-	
-	
 }
 
 int EditorObjectMgr::getType( unsigned long group, unsigned long indexWithinGroup )
@@ -2512,12 +2398,10 @@ int EditorObjectMgr::getType( unsigned long group, unsigned long indexWithinGrou
 	Building* pBuilding = &pGroup->buildings[indexWithinGroup];
 
 	return pBuilding->type;
-
 }
 
 EditorObjectMgr::Building::~Building()
 {
-
 }
 
 bool EditorObjectMgr::moveBuilding( EditorObject* pInfo, long cellJ, long cellI )
@@ -2573,9 +2457,7 @@ EditorObject* EditorObjectMgr::getObjectAtCell( long realCellJ, long realCellI )
 				int j = realCellJ - ((*iter)->cellRow - 4);
 				if ( (FootPrint >> ( j * 8 + i )) & 0x00000001 || (i == 4 && j == 4))
 					return (*iter);
-					
 			}
-
 		}
 
 		for( UNIT_LIST::EIterator uIter = units.Begin();
@@ -2590,13 +2472,10 @@ EditorObject* EditorObjectMgr::getObjectAtCell( long realCellJ, long realCellI )
 				int j = realCellJ - ((*uIter)->cellRow - 4);
 				if ( (FootPrint >> ( j * 8 + i )) & 0x00000001 || (i == 4 && j == 4))
 					return (*uIter);
-					
 			}
-
 		}
 
 	return NULL;
-
 }
 
 EditorObject* EditorObjectMgr::getBuilding( const EditorObject &building )
@@ -2712,11 +2591,9 @@ int EditorObjectMgr::getUnitGroupCount( ) const
 		{
 			counter++;
 		}
-
 	}
 
 	return counter;
-
 }
 
 void EditorObjectMgr::getSelectedUnits( UNIT_LIST& selUnits )
@@ -2757,9 +2634,7 @@ void		EditorObjectMgr::getVariantNames( int group, int indexInGroup, const char*
 		}
 
 		numberOfNames =  i;			
-
 }
-
 
 void EditorObjectMgr::registerSquadNum(unsigned long squadNum)
 {

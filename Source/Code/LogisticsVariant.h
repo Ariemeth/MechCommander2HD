@@ -18,14 +18,12 @@ class FitIniFile;
 
 #pragma warning (disable:4514)
 
-
 enum LOGISTICS_COMPONENT_LOCATION
 {
 	HEAD = 0,
 	CHEST = 1,
 	LEGS = 2
 };
-
 
 class LogisticsChassis
 {
@@ -104,9 +102,6 @@ protected:
 		LOGISTICS_COMPONENT_LOCATION location;
 		LogisticsComponent*				component;
 	};
-	
-
-
 };
 
 class LogisticsVariant
@@ -190,15 +185,10 @@ protected:
 
 		int			getFileID() const { return fileID; }
 
-
-
-		
 	protected:
 
-	
 		const LogisticsChassis::ComponentInfo* getComponentAtLocation(long x, long y) const;
 
-		
 		unsigned long		ID; // bottom 8 bits = mech chassis, next 8 = number within
 		int					fileID; // in csv file
 		
@@ -212,7 +202,6 @@ protected:
 		bool				bDesignerMech;
 		bool				bHidden;
 
-
 		// HELPERS
 		bool				hasJumpJets() const;
 		bool				hasECM() const;
@@ -221,8 +210,6 @@ protected:
 		// SUPPRESSED
 		
 		friend class LogisticsMech;
-
-
 };
 
 class LogisticsVehicle : public LogisticsChassis
@@ -235,9 +222,7 @@ public:
 protected:
 	long				componentCount;
 	ComponentInfo		components[54]; // I count a max of 54 components, might want to check though
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( LogisticsVariant.h )

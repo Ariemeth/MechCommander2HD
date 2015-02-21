@@ -10,43 +10,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#ifndef ABLGEN_H
 #include "ablgen.h"
-#endif
-
-#ifndef ABLERR_H
 #include "ablerr.h"
-#endif
-
-#ifndef ABLSCAN_H
 #include "ablscan.h"
-#endif
-
-#ifndef ABLSYMT_H
 #include "ablsymt.h"
-#endif
-
-#ifndef ABLPARSE_H
 #include "ablparse.h"
-#endif
-
-#ifndef ABLEXEC_H
 #include "ablexec.h"
-#endif
-
-
-#ifndef ABLENV_H
 #include "ablenv.h"
-#endif
-
-#ifndef ABL_H
 #include "abl.h"
-#endif
-
-#ifndef ABLDBUG_H
 #include "abldbug.h"
-#endif
 
 //***************************************************************************
 
@@ -742,8 +714,6 @@ long ABLi_preProcess (char* sourceFileName, long* numErrors, long* numLinesProce
 	ModuleRegistry[NumModulesRegistered].numOrderCalls = NumOrderCalls;
 	ModuleRegistry[NumModulesRegistered].numInstances = 0;
 
-
-
 	ModuleRegistry[NumModulesRegistered].numStateHandles = NumStateHandles;
 	if (NumStateHandles > 1) {
 		ModuleRegistry[NumModulesRegistered].stateHandles = (StateHandleInfoPtr)ABLStackMallocCallback(sizeof(StateHandleInfo) * NumStateHandles);
@@ -1304,7 +1274,6 @@ void routine (void) {
 		ifTokenGetElseError(endToken, ABL_ERR_SYNTAX_MISSING_END_FUNCTION);
 		blockFlag = false;
 
-
 		routineIdPtr->defn.info.routine.numOrderCalls = (unsigned short)NumOrderCalls - routineIdPtr->defn.info.routine.orderCallIndex;
 		routineIdPtr->defn.info.routine.codeSegment = createCodeSegment(routineIdPtr->defn.info.routine.codeSegmentSize);
 		analyzeBlock(routineIdPtr->defn.info.routine.codeSegment);
@@ -1541,7 +1510,6 @@ SymTableNodePtr formalParamList (long* count, long* totalSize) {
 			//--------------------------------
 			// Do we need to synchronize here?
 		}
-
 
 		//------------------------------------------------------------------
 		// Assign the offset and the type to all param ids in the sublist...

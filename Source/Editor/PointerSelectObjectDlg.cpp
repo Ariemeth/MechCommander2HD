@@ -6,16 +6,12 @@ PointerSelectObjectDlg.cpp			: Implementation of the PointerSelectObjectDlg comp
 \*************************************************************************************************/
 
 #include "resource.h"
-
 #include <stdlib.h>
 #include <assert.h>
 #include "EString.h"
-
 #include "PointerSelectObjectDlg.h"
 #include "Objective.h"
-
 #include "EditorInterface.h"
-
 #include "MFCPlatform.hpp"
 
 static const int WM_DOTICK = WM_USER + 1;
@@ -162,7 +158,6 @@ BOOL PointerSelectObjectDlg::OnWndMsg( UINT message, WPARAM wParam, LPARAM lPara
 PointerSelectObjectDlg::~PointerSelectObjectDlg()
 {
 }
-
 
 //*************************************************************************************************
 // end of file ( PointerSelectObjectDlg.cpp )

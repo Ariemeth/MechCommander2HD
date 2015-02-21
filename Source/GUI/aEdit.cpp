@@ -25,7 +25,6 @@ static long acp = 0;
 static bool g_bUseLangDll;
 static gosIME_Appearance g_ia;
 
-
 aEdit::aEdit(  )
 {
 	if (acp == 0) {
@@ -88,7 +87,6 @@ aEdit& aEdit::operator =( const aEdit& src )
 	textColor = src.textColor;
 	highlightColor = src.highlightColor;
 
-	
 	cursorColor = src.cursorColor;
 	selectedColor = src.selectedColor; // selected text
 	outlineColor = src.outlineColor;
@@ -98,7 +96,6 @@ aEdit& aEdit::operator =( const aEdit& src )
 	bAllowIME = src.bAllowIME;
 
 	return *this;
-	
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -129,14 +126,12 @@ void aEdit::handleMouse()
 
 	bool bLeftClick = userInput->isLeftClick();
 	bool bRightClick = userInput->isRightClick();
-	
-	
+
 	int nOffset = mouseX - (globalX() + ENTRY_MARGIN);
 	nOffset += nLeftOffset;
 	
 	// find char position of nOffset and set insertion point there
 	int nChar = findChar(nOffset);
-
 
 	if ( bMouseDown && userInput->isLeftDrag() && bFocus )
 	{
@@ -157,17 +152,10 @@ void aEdit::handleMouse()
 		}
 		else if ( bRightClick )
 		{
-			
-
 		}
-
-
 	}
 	else if ( bLeftClick )
 		setFocus( false );
-	
-
-
 }
 
 void aEdit::handleKeyboard()
@@ -199,7 +187,6 @@ void aEdit::handleKeyboard()
 				key2 = gos_GetKey( );	
 				key2 &= 0x00ff;
 			}
-
 
 			if (dwStyleFlags & ES_EDITNUM)
 			{
@@ -282,15 +269,10 @@ void aEdit::handleKeyboard()
 				nInsertion1 += amountToAdd;
 				nInsertion2 = nInsertion1;
 			}
-
 		}
 
-
-		
-		
 		makeCursorVisible();
 	}
-
 }
 
 void	aEdit::renderWithDropShadow()
@@ -351,7 +333,6 @@ void aEdit::render()
 			startChar = findChar( nLeftOffset );
 		}
 
-
 		if ( text.Length() )
 		{
 			font.render( &textToDraw[startChar], 
@@ -378,7 +359,6 @@ void aEdit::render()
 			// need to find character where this position is
 			startChar = findChar( nLeftOffset );
 		}
-
 
 		if ( textToDraw.Length() )
 		{
@@ -408,7 +388,6 @@ void aEdit::render()
 	drawCursor();
 }
 
-
 void aEdit::getEntry(EString& str)
 {
 	str = text;
@@ -427,14 +406,12 @@ void aEdit::setEntry(const EString& str, BYTE byHighlight)
 		nInsertion2 = nInsertion1 = text.Length();
 		flushCursorRight();
 	}
-
 }
 void aEdit::setFocus(bool bHasFocus)
 {
 	bool bFocusSave = bFocus;
 	bFocus = bHasFocus;
 	gos_KeyboardFlush();
-
 
 	if ( bAllowIME && bHasFocus )
 	{
@@ -460,7 +437,6 @@ void aEdit::setFocus(bool bHasFocus)
 		}
 		gos_SetIMEAppearance( &g_ia );
 
-		
 		if ( !bIMEInitialized )
 		{
 			if ( acp == 932 || acp == 874 || acp == 936 || acp == 949 || acp == 950 )
@@ -478,7 +454,6 @@ void aEdit::setFocus(bool bHasFocus)
 			gos_EnableIME( false );
 	}
 }
-
 
 bool aEdit::clearSelection()
 {
@@ -517,12 +492,9 @@ void aEdit:: backSpace(int nPosition)
 
 	text.Remove( nPosition-nCharCount, nPosition-1 );
 	nInsertion2 = nInsertion1 = nPosition-nCharCount;
-
-	
 }
 void aEdit:: drawCursor()
 {
-
 
 	if ( nInsertion1 != nInsertion2 || !bFocus || !gos_GetMachineInformation( gos_Info_GetIMECaretStatus ) )
 		return;
@@ -542,10 +514,7 @@ void aEdit:: drawCursor()
 		v[1].x = v[0].x;
 		
 		gos_DrawLines( v, 2 );
-
-
 	}
-
 }
 void aEdit:: hideCursor()
 {
@@ -669,16 +638,13 @@ bool aEdit::handleFormattingKeys(int keycode)
 			return true;
 			break;
 
-
 		case KEY_8:
 			if ( !bWierdChars && userInput->getKeyDown( KEY_LSHIFT ) )
 				return true;
 			break;
 //		case \*/?:<>|
-
 	}
 	return false;
-
 }
 
 int		aEdit::charXPos(int nCharIndex)
@@ -782,8 +748,6 @@ void aEdit::init( FitIniFile* file, const char* header )
 	file->readIdLong( "SelectedColor", selectedColor );
 	file->readIdLong( "HelpCaption", helpHeader );
 	file->readIdLong( "HelpDesc", helpID );
-
-
 }
 
 int aEdit::charLength( int index )
@@ -804,7 +768,6 @@ void aEdit::setFont( long resID )
 {
 	font.init( resID );
 }
-
 
 //*************************************************************************************************
 // end of file ( aEdit.cpp )

@@ -10,7 +10,6 @@ TgaMapTGA.cpp			: Implementation of the TgaMapTGA component.
 #include "tacMap.h"
 #include "EditorData.h"
 
-
 BEGIN_MESSAGE_MAP(TacMapTGA, TGAWnd)
 	//{{AFX_MSG_MAP(TGAWnd)
 	ON_WM_PAINT()
@@ -26,14 +25,12 @@ void TacMapTGA::OnPaint()
 	CDC& dc = *pDC;
 	// device context for painting
 
-	
 	if ( eye && land && land->realVerticesMapSide )
 	{
  		Stuff::Vector2DOf< long > screen;
 		gos_VERTEX tmp;
 		Stuff::Vector3D world;
 		POINT pts[5];
-
 
 		// alrighty need to draw that little rectangle
 		screen.x = 1;
@@ -83,7 +80,6 @@ void TacMapTGA::refreshBmp()
 	EditorData::instance->drawTacMap( (BYTE*)m_pBits, 128 * 128 * 4, 128 );
 	RedrawWindow( );
 }
-	
-	
+
 //*************************************************************************************************
 // end of file ( TgaMapTGA.cpp )

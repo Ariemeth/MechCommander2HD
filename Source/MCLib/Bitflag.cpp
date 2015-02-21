@@ -7,22 +7,10 @@
 
 //----------------------------------------------------------------------------------
 // Include Files
-#ifndef BITFLAG_H
 #include "bitflag.h"
-#endif
-
-#ifndef HEAP_H
 #include "heap.h"
-#endif
-
-#ifndef FILE_H
 #include "file.h"
-#endif
-
-#ifndef TGAINFO_H
 #include "tgainfo.h"
-#endif
-
 #include <gameos.hpp>
 
 extern void AG_ellipse_draw(PANE *pane, LONG xc, LONG yc, LONG width, LONG height, LONG color);

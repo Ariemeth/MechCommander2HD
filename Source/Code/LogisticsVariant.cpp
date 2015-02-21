@@ -13,14 +13,12 @@ LogisticsVariant.cpp			: Implementation of the LogisticsVariant component.
 #include "cmponent.h" 
 #include "LogisticsErrors.h"
 
-
 int LogisticsChassis::weightClasses[5] = { 0, 35, 55, 75, 100};
 /*[0- 34	Light
 35-55		Medium 
 56-75		Heavy
 76-100		Assualt
 */
-
 
 LogisticsChassis::LogisticsChassis()
 {
@@ -36,7 +34,6 @@ LogisticsChassis::LogisticsChassis()
 	canHaveGlobalSensor = 
 	canHaveOptics = 
 	canHaveJumpJets = 0;
-
 }
 
 int LogisticsChassis::init( CSVFile* file, int chassisID )
@@ -68,7 +65,6 @@ int LogisticsChassis::init( CSVFile* file, int chassisID )
 	file->readLong( 12, 2, iconPictureIndex );
 	gosASSERT( result == NO_ERR );
 
-	
 	houseID;
 	result = file->readLong( 4, 2, houseID );
 	ID |= ((houseID << 8) & 0x0000ff00);
@@ -102,7 +98,6 @@ int LogisticsChassis::init( CSVFile* file, int chassisID )
  	result = file->readBoolean( 9,8, canHaveExtendedSensor );
 	 gosASSERT( result == NO_ERR );
 
-
 	result = file->readFloat(  7, 5, speed );
 	gosASSERT( result == NO_ERR );
 
@@ -135,8 +130,6 @@ int LogisticsChassis::init( CSVFile* file, int chassisID )
 	mechClass = tmpWeightClass;
 		
 	return 0;
-	
-	
 }
 
 int LogisticsChassis::getArmorClass() const
@@ -152,7 +145,6 @@ int LogisticsChassis::getArmorClass() const
 	else
 		return IDS_ARMOR4;
 }
-
 
 int LogisticsChassis::getDisplaySpeed() const
 {
@@ -206,7 +198,6 @@ int LogisticsChassis::getECM() const
 	return -1;
 }
 
-
 LogisticsVariant::LogisticsVariant()
 {
 	componentCount = 0;
@@ -231,8 +222,6 @@ LogisticsVariant::LogisticsVariant( const LogisticsChassis* pChassis , bool Desi
 	bDesignerMech = Designer;
 	bHidden = 0;
 	fileID = 0;
-
-
 }
 LogisticsVariant::~LogisticsVariant()
 {
@@ -314,9 +303,7 @@ bool LogisticsVariant::operator==( const LogisticsVariant& src )
 //			return 0;
 		
 		return 1;
-
 }
-
 
 int LogisticsVariant::init( CSVFile* file, LogisticsChassis* pChassis, int Variant )
 {
@@ -382,20 +369,15 @@ int LogisticsVariant::init( CSVFile* file, LogisticsChassis* pChassis, int Varia
 				}
 			}
 		}
-
 	}
 
-	
 	return 0;
-
-
 }
 
 bool LogisticsVariant::addComponent( int idFromFitFile, long& x, long& y )
 {
 	LogisticsComponent*
 		pComponent = LogisticsData::instance->getComponent( idFromFitFile );
-
 
 	if ( !pComponent )
 	{
@@ -418,7 +400,6 @@ bool LogisticsVariant::addComponent( int idFromFitFile, long& x, long& y )
 
 	else
 	{
-
 
 		// need to see if this thing will fit
 		long componentWidth = pComponent->getComponentWidth();
@@ -450,7 +431,6 @@ bool LogisticsVariant::addComponent( int idFromFitFile, long& x, long& y )
 					{
 						x = i;
 						y = j;
-			
 					}
 				}
 			}
@@ -614,7 +594,6 @@ int LogisticsVariant::canAddComponent( LogisticsComponent* pComponent, long& x, 
 	}
 	else if ( x == -2 && y == -2 ) // trying to put something illegal in jump jet slot
 		return COMPONENT_SLOT_FULL;
-		 
 
 	if ( x!= -1 && y != -1 )
 	{
@@ -657,11 +636,8 @@ int LogisticsVariant::canAddComponent( LogisticsComponent* pComponent, long& x, 
 					{
 						x = i;
 						y = j;
-			
 					}
 				}
-
-				
 			}
 		}
 
@@ -693,10 +669,7 @@ int LogisticsVariant::canAddComponent( LogisticsComponent* pComponent, long& x, 
 			return ONLY_ONE_ECM_ALLOWED;
 	}
 
-	
-
 	return 0;
-
 }
 
 const LogisticsChassis::ComponentInfo* LogisticsVariant::getComponentAtLocation( long x, long y ) const
@@ -743,7 +716,6 @@ bool LogisticsVariant::hasECM() const
 	}
 
 	return false;
-
 }
 bool LogisticsVariant::hasSensor() const
 {
@@ -754,9 +726,7 @@ bool LogisticsVariant::hasSensor() const
 	}
 
 	return false;
-
 }
-
 
 int	LogisticsVariant::getComponentsWithLocation( long& count, long* IDArray, long* xLocationArray, long* yLocationArray )
 {
@@ -780,13 +750,11 @@ int	LogisticsVariant::getComponents( long& count, long* array )
  	for ( int i = 0; i < componentCount; ++i )
 	{
 		array[i] = components[i].component->getID();
-
 	}
 
 	count = componentCount;
 
 	return count;
-
 }
 
 int		LogisticsVariant::removeComponent( long xCoord, long yCoord )
@@ -802,7 +770,6 @@ int		LogisticsVariant::removeComponent( long xCoord, long yCoord )
 			return INSUFFICIENT_HEAT;
 	}
 
-	
 	if ( !info )
 		return INVALID_LOCATION;
 
@@ -886,7 +853,6 @@ int	LogisticsVariant::getComponents( long& count, LogisticsComponent** array )
 	count = componentCount;
 
 	return 0;
-
 }
 
 LogisticsComponent*	LogisticsVariant::getCompAtLocation( int i, int j, long& realI, long& realJ )
@@ -929,7 +895,6 @@ int	LogisticsVariant::getComponentLocation( LogisticsComponent* pComp, long& x, 
 	}
 	
 	return 0;
-
 }
 
 int			LogisticsVariant::getOptimalRangeString( long& color ) const
@@ -937,7 +902,6 @@ int			LogisticsVariant::getOptimalRangeString( long& color ) const
 	float rangeDamage[3];
 
 	long rangeColors[3] = {0xff6e7c00, 0xff005392,0xffa21600  };
-
 
 	memset( rangeDamage, 0, sizeof ( float ) * 3 );
 
@@ -954,7 +918,6 @@ int			LogisticsVariant::getOptimalRangeString( long& color ) const
 
 			if ( rangeDamage[components[i].component->getRangeType()] > maxDamage )
 				maxDamage = rangeDamage[components[i].component->getRangeType()];
-	
 		}
 	}
 
@@ -968,8 +931,6 @@ int			LogisticsVariant::getOptimalRangeString( long& color ) const
 	}
 
 	return IDS_HOTKEY1;
-
-	
 }
 
 bool		LogisticsVariant::allComponentsAvailable() const
@@ -986,7 +947,6 @@ bool		LogisticsVariant::allComponentsAvailable() const
 	}
 
 	return true;
-
 }
 
 void		LogisticsVariant::setAvailable( bool available ) 
@@ -1042,7 +1002,6 @@ void LogisticsVehicle::init( FitIniFile& file )
 		baseArmor += pts;
 		file.readIdUChar( "CurInternalStructure", pts );
 		baseArmor += pts;
-
 	}
 
 	file.seekBlock( "InventoryInfo" );
@@ -1067,7 +1026,6 @@ void LogisticsVehicle::init( FitIniFile& file )
 				components[componentCount].yCoord = 0;
 				componentCount++;
 			}
-		
 		}
 	}
 }
@@ -1079,15 +1037,12 @@ int LogisticsVehicle::getComponents( long& count, LogisticsComponent** array )
 	for ( int i = 0; i < componentCount; ++i )
 	{
 		array[i] = components[i].component;
-
 	}
 
 	count = componentCount;
 
 	return count;
 }
-
-
 
 //*************************************************************************************************
 // end of file ( LogisticsVariant.cpp )

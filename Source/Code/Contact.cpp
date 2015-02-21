@@ -8,38 +8,18 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef WARRIOR_H
 #include "warrior.h"
-#endif
-
-#ifndef CONTACT_H
 #include "contact.h"
-#endif
-
-#ifndef MOVER_H
 #include "mover.h"
-#endif
 
 //#ifndef GVEHICL_H
 //#include "gvehicl.h"
 //#endif
 
-#ifndef TEAM_H
 #include "team.h"
-#endif
-
-#ifndef UNITDESG_H
 #include "unitdesg.h"
-#endif
-
-#ifndef SOUNDSYS_H
 #include "soundsys.h"
-#endif
-
 #include <gameos.hpp>
 
 //***************************************************************************
@@ -927,7 +907,6 @@ long TeamSensorSystem::getContacts (GameObjectPtr looker, long* contactList, lon
 		for (long contact = 0; contact < numValidContacts; contact++)
 			contactList[contact] = handleList[contact];
 
-
 	return(numValidContacts);
 }
 
@@ -990,7 +969,6 @@ void TeamSensorSystem::addContact (SensorSystemPtr sensor, MoverPtr contact, lon
 	if (contactInfo->contactStatus[teamId] < contactStatus) {
 		contactInfo->contactStatus[teamId] = contactStatus;
 		contactInfo->teamSpotter[teamId] = sensor->owner->getHandle();
-
 	}
 	if (contactInfo->contactCount[teamId] == 1) {
 		contacts[numContacts] = contact->getHandle();
@@ -1340,7 +1318,4 @@ float SensorSystemManager::getEcmEffect (GameObjectPtr victim) {
 }
 
 //***************************************************************************
-
-
-
 

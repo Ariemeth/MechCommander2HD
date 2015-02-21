@@ -13,12 +13,10 @@
 #include "EditorObjectMgr.h"
 #include "mclib.h"
 
-
 /////////////////////////////////////////////////////////////////////////////
 // ForestDlg dialog
 
 static char szFITFilter[] = "FIT Files (*.FIT)|*.fit||";
-
 
 ForestDlg::ForestDlg(CWnd* pParent /*=NULL*/)
 : CDialog(ForestDlg::IDD, pParent), forest( -1 )
@@ -49,7 +47,6 @@ ForestDlg::ForestDlg(CWnd* pParent /*=NULL*/)
 	m_15 = 0;
 	//}}AFX_DATA_INIT
 }
-
 
 void ForestDlg::DoDataExchange(CDataExchange* pDX)
 {
@@ -102,9 +99,7 @@ void ForestDlg::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 //	DDV_MinMaxFloat(pDX, m_xLoc, land->mapTopLeft3d.x, -land->mapTopLeft3d.x);
 	DDV_MinMaxFloat(pDX, m_yLoc, min, max);
-
 }
-
 
 BEGIN_MESSAGE_MAP(ForestDlg, CDialog)
 	//{{AFX_MSG_MAP(ForestDlg)
@@ -227,7 +222,6 @@ void ForestDlg::OnSliderChanged( UINT id, NMHDR * pNotifyStruct, LRESULT * resul
 	{
 		int Val = pSlider->GetPos();
 
-		
 		CEdit* pEdit = (CEdit*)( GetDlgItem( id + 1 ) );
 		if ( pEdit )
 		{
@@ -237,9 +231,7 @@ void ForestDlg::OnSliderChanged( UINT id, NMHDR * pNotifyStruct, LRESULT * resul
 			pEdit->SetWindowText( text );
 		}
 	}
-
 }
-
 
 BOOL ForestDlg::OnInitDialog() 
 {
@@ -260,8 +252,7 @@ BOOL ForestDlg::OnInitDialog()
 	}
 
 	UpdateData( 0 );
-	
-	
+
 	for ( int i = IDC_SLIDER1; i < IDC_SLIDER15; i+= 2 )
 	{
 		CWnd* pWnd = GetDlgItem( i );
@@ -270,7 +261,6 @@ BOOL ForestDlg::OnInitDialog()
 		{
 			pSlider->SetRange( 0, 100 );
 		}
-
 	}
 
 	for ( i = IDC_FOREST_EDIT1; i < IDC_FOREST_EDIT15+1; i+= 2 )
@@ -290,8 +280,6 @@ BOOL ForestDlg::OnInitDialog()
 			pSlider->SetRange( 0, 100 );
 			pSlider->SetPos( forest.percentages[(i-IDC_FOREST_EDIT1)/2] );
 		}
-
-
 	}
 
 	char tmp[256];
@@ -311,7 +299,6 @@ void ForestDlg::OnLoad()
 	CFileDialog dlg( TRUE, "fit", NULL, OFN_NOCHANGEDIR | OFN_FILEMUSTEXIST, szFITFilter, this );
 	dlg.m_ofn.lpstrInitialDir = terrainPath;
 
-
 	if ( IDOK == dlg.DoModal() )
 	{
 		CString str = dlg.GetFileName();
@@ -327,6 +314,4 @@ void ForestDlg::OnLoad()
 		//forest = tmp;
 		OnInitDialog();
 	}
-
-	
 }

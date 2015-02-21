@@ -12,103 +12,35 @@
 #include "mclib.h"
 #endif
 
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef MOVER_H
 #include "mover.h"
-#endif
-
-#ifndef MOVE_H
 #include "move.h"
-#endif
-
-#ifndef MECH_H
 #include "mech.h"
-#endif
-
-#ifndef GVEHICL_H
 #include "gvehicl.h"
-#endif
-
-#ifndef MECH3D_H
 #include "mech3d.h"
-#endif
-
-#ifndef CMPONENT_H
 #include "cmponent.h"
-#endif
-
-#ifndef WARRIOR_H
 #include "warrior.h"
-#endif
 
 #ifdef USE_DEBRIS
-#ifndef DEBRIS_H
 #include "debris.h"
-#endif
+
 #endif
 
-#ifndef GAMELOG_H
 #include "gamelog.h"
-#endif
-
-#ifndef TACORDR_H
 #include "tacordr.h"
-#endif
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
-
-#ifndef COLLSN_H
 #include "collsn.h"
-#endif
-
-#ifndef MECHCLASS_H
 #include "mechclass.h"
-#endif
-
-#ifndef UNITDESG_H
 #include "unitdesg.h"
-#endif
-
-#ifndef MULTPLYR_H
 #include "multplyr.h"
-#endif
-
-#ifndef TEAM_H
 #include "team.h"
-#endif
-
-#ifndef COMNDR_H
 #include "comndr.h"
-#endif
-
-#ifndef GROUP_H
 #include "group.h"
-#endif
-
-#ifndef CONTACT_H
 #include "contact.h"
-#endif
-
-#ifndef TRIGGER_H
 #include "trigger.h"
-#endif
-
-#ifndef MISSION_H
 #include "mission.h"
-#endif
-
-#ifndef LOGISTICSPILOT_H
 #include "logisticspilot.h"
-#endif
 
 //--------
 // DEFINES
@@ -690,7 +622,6 @@ void MoveChunk::build (MoverPtr mover, MovePathPtr path1, MovePathPtr path2) {
 				//-----------------------------------------------------
 				// Since we count the cur position as the first step...
 				numSteps++;
-				
 				}
 			else {
 				//---------------------
@@ -756,7 +687,6 @@ void MoveChunk::build (MoverPtr mover, MovePathPtr path1, MovePathPtr path2) {
 				Assert(numSteps <= (MOVECHUNK_NUM_STEPS + 1), curStep, " MoveChunk.build: path2 and bad curStep > MOVECHUNK_NUM_STEPS ");
 			}
 		}
-	
 	}
 
 	if ((numSteps < 1)  || (numSteps > 4)) {
@@ -844,7 +774,6 @@ void MoveChunk::pack (MoverPtr mover) {
 		Assert(false, numSteps, errMsg);
 	}
 #endif
-
 }
 
 //---------------------------------------------------------------------------
@@ -1341,7 +1270,6 @@ void StatusChunk::pack (MoverPtr mover) {
 			#endif
 	}
 #endif
-
 }
 
 //---------------------------------------------------------------------------
@@ -1486,7 +1414,6 @@ void StatusChunk::unpack (MoverPtr mover) {
 			#endif
 	}
 #endif
-
 }
 
 //---------------------------------------------------------------------------
@@ -1704,7 +1631,6 @@ void MoverControl::brake (void) {
 		case CONTROL_DATA_ELEMENTAL:
 			break;
 	}
-
 }
 
 //---------------------------------------------------------------------------
@@ -2963,7 +2889,6 @@ Stuff::Vector3D Mover::relativePosition (float angle, float distance, unsigned l
 		// Create vector for facing, rotated to adjust for the
 		// relative angle...
 		shiftVect = getRotationVector();
-
 	}
 	Rotate(shiftVect, angle);
 	shiftVect *= distance;
@@ -3135,7 +3060,6 @@ if (queuePlayerOrder)
 			}
 			//else
 			//	message = RADIO_JUMPTO;
-
 			}
 			//-----------------------------------------
 			// No break here--should fall down below...
@@ -3395,7 +3319,6 @@ Stuff::Vector3D Mover::getLOSPosition (void)
 				lowestWeaponNodeID = appearance->getLowestWeaponNode();
 			}
 
-
 			Stuff::Vector3D nodePos = appearance->getWeaponNodePosition(lowestWeaponNodeID);
 			lowestWeaponNodeZ = nodePos.z - land->getTerrainElevation(nodePos);
 		}
@@ -3429,7 +3352,6 @@ Stuff::Vector3D Mover::getLOSPosition (void)
 
 	return (losPos);
 }
-
 
 //---------------------------------------------------------------------------
 
@@ -4576,7 +4498,6 @@ long Mover::calcMoveGoal (GameObjectPtr target,
 				if (noTravelOffMap && GameMap->getOffMap(curCellRow, curCellCol))
 					goalMap[goalMapIndex] -= 50000;
 
-
 				long area = GlobalMoveMap[moveLevel]->calcArea(curCellRow, curCellCol);
 				if ((area != curArea) && (area != -1) && (curArea != -1)) {
 					if (moveLevel < 2) {
@@ -5200,7 +5121,6 @@ bool Mover::getPathRangeBlocked (long range, bool* reachedEnd) {
 //---------------------------------------------------------------------------
 
 void Mover::updateHustleTime (void) {
-
 }
 
 //---------------------------------------------------------------------------
@@ -5537,7 +5457,6 @@ float Mover::getWeaponAmmoLevel (long weaponIndex) {
 bool Mover::getWeaponIsEnergy( long weaponIndex )
 {
 	return MasterComponent::masterList[inventory[weaponIndex].masterID].getForm() == COMPONENT_FORM_WEAPON_ENERGY;
-
 }
 
 //------------------------------------------------------------------------------------------
@@ -5722,7 +5641,6 @@ long Mover::calcFireRanges (void) {
 			optimalRange = 0.0;
 			return(optimalRange != lastOptimalRange);
 		}
-
 	}
 	optimalRange = OptimalRangePoints[optimalRangeType];
 	
@@ -6864,7 +6782,6 @@ void GetBlockedDoorCells (long moveLevel, long door, char* openCells) {
 					}
 			}
 		}
-
 		}
 	else {
 		doorWorldCellRec[0] = GlobalMoveMap[moveLevel]->doors[door].row;
@@ -6982,7 +6899,6 @@ bool Mover::handleEjection()
 		// Create the Eject FX
 		// WHEN READY -fs
 
-	
 		//---------------------------------------------
 		// If we aren't already disabled, we are now...
  		disable(EJECTION_DEATH);

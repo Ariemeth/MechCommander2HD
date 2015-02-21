@@ -946,7 +946,6 @@ int
 										<< srcPolygon.coords[k].w << '\n';
 	#endif
 
-
 									dstPolygon.clipPerVertex[dstPolygon.length] = 
 										srcPolygon.clipPerVertex[k];
 	#ifdef I_SAY_YES_TO_COLOR
@@ -1042,7 +1041,6 @@ int
 	#endif
 									DoClipTrick(dstPolygon.coords[dstPolygon.length], l);
 
-
 									//
 									//----------------------------------------------------------
 									// If there are colors, lerp them in screen space for now as
@@ -1131,7 +1129,6 @@ int
 	#endif
 
 								DoClipTrick(dstPolygon.coords[dstPolygon.length], l);
-
 
 								//
 								//----------------------------------------------------------
@@ -1234,7 +1231,6 @@ int
 							dstPolygon.texCoords = clipBuffer[dstBuffer].texCoords.GetData();
 							dstPolygon.clipPerVertex = clipBuffer[dstBuffer].clipPerVertex.GetData();
 							dstPolygon.length = 0;
-
 						}
 
 						mask = mask << 1;
@@ -1567,10 +1563,7 @@ int
 #if HUNT_CLIP_ERROR
 		DEBUG_STREAM << "***" << endl << endl;
 #endif
-
 	}
-
-
 
 #ifdef I_SAY_YES_TO_DUAL_TEXTURES
 	Verify (tex2count == numGOSVertices);

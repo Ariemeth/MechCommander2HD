@@ -7,10 +7,7 @@
 
 #ifndef _MBCS
 #include <gameos.hpp>
-
-#ifndef HEAP_H
 #include "heap.h"
-#endif
 
 #else
 #include <assert.h>
@@ -390,7 +387,6 @@ save2:
 		rep		stosb
 		mov		[FreeCode],First_Free 		//Next code to use is first_free
 
-		
 		mov		al,[K]                		//Last char
 		jmp		Make_Into_Code
 	}

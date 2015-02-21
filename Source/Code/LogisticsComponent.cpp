@@ -9,10 +9,8 @@ LogisticsComponent.cpp			: Implementation of the LogisticsComponent component.
 #include "LogisticsComponent.h"
 #include <gameos.hpp>
 #include "Cmponent.h"
-
 #include "..\resource.h"
 #include "utilities.h"
-
 
 extern char* ComponentFormString[];
 
@@ -22,7 +20,6 @@ float LogisticsComponent::MAX_HEAT = 20.f;
 float LogisticsComponent::MAX_DAMAGE = 15.f;
 float LogisticsComponent::MAX_RECYCLE = 10.75f;
 float LogisticsComponent::MAX_RANGE = 3.f;
-
 
 /*char* LogisticsComponent::ComponentFormString[NUM_COMPONENT_FORMS] = 
 {
@@ -200,7 +197,6 @@ int LogisticsComponent::extractString( char*& pFileLine, char* pBuffer, int buff
 	pFileLine += i + 1;
 
 	return i;
-
 }
 
 int LogisticsComponent::extractInt( char*& pFileLine )
@@ -250,7 +246,6 @@ bool LogisticsComponent::compare( LogisticsComponent* second, int type )
 		case RANGE:
 			return second->damage > damage;
 			break;
-
 	}
 
 	return 0;
@@ -262,9 +257,7 @@ bool LogisticsComponent::isWeapon()
 		Type == COMPONENT_FORM_WEAPON_ENERGY ||
 		Type == COMPONENT_FORM_WEAPON_BALLISTIC ||
 		Type == COMPONENT_FORM_WEAPON_MISSILE;
-
 }
-
 
 //*************************************************************************************************
 // end of file ( LogisticsComponent.cpp )

@@ -24,84 +24,27 @@
 
 //--------------------------------------------------------------------------------------
 // Include Files
-#ifndef MISSIONGUI_H
 #include "missiongui.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
-
-#ifndef SOUNDS_H
 #include "sounds.h"
-#endif
-
-#ifndef MULTPLYR_H
 #include "multplyr.h"
-#endif
-
-#ifndef TEAM_H
 #include "team.h"
-#endif
-
-#ifndef GAMECAM_H
 #include "gamecam.h"
-#endif
-
-#ifndef VERTEX_H
 #include "Vertex.h"
-#endif
-
-#ifndef MECH_H
 #include "Mech.h"
-#endif
-
-#ifndef ARTLRY_H
 #include "artlry.h"
-#endif
-
-#ifndef LOGISTICSPILOT_H
 #include "LogisticsPilot.h"
-#endif
-
-#ifndef LOGISTICSDATA_H
 #include "LogisticsData.h"
-#endif
-
-#ifndef MISSION_H
 #include "Mission.h"
-#endif
-
-#ifndef GROUP_H
 #include "group.h"
-#endif
-
-#ifndef MOVEMGR_H
 #include "movemgr.h"
-#endif
-
-#ifndef COMNDR_H
 #include "comndr.h"
-#endif
-
-#ifndef PREFS_H
 #include "Prefs.h"
-#endif
-
-#ifndef KEYBOARDREF_H
 #include "KeyboardRef.h"
-#endif
-
 #include "LogisticsDialog.h"
-
 #include "..\resource.h"
-
 #include "windows.h"
-
 #include "gvehicl.h" // remove
 
 	static char* terrainStr[NUM_TERRAIN_TYPES] = {
@@ -121,7 +64,6 @@
 			"None"	//MC_NONE_TYPE
 		};
 
-
 extern void testKeyStuff();
 
 extern long helpTextHeaderID;
@@ -130,7 +72,6 @@ extern CPrefs g_userPreferences;
 
 extern bool invulnerableON;
 extern bool MLRVertexLimitReached;
-
 
 //--------------------------------------------------------------------------------------
 // Globals
@@ -754,14 +695,12 @@ void MissionInterfaceManager::update (void)
 			lineOfSight = Team::home->teamLineOfSight(wPos,0.0f);
 	}	
 
-
 	// update buttons and stuff, even if not in region, it draws objectives and stuff
 	controlGui.update( isPaused() && !isPausedWithoutMenu(), lineOfSight );
 
 	bool leftClicked = (!userInput->isLeftDrag() && !userInput->isRightDrag() && userInput->isLeftClick());
 	bool rightClicked = (!userInput->isLeftDrag() && !userInput->wasRightDrag() && userInput->rightMouseReleased());
 	bool bLeftDouble = userInput->isLeftDoubleClick();
-
 
 	updateTarget(bGui);
 
@@ -820,7 +759,6 @@ void MissionInterfaceManager::update (void)
 			selectForceGroup( forceGroup, true );
 
 		lastUpdateDoubleClick = true;
-		
 	}
 
 	Team* pTeam = Team::home;
@@ -840,7 +778,6 @@ void MissionInterfaceManager::update (void)
 			else
 				nonMoverCount++;
 		}
-
 	}
 	
 	if( g_userPreferences.leftRightMouseProfile ) // using AOE control style
@@ -862,8 +799,6 @@ void MissionInterfaceManager::update (void)
 		}
 
 		updateAOEStyle(shiftDn, altDn, ctrlDn, bGui, lineOfSight, passable, moverCount, nonMoverCount);
-		
-
 	}
 	else // using mc1 style
 	{
@@ -1188,7 +1123,6 @@ void MissionInterfaceManager::updateVTol()
 	}
 }
 
-	
 void MissionInterfaceManager::updateTarget( bool bGui)
 {
 	
@@ -1303,8 +1237,7 @@ void MissionInterfaceManager::updateOldStyle( bool shiftDn, bool altDn, bool ctr
 		if ( !userInput->isLeftDrag() && !controlGui.isAddingAirstrike() && !controlGui.isAddingVehicle() )
 			return;
 	}
-	
-	
+
 	Team* pTeam = Team::home;
 	
 	if (target) // if there is a target, make the appropritate cursor
@@ -1439,8 +1372,6 @@ void MissionInterfaceManager::updateOldStyle( bool shiftDn, bool altDn, bool ctr
 				}
 				else
 					g_soundSystem->playDigitalSample( INVALID_GUI );
-
-
 			}
 			else
 			{
@@ -1451,11 +1382,9 @@ void MissionInterfaceManager::updateOldStyle( bool shiftDn, bool altDn, bool ctr
 							controlGui.setInfoWndMover( (Mover*)target );
 				else if ( !target->isDisabled() && !bForcedShot && !bAimedShot)
 					doAttack();
-			
 			}
 		}
 	}
-
 }	
 void MissionInterfaceManager::updateAOEStyle(bool shiftDn, bool altDn, bool ctrlDn, 
 											  bool bGui, bool lineOfSight, bool passable, 
@@ -1582,7 +1511,6 @@ void MissionInterfaceManager::updateAOEStyle(bool shiftDn, bool altDn, bool ctrl
 			doAttack();
 		else if (!bForcedShot && !bAimedShot)
 			g_soundSystem->playDigitalSample( INVALID_GUI );
-	
 	}
 	else if ( selectClicked && !bGui )
 	{
@@ -1681,7 +1609,6 @@ void MissionInterfaceManager::updateWaypoints (void)
    				pMover->updateDrawWaypointPath();
    			}
    		}
-   		
    	}
 }
 
@@ -1731,7 +1658,6 @@ int MissionInterfaceManager::update( bool leftClickedClick, bool rightClickedCli
 	mouseX = MouseX;
 	mouseY = MouseY;
 	setTarget( pTarget );
-
 
 	if ( !bRetVal )
 	{
@@ -1846,7 +1772,6 @@ void MissionInterfaceManager::doAttack()
 		g_soundSystem->playDigitalSample( INVALID_GUI );
 		return; // don't do if in waypoint mode
 	}
-
 
 	TacticalOrder tacOrder;
 	bool bCapture =  target->isCaptureable(Team::home->getId());
@@ -2004,7 +1929,6 @@ int MissionInterfaceManager::stopJump()
 	if ( controlGui.getJump() )
 		controlGui.toggleJump();
 	return 1;
-
 }
 void MissionInterfaceManager::doJump()
 {
@@ -2039,15 +1963,12 @@ void MissionInterfaceManager::doJump()
 			userInput->setMouseCursor(mState_DONT);
 			g_soundSystem->playDigitalSample( INVALID_GUI );
 		}
-		
-			
 	}
 	else
 	{
 		userInput->setMouseCursor(mState_DONT);
 		g_soundSystem->playDigitalSample( INVALID_GUI );
 	}
-	
 }
 		
 int MissionInterfaceManager::fireFromCurrentPos()
@@ -2120,7 +2041,6 @@ int MissionInterfaceManager::selectVisible()
 	}
 		
 	return addVisibleToSelection();
-
 }
 
 int MissionInterfaceManager::addVisibleToSelection()
@@ -2190,7 +2110,6 @@ int MissionInterfaceManager::aimLeg()
 				bAimedShot = true;
 				return 1;
 			}
-			
 		}
 	}
 	else
@@ -2326,7 +2245,6 @@ int MissionInterfaceManager::powerDown()
 	tacOrder.pack(NULL, NULL);
 	handleOrders( tacOrder );
 	return 1;
-					
 }
 int MissionInterfaceManager::changeSpeed()
 {
@@ -2351,7 +2269,6 @@ int MissionInterfaceManager::eject()
 		}
 
 		userInput->setMouseCursor( mState_EJECT );
-	
 	}
 	else if ( !controlGui.forceGroupBar.inRegion( userInput->getMouseX(), userInput->getMouseY() ) )
 		userInput->setMouseCursor( mState_XEJECT );
@@ -2556,7 +2473,6 @@ int MissionInterfaceManager::handleOrders( TacticalOrder& order)
 				else
 					pMover->handleTacticalOrder(order);
 			}
-
 		}
 	}
 
@@ -2654,7 +2570,6 @@ int MissionInterfaceManager::tiltDown()
 	float scrollFactor = scrollInc / eye->getScaleFactor() * frameFactor;
 	eye->tiltUp(scrollFactor * frameFactor * 30.0f);
 	return 1;
-	
 }
 int MissionInterfaceManager::centerCamera()
 {
@@ -2951,7 +2866,6 @@ void MissionInterfaceManager::render (void)
 
 			Stuff::Vector4D screenPos;
 			eye->projectZ( dragStart, screenPos );
-				
 
 			vertices[0].x 		= screenPos.x;
 			vertices[0].y 		= screenPos.y;
@@ -3018,7 +2932,6 @@ void MissionInterfaceManager::render (void)
 					pMover->drawWaypointPath();
 				}
 			}
-			
 		}
 
 		if ( bDrawHotKeys )
@@ -3135,7 +3048,6 @@ void MissionInterfaceManager::printDebugInfo()
 			sprintf(debugString, "POS = %s(%c) %d,%d [%ld, %ld] (%.4f, %.4f, %.4f)\n", terrainStr[GameMap->getTerrain(row, col)], GameMap->getPassable(row, col) ? 'T' : 'F', GlobalMoveMap[0]->calcArea(row, col), GlobalMoveMap[1]->calcArea(row, col), row, col, wPos.x, wPos.y, wPos.z);
 		DEBUGWINS_print(debugString);
 	}
-
 }
 
 void MissionInterfaceManager::doMove(const Stuff::Vector3D& pos)
@@ -3175,7 +3087,6 @@ void MissionInterfaceManager::doMove(const Stuff::Vector3D& pos)
 	if ( controlGui.getMines() )
 		tacOrder.moveParams.mode = MOVE_MODE_MINELAYING;
 	tacOrder.pack(NULL, NULL);
-
 
 	handleOrders(tacOrder);
 	
@@ -3217,7 +3128,6 @@ bool MissionInterfaceManager::makePatrolPath()
 					return 1;
 				}
 			}
-			
 		}
 	}
 
@@ -3252,9 +3162,6 @@ int MissionInterfaceManager::forceShot()
 	}
 
 	return 0;
-
-	
-
 }
 
 void MissionInterfaceManager::selectForceGroup( int forceGroup, bool deselect )
@@ -3411,13 +3318,11 @@ bool MissionInterfaceManager::moveCameraAround( bool lineOfSight, bool passable,
 		{
 			eye->tiltDown(actualTilt);
 			bRetVal = 1;
-	
 		}
 		else if (mouseYDelta < 0)
 		{
 			eye->tiltUp(actualTilt);
 			bRetVal = 1;
-	
 		}
 		userInput->setMouseCursor( mState_ROTATE_CAMERA );
 		
@@ -3480,7 +3385,6 @@ bool MissionInterfaceManager::moveCameraAround( bool lineOfSight, bool passable,
 	doDrag(bGui);
 
 	return bRetVal;
-
 }
 
 bool MissionInterfaceManager::canJump()
@@ -3505,7 +3409,6 @@ bool MissionInterfaceManager::canJump()
 	}
 
 	return canJump;
-
 }
 
 bool MissionInterfaceManager::canJumpToWPos()
@@ -3559,7 +3462,6 @@ bool MissionInterfaceManager::canJumpToWPos()
 	}
 
 	return 0;
-	
 }
 
 void MissionInterfaceManager::doDrag(bool bGui)
@@ -3597,7 +3499,6 @@ void MissionInterfaceManager::doDrag(bool bGui)
 			//----------------------------------------------
 			// We should select everything in the drag box.
 
-		
 			// AND deselect anything outside of it.
 
 			GameObject*	objsInRect[MAX_ICONS];
@@ -3675,7 +3576,6 @@ bool MissionInterfaceManager::canAddVehicle( const Stuff::Vector3D& pos )
 				return false;
 		}	
 	}
-	
 
 	return false;
 }
@@ -3702,7 +3602,6 @@ bool MissionInterfaceManager::canRecover( const Stuff::Vector3D& pos )
 				return false;
 		}	
 	}
-	
 
 	return false;
 }
@@ -3722,7 +3621,6 @@ long MissionInterfaceManager::makeTargetCursor( bool lineOfSight, long moverCoun
 		return currentCursor;
 	}
 
-	
 	if ( controlGui.isSelectingInfoObject()  )
 	{
 		if ( target->isMover() )
@@ -3827,7 +3725,6 @@ long MissionInterfaceManager::makeTargetCursor( bool lineOfSight, long moverCoun
 		}
 	}	
 
-			
 	switch (target->getObjectClass())
 	{
 		case BATTLEMECH:
@@ -3921,7 +3818,6 @@ long MissionInterfaceManager::makeTargetCursor( bool lineOfSight, long moverCoun
 			return makeNoTargetCursor( false, lineOfSight, 0, 0, moverCount, nonMoverCount );
 			break;
 
-			
 		case DEBRIS:
 		{
 			//----------------------------------
@@ -3941,8 +3837,6 @@ long MissionInterfaceManager::makeTargetCursor( bool lineOfSight, long moverCoun
 	{
 		currentCursor = makeRangeCursor( lineOfSight );
 	}
-
-
 
 	return currentCursor;
 }
@@ -4003,7 +3897,6 @@ long MissionInterfaceManager::makeNoTargetCursor( bool passable, bool lineOfSigh
 	{
 		return makeRangeCursor( lineOfSight );
 	}
-	
 
 	if ( !passable && !selectionIsHelicopters() )
 		cursorType = mState_DONT;
@@ -4045,7 +3938,6 @@ long MissionInterfaceManager::makeNoTargetCursor( bool passable, bool lineOfSigh
 			cursorType = mState_XSALVAGE;
 		else if ( bGui )
 			cursorType = mState_NORMAL;
-
 	}
 	else if ( userInput->getKeyDown( s_waypointKey ) || controlGui.getMines() )
 	{
@@ -4067,8 +3959,6 @@ long MissionInterfaceManager::makeNoTargetCursor( bool passable, bool lineOfSigh
 		}
 
 		return cursorType;
-		
-
 	}
 
 	else if ( controlGui.getJump() )
@@ -4087,8 +3977,6 @@ long MissionInterfaceManager::makeNoTargetCursor( bool passable, bool lineOfSigh
 			
 		if ( !passable && !selectionIsHelicopters() )
 			cursorType = mState_DONT;
-
-
 	}
 	else if ( controlGui.getRun() && moverCount )
 	{
@@ -4492,7 +4380,6 @@ void MissionInterfaceManager::doSalvage()
 
 		handleOrders( tacOrder );
 	}
-
 }
 
 bool MissionInterfaceManager::canRepair( GameObject* pMover )
@@ -4528,7 +4415,6 @@ bool MissionInterfaceManager::canRepair( GameObject* pMover )
 		return true;
 
 	return 0;
-
 }
 void MissionInterfaceManager::doRepair(GameObject* who)
 {
@@ -4613,7 +4499,6 @@ int MissionInterfaceManager::togglePause()
 		bPausedWithoutMenu = 0;
 
 	g_soundSystem->playDigitalSample( LOG_NEXTBACKBUTTONS );
-		
 
 	if ( bPaused )
 	{
@@ -4682,7 +4567,6 @@ int MissionInterfaceManager::reverseSwitchTab()
 	return 1;
 }
 
-
 int MissionInterfaceManager::infoCommand()
 {
 	if ( !controlGui.infoButtonPressed() )
@@ -4743,7 +4627,6 @@ int MissionInterfaceManager::gotoNextNavMarker()
 					tacOrder.moveParams.mode = MOVE_MODE_MINELAYING;
 				tacOrder.pack(NULL, NULL);
 
-
 				handleOrders(tacOrder);
 				
 				g_soundSystem->playDigitalSample(BUTTON5);
@@ -4755,7 +4638,6 @@ int MissionInterfaceManager::gotoNextNavMarker()
 	// if we got here there weren't any valid markers, play bad sound
 	g_soundSystem->playDigitalSample( INVALID_GUI );
 	return 0;
-
 }
 int MissionInterfaceManager::sendSensorStrike()
 {
@@ -5277,7 +5159,6 @@ int MissionInterfaceManager::saveHotKeys( FitIniFile& file )
 	}
 
 	return 0;
-
 }
 int MissionInterfaceManager::loadHotKeys( FitIniFile& file )
 {
@@ -5552,7 +5433,6 @@ bool MissionInterfaceManager::hotKeyIsPressed( int whichCommand )
 	}
 
 	return false;
-
 }
 
 void testKeyStuff()
@@ -5567,7 +5447,6 @@ void testKeyStuff()
 	file.open( "keyboards.fit" );
 	MissionInterfaceManager::instance()->loadHotKeys( file );
 	MissionInterfaceManager::instance()->getHotKey( 6, key, bShift, bCtrl, bAlt );
-
 }
 
 int MissionInterfaceManager::toggleHotKeys()
@@ -5590,8 +5469,6 @@ void MissionInterfaceManager::drawHotKeys()
 
 	keyboardRef->render();
 	return;
-
-
 }
 
 void MissionInterfaceManager::drawHotKey( const char* keyString, const char* descString, long x, long y )
@@ -5600,7 +5477,6 @@ void MissionInterfaceManager::drawHotKey( const char* keyString, const char* des
 
 	hotKeyFont.render( descString,  x + (10 * Environment.screenWidth/640.f), y, 
 		Environment.screenWidth, Environment.screenHeight, 0xffffffff, 0, 0 );
-
 }
 
 void MissionInterfaceManager::doGuardTower()
@@ -5673,9 +5549,7 @@ long MissionInterfaceManager::makeJumpCursor( bool bLineOfSite )
 	// OK, rotations go clockwise starting from 180...
 	gosASSERT( rotation >= 0 && rotation < 32 );
 	return mState_JUMP1 + 32 * bLineOfSite + rotation;
-
 }
-
 
 long MissionInterfaceManager::makeRunCursor( bool bLineOfSite )
 {
@@ -5685,7 +5559,6 @@ long MissionInterfaceManager::makeRunCursor( bool bLineOfSite )
 	// OK, rotations go clockwise starting from 180...
 	gosASSERT( rotation >= 0 && rotation < 32 );
 	return mState_RUN1 + 32 * bLineOfSite + rotation;
-
 }
 
 long MissionInterfaceManager::calcRotation()
@@ -6029,7 +5902,6 @@ void MissionInterfaceManager::updateRollovers()
 	For all the force-fire attack cursors, use strings 45173/45174
 	For the guard cursor, use strings 45147/45148 (one each for right-click and left-click models).*/
 
-
 	long cursor = userInput->getMouseCursor();
 
 	if ( ( cursor >= mState_RUN1 && cursor <= mState_RUN1 + 64) )
@@ -6044,11 +5916,8 @@ void MissionInterfaceManager::updateRollovers()
 		controlGui.setRolloverHelpText( IDS_JUMP_CURSOR_LEFT_HELP );
 	}
 
-
- 
 	else
 	{
-
 
 		switch (cursor)
 		{
@@ -6122,12 +5991,8 @@ void MissionInterfaceManager::updateRollovers()
 				helpTextID = 0;
 				controlGui.setRolloverHelpText( IDS_LONG_RANGE_CURSOR_LEFT_HELP );
 				break;
-
-
-
 		}
 	}
-
 }
 
 //--------------------------------------------------------------------------------------

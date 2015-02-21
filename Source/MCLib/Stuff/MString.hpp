@@ -53,7 +53,6 @@ namespace MemoryStreamIO {
 			Stuff::MemoryStream* stream,
 			const Stuff::MString* str
 		);
-
 }
 
 namespace GetHashFunctions {
@@ -623,7 +622,6 @@ namespace Stuff {
 		void
 			ToLower();
 
-
 		//
 		// stream input/output methods
 		//
@@ -659,7 +657,6 @@ namespace Stuff {
 
 		friend IteratorPosition
 			GetHashFunctions::GetHashValue(const MString &value);
-
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Private Data
@@ -860,7 +857,6 @@ namespace Stuff {
 			representation->GetNthToken(nth_token, delimiters);
 		return MString(temp.stringText);
 	}
-
 }
 
 // stream input/output methods
@@ -896,5 +892,4 @@ namespace MemoryStreamIO {
 	{
 		return Write(stream, *str->representation);
 	}
-
 }

@@ -55,7 +55,6 @@ protected:
 	bool bThisIsInitialized;
 };	
 
-
 //{{AFX_INSERT_LOCATION}}
 
 #endif// TGAWND_H

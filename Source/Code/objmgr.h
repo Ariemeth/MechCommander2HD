@@ -13,65 +13,21 @@
 
 //---------------------------------------------------------------------------
 
-#ifndef DOBJMGR_H
 #include "dobjmgr.h"
-#endif
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef MOVER_H
 #include "mover.h"
-#endif
-
-#ifndef DMECH_H
 #include "dmech.h"
-#endif
-
-#ifndef DGVEHICL_H
 #include "dgvehicl.h"
-#endif
-
-#ifndef DELEMNTL_H
 #include "delemntl.h"
-#endif
-
-#ifndef DTERROBJ_H
 #include "dterrobj.h"
-#endif
-
-#ifndef DBLDNG_H
 #include "dbldng.h"
-#endif
-
-#ifndef DWEAPONBOLT_H
 #include "dweaponbolt.h"
-#endif
-
-#ifndef DCARNAGE_H
 #include "dcarnage.h"
-#endif
-
-#ifndef DARTLRY_H
 #include "dartlry.h"
-#endif
-
-#ifndef DOBJBLCK_H
 #include "dobjblck.h"
-#endif
-
-#ifndef DTURRET_H
 #include "dturret.h"
-#endif
-
-#ifndef DGATE_H
 #include "dgate.h"
-#endif
-
-#ifndef DCOLLSN_H
 #include "dcollsn.h"
-#endif
 
 class PacketFile;
 
@@ -282,7 +238,6 @@ class GameObjectManager {
 			long &turretIndex, long &gateIndex, long& curCollideHandle, long& curNonCollideHandle);
 
 		void countObject( ObjDataLoader* objType);
-
 
 	public:
 

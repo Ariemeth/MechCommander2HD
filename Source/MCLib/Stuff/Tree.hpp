@@ -513,5 +513,4 @@ namespace Stuff {
 		TreeIteratorOf<T, V>::~TreeIteratorOf()
 	{
 	}
-
 }

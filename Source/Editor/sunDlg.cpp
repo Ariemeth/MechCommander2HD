@@ -12,7 +12,6 @@ sunDlg.cpp			: Implementation of the sunDlg component. dialog for sun settings
 #include "utilities.h"
 #include "EditorInterface.h"
 
-
 BEGIN_MESSAGE_MAP(SunDlg,CDialog )
 	//{{AFX_MSG_MAP(SunDlg)
 	ON_WM_CTLCOLOR()
@@ -32,7 +31,6 @@ SunDlg::SunDlg(): CDialog ( IDD_LIGHT )
 	//}}AFX_DATA_INIT
 }
 
-
 void SunDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -42,11 +40,7 @@ void SunDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_YAW, m_Yaw);
 	DDX_Text(pDX, IDC_INITIAL_PITCH, m_InitialSunPitch);
 	//}}AFX_DATA_MAP
-
-
 }
-
-
 
 void SunDlg::Init()
 {
@@ -61,7 +55,6 @@ void SunDlg::Init()
 	m_Yaw = eye->lightYaw;
 
 	UpdateData( 0 );
-
 }
 
 void SunDlg::displayInHex( long number, CEdit& edit )
@@ -122,7 +115,6 @@ void SunDlg::OnOK()
 	CDialog::OnOK();
 }
 
-
 HBRUSH SunDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor) 
 {
 	int ID = pWnd->GetDlgCtrlID();
@@ -133,14 +125,12 @@ HBRUSH SunDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	
 		int i = getHexValue( *(CEdit*)pWnd );
 
-				
 		if ( backgroundBrush.m_hObject )
 			backgroundBrush.DeleteObject();
 
 		// need to swap r's and blue's.
 		unsigned long reverse = reverseRGB( i );
 
-	
 		backgroundBrush.CreateSolidBrush( reverse );
 		pDC->SetBkColor( reverse );
 
@@ -149,8 +139,6 @@ HBRUSH SunDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 
 		return (HBRUSH)backgroundBrush.m_hObject;		
 	}
-	
-	
 
 	// TODO: Return a different brush if the default is not desired
 	return hbr;
@@ -166,14 +154,12 @@ BOOL SunDlg::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-
 //*************************************************************************************************
 // end of file ( sunDlg.cpp )
 
 void SunDlg::OnAmbientButton() 
 {
 	DoColorDlg( m_AmbientEdit );
-	
 }
 
 void SunDlg::DoColorDlg( CEdit& edit)

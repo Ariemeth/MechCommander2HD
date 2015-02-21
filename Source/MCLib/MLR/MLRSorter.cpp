@@ -189,7 +189,6 @@ void
 			STOP(("GOS doesnt suppert gos_DrawQuads for gos_VERTEX_2UV yet."));
 //			gos_DrawQuads( (GOSVertex2UV *)vertices, numVertices);
 		}
-
 	}
 	Stop_Timer(GOS_Draw_Time);
 }
@@ -310,7 +309,6 @@ int
 
 	return 0;
 }
-
 
 #ifdef CalDraw
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -469,7 +467,6 @@ void
 		}
 		break;
 	}
-
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

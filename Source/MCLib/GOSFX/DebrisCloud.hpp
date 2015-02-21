@@ -179,7 +179,6 @@ namespace gosFX
 						);
 				}
 
-
 		static ClassData
 			*DefaultData;
 

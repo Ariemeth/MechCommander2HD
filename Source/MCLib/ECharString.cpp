@@ -25,12 +25,9 @@
 
 //***************************************************************
 
-
-
 #include <windows.h>
 #include <stdio.h>
 #include "ECharString.h"
-
 #include <gameos.hpp>
 
 #ifdef UNICODE
@@ -46,7 +43,6 @@
 #define INT_SIZE_LENGTH 20
 extern int __ismbcodepage;
 #define _ISNOTMBCP  (__ismbcodepage == 0)
-
 
 static wchar_t * __cdecl wideRev (
         wchar_t * string
@@ -137,7 +133,6 @@ static long __cdecl atolong(
             return total;   /* return result, negated if necessary */
 }
 
-
 static char * __cdecl StrStr (
         const char * str1,
         const char * str2
@@ -164,7 +159,6 @@ static char * __cdecl StrStr (
         }
 
         return(NULL);
-
 }
 
 static char * __cdecl StrRev (
@@ -188,7 +182,6 @@ static char * __cdecl StrRev (
 
         return(start);
 }
-
 
 //***************************************************************
 
@@ -223,13 +216,10 @@ static char * __cdecl StrRev (
 #endif
 #endif
 
-
-
 const int ECharString::INVALID_INDEX = -1;
 const int ECharString::s_Alloc_Allign = 4;
 const int ECharString::s_Force_Ansi =  0x10000;
 const int ECharString::s_Force_Unicode = 0x20000;
-
 
 // keep around an empty buffer which all of our empty objects use
 ECharString::EBuffer	ECharString::EBuffer::s_Empty_Buffer = { 0, 0, 0 };
@@ -285,13 +275,8 @@ void	ECharString::ChecEBufferDoRealloc()
 
 		memcpy( m_pBuffer + 1, p_Data, Cur_Length * sizeof( ECSChar ) );
 		m_pBuffer->m_Data_Length = Cur_Length;
-
 	}
-
 }
-
-
-
 
 //***************************************************************
 
@@ -433,7 +418,6 @@ void ECharString::Replace( int Start_Index, const ECSChar* p_String )
 			m_pBuffer->m_Data_Length = Alloc_Length;
 
 			p_Old_Buffer->Release();		
-
 		}
 
 		// check to see if the p_String is null
@@ -441,9 +425,6 @@ void ECharString::Replace( int Start_Index, const ECSChar* p_String )
 		{
 			*(m_pBuffer->Data() + Start_Index) = 0;
 		}
-
-		
-
 	}	
 }
 
@@ -452,7 +433,6 @@ void ECharString::Replace( int Start_Index, const ECharString& String )
 {
 	Replace( Start_Index, String.m_pBuffer->Data() );
 }
-
 
 ///////////////////////////////////////////////////////////////
 void ECharString::Insert( int Start_Index, const ECSChar* p_String )
@@ -480,8 +460,7 @@ void ECharString::Insert( int Start_Index, const ECSChar* p_String )
 					(p_Tmp->m_Data_Length - Start_Index) * sizeof (ECSChar) );
 		// write the string last in case we are writing over an old buffer
 		memcpy( m_pBuffer->Data() + Start_Index, p_String, Length * sizeof( ECSChar ) );
-	
-		
+
 		m_pBuffer->m_Data_Length = Length + p_Tmp->m_Data_Length;
 
 		// Bill added - in some cases, removing some characters then inserting fewer
@@ -534,7 +513,6 @@ bool ECharString::Remove( ECharString& Sub_String )
 
 	return false;
 }
-
 
 ///////////////////////////////////////////////////////////////
 void ECharString::Swap( ECharString& Src )
@@ -647,7 +625,6 @@ void ECharString::Format( const ECSChar* p_Str, ... )
 					else
 						break;
 				}
-
 			}
 			gosASSERT( Precision >= 0);
 		}
@@ -816,7 +793,6 @@ void ECharString::Format( const ECSChar* p_Str, ... )
 				va_arg(Arg_List, __int64);
 				break;
 
-
 			default:
 				gosASSERT(false);  // unknown formatting option
 			}
@@ -841,12 +817,10 @@ void ECharString::Format( const ECSChar* p_Str, ... )
 	vsprintf(m_pBuffer->Data(), p_Str, Arg_List_Save);
 #endif
 
-
 	m_pBuffer->m_Data_Length = StrSize( m_pBuffer->Data() );
 
 	// clean up
 	va_end( Arg_List );
-	
 }
 
 /////////////////////////////////////////////////////////////////
@@ -875,7 +849,6 @@ ECharString operator+( const ECSChar* p_Begin_String,
 	Ret_String.m_pBuffer->m_Data_Length = Length + End_String.m_pBuffer->m_Data_Length;
 
 	return Ret_String;
-
 }
 
 /////////////////////////////////////////////////////////////////
@@ -897,7 +870,6 @@ ECharString operator+( const ECharString& Begin_String, const ECSChar* p_End_Str
 	Ret_String.m_pBuffer->m_Data_Length = Length + Begin_String.m_pBuffer->m_Data_Length;
 
 	return Ret_String;
-
 }
 
 /////////////////////////////////////////////////////////////////
@@ -919,7 +891,6 @@ ECharString operator+( const ECSChar Char,  const  ECharString& Begin_String )
 
 	return Tmp + Begin_String;
 }
-
 
 /////////////////////////////////////////////////////////////////
 int ECharString::Compare( const ECharString& Str_To_Compare, bool Case_Sensitive ) const
@@ -954,7 +925,6 @@ int ECharString::Compare( const ECSChar* p_String, bool Case_Sensitive ) const
 		return ( memcmp( m_pBuffer->Data(), p_String, Length ) );
 	}	
 	return (KStrCmp( m_pBuffer->Data(), p_String ) );
-	
 }
  	
 /////////////////////////////////////////////////////////////////
@@ -962,7 +932,6 @@ int ECharString::Size() const 	// number of bytes
 {
 	return m_pBuffer->m_Data_Length * sizeof(ECSChar);
 }
-
 
 /////////////////////////////////////////////////////////////////
 int ECharString::Length() const	// number of characters
@@ -996,11 +965,9 @@ int ECharString::Find( ECSChar Char, int Start_Index ) const
 		}
 		
 		p_Tmp++;
-		
 	}
 
 	return INVALID_INDEX;
-
 }
 
 /////////////////////////////////////////////////////////////////
@@ -1025,12 +992,10 @@ int ECharString::Find( const ECSChar* p_Str_To_Find, int Start_Index ) const
 		Start_Index = 0;
 	}
 
-	
 	ECSChar* p_Tmp = KStrStr( m_pBuffer->Data() + Start_Index, 
 							p_Str_To_Find );
 
 	return ( p_Tmp ? p_Tmp - m_pBuffer->Data() : INVALID_INDEX );
-
 }
 
 /////////////////////////////////////////////////////////////////
@@ -1052,7 +1017,6 @@ int ECharString::ReverseFind ( ECSChar Char, int End_Index ) const
 		
 		p_Tmp --;
 		End_Index --;
-	
 	}
 
 	return INVALID_INDEX;
@@ -1097,8 +1061,6 @@ ECharString ECharString::SubString( int Start_Index, int End_Index ) const
 	return Ret_String;
 }
 
-
-
 /////////////////////////////////////////////////////////////////
 unsigned short* ECharString::CreateUNICODE() const
 {
@@ -1126,14 +1088,7 @@ char* 	ECharString::CreateMBCS() const
 #endif
 
 	return p_Ret_String;
-
 }
-
-
-
- 	
-
-
 
 ///****************************************************************
 #ifdef K_UNICODE
@@ -1170,7 +1125,6 @@ const ECharString& ECharString::operator+=( char Char )
 
 	return *this;	
 }
-
 
 /////////////////////////////////////////////////////////////////
 ECharString operator+( const ECharString& Begin_String, char* p_End_String )
@@ -1515,9 +1469,6 @@ void ECharString::Format( const char* p_Str, ... )
 
 	// clean up
 	va_end( Arg_List );
-	
-
-	
 }
 
 /////////////////////////////////////////////////////////////////
@@ -1564,12 +1515,7 @@ const ECharString& ECharString::operator=( char Char )
 	return operator=( Tmp );
 }
 
-
-
 #endif // Unicode
-
-
-
 
 //***************************************************************
 

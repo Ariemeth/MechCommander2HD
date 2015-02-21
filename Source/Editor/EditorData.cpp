@@ -66,7 +66,6 @@ bool MissionSettings::save( FitIniFile* file )
 	return true;
 }
 
-
 EditorData::EditorData()
 { 
 	gosASSERT( !instance ); instance = this; 
@@ -88,9 +87,6 @@ EditorData::~EditorData()
 		free( tacMapBmp );
 
 	tacMapBmp = NULL;
-
-
-		
 }
 //-------------------------------------------------------------------------------------------------
 bool EditorData::clear()
@@ -278,7 +274,6 @@ bool EditorData::initTerrainFromPCV( const char* fileName )
 		EditorInterface::instance()->UnsetBusyMode();
 		bIsLoading = false;
 		return false;
-	
 	}
 
 	land = new Terrain( );
@@ -406,8 +401,6 @@ bool EditorData::initTerrainFromPCV( const char* fileName )
 			{
 				EditorData::instance->CBills(tmpLong);
 			}
-
-
 
 			unsigned long tmpULong = 0;
 			result = file.readIdULong("IsSinglePlayer", tmpULong);
@@ -744,7 +737,6 @@ bool EditorData::reassignHeightsFromTGA( const char* fileName, int min, int max 
 				land->setVertexHeight( j * land->realVerticesMapSide + i, h );
 			}
 			pLine += lineIncrement;
-
 		}
 	}
 
@@ -756,7 +748,6 @@ bool EditorData::reassignHeightsFromTGA( const char* fileName, int min, int max 
 	land->reCalcLight();
 
 	return true;
-
 }
 
 void* DecodeJPG( const char* FileName, BYTE* Data, DWORD DataSize, DWORD* TextureWidth, DWORD* TextureHeight, bool TextureLoad, void *pDestSurf );
@@ -1183,8 +1174,7 @@ bool EditorData::save( const char* fileName, bool quickSave )
 								}
 							}
 						}
-						
-						
+
 						Overlays overlay;
 						unsigned long offset;
 						land->getOverlay( i, j, overlay, offset );
@@ -1733,7 +1723,6 @@ bool EditorData::saveMissionFitFileStuff( FitIniFile &fitFile )
 			strcat(buf, ".abl");
 			mapAsset->AddRelationship("AVIFilename", buf);
 		}
-
 	}
 
 	return bRetVal;
@@ -1859,10 +1848,7 @@ bool EditorData::saveHeightMap( File* file )
 	}
 
 	return true;
-
-
 }
-
 
 struct TGARecs
 {
@@ -2423,7 +2409,6 @@ void EditorData::makeTacMap(BYTE*& pReturn, long& dataSize, int tacMapSize )
 	header->image_type = UNC_TRUE;
 	header->pixel_depth = 32;
 	header->image_descriptor = 32;
-
 }
 
 //---------------------------------------------------------------------------

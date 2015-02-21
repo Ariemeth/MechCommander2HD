@@ -7,9 +7,7 @@ ForceGroupBar.h			: Interface for the ForceGroupBar component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef MCLIB_H
 #include "MCLib.h"
-#endif
 
 //*************************************************************************************************
 
@@ -23,7 +21,6 @@ class StaticInfo;
 #include "MechIcon.h"
 
 #define FORCEGROUP_TOP	ForceGroupIcon::selectionRect[0].top
-
 
 /**************************************************************************************************
 CLASS DESCRIPTION
@@ -67,14 +64,11 @@ class ForceGroupBar
 		long forceNumFlashes;
 		float forceFlashTime;
 
-
 		int iconCount;
 		ForceGroupIcon*	icons[MAX_ICONS];
 
 		friend class ControlGui;
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( ForceGroupBar.h )

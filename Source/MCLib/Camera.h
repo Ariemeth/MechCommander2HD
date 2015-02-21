@@ -11,26 +11,11 @@
 //---------------------------------------------------------------------------
 // Include Files
 
-#ifndef DCAMERA_H
 #include "dcamera.h"
-#endif
-
-#ifndef TERRAIN_H
 #include "terrain.h"
-#endif
-
-#ifndef MATHFUNC_H
 #include "mathfunc.h"
-#endif
-
-#ifndef TGL_H
 #include "tgl.h"
-#endif
-
-#ifndef INIFILE_H
 #include "inifile.h"
-#endif
-
 #include <stuff\stuff.hpp>
 
 inline signed short int float2short(float _in)
@@ -136,8 +121,7 @@ class Camera
 		DWORD						fadeStart;
 		float						timeLeftToFade;
 		float						startFadeTime;
-		
-		
+
 	public:
 
 		bool					active;					//Is camera active (ie. drawing itself)
@@ -203,7 +187,6 @@ class Camera
 														//Based solely on light angle.
 																	
 		float					nightFactor;			//How "night" is it?  1.0f being full night, 0.0f being full day!
-
 
 		float					day2NightTransitionTime;//Time in Seconds that light goes from day to night.
 		float					dayLightTime;			//Current dayToNight Transition time.
@@ -454,7 +437,6 @@ class Camera
 		virtual long activate (void);
 		virtual void reset (void)
 		{
-		
 		}
 		
 		void deactivate (void);

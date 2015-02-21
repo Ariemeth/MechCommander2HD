@@ -9,37 +9,14 @@
 //---------------------------------------------------------------------------
 // Include files
 
-#ifndef CEVFX_H
 #include "cevfx.h"
-#endif
-
-#ifndef SCALE_H
 #include "scale.h"
-#endif
-
-#ifndef VPORT_H
 #include "vport.h"
-#endif
-
-#ifndef VFX_H
 #include "vfx.h"
-#endif
-
-#ifndef HEAP_H
 #include "heap.h"
-#endif
-
-#ifndef TGL_H
 #include "tgl.h"
-#endif
-
-#ifndef CAMERA_H
 #include "camera.h"
-#endif
-
-#ifndef CLIP_H
 #include "clip.h"
-#endif
 
 extern void AG_shape_translate_transform(PANE *globalPane, void *shapeTable,LONG frameNum, LONG hotX, LONG hotY,void *tempBuffer,LONG reverse, LONG scaleUp);
 extern void AG_shape_transform(PANE *globalPane, void *shapeTable,LONG frameNum, LONG hotX, LONG hotY, void *tempBuffer,LONG reverse, LONG scaleUp);
@@ -91,7 +68,6 @@ VFXElement::VFXElement (MemoryPtr _shape, long _x, long _y, long frame, bool rev
 	}
 #endif
 }
-
 
 //---------------------------------------------------------------------------
 VFXElement::VFXElement (MemoryPtr _shape, float _x, float _y, long frame, bool rev, MemoryPtr fTable, bool noScale, bool upScale) : Element(-_y)
@@ -170,7 +146,6 @@ void VFXElement::draw (void)
 			}
 		}
 	}
-	
 }
 
 long mechRGBLookup[56] = 
@@ -605,7 +580,6 @@ void VFXShapeElement::draw (void)
 	gVertex[0].v		= 0.0;
 	gVertex[0].argb		= lightRGB;
 	gVertex[0].frgb		= fogRGB;
-
 
 	gVertex[1].x		= gVertex[0].x+textureFactor;
 	gVertex[1].y		= gVertex[0].y;
@@ -1072,7 +1046,6 @@ void TexturedPolygonQuadElement::draw (void)
 		gos_SetRenderState(	gos_State_ZWrite, zWrite);
 	}
 
-		
 	if (textureHandle == 0xffffffff)		
 	{
 		gos_SetRenderState( gos_State_Texture, 0 );
@@ -1211,6 +1184,4 @@ void TexturedPolygonTriElement::draw (void)
 }	
 
 //---------------------------------------------------------------------------
-
-
 

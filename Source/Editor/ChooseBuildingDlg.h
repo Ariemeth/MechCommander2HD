@@ -13,7 +13,6 @@ ChooseBuildingDlg.h		: Interface for the ChooseBuildingDlg component.
 #include "EditorObjectMgr.h"
 #include "stdafx.h"
 
-
 class ChooseBuildingDlg: public CDialog
 {
 public:
@@ -45,7 +44,6 @@ private:
 	CButton *m_pCancelButton;
 	CButton *m_pOKButton;
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( ChooseBuildingDlg.h )

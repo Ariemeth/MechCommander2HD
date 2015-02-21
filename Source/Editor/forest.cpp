@@ -9,7 +9,6 @@ forest.cpp			: Implementation of the forest component.
 #include "forest.h"
 #include "mclib.h"
 #include "resource.h"
-
 #include "EditorObjectMgr.h"
 
 extern unsigned long gameResourceHandle;
@@ -34,12 +33,9 @@ Forest::Forest( int newID )
 	minHeight = .75;
 	bRandom = true;
 
-	
 	char tmp[256];
 	cLoadString( IDS_UNNAMDE_FOREST, tmp, 255, gameResourceHandle );
 	name.Format( tmp, ID );
-
-
 }
 
 Forest::Forest( const Forest& src )
@@ -56,7 +52,6 @@ Forest::Forest( const Forest& src )
 	minDensity = src.minDensity;
 
 	name = src.name;
-
 
 	radius = src.radius;
 	for ( int i = 0; i < FOREST_TYPES; i++ )
@@ -81,7 +76,6 @@ Forest& Forest::operator=( const Forest& src )
 		minHeight = src.minHeight;
 		maxDensity = src.maxDensity;
 		minDensity = src.minDensity;
-
 
 		radius = src.radius;
 		for ( int i = 0; i < FOREST_TYPES; i++ )
@@ -111,9 +105,6 @@ void Forest::init()
 	file.seekBlock( "ForestInfo" );
 
 	init( file );
-
-
-
 }
 
 void Forest::init( FitIniFile& file )
@@ -124,7 +115,6 @@ void Forest::init( FitIniFile& file )
 		sprintf( headerName, "TreeType%d", i );
 		file.readIdFloat( headerName, percentages[i] );	
 	}
-
 
 	char tmp[256];
 	tmp[0] = 0;
@@ -144,7 +134,6 @@ void Forest::init( FitIniFile& file )
 	fileName = tmp;
 }
 
-
 void Forest::save()
 {
 	FitIniFile file;
@@ -159,10 +148,6 @@ void Forest::save()
 	file.writeBlock( "ForestInfo" );
 
 	save( file );
-
-	
-
-
 }
 
 void Forest::save( FitIniFile& file )
@@ -185,10 +170,7 @@ void Forest::save( FitIniFile& file )
 	file.writeIdFloat( "Radius", radius );
 	file.writeIdString( "Name", name );
 	file.writeIdString( "FileName", fileName );
-
 }
-
-
 
 //*************************************************************************************************
 // end of file ( forest.cpp )

@@ -169,7 +169,6 @@ int
 
 	int mask, k1, ct=0, ret = 0;
 	Scalar a=0.0f, bc0, bc1;
-	
 
 	Check_Object(vt);
 
@@ -327,7 +326,6 @@ int
 				true
 			);
 
-
 			DWORD tmpColor = GOSCopyColor(&colors[i]);
 
 			gos_vertices[numGOSVertices].argb = tmpColor;
@@ -376,7 +374,6 @@ int
 			{
 				continue;
 			}
-
 
 			int numberVerticesPerPolygon = 0;
 
@@ -530,7 +527,6 @@ int
 				srcPolygon.coords = &((*transformedCoords)[j]);
 				srcPolygon.clipPerVertex = &((*clipPerVertex)[j]);							
 				srcPolygon.flags = 0;
-
 
 //				srcPolygon.colors = const_cast<RGBAColor*>(&colors[j]);
 
@@ -701,7 +697,6 @@ int
 							dstPolygon.texCoords = clipBuffer[dstBuffer].texCoords.GetData();
 							dstPolygon.clipPerVertex = clipBuffer[dstBuffer].clipPerVertex.GetData();
 							dstPolygon.length = 0;
-
 						}
 
 						mask = mask << 1;

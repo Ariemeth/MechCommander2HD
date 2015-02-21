@@ -19,7 +19,6 @@ namespace MidLevelRenderer {
 	//#######################    MLRCardCloud    ###############################
 	//##########################################################################
 
-
 	class MLRCardCloud:
 		public MLREffect
 	{

@@ -13,33 +13,13 @@
 
 //---------------------------------------------------------------------------
 
-#ifndef DCOMNDR_H
 #include "dcomndr.h"
-#endif
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef DMOVER_H
 #include "dmover.h"
-#endif
-
-#ifndef GROUP_H
 #include "group.h"
-#endif
-
-#ifndef DTEAM_H
 #include "dteam.h"
-#endif
-
-#ifndef TACORDR_H
 #include "tacordr.h"
-#endif
-
-#ifndef UNITDESG_H
 #include "unitdesg.h"
-#endif
 
 //---------------------------------------------------------------------------
 typedef struct _CommanderData
@@ -47,14 +27,12 @@ typedef struct _CommanderData
 	long					id;
 	long					teamId;
 	MoverGroupData			groups[MAX_MOVERGROUPS];
-
 } CommanderData;
 
 typedef struct _StaticCommanderData
 {
 	long	numCommanders;
 	long	homeCommanderId;
-
 } StaticCommanderData;
 
 class Commander {

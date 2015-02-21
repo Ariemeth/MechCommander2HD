@@ -10,30 +10,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#ifndef ABLGEN_H
 #include "ablgen.h"
-#endif
-
-#ifndef ABLERR_H
 #include "ablerr.h"
-#endif
-
-#ifndef ABLSCAN_H
 #include "ablscan.h"
-#endif
-
-#ifndef ABLEXEC_H
 #include "ablexec.h"
-#endif
-
-#ifndef ABLENV_H
 #include "ablenv.h"
-#endif
-
-#ifndef ABLDBUG_H
 #include "abldbug.h"
-#endif
 
 //***************************************************************************
 long ABLi_preProcess (char* sourceFileName,
@@ -927,7 +909,6 @@ long ABLModule::execute (ABLParamPtr moduleParamList, SymTableNodePtr functionId
 		CurFSM = NULL;
 	NumStateTransitions = 0;
 
-
 	//--------------------------------------------
 	// Point to this module's static data space...
 	StaticDataPtr = staticData;
@@ -1472,5 +1453,4 @@ void ABLi_loadEnvironment (ABLFile* ablFile, bool malloc) {
 }
 
 //***************************************************************************
-
 

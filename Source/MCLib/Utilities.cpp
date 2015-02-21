@@ -6,11 +6,9 @@ Utilities.cpp			: Implementation of the Utilities component.
 //===========================================================================//
 \*************************************************************************************************/
 #include "Utilities.h"
-
 #include "txmmgr.h"
 #include "IniFile.h"
 #include "McLib.h"
-
 
 #pragma warning(disable:4514)
 
@@ -43,8 +41,7 @@ void drawRect( const GUI_RECT& area, unsigned long color )
 
 		if ( clientArea.bottom >= Environment.screenHeight )
 			clientArea.bottom = Environment.screenHeight;
-		
-		
+
 		gos_VERTEX v[4];
 
 		memset( v,0,sizeof(v) );
@@ -72,7 +69,6 @@ void drawRect( const GUI_RECT& area, unsigned long color )
 	}
 }
 
-	
 void drawEmptyRect( const GUI_RECT& area, unsigned long leftTopBorderColor, 
 							unsigned long rightBottomBorderColor )
 {
@@ -118,7 +114,6 @@ void drawEmptyRect( const GUI_RECT& area, unsigned long leftTopBorderColor,
 	gos_SetRenderState( gos_State_ZCompare, 0 );
 	gos_SetRenderState( gos_State_AlphaMode, gos_Alpha_AlphaInvAlpha );
 
-
 	v[0].x		= (float)(clientArea.left);
 	v[0].y		= (float)(clientArea.top);
 	v[0].argb	= leftTopBorderColor;
@@ -151,13 +146,10 @@ void drawEmptyRect( const GUI_RECT& area, unsigned long leftTopBorderColor,
 	v[2].y		= (float)(clientArea.bottom) + .1/256.f;
 	v[2].argb	= rightBottomBorderColor;
 
-
 	gos_DrawLines( v, 4 );
-
 }
 
 // STATIC STUFF
-
 
 StaticInfo::~StaticInfo()
 {
@@ -176,7 +168,6 @@ void StaticInfo::render()
 	gos_SetRenderState( gos_State_AlphaMode, gos_Alpha_AlphaInvAlpha );
 	gos_SetRenderState( gos_State_Clipping, 1);
 	gos_DrawQuads( location, 4 );
-	
 }
 
 void StaticInfo::showGUIWindow( bool bShow )
@@ -200,7 +191,6 @@ bool StaticInfo::isInside( int mouseX, int mouseY )
 		 return true;
 
 	return false;
-	
 }
 
 //Fills the buffer with the bitmap data.
@@ -330,7 +320,6 @@ void StaticInfo::init( FitIniFile& file, char* blockName, long hiResOffsetX, lon
 		location[2].v = (v + vHeight)/(float)textureWidth + (.1f / (float)textureWidth);;
 		location[3].v = (v + vHeight)/(float)textureWidth + (.1f / (float)textureWidth);;
 	}
-
 }
 
 void StaticInfo::setLocation( float  newX, float newY )
@@ -357,7 +346,6 @@ void StaticInfo::setColor( long newColor )
 {
 	for ( int i = 0; i < 4; i++ )
 		location[i].argb = newColor;
-
 }
 
 void StaticInfo::setNewUVs( float uLeft, float vTop, float uRight, float vBottom )
@@ -385,7 +373,6 @@ void drawShadowText( long colorTop, long colorShadow, HGOSFONT3D font,
 	gos_TextSetAttributes( font, colorTop, scale, false, proportional, bold, false, 0 );
 	gos_TextSetPosition( left, top );
 	gos_TextDraw( text );
-
 }
 
 void drawShadowText( long colorTop, long colorShadow, HGOSFONT3D font, 
@@ -401,7 +388,6 @@ void drawShadowText( long colorTop, long colorShadow, HGOSFONT3D font,
 	gos_TextSetPosition( left, top );
 	gos_TextDraw( text );
 }
-
 
 long interpolateColor( long color1, long color2, float percent )
 {
@@ -434,5 +420,4 @@ long interpolateColor( long color1, long color2, float percent )
 
 	return color;
 }
-
 

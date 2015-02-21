@@ -529,5 +529,4 @@ namespace Stuff {
 		TableIteratorOf<T, V>::~TableIteratorOf()
 	{
 	}
-
 }

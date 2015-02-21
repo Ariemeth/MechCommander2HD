@@ -7,18 +7,9 @@ LinkBrush.h			: Interface for the LinkBrush component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef BRUSH_H
 #include "Brush.h"
-#endif
-
-#ifndef ACTION_H
 #include "Action.h"
-#endif
-
-#ifndef BUILDINGLINK_H
 #include "BuildingLink.h"
-#endif
-
 #include "mclib.h"
 
 class EditorObject;
@@ -46,7 +37,6 @@ class LinkBrush: public Brush
 	Stuff::Vector3D			parentPos;
 	bool					bLink;
 
-
 	bool unPaint( Stuff::Vector3D& worldPos, int screenX, int screenY  );
 	bool canUnPaint( Stuff::Vector3D& worldPos, int screenX, int screenY, int flags );
 
@@ -64,15 +54,13 @@ class LinkBrush: public Brush
 		
 		BuildingLink m_LinkCopy;  // copy of link
 		int  type;
-
 	};
 	
 	class LinkAction : public Action
 	{
 	
 	public:
-		
-		
+
 		LinkAction();
 		~LinkAction( ){}
 		
@@ -84,9 +72,7 @@ class LinkBrush: public Brush
 	};
 
 	LinkAction* pAction;
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( LinkBrush.h )

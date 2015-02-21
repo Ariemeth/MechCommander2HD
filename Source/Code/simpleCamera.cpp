@@ -41,7 +41,6 @@ SimpleCamera::SimpleCamera()
 	bIsInMission = false;
 }
 
-
 SimpleCamera::~SimpleCamera()
 {
 	//Why did we not delete here??
@@ -82,7 +81,6 @@ void SimpleCamera::init( float left, float top, float right, float bottom )
 	bounds[1] = top;
 	bounds[2] = right;
 	bounds[3] = bottom;
-
 }
 
 ////////////////////////////////////////////////
@@ -186,19 +184,14 @@ void SimpleCamera::render(long xOffset, long yOffset)
 				gos_SetRenderState( gos_State_TextureAddress, gos_TextureWrap );
 				gos_SetRenderState( gos_State_ZCompare, 1);
 				gos_SetRenderState(	gos_State_ZWrite, 1);
-	
 			}
 
-			
 			pObject->render();
 			if ( !drawOldWay )
 				mcTextureManager->renderLists();
 			eye = oldCam;
 			gos_PopRenderStates();
 	}
-
-
-	
 }
 
 ////////////////////////////////////////////////
@@ -239,7 +232,6 @@ long SimpleCamera::update()
 			float offsetY = bounds[1] + bounds[3] - viewMulY;
 			offsetY /= 2;
 			offsetY += fudgeY; // hack, just to get exactly where Dorje wants it
-		
 
 			TG_Shape::SetViewport(viewMulX,viewMulY, offsetX, offsetY);	
 
@@ -260,7 +252,6 @@ long SimpleCamera::update()
 		mechPos.y = -mechPos.z/2.f;
 		mechPos.z = tmp;
 
-
 		float rotation = g_frameTime * rotationIncrement + pObject->rotation;
 
 		pObject->setObjectParameters(mechPos, rotation, 0, 0, 0);
@@ -268,7 +259,6 @@ long SimpleCamera::update()
 		pObject->update();
 		pObject->setVisibility(true,true);
 		eye = oldCam;
-
 	}
 
 	return 0;
@@ -293,7 +283,6 @@ void SimpleCamera::setMech(const char* fileName, long baseColor, long highlight1
 		Mission::initBareMinimum();
 
 	rotationIncrement = 0;
-	
 
 	pObject = NULL;
 
@@ -313,7 +302,6 @@ void SimpleCamera::setMech(const char* fileName, long baseColor, long highlight1
 	FullPathFileName path;
 	path.init( tglPath, testName, ".ini" );
 
-
 	//MUST ALWAYS CALL GET, EVEN IF WE HAVE AN APPEARANCE TYPE OR REFERENCE COUNT DOES NOT INCREASE!
 	Mech3DAppearanceType* appearanceType = NULL;
 	
@@ -332,7 +320,6 @@ void SimpleCamera::setMech(const char* fileName, long baseColor, long highlight1
 		
 	setPosition(position, 0);
 	ZoomTight();
-
 }
 
 void SimpleCamera::setVehicle(const char* fileName,long base, long highlight, long h2)
@@ -362,7 +349,6 @@ void SimpleCamera::setVehicle(const char* fileName,long base, long highlight, lo
 	char NoPathFileName[256];
 	_splitpath( fileName, NULL, NULL, NoPathFileName, NULL );
 
-
 	char testName[256];
 	strcpy( testName, fileName );
 	strcat( testName, "enc" );
@@ -388,10 +374,7 @@ void SimpleCamera::setVehicle(const char* fileName,long base, long highlight, lo
 		
 	setPosition(position);
 	ZoomTight();
-
 }
-
-
 
 void SimpleCamera::setComponent(const char* fileName )
 {
@@ -404,16 +387,13 @@ void SimpleCamera::setComponent(const char* fileName )
 	fudgeX = 0;
 	fudgeY = 0;
 
-	
 	if ( !appearanceTypeList )
 		Mission::initBareMinimum();
 
-	
 	if ( appearanceTypeList && appearanceTypeList->pointerCanBeDeleted(pObject) )
 		delete pObject;
 
 	pObject = NULL;
-
 
 	if ( !fileName )
 		return;
@@ -433,7 +413,6 @@ void SimpleCamera::setComponent(const char* fileName )
 		appearanceType = (BldgAppearanceType*)appearanceTypeList->getAppearance( BLDG_TYPE << 24, (char*)fileName );
 
 	//MUST ALWAYS CALL GET, EVEN IF WE HAVE AN APPEARANCE TYPE OR REFERENCE COUNT DOES NOT INCREASE!
-	 
 
 	pObject = new BldgAppearance;	
 	pObject->init( appearanceType );
@@ -441,14 +420,11 @@ void SimpleCamera::setComponent(const char* fileName )
 	pObject->rotation = rotation;
 
 	rotationIncrement = 90;
-	
-
 
 	activate();
 		
 	setPosition(position);
 	ZoomTight();
-
 }
 void SimpleCamera::setScale( float newAltitude )
 {
@@ -474,7 +450,6 @@ void SimpleCamera::setObject( const char* pFileName, long type, long base, long 
 		pObject = NULL;
 
 		return;
-
 	}
 	switch( type )
 	{
@@ -504,6 +479,5 @@ void SimpleCamera::setColors( long base, long highlight, long h2 )
 void SimpleCamera::zoomIn( float howMuch )
 {
 	AltitudeTight = 650.f/howMuch;
-
 }// scale for things that can't 
 

@@ -150,8 +150,6 @@ void
 	#endif	//	FOG_HACK
 				);
 				(*texCoords2)[tex2count++] = texCoords[numVertices + j];
-
-			
 			}
 #else //	I_SAY_YES_TO_DUAL_TEXTURES
 	#ifdef I_SAY_YES_TO_DETAIL_TEXTURES
@@ -255,7 +253,6 @@ void
 	if(MLRState::GetMultitextureLightMap() == false || state.GetMultiTextureMode()==MLRState::MultiTextureOffMode)
 	{
 		Verify (tex2count == numGOSVertices);
-
 
 		if(db==false)
 		{
@@ -1170,7 +1167,6 @@ int
 										<< srcPolygon.coords[k].w << '\n';
 #endif	//	HUNT_CLIP_ERROR
 
-
 									dstPolygon.clipPerVertex[dstPolygon.length] = 
 										srcPolygon.clipPerVertex[k];
 #ifdef I_SAY_YES_TO_COLOR
@@ -1266,7 +1262,6 @@ int
 #endif	//	HUNT_CLIP_ERROR
 									DoClipTrick(dstPolygon.coords[dstPolygon.length], l);
 
-
 									//
 									//----------------------------------------------------------
 									// If there are colors, lerp them in screen space for now as
@@ -1355,7 +1350,6 @@ int
 #endif	//	HUNT_CLIP_ERROR
 
 								DoClipTrick(dstPolygon.coords[dstPolygon.length], l);
-
 
 								//
 								//----------------------------------------------------------
@@ -1458,7 +1452,6 @@ int
 							dstPolygon.texCoords = clipBuffer[dstBuffer].texCoords.GetData();
 							dstPolygon.clipPerVertex = clipBuffer[dstBuffer].clipPerVertex.GetData();
 							dstPolygon.length = 0;
-
 						}
 
 						mask = mask << 1;
@@ -1896,7 +1889,6 @@ int
 #if HUNT_CLIP_ERROR
 		DEBUG_STREAM << "***" << endl << endl;
 #endif	//	HUNT_CLIP_ERROR
-
 	}
 
 #ifdef I_SAY_YES_TO_DUAL_TEXTURES
@@ -2093,7 +2085,6 @@ int
 	{
 	}
 
-
 #if	0	//def	I_SAY_YES_TO_DUAL_TEXTURES
 	if(MLRState::GetMultitextureLightMap() == true && state.GetMultiTextureMode()!=MLRState::MultiTextureOffMode)
 	{
@@ -2104,7 +2095,6 @@ int
 		CheckVertices( gos_vertices, numGOSVertices, false );
 	}
 #endif	//		//	I_SAY_YES_TO_DUAL_TEXTURES
-
 
 	Stop_Timer(Clipping_Time);
 

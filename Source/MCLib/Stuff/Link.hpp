@@ -86,5 +86,4 @@ namespace Stuff {
 		Link *nextLink;
 		Link *prevLink;
 	};
-
 }

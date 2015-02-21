@@ -22,13 +22,10 @@ MPParameterScreen.cpp			: Implementation of the MPParameterScreen component.
 
 extern bool g_quitGame;
 
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
 
 #define	MP_PLAYER_PREFS 120
 #define MAP_INFO		121
-
 
 #define CHECK_BUTTON 200
 #define MP_INCREMENT_DROPWEIGHT 198
@@ -39,8 +36,6 @@ extern bool g_quitGame;
 #define MP_DECREMENT_TIME 203
 #define MP_INCREMENT_RP 204
 #define MP_DECREMENT_RP 205
-
-
 
 #define MP_AIRSTRIKES 206
 #define MP_SENSOR_PROBE 207
@@ -61,19 +56,15 @@ extern bool g_quitGame;
 #define MP_INCREMENT_PLAYER_CBILLS 250
 #define MP_DECREMENT_PLAYER_CBILLS 251
 
-
 static const int FIRST_BUTTON_ID = 1000010;
 static const int OK_BUTTON_ID = 1000001;
 static const int CANCEL_BUTTON_ID = 1000002;
 
 MPParameterScreen* MPParameterScreen::s_instance = NULL;
 
-
 GUID NO_VERSION_GUID = {
 	0,0,0,0,0,0,0,0,0,0,0
-
 };
-
 
 const char* pPurchaseFiles[5] = 
 {
@@ -163,7 +154,6 @@ void MPParameterScreen::init(FitIniFile* file)
 		playerParameters[i] = playerParameters[0];
 		curY = i * (playerParameters[i].bottom() - playerParameters[i].top() + 5);
 		playerParameters[i].move( 0, curY );
-		
 	}
 
 	FullPathFileName path;
@@ -192,9 +182,6 @@ void MPParameterScreen::init(FitIniFile* file)
 	edits[1].limitEntry( 3 );
 	edits[2].limitEntry( 2 );
 	edits[3].limitEntry( 6 );
-
-
-
 }
 
 void MPParameterScreen::begin()
@@ -230,9 +217,7 @@ void MPParameterScreen::begin()
 	}
 
 	bWaitingToStart = 0;
-
 }
-
 
 void MPParameterScreen::end()
 {
@@ -280,7 +265,6 @@ void MPParameterScreen::render(int xOffset, int yOffset )
 	else if ( bShowNoMapDlg || bBootDlg || bDisconnectDlg )
 	{
 		LogisticsOKDialog::instance()->render();
-
 	}
 	else if ( bErrorDlg )
 	{
@@ -296,7 +280,6 @@ void MPParameterScreen::render(int xOffset, int yOffset )
 				pFocus = & playerParameters[i];
 			
 			playerParameters[i].render();
-				 
 		}
 
 		if ( pFocus )
@@ -309,8 +292,6 @@ void MPParameterScreen::render(int xOffset, int yOffset )
 	{
 		LogisticsOneButtonDialog::instance()->render();
 	}
-
-
 }
 
 void MPParameterScreen::render()
@@ -346,7 +327,6 @@ int	MPParameterScreen::handleMessage( unsigned long message, unsigned long who)
 				LogisticsOKDialog::instance()->setText( IDS_PROMPT_TO_DISCONNECT, IDS_DIALOG_NO, IDS_DIALOG_YES );
 				LogisticsOKDialog::instance()->begin();
 				bDisconnectDlg = true;
-
 			}
 			break;
 		case 50/*MB_MSG_NEXT*/:
@@ -468,8 +448,7 @@ int	MPParameterScreen::handleMessage( unsigned long message, unsigned long who)
 			MPlayer->redistributeRP();
 
 			MPParameterScreen::resetCheckBoxes();
-			
-			
+
 			break;
 		case MP_DECREMENT_CBILLS:
 			MPlayer->missionSettings.defaultCBills -=5000;
@@ -581,12 +560,10 @@ int	MPParameterScreen::handleMessage( unsigned long message, unsigned long who)
 			MPlayer->missionSettings.quickStart ^= 1;
 			MPParameterScreen::resetCheckBoxes();
 			break;
-
 		}
 	}
 
 	return 0;
-
 }
 
 void MPParameterScreen::initializeMap ( const char* fileName )
@@ -637,7 +614,6 @@ void MPParameterScreen::setMission( const char* fileName, bool resetData )
 		strcpy( MPlayer->missionSettings.map, fileName );
 		strcpy(MPlayer->missionSettings.name, missionName);
 
-			
 		missionFile.readIdLong( "ResourcePoints", MPlayer->missionSettings.resourcePoints );
 		missionFile.readIdLong("AdditionalCBills", MPlayer->missionSettings.defaultCBills );
 		if (MPlayer->isHost())
@@ -679,7 +655,6 @@ void MPParameterScreen::setMission( const char* fileName, bool resetData )
 			MPlayer->missionSettings.missionType = tmp;
 
 		// divvy up the cBills!
-		
 
  	mapName = MPlayer->missionSettings.map;
 	}
@@ -693,10 +668,6 @@ void MPParameterScreen::setMission( const char* fileName, bool resetData )
 
 	GUID tmpGuid = getGUIDFromFile( fileName );
 	MPlayer->missionSettings.mapGuid = tmpGuid;
-
-
-
-
 }
 
 int __cdecl sortPlayers( const void* p1, const void* p2 )
@@ -712,7 +683,6 @@ int __cdecl sortPlayers( const void* p1, const void* p2 )
 		return -1;
 
 	return 1;
-	
 }
 
 void MPParameterScreen::update()
@@ -739,7 +709,6 @@ void MPParameterScreen::update()
 				// might need to kill the game here
 				g_quitGame = true;
 			}
-
 		}
 		else
 		{
@@ -750,7 +719,6 @@ void MPParameterScreen::update()
 		}
   
 		return;
-
 	}	
 	
 	char text[256];
@@ -817,7 +785,6 @@ void MPParameterScreen::update()
 			MPlayer->sendMissionSetup(0, 6, NULL);
 
 			status = NEXT;
-			
 		}
 		else {
 			if (MPlayer->isHost())
@@ -851,7 +818,6 @@ void MPParameterScreen::update()
 		}
 	}
 
-
 	// load up my own icon and send out to everyone else....
 /*	MC2Player* pPlayer = MPlayer->getPlayerInfo( MPlayer->commanderID );
 
@@ -873,7 +839,6 @@ void MPParameterScreen::update()
 			MPlayer->insigniaList[MPlayer->commanderID] = 1;
 		}
 	}*/
-
 
 	if ( MPlayer->launchedFromLobby )
 		getButton( MB_MSG_PREV )->disable( true );
@@ -923,7 +888,6 @@ void MPParameterScreen::update()
 			if ( bShowNoMapDlg )
 			{
 				mapName = MPlayer->missionSettings.map;
-				
 
 				char chatStr[256];
 				char final[1024];
@@ -938,7 +902,6 @@ void MPParameterScreen::update()
 		}
 		return;
 	}
-
 
 	else if ( bLoading )
 	{
@@ -955,7 +918,6 @@ void MPParameterScreen::update()
 				setMission(pName);
 
 				resetCheckBoxes();
-				
 			}
 			bLoading = false;
 		}
@@ -1027,8 +989,6 @@ void MPParameterScreen::update()
 				//
 				setMissionClientOnly( MPlayer->missionSettings.map );
 			}
-		
-		
 		}
 		else
 		{
@@ -1049,7 +1009,6 @@ void MPParameterScreen::update()
 			{
 				MPlayer->missionSettings.defaultCBills = 50000;
 				MPlayer->redistributeRP();
-
 			}
 			for ( int i = MP_INCREMENT_DROPWEIGHT; i < MP_RP_FORMMECHS+1; i++ )
 			{
@@ -1063,7 +1022,6 @@ void MPParameterScreen::update()
 
 			for ( i = 0; i < 3; i++ )
 				edits[i].setReadOnly( false );
-
 
 			// see if they clicked the launch button and there are too many players
 			if ( playerCount > MPlayer->missionSettings.maxPlayers )
@@ -1079,7 +1037,6 @@ void MPParameterScreen::update()
 					LogisticsOneButtonDialog::instance()->setText( errorStr );
 					LogisticsOneButtonDialog::instance()->begin();
 					bErrorDlg = true;
-
 				}
 			}
 
@@ -1090,7 +1047,6 @@ void MPParameterScreen::update()
 				else
 					return;
 			}
-
 
 			getButton( 101/*load map button*/ )->showGUIWindow( true );
 
@@ -1105,7 +1061,6 @@ void MPParameterScreen::update()
 			bDisable = MPlayer->missionSettings.resourcePoints >= 99900.f;
 			getButton( MP_INCREMENT_RP )->disable( bDisable );
 
-			
 			bDisable = MPlayer->missionSettings.defaultCBills <= 50000;
 			getButton( MP_DECREMENT_CBILLS )->disable( bDisable );
 			bDisable = MPlayer->missionSettings.defaultCBills >= 999000.f;
@@ -1122,8 +1077,6 @@ void MPParameterScreen::update()
 			getButton( MP_BOOTPLAYER )->showGUIWindow( true );
 			getButton( MP_BOOTPLAYER )->disable( false );
 
-
-
 			for( i = 0; i < playerCount; i++ )
 			{
 				if ( playerParameters[i].hasFocus() )
@@ -1132,8 +1085,6 @@ void MPParameterScreen::update()
 						getButton( MP_BOOTPLAYER )->disable( true );
 				}
 			}
-		
-			
 		}
 		
 		int oldEditFocus = -1;
@@ -1180,7 +1131,6 @@ void MPParameterScreen::update()
 			}
 		}
 
-		
 	/// now make all enabled so they draw correctly...
 		for ( i = MP_AIRSTRIKES; i < MP_RP_FORMMECHS+1; i++ )
 		{
@@ -1241,7 +1191,6 @@ void MPParameterScreen::update()
 
 				if ( sortedPlayers[i]->team != team )
 					bUniqueTeam = 1;
-
 			}
 
 			bReady &= !bEditHasFocus;
@@ -1301,10 +1250,8 @@ void MPParameterScreen::update()
 //			else
 //				getButton( MAP_INFO )->disable( false );
 
-	
 			textObjects[1].setText( MPlayer->missionSettings.name );
 
-			
 //			cLoadString( IDS_MP_LM_MAP_LIST_TYPE, tmp, 255 );
 //			cLoadString( IDS_MP_LM_TYPE0 + MPlayer->missionSettings.missionType, tmp2, 127 );
 //			sprintf( text, tmp, tmp2 );
@@ -1344,20 +1291,14 @@ void MPParameterScreen::update()
 					MPlayer->setInProgress( 0 );
 				}
 			}
-
-	
-
 		}
 
 		if ( !bEditHasFocus )
 			ChatWindow::instance()->update();
-
 	}
 
 	helpTextID = 0;
 	helpTextHeaderID = 0;
-
-
 
 	/*
 	for ( int i = 0; i < buttonCount; i++ )
@@ -1368,7 +1309,6 @@ void MPParameterScreen::update()
 		{
 			handleMessage( buttons[i].getID(), buttons[i].getID() );
 		}
-
 	}
 	*/
 }
@@ -1398,7 +1338,6 @@ GUID			MPParameterScreen::getGUIDFromFile( const char* pNewMapName)
 		memset( &retVal, 0, sizeof( GUID ) );
 		return retVal;
 	}
-
 }
 
 void MPParameterScreen::setMissionClientOnly( const char* pNewMapName )
@@ -1426,7 +1365,6 @@ void MPParameterScreen::setMissionClientOnly( const char* pNewMapName )
 
 	checkVersionClientOnly( pNewMapName );
 
-
 	getButton( MAP_INFO )->disable( false );
 
 	long textureHandle = MissionBriefingScreen::getMissionTGA( pNewMapName );
@@ -1436,7 +1374,6 @@ void MPParameterScreen::setMissionClientOnly( const char* pNewMapName )
 		statics[15].setUVs( 0, 127, 127, 0 );
 		statics[15].setColor( 0xffffffff );
 	}
-
 
  	mapName = MPlayer->missionSettings.map;
 }
@@ -1469,11 +1406,8 @@ void MPParameterScreen::checkVersionClientOnly( const char* pNewMapName )
 				break;
 			}
 		}
-
 	}
 }
-
-
 
 void MPParameterScreen::resetCheckBoxes()
 {
@@ -1488,10 +1422,8 @@ void MPParameterScreen::resetCheckBoxes()
 			MC2Player* pWrite = MPlayer->getPlayerInfo( players[i].commanderID );
 			if ( pWrite->commanderID != MPlayer->commanderID )
 				pWrite->ready = 0;
-				
 		}
 	}
-
 }
 
 void MPParameterScreen::setHostLeftDlg( const char* playerName )
@@ -1507,11 +1439,7 @@ void MPParameterScreen::setHostLeftDlg( const char* playerName )
 	LogisticsOneButtonDialog::instance()->setText( formatStr );
 	LogisticsOneButtonDialog::instance()->begin();
 	bHostLeftDlg = true;
-
 }
-
-
-
 
 aPlayerParams::aPlayerParams()
 {
@@ -1606,7 +1534,6 @@ long aPlayerParams::init(long xPos, long yPos,long w, long h )
 		CBillsSpinnerUpButton.showGUIWindow( 0 );
 	}
 
-	
 	return (NO_ERR);
 }
 
@@ -1629,7 +1556,6 @@ void aPlayerParams::init( FitIniFile* pFile, const char* blockNameParam )
 	edit.allowIME( 0 );
 	addChild( &edit );
 
-
 	CBillsSpinnerDownButton.setPressFX( LOG_VIDEOBUTTONS );
 	CBillsSpinnerUpButton.setPressFX( LOG_VIDEOBUTTONS );
 	ReadyButton.setPressFX( LOG_VIDEOBUTTONS );
@@ -1641,7 +1567,6 @@ void aPlayerParams::init( FitIniFile* pFile, const char* blockNameParam )
 	CBillsSpinnerDownButton.setDisabledFX( LOG_WRONGBUTTON );
 	CBillsSpinnerUpButton.setDisabledFX( LOG_WRONGBUTTON );
 	ReadyButton.setDisabledFX( LOG_WRONGBUTTON );
-
 
 	const char* staticName = "PlayerParamsStatic";
 	const char* textName = "PlayerParamsText";
@@ -1668,7 +1593,6 @@ void aPlayerParams::init( FitIniFile* pFile, const char* blockNameParam )
 					statics[i].init( &file, blockName );			
 					addChild(&(statics[i]));
 				}
-				
 			}
 		}
 	}
@@ -1714,13 +1638,9 @@ void aPlayerParams::init( FitIniFile* pFile, const char* blockNameParam )
 					textObjects[i].init( &file, blockName );
 					addChild(&(textObjects[i]));
 				}
-				
 			}
 		}
 	}
-
-	
-	
 
 	{
 		char path[256];
@@ -1740,8 +1660,6 @@ void aPlayerParams::init( FitIniFile* pFile, const char* blockNameParam )
 
 		PNfile.seekBlock( "Text0" );
 		templateItem.init(&PNfile, "Text0" );
-
-	
 	}
 	addChild(&teamNumberDropList);
 
@@ -1810,11 +1728,6 @@ void aPlayerParams::init( FitIniFile* pFile, const char* blockNameParam )
 		resize( w, h );
 		moveToNoRecurse( x, y );
 	}
-
-
-
-
-
 }
 
 bool aPlayerParams::hasFocus( )
@@ -1904,7 +1817,6 @@ void aPlayerParams::update()
 			pTmp2->sizeToText();
 			factionDropList.AddItem(pTmp2);
 			factionDropList.SelectItem( 0 );
-
 		}
 	}
 
@@ -1940,8 +1852,6 @@ void aPlayerParams::update()
 		rects[7].showGUIWindow( 1 );
 		rects[8].showGUIWindow( 1 );
 		rects[1].showGUIWindow( 1 );
-
-
 	}
 
 	if ( commanderID == MPlayer->commanderID )
@@ -2045,21 +1955,13 @@ void aPlayerParams::update()
 					pInfo->team = newSel;
 					MPlayer->sendPlayerUpdate( 0, 5, commanderID );
 				}
-
-				
 			}
 
 			bHasFocus = 0;
-
-
-
 		}
 
 		if ( userInput->getKeyDown( KEY_RETURN ) )
 			bHasFocus = false;
-
-
-
 }
 
 void	aPlayerParams::disableReadyButton()
@@ -2088,7 +1990,6 @@ void	aPlayerParams::setData( const _MC2Player* data)
 	}
 
 	commanderID = data->commanderID;
-
 
 	long textColor = 0xff000000;
 	long newColor = MPlayer->colors[data->baseColor[BASECOLOR_TEAM]];
@@ -2124,10 +2025,8 @@ void	aPlayerParams::setData( const _MC2Player* data)
 			statics[0].setUVs( 0, 0, 32, 32 );
 			insigniaName = pFileName;
 			MPlayer->insigniaList[data->commanderID] = 1;
-
 		}
 	}
-
 
 	if ( !teamNumberDropList.IsExpanded() )
 	{
@@ -2160,11 +2059,7 @@ void	aPlayerParams::setData( const _MC2Player* data)
 	{
 		factionDropList.SelectItem( data->faction );
 	}
-	
-
-
 }
-
 
 int aPlayerParams::handleMessage( unsigned long message, unsigned long who )
 {
@@ -2187,8 +2082,6 @@ int aPlayerParams::handleMessage( unsigned long message, unsigned long who )
 				sprintf(text, "%ld", pInfo->cBills/5000 * (5) ); // need to round to nearest 5000
 				edit.setEntry( text );
 				MPParameterScreen::resetCheckBoxes();
-				
-
 
 				break;
 			}
@@ -2202,9 +2095,6 @@ int aPlayerParams::handleMessage( unsigned long message, unsigned long who )
 				sprintf(text, "%ld", pInfo->cBills/5000 * (5) );
 				edit.setEntry( text );
 				MPParameterScreen::resetCheckBoxes();
-
-
-
 			}
 			break;
 		}
@@ -2221,8 +2111,6 @@ void aPlayerParams::move( float offsetX, float offsetY )
 {
 	aObject::move( offsetX, offsetY );
 }
-
-
 
 long aStyle2TextListItem::init( FitIniFile* file, const char* blockName )
 {
@@ -2282,7 +2170,6 @@ void aStyle2TextListItem::render()
 
 	aTextListItem::render();
 }
-
 
 CFocusManager::CFocusManager()
 {
@@ -2391,10 +2278,7 @@ aObject *CFocusManager::pControlThatHasTheFocus()
 	return NULL;
 }
 
-
 //////////////////////////////////////////////
-
-
 
 //*************************************************************************************************
 // end of file ( MPParameterScreen.cpp )

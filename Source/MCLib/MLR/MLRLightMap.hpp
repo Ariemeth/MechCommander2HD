@@ -124,5 +124,4 @@ namespace MidLevelRenderer {
 		static GOSVertexPool*
 			vertexPool;
 	};
-
 }

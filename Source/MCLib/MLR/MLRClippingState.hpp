@@ -338,5 +338,4 @@ namespace MidLevelRenderer {
 		}
 #endif
 	}
-
 }

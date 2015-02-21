@@ -16,7 +16,6 @@
 
 LogisticsMechIcon*	LogisticsMechIcon::s_pTemplateIcon = NULL;
 
-
 LogisticsMechIcon::LogisticsMechIcon( )
 {
 	if( s_pTemplateIcon )
@@ -50,7 +49,6 @@ LogisticsMechIcon& LogisticsMechIcon::operator =( const LogisticsMechIcon& src )
 		pilotIconID = src.pilotIconID;
 		outlineID = src.outlineID;
 		helpID = src.helpID;
-
 	}
 
 	return *this;
@@ -60,10 +58,7 @@ LogisticsMechIcon& LogisticsMechIcon::operator =( const LogisticsMechIcon& src )
 
 LogisticsMechIcon::~LogisticsMechIcon()
 {
-
 }
-
-
 
 int LogisticsMechIcon::init( FitIniFile& file )
 {
@@ -88,8 +83,6 @@ int LogisticsMechIcon::init( FitIniFile& file )
 		s_pTemplateIcon->pilotIcon.init( &file, "PilotIcon" );
 		assignAnimation( file, s_pTemplateIcon->pilotIconID );
 
-
-
 		char blockName[64];
 		for ( int i = 0; i < ICON_ANIM_COUNT; i++ )
 		{
@@ -97,7 +90,6 @@ int LogisticsMechIcon::init( FitIniFile& file )
 			s_pTemplateIcon->animations[i].init( &file, blockName );
 		}
 	}
-	
 
 	return true;
 }
@@ -155,19 +147,14 @@ void LogisticsMechIcon::setMech( LogisticsMech* pNewMech )
 		if ( pMech->getPilot() )
 		{
 			pilotName.setText( pMech->getPilot()->getName() );
-			
 		}
 		else
 		{
 			pilotName.setText( IDS_NOPILOT );
-			
 		}
 	}
 	else
 		iconConnector.showGUIWindow( 0 );
-
-		
-
 }
 
 void LogisticsMechIcon::render(long xOffset, long yOffset )
@@ -181,12 +168,10 @@ void LogisticsMechIcon::render(long xOffset, long yOffset )
 		drawRect( tmprect, 0xff000000 );
 
 		return;
-
 	}
 
 	if ( !pMech )
 		return;
-
 
 	long color = animations[outlineID].getCurrentColor(animations[outlineID].getState());
 
@@ -196,7 +181,6 @@ void LogisticsMechIcon::render(long xOffset, long yOffset )
 	xOffset += outline.globalX();
 	yOffset += outline.globalY();
 
-	
 	renderObject( icon, iconID, xOffset, yOffset );
 	renderObject( chassisName, chassisNameID, xOffset, yOffset );
 	renderObject( pilotName, pilotID, xOffset, yOffset );
@@ -205,7 +189,6 @@ void LogisticsMechIcon::render(long xOffset, long yOffset )
 
 	if ( pMech && pMech->getPilot() )
 		pilotIcon.render(xOffset, yOffset );
-	
 }
 
 void LogisticsMechIcon::renderObject( aObject& obj, long animIndex, long xOffset, long yOffset )
@@ -267,7 +250,6 @@ void LogisticsMechIcon::update()
 		}
 
 		::helpTextID = helpID;
-
 	}
 	else if ( state != aListItem::SELECTED )
 	{
@@ -278,9 +260,6 @@ void LogisticsMechIcon::update()
 
 		state = aListItem::ENABLED;
 	}
-
-
-	
 }
 
 void LogisticsMechIcon::move( long x, long y )
@@ -302,7 +281,6 @@ void LogisticsMechIcon::select( bool bSelect )
 		for ( int i = 0; i < ICON_ANIM_COUNT; i++ )
 			animations[i].setState( aAnimGroup::PRESSED );
 
-		
 		bJustSelected = true;
 	}
 }
@@ -334,7 +312,6 @@ void LogisticsMechIcon::setPilot( LogisticsPilot* pPilot )
 			pilotIcon.moveTo( x, y );
 			pilotName.setText( pPilot->getName() );
 			pPilot->setUsed( true );
-
 		}
 		else
 		{

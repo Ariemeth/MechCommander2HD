@@ -60,7 +60,6 @@ int ChatWindow::initInstance()
 		sprintf( buffer2, "couldn't open file %s", (char*)path );
 		Assert( 0, 0, buffer2 );
 		return false;	
-
 	}
 
 	LogisticsScreen::init( file, "Static", "Text", "Rect", "Button", "Edit" );		
@@ -97,7 +96,6 @@ bool ChatWindow::pointInside( long xPos, long yPos )
 	return LogisticsScreen::inside( xPos, yPos );
 }
 
-
 bool ChatWindow::isExpanded()
 {
 	return getButton( MP_CHAT_EXPAND )->isPressed();
@@ -121,11 +119,9 @@ int ChatWindow::handleMessage( unsigned long, unsigned long who )
 	{
 		
 		getButton( MP_CHAT_HELPTOGGLE )->press( 0 );
-
 	}
 	return 1;
 }
-
 
 void ChatWindow::render( int xOffset, int yOffset )
 {
@@ -135,7 +131,6 @@ void ChatWindow::render( int xOffset, int yOffset )
 		chatWidget.listBox.render();
 		chatWidget.listBox.move( -xOffset, -yOffset );
 		textObjects[0].showGUIWindow( 0 );
-
 	}
 	else if ( !getButton( MP_CHAT_HELPTOGGLE )->isPressed() )
 	{
@@ -149,7 +144,6 @@ void ChatWindow::render( int xOffset, int yOffset )
 
 	LogisticsScreen::render( xOffset, yOffset );
 
-	
 	if ( getButton( MP_CHAT_EXPAND )->isPressed() )
 	{
 		GUI_RECT rect = { edits[0].globalX(), edits[0].globalY(), listBox.globalRight(), edits[0].globalBottom() };
@@ -169,7 +163,6 @@ void ChatWindow::render( int xOffset, int yOffset )
 	}
 
 	textObjects[0].render(); // render this last, otherwise it gets cut off
-
 }
 
 void ChatWindow::update()
@@ -185,8 +178,6 @@ void ChatWindow::update()
 	else
 		listBox.update();
 
-
-	
 	edits[0].showGUIWindow( true );
 	if ( getButton( MP_CHAT_HELPTOGGLE )->isPressed() )
 	{
@@ -195,7 +186,6 @@ void ChatWindow::update()
 	}
 	else
 		rects[2].setColor( rects[2].getColor( ) | 0xff000000 );
-	
 
 	char* chatTexts[MAX_STORED_CHATS];
 	long playerIDs[MAX_STORED_CHATS];
@@ -205,7 +195,6 @@ void ChatWindow::update()
 	
 	refillListBox( listBox, chatTexts, playerIDs, listItems, curItem, count, maxItems );
 	refillListBox( chatWidget.listBox, chatTexts, playerIDs, chatWidget.listItems, chatWidget.curItem, count, 128 );
-
 
 	// now do the same for the chat widget....
 
@@ -234,8 +223,6 @@ void ChatWindow::update()
 			edits[0].setFocus( true );
 		}
 	}
-
-
 }
 
 void ChatWindow::refillListBox( aListBox& listBox, char** chatTexts, long* playerIDs, ChatMessageItem* pItems, long& curItem, long itemCount, long maxCount )
@@ -263,7 +250,6 @@ void ChatWindow::refillListBox( aListBox& listBox, char** chatTexts, long* playe
 		linesToAdd += lineCount;
 		pItems[item].setTextColor( (playerIDs[i] & 0x10000000)  ? 0xff41c700 : 0xffffffff );
 		pItems[item].moveTo( 0, 0 );
-
 	}
 
 	int curLinesInListBox = 0;
@@ -321,15 +307,11 @@ void ChatWidget::init( )
 		sprintf( buffer2, "couldn't open file %s", (char*)path );
 		Assert( 0, 0, buffer2 );
 		return;
-
 	}
-
 
 	LogisticsScreen::init( file, "Static", "Text", "Rect", "Button", "Edit" );
 	listBox.init( rects[2].left(), rects[2].top(), rects[2].width(), rects[2].height() );
 	listBox.setSpaceBetweenItems( 0 );
-
-
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -344,7 +326,6 @@ ChatMessageItem::ChatMessageItem()
 	name.move( 1, 1 );
 	playerText.move( 0, 1 );
 	playerRect.move( 0, 1 );
-
 
 	resize(140, name.font.height() );
 
@@ -364,8 +345,6 @@ void ChatMessageItem::setPlayerName( const char* pName )
 	playerRect.resize( tmpWidth+2, playerText.font.height() - 2 );
 	playerText.resize( 437 - playerRect.width() - 2, playerText.font.height()  );
 	lineCount = 1;
-
-
 }
 
 int ChatMessageItem::setText( const char* pText )
@@ -401,8 +380,6 @@ void ChatMessageItem::setTextColor( long newColor )
 {
 	playerText.setColor( newColor );
 }
-
-
 
 //*************************************************************************************************
 // end of file ( ChatWindow.cpp )

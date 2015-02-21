@@ -9,22 +9,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
-#ifndef ABLGEN_H
 #include "ablgen.h"
-#endif
-
-#ifndef ABLSCAN_H
 #include "ablscan.h"
-#endif
-
-#ifndef ABLERR_H
 #include "ablerr.h"
-#endif
-
-#ifndef ABL_H
 #include "abl.h"
-#endif
 
 //***************************************************************************
 

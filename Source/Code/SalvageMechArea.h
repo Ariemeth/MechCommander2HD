@@ -37,7 +37,6 @@ class SalvageMechArea : public LogisticsScreen
 	virtual void render(long xOffset, long yOffset);
 	virtual void update();
 
-	
 	protected:
 
 	LogisticsVariant*		unit;
@@ -45,9 +44,7 @@ class SalvageMechArea : public LogisticsScreen
 	AttributeMeter		attributeMeters[3];
 	ComponentListBox	loadoutListBox;
 	SimpleCamera		mechCamera;
-
 };
-
 
 class SalvageMechScreen : public LogisticsScreen
 {
@@ -66,7 +63,6 @@ public:
 	void updateSalvage(); // put into inventory
 
 	bool				bDone;
-
 
 private:
 
@@ -127,13 +123,7 @@ private:
 	unsigned long				psBlue;
 
 	friend class SalvageMechScreen;
-
-
-	
 };
-
-
-
 
 //*************************************************************************************************
 #endif  // end of file ( SalvageMechArea.h )

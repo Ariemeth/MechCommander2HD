@@ -21,10 +21,7 @@ ComponentListItem* ComponentListItem::s_templateItem = NULL;
 
 ComponentIconListBox* ComponentIconListBox::s_instance = NULL;
 
-
-
 ///////////////////////////////////////////////////////
-
 
 ComponentListItem::ComponentListItem( LogisticsComponent* pComp )
 {
@@ -33,7 +30,6 @@ ComponentListItem::ComponentListItem( LogisticsComponent* pComp )
 		*this = *s_templateItem;
 
 	pComponent = pComp;
-
 
 	if ( pComp )
 	{
@@ -69,7 +65,6 @@ ComponentListItem::ComponentListItem( LogisticsComponent* pComp )
 		disabledText.moveTo( 0, 0 );
 		disabledText.alignment = 3;
 
-
 		aObject::init( outline.left(), outline.top(), outline.width(), outline.height() );
 
 		addChild( &icon );
@@ -94,7 +89,6 @@ ComponentListItem::ComponentListItem( LogisticsComponent* pComp )
 				}
 			}
 		}
-
 	}
 }
 
@@ -112,7 +106,6 @@ int ComponentListItem::init( FitIniFile& file )
 		{
 			sprintf( animName[i], "Animation%d", i );
 			s_templateItem->animations[i].init( &file, animName[i] );
-		
 		}
 		
 		s_templateItem->icon.init( &file, "ComponentIcon" );
@@ -121,7 +114,6 @@ int ComponentListItem::init( FitIniFile& file )
 		s_templateItem->iconOutline.init( &file, "ComponentIconOutlineRect" );
 
 		s_templateItem->outline.init( &file, "ComponentEntryBox" );
-
 
 		s_templateItem->name.init( &file, "ComponentNameText" );
 		assignAnimation( file, 1, animName, &s_templateItem->name );
@@ -139,7 +131,6 @@ int ComponentListItem::init( FitIniFile& file )
 		assignAnimation( file, 5, animName, &s_templateItem->heatIcon );
 
 		s_templateItem->disabledText.init( &file, "ComponentDisabledText" );
-		
 	}
 
 	return 0;
@@ -161,7 +152,6 @@ void ComponentListItem::assignAnimation( FitIniFile& file, int whichChild, char 
 		}
 
 		s_templateItem->addChild( object );
-
 }
 
 void ComponentListItem::render( )
@@ -187,14 +177,12 @@ void ComponentListItem::render( )
 		}
 	}
 
-
 	if ( MechLabScreen::instance()->canAddComponent( pComponent ) )
 	{
 		icon.setColor( 0xff404040 );
 	}
 	else
 		icon.setColor( 0xffffffff );
-
 }
 
 void	ComponentListItem::update()
@@ -224,7 +212,6 @@ void	ComponentListItem::update()
 			}
 
 			::helpTextID = IDS_HELP_COMP0 + pComponent->getID();
-
 		}
 
 		if ( !bCanAdd )
@@ -234,7 +221,6 @@ void	ComponentListItem::update()
 				for ( int i = 0; i < COMP_ANIMATION_COUNT; i++ )
 				{
 					animations[i].setState( aAnimGroup::PRESSED );
-					
 				}
 			}
 			if ( isInside && ComponentIconListBox::s_instance->pointInside( userInput->getMouseX(), userInput->getMouseY() ) ) 
@@ -258,8 +244,6 @@ void	ComponentListItem::update()
 			}
 			else
 				disabledText.setText( "" );
-
-
 		}
 		
 		if ( !bCanAdd )
@@ -281,7 +265,6 @@ void	ComponentListItem::update()
 			}
 
 			g_soundSystem->playDigitalSample( LOG_HIGHLIGHTBUTTONS );
-
 		}
 		state = aListItem::HIGHLITE;
 		::helpTextID = IDS_HELP_COMP0 + pComponent->getID();
@@ -301,7 +284,6 @@ void	ComponentListItem::update()
 		if ( isInside
 			&& ComponentIconListBox::s_instance->pointInside( userInput->getMouseX(), userInput->getMouseY() ))
 			::helpTextID = IDS_HELP_COMP0 + pComponent->getID();
-
 
 		if ( (userInput->isLeftClick() && isInside
 			&& ComponentIconListBox::s_instance->pointInside( userInput->getMouseX(), userInput->getMouseY() ) ) )
@@ -332,7 +314,6 @@ void	ComponentListItem::update()
 	aObject::update();
 }
 
-
 void ComponentListItem::doAdd()
 {
 	long x = -1;
@@ -359,12 +340,10 @@ void ComponentIconListBox::setType( int newType, int otherNewType, int orThis )
 	type = newType;
 	scrollBar->setGreen();
 
-	
 	removeAllItems( 0 );
 
 	itemSelected = -1;
 
-	
 	if ( !masterComponentList.Count() )
 	{
 		int count = 256;
@@ -377,7 +356,6 @@ void ComponentIconListBox::setType( int newType, int otherNewType, int orThis )
 				ComponentListItem* pItem = new ComponentListItem( pComp[i] );
 				masterComponentList.Append( pItem );	
 			}			
-	
 
 	//	for ( EList< ComponentListItem*, ComponentListItem* >::EIterator iter = masterComponentList.Begin();
 	//	!iter.IsDone(); iter++ )
@@ -409,7 +387,6 @@ void ComponentIconListBox::setType( int newType, int otherNewType, int orThis )
 		}
 
 	selectFirstAvailableComponent();
-
 }
 
 void ComponentIconListBox::update()
@@ -454,7 +431,6 @@ ComponentIconListBox::ComponentIconListBox()
 	skipAmount = 5;
 	type = -1;
 	s_instance = this;
-
 }
 
 ComponentIconListBox::~ComponentIconListBox()
@@ -499,12 +475,8 @@ void ComponentIconListBox::addSortedItem( ComponentListItem* pItem )
 		}
 	}
 
-	
 	aListBox::AddItem( pItem );
 }
 
-
-
-	
 //*************************************************************************************************
 // end of file ( ComponentListBox.cpp )

@@ -18,7 +18,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // SelectSlopeDialog dialog
 
-
 SelectSlopeDialog::SelectSlopeDialog(CWnd* pParent /*=NULL*/)
 	: CDialog(SelectSlopeDialog::IDD, pParent)
 {
@@ -28,7 +27,6 @@ SelectSlopeDialog::SelectSlopeDialog(CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
 }
 
-
 void SelectSlopeDialog::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -37,7 +35,6 @@ void SelectSlopeDialog::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_SELECT_SLOPE_MIN_EDIT, m_MinEdit);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(SelectSlopeDialog, CDialog)
 	//{{AFX_MSG_MAP(SelectSlopeDialog)

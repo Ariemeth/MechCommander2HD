@@ -2,13 +2,8 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef TRIGGER_H
 #include "trigger.h"
-#endif
-
-#ifndef MOVER_H
 #include "mover.h"
-#endif
 
 //***************************************************************************
 

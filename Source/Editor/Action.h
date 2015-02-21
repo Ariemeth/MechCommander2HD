@@ -14,9 +14,7 @@
 class ActionUndoMgr;
 class Action;
 
-#ifndef ELIST_H
 #include "Elist.h"
-#endif
 
 // Abstract base class for all action objects
 class Action 
@@ -30,9 +28,7 @@ public:
 	Action& operator=( const Action& src );
 	const char* getDescription(){  return m_strDescription; }
 
-
 	char  m_strDescription[MAX_DESC_LENGTH];
-
 
 protected:
 	
@@ -45,8 +41,6 @@ protected:
 
 	// if you call this, make sure you set the description
 	Action(){ m_strDescription[0] = 0; }
-
-
 };
 
 struct VertexInfo
@@ -62,7 +56,6 @@ struct VertexInfo
 private:
 	// make sure the list class doesn't try and use this
 	VertexInfo& operator=( const VertexInfo& );
-
 };
 
 typedef EList< VertexInfo, const VertexInfo& > VERTEX_INFO_LIST;
@@ -92,13 +85,10 @@ class ActionPaintTile : public Action
 		VERTEX_INFO_LIST	vertexInfoList;	
 
 	private:
-
 };
 
-
-#ifndef EDITOROBJECTS_H
 #include "EditorObjects.h"
-#endif
+
 class ModifyBuildingAction : public Action
 {
 public:
@@ -130,10 +120,6 @@ private:
 	OBJ_INFO_PTR_LIST buildingPtrs;
 	OBJ_ID_LIST buildingIDs;
 };
-
-
-
-
 
 // this mgr holds all the actions
 class ActionUndoMgr

@@ -9,13 +9,8 @@
 
 //--------------------------
 // Include Files
-#ifndef FLOATHELP_H
 #include "floathelp.h"
-#endif
-
-#ifndef HEAP_H
 #include "heap.h"
-#endif
 
 //-----------------------------------------------------------------------------------------
 DWORD		FloatHelp::currentFloatHelp = 0;		//How many of them are we using at present

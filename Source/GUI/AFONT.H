@@ -9,8 +9,6 @@
 
 class aFont;
 
-
-
 class aFont
 {
 public:
@@ -42,7 +40,6 @@ private:
 	char			fontName[64]; // so we can copy fonts
 	long			size;
 	void copyData( const aFont& src );
-	
 };
 
 // Error codes, local to this file...

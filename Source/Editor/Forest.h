@@ -32,7 +32,6 @@ public:
 	void save( );
 	void save( FitIniFile& file );
 
-
 	const char* getFileName() const { return fileName; }
 	void		setFileName( const char* newName ){ fileName = newName; }
 
@@ -40,11 +39,8 @@ public:
 	void		setName( const char* newName ){ name = newName; }
 
 	long		getID() const { return ID; }
-	
 
 private:
-
-
 
 		long	ID;
 		CString fileName;
@@ -62,13 +58,10 @@ private:
 		float	centerX;
 		float	centerY;
 		float	radius;
-	
 
 		friend class EditorObjectMgr;
 		friend class ForestDlg;
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( forest.h )

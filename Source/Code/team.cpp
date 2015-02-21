@@ -8,68 +8,35 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//*
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef MOVER_H
 #include "mover.h"
-#endif
 
 #ifdef USE_MECHS
-#ifndef MECH_H
 #include <mech.h>
-#endif
+
 #endif
 
-#ifndef GVEHICL_H
 #include "gvehicl.h"
-#endif
 
 #ifdef USE_ARTILLERY
-#ifndef ARTLRY_H
 #include <artlry.h>
-#endif
+
 #endif
 
-#ifndef UNITDESG_H
 #include "unitdesg.h"
-#endif
-
-#ifndef TEAM_H
 #include "team.h"
-#endif
 
 #ifdef USE_MOVERCONTROL
-#ifndef AICTRL_H
 #include <aictrl.h>
-#endif
+
 #endif
 
-#ifndef MULTPLYR_H
 #include "multplyr.h"
-#endif
-
-#ifndef CONTACT_H
 #include "contact.h"
-#endif
-
-#ifndef MISSION_H
 #include "mission.h"
-#endif
-
-#ifndef MISSIONGUI_H
 #include "missionGui.h"
-#endif
-
-#ifndef WARRIOR_H
 #include "warrior.h"
-#endif
-
 #include "prefs.h"
 
 char Team::relations[MAX_TEAMS][MAX_TEAMS] = {
@@ -94,7 +61,6 @@ extern bool drawTerrainGrid;
 extern long currentLineElement;
 extern LineElement *debugLines[];
 #endif
-
 
 extern float maxVisualRange;
 extern long	visualRangeTable[];
@@ -530,7 +496,6 @@ void Team::statusCount (long* statusTally) {
 
 void Team::destroy (void) {
 	objectives.Clear();
-
 }
 
 //---------------------------------------------------------------------------
@@ -635,7 +600,6 @@ bool Team::teamLineOfSight (Stuff::Vector3D tPos, float extRad)
 						return true;
 				}
 			}
-				
 		}
 	}
 
@@ -1077,7 +1041,6 @@ long Team::Load (PacketFilePtr file, long packetNum)
 		if (data.id == staticData.homeTeamId)
 			home = teams[i];
 	}
-
 
 	return packetNum;
 }

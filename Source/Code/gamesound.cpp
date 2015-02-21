@@ -9,18 +9,12 @@
 
 //---------------------------------------------------------------------------
 // Include files
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
-
-#ifndef WARRIOR_H
 #include "warrior.h"
-#endif
 
 #ifndef VIEWER
-#ifndef CONTROLGUI_H
 #include "ControlGui.h"
-#endif 
+ 
 #endif
 
 //---------------------------------------------------------------------------
@@ -139,7 +133,6 @@ long i;
 				Fatal(-1," Bad Message in Queue -- RmoveQMsg");
 		}
 #endif
-
 	}
 }
 
@@ -558,5 +551,4 @@ void GameSoundSystem::update (void)
 		wholeMsgDone = FALSE;
 	}
 }
-
 

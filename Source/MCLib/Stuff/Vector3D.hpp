@@ -474,7 +474,6 @@ namespace Stuff {
       	const char *str,
          Vector3D *vector_3D
       );
-
 }
 
 namespace MemoryStreamIO {
@@ -491,5 +490,4 @@ namespace MemoryStreamIO {
 			const Stuff::Vector3D *input
 		)
 			{return stream->WriteBytes(input, sizeof(*input));}
-
 }

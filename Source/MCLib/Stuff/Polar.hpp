@@ -108,5 +108,4 @@ namespace Stuff {
 		static bool
 			TestClass();
 	};
-
 }

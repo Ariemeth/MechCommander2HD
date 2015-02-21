@@ -7,24 +7,12 @@ SelectionBrush.cpp			: Implementation of the SelectionBrush component.
 \*************************************************************************************************/
 
 #include "SelectionBrush.h"
-
-#ifndef CAMERA_H
 #include "Camera.h"
-#endif
-
-#ifndef EDITOROBJECTMGR_H
 #include "EditorObjectMgr.h"
-#endif
-
-#ifndef ACTION_H
 #include "Action.h"
-#endif
-
 #include "utilities.h"
-
 #include "EditorMessages.h"
 #include "EditorInterface.h"
-
 
 SelectionBrush::SelectionBrush( bool Area, int newRadius )
 { 
@@ -118,14 +106,12 @@ Action* SelectionBrush::endPaint()
 	return pRetAction;
 }
 
-
 float SelectionBrush::calcNewHeight( int vertexRow, int vertexCol, float deltaScreen )
 {
 	Stuff::Vector3D world;
 	Stuff::Vector3D newWorld;
 	Stuff::Vector4D screenVertex;
 	Stuff::Vector4D screenNewVertex;
-
 
 	world.y = newWorld.y = land->tileRowToWorldCoord[vertexRow];
 	world.x = newWorld.x = land->tileColToWorldCoord[vertexCol];
@@ -138,7 +124,6 @@ float SelectionBrush::calcNewHeight( int vertexRow, int vertexCol, float deltaSc
 	float ratio = 1000.0f/(screenNewVertex.y - screenVertex.y);
 	
 	return (ratio * deltaScreen);
-	
 }
 
 bool SelectionBrush::paint( Stuff::Vector3D& worldPos, int screenX, int screenY )
@@ -225,7 +210,6 @@ bool SelectionBrush::paint( Stuff::Vector3D& worldPos, int screenX, int screenY 
 			}
 			
 			eye->inverseProject( screenPos, lastWorldPos );
-		
 		}
 		else
 		{
@@ -276,7 +260,6 @@ bool SelectionBrush::paint( Stuff::Vector3D& worldPos, int screenX, int screenY 
 		}
 	}
 
-
 	return true;
 }
 
@@ -293,7 +276,6 @@ void SelectionBrush::render( int screenX, int screenY )
 		drawRect( rect, 0x30ffffff );
 		drawEmptyRect( rect, 0xff000000, 0xff000000 );
 	}
-
 
 	else if ( lastPos.x != 0.0 && lastPos.y != 0.0 && 
 		!GetAsyncKeyState( KEY_LSHIFT ) && !GetAsyncKeyState( KEY_LCONTROL ) )
@@ -322,7 +304,6 @@ void SelectionBrush::render( int screenX, int screenY )
 				lastPos.y = (float)screenY;
 				return;
 			}
-
 		}
 		
 		// not movinve a building, figure out if we are moving a vertex
@@ -341,7 +322,6 @@ void SelectionBrush::render( int screenX, int screenY )
 						world.y = land->tileRowToWorldCoord[j];
 						world.x = land->tileColToWorldCoord[i];
 						world.z = land->getTerrainElevation( j, i );
-
 
 						eye->projectZ( world, screen );
 						if ( (fabs(screen.x - screenX) < 20 && fabs(screen.y - screenY) < 20) )
@@ -365,7 +345,6 @@ void SelectionBrush::render( int screenX, int screenY )
 		pDragBuilding = NULL;
 	}
 }
-
 
 bool SelectionBrush::paintSmooth(Stuff::Vector3D& worldPos, int screenX, int screenY, int radius)
 {
@@ -468,7 +447,6 @@ bool   SelectionBrush::paintSmoothArea( Stuff::Vector3D& worldPos, int screenX, 
 										edge.y = 0.f;
 										edge.x = deltaX < 0 ? -radX * land->worldUnitsPerVertex : 
 										radX * land->worldUnitsPerVertex;
-
 									}
 									else
 									{
@@ -480,8 +458,7 @@ bool   SelectionBrush::paintSmoothArea( Stuff::Vector3D& worldPos, int screenX, 
 										float tangent = deltaY/deltaX;
 										
 										float tmp = 1/a + tangent * tangent/b;
-										
-									
+
 										edge.x = (float)sqrt( 1/tmp );
 
 										if ( deltaX < 0 && edge.x > 0 )
@@ -496,18 +473,15 @@ bool   SelectionBrush::paintSmoothArea( Stuff::Vector3D& worldPos, int screenX, 
 											edge.y = -edge.y;
 										}
 									}
-									
-															
+
 									float r = (float)sqrt( edge.x * edge.x + edge.y * edge.y );
 									float delta = (float)sqrt( deltaX * deltaX + deltaY * deltaY );
-									
-									
+
 									edge.x += midX;
 									edge.y += midY;
 
 									edge.z = land->getTerrainElevation( edge );							
-									
-									
+
 									float deltaZ = newHeight - edge.z;
 
 									if ( deltaZ > .1 || deltaZ < -.1 )
@@ -532,14 +506,12 @@ bool   SelectionBrush::paintSmoothArea( Stuff::Vector3D& worldPos, int screenX, 
 			
 			lastPos = endPos;
 			return true;
-
 		}
 	}	
 
 	lastPos = endPos;
 	return true;
 }
-
 
 //*************************************************************************************************
 // end of file ( SelectionBrush.cpp )

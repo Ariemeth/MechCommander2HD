@@ -11,12 +11,10 @@
 #include "EditorObjects.h"
 #include "EditorObjectMgr.h"
 #include "EditorInterface.h" // just for the undo manager
-
 #include "..\Code\unitdesg.h" /* just for definition of MIN_TERRAIN_PART_ID and MAX_MAP_CELL_WIDTH */
 
 /////////////////////////////////////////////////////////////////////////////
 // BuildingSettingsDlg dialog
-
 
 BuildingSettingsDlg::BuildingSettingsDlg( EList< EditorObject*, EditorObject* >& newList/*=NULL*/, ActionUndoMgr &undoMgr)
 	: CDialog(BuildingSettingsDlg::IDD), units( newList )
@@ -33,7 +31,6 @@ BuildingSettingsDlg::BuildingSettingsDlg( EList< EditorObject*, EditorObject* >&
 	pAction = NULL;
 }
 
-
 void BuildingSettingsDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -47,7 +44,6 @@ void BuildingSettingsDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_FOREST_NAME, m_forestName);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(BuildingSettingsDlg, CDialog)
 	//{{AFX_MSG_MAP(BuildingSettingsDlg)
@@ -75,7 +71,6 @@ void BuildingSettingsDlg::OnSelchangeGroup()
 		{
 			m_Mech.AddString( MechNames[i] );
 		}
-
 
 		m_Mech.SetCurSel( 0 );	
 }
@@ -304,7 +299,6 @@ void BuildingSettingsDlg::updateMemberVariables()
 			if ( index != -1 )
 			{
 				m_Mech.SetCurSel( index );
-
 			}
 		}
 	}

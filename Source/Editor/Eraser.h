@@ -7,9 +7,7 @@ Eraser.h			: Interface for the Eraser component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef BRUSH_H
 #include "Brush.h"
-#endif
 
 //*************************************************************************************************
 
@@ -17,25 +15,11 @@ Eraser.h			: Interface for the Eraser component.
 CLASS DESCRIPTION
 Eraser:
 **************************************************************************************************/
-#ifndef ELIST_H
 #include "EList.h"
-#endif
-
-#ifndef ACTION_H
 #include "Action.h"
-#endif
-
-#ifndef BUILDINGBRUSH_H
 #include "BuildingBrush.h"
-#endif
-
-#ifndef LINKBRUSH_H
 #include "LinkBrush.h"
-#endif
-
-#ifndef EDITORINTERFACE_H
 #include "EditorInterface.h" /*only for the definition of TeamsAction*/
-#endif
 
 class Eraser: public Brush
 {
@@ -48,7 +32,6 @@ class Eraser: public Brush
 		virtual bool paint( Stuff::Vector3D& worldPos, int screenX, int screenY );
 		virtual bool canPaint( Stuff::Vector3D& worldPos, int screenX, int screenY, int flags );
 		virtual Action* applyToSelection();
-
 
 	private:
 
@@ -66,13 +49,10 @@ class Eraser: public Brush
 			to record the objective change*/
 			bool teamsActionIsSet;
 			TeamsAction teamsAction;
-
 		};
 
 		EraserAction* pCurAction;
-		
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( Eraser.h )

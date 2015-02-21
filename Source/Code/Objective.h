@@ -11,14 +11,8 @@ Objective.h			: Interface for the Objective component.
 #include "EString.h"
 #include "tchar.h"
 #include "mover.h"
-
-#ifndef BLDNG_H
 #include "bldng.h"
-#endif
-
-#ifndef GAMETACMAP_H
 #include "gametacmap.h"
-#endif
 
 class FitIniFile;
 
@@ -71,7 +65,6 @@ enum MARKER_TYPES
 	NAV = 1,
 	NUMERIC = 2
 };
-
 
 static const char *g_conditionSpeciesStringArray[] = {
 	"DestroyAllEnemyUnits",

@@ -14,22 +14,10 @@
 //---------------------------------------------------------------------------
 // Include Files
 
-#ifndef DWEAPONBOLT_H
 #include "dweaponbolt.h"
-#endif
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef OBJTYPE_H
 #include "objtype.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
 #include <stuff\stuff.hpp>
 #include <gosFX\gosfxheaders.hpp>
 //---------------------------------------------------------------------------
@@ -372,32 +360,4 @@ class WeaponBolt : public GameObject
 
 //---------------------------------------------------------------------------
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

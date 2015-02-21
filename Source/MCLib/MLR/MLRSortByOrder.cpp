@@ -6,7 +6,6 @@
 
 extern DWORD gEnableTextureSort, gEnableAlphaSort, gEnableLightMaps;
 
-
 MLRSortByOrder::ClassData*
 	MLRSortByOrder::DefaultData = NULL;
 
@@ -367,7 +366,6 @@ void
 							Set_Statistic(Index_Over_Vertex_Ratio, (Scalar)NumAllIndices/(Scalar)NumAllVertices);
 						}
 #endif
-
 					}
 
 					if(nrOfLightMaps)
@@ -461,7 +459,6 @@ void
 							(sd->*drawFunc)();
 						}
 					}
-
 				}
 			}
 		}
@@ -577,7 +574,6 @@ void
 					{
 						(*alphaArray)[jj] = (*alphaArray)[jj-hh];
 						jj -= hh;
-
 					}
 					(*alphaArray)[jj] = tempSortAlpha;
 				}

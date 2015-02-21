@@ -6,13 +6,8 @@ LogisticsMissionInfo.cpp			: Implementation of the LogisticsMissionInfo componen
 //===========================================================================//
 \*************************************************************************************************/
 #include "McLib.h"
-
 #include "LogisticsMissionInfo.h"
-
-#ifndef FITINIFILE_H
 #include "IniFile.h"
-#endif
-
 #include "LogisticsErrors.h"
 #include "Multplyr.h"
 
@@ -62,17 +57,13 @@ void LogisticsMissionInfo::clear()
 
 	additionalPurchaseFiles.Clear();
 
-
-
 	currentMission = -1;
 	currentStage = 0;
 	groups = 0;
 	currentMissionName = g_missionName;
 	groupCount = 0;
 	CBills = 0;
-
 }
-
 
 long LogisticsMissionInfo::init( FitIniFile& file )
 {
@@ -101,7 +92,6 @@ long LogisticsMissionInfo::init( FitIniFile& file )
 
 	campaignDisplayName = resultName;
 
-
 	result = file.readIdLong( "GroupCount", groupCount );
 	if ( result != NO_ERR )
 	{
@@ -117,7 +107,6 @@ long LogisticsMissionInfo::init( FitIniFile& file )
 		finalVideoName = tmp;
 	}
 
-	
 	// create storage for 'em
 	groups = new MissionGroup[groupCount];
 
@@ -154,7 +143,6 @@ long LogisticsMissionInfo::init( FitIniFile& file )
 			char errorStr[256];
 			sprintf( errorStr, "couldn't find the video for operation %d", i );
 			Assert( 0, 0, errorStr );
-			
 		}
 		groups[i].videoFileName = tmp;
 		groups[i].videoShown = 0;
@@ -199,8 +187,7 @@ long LogisticsMissionInfo::init( FitIniFile& file )
 				pInfo->fileName = fileName;
 				
 				pInfo->completed = 0;
-			
-				
+
 				FitIniFile missionFile;
 				
 				if ( NO_ERR != missionFile.open( (char*)(const char*)path ) )
@@ -232,15 +219,12 @@ long LogisticsMissionInfo::init( FitIniFile& file )
 				if ( NO_ERR != file.readIdBoolean( "PlayLogistics", pInfo->playLogistics ) )
 					pInfo->playLogistics = true;
 
-				
 				if ( NO_ERR != file.readIdBoolean( "PlaySalvage", pInfo->playSalvage ) )
 					pInfo->playSalvage = true;
 
-				
 				if ( NO_ERR != file.readIdBoolean( "PlayPilotPromotion", pInfo->playPilotPromotion ) )
 					pInfo->playPilotPromotion = true;
 
-	
 				if ( NO_ERR != file.readIdBoolean( "PlayPurchasing", pInfo->playPurchasing ) )
 					pInfo->playPurchasing = true;
 
@@ -254,7 +238,6 @@ long LogisticsMissionInfo::init( FitIniFile& file )
 				pInfo->purchaseFileName += ".fit";
 			}
 		}
-
 	}
 
 	return 0;
@@ -314,7 +297,6 @@ void LogisticsMissionInfo::readMissionInfo( FitIniFile& file, LogisticsMissionIn
 	else
 		pInfo->dropWeight = fTmp;
 
-	
 	if ( NO_ERR != file.readIdBoolean( "AirStrikesEnabledDefault", pInfo->enableAirStrike) )
 		pInfo->enableAirStrike = 1;
 
@@ -326,7 +308,6 @@ void LogisticsMissionInfo::readMissionInfo( FitIniFile& file, LogisticsMissionIn
 
 	if ( NO_ERR != file.readIdBoolean("SalvageCraftEnabledDefault", pInfo->enableSalavageCraft) )
 		pInfo->enableSalavageCraft = 1;
-
 
 	if ( NO_ERR != file.readIdBoolean( "SensorProbesEnabledDefault", pInfo->enableSensorStrike) )
 		pInfo->enableSensorStrike = true;
@@ -396,7 +377,6 @@ long LogisticsMissionInfo::load( FitIniFile& file )
 
 		pInfo->completed = 1;
 		numberCompleted ++;
-
 	}
 
 	if ( numberCompleted >= pGroup->numberToBeCompleted  ) // unhide necessary missions
@@ -416,12 +396,9 @@ long LogisticsMissionInfo::load( FitIniFile& file )
 			iter++;
 		}
 	}
-		
-	
 
 	if ( count < pGroup->infos.Count() )
 		setNextMission( pGroup->infos[count]->fileName );
-
 
 	char tmpPlayerName[64];
 	file.readIdString( "PlayerName", tmpPlayerName, 63 );
@@ -445,12 +422,9 @@ long LogisticsMissionInfo::load( FitIniFile& file )
 			else
 				break;
 		}
-			
-		
 	}
 	
 	return 0;
-
 }
 void LogisticsMissionInfo::save( FitIniFile& file )
 {
@@ -499,7 +473,6 @@ void LogisticsMissionInfo::save( FitIniFile& file )
 
 	file.writeIdLong( "CompletedMissions", count );
 
-
 	file.writeBlock( "AdditionalPurchaseFiles" );
 	int i = 0;
 	for ( FILE_LIST::EIterator fIter = additionalPurchaseFiles.Begin(); !fIter.IsDone(); fIter++ )
@@ -509,10 +482,6 @@ void LogisticsMissionInfo::save( FitIniFile& file )
 		file.writeIdString( header, (*fIter) );
 		i++;
 	}
-
-
-
-
 }
 
 long LogisticsMissionInfo::getAvailableMissions( const char** missions, int& numberOfEm )
@@ -533,7 +502,6 @@ long LogisticsMissionInfo::getAvailableMissions( const char** missions, int& num
 			}
 
 			count++;
-
 		}
 		iter++;
 	}
@@ -599,8 +567,7 @@ long LogisticsMissionInfo::setNextMission(const char* missionName)
 			pInfo->playPurchasing = true;
 
 			currentMissionName = missionName;
-			
-				
+
 			FitIniFile missionFile;
 			
 			if ( NO_ERR != missionFile.open( (char*)(const char*)path ) )
@@ -622,7 +589,6 @@ long LogisticsMissionInfo::setNextMission(const char* missionName)
 				pInfo->resourcePoints = MPlayer->missionSettings.resourcePoints;
 				pInfo->additionalCBills = pPlayerInfo->cBills;
 				// need to put dropweight in here as sooon as we have it
-				
 			}
 
 			pInfo->dropWeight = MPlayer->missionSettings.dropWeight;
@@ -682,10 +648,7 @@ long LogisticsMissionInfo::setNextMission(const char* missionName)
 			return INVALID_MISSION;
 	}
 
-	
-
 	return 0;
-
 }
 
 void LogisticsMissionInfo::setSingleMission( const char* missionFileName )
@@ -709,8 +672,6 @@ void LogisticsMissionInfo::setSingleMission( const char* missionFileName )
 
 	groupCount = 1;
 
-
-	
 	EString path = missionPath;
 	path += missionFileName;
 	path += ".fit";
@@ -726,8 +687,7 @@ void LogisticsMissionInfo::setSingleMission( const char* missionFileName )
 	pInfo->playPilotPromotion = 0;
 
 	currentMissionName = missionFileName;
-	
-		
+
 	FitIniFile missionFile;
 	
 	if ( NO_ERR != missionFile.open( (char*)(const char*)path ) )
@@ -737,7 +697,6 @@ void LogisticsMissionInfo::setSingleMission( const char* missionFileName )
 		Assert( 0, 0, errorStr );
 		return;
 	}
-
 
 	readMissionInfo( missionFile, pInfo );
 
@@ -749,7 +708,6 @@ void LogisticsMissionInfo::setSingleMission( const char* missionFileName )
 	if ( result != NO_ERR || !pInfo->additionalCBills )
 		pInfo->additionalCBills = 1200 * fTmp + 100000;
 	CBills = pInfo->additionalCBills;
-	
 }
 
 long LogisticsMissionInfo::getCurrentMissionId( )
@@ -894,7 +852,6 @@ const char* LogisticsMissionInfo::getCurrentOperationFile() const
 		return pGroup->operationFileName;
 
 	return NULL;
-	
 }
 
 const char* LogisticsMissionInfo::getCurrentVideo() const
@@ -959,7 +916,6 @@ const char*			LogisticsMissionInfo::getCurrentMissionFriendlyName() const
 		return pGroup->infos[currentMission]->missionDescriptiveName;	
 
 	return NULL;
-
 }
 
 const char*			LogisticsMissionInfo::getCurrentABLScriptName() const
@@ -996,10 +952,8 @@ int		LogisticsMissionInfo::getCurrentRP() const
 	if ( currentMission == -1 )
 		return 0;
 
-	
 	MissionGroup* pGroup = &groups[currentStage];
 	return pGroup->infos[currentMission]->resourcePoints;
-
 }
 
 const char*			LogisticsMissionInfo::getCurrentBigVideo() const
@@ -1014,7 +968,6 @@ const char*			LogisticsMissionInfo::getCurrentBigVideo() const
 
 	pGroup->bigVideoShown = true;
 	return pGroup->bigVideoName;
-		
 }
 const char*			LogisticsMissionInfo::getFinalVideo() const
 {
@@ -1039,10 +992,6 @@ void		LogisticsMissionInfo::setMultiplayer()
 
 	currentMission = 0;
 	groupCount = 1;
-
-
-			
-
 }
 void		LogisticsMissionInfo::setPurchaseFile( const char* fileName )
 {
@@ -1092,7 +1041,6 @@ bool	LogisticsMissionInfo::skipLogistics()
 
 	MissionGroup* pGroup = &groups[currentStage]; 
 	return !pGroup->infos[currentMission]->playLogistics;
-
 }
 bool	LogisticsMissionInfo::skipPilotReview()
 {
@@ -1102,8 +1050,6 @@ bool	LogisticsMissionInfo::skipPilotReview()
 	if ( !pInfo )
 		return 0;
 	return !pInfo->playPilotPromotion;
-	
-
 }
 bool	LogisticsMissionInfo::skipSalvageScreen()
 {
@@ -1114,7 +1060,6 @@ bool	LogisticsMissionInfo::skipSalvageScreen()
 		return 0;
 	
 	return !pInfo->playSalvage;
-
 }
 bool	LogisticsMissionInfo::skipPurchasing()
 {
@@ -1172,14 +1117,12 @@ bool LogisticsMissionInfo::	showChooseMission()
 
 	MissionGroup* pGroup = &groups[currentStage]; 
 	return pGroup->infos[currentMission]->playMissionSelection;
-
 }
 
 bool	LogisticsMissionInfo::canHaveSalavageCraft()
 {
 	MissionGroup* pGroup = &groups[currentStage]; 
 	return pGroup->infos[currentMission]->enableSalavageCraft;
-
 }
 
 bool LogisticsMissionInfo::canHaveRepairTruck()
@@ -1217,20 +1160,13 @@ bool LogisticsMissionInfo::getVideoShown()
 {
 	MissionGroup* pGroup = &groups[currentStage]; 
 	return pGroup->videoShown;
-
 }
 
 void LogisticsMissionInfo::setVideoShown()
 {
 	MissionGroup* pGroup = &groups[currentStage]; 
 	pGroup->videoShown = true;
-
 }
-
-
-
-
-
 
 //*************************************************************************************************
 // end of file ( LogisticsMissionInfo.cpp )

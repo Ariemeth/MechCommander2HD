@@ -34,7 +34,6 @@ aAnimation*	SalvageListItem::s_pressedAnim = NULL;
 aAnimation*	SalvageListItem::s_highlightAnim = NULL;
 aAnimation*	SalvageListItem::s_normalAnim = NULL;
 
-
 #define RP_TEXTID	3
 #define NAME_TEXTID 0
 #define WEIGHT_TEXTID	2
@@ -46,8 +45,6 @@ aAnimation*	SalvageListItem::s_normalAnim = NULL;
 #define MECH_RECT	6
 
 #define CHECK_BUTTON 200
-
-
 
 SalvageMechScreen::SalvageMechScreen()
 {
@@ -97,9 +94,6 @@ SalvageMechScreen::~SalvageMechScreen()
 
 	delete SalvageListItem::cBillsIcon;
 	SalvageListItem::cBillsIcon = NULL;
-
-
-
 }
 	
 int __cdecl sortMechs( const void* pW1, const void* pW2 )
@@ -120,10 +114,8 @@ int __cdecl sortMechs( const void* pW1, const void* pW2 )
 		else if ( cost2 < cost1 )
 			return 1;
 	}
-		
 
 	return 0;
-
 }
 
 void SalvageMechScreen::init(FitIniFile* file)
@@ -137,7 +129,6 @@ void SalvageMechScreen::init(FitIniFile* file)
 	{
 		buttons[i].setMessageOnRelease();
 	}
-
 
 	long left, right, top, bottom;
 	file->seekBlock( "SalvageAreaRect3" );
@@ -168,9 +159,7 @@ void SalvageMechScreen::init(FitIniFile* file)
 			salvageListBox.AddItem( pItem );
 			pItem->setParent( this );
 		}
-
 	}
-
 
 	selMechArea.init( file );
 	salvageListBox.SelectItem( 0 );
@@ -178,8 +167,6 @@ void SalvageMechScreen::init(FitIniFile* file)
 	entryAnim.initWithBlockName( file, "SalvageAreaFadeInAnimation" );
 	entryAnim.begin();
 	beginFadeIn( 1.0 );
-	
-	
 }
 
 void SalvageMechScreen::render()
@@ -196,9 +183,7 @@ void SalvageMechScreen::render()
 	salvageListBox.move( -xOffset, -yOffset );
 	
 	selMechArea.render(xOffset, yOffset);
-	
 
-	
 	LogisticsScreen::render(xOffset, yOffset);
 
 // this animation draw a big white square and looks like crap
@@ -208,8 +193,6 @@ void SalvageMechScreen::render()
 //		GUI_RECT rect = { 0, 0, Environment.screenWidth, Environment.screenHeight };
 //		drawRect( rect, color );
 //	}
-
-	
 }
 
 int	SalvageMechScreen::handleMessage( unsigned long message, unsigned long who)
@@ -236,7 +219,6 @@ int	SalvageMechScreen::handleMessage( unsigned long message, unsigned long who)
 	}
 
 	return 0;
-
 }
 
 bool SalvageMechScreen::isDone()
@@ -269,7 +251,6 @@ void SalvageMechScreen::update()
 			color = 0xffa21600;
 	}
 
-
 	char cBillText[32];
 	sprintf( cBillText, "%d", amount );
 	textObjects[RP_TEXTID].setText( cBillText );
@@ -285,7 +266,6 @@ void SalvageMechScreen::update()
 		{
 			handleMessage( aMSG_DONE, aMSG_DONE );
 		}*/
-
 	}
 
 	entryAnim.update();
@@ -297,7 +277,6 @@ void SalvageMechScreen::update()
 
 	if ( exitAnim.isAnimating() )
 		fadeTime = 0.f;
-	
 }
 
 void SalvageMechScreen::updateSalvage()
@@ -311,7 +290,6 @@ void SalvageMechScreen::updateSalvage()
 		}
 	}
 }
-
 
 //////////////////////////////////////////////
 
@@ -355,12 +333,9 @@ void	SalvageListItem::init( FitIniFile* file )
 	s_pressedAnim = new aAnimation;
 	s_highlightAnim = new aAnimation;
 
-
-	
 	s_normalAnim->init( file, "Normal" );
 	s_pressedAnim->init( file, "Pressed" );
 	s_highlightAnim->init( file, "Highlight" );
-
 
 	file->seekBlock( "MechEntryIcon" );
 	file->readIdLong( "XLocation", iconRect.left );
@@ -369,8 +344,6 @@ void	SalvageListItem::init( FitIniFile* file )
 	file->readIdLong( "Height", height );
 	iconRect.right= iconRect.left + width;
 	iconRect.bottom = iconRect.top + height;
-
-		
 }
 
 SalvageListItem::SalvageListItem( BattleMech* pMech )
@@ -397,7 +370,6 @@ SalvageListItem::SalvageListItem( BattleMech* pMech )
 
 	costToSalvage = .8f * (float)pVariant->getCost();
 
-
 	// add the chassis
 	aText* pText = new aText();
 	*pText = *mechNameText;
@@ -412,7 +384,6 @@ SalvageListItem::SalvageListItem( BattleMech* pMech )
 	*pText = *variantNameText;
 	pText->setText( pVariant->getName() );
 	addChild( pText );
-
 
 	// add salvage
 	char text[64];
@@ -448,8 +419,6 @@ SalvageListItem::SalvageListItem( BattleMech* pMech )
 	addChild( pObject );
 
 	normalAnim.begin();
-
-	
 }
 
 void SalvageListItem::update()
@@ -550,8 +519,6 @@ void SalvageListItem::render()
 	tmp.top = location[0].y;
 	tmp.bottom = location[2].y;
 	drawEmptyRect( tmp, color, color );
-
-
 }
 
 bool SalvageListItem::isChecked()
@@ -578,7 +545,6 @@ int SalvageListItem::handleMessage( unsigned long message, unsigned long who )
 }
 
 //////////////////////////////////
-
 
 SalvageMechArea::SalvageMechArea()
 {
@@ -615,8 +581,6 @@ void SalvageMechArea::init( FitIniFile* file )
 	file->readIdLong( "bottom", bottom );
 	mechCamera.init( left, top, right, bottom );
 
-
-
 	LogisticsScreen::init(*file, 0, "SalvageAreaMechText", 0, 0 );
 
 	char blockName[64];
@@ -625,9 +589,6 @@ void SalvageMechArea::init( FitIniFile* file )
 		sprintf( blockName, "AttributeMeter%d", i );
 		attributeMeters[i].init( file, blockName );
 	}
-
-
-
 }
 
 void SalvageMechArea::update()
@@ -666,7 +627,6 @@ void SalvageMechArea::setMech( LogisticsVariant* pMech, long red, long green, lo
 		attributeMeters[0].setValue( ((float)pMech->getArmor())/MAX_ARMOR_RANGE );
 		attributeMeters[1].setValue( ((float)pMech->getSpeed())/MAX_SPEED_RANGE );
 		attributeMeters[2].setValue( ((float)pMech->getJumpRange() * 25.0f)/MAX_JUMP_RANGE );
-
 	}
 	else
 	{
@@ -678,14 +638,10 @@ void SalvageMechArea::setMech( LogisticsVariant* pMech, long red, long green, lo
 		attributeMeters[1].setValue( 0 );
 		attributeMeters[2].setValue( 0 );
 		mechCamera.setMech( 0 );
-
 	}
 
 	unit = pMech;
-
 }
-
-
 
 void SalvageMechArea::render(long xOffset, long yOffset)
 {
@@ -700,7 +656,6 @@ void SalvageMechArea::render(long xOffset, long yOffset)
 			textObjects[i].move( xOffset, yOffset );
 			textObjects[i].render();
 			textObjects[i].move( -xOffset, -yOffset );
-
 		}
 
 		for ( i = 0; i < 3; i++ )
@@ -711,11 +666,7 @@ void SalvageMechArea::render(long xOffset, long yOffset)
 		if ( !xOffset && !yOffset )
 			mechCamera.render();
 	}
-
-
 }
-
-
 
 //*************************************************************************************************
 // end of file ( SalvageMechArea.cpp )

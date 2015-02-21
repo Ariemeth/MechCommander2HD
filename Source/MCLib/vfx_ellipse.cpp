@@ -2,16 +2,11 @@
 extern char AlphaTable[];
 extern char SpecialColor[];
 
-
 //extern void AG_ellipse_draw(PANE *pane, LONG xc, LONG yc, LONG width, LONG height, LONG color);
 //extern void AG_ellipse_fill(PANE *pane, LONG xc, LONG yc, LONG width, LONG height, LONG color);
 
 static signed int paneY0,paneY1,paneX0,paneX1,DestWidth,DestBuffer,x_top,y_top,Bsquared,TwoBsquared,Asquared,TwoAsquared,var_dx,var_dy,x_vector,line_left,line_right;
 static int DrawRoutine;
-
-
-
-
 
 void AG_ellipse_draw(PANE *pane, LONG xc, LONG yc, LONG width, LONG height, LONG color)
 {
@@ -142,7 +137,6 @@ __d_pos:
 
 		js __end_ellipse
 		jmp __until_neg
-
 
 ;
 ;
@@ -306,10 +300,6 @@ __end_ellipse:
 	}
 }
 
-
-
-
-
 void AG_ellipse_fill(PANE *pane, LONG xc, LONG yc, LONG width, LONG height, LONG color)
 {
 	if( width==0 || height==0 )
@@ -429,8 +419,6 @@ __d_pos:
 		dec ebx
 		js __end_ellipse
 		jmp __until_neg
-
-
 
 ELLIPSE_LINES:
 		mov edi,xc
@@ -591,9 +579,6 @@ Alo2:	mov al,[edi]
 ALN2:    
 		ret
 
-
-
-
 __end_ellipse:
 	}
 }
@@ -726,8 +711,6 @@ __d_pos:
 		dec ebx
 		js __end_ellipse
 		jmp __until_neg
-
-
 
 XOR_ELLIPSE_LINES:
 		mov edi,xc
@@ -938,8 +921,6 @@ __d_pos:
 		js __end_ellipse
 		jmp __until_neg
 
-
-
 XOR_ELLIPSE_LINES:
 		mov edi,xc
 		add edi,x_top
@@ -1019,10 +1000,4 @@ LN2:
 __end_ellipse:
 	}
 }
-
-
-
-
-
-
 

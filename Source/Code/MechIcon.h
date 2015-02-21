@@ -7,17 +7,9 @@ MechIcon.h			: Interface for the MechIcon component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef MCLIB_H
 #include "McLib.h"
-#endif
-
-#ifndef AFONT_H
 #include "aFont.h"
-#endif
-
-#ifndef MC2movie_H
 #include "mc2movie.h"
-#endif
 
 //*************************************************************************************************
 class Mover;
@@ -43,7 +35,6 @@ public:
 	void setTextureIndex(  int newIndex ) { pilotTextureIndex = newIndex; }
 	void render( float left, float top, float right, float bottom );
 
-
 private:
 
 	unsigned long pilotTextureIndex;
@@ -59,7 +50,6 @@ private:
 	friend class Mission;
 };
 
-
 class ForceGroupIcon
 {
 public:
@@ -74,9 +64,6 @@ public:
 		void renderPilotIcon( float left, float top, float right, float bottom );
 		virtual bool			init( Mover* pMover ){ return false; }
 		void init();
-
-		
-
 
 		bool inRegion( int x, int y );
 
@@ -130,7 +117,6 @@ protected:
 		void drawBar( float barStatus );
 		static void setIconVariables();
 
-
 		friend class ForceGroupBar;
 		friend void Terminate(void);
 
@@ -159,7 +145,6 @@ protected:
 		static		MC2MoviePtr 	bMovie;
 		static		DWORD			pilotVideoTexture;
 		static		MechWarrior*	pilotVideoPilot;
-		
 };
 
 class MechIcon : public ForceGroupIcon
@@ -177,18 +162,12 @@ class MechIcon : public ForceGroupIcon
 		void doDraw( char* newDamage, char* oldDamage, unsigned long handle, unsigned long where);
 		virtual void setDrawBack( bool bSet);
 
-		
-
-		
-
 	private:
 
 		char	damage[8];
 		char	backDamage[8];
 		bool init( long whichIndex );
 		bool initTextures();
-
-		
 };
 
 class VehicleIcon : public ForceGroupIcon
@@ -207,10 +186,7 @@ public:
 private:
 
 		char	damage[5];
-
 };
-
-
 
 //*************************************************************************************************
 #endif  // end of file ( MechIcon.h )

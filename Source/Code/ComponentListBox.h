@@ -7,25 +7,15 @@ ComponentListBox.h			: Interface for the ComponentListBox component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef ALISTBOX_H
 #include "aListBox.h"
-#endif
-
-#ifndef AANIM_H
 #include "aanim.h"
-#endif
-
-#ifndef ELIST_H
 #include "eList.h"
-#endif
 
 class LogisticsVariant;
 class LogisticsComponent;
 class LogisticsVehicle;
 
-
 #define COMP_ANIMATION_COUNT 5
-
 
 //*************************************************************************************************
 
@@ -77,9 +67,6 @@ class ComponentListItem : public aListItem
 		void doAdd();
 		void setComponent();
 		void startDrag();
-
-
-
 };
 
 class ComponentIconListBox : public aListBox
@@ -96,8 +83,6 @@ public:
 
 	static ComponentIconListBox* s_instance;
 
-	
-
 	private:
 
 		ComponentIconListBox( const ComponentIconListBox& src );
@@ -108,9 +93,7 @@ public:
 		int type;
 
 		void addSortedItem( ComponentListItem* pItem );
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( ComponentListBox.h )

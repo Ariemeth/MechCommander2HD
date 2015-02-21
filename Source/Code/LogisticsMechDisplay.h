@@ -7,24 +7,12 @@ LogisticsMechDisplay.h			: Interface for the LogisticsMechDisplay component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef LOGISTICSSCREEN_H
 #include "LogisticsScreen.h"
-#endif
-
-#ifndef SIMPLECAMERA_H
 #include "SimpleCamera.h"
-#endif
-
-#ifndef ATTRIBUTEMETER_H
 #include "AttributeMeter.h"
-#endif
-
-#ifndef SIMPLECOMPONENTLISTBOX_H
 #include "SimpleComponentListBox.h"
-#endif
 
 class LogisticsMech;
-
 
 //*************************************************************************************************
 
@@ -50,10 +38,7 @@ private:
 		AttributeMeter		attributeMeters[3];
 		SimpleCamera		mechCamera;
 		ComponentListBox	componentListBox;
-
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( LogisticsMechDisplay.h )

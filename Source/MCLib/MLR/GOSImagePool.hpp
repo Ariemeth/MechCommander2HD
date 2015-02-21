@@ -72,6 +72,5 @@ namespace MidLevelRenderer {
 	public:
 		bool
 			LoadImage(GOSImage *image, int=0);
-
 	};
 }

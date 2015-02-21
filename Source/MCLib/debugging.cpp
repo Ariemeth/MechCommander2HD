@@ -8,14 +8,8 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef DEBUGGING_H
 #include "debugging.h"
-#endif
-
-#ifndef HEAP_H
 #include "heap.h"
-#endif
-
 #include <string.h>
 
 extern UserHeapPtr g_systemHeap;

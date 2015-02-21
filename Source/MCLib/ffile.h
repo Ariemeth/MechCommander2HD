@@ -14,14 +14,8 @@
 //---------------------------------------------------------------------------
 // Include files
 
-#ifndef DSTD_H
 #include <dstd.h>
-#endif
-
-#ifndef FILE_H
 #include <file.h>
-#endif
-
 #include <sys\types.h>
 #include <sys\stat.h>
 //---------------------------------------------------------------------------

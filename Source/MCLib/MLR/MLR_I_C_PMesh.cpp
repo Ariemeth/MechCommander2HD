@@ -166,7 +166,6 @@ MLR_I_C_PMesh*
 	return mesh;
 }
 
-
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 void
@@ -558,7 +557,6 @@ MLR_I_PMesh*
 		colors[i+4].blue *= 1.2f;;
 	}
 
-
 #endif
 	ret->SetColorData(colors, 8);
 
@@ -664,7 +662,6 @@ MLRShape*
 		subdivide (coords, v[0], v[1], v[2], icoInfo.depth, nrTri, icoInfo.radius);
 
 		mesh->SetSubprimitiveLengths(lengths, nrTri);
-
 
 		if(icoInfo.indexed==true)
 		{

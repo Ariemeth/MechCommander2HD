@@ -13,17 +13,9 @@
 //---------------------------------------------------------------------------
 // Include Files
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
 
 //---------------------------------------------------------------------------
 class GameCamera : public Camera

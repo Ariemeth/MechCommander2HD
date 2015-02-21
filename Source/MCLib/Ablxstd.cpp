@@ -12,10 +12,7 @@
 #include <string.h>
 #include <math.h>
 #include <time.h>
-
-#ifndef ABL_H
 #include "abl.h"
-#endif
 
 inline signed int double2long(double _in)
 {
@@ -383,7 +380,6 @@ void execOrderReturn (long returnVal) {
 			codeSegmentPtr = (char*)ExitStateCodeSegment;
 			getCodeToken();
 		}
-		
 		}
 	else {
 		//-------------------------------------------------------------------------
@@ -958,7 +954,6 @@ void initStandardRoutines (void) {
 	enterStandardRoutine("callfunction", -1, false, "i", NULL, execStdCallFunction);
 	enterStandardRoutine("setflag", -1, false, "iib", "i", execStdSetFlag);
 	enterStandardRoutine("getflag", -1, false, "ii", "b", execStdGetFlag);
-
 }
 
 //-----------------------------------------------------------------------------

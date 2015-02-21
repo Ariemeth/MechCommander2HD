@@ -21,10 +21,8 @@ MainMenu.cpp			: Implementation of the MainMenu component.
 #include "gameSound.h"
 #include "aAnimObject.h"
 #include "Multplyr.h"
-
 #include "prefs.h"
 extern CPrefs g_userPreferences;
-
 
 #define MM_MSG_NEW_CAMPAIGN 90
 #define MM_MSG_SAVE			92
@@ -43,9 +41,6 @@ extern volatile bool mc2IsInDisplayBackBuffer;
 void MouseTimerKill();
 
 extern void (*AsynFunc)(RECT& WinRect,DDSURFACEDESC2& mouseSurfaceDesc );
-
-
-
 
 extern bool g_invokeOptionsScreen;
 bool	MainMenu::bDrawMechlopedia = false;;
@@ -119,7 +114,6 @@ int MainMenu::init( FitIniFile& file )
 
 	beginAnim.initWithBlockName( &file, "InAnim" );
 	endAnim.initWithBlockName( &file, "OutAnim" );
-
 
 	intro.init();
 
@@ -200,7 +194,6 @@ void MainMenu::begin()
    			if (Environment.fullScreen && g_userPreferences.fullScreen)
    				localFullScreen = false;
 
-
 			// make sure we get into 800 x 600 mode
 			if ( Environment.screenWidth != 800 )
 			{
@@ -210,8 +203,6 @@ void MainMenu::begin()
 				else
 					gos_SetScreenMode(800,600,16,g_userPreferences.renderer,0,0,0,localFullScreen ,0,localWindow,0,localRenderer);
 			}
-
-
 	}
 }
 
@@ -219,7 +210,6 @@ void MainMenu::end()
 {
 	endAnim.end();
 	bHostLeftDlg = 0;
-
 }
 
 void MainMenu::setDrawBackground( bool bNewDrawBackground )
@@ -418,7 +408,6 @@ void MainMenu::skipIntro()
 		introMovie->stop();
 		delete introMovie;
 		introMovie = NULL;
-
 	}
 }
 
@@ -508,7 +497,6 @@ void MainMenu::update()
 			if ( stricmp( &name[index], ".fit" ) !=0 ) 
 				strcat( name, ".fit" );
 
-			
 			FitIniFile file;
 			if ( bSave )
 			{
@@ -529,8 +517,6 @@ void MainMenu::update()
 				}
 				bSave = bLoad = 0;
 				status = NEXT;
-				
-
 			}
 			else if ( bLoadCampaign )
 			{
@@ -554,7 +540,6 @@ void MainMenu::update()
 				bSave = bLoad = 0;
 				status = RESTART;
 				file.close();
-
 			}
 		}
 		else if ( LogisticsSaveDialog::instance()->getStatus() == LogisticsScreen::NO &&
@@ -602,16 +587,12 @@ void MainMenu::update()
 				g_soundSystem->playDigitalSample( LOG_EXITGAME );
 				gos_TerminateApplication();
 				promptToQuit = 0;
-
 			}
 			else if ( LogisticsOKDialog::instance()->getStatus() == LogisticsScreen::NO)
 			{
 				if ( LogisticsOKDialog::instance()->isDone() )
 					promptToQuit = 0;
 			}
-
-			
-
 		}
 	}
 	else if ( bLegal )
@@ -678,7 +659,6 @@ void MainMenu::update()
 					introOver = true;
 					userInput->mouseOn();
 					g_soundSystem->playDigitalSample( LOG_MAINMENUBUTTON );
-
 				}
 				else if ( !introOver )
 					return;
@@ -691,7 +671,6 @@ void MainMenu::update()
 
 				introOver = true;
 				userInput->mouseOn();
-
 			}
 		}
 
@@ -720,7 +699,6 @@ void MainMenu::render()
 		return;
 	}
 
-	
 	if ( bOptions )
 	{
 		optionsScreenWrapper->render();
@@ -746,7 +724,6 @@ void MainMenu::render()
 			if ( endTime )
 			{
 				color = interpolateColor( 0x00000000, 0x7f000000, time/endTime );
-
 			}
 		}
 
@@ -772,8 +749,6 @@ void MainMenu::render()
 			intro.render();
 			if ( !intro.animObjects[0].isDone() && !introOver && !bHostLeftDlg )
 				return;
-
-
 		}
 	}
 	else
@@ -792,7 +767,6 @@ void MainMenu::render()
 
 	textObjects[1].showGUIWindow( false );
 
-	
 	if ( (!bSave && !bLoad && !bLoadSingle && !bLoadCampaign) || (!endAnim.isDone() && endResult != RESTART ) )	
 		LogisticsScreen::render( xDelta, yDelta );
 	else if ( bLoadSingle )
@@ -812,10 +786,6 @@ void MainMenu::render()
 	{
 		LogisticsOneButtonDialog::instance()->render();
 	}
-
-
-
-	
 }
 
 void MainMenu::setHostLeftDlg( const char* playerName )
@@ -834,15 +804,10 @@ void MainMenu::setHostLeftDlg( const char* playerName )
 	{
 		LogisticsOneButtonDialog::instance()->setText( IDS_MP_PLAYER_KICKED,
 					IDS_DIALOG_OK, IDS_DIALOG_OK );
-
 	}
 	LogisticsOneButtonDialog::instance()->begin();
 	bHostLeftDlg = true;
-
 }
-
-
-
 
 //*************************************************************************************************
 // end of file ( MainMenu.cpp )

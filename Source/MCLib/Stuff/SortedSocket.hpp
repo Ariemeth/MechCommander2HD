@@ -75,5 +75,4 @@ namespace Stuff {
 	protected:
 		explicit SortedIterator(SortedSocket *sortedSocket);
 	};
-
 }

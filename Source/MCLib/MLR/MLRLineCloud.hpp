@@ -19,7 +19,6 @@ namespace MidLevelRenderer {
 	//#######################    MLRLineCloud    ##############################
 	//##########################################################################
 
-
 	class MLRLineCloud:
 		public MLREffect
 	{
@@ -72,5 +71,4 @@ namespace MidLevelRenderer {
 		int type;
 		const int *usedNrOfVertices;
 	};
-
 }

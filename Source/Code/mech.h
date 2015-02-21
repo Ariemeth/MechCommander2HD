@@ -11,47 +11,21 @@
 #ifndef MECH_H
 #define MECH_H
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef MOVER_H
 #include "mover.h"
-#endif
-
-#ifndef DMECH_H
 #include "dmech.h"
-#endif
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef OBJTYPE_H
 #include "objtype.h"
-#endif
-
-#ifndef DOBJNUM_H
 #include "dobjnum.h"
-#endif
-
-#ifndef CMPONENT_H
 #include "cmponent.h"
-#endif
-
-#ifndef WARRIOR_H
 #include "warrior.h"
-#endif
 
 #ifdef USE_JETS
-#ifndef DJET_H
 #include "djet.h"
-#endif
+
 #endif
 
-#ifndef MECHCLASS_H
 #include "mechclass.h"
-#endif
 
 extern float metersPerWorldUnit;
 
@@ -349,7 +323,6 @@ class BattleMech : public Mover {
 
 		long				variantID;						// need to store this for logistics
 		char				variantName[64];				// user defined
-
 
 		//------------------
 		// Additional status

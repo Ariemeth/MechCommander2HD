@@ -60,7 +60,6 @@ void ComponentListBox::setMech( LogisticsVariant* pMech )
 			textItem->setHelpID( IDS_HELP_COMP0 + ECM );
 			AddItem( textItem );
 		}
-
 	}
 }
 
@@ -76,15 +75,12 @@ void ComponentListBox::setVehicle( LogisticsVehicle* pVeh )
 		pVeh->getComponents( componentCount, components );
 
 		setComponents( componentCount, components );	
-
 	}
 }
-
 
 void ComponentListBox::setComponents( long componentCount, LogisticsComponent** components )
 {
 		LogisticsComponent* finalList[64];
-
 
 		long finalListCount[64];
 //		long stringIDs[4] = { IDS_SHORT, IDS_MEDIUM, IDS_LONG, IDS_COMPONENT};
@@ -148,14 +144,10 @@ void ComponentListBox::setComponents( long componentCount, LogisticsComponent** 
 					textItem->setColor( colors[i] );
 					textItem->setHelpID( IDS_HELP_COMP0 + finalList[j]->getID() );
 					AddItem( textItem );
-				
 				}
-
 			}
 		}
-
 }
-
 
 //*************************************************************************************************
 // end of file ( SimpleComponentListBox.cpp )

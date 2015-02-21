@@ -238,7 +238,6 @@ namespace Stuff {
 		YawPitchRoll&
 			operator=(const Origin3D &p);
 
-
 		static int GetMemberCount(void)
 			{
 				return 3;
@@ -258,7 +257,6 @@ namespace Stuff {
 					Verify(static_cast<unsigned>(index) <= Z_Axis);
 					return (&yaw)[index];
 				}
-
 
 		//
 		// "Close-enough" comparators
@@ -380,7 +378,6 @@ namespace Stuff {
 		UnitQuaternion&
 			operator=(const Vector3D &v);
 
-
 		//
 		// "Close-enough" comparators
 		//
@@ -477,7 +474,6 @@ namespace Stuff {
 				const UnitQuaternion& q, 
 				Scalar t
 			);
-		
 
 		UnitQuaternion&
 			Lerp(
@@ -598,11 +594,6 @@ namespace Stuff {
 		// END JSE ---------------------------------------
 		//------------------------------------------------
 
-
-
-
-
-
 		//
 		// Support functions
 		//
@@ -618,7 +609,6 @@ namespace Stuff {
 		static bool
 			TestClass();
 	};
-
 }
 
 namespace MemoryStreamIO {
@@ -661,5 +651,4 @@ namespace MemoryStreamIO {
 			const Stuff::UnitQuaternion *input
 		)
 			{return stream->WriteBytes(input, sizeof(*input));}
-
 }

@@ -29,7 +29,6 @@ namespace MidLevelRenderer {
 	//#### MLRIndexedPolyMesh with no color no lighting w/ detail texture  #####
 	//##########################################################################
 
-
 	class MLR_I_DeT_PMesh:
 		public MLR_I_PMesh
 	{

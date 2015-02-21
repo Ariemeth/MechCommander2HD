@@ -10,22 +10,14 @@
 #define APPRTYPE_H
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef DAPRTYPE_H
 #include "daprtype.h"
-#endif
-
-#ifndef DAPPEAR_H
 #include "dappear.h"
-#endif
 
 #ifndef DSTD_h
 #include "dstd.h"
 #endif
 
-#ifndef HEAP_H
 #include "heap.h"
-#endif
-
 #include <stuff\stuffheaders.hpp>
 
 //---------------------------------------------------------------------------

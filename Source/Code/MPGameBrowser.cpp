@@ -13,10 +13,7 @@ MPGameBrowser.cpp			: Implementation of the MPGameBrowser component.
 #include "..\resource.h"
 #include "Multplyr.h"
 #include "MechBayScreen.h"
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
 
 #define CHECK_BUTTON 200
 
@@ -45,7 +42,6 @@ MPGameBrowser::MPGameBrowser()
 	bSortUpward = 1;
 	bHosting = 0;
 	bShowErrorDlg = 0;
-
 }
 
 MPGameBrowser::~MPGameBrowser()
@@ -85,7 +81,6 @@ void MPGameBrowser::init(FitIniFile* file)
 		}
 	}
 
-
 	{
 		char path[256];
 		strcpy( path, artPath );
@@ -113,9 +108,7 @@ void MPGameBrowser::init(FitIniFile* file)
 		{
 			items[i] = templateItem;
 		}
-
 	}
-
 
 	hostDlg.init();
 }
@@ -125,7 +118,6 @@ void MPGameBrowser::begin()
 	status = RUNNING;
 	bHosting = 0;
 	bShowErrorDlg = 0;
-	
 
 	if ( MPlayer )
 	{
@@ -134,9 +126,7 @@ void MPGameBrowser::begin()
 		MPlayer->beginSessionScan (NULL);
 		MPlayer->setMode(MULTIPLAYER_MODE_BROWSER);
 	}
-
 }
-
 
 void MPGameBrowser::end()
 {
@@ -164,8 +154,6 @@ void MPGameBrowser::render(int xOffset, int yOffset )
 		LogisticsOneButtonDialog::instance()->render();
 		return;
 	}
-
-	
 }
 
 void MPGameBrowser::render()
@@ -255,7 +243,6 @@ int	MPGameBrowser::handleMessage( unsigned long message, unsigned long who)
 									errorID = IDS_MP_CONNECTION_ERROR_FULL;
 									fontID = IDS_MP_CONNECTION_ERROR_FULL_FONT;
 									break;
-
 								}
 
 								LogisticsOneButtonDialog::instance()->begin();
@@ -289,7 +276,6 @@ int	MPGameBrowser::handleMessage( unsigned long message, unsigned long who)
 	}
 
 	return 0;
-
 }
 
 bool MPGameBrowser::isDone()
@@ -357,7 +343,6 @@ void MPGameBrowser::update()
 
 		// could easily do sort here.
 
-		
 		for ( int i = 0; i < sessionCount; i++ )
 		{
 			if (pSessions[i].cancelled)
@@ -381,7 +366,6 @@ void MPGameBrowser::update()
 			{
 				gameList.AddItem( &items[i] );
 			}
-
 		}
 		gameList.SelectItem( oldSel );
 
@@ -399,8 +383,6 @@ void MPGameBrowser::update()
 
 	gameList.setScrollPos(oldScrollPos);
 }
-
-
 
 long aStyle3TextListItem::init( FitIniFile* file, const char* blockName )
 {
@@ -504,8 +486,6 @@ aGameListItem& aGameListItem::operator=( const aGameListItem& src )
 }
 aGameListItem::aGameListItem() : latency( IDS_MP_LANBROW_PING_FONT )
 {
-
-
 }
 long aGameListItem::init( FitIniFile* file, const char* blockName )
 {
@@ -682,14 +662,11 @@ void aGameListItem::setSessionInfo( MC2Session* pSession )
 	else if ( pSession->ping > 300 )
 		color = 0xffffff00;
 
-
 	latency.setColor( color );
 	pingIcon.setColor( color );
 	//<300ms	 - 	green 
 	//301-500ms	 - 	yellow 
 	//>501ms	 - 	red
-
-
 }
 
 const char* aGameListItem::getText( int which )
@@ -704,15 +681,12 @@ const char* aGameListItem::getText( int which )
 		return mapName.getText();
 
 	return NULL;
-
 }
 
 const char* aGameListItem::getSessionName(  )
 {
 	return gameName.getText();
 }
-
-
 
 void aGameListItem::update()
 {
@@ -724,8 +698,6 @@ void aGameListItem::update()
 }
 
 //////////////////////////////////////////////
-
-
 
 //*************************************************************************************************
 // end of file ( MPGameBrowser.cpp )

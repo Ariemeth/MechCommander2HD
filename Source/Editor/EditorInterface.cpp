@@ -10,137 +10,48 @@
 #include "mmsystem.h"
 #pragma warning( default:4201 )
 
-#ifndef EDITORCAMERA_H
 #include "EditorCamera.h"
-#endif
-
-#ifndef EDITORMESSAGES_H
 #include "EditorMessages.h"
-#endif
-
-#ifndef EDITORDATA_H
 #include "EditorData.h"
-#endif
-
-#ifndef OVERLAYBRUSH_H
 #include "OverlayBrush.h"
-#endif
-
-#ifndef ACTION_H
 #include "Action.h"
-#endif
-
-#ifndef TERRAINBRUSH_H
 #include "TerrainBrush.h"
-#endif
-
-#ifndef UTILITIES_H
 #include "Utilities.h"
-#endif
-
-#ifndef BUILDINGBRUSH_H
 #include "BuildingBrush.h"
-#endif
-
-#ifndef ERASER_H
 #include "Eraser.h"
-#endif
-
-#ifndef SELECTIONBRUSH_H
 #include "SelectionBrush.h"
-#endif
-
-#ifndef FLATTENBRUSH_H
 #include "FlattenBrush.h"
-#endif
-
-#ifndef HEIGHTDLG_H
 #include "HeightDlg.h"
-#endif
-
 #include "SelectSlopeDialog.h"
-
-#ifndef TERRAINDLG_H
 #include "TerrainDlg.h"
-#endif
-
-#ifndef MAPSIZEDLG_H
 #include "MapsizeDlg.h"
-#endif
-
 #include "..\resource.h"
-
-#ifndef SUNDLG_H
 #include "sunDlg.h"
-#endif
-
-#ifndef FOGDLG_H
 #include "FogDlg.h"
-#endif
-
-#ifndef AFX_WATERDLG_H
 #include "WaterDlg.h"
-#endif
-
-#ifndef VERTEX_H
 #include "Vertex.h"
-#endif
-
 #include "NewSingleMission.h"
-
-#ifndef SINGLEVALUEDLG_H
 #include "SingleValueDlg.h"
-#endif
-
 #include "MissionSettingsDlg.h"
-
 #include "PlayerSettingsDlg.h"
-
 #include "SelectTerrainTypeDlg.h"
-
 #include "FractalDialog.h"
-
-#ifndef EDITOROBJECTS_H
 #include "EditorObjects.h"
-#endif
-
-#ifndef MESSAGEBOX_H
 #include "MessageBox.h"
-#endif
-
-#ifndef DRAGTOOL_H
 #include "DragTool.h"
-#endif
-
-#ifndef DAMAGEBRUSH_H
 #include "DamageBrush.h"
-#endif
-
-#ifndef MINEBRUSH_H
 #include "MineBrush.h"
-#endif
-
 #include "resource.h"
-
-#ifndef LINKBRUSH_H
 #include "Linkbrush.h"
-#endif
-#ifndef DROPZONEBRUSH_H
 #include "DropZoneBrush.h"
-#endif
-
 #include "UnitSettingsDlg.h"
 #include "BuildingSettingsDlg.h"
 #include "TilingFactorsDialog.h"
-
 #include "MFCPlatform.hpp"
-
 #include "MainFrm.h"
-
 #include "EditorObjects.h"
 #include "ForestDlg.h"
 #include "EditForestDlg.h"
-
 #include "CampaignDialog.h"
 
 extern bool silentMode;
@@ -151,7 +62,6 @@ extern char versionStamp[];
 #include "..\ARM\Microsoft.Xna.Arm.h"
 using namespace Microsoft::Xna::Arm;
 IProviderEngine * armProvider;
-
 
 #pragma warning( disable:4244 )
 
@@ -201,7 +111,6 @@ void Editor::init( char* loader )
 
 	if ( !eye )
 		eye = new EditorCamera;
-	
 
 	Pilot::initPilots();
 
@@ -604,8 +513,6 @@ BEGIN_MESSAGE_MAP(EditorInterface,CWnd )
 	ON_COMMAND_RANGE( 0, 0xffff, OnCommand )
 END_MESSAGE_MAP()
 
-
-
 EditorInterface::EditorInterface()
 {
 	bThisIsInitialized = false;
@@ -733,7 +640,6 @@ void EditorInterface::init( const char* fileName )
 	result = loader.readIdFloat("MouseDoubleClickThreshold",missionDblClkThreshold);
 	gosASSERT(result == NO_ERR);
 
-
 	addBuildingsToNewMenu();
 
 	curBrush = new SelectionBrush( false, -1 );
@@ -796,14 +702,12 @@ void EditorInterface::addBuildingsToNewMenu()
 					pChildMenu->InsertMenu( k, MF_BYPOSITION, id, pBuildingNames[j] );
 					bAdded = 1;
 					break;
-
 				}
 			}
 			if ( !bAdded )
 				pChildMenu->AppendMenu(MF_STRING, id, pBuildingNames[j] );
 		}
 
-		
 		CString oldName;
 		bool bAdded = 0;
 		int count =  pMenu->GetMenuItemCount();
@@ -815,7 +719,6 @@ void EditorInterface::addBuildingsToNewMenu()
 				pMenu->InsertMenu( k, MF_BYPOSITION | MF_POPUP, (UINT)pChildMenu->m_hMenu, pNames[i] );
 				bAdded = 1;
 				break;
-
 			}
 		}
 		if ( !bAdded )
@@ -870,7 +773,6 @@ void EditorInterface::addBuildingsToNewMenu()
 				pChildMenu->InsertMenu( j, MF_BYPOSITION, ID_TERRAINS_BLUEWATER + i - groupCount, buffer );
 				bPlaced = 1;
 				break;
-
 			}
 		}
 
@@ -879,11 +781,9 @@ void EditorInterface::addBuildingsToNewMenu()
 	}
 	AfxGetMainWnd()->GetMenu()->InsertMenu( 4, MF_BYPOSITION | MF_POPUP, (UINT)pChildMenu->m_hMenu, TerrainHeader );
 
-
 	AfxGetMainWnd()->DrawMenuBar();
 	
 	free( pNames );
-
 }
 
 //--------------------------------------------------------------------------------------
@@ -1067,7 +967,6 @@ void EditorInterface::handleNewMenuMessage( long specificMessage )
 	}
 }
 
-
 //--------------------------------------------------------------------------------------
 int EditorInterface::Quit()
 {
@@ -1170,7 +1069,6 @@ int EditorInterface::FileOpen()
 	}
 
 	return true;
-
 }
 
 //--------------------------------------------------------------------------------------
@@ -1194,20 +1092,17 @@ void EditorInterface::handleLeftButtonDown( int PosX, int PosY )
 	}
 
 	lastClickPos = vector;
-
 }
 
 void EditorInterface::handleMouseMove( int PosX, int PosY )
 {
 	if (  !eye || !eye->active  )
 		return;
-	
-	
+
 	Stuff::Vector3D vector;
 	Stuff::Vector2DOf<long> v2( PosX, PosY );
 	eye->inverseProject( v2, vector );
-		
-	
+
 	if ( curBrush && ( painting ) )
 	{
 		if ( curBrush->canPaint( vector, PosX, PosY, 0 ) )
@@ -1248,7 +1143,6 @@ void EditorInterface::handleMouseMove( int PosX, int PosY )
 		tacMap.RedrawWindow();
 		syncScrollBars();
 	}
-
 
 	char buffer2[256];
 	sprintf( buffer2, "%.3f, %.3f", vector.x, vector.y );
@@ -1297,8 +1191,6 @@ void EditorInterface::handleMouseMove( int PosX, int PosY )
 	sprintf( buffer, "%.3f", eyeDistance);
 	((MainFrame*)AfxGetMainWnd())->m_wndDlgBar.GetDlgItem( IDC_OBJDISTANCEEDIT )->SetWindowText( buffer );
 }
-
-
 
 void EditorInterface::handleLeftButtonUp( int PosX, int PosY )
 {
@@ -1384,7 +1276,6 @@ void EditorInterface::handleKeyDown( int Key )
 				EditorInterface::instance()->Team(EditorInterface::instance()->objectivesEditState.alignment);
 			}
 		}
-
 
 		if (GetAsyncKeyState(KEY_T) && ctrlDn && altDn && !shiftDn)
 		{
@@ -1684,7 +1575,6 @@ int EditorInterface::PaintDamagedBridge()
 	return PaintOverlay( DAMAGED_BRIDGE, PAINT_OVERLAY_PAVED );
 }
 
-
 int EditorInterface::PaintOverlay( int type, int message )
 {
 	KillCurBrush();
@@ -1710,10 +1600,8 @@ int EditorInterface::PaintTerrain( int type )
 			curBrush = new TerrainBrush( type );
 			ChangeCursor( IDC_PAINT );
 			currentBrushID = type;
-
 	}
 	return true;
-
 }
 
 int EditorInterface::SaveAs()
@@ -1984,7 +1872,6 @@ void EditorInterface::render()
 
 		Rotate( screenVector, 45.f );
 
-
 		vertices[0].x = (float)screenPos.x;
 		vertices[0].y = (float)screenPos.y;
 		vertices[0].argb = 0xffff0000;
@@ -2011,7 +1898,6 @@ void EditorInterface::render()
 		vertices[0].y = screenPos2.y + 10 * screenVector.y;
 		gos_DrawLines( vertices, 2 );
 		}*/
-
 
 	if ( curBrush )
 	{
@@ -2040,7 +1926,6 @@ void EditorInterface::render()
 			float frameFactor = g_frameTime / baseFrameLength;
 			float scrollFactor = scrollInc / eye->getScaleFactor() * frameFactor;
 
-
 			if (scrollLf)
 			{
 				eye->moveLeft(scrollFactor);
@@ -2065,8 +1950,6 @@ void EditorInterface::render()
 				syncScrollBars();
 			}
 		}
-
-
 	}
 }
 
@@ -2221,7 +2104,6 @@ int EditorInterface::Flatten()
 	}
 
 	return true;
-
 }
 
 int EditorInterface::SaveCameras()
@@ -2244,7 +2126,6 @@ int EditorInterface::SaveCameras()
 		file.open( base );
 
 		return eye->save( &file );
-
 	}
 
 	return true;
@@ -2461,13 +2342,10 @@ int EditorInterface::Waves()
 		land->recalcWater();
 
 		tacMap.UpdateMap();
-
 	}
 
 	return true;	
-
 }
-
 
 int EditorInterface::DragSmooth()
 {
@@ -2481,7 +2359,6 @@ int EditorInterface::DragSmooth()
 	}
 
 	return true;
-
 }
 int EditorInterface::DragRough()
 {
@@ -2495,7 +2372,6 @@ int EditorInterface::DragRough()
 	}
 
 	return true;
-
 }
 
 int EditorInterface::AssignElevation()
@@ -2536,7 +2412,6 @@ int EditorInterface::AssignElevation()
 		}
 	}
 
-
 	return true;
 }
 
@@ -2547,7 +2422,6 @@ int EditorInterface::SmoothRadius()
 	{
 		smoothRadius = dlg.GetVal();
 
-		
 		if ( IDS_SELECT == currentBrushID )
 		{
 			currentBrushID = -1;
@@ -2564,8 +2438,7 @@ int EditorInterface::Alignment( int specific )
 	
 	for ( int i = 0; i < 9; ++i )
 		GetParent()->GetMenu()->CheckMenuItem( ID_ALIGNMENT_TEAM1 + i, MF_BYCOMMAND | MF_UNCHECKED );
-		
-	
+
 	GetParent()->GetMenu()->CheckMenuItem( specific, MF_BYCOMMAND | MF_CHECKED );
 	
 	if ( currentBrushID >= IDS_OBJECT_200 && currentBrushID <= 30800 )
@@ -2604,7 +2477,6 @@ int EditorInterface::SaveHeightMap()
 	}
 
 	return true;
-
 }
 
 int EditorInterface::MissionSettings()
@@ -3081,7 +2953,6 @@ int EditorInterface::DropZone( bool bVTol )
 	ChangeCursor( IDC_DROPZONE );
 
 	return true;
-
 }
 
 int EditorInterface::CampaignEditor()
@@ -3190,7 +3061,6 @@ LRESULT EditorInterface::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 	}		
 	
 	return retVal;
-	
 }
 
 afx_msg void EditorInterface::OnCommand(WPARAM wParam) 
@@ -3211,7 +3081,6 @@ void EditorInterface::UpdateButton( CCmdUI* pButton )
 			pButton->Enable( false );
 	}
 }
-
 
 void EditorInterface::OnLButtonDown(UINT nFlags, CPoint point) 
 {
@@ -3245,7 +3114,6 @@ void EditorInterface::ChangeCursor( int ID )
 	}
 	
 	curCursorID = ID;
-	
 }
 
 BOOL EditorInterface::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
@@ -3265,7 +3133,6 @@ BOOL EditorInterface::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 	}
 
 	return CWnd::OnSetCursor( pWnd, nHitTest, message );
-
 }
 
 BOOL EditorInterface::PreCreateWindow(CREATESTRUCT& cs) 
@@ -3310,7 +3177,6 @@ void EditorInterface::OnRButtonDown(UINT nFlags, CPoint point)
 	lastY = point.y;
 	rightDrag = true;
 	lastRightClickTime = timeGetTime();
-
 }
 void EditorInterface::OnRButtonUp(UINT nFlags, CPoint point) 
 {
@@ -3462,12 +3328,10 @@ void EditorInterface::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 			pt.x = nPos;
 			break;
 
-
 		default:
 			break;
 	}
 
-	
 	/* this calculation was based in the code for Camera::moveRight(float amount) */
 	Stuff::Vector3D direction;
 	if (!eye->usePerspective)
@@ -3508,7 +3372,6 @@ void EditorInterface::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	syncScrollBars();
 }
 
-
 void EditorInterface::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) 
 {
 	SCROLLINFO sInfo;
@@ -3548,7 +3411,6 @@ void EditorInterface::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 		case SB_THUMBTRACK:
 			pt.y = nPos;
 			break;
-
 
 		default:
 			break;
@@ -3635,7 +3497,6 @@ int EditorInterface::UnitSettings()
 	}
 
 	return true;
-	
 }
 
 void EditorInterface::initTacMap()
@@ -3928,7 +3789,6 @@ void EditorInterface::OnForestTool()
 	long count = 0;
 	float xAvg = 0;
 	float yAvg = 0;
-	
 
 	// figure out selection
 	for ( int j = 0; j < land->realVerticesMapSide; ++j )
@@ -3980,7 +3840,6 @@ void EditorInterface::OnForestTool()
 	{
 		EditorObjectMgr::instance()->createForest( dlg.forest );
 	}
-	
 }
 
 void EditorInterface::OnOtherEditforests() 

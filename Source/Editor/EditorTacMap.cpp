@@ -11,10 +11,8 @@
 #include "tacMap.h"
 #include "EditorInterface.h"
 
-
 /////////////////////////////////////////////////////////////////////////////
 // EditorTacMap dialog
-
 
 EditorTacMap::EditorTacMap(CWnd* pParent /*=NULL*/)
 	: CDialog(EditorTacMap::IDD, pParent)
@@ -24,7 +22,6 @@ EditorTacMap::EditorTacMap(CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
 }
 
-
 void EditorTacMap::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -32,7 +29,6 @@ void EditorTacMap::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TGA, picture);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(EditorTacMap, CDialog)
 	//{{AFX_MSG_MAP(EditorTacMap)
@@ -59,7 +55,6 @@ BOOL EditorTacMap::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-
 void EditorTacMap::OnTga() 
 {
 	POINT pt;
@@ -70,7 +65,6 @@ void EditorTacMap::OnTga()
 	
 	screen.x = pt.x;
 	screen.y = pt.y;
-
 
 	Stuff::Vector3D world;
 

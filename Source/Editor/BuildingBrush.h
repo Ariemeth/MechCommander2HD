@@ -8,17 +8,9 @@ BuildingBrush.h		: Interface for the BuildingBrush component. The thing you use 
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef BRUSH_H
 #include "Brush.h"
-#endif
-
-#ifndef ACTION_H
 #include "Action.h"
-#endif
-
-#ifndef EDITOROBJECTMGR_H
 #include "EditorObjects.h"
-#endif
 
 //*************************************************************************************************
 
@@ -41,7 +33,6 @@ class BuildingBrush: public Brush
 		virtual void update( int screenX, int screenY );
 		void rotateBrush( int direction );
 
-		
 		class BuildingAction : public Action
 		{
 		public:
@@ -81,7 +72,6 @@ class BuildingBrush: public Brush
 
 		int					alignment;
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( BuildingBrush.h )

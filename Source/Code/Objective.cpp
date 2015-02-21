@@ -7,50 +7,22 @@ Objective.cpp			: Implementation of the Objective component.
 \*************************************************************************************************/
 
 #include "terrain.h"
-
 #include "Objective.h"
-
 #include "EString.h"
 #include "ECharString.h"
-
-#ifndef INIFILE_H
 #include "IniFile.h"
-#endif
-
-#ifndef MISSION_H
 #include "mission.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef BLDNG_H
 #include "bldng.h"
-#endif
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
-
-#ifndef TACMAP_H
 #include "TacMap.h"
-#endif
-
-#ifndef AFONT_H
 #include "aFont.h"
-#endif
-
 #include "Logisticsdata.h"
 #include "team.h"
 #include "comndr.h"
-
 #include "ControlGui.h"
-
 #include "..\resource.h"
-
 #include <tchar.h>
-
 #include <assert.h>
 
 float CObjective::s_blinkLength = .5;
@@ -317,7 +289,6 @@ void CBooleanArray::load (long alignment, FitIniFile *file)
 		}
 	}
 }
-
 
 objective_status_type CDestroyAllEnemyUnits::Status() {
 	long numMovers = ObjectManager->getNumMovers();
@@ -1937,7 +1908,6 @@ objective_status_type CObjective::Status(CObjectives &objectives) {
 		it++;
 	}
 	return retval;
-
 }
 
 void CObjective::Status(objective_status_type newStatus) {
@@ -2202,7 +2172,6 @@ objective_status_type CObjectives::Status() {
 	gos_TextSetPosition(xPos + 2 * fontWidth, yPos );
 
 	gos_TextDraw( (const char*)m_description );
-
 }*/
 
 bool CObjective::RenderMarkers(GameTacMap *tacMap, bool blink ) 
@@ -2234,7 +2203,6 @@ bool CObjective::RenderMarkers(GameTacMap *tacMap, bool blink )
 							s_blinkColor = 0;
 					}
 				}
-
 			}
 			else
 			{
@@ -2245,14 +2213,11 @@ bool CObjective::RenderMarkers(GameTacMap *tacMap, bool blink )
 				height = s_markerFont->height();
 				width = s_markerFont->width( m_markerText );
 				drawShadowText( 0xffffffff, 0xff000000, s_markerFont->getTempHandle(), pos.x - width/2, pos.y - height/2, true, m_markerText, 0, s_markerFont->getSize(), -2, 2 );
-
 			}
-
 	}
 
 	return bRetVal;
 }
-
 
 /* Reads Nav Marker info and adds appropriate "hidden trigger" objectives. */
 bool ReadNavMarkers( FitIniFile* missionFile, CObjectives &objectives )

@@ -4,14 +4,9 @@
 // Viewer.cpp : Defines the class behaviors for the application.
 //
 
-
-#ifndef VERSION_H
 #include "version.h"
-#endif
-
 #include <GameOS.hpp>
 #include <ToolOS.hpp>
-
 #include "..\resource.h"
 #include "mclib.h"
 #include "GameSound.h"
@@ -67,13 +62,10 @@ float	gosFontScale = 1.0;
 float   doubleClickThreshold = 0.2f;
 float	dragThreshold = 0.016667f;
 
-
 DWORD gosResourceHandle = 0;
 HGOSFONT3D gosFontHandle = 0;
 
-
 bool g_quitGame = FALSE;
-
 
 // these globals are necessary for fast files for some reason
 FastFile 	**g_fastFiles = NULL;
@@ -87,11 +79,8 @@ bool	useLOSAngle = 0;
 Stuff::MemoryStream *effectStream = NULL;
 extern MidLevelRenderer::MLRClipper * theClipper;
 
-
-
 Mechlopedia*	pMechlopedia;
 LogisticsData*  pLogData;
-
 
 char *SpecialtySkillsTable[NUM_SPECIALTY_SKILLS] = {
 	"LightMechSpecialist",
@@ -161,7 +150,6 @@ void __stdcall UpdateRenderers()
 	gos_SetRenderState( gos_State_Filter, gos_FilterNone );
 	userInput->setViewport(viewMulX,viewMulY,viewAddX,viewAddY);
 	userInput->render();
-
 }
 
 //------------------------------------------------------------
@@ -191,8 +179,6 @@ void __stdcall DoGameLogic()
 	if ( LogisticsScreen::RUNNING != pMechlopedia->getStatus() )
 		g_quitGame = true;
 }
-
-
 
 //---------------------------------------------------------------------------
 void __stdcall InitializeGameEngine()
@@ -426,7 +412,6 @@ void __stdcall InitializeGameEngine()
 	gos_PopCurrentHeap();
 
 	g_systemHeap->Free(effectsData);
-	
 
 	//------------------------------------------------
 	// Fire up the MC Texture Manager.
@@ -446,26 +431,18 @@ void __stdcall InitializeGameEngine()
 	userInput->setMouseCursor( mState_NORMAL );
 	userInput->mouseOn();
 
-
-
 	// now the sound system
 	g_soundSystem = new GameSoundSystem;
 	g_soundSystem->init();
 	((SoundSystem *)g_soundSystem)->init("sound");
 	g_soundSystem->playDigitalMusic( LOGISTICS_LOOP );
 
-	
 	pLogData = new LogisticsData;
 	pLogData->init();
-	
 
 	pMechlopedia = new Mechlopedia;
 	pMechlopedia->init();
 	pMechlopedia->begin();
-
-
-
-
 }
 
 void __stdcall TerminateGameEngine()
@@ -502,7 +479,6 @@ void __stdcall TerminateGameEngine()
 		delete g_systemHeap;
 		g_systemHeap = NULL;
 	}
-
 
 	if (globalHeapList)
 	{
@@ -544,10 +520,7 @@ void __stdcall TerminateGameEngine()
 	//--------------------------
 	//
 	FastFileFini();
-	
-	
 }
-
 
 //---------------------------------------------------------------------
 void __stdcall GetGameOSEnvironment( char* CommandLine )
@@ -599,9 +572,7 @@ void __stdcall GetGameOSEnvironment( char* CommandLine )
 	Environment.RaidFilePath			= "\\\\aas1\\MC2\\Test\\GOSRaid";
 	Environment.RaidCustomFields		= "Area=GOSRaid"; 	
 
-	
 	Environment.screenWidth = 800;
 	Environment.screenHeight = 600;
 }
-
 

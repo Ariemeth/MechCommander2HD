@@ -8,33 +8,14 @@
 
 //---------------------------------------------------------------------
 // Include Files
-#ifndef CRATER_H
 #include "crater.h"
-#endif
-
-#ifndef CAMERA_H
 #include "camera.h"
-#endif
-
-#ifndef TERRAIN_H
 #include "terrain.h"
-#endif
-
-#ifndef CIDENT_H
 #include "cident.h"
-#endif
-
-#ifndef PATHS_H
 #include "paths.h"
-#endif
-
-#ifndef CEVFX_H
 #include "cevfx.h"
-#endif
-
-#ifndef TXMMGR_H
 #include "txmmgr.h"
-#endif
+
 //---------------------------------------------------------------------
 // Static Globals
 CraterManagerPtr craterManager = NULL;

@@ -10,33 +10,13 @@
 
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef QUAD_H
 #include "quad.h"
-#endif
-
-#ifndef VERTEX_H
 #include "vertex.h"
-#endif
-
-#ifndef TERRAIN_H
 #include "terrain.h"
-#endif
-
-#ifndef CAMERA_H
 #include "camera.h"
-#endif
-
-#ifndef DBASEGUI_H
 #include "dbasegui.h"
-#endif
-
-#ifndef CELINE_H
 #include "celine.h"
-#endif
-
-#ifndef MOVE_H
 #include "move.h"
-#endif
 
 #define SELECTION_COLOR 0xffff7fff
 #define HIGHLIGHT_COLOR	0xff00ff00
@@ -1905,7 +1885,6 @@ void TerrainQuad::draw (void)
 		selected = FALSE;		
 	}
 #endif
-
 }
 
 extern float elevationAnimation;
@@ -3294,8 +3273,6 @@ void TerrainQuad::drawDebugCellLine (void)
 			}
 		}
 	}
-
-
 }
 
 //---------------------------------------------------------------------------

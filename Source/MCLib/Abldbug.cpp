@@ -9,30 +9,12 @@
 
 #include <stdlib.h>
 #include <string.h>
-
-#ifndef ABLGEN_H
 #include "ablgen.h"
-#endif
-
-#ifndef ABLERR_H
 #include "ablerr.h"
-#endif
-
-#ifndef ABLSCAN_H
 #include "ablscan.h"
-#endif
-
-#ifndef ABLSYMT_H
 #include "ablsymt.h"
-#endif
-
-#ifndef ABLEXEC_H
 #include "ablexec.h"
-#endif
-
-#ifndef ABLDBUG_H
 #include "abldbug.h"
-#endif
 
 //***************************************************************************
 
@@ -80,7 +62,6 @@ extern long				NumModuleInstances;
 extern long				MaxWatchesPerModule;
 extern long				MaxBreakPointsPerModule;
 extern char*			TokenStrings[NUM_TOKENS];
-
 
 //extern StackItem*		stack;
 //extern StackItemPtr		stackFrameBasePtr;
@@ -291,7 +272,6 @@ long WatchManager::setFetch (SymTableNodePtr idPtr, bool state, bool breakToDebu
 		}
 	}
 	return(ABL_NO_ERR);
-
 }
 
 //---------------------------------------------------------------------------
@@ -484,7 +464,6 @@ long Debugger::init (void (*callback)(char* s), ABLModulePtr _module) {
 //---------------------------------------------------------------------------
 
 void Debugger::destroy (void) {
-
 }
 
 //---------------------------------------------------------------------------
@@ -1012,7 +991,6 @@ void Debugger::showValue (void) {
 		codeSegmentPtr = savedCodeSegmentPtr;
 		codeToken = savedCodeToken;
 	}
-
 }
 
 //---------------------------------------------------------------------------
@@ -1035,7 +1013,6 @@ void Debugger::displayModuleInstanceRegistry (void) {
 		}
 		print(buffer1);
 	}
-
 }
 
 //---------------------------------------------------------------------------

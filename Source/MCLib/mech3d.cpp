@@ -10,73 +10,23 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef MECH3D_H
 #include "mech3d.h"
-#endif
-
-#ifndef CAMERA_H
 #include "camera.h"
-#endif
-
-#ifndef DBASEGUI_H
 #include "dbasegui.h"
-#endif
-
-#ifndef TERRAIN_H
 #include "terrain.h"
-#endif
-
-#ifndef MSTATES_H
 #include "mstates.h"
-#endif
-
-#ifndef OBJSTATUS_H
 #include "objstatus.h"
-#endif
-
-#ifndef CIDENT_H
 #include "cident.h"
-#endif
-
-#ifndef PATHS_H
 #include "paths.h"
-#endif
-
-#ifndef USERINPUT_H
 #include "userinput.h"
-#endif
-
-#ifndef TIMING_H
 #include "timing.h"
-#endif
-
-#ifndef UTILITIES_H
 #include "utilities.h"
-#endif
-
-#ifndef CEVFX_H
 #include "cevfx.h"
-#endif
-
-#ifndef TXMMGR_H
 #include "txmmgr.h"
-#endif
-
-#ifndef CELINE_H
 #include "celine.h"
-#endif
-
-#ifndef WEAPONFX_H
 #include "weaponfx.h"
-#endif
-
-#ifndef CRATER_H
 #include "crater.h"
-#endif
-
-#ifndef GVACTOR_H
 #include "gvactor.h"
-#endif
 
 //-------------------------------------------------------------------------------
 // Static Globals
@@ -504,7 +454,6 @@ void Mech3DAppearanceType::init (char * fileName)
 			
 			strcpy(nodeData[i+numSmokeNodes].nodeId,weaponName);
 			nodeData[i+numSmokeNodes].weaponType = weaponType;
-			
  		}
 		
 		for (i=0;i<numJumpNodes;i++)
@@ -579,7 +528,6 @@ void Mech3DAppearanceType::init (char * fileName)
 	
 		GVAppearanceType::SensorTriangleShape->LoadTGMultiShapeFromASE(sensorName);
 	}
-	
 }
 
 //----------------------------------------------------------------------------
@@ -1069,7 +1017,6 @@ void Mech3DAppearance::init (AppearanceTypePtr tree, GameObjectPtr obj)
 	flashColor = 0x00000000;
 	drawFlash = false;
 
-
 	//Default to Bright RGB.
 	psRed = psGreen = psBlue = 0xffffffff;
 	
@@ -1555,8 +1502,7 @@ void Mech3DAppearance::hitRight (void)
 		atTransitionToNextGesture = false;
 		
 		inReverse = false;
-		
-			
+
 		currentFrame = firstFrame;
 	}
 }
@@ -1891,7 +1837,6 @@ void Mech3DAppearance::setMoverParameters (float turretRot, float lArmRot, float
 //-----------------------------------------------------------------------------
 void Mech3DAppearance::updateFootprints (void)
 {
-
 }
 
 //-----------------------------------------------------------------------------
@@ -2394,9 +2339,7 @@ long Mech3DAppearance::render (long depthFixup)
 					char tmpPilotName[255];
 					cLoadString( pilotNameID, tmpPilotName, 254 );
 					drawPilotName( tmpPilotName, color );
-
 				}
-
 			}
 
 			//------------------------------------------------
@@ -2916,7 +2859,6 @@ void Mech3DAppearance::setObjStatus (long oStatus)
 							mechShape->SetTextureHandle(i,gosTextureHandle);
 							mechShape->SetTextureAlpha(i,true);
 						}
-						
 					}
 					else
 					{

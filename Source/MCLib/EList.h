@@ -42,7 +42,6 @@ Example:
 	EList<KSomeClass, const KSomeClass&>	m_List(10, 5, "SomeList");
 	EList<int, const int>					m_List(100, 10);
 
-
 Note:
 	The second template argument is const to provide for const safety.
 	It is syntacticly legal to use a non-const version, however, it will not provide
@@ -58,7 +57,6 @@ not sufficient).
 	inline void *__cdecl operator new(size_t, void *_P)
 	{return (_P); } // placement new
 #endif
-
 
 ELIST_TPL_DEF class EList
 {
@@ -82,7 +80,6 @@ protected:
 	{
 		MAX_NAME_LENGTH = 64
 	};
-
 
 public:
 
@@ -191,7 +188,6 @@ public:
 		char	m_Name[64];
 #endif
 	};	// END CLASS EConstIterator
-	
 
 	/**************************************************************************************************
 	CLASS DESCRIPTION
@@ -210,9 +206,7 @@ public:
 		{
 			return Item();
 		}
-
 	};	// END CLASS EIterator
-
 
 	//===== ENUMERATIONS & CONSTANTS =====
 
@@ -255,7 +249,6 @@ public:
 	inline	bool	Delete(unsigned long Pos);				// Remove the element at the specified position
 	inline	bool	Delete(const typename EList<ELIST_TPL_ARG>::EIterator& rStart_Iter, const typename EList<ELIST_TPL_ARG>::EIterator& rEnd_Iter);	// Remove the element at the specified position
 	inline	bool	Delete(unsigned long Start_Pos, unsigned long End_Pos);	// Remove the element at the specified position
-
 
 	inline	bool	Replace(T_ARG Element, const typename EList<ELIST_TPL_ARG>::EIterator& rIter);	// Replace an element at the specified position
 	inline	bool	Replace(T_ARG Element, unsigned long Pos);		// Replace an element at the specified position
@@ -305,17 +298,13 @@ private:
 	inline	void	KillElement(ENode* pElement);
 	void	DestroyList();
 	bool	CopyData(const EList<ELIST_TPL_ARG>& rSrc);
-
-
 }; // END CLASS EList
-
 
 //*************************************************************************************************
 // Constants
 //*************************************************************************************************
 
 ELIST_TPL_DEF const typename EList<ELIST_TPL_ARG>::EIterator	EList<ELIST_TPL_ARG>::INVALID_ITERATOR = EList<ELIST_TPL_ARG>::EIterator();
-
 
 //*************************************************************************************************
 // Inline Functions
@@ -460,7 +449,6 @@ ELIST_TPL_DEF inline bool EList<ELIST_TPL_ARG>::operator!=(const EList<ELIST_TPL
 {
 	return(!(rList == *this));
 }
-
 
 //-------------------------------------------------------------------------------------------------
 // MANIPULATORS
@@ -683,7 +671,6 @@ ELIST_TPL_DEF inline bool EList<ELIST_TPL_ARG>::Insert(T_ARG New_Element, const 
 	//	Connect the newly created node
 	pNode->m_pNext = rIter.m_pCur_Node;
 	pNode->m_pPrev = rIter.m_pCur_Node->m_pPrev;
-
 
 	//	Make sure to connect the previous node only if we are not the first in the list
 	if(pNode->m_pPrev)
@@ -1070,7 +1057,6 @@ ELIST_TPL_DEF bool EList<ELIST_TPL_ARG>::Insert(const EList<ELIST_TPL_ARG>& rLis
 	return(Insert(rList, Iterator(Pos)));
 }
 
-
 //-------------------------------------------------------------------------------------------------
 // ACCESSORS
 //-------------------------------------------------------------------------------------------------
@@ -1229,7 +1215,6 @@ ELIST_TPL_DEF inline unsigned long EList<ELIST_TPL_ARG>::Count() const
 {
 	return(m_Count);
 }
-	
 
 /**************************************************************************************************
 FUNCTION DESCRIPTION:
@@ -1255,7 +1240,6 @@ ELIST_TPL_DEF inline unsigned long EList<ELIST_TPL_ARG>::GrowSize() const
 	return(m_List_Pool.PageSize());
 }
 
-
 /**************************************************************************************************
 FUNCTION DESCRIPTION:
 	Exists
@@ -1269,7 +1253,6 @@ ELIST_TPL_DEF inline bool EList<ELIST_TPL_ARG>::Exists(unsigned long Pos) const
 {
 	return(Pos < m_Count);
 }
-
 
 //-------------------------------------------------------------------------------------------------
 // HELPER FUNCTIONS

@@ -13,10 +13,7 @@ MPLoadMap.cpp			: Implementation of the MPLoadMap component.
 #include "..\resource.h"
 #include <windows.h>
 #include "MissionBriefingScreen.h"
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
 
 #define CHECK_BUTTON 200
 
@@ -73,8 +70,6 @@ void MPLoadMap::init(FitIniFile* file)
 	file->seekBlock( "LeaveAnim" );
 	exitAnim.init( file, "" );
 
-
-
 	{
 		char path[256];
 		strcpy( path, artPath );
@@ -91,7 +86,6 @@ void MPLoadMap::init(FitIniFile* file)
 		PNfile.seekBlock("MapList"); /*for some reason aListBox::init(...) doesn't do the seekBlock itself*/
 		mapList.init(&PNfile, "MapList");
 		templateItem.init( &PNfile, "Text0" );
-	
 	}
 
 	mapList.setOrange( true );
@@ -104,10 +98,7 @@ void MPLoadMap::begin()
 
 	seedDialog( 0 );
 
-
 	bIsSingle = false;
-
-
 }
 
 void MPLoadMap::beginSingleMission()
@@ -127,7 +118,6 @@ void MPLoadMap::seedDialog( bool bSeedSingle )
 	char findString[512];
 	sprintf(findString,"%s*.fit",missionPath);
 
-
 	WIN32_FIND_DATA	findResult;
 	HANDLE searchHandle = FindFirstFile(findString,&findResult); 
 	if ( searchHandle != INVALID_HANDLE_VALUE )
@@ -139,10 +129,6 @@ void MPLoadMap::seedDialog( bool bSeedSingle )
 
 				addFile( findResult.cFileName, bSeedSingle );
 			}
-
-				
-				
-			
 		} while (FindNextFile(searchHandle,&findResult) != 0);
 	}
 
@@ -151,7 +137,6 @@ void MPLoadMap::seedDialog( bool bSeedSingle )
 	if ( bSeedSingle )
 	{
 		seedFromCampaign();
-
 	}
 	else 
 	{
@@ -190,8 +175,6 @@ void MPLoadMap::addFile( const char* pFileName, bool bSeedSingle )
 				if ( pExt )
 					*pExt = NULL;
 
-								
-				
 				aLocalizedListItem* pEntry = new aLocalizedListItem();
 				*pEntry = templateItem;
 				pEntry->resize( mapList.width() - mapList.getScrollBarWidth() - 30, pEntry->height());
@@ -221,7 +204,6 @@ void MPLoadMap::addFile( const char* pFileName, bool bSeedSingle )
 							mapList.InsertItem( pEntry, i+1 );
 							bFound = true;
 						}
-					
 					}
 
 					if ( !bFound )
@@ -236,7 +218,6 @@ void MPLoadMap::addFile( const char* pFileName, bool bSeedSingle )
 						mapList.AddItem( pHeaderEntry );
 						pEntry->move( 10, 0 );
 						mapList.AddItem( pEntry );
-
 					}
 				}
 				else
@@ -319,8 +300,6 @@ void MPLoadMap::seedFromCampaign()
 					 }
 
 					tmpFile.close();
-
-
 				}
 			} while (FindNextFile(searchHandle,&findResult) != 0);
 		 }
@@ -388,7 +367,6 @@ void MPLoadMap::seedFromCampaign()
 		 }
 }
 
-
 void MPLoadMap::end()
 {
 	LogisticsDialog::end();
@@ -407,7 +385,6 @@ void MPLoadMap::render(int, int )
 		if ( endTime )
 		{
 			color = interpolateColor( 0x00000000, 0x7f000000, time/endTime );
-			
 		}
 	}
 
@@ -418,12 +395,9 @@ void MPLoadMap::render(int, int )
 		if ( endTime )
 		{
 			color = interpolateColor( 0x7f000000, 0x00000000, time/endTime );
-			
-			
 		}
 	}
 
-	
 	GUI_RECT rect = { 0, 0, Environment.screenWidth, Environment.screenHeight };
 	drawRect( rect, color );
 
@@ -446,9 +420,6 @@ void MPLoadMap::render(int, int )
 	}
 
 	LogisticsScreen::render( (int)xOffset, (int)yOffset );
-
-
-
 }
 
 void MPLoadMap::render()
@@ -487,7 +458,6 @@ int	MPLoadMap::handleMessage( unsigned long message, unsigned long who)
 	}
 
 	return 0;
-
 }
 
 bool MPLoadMap::isDone()
@@ -516,7 +486,6 @@ void MPLoadMap::update()
 		{
 			handleMessage( buttons[i].getID(), buttons[i].getID() );
 		}
-
 	}
 	*/
 }
@@ -574,8 +543,7 @@ void MPLoadMap::updateMapInfo()
 				
 				sprintf( text2, text, mType );
 				textObjects[4].setText( text2 );
-			
-	
+
 				unsigned long numPlayers = 0;
 				file.readIdULong( "MaximumNumberOfPlayers", numPlayers );
 
@@ -606,11 +574,7 @@ void MPLoadMap::updateMapInfo()
 			}
 
 			textObjects[5].setText( blurb );
-
-  
-
 		}
-
 	}
 	else
 	{
@@ -619,8 +583,6 @@ void MPLoadMap::updateMapInfo()
 		textObjects[2].setText( "" );
 		textObjects[5].setText( "" );
 		statics[18].setColor( 0 );
-
-
 	}
 }
 
@@ -638,7 +600,6 @@ void MPLoadMap::getMapNameFromFile(const char* pFileName, char* missionName, lon
 		Assert( 0, 0, errorStr );
 	}
 
-	
 	long result = file.seekBlock( "MissionSettings" );
 	Assert( result == NO_ERR, 0, "Coudln't find the mission settings block in the mission file" );
 
@@ -661,12 +622,7 @@ void MPLoadMap::getMapNameFromFile(const char* pFileName, char* missionName, lon
 	}
 }
 
-
-
-
 //////////////////////////////////////////////
-
-
 
 //*************************************************************************************************
 // end of file ( MPLoadMap.cpp )

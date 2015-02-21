@@ -12,21 +12,14 @@
 const EulerAngles
 	EulerAngles::Identity(0.0f,0.0f,0.0f);
 
-
-
 bool UseFastLerp = true;
 bool UseFastNormalize = true;
-
-
 
 static bool __stdcall Check_UseFastLerp() {return UseFastLerp == true;}
 static bool __stdcall Check_UseFastNormalize() {return UseFastNormalize == true;}
 
-
 static void __stdcall Activate_UseFastLerp() {UseFastLerp = !UseFastLerp;}
 static void __stdcall Activate_UseFastNormalize() {UseFastNormalize = !UseFastNormalize;}
-
-
 
 //
 //#############################################################################
@@ -467,19 +460,16 @@ DWORD
 const int QuaternionLerpTableSize=static_cast<int>(1024);
 const int SinTableSize=static_cast<int>(1024);
 
-
 const float MinCosom = static_cast<float>(-1.0f);
 const float MaxCosom = static_cast<float>(1.0f);
 const float CosomRangeOverOne = static_cast<float>(1.0f/(MaxCosom-MinCosom));
 const float CosBiggestNumber = (float)static_cast<unsigned int>(0xffffffff>>(32-10));
-
 
 const float MinSin = static_cast<float>(-1.3);
 const float MaxSin = static_cast<float>(1.3);
 const float SinRangeOverOne = static_cast<float>(1.0f/(MaxSin-MinSin));
 const float SinIncrement = static_cast<float>((MaxSin - MinSin) / SinTableSize);
 const float SinBiggestNumber = (float)static_cast<unsigned int>(0xffffffff>>(32-10));
-
 
 float Omega_Table[QuaternionLerpTableSize];
 float SinomOverOne_Table[QuaternionLerpTableSize];
@@ -505,14 +495,10 @@ void
 
 	AddDebuggerMenuItem("Libraries\\Animation\\Use Fast Lerp", Check_UseFastLerp, Activate_UseFastLerp, NULL );
 	AddDebuggerMenuItem("Libraries\\Animation\\Use Fast Normalize", Check_UseFastNormalize, Activate_UseFastNormalize, NULL );
-	
 
 	float increment_step = (MaxCosom - MinCosom) / QuaternionLerpTableSize;
 	tableIncrementStepOverOne = 1.0f / increment_step;
 	float cosom = MinCosom;
-
-	
-
 
 	for (int i = 0; i < QuaternionLerpTableSize; ++i)
 	{
@@ -524,7 +510,6 @@ void
 
 		cosom += increment_step;
 	}
-
 
 	float sin_seed = MinSin;
 	
@@ -885,7 +870,6 @@ UnitQuaternion&
 UnitQuaternion&
 	UnitQuaternion::Normalize()
 {
-	
 
 	Scalar t = x*x + y*y + z*z;
 	if (t <= 1.0f)
@@ -949,7 +933,6 @@ UnitQuaternion&
 	}
 	return *this;
 }
-
 
 //
 //#############################################################################
@@ -1138,7 +1121,6 @@ UnitQuaternion&
 //
 #define SLERP_THRESHOLD (float)0.00001f
 
-
 UnitQuaternion &UnitQuaternion::Lerp(const UnitQuaternion& p, const UnitQuaternion& q, Scalar t)
 {
 
@@ -1149,18 +1131,15 @@ UnitQuaternion &UnitQuaternion::Lerp(const UnitQuaternion& p, const UnitQuaterni
 	Scalar omega,cosom,sinom,sclp,sclq;
 	//UnitQuaternion qt;
 
-
 	//UnitQuaternion q = q_temp;
 	//UnitQuaternion p = p_temp;
 
 	cosom = p.x*q.x + p.y*q.y + p.z*q.z + p.w*q.w;
 
-
 	if ( (1.0f + cosom) > 0.01f)
 	{
 		// usual case 
-	
-		
+
 		if ( (1.0f - cosom) > 0.00001f ) 
 		{ 
 			//usual case 
@@ -1182,7 +1161,6 @@ UnitQuaternion &UnitQuaternion::Lerp(const UnitQuaternion& p, const UnitQuaterni
 
 			//SPEW(("jerryeds", "# %f %f", sclp, sclq));
 		}
-
 
 		x = sclp*p.x + sclq*q.x;
 		y = sclp*p.y + sclq*q.y;
@@ -1213,7 +1191,6 @@ UnitQuaternion &UnitQuaternion::Lerp(const UnitQuaternion& p, const UnitQuaterni
 		scaled_quat = scaled_rotation;
 
 		Multiply(scaled_quat, p);
-
 	}
 
 	Stop_Timer(SlerpTime);
@@ -1234,10 +1211,8 @@ UnitQuaternion&
 	)
 {
 
-
 	if (!UseFastLerp)
 		return Lerp(p,q,t);
-
 
 	Start_Timer(SlerpTime);
 
@@ -1249,21 +1224,15 @@ UnitQuaternion&
 	
 	cosom = p.x*q.x + p.y*q.y + p.z*q.z + p.w*q.w;
 
-
 	if ( (1.0f + cosom) > 0.01f)
 	{
 		// usual case 
-	
 
-		
 		if ( (1.0f - cosom) > 0.00001f ) 
 		{ 
 			//usual case
-			
-			
 
 			//table_entry = (int)Scaled_Float_To_Bits(cosom, MinCosom, MaxCosom, 10);
-
 
 			float tabled_float =  cosom - MinCosom;
 			int cos_table_entry = Truncate_Float_To_Word(((tabled_float*CosomRangeOverOne) * CosBiggestNumber));
@@ -1273,16 +1242,13 @@ UnitQuaternion&
 		
 			float difference, percent, lerped_sin;
 
-
 			tabled_float =  ((1.0f - t)*Omega_Table[cos_table_entry]) - MinSin;
 			int sclp_table_entry = Truncate_Float_To_Word(((tabled_float*SinRangeOverOne) * SinBiggestNumber));
-
 
 			if (!(sclp_table_entry < SinTableSize))
 			{
 				Max_Clamp(sclp_table_entry, SinTableSize-1);
 			}
-
 
 			Verify(sclp_table_entry >= 0 && sclp_table_entry < SinTableSize);
 			difference = tabled_float - (SinIncrement * sclp_table_entry);
@@ -1291,8 +1257,6 @@ UnitQuaternion&
 			Max_Clamp(lerp_to_entry, SinTableSize-1);
 			lerped_sin = Stuff::Lerp(Sin_Table[sclp_table_entry], Sin_Table[lerp_to_entry], percent);
 			sclp = lerped_sin * SinomOverOne_Table[cos_table_entry];
-
-
 
 			tabled_float =  (t*Omega_Table[cos_table_entry]) - MinSin;
 			int sclq_table_entry = Truncate_Float_To_Word(((tabled_float*SinRangeOverOne) * SinBiggestNumber));
@@ -1340,14 +1304,11 @@ UnitQuaternion&
 		Multiply(scaled_quat, p);
 
 		Normalize();
-
 	}
-
 
 	Stop_Timer(SlerpTime);
 
 	return *this;
-
 }
 
 //
@@ -1386,7 +1347,6 @@ UnitQuaternion
 	Scalar omega = angle*0.5f;
 	Scalar nrevs = 0.0f;
 	UnitQuaternion r,pp,qq;
-
 
 	if (omega<Pi-0.0001f) 
 	{ 
@@ -1555,7 +1515,6 @@ UnitQuaternion&
 //#############################################################################
 //
 
-
 UnitQuaternion& 
 	UnitQuaternion::Exp(const UnitQuaternion& q) 
 {
@@ -1615,8 +1574,6 @@ UnitQuaternion&
 	return *this;
 }
 
-
-
 //
 //#############################################################################
 //#############################################################################
@@ -1651,5 +1608,4 @@ void
 			STOP(("UnitQuaternion needs normalizing"));
 	}
 	Verify(Small_Enough(diff));
-
 }

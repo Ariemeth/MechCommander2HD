@@ -8,18 +8,9 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef GAMEOBJ_H
 #include "gameobj.h"
-#endif
-
-#ifndef LIGHT_H
 #include "light.h"
-#endif
-
 #include <stdio.h>
 
 #define LIGHT_DEPTH_FIXUP		-500

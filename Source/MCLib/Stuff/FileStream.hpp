@@ -56,7 +56,6 @@ namespace Stuff {
 		typedef Stuff::PlugOf<Stuff::MString>
 			DirectoryFolder;
 
-
 		Stuff::SortedChainOf<DirectoryFolder*, Stuff::MString>
 			folderEntries;
 		Stuff::SortedChainOf<DirectoryEntry*, Stuff::MString>
@@ -171,7 +170,6 @@ namespace Stuff {
 		static void
 			IgnoreReadOnly(bool flag)
 				{IgnoreReadOnlyFlag = flag;}
-				
 
 	protected:
 		WriteStatus

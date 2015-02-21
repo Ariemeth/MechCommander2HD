@@ -8,9 +8,7 @@ DragTool.h			: Interface for the DragTool component.  When you hold down the spa
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef BRUSH_H
 #include "Brush.h"
-#endif
 
 class DragTool: public Brush
 {
@@ -25,15 +23,11 @@ class DragTool: public Brush
 		virtual bool canPaint( Stuff::Vector3D& worldPos, int screenX, int screenY, int flags ) { return true; } 
 		virtual bool canPaintSelection( ){ return false; }
 
-
 	private:
 
 		int lastX;
 		int lastY;
-
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( DragTool.h )

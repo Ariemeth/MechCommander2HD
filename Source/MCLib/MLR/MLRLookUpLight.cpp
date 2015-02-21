@@ -87,7 +87,6 @@ MLRLookUpLight::MLRLookUpLight(
 
 		stream->ReadBytes(maps[i], 256*256);
 	}
-
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -263,7 +262,6 @@ bool
 				Mem_Copy(&maps[j*mapZoneCountX+i][k*256], uptr, 256, (256-k)*256);
 				uptr += 256;
 
-
 //					&map[(256*j+k)*(mapZoneCountX*256) + i*256]
 			}
 		}
@@ -332,8 +330,6 @@ void
 	//-------------------------------------------------------------------
 	//
 	Scalar cosine = -(light_z * (*vertexData.normal))*mapIntensity*intensity;
-
-
 
 #if COLOR_AS_DWORD
 	TO_DO;

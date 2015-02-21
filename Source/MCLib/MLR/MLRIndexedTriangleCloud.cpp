@@ -26,7 +26,6 @@ DynamicArrayOf<Vector2DScalar>
 DynamicArrayOf<unsigned char>
 	*MLRIndexedTriangleCloud::visibleIndexedVertices;
 
-
 MLRIndexedTriangleCloud::ClassData*
 	MLRIndexedTriangleCloud::DefaultData = NULL;
 
@@ -51,7 +50,6 @@ void
 	Register_Pointer(clipExtraTexCoords);
 	visibleIndexedVertices = new DynamicArrayOf<unsigned char> (Limits::Max_Number_Vertices_Per_Mesh);
 	Register_Pointer(visibleIndexedVertices);
-
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -132,7 +130,6 @@ void
 		v4->Multiply(points[k], effectToClipMatrix);
 		(*clipPerVertex)[k].Clip4dVertex(v4);
 	}
-
 
 	if( Clip(dInfo->clippingFlags, allVerticesToDraw) )
 	{
@@ -570,7 +567,6 @@ int
 										<< srcPolygon.coords[k].w << '\n';
 	#endif
 
-
 									dstPolygon.clipPerVertex[dstPolygon.length] = 
 										srcPolygon.clipPerVertex[k];
 									dstPolygon.colors[dstPolygon.length] = 
@@ -648,7 +644,6 @@ int
 	#endif
 									DoClipTrick(dstPolygon.coords[dstPolygon.length], l);
 
-
 									//
 									//----------------------------------------------------------
 									// If there are colors, lerp them in screen space for now as
@@ -707,7 +702,6 @@ int
 	#endif
 
 								DoClipTrick(dstPolygon.coords[dstPolygon.length], l);
-
 
 								//
 								//----------------------------------------------------------
@@ -776,7 +770,6 @@ int
 							dstPolygon.texCoords = clipBuffer[dstBuffer].texCoords.GetData();
 							dstPolygon.clipPerVertex = clipBuffer[dstBuffer].clipPerVertex.GetData();
 							dstPolygon.length = 0;
-
 						}
 
 						mask = mask << 1;
@@ -968,7 +961,6 @@ int
 				}
 #endif
 
-
 				Verify((vt->GetLastIndex() + 3 + numGOSIndices) < vt->GetLength());
 				Verify(numGOSIndices%3 == 0);
 
@@ -985,7 +977,6 @@ int
 #if HUNT_CLIP_ERROR
 		DEBUG_STREAM << "***" << endl << endl;
 #endif
-
 	}
 	vt->Increase(numGOSVertices);
 	vt->IncreaseIndex(numGOSIndices);

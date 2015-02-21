@@ -23,8 +23,6 @@ mpprefs.cpp			: Implementation of the mpprefs component.ef
 
 MPPrefs* MPPrefs::s_instance = NULL;
 
-
-
 MPPrefs::MPPrefs(  )
 {
 	helpTextArrayID = 0;
@@ -106,14 +104,11 @@ int MPPrefs::init( FitIniFile& file )
 		comboBox[i].EditBox().allowIME( 0 );
 	}
 
-
 	comboBox[2].EditBox().setReadOnly(true);
-	
 
 	camera.init( rects[2].left(), rects[2].top(), rects[2].right(), rects[2].bottom() );
 
 	status = NEXT;
-
 
 	return 0;
 }
@@ -187,7 +182,6 @@ void MPPrefs::begin()
 					statics[12].setUVs( 0, 0, 32, 32 );
 				}
 			}
-
 		}
 	} while (FindNextFile(searchHandle,&findResult) != 0);
 
@@ -197,7 +191,6 @@ void MPPrefs::begin()
 	{
 		comboBox[2].SelectItem( 0 );
 	}
-	
 
 	MC2Player* player = MPlayer->getPlayerInfo( MPlayer->commanderID );
 	long mySeniority = player->teamSeniority;
@@ -226,23 +219,16 @@ void MPPrefs::begin()
 		getButton( MP_PREFS_STRIPE )->press( 0 );
 	}
 
-	
-
-
 	camera.setMech( "Bushwacker", MPlayer->colors[player->baseColor[BASECOLOR_SELF]], 
 						MPlayer->colors[player->stripeColor], MPlayer->colors[player->stripeColor] );
 
 	camera.zoomIn( 1.5 );
-									
-
-
 }
 void MPPrefs::end()
 {
 	camera.setMech(NULL);
 	status = NEXT;
 }
-
 
 void MPPrefs::update()
 {
@@ -267,7 +253,6 @@ void MPPrefs::update()
 	}
 	else
 		getButton( MP_PREFS_BASE )->disable( false );
-	
 
 	if ( !ChatWindow::instance()->pointInside(userInput->getMouseX(), userInput->getMouseY()) )
 		LogisticsScreen::update();
@@ -283,8 +268,6 @@ void MPPrefs::update()
 			bExpanded = true;
 		}
 		comboBox[i].update();
-
-		
 	}
 	int newSel = comboBox[2].GetSelectedItem();
 
@@ -299,7 +282,6 @@ void MPPrefs::update()
 
 		MPlayer->sendPlayerUpdate( 0, 5, -1 );
 
-	
 		FullPathFileName path;
 		path.init( "data\\multiplayer\\insignia\\", pName, ".tga" );
 		insigniaBmp.setTexture( path );
@@ -336,20 +318,13 @@ void MPPrefs::update()
 				else
 					setHighlightColor( rects[j].getColor() );
 
-
 				break;
-	
 			}
 		}			
 	}
 
 	if ( MPlayer && ChatWindow::instance() )
 		ChatWindow::instance()->update();
-
-	
-
- 
-
 }
 
 void MPPrefs::setColor( unsigned long color )
@@ -362,7 +337,6 @@ void MPPrefs::setColor( unsigned long color )
 		{
 			g_soundSystem->playDigitalSample(LOG_WRONGBUTTON);
 			return;
-			
 		}
 	}
 					
@@ -373,7 +347,6 @@ void MPPrefs::setColor( unsigned long color )
 
 	//GD:camera.setMech( "Bushwacker", color, MPlayer->colors[player->stripeColor], MPlayer->colors[player->stripeColor] );
 	//GD:camera.zoomIn( 1.5 );
-
 }
 
 void MPPrefs::setHighlightColor( unsigned long color )
@@ -384,8 +357,6 @@ void MPPrefs::setHighlightColor( unsigned long color )
 
 	camera.setMech( "Bushwacker", MPlayer->colors[player->baseColor[BASECOLOR_PREFERENCE]], color, color );
 	camera.zoomIn( 1.5 );
-
-
 }
 
 char MPPrefs::getColorIndex( unsigned long color )
@@ -439,9 +410,6 @@ void MPPrefs::updateBaseColors( const MC2Player* players, long playerCount, bool
 	MC2Player* pInfo = MPlayer->getPlayerInfo( MPlayer->commanderID );
 
 	rects[BASE_RECT].setColor(  MPlayer->colors[pInfo->baseColor[BASECOLOR_PREFERENCE]] );
-
-	
-	
 }
 
 void MPPrefs::updateStripeColors(const MC2Player* players, long playerCount, bool bDrawRect)
@@ -501,11 +469,7 @@ void MPPrefs ::render(int OffsetX, int OffsetY )
 		updateBaseColors( players, playerCount, bRect );
 		updateStripeColors( players, playerCount, bRect );
 
-
 		textObjects[helpTextArrayID].render();
-
-
-
 	}
 
 	if ( MPlayer && ChatWindow::instance() )
@@ -521,9 +485,6 @@ void MPPrefs ::render(int OffsetX, int OffsetY )
 			statics[17].render( );
 		}
 	}
-
-
-
 }
 
 int			MPPrefs::handleMessage( unsigned long message, unsigned long who )
@@ -550,11 +511,8 @@ int			MPPrefs::handleMessage( unsigned long message, unsigned long who )
 			getButton( MP_PREFS_BASE )->press( 0 );
 			getButton( MP_PREFS_STRIPE )->press( 0 );
 			getButton( who )->press( 1 );
-
 		}
 		break;
-
-
 	}
 
 	return 0;
@@ -586,7 +544,6 @@ void MPPrefs::saveSettings()
 	if ( txt )
 		strcpy( pInfo->unitName, txt );
 
-
 	// colors should already be updated by now
 	// update insignia
 	int index = comboBox[2].GetSelectedItem();
@@ -609,10 +566,6 @@ void MPPrefs::saveSettings()
 
 	MPlayer->sendPlayerUpdate( 0, 5, -1 );
 	g_userPreferences.save();
-
-
-
-
 }
 
 void MPPrefs::cancelSettings()
@@ -625,8 +578,6 @@ void MPPrefs::cancelSettings()
 
 	MPlayer->sendPlayerUpdate( 0, 5, -1 );
 	g_userPreferences.save();
-
-
 }
 
 void MPPrefs::initColors()
@@ -636,7 +587,6 @@ void MPPrefs::initColors()
 		if ( MPlayer )
 			MPlayer->colors[j - FIRST_COLOR_RECT] = rects[j].getColor();
 	}
-
 }
 
 int aBmpListItem::setBmp( const char* pFileName )
@@ -681,7 +631,6 @@ void MPPrefs::setMechColors( unsigned long base, unsigned long highlight )
 		camera.setMech( "Bushwacker", base, highlight, highlight );
 		camera.zoomIn( 1.5 );
 	}
-
 }
 
 //*************************************************************************************************

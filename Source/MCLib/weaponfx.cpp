@@ -7,10 +7,7 @@
 
 //---------------------------------------------------------------------------------
 // Include Files
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
 #include "weaponfx.h"
 //---------------------------------------------------------------------------------
 // weapon FX Equivalancy.  Stores names now for GOS FX

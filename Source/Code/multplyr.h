@@ -14,49 +14,21 @@
 //--------------
 // Include Files
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef DMULTPLYR_H
 #include "dmultplyr.h"
-#endif
-
-#ifndef DMOVER_H
 #include "dmover.h"
-#endif
-
-#ifndef DWARRIOR_H
 #include "dwarrior.h"
-#endif
-
-#ifndef DTURRET_H
 #include "dturret.h"
-#endif
-
-#ifndef DTACORDR_H
 #include "dtacordr.h"
-#endif
-
-#ifndef DGAMEOBJ_H
 #include "dgameobj.h"
-#endif
-
-#ifndef DBLDNG_H
 #include "dbldng.h"
-#endif
 
 //#ifndef DUNIT_H
 //#include <dunit.h>
 //#endif
 
-#ifndef UNITDESG_H
 #include "unitdesg.h"
-#endif
-
-#ifndef DGROUP_H
 #include "dgroup.h"
-#endif
 
 //#ifndef FICOMMONNETWORK_H
 //#include <ficommonnetwork.h>
@@ -409,7 +381,6 @@ class WorldChunk {
 		bool equalTo (WorldChunkPtr chunk);
 };
 
-
 // The following messages are for multiplayer games and are sent when
 // the user deploys a unit or drags it back to MechBay.
 //------------------------------------------------------------------------------------------
@@ -487,7 +458,6 @@ class MCMSG_DeployForce: public FIGuaranteedMessageHeader
 			dataFlags |= PartTypeFlag;
 		}
 
-		
 		void SetVariant(int variant)
 		{
 			if (variant > 3)
@@ -514,7 +484,6 @@ class MCMSG_DeployForce: public FIGuaranteedMessageHeader
 			dataFlags |= (slot << SlotBits1);
 		}
 
-
 		int GetVariant()
 		{
 			return (dataFlags & VariantMask) >> VariantBits1;
@@ -539,8 +508,6 @@ class MCMSG_DeployForce: public FIGuaranteedMessageHeader
 		{
 			return (dataFlags & PartTypeFlag);
 		}
-
-
 };
 */
 
@@ -624,7 +591,6 @@ class MCMSG_PlayerCID {
 			commanderID = -1;
 			subType = 0;
 		}
-
 };
 
 //---------------------------------------------------------------------------
@@ -827,7 +793,6 @@ class MCMSG_StartMission {
 
 		unsigned char	type;
 		long			huh;
-	
 
 	public:
 
@@ -973,7 +938,6 @@ class MCMSG_PlayerMoverGroup {
 			groupId = -1;
 			moverGroupInfo = 0;
 		}
-
 };
 
 //---------------------------------------------------------------------------
@@ -1228,7 +1192,6 @@ class MCMSG_NewServer {
 			type = MCMSG_NEW_SERVER;
 			ipAddress[0] = NULL;
 		}
-
 };
 
 //---------------------------------------------------------------------------
@@ -1392,7 +1355,6 @@ class MultiPlayer {
 		// ChatMessageCallback is called when a chat message arrives.
 		//LPMESSAGECALLBACK ChatMessageCallback;
 
-
 		// Server Data
 		float				pingUpdateTime;
 		float				pingUpdateFrequency;
@@ -1433,7 +1395,6 @@ class MultiPlayer {
 		long				maxReceiveSize;
 		long				worldChunkTally[NUM_WORLDCHUNK_TYPES];
 
-
 		char				currentChatMessages[MAX_STORED_CHATS][MAX_CHAT_LENGTH];
 		long				currentChatMessagePlayerIDs[MAX_STORED_CHATS];
 		long				chatCount;
@@ -1461,7 +1422,6 @@ class MultiPlayer {
 		void initStartupParameters (bool fresh);
 
 		void resetForNewGame (void);
-
 
 		MultiPlayer (void) {
 			init();

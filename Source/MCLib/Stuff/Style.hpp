@@ -160,7 +160,6 @@ namespace Stuff {
 	//############
 
 	enum {INT_BITS=32};
-
 }
 
 #ifndef __PLACEMENT_NEW_INLINE

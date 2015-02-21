@@ -11,20 +11,13 @@
 //---------------------------------------------------------------------------
 // Include files
 
-#ifndef INIFILE_H
 #include "inifile.h"
-#endif
-
-#ifndef HEAP_H
 #include "heap.H"
-#endif
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
 #include <ctype.h>
-
 #include "err.h"
 
 #ifndef _MBCS
@@ -321,10 +314,8 @@ long FitIniFile::textToLong (const char *num)
 		}
 	}
 
-	
 	return(result);
 }
-
 
 //---------------------------------------------------------------------------
 short FitIniFile::textToShort (const char *num)
@@ -376,7 +367,6 @@ short FitIniFile::textToShort (const char *num)
 	
 	return(result);
 }
-
 
 //---------------------------------------------------------------------------
 char FitIniFile::textToChar (const char *num)
@@ -480,7 +470,6 @@ unsigned long FitIniFile::textToULong (const char *num)
 	return(result);
 }
 
-
 //---------------------------------------------------------------------------
 unsigned short FitIniFile::textToUShort (const char *num)
 {
@@ -531,7 +520,6 @@ unsigned short FitIniFile::textToUShort (const char *num)
 	
 	return(result);
 }
-
 
 //---------------------------------------------------------------------------
 unsigned char FitIniFile::textToUChar (const char *num)
@@ -1355,8 +1343,6 @@ long FitIniFile::readIdString (const char *varName, char *result, unsigned long 
 	{
 		equalSign++;
 
-		
-
 		char* pFound = NULL;
 		char* pFirstEqual = strstr( equalSign, "\"" );
 		// strings can span more than one line, make sure there is another equal sign
@@ -1378,7 +1364,6 @@ long FitIniFile::readIdString (const char *varName, char *result, unsigned long 
 				}
 				else
 					break;
-
 			}while( !pFound && (logicalPosition < endOfBlock) );
 		}
 		
@@ -1390,8 +1375,7 @@ long FitIniFile::readIdString (const char *varName, char *result, unsigned long 
 	{
 		return(SYNTAX_ERROR);
 	}
-	
-	
+
 	return(NO_ERR);
 }
 

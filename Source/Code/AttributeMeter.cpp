@@ -12,7 +12,6 @@
 extern long helpTextID;
 extern long helpTextHeaderID;
 
-
 AttributeMeter::AttributeMeter()
 {
 
@@ -41,7 +40,6 @@ bool AttributeMeter::pointInside(long mouseX, long mouseY) const
 	return false;
 }
 
-
 void AttributeMeter::update()
 {
 	long mouseX = userInput->getMouseX();
@@ -55,7 +53,6 @@ void AttributeMeter::render()
 	
 	render( 0, 0 );
 }
-
 
 void AttributeMeter::render( long xOffset, long yOffset )
 {
@@ -112,9 +109,7 @@ void AttributeMeter::render( long xOffset, long yOffset )
 		tmpRect.left += unitWidth + skipWidth;
 		tmpRect.right = tmpRect.left + unitWidth-1;
 	}
-
 }
-
 
 void AttributeMeter::init( FitIniFile* file, const char* headerName )
 {
@@ -141,7 +136,6 @@ void AttributeMeter::init( FitIniFile* file, const char* headerName )
 		outsideRect.right = outsideRect.left + tmp;
 		file->readIdLong( "Height", tmp );
 		outsideRect.bottom = outsideRect.top + tmp;
-
 	}
 	file->readIdLong( "UnitWidth", unitWidth );
 	file->readIdLong( "Skip", skipWidth );
@@ -149,7 +143,6 @@ void AttributeMeter::init( FitIniFile* file, const char* headerName )
 	file->readIdLong( "Color", rectColor );
 
 	file->readIdLong( "HelpDesc", helpID );
-
 
 	long tmp;
 	if ( NO_ERR == file->readIdLong( "ColorMin", tmp ) )
@@ -161,11 +154,7 @@ void AttributeMeter::init( FitIniFile* file, const char* headerName )
 	{
 		colorMax = tmp;
 	}
-
-
 }
 
-
-	
 //*************************************************************************************************
 // end of file ( AttributeMeter.cpp )

@@ -8,65 +8,21 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef GVACTOR_H
 #include "gvactor.h"
-#endif
-
-#ifndef CAMERA_H
 #include "camera.h"
-#endif
-
-#ifndef DBASEGUI_H
 #include "dbasegui.h"
-#endif
-
-#ifndef MECH3D_H
 #include "mech3d.h"
-#endif
-
-#ifndef OBJSTATUS_H
 #include "objstatus.h"
-#endif
-
-#ifndef CIDENT_H
 #include "cident.h"
-#endif
-
-#ifndef PATHS_H
 #include "paths.h"
-#endif
-
-#ifndef USERINPUT_H
 #include "userinput.h"
-#endif
-
-#ifndef TIMING_H
 #include "timing.h"
-#endif
-
-#ifndef UTILITIES_H
 #include "utilities.h"
-#endif
-
-#ifndef CEVFX_H
 #include "cevfx.h"
-#endif
-
-#ifndef TXMMGR_H
 #include "txmmgr.h"
-#endif
-
-#ifndef ERR_H
 #include "err.h"
-#endif
-
-#ifndef WEAPONFX_H
 #include "weaponfx.h"
-#endif
-
-#ifndef MOVE_H
 #include "move.h"
-#endif
 
 //******************************************************************************************
 extern float	worldUnitsPerMeter;
@@ -208,7 +164,6 @@ void GVAppearanceType::init (char * fileName)
 		result = iniFile.readIdString("FileName",destructEffect,59);
 		if (result != NO_ERR)
 			STOP(("Could not Find DestructEffectName in building appearance INI file"));
-	
 	}
 	else
 	{
@@ -316,7 +271,6 @@ void GVAppearanceType::init (char * fileName)
 		
 		strcpy(nodeData[(i-1)+numSmokeNodes].nodeId,blockId);
 		nodeData[(i-1)+numSmokeNodes].weaponType = MECH3D_WEAPONTYPE_ANY;
-		
 	}
 	
 	for (i=1;i<=numFootNodes;i++)
@@ -770,7 +724,6 @@ void GVAppearance::init (AppearanceTypePtr tree, GameObjectPtr obj)
 						gvShape->SetTextureHandle(i,gosTextureHandle);
 						gvShape->SetTextureAlpha(i,true);
 					}
-					
 				}
 				else
 				{
@@ -1080,7 +1033,6 @@ void GVAppearance::setObjStatus (long oStatus)
 						gvShape->SetTextureHandle(i,gosTextureHandle);
 						gvShape->SetTextureAlpha(i,true);
 					}
-					
 				}
 				else
 				{
@@ -2052,7 +2004,6 @@ long GVAppearance::render (long depthFixup)
 				gvShape->SetARGBHighLight(0x0);
 			}
 
-				
 			if (selected & DRAW_BARS)
 			{
 				drawBars();
@@ -2071,16 +2022,13 @@ long GVAppearance::render (long depthFixup)
 					char tmpString[255];
 					cLoadString(objectNameId, tmpString, 254);					
 					drawTextHelp(tmpString, color);
-					
 				}
 				if ( strlen( pilotName ) )
 				{
 					drawPilotName( pilotName, color );
 				}
-
 			}
-		
-			
+
 			//selected = FALSE;
 			
 			//------------------------------------------
@@ -2235,7 +2183,6 @@ long GVAppearance::render (long depthFixup)
 					if (!MLRVertexLimitReached)
 						activity->Draw(&drawInfo);
 				}
-
 			}
 		}
 		
@@ -2657,8 +2604,7 @@ long GVAppearance::update (bool animate)
 					
 				canTransition = true;		//Whenever we have completed one cycle or at last frame, OK to move on!
 			}
-			
-	
+
 			//--------------------------------------
 			//Check negative overflow of gesture
 			if (currentFrame < 0)
@@ -2895,6 +2841,5 @@ void GVAppearance::flashBuilding (float dur, float fDuration, DWORD color)
 	drawFlash = true;
 	currentFlash = flashDuration;
 }
-
 
 //*****************************************************************************

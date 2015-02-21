@@ -145,7 +145,6 @@ MLR_I_C_DT_PMesh*
 	return mesh;
 }
 
-
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 void
@@ -495,7 +494,6 @@ MLRShape*
 		subdivide (coords, v[0], v[1], v[2], icoInfo.depth, nrTri, icoInfo.radius);
 
 		mesh->SetSubprimitiveLengths(lengths, nrTri);
-
 
 		if(icoInfo.indexed==true)
 		{

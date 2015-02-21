@@ -10,17 +10,9 @@
 #ifndef ABLEXEC_H
 #define ABLEXEC_H
 
-#ifndef ABLGEN_H
 #include "ablgen.h"
-#endif
-
-#ifndef ABLSYMT_H
 #include "ablsymt.h"
-#endif
-
-#ifndef ABLPARS_H
 #include "ablparse.h"
-#endif
 
 //***************************************************************************
 

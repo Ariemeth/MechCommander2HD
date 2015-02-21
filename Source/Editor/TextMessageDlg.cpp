@@ -18,7 +18,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // TextMessageDlg dialog
 
-
 TextMessageDlg::TextMessageDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(TextMessageDlg::IDD, pParent)
 {
@@ -26,7 +25,6 @@ TextMessageDlg::TextMessageDlg(CWnd* pParent /*=NULL*/)
 	m_TextMessage = _T("");
 	//}}AFX_DATA_INIT
 }
-
 
 void TextMessageDlg::DoDataExchange(CDataExchange* pDX)
 {
@@ -36,7 +34,6 @@ void TextMessageDlg::DoDataExchange(CDataExchange* pDX)
 	DDV_MaxChars(pDX, m_TextMessage, 2000);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(TextMessageDlg, CDialog)
 	//{{AFX_MSG_MAP(TextMessageDlg)

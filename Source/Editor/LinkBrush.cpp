@@ -29,7 +29,6 @@ bool LinkBrush::beginPaint()
 	pAction = new LinkAction();
 
 	return true;
-
 }
 
 Action* LinkBrush::endPaint()
@@ -75,7 +74,6 @@ bool LinkBrush::paint( Stuff::Vector3D& worldPos, int screenX, int screenY )
 
 			pAction->AddToListOnce( LinkInfo(pLink, LinkInfo::ADD) );
 		}
-
 	}
 
 	else // we already have a parnet, this is a child building
@@ -93,7 +91,6 @@ bool LinkBrush::paint( Stuff::Vector3D& worldPos, int screenX, int screenY )
 
 			EditorObjectMgr::instance()->addLink( pLink );
 			pAction->AddToListOnce( LinkInfo(pLink, LinkInfo::ADD) );
-
 		}
 		
 		BuildingLink* pOldLink = EditorObjectMgr::instance()->getLinkWithBuilding( pObject );
@@ -107,7 +104,6 @@ bool LinkBrush::paint( Stuff::Vector3D& worldPos, int screenX, int screenY )
 		if ( !pLink->AddChild( pObject ) )
 		{
 			SPEW((0,"LinkBrush failed to add a link to a parent\n"));
-		
 		}
 
 		if ( pObject->getSpecialType() != EditorObjectMgr::POWER_STATION )
@@ -116,12 +112,8 @@ bool LinkBrush::paint( Stuff::Vector3D& worldPos, int screenX, int screenY )
 		return true;
 	}
 
-
 	return false;
-	
-	
 }
-
 
 bool LinkBrush::canPaint( Stuff::Vector3D& pos, int x, int y, int flags ) 
 { 
@@ -144,7 +136,6 @@ bool LinkBrush::canPaint( Stuff::Vector3D& pos, int x, int y, int flags )
 			return true;
 	}
 
-
 	return false;
 }
 
@@ -162,9 +153,7 @@ bool LinkBrush::canUnPaint( Stuff::Vector3D& pos, int x, int y, int flags )
 	else if ( EditorObjectMgr::instance()->getLinkWithBuilding( pBuilding) )
 		return true; 
 
-
 	return false;
-	 
 } 
 
 int LinkBrush::LinkAction::AddToListOnce( const LinkBrush::LinkInfo& Info )
@@ -184,7 +173,6 @@ int LinkBrush::LinkAction::AddToListOnce( const LinkBrush::LinkInfo& Info )
 
 LinkBrush::LinkAction::LinkAction( )
 { 
-	
 }
 
 bool LinkBrush::LinkAction::undo( )
@@ -243,7 +231,6 @@ bool LinkBrush::LinkAction::undo( )
 					(const_cast<EditorObject*>(pObject))->setAlignment( align );
 				}
 			}
-
 		}
 		else if ( (*iter).type == LinkInfo::EDIT )
 		{
@@ -269,13 +256,10 @@ bool LinkBrush::LinkAction::undo( )
 				SPEW(( 0,"LinkBursh::LinkAction::Undo failed because the map didn't have the link\n") );
 				return false;
 			}
-
 		}
-
 	}
 
 	return true;
-
 }
 
 bool LinkBrush::unPaint( Stuff::Vector3D& pos, int XPos, int yPos )
@@ -308,7 +292,6 @@ bool LinkBrush::unPaint( Stuff::Vector3D& pos, int XPos, int yPos )
 			{
 				pAction->AddToListOnce( LinkInfo( pLink, LinkInfo::EDIT ) );
 				pLink->RemoveObject( pBuilding );
-				
 			}
 
 			return true;
@@ -346,6 +329,5 @@ void LinkBrush::render( int screenX, int screenY )
 	
 		LineElement elem( curScreen, screenPos, 0xffff0000, 0, -1 );
 		elem.draw();
-
 	}
 }

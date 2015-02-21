@@ -10,8 +10,6 @@ mission2.cpp			: The parts of mission.cpp that we need for the mech viewer
 
 bool Mission::statisticsInitialized = 0;
 
-
-
 #ifdef LAB_ONLY
 __int64 MCTimeABLLoad 			= 0;
 __int64 MCTimeMiscToTeamLoad 	= 0; 
@@ -104,7 +102,6 @@ void Mission::initBareMinimum()
 	{
 		mcTextureManager = new MC_TextureManager;
 		mcTextureManager->start();
-
 	}
 
 	//Startup the vertex array pool
@@ -213,7 +210,6 @@ void Mission::initializeStatistics()
 #endif
 }
 
-
 void Mission::initTGLForLogistics()
 {
 	//---------------------------------------------------------
@@ -293,8 +289,6 @@ void Mission::initTGLForLogistics()
 		trianglePool->init(2000);
 	}
 }
-
-
 
 //*************************************************************************************************
 // end of file ( mission2.cpp )

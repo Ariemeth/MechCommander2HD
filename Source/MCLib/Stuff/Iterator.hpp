@@ -163,5 +163,4 @@ namespace Stuff {
 			BackwardImplementation()
 				{Previous(); return *this;}
 	};
-
 }

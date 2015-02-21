@@ -39,7 +39,6 @@ class DlgFileOpen: public CDialog
 		// HELPER FUNCTIONS
 		void init(); // I think I'll hard wire the file name here
 
-
 		//{{AFX_DATA(DlgFileOpen)
 		enum { IDD = IDD_FILEOPEN };
 		//}}AFX_DATA
@@ -54,7 +53,6 @@ class DlgFileOpen: public CDialog
 	//}}AFX_MSG
 		DECLARE_MESSAGE_MAP()
 
-
 		// suppressing these
 		inline DlgFileOpen();
 		DlgFileOpen& operator=( const DlgFileOpen& lgFileOpen );
@@ -64,9 +62,7 @@ class DlgFileOpen: public CDialog
 
 		char m_directory[MAX_PATH];
 		bool m_bSave;
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( DlgFileOpen.h )

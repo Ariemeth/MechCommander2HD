@@ -8,20 +8,14 @@
 
 //--------------
 // Include Files
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef MOVE_H
 #include "move.h"
-#endif
 
 #define	MOVELOG
 
 #ifdef MOVELOG
-#ifndef GAMELOG_H
 #include "gamelog.h"
-#endif
+
 #endif
 
 //***************************************************************************
@@ -687,7 +681,6 @@ long MOVE_readData (PacketFile* packetFile, long whichPacket) {
 		GlobalMoveMap[1]->hover = true;
 		numGlobalMap1Packets = GlobalMoveMap[1]->init(packetFile, whichPacket + numMissionMapPackets + numGlobalMap0Packets);
 
-		
 		//--------------------------------------
 		// Let's read the helicoptor move map...
 		if (GlobalMoveMap[2]) {
@@ -717,7 +710,6 @@ long MOVE_readData (PacketFile* packetFile, long whichPacket) {
 			if (numBytes <= 0)
 				Fatal(numBytes, " MOVE_readData: Unable to read num special areas ");
 		}
-
 	}
 
 	//-----------------------
@@ -1046,8 +1038,6 @@ void MissionMap::placeTerrainObject(long objectClass,
 									 __int64 footPrint,
 									 bool blocksLineOfFire,
 									 long mineType) {
-
-
 }	
 
 //---------------------------------------------------------------------------
@@ -1504,7 +1494,6 @@ long GlobalMap::init (PacketFilePtr packetFile, long whichPacket) {
 					doors[areas[i].doors[d].doorIndex].area[0], doors[areas[i].doors[d].doorIndex].area[1]);
 				log->write(s);
 			}
-			
 		}
 		log->write(" ");
 	}
@@ -2123,7 +2112,6 @@ void GlobalMap::calcGlobalDoors (void) {
 
 	short doorMap[SECTOR_DIM][SECTOR_DIM];
 
-
 	beginDoorProcessing();
 
 	for (long sectorR = 0; sectorR < sectorHeight; sectorR++) {
@@ -2606,7 +2594,6 @@ void GlobalMap::resetPathCostTable (void) {
 		}
 	closes = false;
 	opens = false;
-
 }
 
 //------------------------------------------------------------------------------------------
@@ -2726,7 +2713,6 @@ long GlobalMap::exitDirection (long doorIndex, long fromArea) {
 
 void GlobalMap::getDoorTiles (long area, long door, GlobalMapDoorPtr areaDoor) {
 
-	
 	*areaDoor = doors[areas[area].doors[door].doorIndex];
 }
 
@@ -2880,7 +2866,6 @@ long GlobalMap::build (MissionMapCellInfo* mapData) {
 					doors[areas[i].doors[d].doorIndex].area[0], doors[areas[i].doors[d].doorIndex].area[1]);
 				log->write(s);
 			}
-			
 		}
 		log->write(" ");
 	}
@@ -2940,7 +2925,6 @@ void GlobalMap::setStartDoor (long startArea) {
 		curDoor->links[doorSide][curDoor->numLinks[doorSide]].openCost = costSum;
 		curDoor->numLinks[doorSide]++;
 	}
-
 }
 
 //---------------------------------------------------------------------------
@@ -3731,7 +3715,6 @@ bool GlobalMap::toggleLog (void) {
 						map->doors[map->areas[i].doors[d].doorIndex].area[0], map->doors[map->areas[i].doors[d].doorIndex].area[1]);
 					log->write(s);
 				}
-				
 			}
 			log->write(" ");
 		}
@@ -3804,7 +3787,6 @@ void MoveMap::init (long maxW, long maxH) {
 					map[mapCellIndex].adjCells[d] = -1;
 			}
 		}
-
 
 	float cellLength = Terrain::worldUnitsPerCell * metersPerWorldUnit;
 	for (long i = 0; i < DISTANCE_TABLE_DIM; i++)
@@ -4152,7 +4134,6 @@ long MoveMap::setUp (long mapULr,
 	maxCol = mapWidth - 1;
 	moveLevel = level;
 
-
 	startRow -= ULr;
 	startCol -= ULc;
 	Assert(startRow > -1, 0, " huh ");
@@ -4258,7 +4239,6 @@ long MoveMap::setUp (long mapULr,
 					adjustMoveMapCellCost(&map[cellRow * maxWidth + cellCol], pathLockCost);
 			}
 		}
-
 
 	if (FindingEscapePath)
 		markEscapeGoals(goalPos);
@@ -4964,7 +4944,6 @@ long MoveMap::calcPath (MovePathPtr path, Stuff::Vector3D* goalWorldPos, long* g
 		}
 	}
 
-
 	#ifdef DEBUG_MOVE_MAP
 		if (debugMoveMap) {
 			File* pathDebugFile = new File;
@@ -5431,7 +5410,6 @@ long MoveMap::calcPathJUMP (MovePathPtr path, Stuff::Vector3D* goalWorldPos, lon
 		}
 	}
 
-
 	#ifdef DEBUG_MOVE_MAP
 		if (debugMoveMap) {
 			File* pathDebugFile = new File;
@@ -5876,7 +5854,6 @@ long MoveMap::calcEscapePath (MovePathPtr path, Stuff::Vector3D* goalWorldPos, l
 		}
 	}
 
-
 	#ifdef DEBUG_MOVE_MAP
 		if (debugMoveMap) {
 			File* pathDebugFile = new File;
@@ -6154,7 +6131,6 @@ void MoveMap::writeDebug (File* debugFile) {
 		debugFile->writeString(outString);
 	}
 	debugFile->writeString("\n");
-
 }
 
 //---------------------------------------------------------------------------
@@ -6184,7 +6160,6 @@ void MoveMap::destroy (void) {
 		g_systemHeap->Free(mapColTable);
 		mapColTable = NULL;
 	}
-
 }
 
 //***************************************************************************

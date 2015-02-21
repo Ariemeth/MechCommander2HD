@@ -469,7 +469,6 @@ namespace Stuff {
 		alpha = color.alpha;
 		return *this;
 	}
-
 }
 
 namespace MemoryStreamIO {

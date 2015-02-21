@@ -12,26 +12,11 @@
 #include <math.h>
 #include <string.h>
 #include <time.h>
-
-#ifndef ABLGEN_H
 #include "ablgen.h"
-#endif
-
-#ifndef ABLERR_H
 #include "ablerr.h"
-#endif
-
-#ifndef ABLSCAN_H
 #include "ablscan.h"
-#endif
-
-#ifndef ABLPARSE_H
 #include "ablparse.h"
-#endif
-
-#ifndef ABLENV_H
 #include "ablenv.h"
-#endif
 
 //***************************************************************************
 #pragma warning(disable:4244)
@@ -901,7 +886,6 @@ void getWord (void) {
 			downShiftWord();
 		}
 	}
-
 
 	if (!isReservedWord())
 		curToken = TKN_IDENTIFIER;

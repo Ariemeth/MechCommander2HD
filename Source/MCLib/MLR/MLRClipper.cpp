@@ -188,7 +188,6 @@ void
 	gos_SetRenderState( gos_State_AlphaTest, 0 );
 	gos_SetRenderState( gos_State_Fog, 0 );
 
-
 	sorter->SetFarClipReciprocal((1.0f-cameraToClip(2, 2))/cameraToClip(3, 2));
 
 	sorter->StartDraw(default_state);
@@ -494,7 +493,6 @@ void
 							{
 								sorter->DrawPrimitive(primitive, j);
 							}
-							
 						}
 					}
 				}
@@ -671,7 +669,6 @@ void
 //
 }
 
-
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 void
@@ -714,7 +711,6 @@ void
 
 				vertices[j].u = dInfo->texCoords[offset][0];
 				vertices[j].v = dInfo->texCoords[offset][1];
-
 			}
 		}
 	}

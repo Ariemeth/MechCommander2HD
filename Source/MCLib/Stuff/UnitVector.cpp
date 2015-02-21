@@ -61,5 +61,4 @@ void
 		//Verify(Small_Enough(diff,3e-5f));
 		Verify(Small_Enough(diff));
 	#endif
-
 }

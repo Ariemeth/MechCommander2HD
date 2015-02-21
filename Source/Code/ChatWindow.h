@@ -6,9 +6,7 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef LOGISTICSSCREEN_H
 #include "LogisticsScreen.h"
-#endif
 
 //*************************************************************************************************
 
@@ -16,9 +14,7 @@
 CLASS DESCRIPTION
 ChatWindow:
 **************************************************************************************************/
-#ifndef ALISTBOX_H
 #include "aListBox.h"
-#endif
 
 class ChatMessageItem : public aListItem
 {
@@ -54,8 +50,6 @@ private:
 
 	ChatMessageItem	listItems[128];
 	long			curItem;
-
-
 };
 
 class ChatWindow: public LogisticsScreen
@@ -78,7 +72,6 @@ class ChatWindow: public LogisticsScreen
 		virtual bool pointInside( long xPos, long yPos );
 		bool		 isExpanded();
 
-
 	private:
 
 		static ChatWindow*	s_instance;
@@ -92,20 +85,9 @@ class ChatWindow: public LogisticsScreen
 		long			curItem;
 		long			maxItems;
 
-
 		static void refillListBox( aListBox& listBox, char** chatTexts, long* playerIDs,  ChatMessageItem* pItems, 
 			long& curItem, long itemCount, long maxCount );
-
-
-
-
-
 };
-
-
-
-
-
 
 //*************************************************************************************************
 #endif  // end of file ( ChatWindow.h )

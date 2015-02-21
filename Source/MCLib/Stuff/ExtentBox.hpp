@@ -120,7 +120,6 @@ namespace Stuff {
 			DynamicArrayOf<Plane> *planes,
 			const DynamicArrayOf<ExtentBox> &boxes
 		);
-
 }
 
 namespace MemoryStreamIO {
@@ -137,5 +136,4 @@ namespace MemoryStreamIO {
 			const Stuff::ExtentBox *input
 		)
 			{return stream->WriteBytes(input, sizeof(*input));}
-
 }

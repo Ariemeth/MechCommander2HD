@@ -7,17 +7,9 @@ MPPrefs.h			: Interface for the MPPrefs component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef LOGISTICSSCREEN_H
 #include "LogisticsScreen.h"
-#endif
-
-#ifndef ALISTBOX_H
 #include "AListBox.h"
-#endif
-
-#ifndef SIMPLECAMERA_H
 #include "SimpleCamera.h"
-#endif
 
 class FitIniFile;
 struct _MC2Player;
@@ -65,8 +57,6 @@ class MPPrefs: public LogisticsScreen
 		void	setHighlightColor( unsigned long color );
 
 		static MPPrefs* s_instance;
-
-
 };
 
 class aBmpListItem : public aListItem
@@ -82,7 +72,6 @@ private:
 
 	EString		fileName;
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( MPPrefs.h )

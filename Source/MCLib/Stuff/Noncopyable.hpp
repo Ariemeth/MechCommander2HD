@@ -6,7 +6,6 @@
 #ifndef NONCOPYABLE_HPP
 #define NONCOPYABLE_HPP
 
-
 namespace Stuff
 {
 	class Noncopyable
@@ -19,7 +18,5 @@ namespace Stuff
 		const Noncopyable& operator=(const Noncopyable&);
 	};
 };
-
-
 
 #endif // NONCOPYABLE_HPP

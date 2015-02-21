@@ -256,7 +256,6 @@ MLR_Terrain2*
 	return terrain;
 }
 
-
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 void
@@ -325,7 +324,6 @@ void
 */
 	textureFlags = 3;
 //	HACK
-
 
 	*stream << textureFlags;
 }

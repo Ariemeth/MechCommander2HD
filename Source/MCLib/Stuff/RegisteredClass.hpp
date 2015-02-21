@@ -224,5 +224,4 @@ namespace Stuff {
 	{
 		return DefaultData->FindClassData(name);
 	}
-
 }

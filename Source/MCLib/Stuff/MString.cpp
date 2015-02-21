@@ -6,7 +6,6 @@
 //===========================================================================//
 
 #include "StuffHeaders.hpp"
-
 #include <windows.h>
 //#############################################################################
 //#######################    MStringRepresentation    #########################
@@ -116,7 +115,6 @@ MStringRepresentation::~MStringRepresentation()
 void
 	MStringRepresentation::TestInstance() const
 {
-
 }
 
 //

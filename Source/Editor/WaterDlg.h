@@ -33,7 +33,6 @@ public:
 	DWORD	alphaShallow;
 	//}}AFX_DATA
 
-
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(WaterDlg)

@@ -11,13 +11,8 @@
 #ifndef TGAINFO_H
 #define TGAINFO_H
 
-#ifndef DSTD_H
 #include "dstd.h"
-#endif
-
-#ifndef FILE_H
 #include "file.h"
-#endif
 
 //---------------------------------------------------------------------------
 enum TGAImageType

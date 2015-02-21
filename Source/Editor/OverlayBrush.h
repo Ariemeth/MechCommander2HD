@@ -8,9 +8,7 @@ OverlayBrush.h		: Interface for the OverlayBrush component.  This is the thing y
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef BRUSH_H
 #include "Brush.h"
-#endif
 
 class ActionPaintTile;
 
@@ -50,15 +48,8 @@ class OverlayBrush: public Brush
 
 		ActionPaintTile* pAction;
 
-	
-
-
 public:
-		
-
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( OverlayBrush.h )

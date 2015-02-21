@@ -13,7 +13,6 @@ ChooseUnitDlg.h		: Interface for the ChooseUnitDlg component.
 #include "EditorObjectMgr.h"
 #include "stdafx.h"
 
-
 class ChooseUnitDlg: public CDialog
 {
 public:
@@ -46,7 +45,6 @@ private:
 	CButton *m_pCancelButton;
 	CButton *m_pOKButton;
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( ChooseUnitDlg.h )

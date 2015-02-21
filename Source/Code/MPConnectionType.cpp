@@ -13,10 +13,7 @@ MPConnectionType.cpp			: Implementation of the MPConnectionType component.
 #include "..\resource.h"
 #include "Multplyr.h"
 #include "Mechbayscreen.h"
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
 
 #define CHECK_BUTTON 200
 
@@ -75,7 +72,6 @@ void MPConnectionType::init(FitIniFile* file)
 			if (buttons[i].getID() == 0)
 			{
 				buttons[i].setID(FIRST_BUTTON_ID + i);
-			
 			}
 			if ( buttons[i].getID()  != MB_MSG_MAINMENU )
 			{
@@ -154,11 +150,8 @@ void MPConnectionType::init(FitIniFile* file)
 		break;
 	}
 
-	
 	hostDlg.init();
-
 }
-
 
 void MPConnectionType::begin()
 {
@@ -182,7 +175,6 @@ void MPConnectionType::begin()
 
 	tcpipPanel.begin();
 }
-
 
 void MPConnectionType::end()
 {
@@ -313,8 +305,6 @@ int	MPConnectionType::handleMessage( unsigned long message, unsigned long who)
 			break;
 		}
 
-	
-
 		switch ( who )
 		{
 		case FIRST_BUTTON_ID+1:
@@ -329,7 +319,6 @@ int	MPConnectionType::handleMessage( unsigned long message, unsigned long who)
 	}
 
 	return 0;
-
 }
 
 bool MPConnectionType::isDone()
@@ -350,7 +339,6 @@ void MPConnectionType::update()
 				hostDlg.end();
 				(*ppConnectionScreen) = pMPPlaceHolderScreen;
 				status = NEXT;
-
 			}
 			else if ( hostDlg.getStatus() == NO )
 				bHosting = 0;
@@ -364,8 +352,6 @@ void MPConnectionType::update()
 		pPanel->update();
 	}
 
-
-
 	//helpTextID = 0;
 	//helpTextHeaderID = 0;
 
@@ -378,11 +364,9 @@ void MPConnectionType::update()
 		{
 			handleMessage( buttons[i].getID(), buttons[i].getID() );
 		}
-
 	}
 	*/
 }
-
 
 void aZonePanel::init(FitIniFile* pFile, LogisticsScreen* pParent)
 {
@@ -425,9 +409,6 @@ void aZonePanel::update()
 	}
 	else
 		aObject::update();
-
-
-	
 }
 
 void aZonePanel::render()
@@ -438,8 +419,6 @@ void aZonePanel::render()
 	{
 		LogisticsOKDialog::instance()->render();
 	}
-
-
 }
 
 int aZonePanel::handleMessage( unsigned long, unsigned long )
@@ -454,8 +433,6 @@ int aZonePanel::handleMessage( unsigned long, unsigned long )
 void aLanPanel::update()
 {
 	aObject::update();
-
-
 }
 
 void aLanPanel::init(FitIniFile* pFile)
@@ -467,7 +444,6 @@ void aLanPanel::init(FitIniFile* pFile)
 	if (button0.getID() == 0)
 	{
 		button0.setID(LAN_PANEL_FIRST_BUTTON_ID);
-
 	}
 
 	button0.setPressFX( LOG_VIDEOBUTTONS );
@@ -487,7 +463,6 @@ void aLanPanel::init(FitIniFile* pFile)
 	button1.setPressFX( LOG_VIDEOBUTTONS );
 	button1.setHighlightFX( LOG_DIGITALHIGHLIGHT );
 	button1.setDisabledFX( LOG_WRONGBUTTON );
-
 
 	text.init( &file, "Text0" );
 	addChild(&text);
@@ -525,8 +500,6 @@ void aTcpipPanel::begin()
 	bFoundConnection = 0;
 	bConnectingDlg = 0;
 	bErrorDlg = 0;
-
-
 }
 
 void aTcpipPanel::destroy()
@@ -540,7 +513,6 @@ void aTcpipPanel::init(FitIniFile* pFile)
 	bConnectingDlg = 0;
 
 	helpRect.init( pFile, "Rect0" );
-	
 
 	button0.init( file, "Button0" );
 	button0.setMessageOnRelease();
@@ -554,7 +526,6 @@ void aTcpipPanel::init(FitIniFile* pFile)
 	button0.setHighlightFX( LOG_DIGITALHIGHLIGHT );
 	button0.setDisabledFX( LOG_WRONGBUTTON );
 
-
 	button1.init( file, "Button1" );
 	button1.setMessageOnRelease();
 	if (button1.getID() == 0)
@@ -566,7 +537,6 @@ void aTcpipPanel::init(FitIniFile* pFile)
 	button1.setPressFX( LOG_VIDEOBUTTONS );
 	button1.setHighlightFX( LOG_DIGITALHIGHLIGHT );
 	button1.setDisabledFX( LOG_WRONGBUTTON );
-
 
 	text0.init( &file, "Text0" );
 	addChild(&text0);
@@ -590,7 +560,6 @@ void aTcpipPanel::init(FitIniFile* pFile)
 
 	comboBox.EditBox().setNoBlank( true );
 
-
 	comboBox.EditBox().allowIME( false );
 	
 	addChild( &comboBox );
@@ -609,7 +578,6 @@ void aTcpipPanel::init(FitIniFile* pFile)
 	bFoundConnection = 0;
 
 	// need to initialize old addresses
-	
 }
 
 void aTcpipPanel::update()
@@ -640,13 +608,11 @@ void aTcpipPanel::update()
 							g_userPreferences.setNewIP( ipAddress );
 							g_userPreferences.save();
 							connectingTime = 0.f;
-
 						}
 					}
 
 					bFoundConnection = 0;
 					bConnectingDlg = 0;
-
 				}
 				//they cancelled
 				MPlayer->endSessionScan();
@@ -657,7 +623,6 @@ void aTcpipPanel::update()
 				LogisticsOneButtonDialog::instance()->end();
 				bErrorDlg = 0;
 			}
-
 		}
 		else  if ( !bErrorDlg && !bFoundConnection )
 		{
@@ -679,7 +644,6 @@ void aTcpipPanel::update()
 					connectingTime = 0.f;
 				}
 			}
-
 		}	
 
 		if ( retVal )
@@ -718,7 +682,6 @@ void aTcpipPanel::update()
 				errorID = IDS_MP_CONNECTION_ERROR_FULL;
 				fontID = IDS_MP_CONNECTION_ERROR_FULL_FONT;
 					break;
-
 			}
 			LogisticsOneButtonDialog::instance()->end();
 			LogisticsOneButtonDialog::instance()->setText( errorID, IDS_DIALOG_OK, IDS_DIALOG_OK  );
@@ -742,7 +705,6 @@ void aTcpipPanel::update()
 		if ( userInput->leftMouseReleased() )
 			bExpanded = 0;
 	}
-
 
 	// grey out button if inavlid...
 	EString str;
@@ -798,8 +760,6 @@ void aTcpipPanel::update()
 					bValid = 0;
 				}
 			}
-
-			
 		}
 		else
 			bValid = 0;
@@ -818,8 +778,6 @@ void aTcpipPanel::update()
 	{
 		handleMessage( TCPIP_PANEL_FIRST_BUTTON_ID, TCPIP_PANEL_FIRST_BUTTON_ID);
 	}
-
-	
 }
 
 void		aTcpipPanel::render()
@@ -830,14 +788,12 @@ void		aTcpipPanel::render()
 	{
 		LogisticsOneButtonDialog::instance()->render();
 	}
-		
 }
 
 long aTcpipPanel::getNum( char* pStr, long index1, long index2 )
 {
 	pStr[index2] = 0;
 	return atoi( &pStr[index1] );
-
 }
 int	aTcpipPanel::handleMessage( unsigned long message, unsigned long who)
 {
@@ -875,8 +831,6 @@ int	aTcpipPanel::handleMessage( unsigned long message, unsigned long who)
 	return 0;
 }
 //////////////////////////////////////////////
-
-
 
 //*************************************************************************************************
 // end of file ( MPConnectionType.cpp )

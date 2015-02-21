@@ -238,10 +238,7 @@ void
 		#error Right handed coordinate depenancy!
 	#endif
 
-
 	Verify(Close_Enough(v3.x, (*this)(2,0)));
 	Verify(Close_Enough(v3.y, (*this)(2,1)));
 	Verify(Close_Enough(v3.z, (*this)(2,2)));
-
-
 }

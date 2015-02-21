@@ -25,7 +25,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CCampaignDialog dialog
 
-
 CCampaignDialog::CCampaignDialog(CWnd* pParent /*=NULL*/)
 	: CDialog(CCampaignDialog::IDD, pParent)
 {
@@ -36,7 +35,6 @@ CCampaignDialog::CCampaignDialog(CWnd* pParent /*=NULL*/)
 	m_NameResourceStringIDEdit = _T("");
 	//}}AFX_DATA_INIT
 }
-
 
 void CCampaignDialog::DoDataExchange(CDataExchange* pDX)
 {
@@ -49,7 +47,6 @@ void CCampaignDialog::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_CA_NAME_RESOURCE_STRING_ID_EDIT, m_NameResourceStringIDEdit);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(CCampaignDialog, CDialog)
 	//{{AFX_MSG_MAP(CCampaignDialog)

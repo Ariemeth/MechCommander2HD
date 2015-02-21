@@ -11,13 +11,8 @@
 //---------------------------------------------------------------------------
 // Include files
 
-#ifndef CELEMENT_H
 #include "celement.h"
-#endif
-
-#ifndef VFX_H
 #include "vfx.h"
-#endif
 
 //---------------------------------------------------------------------------
 class PaneElement : public Element
@@ -28,7 +23,6 @@ class PaneElement : public Element
 		long	x;
 		long	y;
 		long	midx,midy,SizeX,SizeY;
-
 
 	PaneElement (void)
 	{

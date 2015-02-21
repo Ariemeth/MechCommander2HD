@@ -30,7 +30,6 @@ namespace MidLevelRenderer {
 		Stuff::DynamicArrayOf<MLRClippingState> clipPerVertex; //[Max_Number_Vertices_Per_Polygon];
 	};
 
-
 	class MLRPrimitiveBase__ClassData;
 
 	//##########################################################################

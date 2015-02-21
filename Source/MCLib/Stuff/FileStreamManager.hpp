@@ -93,5 +93,4 @@ namespace Stuff {
 		Stuff::TreeOf<FileStatPlug*, Stuff::MString>
 			compareCache;
 	};
-
 }

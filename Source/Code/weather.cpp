@@ -9,21 +9,10 @@
 
 //----------------------------------------------------------------------------------
 // Include Files
-#ifndef WEATHER_H
 #include "weather.h"
-#endif
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
-
-#ifndef QUAD_H
 #include "quad.h"
-#endif
-
-#ifndef TGL_H
 #include "tgl.h"
-#endif
 
 //----------------------------------------------------------------------------------
 // Macro Definitions
@@ -523,5 +512,4 @@ void Weather::render (void)
 }
 
 //----------------------------------------------------------------------------------
-
 

@@ -12,41 +12,15 @@
 #define TERRAIN_H
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef MAPDATA_H
 #include "mapdata.h"
-#endif
-
-#ifndef TERRTXM_H
 #include "terrtxm.h"
-#endif
-
-#ifndef TERRTXM2_H
 #include "terrtxm2.h"
-#endif
-
-#ifndef BITLAG_H
 #include "bitflag.h"
-#endif
-
-#ifndef INIFILE_H
 #include "inifile.h"
-#endif
-
-#ifndef MATHFUNC_H
 #include "mathfunc.h"
-#endif
-
-#ifndef DQUAD_H
 #include "dquad.h"
-#endif
-
-#ifndef DVERTEX_H
 #include "dvertex.h"
-#endif
-
-#ifndef CLOUDS_H
 #include "clouds.h"
-#endif
 
 //---------------------------------------------------------------------------
 // Macro Definitions

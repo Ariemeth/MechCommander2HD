@@ -26,7 +26,6 @@ public:
 	CString	m_Edit;
 	//}}AFX_DATA
 
-
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(ViewConditionOrActionDlg)

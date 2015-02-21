@@ -8,34 +8,13 @@
 //***************************************************************************
 
 #include <string.h>
-
-#ifndef ABLGEN_H
 #include "ablgen.h"
-#endif
-
-#ifndef ABLERR_H
 #include "ablerr.h"
-#endif
-
-#ifndef ABLSCAN_H
 #include "ablscan.h"
-#endif
-
-#ifndef ABLSYMT_H
 #include "ablsymt.h"
-#endif
-
-#ifndef ABLPARSE_H
 #include "ablparse.h"
-#endif
-
-#ifndef ABLEXEC_H
 #include "ablexec.h"
-#endif
-
-#ifndef ABLDBUG_H
 #include "abldbug.h"
-#endif
 
 //***************************************************************************
 
@@ -586,7 +565,4 @@ TypePtr execExpression (void) {
 }
 
 //***************************************************************************
-
-
-
 

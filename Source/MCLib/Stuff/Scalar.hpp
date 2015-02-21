@@ -28,7 +28,6 @@ namespace Stuff {
 	const Scalar Radians_Per_Degree=static_cast<Scalar>(M_PI/180.0);
 	const int FP_ONE_BITS = 0x3F800000;
 
-
 	inline Scalar
 		Fabs(Scalar a)
 			{return static_cast<Scalar>(fabs(a));}
@@ -90,8 +89,6 @@ namespace Stuff {
 
 	int
 		Scaled_Int_From_Bits(DWORD in, int min, int max, int bits);
-
-	
 
 	int
 		Round(Scalar value);
@@ -234,5 +231,4 @@ namespace MemoryStreamIO {
 			const Stuff::Scalar *input
 		)
 			{return stream->WriteBytes(input, sizeof(*input));}
-
 }

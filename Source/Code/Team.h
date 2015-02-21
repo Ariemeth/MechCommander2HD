@@ -13,25 +13,11 @@
 
 //---------------------------------------------------------------------------
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef DTEAM_H
 #include "dteam.h"
-#endif
-
-#ifndef DMOVER_H
 #include "dmover.h"
-#endif
-
-#ifndef CONTACT_H
 #include "contact.h"
-#endif
-
-#ifndef OBJECTIVE_H
 #include "Objective.h"
-#endif
 
 //***************************************************************************
 
@@ -112,7 +98,6 @@ class Team {
 		void removeFromRoster (MoverPtr mover);
 
 		virtual long getRoster (GameObjectPtr* objList, bool existsOnly = false);
-
 
 		void disableTargets (void);
 
@@ -202,7 +187,6 @@ class Team {
 			return(relations[id][team->getId()] == RELATION_NEUTRAL);
 		}
 };
-
 
 //***************************************************************************
 

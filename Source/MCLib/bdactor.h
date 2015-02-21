@@ -13,25 +13,11 @@
 
 //---------------------------------------------------------------------------
 // Include files
-#ifndef APPEAR_H
 #include "appear.h"
-#endif
-
-#ifndef APPRTYPE_H
 #include "apprtype.h"
-#endif
-
-#ifndef MOVE_H
 #include "move.h"
-#endif
-#ifndef MSL_H
 #include "msl.h"
-#endif
-
-#ifndef OBJECTAPPEARANCE_H
 #include "ObjectAppearance.h"
-#endif
-
 #include <gosFX\gosfxheaders.hpp>
 //**************************************************************************************
 #ifndef NO_ERR
@@ -161,7 +147,6 @@ class BldgAppearanceType : public AppearanceType
   		virtual void init (char *fileName);
 		
 		virtual void destroy (void);
-
 };
 
 //***********************************************************************
@@ -551,7 +536,5 @@ class TreeAppearance : public ObjectAppearance
 
 //***************************************************************************
 
-
 #endif
-
 

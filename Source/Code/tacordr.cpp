@@ -12,68 +12,22 @@
 #include "mclib.h"
 #endif
 
-#ifndef TACORDR_H
 #include "tacordr.h"
-#endif
-
-#ifndef MOVE_H
 #include "move.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef MECH_H
 #include "mech.h"
-#endif
-
-#ifndef GVEHICL_H
 #include "gvehicl.h"
-#endif
-
-#ifndef WARRIOR_H
 #include "warrior.h"
-#endif
-
-#ifndef BLDNG_H
 #include "bldng.h"
-#endif
-
-#ifndef GROUP_H
 #include "group.h"
-#endif
-
-#ifndef UNITDESG_H
 #include "unitdesg.h"
-#endif
-
-#ifndef MULTPLYR_H
 #include "multplyr.h"
-#endif
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
-
-#ifndef SOUNDS_H
 #include "sounds.h"
-#endif
-
-#ifndef TEAM_H
 #include "team.h"
-#endif
-
-#ifndef MISSION_H
 #include "mission.h"
-#endif
-
-#ifndef COMNDR_H
 #include "comndr.h"
-#endif
-
 #include "LogisticsData.h"
-
 #include <stdio.h>
 
 //***************************************************************************
@@ -519,7 +473,6 @@ long TacticalOrder::pack (MoverGroupPtr group, MoverPtr point) {
 
 		tempData |= worldCell[1];
 		tempData <<= TACORDERCHUNK_RUN_BITS;
-
 	}
 
 	tempData |= ((moveParams.wayPath.mode[0] == TRAVEL_MODE_FAST) ? 1 : 0);
@@ -1493,7 +1446,6 @@ long TacticalOrder::status (MechWarriorPtr warrior) {
 								time = g_missionTime;
 							if (!warrior->getVehicle()->getRefitPoints())
 								warrior->getVehicle()->disable(POWER_USED_UP);
-
 						}
 						break;
 					case 4: // done. power-up (or whatever) and report
@@ -1651,7 +1603,6 @@ long TacticalOrder::status (MechWarriorPtr warrior) {
 				case -1:	// execute failed
 					result = TACORDER_SUCCESS;
 					break;
-
 			}
 #endif
 			}

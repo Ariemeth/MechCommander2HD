@@ -3,11 +3,7 @@
 //===========================================================================//
 
 #include "stdafx.h"
-
-#ifndef EDITORINTERFACE_H
 #include "EditorInterface.h"
-#endif
-
 #include <GameOS.hpp>
 #include <ToolOS.hpp>
 #include <mlr\mlr.hpp>
@@ -22,7 +18,6 @@
 //#include "d3dfont.h"
 extern void InitWLib(void);
 /* end jubilee stuff */
-
 
 // globals used for memory
 UserHeapPtr g_systemHeap = NULL;
@@ -39,7 +34,6 @@ unsigned long g_tglHeapSize = 256 * MEGABYTES_TO_BYTES;
 unsigned long g_maxVertexCount = 1000000;
 
 Stuff::MemoryStream *effectStream = NULL;
-
 
 DWORD BaseVertexColor = 0x00000000;		//This color is applied to all vertices in game as Brightness correction.
 
@@ -173,7 +167,6 @@ void DoGameLogic()
 
 	bool doTransformMath = true;
 
-
 	if (doTransformMath)
 	{
 		//-------------------------------------
@@ -185,7 +178,6 @@ void DoGameLogic()
 		// Update all of the timers
 		timerManager->update();
 	}
-
 
 	//---------------------------------------------------
 	// Update heap instrumentation.
@@ -500,7 +492,6 @@ void InitializeGameEngine()
 	FitIniFilePtr prefs = new FitIniFile;
 
 	Environment.Key_Exit= (unsigned long)-1;
-
 
 #ifdef _DEBUG
 	long prefsOpenResult = 
@@ -999,7 +990,6 @@ void GetGameOSEnvironment( char* CommandLine )
 	dev.dmSpecVersion = DM_SPECVERSION;
 	EnumDisplaySettings( NULL, ENUM_CURRENT_SETTINGS, &dev );
 
-	
 	Environment.screenWidth = dev.dmPelsWidth;
 	Environment.screenHeight = dev.dmPelsHeight;
 
@@ -1051,6 +1041,4 @@ void GetGameOSEnvironment( char* CommandLine )
 
 	EditorData::setMapName( NULL );
 }
-
-
 

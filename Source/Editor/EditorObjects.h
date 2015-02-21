@@ -10,15 +10,8 @@ EditorObjects.h			: Interface for the EditorObjects, buildings, mechs etc.
 class FitIniFile;
 
 #include "ObjectAppearance.h"
-
-#ifndef HEAP_H
 #include <heap.h>
-#endif
-
-#ifndef ELIST_H
 #include "EList.h"
-#endif
-
 #include "DAprType.h"
 #define MAX_PILOT	64
 //*************************************************************************************************
@@ -92,7 +85,6 @@ protected:
 			result = g_systemHeap->Malloc(mySize);
 			
 			return(result);
-		
 		}
 
 		void operator delete (void *us)
@@ -101,8 +93,6 @@ protected:
 		}
 
 		AppearanceInfo& operator=( const AppearanceInfo& src );
-
-
 	};
 
 	long	cellColumn;
@@ -113,9 +103,7 @@ protected:
 	long	scale; // forest only
 
 	friend class EditorObjectMgr; // the only thing that can move and change these things
-
 };
-
 
 // THIS CLASS CLEARLY NEEDS FLESHING OUT!
 //*************************************************************************************************
@@ -148,7 +136,6 @@ public:
 	PilotInfo* info;
 	/*note: The value of info should always be NULL or a pointer to static data. So the default
 	assignment/copy operator (shallow copy) is valid. */
-	
 };
 
 //*************************************************************************************************
@@ -252,7 +239,6 @@ protected:
 	unsigned long						variant;
 };
 
-
 class CUnitList : public EList<Unit, Unit&> {};
 
 //*************************************************************************************************
@@ -280,11 +266,8 @@ class NavMarker : public EditorObject
 		NavMarker();
 		virtual EditorObject *Clone() { return(new NavMarker(*this)); }
 		virtual bool save( FitIniFile* file, int number );
-
 };
 
-
 //*************************************************************************************************
-
 
 #endif  // end of file ( EditorObjects.h )

@@ -6,13 +6,8 @@
 #include <stuff\stuff.hpp>
 #endif
 
-#ifndef DSTD_H
 #include "dstd.h"
-#endif
-
-#ifndef MATHFUNC_H
 #include "mathfunc.h"
-#endif
 
 Stuff::Vector3D UnitI(-1.0f,0.0f,0.0f);
 Stuff::Vector3D UnitJ(0.0f,-1.0f,0.0f);
@@ -325,5 +320,4 @@ frameOfRef & frameOfRef::orthonormalize_on_zaxis ()
 }
 
 /* ---------------------------------------------------------------------- */
-
 

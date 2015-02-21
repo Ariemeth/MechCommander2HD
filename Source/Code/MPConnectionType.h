@@ -9,22 +9,12 @@ MPConnectionType.h			: Interface for the MPConnectionType component.
 
 //*************************************************************************************************
 
-#ifndef LOGISTICSSCREEN_H
 #include "LogisticsScreen.h"
-#endif
-
 #include "aSystem.h"
 #include "aButton.h"
 #include "aListBox.h"
-
-#ifndef AANIM_H
 #include "aAnim.h"
-#endif
-
-#ifndef MPHOSTGAME_H
 #include "MPHostGame.h"
-#endif
-
 #include "assert.h"
 
 static const int ZONE_PANEL_FIRST_BUTTON_ID = 1000100;
@@ -46,7 +36,6 @@ private:
 	bool	bShowWarning;
 };
 
-
 static const int LAN_PANEL_FIRST_BUTTON_ID = 1000200;
 
 class aLanPanel : public aObject
@@ -65,7 +54,6 @@ private:
 	aAnimButton button1;
 	aText text;
 };
-
 
 static const int TCPIP_PANEL_FIRST_BUTTON_ID = 1000300;
 
@@ -98,7 +86,6 @@ private:
 	bool	bErrorDlg;
 	bool			bExpanded;
 	bool	bFoundConnection;
-
 };
 
 class MPConnectionType : public LogisticsScreen
@@ -172,8 +159,6 @@ public:
 
 private:
 };
-
-
 
 //*************************************************************************************************
 #endif  // end of file ( MPConnectionType.h )

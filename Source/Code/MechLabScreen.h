@@ -7,21 +7,10 @@ MechLabScreen.h			: Interface for the MechLabScreen component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef LOGISTICSSCREEN_H
 #include "LogisticsScreen.h"
-#endif
-
-#ifndef ATTRIBUTEMETER_H
 #include "AttributeMeter.h"
-#endif
-
-#ifndef COMPONENTLISTBOX_H
 #include "ComponentListBox.h"
-#endif
-
-#ifndef SIMPLECAMERA_H
 #include "SimpleCamera.h"
-#endif
 
 #define MECH_LAB_ATTRIBUTE_METER_COUNT	9
 class FitIniFile;
@@ -61,7 +50,6 @@ class MechLabScreen: public LogisticsScreen
 		static MechLabScreen* instance() { return s_instance;}
 
 		bool canRemoveComponent( LogisticsComponent* pComp );
-
 
 	private:
 
@@ -129,7 +117,6 @@ class MechLabScreen: public LogisticsScreen
 
 		bool				bErrorDlg;
 
-
 		// HELPER FUNCTIONS
 		void getMouseDiagramCoords( long& x, long& y );
 		void getMouseDiagramCoords( long screenX, long screenY, long& x, long& y );
@@ -142,11 +129,7 @@ class MechLabScreen: public LogisticsScreen
 		void	updateHeatMeter();
 		void	updateArmorMeter();
 		void	removeComponent( long i, long j );
-
-
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( MechLabScreen.h )

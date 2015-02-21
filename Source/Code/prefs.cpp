@@ -3,11 +3,9 @@
 //===========================================================================//
 
 #include <io.h> // for _chmod()
-
 #include "prefs.h"
 #include "gamesound.h"
 #include "MissionGui.h"
-
 #include "soundSys.h"
 #include "..\resource.h"
 
@@ -37,7 +35,6 @@ CPrefs::CPrefs() {
 
 	for (i = 0; i < 10; i++ )
 		ipAddresses[i][0] = 0;
-
 
 	baseColor = 0xffff7e00;
 	highlightColor = 0xffff7e00;
@@ -171,7 +168,6 @@ int CPrefs::load( const char* pFileName ) {
 				result = prefsFile->readIdString( blockName, &unitName[i][0], 255 );
 			}
 
-		
 			result = prefsFile->readIdLong( "BaseColor", baseColor );
 			if ( result != NO_ERR )	
 				baseColor = 0xffff7e00;
@@ -263,7 +259,6 @@ int CPrefs::load( const char* pFileName ) {
 			if (result != NO_ERR)
 				Camera::cameraTilt[3] = 35.0f;
 		}
-
 	}
 #ifndef VIEWER
 	MissionInterfaceManager::loadHotKeys( *prefsFile);
@@ -334,7 +329,6 @@ int CPrefs::save() {
 
 				sprintf( blockName, "IPAddress%d", i );
 				result = prefsFile->writeIdString( blockName, &ipAddresses[i][0] );
-
 			}
 
 			result = prefsFile->writeIdLong( "BaseColor", baseColor );
@@ -373,8 +367,7 @@ int CPrefs::save() {
 	MissionInterfaceManager::saveHotKeys( *prefsFile);
 #endif
 	prefsFile->close();
-	
-	
+
 	delete prefsFile;
 	prefsFile = NULL;
 
@@ -581,6 +574,4 @@ void CPrefs::setNewUnit( const char* pNewUnit )
 		strcpy( unitName[0], pNewUnit );
 	}
 }
-
-
 

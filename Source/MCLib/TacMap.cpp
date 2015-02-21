@@ -16,7 +16,6 @@ TacMap::TacMap()
 {
 }
 
-
 void TacMap::worldToTacMap( Stuff::Vector3D& world, int xOffset, int yOffset, int xSize, int ySize, gos_VERTEX& tac )
 {
 	long tacX;
@@ -37,7 +36,6 @@ void TacMap::worldToTacMap( Stuff::Vector3D& world, int xOffset, int yOffset, in
 
 	tac.x += xOffset;
 	tac.y += yOffset;
-
 }
 
 void TacMap::tacMapToWorld( const Stuff::Vector2DOf<long>& screen, int xSize, int ySize,  Stuff::Vector3D& world )

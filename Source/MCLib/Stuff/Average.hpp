@@ -348,5 +348,4 @@ namespace Stuff {
 		size_t size;
 		T total;
 	};
-
 }

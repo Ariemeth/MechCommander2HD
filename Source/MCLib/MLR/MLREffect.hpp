@@ -159,6 +159,4 @@ namespace MidLevelRenderer {
 		int flags;
 		int length;
 	};
-
-
 }

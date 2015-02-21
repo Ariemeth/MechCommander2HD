@@ -12,7 +12,6 @@ class aTitleWindow;
 class InterfaceObject;
 
 #include <gameos.hpp>
-
 #include "EString.h"
 #include "aFont.h"
 
@@ -53,8 +52,6 @@ typedef enum
 	NUMBER_OF_WINDOWTYPES
 } WINDOW_ID;
 
-
-
 // Error codes, local to this file...
 #define	DUPLICATE_INSTANCE			-1
 #define	FAILED_TO_CREATE_WINDOW		-2
@@ -71,8 +68,6 @@ typedef enum
 
 extern long helpTextID;
 extern long helpTextHeaderID;
-
-
 
 class aBaseObject
 {
@@ -136,13 +131,11 @@ public:
 	aObject*	children();
 	aObject*	child(long w);
 
-	
 	virtual void		render();
 	virtual void		render(long x, long y);
 	virtual void		update();
 
 	long getColor(){ return location[0].argb; }
-		
 
 	void		showGUIWindow(bool show) {showWindow = show;}
 	bool		isShowing(void) const {return showWindow;}
@@ -159,7 +152,6 @@ public:
 
 	void			setHelpID( int newID ) { helpID = newID; }
 	int				getHelpID() const { return helpID; }
-	
 
 	float		left()
 	{
@@ -179,8 +171,6 @@ public:
 		return y() + height();
 	}
 
-
-	
 protected:
 
 	gos_VERTEX		location[4];
@@ -189,7 +179,6 @@ protected:
 	float		fileWidth;
 	bool		showWindow;
 
-	
 	aObject*	pChildren[MAX_CHILDREN];
 	long		pNumberOfChildren;
 	aObject*	pParent;
@@ -200,10 +189,7 @@ protected:
 
 	long			helpHeader;
 	long			helpID;
-
-
 };
-
 
 //class aRect : public aBaseObject
 /* It may seem wasteful to derive from aObject instead of aBaseObject, but an aRect 
@@ -225,7 +211,6 @@ public:
 	GUI_RECT getGlobalGUI_RECT();
 
 	bool	bOutline;
-
 };
 
 class aText : public aObject
@@ -240,7 +225,6 @@ public:
 
 	virtual void render();
 	virtual void		render(long x, long y);
-	
 
 	void	init( FitIniFile* file, const char* header );
 
@@ -256,11 +240,6 @@ public:
 private:
 
 	void CopyData( const aText& src );
-
-
-
 };
-
-
 
 #endif ASYSTEM_H

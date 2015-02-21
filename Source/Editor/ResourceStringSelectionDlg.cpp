@@ -8,7 +8,6 @@
 #include "stdafx.h"
 #include "resource.h"
 #include "ResourceStringSelectionDlg.h"
-
 #include "assert.h"
 #include "..\MCLib\Utilities.h" /*for cLoadString*/
 
@@ -20,7 +19,6 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 // ResourceStringSelectionDlg dialog
-
 
 ResourceStringSelectionDlg::ResourceStringSelectionDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(ResourceStringSelectionDlg::IDD, pParent)
@@ -34,7 +32,6 @@ ResourceStringSelectionDlg::ResourceStringSelectionDlg(CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
 }
 
-
 void ResourceStringSelectionDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -42,7 +39,6 @@ void ResourceStringSelectionDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_RESOURCE_STRING_SELECTION_COMBO, m_Combo);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(ResourceStringSelectionDlg, CDialog)
 	//{{AFX_MSG_MAP(ResourceStringSelectionDlg)

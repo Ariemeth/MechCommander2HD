@@ -32,10 +32,6 @@ public:
 	virtual void update( int screenX, int screenY ){}
 
 private:
-
-
 };
-
-
 
 #endif // BRUSH_H_

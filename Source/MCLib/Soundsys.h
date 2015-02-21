@@ -11,34 +11,13 @@
 #define SOUNDSYS_H
 //---------------------------------------------------------------------------
 // Include files
-#ifndef DSTD_H
 #include "dstd.h"
-#endif
-
-#ifndef HEAP_H
 #include "heap.h"
-#endif
-
-#ifndef PACKET_H
 #include "packet.h"
-#endif
-
-#ifndef CIDENT_H
 #include "cident.h"
-#endif
-
-#ifndef PATHS_H
 #include "paths.h"
-#endif
-
-#ifndef INIFILE_H
 #include "inifile.h"
-#endif
-
-#ifndef TIMING_H
 #include "timing.h"
-#endif
-
 #include <math.h>
 #include <gameos.hpp>
 #include <Stuff\Stuff.hpp>
@@ -248,7 +227,6 @@ class SoundSystem
 		long playBettySample (unsigned long bettySampleId);
 		void stopBettySample (void);
 
-		
 		long playSupportSample (unsigned long supportSampleId, char* fileName = NULL);
 		
  		void stopDigitalSample (unsigned long sampleHandleNumber);

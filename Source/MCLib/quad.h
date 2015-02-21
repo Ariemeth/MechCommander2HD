@@ -12,17 +12,9 @@
 #define QUAD_H
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef DQUAD_H
 #include "dquad.h"
-#endif
-
-#ifndef DVERTEX_H
 #include "dvertex.h"
-#endif
-
-#ifndef DSTD_H
 #include "dstd.h"
-#endif
 
 //---------------------------------------------------------------------------
 typedef struct _TerrainUVData
@@ -53,7 +45,6 @@ typedef struct _MineResult
 		DWORD result = (mineData >> (pos << 1)) & (0x3);
 		return result;
 	}
-	
 } MineResult;
 
 class TerrainQuad
@@ -82,7 +73,6 @@ class TerrainQuad
 		static DWORD 		mineTextureHandle;		//Handle to the mine textures.
 		static DWORD 		blownTextureHandle;
 
-		
 #ifdef _DEBUG
 		bool				selected;			//Debug to show which triangle I am on.
 #endif

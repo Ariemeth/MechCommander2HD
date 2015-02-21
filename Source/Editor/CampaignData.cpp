@@ -4,10 +4,8 @@
 
 #include "StdAfx.h"
 #include "CampaignData.h"
-
 #include "EString.h"
 #include "ECharString.h"
-
 #include "assert.h"
 
 static long sReadIdBoolean(FitIniFile &missionFile, const char *varName, bool &value) {
@@ -45,7 +43,6 @@ static long sReadIdString(FitIniFile &missionFile, const char *varName, CString 
 	}
 	return result;
 }
-
 
 CMissionData::CMissionData() {
 	m_PurchaseFile = "purchase_All";

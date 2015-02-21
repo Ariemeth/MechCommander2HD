@@ -125,5 +125,4 @@ namespace Stuff {
 		Normal3D& operator/=(Scalar Value);
 		Normal3D& Combine(const Vector3D& V1,Scalar t1,const Vector3D& V2,Scalar t2);
 	};
-
 }

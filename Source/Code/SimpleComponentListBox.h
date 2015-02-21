@@ -7,9 +7,7 @@ SimpleComponentListBox.h			: Interface for the SimpleComponentListBox component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef ALISTBOX_H
 #include "aListBox.h"
-#endif
 
 class LogisticsVariant;
 class LogisticsVehicle;
@@ -35,10 +33,7 @@ class ComponentListBox: public aListBox
 		ComponentListBox( const ComponentListBox& src );
 		ComponentListBox& operator=( const ComponentListBox& omponentListBox );
 		// HELPER FUNCTIONS
-
 };
-
-
 
 //*************************************************************************************************
 #endif  // end of file ( SimpleComponentListBox.h )

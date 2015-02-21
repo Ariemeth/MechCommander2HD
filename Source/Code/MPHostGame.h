@@ -9,19 +9,12 @@ MPHostGame.h			: Interface for the MPHostGame component.
 
 //*************************************************************************************************
 
-#ifndef LOGISTICSDIALOG_H
 #include "LogisticsDialog.h"
-#endif
-
 #include "aSystem.h"
 #include "aListBox.h"
 #include "AttributeMeter.h"
 #include "SimpleCamera.h"
-
-#ifndef AANIM_H
 #include "aAnim.h"
-#endif
-
 
 class aStyle5TextListItem : public aTextListItem
 {
@@ -52,7 +45,6 @@ public:
 	virtual void update();
 	virtual int			handleMessage( unsigned long, unsigned long );
 
-
 private:
 //	aEdit		nameEntry;
 //	aRect		nameEntryOutline;
@@ -60,8 +52,6 @@ private:
 
 	int indexOfButtonWithID(int id);
 };
-
-
 
 //*************************************************************************************************
 #endif  // end of file ( MPHostGame.h )

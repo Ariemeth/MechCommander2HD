@@ -7,17 +7,9 @@ KeyboardRef.h			: Interface for the KeyboardRef component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef LOGISTICSSCREEN_H
 #include "LogisticsScreen.h"
-#endif
-
-#ifndef ALISTBOX_H
 #include "aListBox.h"
-#endif
-
-#ifndef MISSIONGUI_H
 #include "MissionGui.h"
-#endif
 
 //*************************************************************************************************
 
@@ -42,7 +34,6 @@ class KeyboardRef: public LogisticsScreen
 
 		virtual int			handleMessage( unsigned long, unsigned long );
 
-
 	private:
 
 		KeyboardRef( const KeyboardRef& src );
@@ -51,9 +42,7 @@ class KeyboardRef: public LogisticsScreen
 		aListBox		listBox;
 		aTextListItem	listItemTemplate;
 		aTextListItem	listItemTemplate2;
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( KeyboardRef.h )

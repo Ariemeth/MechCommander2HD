@@ -8,10 +8,7 @@ eraser.cpp			: Implementation of the eraser component.
 
 #include "eraser.h"
 #include "MineBrush.h"
-
-#ifndef OBJECTMGR_H
 #include "EditorObjectMgr.h"
-#endif
 
 //---------------------------------------------------------------------------
 inline bool isCementType (DWORD type)
@@ -113,7 +110,6 @@ bool Eraser::paint( Stuff::Vector3D& worldPos, int screenX, int screenY )
 	}
 
 	return false;
-
 }
 bool Eraser::canPaint( Stuff::Vector3D& worldPos, int screenX, int screenY, int flags )
 {
@@ -258,7 +254,6 @@ bool Eraser::EraserAction::redo()
 	bRetVal = bldgAction.undo() && bRetVal;
 	bRetVal = ActionPaintTile::undo() && bRetVal;
 	return bRetVal;
-
 }
 //*************************************************************************************************
 // end of file ( eraser.cpp )

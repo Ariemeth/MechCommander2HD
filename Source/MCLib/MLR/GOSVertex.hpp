@@ -264,7 +264,6 @@ void
 		fstp		st(1)
 
 		fstp        dword ptr [eax]			//	x
-
 	}
 #else
 	x = v.x*m(0,0) + v.y*m(1,0) + v.z*m(2,0) + m(3,0);
@@ -511,7 +510,6 @@ void
 		return GOSCopyColor(&lerp);
 	}
 
-
 	//######################################################################################################################
 	//	the lines below will produce following functions:
 	//
@@ -552,5 +550,4 @@ void
 	#include <MLR\GOSVertexManipulation.hpp>
 
 	#define MLR_GOSVERTEXMANIPULATION_HPP
-
 }

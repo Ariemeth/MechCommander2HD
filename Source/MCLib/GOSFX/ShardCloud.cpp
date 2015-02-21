@@ -86,7 +86,6 @@ void
 	m_angularity.m_ageCurve.SetCurve(1.0f);
 	m_angularity.m_seeded = false;
 	m_angularity.m_seedCurve.SetCurve(1.0f);
-
 }
 
 //------------------------------------------------------------------------------

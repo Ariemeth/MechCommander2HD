@@ -37,7 +37,6 @@ public:
 	int		m_NumMissionsToCompleteEdit;
 	//}}AFX_DATA
 
-
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CGroupDialog)

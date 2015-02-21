@@ -8,7 +8,6 @@
 
 #include "Stuff.hpp"
 
-
 namespace Stuff
 {
 
@@ -55,8 +54,6 @@ namespace Stuff
 	  private:
 		T* m_ptr;
 	};
-
 }; // namespace Stuff
-
 
 #endif // PTR_HPP

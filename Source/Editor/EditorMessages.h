@@ -40,6 +40,5 @@ EditorMessages.h			: Interface for the EditorMessages component.
 #define DAMAGE				33
 #define REPAIR				34
 
-
 //*************************************************************************************************
 #endif  // end of file ( EditorMessages.h )

@@ -126,7 +126,6 @@ void OptionsXScreen::init(FitIniFile* file)
 
 		tabAreas[i]->init( tmpFile, "Static", "Text", "Rect", "Button", "Edit" );
 		tabAreas[i]->moveTo( rects[2].x(), rects[2].y() );
-
 	}
 
 	// 640: offset x = -80, y = -90
@@ -159,13 +158,9 @@ void OptionsXScreen::init(FitIniFile* file)
 		xOffset = 400;
 		yOffset = 270;
 		break;
-
-
-
 	}
 
 	move( xOffset, yOffset );
-
 
 	pGraphics->init(xOffset, yOffset);
 	pAudio->init(xOffset, yOffset);
@@ -176,7 +171,6 @@ void OptionsXScreen::init(FitIniFile* file)
 	CPrefs::originalSettings.load( "OrgPrefs" );
 
 	g_userPreferences.load();
-
 
 	for ( i = 0; i < 4; i++ )
 		tabAreas[i]->begin();
@@ -207,7 +201,6 @@ void OptionsXScreen::render()
 		tabAreas[curTab]->render();
 	rects[1].setColor( 0 );
 	LogisticsScreen::render();
-
 
 	getButton( MSB_TAB0 + curTab )->render();
 
@@ -274,12 +267,10 @@ int	OptionsXScreen::handleMessage( unsigned long message, unsigned long who)
 				return 1;
 			}
 			break;
-
 		}
 	}
 
 	return 0;
-
 }
 
 bool OptionsXScreen::isDone()
@@ -305,15 +296,11 @@ void OptionsXScreen::update()
 
 		tabAreas[curTab]->update();
 	}
-	
-
-
 }
 
 void OptionsXScreen::updateOptions()
 {
 }
-
 
 //////////////////////////////////////////////
 typedef struct 
@@ -440,7 +427,6 @@ void OptionsGraphics::init(long xOffset, long yOffset)
 
 //If you set the values to any of the above, you will switch to that device.
 
-
 	for ( i = 0; i < buttonCount; i++ )
 	{
 		buttons[i].setPressFX( LOG_VIDEOBUTTONS );
@@ -448,14 +434,9 @@ void OptionsGraphics::init(long xOffset, long yOffset)
 		buttons[i].setDisabledFX( LOG_WRONGBUTTON );
 	}
 
-
 	move( xOffset, yOffset );
 
 	helpTextArrayID = 1;
-
-
-
-	
 }
 
 int		OptionsGraphics::handleMessage( unsigned long message, unsigned long fromWho )
@@ -474,7 +455,6 @@ void OptionsGraphics::render()
 	resolutionList.render();
 	
 	cardList.render();
-
 }
 
 void OptionsGraphics::update()
@@ -498,7 +478,6 @@ void OptionsGraphics::update()
 
 		if ( userInput->leftMouseReleased() )
 			bExpanded = 0;
-
 	}
 
 //	if ( cardList.ListBox().GetItemCount() > 1 )
@@ -515,15 +494,12 @@ void OptionsGraphics::update()
 	{
 		g_soundSystem->playDigitalSample( LOG_WRONGBUTTON );
 	}
-	
-
 }
 
 void OptionsGraphics::begin()
 {
 	helpTextArrayID = 1;
 	reset(g_userPreferences);
-
 }
 void OptionsGraphics::end()
 {
@@ -590,7 +566,6 @@ void OptionsGraphics::end()
 	int index = cardList.GetSelectedItem( );
 	if ((index != -1) && (g_userPreferences.renderer != 3))
 		g_userPreferences.renderer = index;
-
 }
 void OptionsGraphics::reset(const CPrefs& newPrefs)
 {
@@ -636,7 +611,6 @@ void OptionsAudio::init(long xOffset, long yOffset)
 		buttons[i].setPressFX( LOG_VIDEOBUTTONS );
 		buttons[i].setHighlightFX( LOG_DIGITALHIGHLIGHT );
 		buttons[i].setDisabledFX( LOG_WRONGBUTTON );
-
 	}
 
 	for ( i = 0; i < 5; i++ )
@@ -648,7 +622,6 @@ void OptionsAudio::init(long xOffset, long yOffset)
 	}
 
 	helpTextArrayID = 15;
-	
 }
 
 int		OptionsAudio::handleMessage( unsigned long message, unsigned long fromWho )
@@ -698,7 +671,6 @@ void OptionsAudio::begin()
 {
 	helpTextArrayID = 15;
 	reset(g_userPreferences);
-
 }
 void OptionsAudio::end()
 {
@@ -707,8 +679,6 @@ void OptionsAudio::end()
 	g_userPreferences.sfxVolume = scrollBars[2].GetScrollPos();
 	g_userPreferences.RadioVolume = scrollBars[3].GetScrollPos();
 	g_userPreferences.BettyVolume = scrollBars[4].GetScrollPos();
-
-
 }
 void OptionsAudio::reset(const CPrefs& newPrefs)
 {
@@ -717,8 +687,6 @@ void OptionsAudio::reset(const CPrefs& newPrefs)
 	scrollBars[2].SetScrollPos( newPrefs.sfxVolume );
 	scrollBars[3].SetScrollPos( newPrefs.RadioVolume );
 	scrollBars[4].SetScrollPos( newPrefs.BettyVolume );
-
-
 }
 
 //////////////////////////////////////////////
@@ -754,13 +722,11 @@ void OptionsGamePlay::init(long xOffset, long yOffset)
 		buttons[i].setPressFX( LOG_VIDEOBUTTONS );
 		buttons[i].setHighlightFX( LOG_DIGITALHIGHLIGHT );
 		buttons[i].setDisabledFX( LOG_WRONGBUTTON );
-
 	}
 
 	move( xOffset, yOffset );
 
 	helpTextArrayID = 2;
-	
 }
 
 int		OptionsGamePlay::handleMessage( unsigned long message, unsigned long fromWho )
@@ -798,7 +764,6 @@ void OptionsGamePlay::render()
 
 	LogisticsScreen::render();
 
-
 	long colorToMatch = getButton( MSG_BASE )->isPressed() ? 
 		rects[36].getColor() : rects[37].getColor();
 	for ( int i = 4; i < 36; i++ )
@@ -812,7 +777,6 @@ void OptionsGamePlay::render()
 
 			drawEmptyRect( tmp, 0xffffffff, 0xffffffff );
 			break;
-			
 		}
 	}
 
@@ -820,7 +784,6 @@ void OptionsGamePlay::render()
 	rects[36].render();
 
 	camera.render();
-
 }
 
 void OptionsGamePlay::update()
@@ -898,7 +861,6 @@ void OptionsGamePlay::end()
 	{
 		camera.setMech( NULL );
 	}
-
 }
 void OptionsGamePlay::reset(const CPrefs& newPrefs)
 {
@@ -923,7 +885,6 @@ void OptionsGamePlay::reset(const CPrefs& newPrefs)
 
 void OptionsHotKeys::init(long xOffset, long yOffset)
 {
-
 
 	hotKeyList.init( rects[0].x(), rects[0].y(), rects[0].width(), rects[0].height() );	
 	helpTextArrayID = 2;
@@ -1065,7 +1026,6 @@ void OptionsHotKeys::update()
 					LogisticsOKDialog::instance()->begin();
 					bShowDlg = true;
 				}
-
 			}
 				
 			if ( !bShowDlg )
@@ -1084,7 +1044,6 @@ void OptionsHotKeys::update()
 				}
 				hotKeyList.SelectItem( -1 );
 			}
-
 		}
 	}
 }
@@ -1121,9 +1080,7 @@ void OptionsHotKeys::makeKeyString( long newKey, char* keysString )
 	}	
 	
 	strcat( keysString, pKey );
-
 }
-
 
 int OptionsHotKeys::makeInputKeyString( long& tmpKey, char* hotKeyString )
 {
@@ -1177,7 +1134,6 @@ void OptionsHotKeys::begin()
 {
 	helpTextArrayID = 2;
 	reset(0);
-
 }
 void OptionsHotKeys::end()
 {
@@ -1273,11 +1229,8 @@ long ScrollX::init(aButton* pLeft, aButton* pRight, aButton* pTab)
 
 	setColor( 0 );
 
-
 	return (NO_ERR);
 }
-
-
 
 void ScrollX::SetScrollMax(float newMax)
 {
@@ -1294,7 +1247,6 @@ void ScrollX::SetScrollPos(float newPos)
 		newPos = scrollMax;
 	scrollPos = newPos;
 	ResizeAreas();	
-	
 }
 
 void ScrollX::SetScroll( long newScrollPos )
@@ -1309,7 +1261,6 @@ void ScrollX::SetScroll( long newScrollPos )
 		getParent()->handleMessage( aMSG_SCROLLTO, newScrollPos );
 	
 	SetScrollPos( newScrollPos );
-
 }
 void ScrollX::update()
 {
@@ -1331,9 +1282,7 @@ void ScrollX::update()
 				newScrollPos = scrollMax;
 			getParent()->handleMessage( aMSG_SCROLLTO, newScrollPos );
 
-
 			SetScrollPos( newScrollPos );
-
 		}
 		else if ( pointInside( mouseX, mouseY ) )
 		{
@@ -1377,20 +1326,17 @@ void ScrollX::update()
 							SetScrollPos( newScrollPos );
 						}
 					}
-					
 				}
 			}
 			else
 				buttons[2]->press( 0 );
-
 		}
 		else 
 			buttons[2]->press( 0 );
 
 		if ( userInput->leftMouseReleased() )
 			lastX = 0;
-		
-	
+
 	aObject::update();
 }
 
@@ -1421,7 +1367,6 @@ void ScrollX::ResizeAreas(void)
 	position = range * scrollPos / scrollMax;	//	center of scroll tab;
 
 	buttons[2]->moveTo( globalX() + position + buttons[0]->width() + 2, globalY() + 1);
-
 }
 
 void ScrollX::Enable( bool enable )
@@ -1430,7 +1375,6 @@ void ScrollX::Enable( bool enable )
 	buttons[0]->disable( !enable );
 	buttons[1]->disable( !enable );
 }
-
 
 void HotKeyListItem::init()
 {
@@ -1462,7 +1406,6 @@ void HotKeyListItem::init()
 void HotKeyListItem::render()
 {
 
-
 	aAnimGroup::STATE curState = (aAnimGroup::STATE)getState();
 
 	for ( int i = 0; i < 3; i++ )
@@ -1478,7 +1421,6 @@ void HotKeyListItem::render()
 
 void HotKeyListItem::update()
 {
-
 }
 
 void HotKeyListItem::setDescription( const char* pText )
@@ -1510,9 +1452,6 @@ HotKeyListItem::HotKeyListItem( )
 		addChild( &description );
 		addChild( &text );
 		addChild( &rects[0] );
-
-
 	}
 }
-
 

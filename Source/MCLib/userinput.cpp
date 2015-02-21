@@ -9,36 +9,14 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef USERINPUT_H
 #include "userinput.h"
-#endif
-
-#ifndef TIMING_H
 #include "timing.h"
-#endif
-
-#ifndef CIDENT_H
 #include "cident.h"
-#endif
-
-#ifndef INIFILE_H
 #include "inifile.h"
-#endif
-
-#ifndef PATHS_H
 #include "paths.h"
-#endif
-
-#ifndef CLIP_H
 #include "clip.h"
-#endif
-
-#ifndef TXMMGR_H
 #include "txmmgr.h"
-#endif
-
 #include <windows.h>
-
 #include <stuff\stuff.hpp>
 #include <math.h>
 
@@ -101,7 +79,6 @@ void MouseCursorData::initCursors (char *cursorFileName)
 		cursorFile.readIdChar( "HotSpotY", mouseHS[i][1] );
 		cursorFile.readIdULong( "NumFrames", numFrames[i] );
 		cursorFile.readIdFloat( "FrameLength", frameLengths[i] );
-
 	}
 	
 	cursorFile.close();
@@ -177,7 +154,6 @@ void UserInput::update (void)
 	leftClick = rightClick = middleClick = false;
 	leftDoubleClick = rightDoubleClick = middleDoubleClick = false;
 
-	
 	DWORD LEFT_MOUSE_CODE = VK_LBUTTON;
 	DWORD RIGHT_MOUSE_CODE = VK_RBUTTON;
 	if ( GetSystemMetrics(SM_SWAPBUTTON) )
@@ -249,8 +225,6 @@ void UserInput::update (void)
 		mouseDragY = lastMouseYPosition;
 
 		leftMouseDrag = 0;
-		
-
 	}
 
 	else if (gos_GetKeyStatus( KEY_LMOUSE ) == KEY_HELD /*code & 0x8000*/) // held
@@ -272,7 +246,6 @@ void UserInput::update (void)
 
 		mouseLeftUpTime = 0;
 		mouseLeftHeldTime += g_frameTime;
-
 	}
 
 	if ((rightMouseButtonState == MC2_MOUSE_UP) && (lastRightMouseButtonState == MC2_MOUSE_DOWN))
@@ -875,9 +848,6 @@ void UserInput::render (void)						//Last thing rendered.  Draws Mouse.
 				cursors->cursorInfos[mouseState].render();
 				cursors->cursorInfos[mouseState].u = oldU;
 				cursors->cursorInfos[mouseState].v = oldV;
-
-
-
 			}
 			else
 				cursors->cursorInfos[mouseState].render();

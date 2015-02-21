@@ -9,17 +9,9 @@
 //---------------------------------------------------------------------------
 // Include files
 
-#ifndef CEPANE_H
 #include "cepane.h"
-#endif
-
-#ifndef VPORT_H
 #include "vport.h"
-#endif
-
-#ifndef VFX_H
 #include "vfx.h"
-#endif
 
 //---------------------------------------------------------------------------
 // Static Globals
@@ -93,7 +85,6 @@ DeltaElement::DeltaElement (MemoryPtr _shape, long _x, long _y, long frame, bool
 	}
 #endif
 }
-	
 
 //---------------------------------------------------------------------------
 void DeltaElement::draw (void)
@@ -122,5 +113,4 @@ void DeltaElement::draw (void)
 			AG_shape_translate_draw(globalPane,shapeTable,frameNum+1,x,y);
 		}
 	}
-	
 }

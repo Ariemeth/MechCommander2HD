@@ -143,7 +143,6 @@ namespace Stuff {
 				{return (T)GetCurrentPlug();}
 	};
 
-
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~ SlotOf templates ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	template <class T>
@@ -156,6 +155,5 @@ namespace Stuff {
 		SlotOf<T>::~SlotOf()
 	{
 	}
-
 }
 

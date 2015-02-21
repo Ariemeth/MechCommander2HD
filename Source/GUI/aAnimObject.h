@@ -7,13 +7,8 @@ aAnimObject.h			: Interface for the aAnimObject component of the GUI library.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef ASYSTEM_H
 #include "aSystem.h"
-#endif
-
-#ifndef AANIM_H
 #include "aAnim.h"
-#endif
 
 //*************************************************************************************************
 
@@ -29,7 +24,6 @@ class aAnimObject: public aObject
 		virtual ~aAnimObject();
 		aAnimObject& operator=( const aAnimObject& AnimObject );
 
-
 		int init( FitIniFile* file, const char* blockName, DWORD neverFlush = 0);
 
 		virtual void update();
@@ -43,13 +37,10 @@ class aAnimObject: public aObject
 
 		aAnimation		animInfo;
 
-
 	private:
 	
 		aAnimObject( const aAnimObject& src );	
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( aAnimObject.h )

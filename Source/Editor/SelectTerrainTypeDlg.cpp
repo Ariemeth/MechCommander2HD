@@ -8,7 +8,6 @@
 #include "stdafx.h"
 #include "resource.h"
 #include "SelectTerrainTypeDlg.h"
-
 #include "Utilities.h"
 #include "TerrTxm.h"
 #include "Terrain.h"
@@ -22,7 +21,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // SelectTerrainTypeDlg dialog
 
-
 SelectTerrainTypeDlg::SelectTerrainTypeDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(SelectTerrainTypeDlg::IDD, pParent)
 {
@@ -31,7 +29,6 @@ SelectTerrainTypeDlg::SelectTerrainTypeDlg(CWnd* pParent /*=NULL*/)
 	//}}AFX_DATA_INIT
 }
 
-
 void SelectTerrainTypeDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -39,7 +36,6 @@ void SelectTerrainTypeDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SELECT_TERRAIN_TYPE_LIST, m_terrainTypeList);
 	//}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(SelectTerrainTypeDlg, CDialog)
 	//{{AFX_MSG_MAP(SelectTerrainTypeDlg)
@@ -79,7 +75,6 @@ BOOL SelectTerrainTypeDlg::OnInitDialog()
 					m_terrainTypeList.SetItemData(j, ID_TERRAINS_BLUEWATER + i);
 					bPlaced = 1;
 					break;
-
 				}
 			}
 

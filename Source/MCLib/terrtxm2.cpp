@@ -11,41 +11,15 @@
 //---------------------------------------------------------------------------
 // Include Files
 #include <windows.h> /*only for declaration of DeleteFile() */
-
-#ifndef TERRTXM2_H
 #include "terrtxm2.h"
-#endif
-
-#ifndef PATHS_H
 #include "paths.h"
-#endif
-
-#ifndef TGAINFO_H
 #include "tgainfo.h"
-#endif
-
-#ifndef CIDENT_H
 #include "cident.h"
-#endif
-
-#ifndef FILE_H
 #include "file.h"
-#endif
-
-#ifndef VERTEX_H
 #include "vertex.h"
-#endif
-
-#ifndef TERRAIN_H
 #include "terrain.h"
-#endif
-
-#ifndef CAMERA_H
 #include "camera.h"
-#endif
-
 #include "resizeimage.h"
-
 #include <io.h>
 #include <sys\stat.h>
 
@@ -750,8 +724,7 @@ void TerrainColorMap::burnInShadows (bool doBumpPass, char *fileName)
 				triVect[1].x = worldUnitsPerPixel;
 				triVect[1].y = worldUnitsPerPixel;
 				triVect[1].z = (v3 - v0) * ContrastEnhance;
-				
-			
+
 				normals[2].Cross(triVect[0],triVect[1]);
 				gosASSERT(normals[2].z > 0.0);
 				

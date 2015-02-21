@@ -451,5 +451,4 @@ namespace Stuff {
 			stream->ReadBytes(&array->data[0], length * sizeof(T));
 		return *stream;
 	}
-
 }

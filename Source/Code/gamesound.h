@@ -11,17 +11,9 @@
 #define GAMESOUND_H
 //---------------------------------------------------------------------------
 // Include files
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef DWARRIOR_H
 #include "dwarrior.h"
-#endif
-
-#ifndef RADIO_H
 #include "radio.h"
-#endif
 
 //---------------------------------------------------------------------------
 // Macro Defintiions

@@ -200,5 +200,4 @@ namespace Stuff {
 			Pop()
 				{MemoryStack::Pop();}
 	};
-
 }

@@ -9,10 +9,7 @@ MPParameterScreen.h			: Interface for the MPParameterScreen component.
 
 //*************************************************************************************************
 
-#ifndef LOGISTICSSCREEN_H
 #include "LogisticsScreen.h"
-#endif
-
 #include "aSystem.h"
 #include "aListBox.h"
 #include "AttributeMeter.h"
@@ -20,14 +17,9 @@ MPParameterScreen.h			: Interface for the MPParameterScreen component.
 #include "EList.h"
 #include "Multplyr.h"
 #include "MPLoadMap.h"
-
-#ifndef AANIM_H
 #include "aAnim.h"
-#endif
 
 struct _MC2Player;
-
-
 
 class aStyle2TextListItem : public aTextListItem
 {
@@ -40,8 +32,6 @@ protected:
 	bool hasAnimation;
 	aAnimGroup animGroup;
 	int normalColor;
-	
-
 };
 
 class aPlayerParams : public aObject
@@ -69,8 +59,6 @@ public:
 	int					getCommanderID( ) const { return commanderID; }
 
 	void				disableReadyButton();
-
-
 
 protected:
 	aAnimButton		CBillsSpinnerUpButton;
@@ -124,7 +112,6 @@ private:
 	CListOfDropListPointers listOfDropListPointers;
 };
 
-
 class MPParameterScreen : public LogisticsScreen
 {
 public:
@@ -150,7 +137,6 @@ public:
 
 	static MPParameterScreen* s_instance;
 
-
 private:
 	int indexOfButtonWithID(int id);
 	
@@ -159,9 +145,6 @@ private:
 	void				setMission( const char* fileName, bool resetData = 1 );
 	void				setMissionClientOnly( const char* pNewMapName );
 	void				checkVersionClientOnly( const char* pNewMapName );
-
-
-
 
 	aPlayerParams	playerParameters[MAX_MC_PLAYERS];
 	long			playerCount;
@@ -182,12 +165,7 @@ private:
 
 	bool			bHostLeftDlg;
 	bool			bWaitingToStart;
-
-	
-
 };
-
-
 
 //*************************************************************************************************
 #endif  // end of file ( MPParameterScreen.h )

@@ -11,20 +11,10 @@
 //--------------
 // Include Files
 
-#ifndef SORTLIST_H
 #include "sortlist.h"
-#endif
-
-#ifndef ERR_H
 #include "err.h"
-#endif
-
-#ifndef HEAP_H
 #include "heap.h"
-#endif
-
 #include <stdlib.h>
-
 #include <gameos.hpp>
 //***************************************************************************
 // Class SortList

@@ -222,7 +222,6 @@
 #define BETTY_MINES_GONE			52
 #define BETTY_SENSOR_CAPTURED		53
 
-
 #define MAX_BETTY_SAMPLES			54
 
 //---------------------------------------------------------------------------

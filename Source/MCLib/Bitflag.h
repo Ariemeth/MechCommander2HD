@@ -9,21 +9,10 @@
 #define BITFLAG_H
 //----------------------------------------------------------------------------------
 // Include Files
-#ifndef DBITFLAG_H
 #include "dbitflag.h"
-#endif
-
-#ifndef HEAP_H
 #include "heap.h"
-#endif
-
-#ifndef DSTD_H
 #include "dstd.h"
-#endif
-
-#ifndef VFX_H
 #include "vfx.h"
-#endif
 
 //----------------------------------------------------------------------------------
 // Macro Definitions

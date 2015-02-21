@@ -40,9 +40,7 @@ class SingleValueDlg: public CDialog
 		char  caption[256];
 
 		int val;
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( HeightDlg.h )

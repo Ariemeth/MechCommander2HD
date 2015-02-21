@@ -8,14 +8,8 @@
 
 //---------------------------------------------------------------------------
 // Include Files
-#ifndef DSTD_H
 #include "dstd.h"
-#endif
-
-#ifndef VFX_H
 #include "vfx.h"
-#endif
-
 #include <gameos.hpp>
 //---------------------------------------------------------------------------
 // Macro Definitions

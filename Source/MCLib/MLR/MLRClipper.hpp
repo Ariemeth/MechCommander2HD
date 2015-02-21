@@ -104,7 +104,6 @@ namespace MidLevelRenderer {
 			nrOfQuads,
 			currentNrOfQuads;
 
-
 		MLRState state;
 
 		void
@@ -228,5 +227,4 @@ namespace MidLevelRenderer {
 
 		GOSVertexPool allVerticesToDraw;
 	};
-
 }

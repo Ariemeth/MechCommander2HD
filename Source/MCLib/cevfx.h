@@ -11,10 +11,7 @@
 //---------------------------------------------------------------------------
 // Include files
 
-#ifndef CELEMENT_H
 #include "celement.h"
-#endif
-
 #include <float.h>
 #include <gameos.hpp>
 //---------------------------------------------------------------------------
@@ -166,7 +163,6 @@ class PolygonQuadElement : public Element
 	void init (gos_VERTEX *v);
 	
 	virtual void draw (void);
-
 };
 
 //---------------------------------------------------------------------------
@@ -186,7 +182,6 @@ class PolygonTriElement : public Element
 	void init (gos_VERTEX *v);
 	
 	virtual void draw (void);
-
 };
 
 //---------------------------------------------------------------------------
@@ -208,7 +203,6 @@ class TexturedPolygonQuadElement : public PolygonQuadElement
 	void init (gos_VERTEX *v, DWORD tHandle, bool writeZ = true, bool compZ = true);
 	
 	virtual void draw (void);
-
 };
 
 //---------------------------------------------------------------------------
@@ -228,7 +222,6 @@ class TexturedPolygonTriElement : public PolygonTriElement
 	void init (gos_VERTEX *v, DWORD tHandle);
 	
 	virtual void draw (void);
-
 };
 
 //---------------------------------------------------------------------------

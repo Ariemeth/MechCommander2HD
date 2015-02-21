@@ -7,9 +7,7 @@ SelectionBrush.h	: Interface for the SelectionBrush component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef BRUSH_H
 #include "Brush.h"
-#endif
 
 class ActionPaintTile;
 class ModifyBuildingAction;
@@ -54,10 +52,7 @@ class SelectionBrush: public Brush
 		ModifyBuildingAction*	pCurModifyBuildingAction;
 
 		int smoothRadius;
-
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( SelectionBrush.h )

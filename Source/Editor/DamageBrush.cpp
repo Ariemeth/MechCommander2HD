@@ -9,8 +9,6 @@ DamageBrush.cpp			: Implementation of the DamageBrush component.
 #include "DamageBrush.h"
 #include "EditorObjectMgr.h"
 
-
-
 bool DamageBrush::beginPaint()
 {
 	if ( !pAction )
@@ -55,7 +53,6 @@ bool DamageBrush::canPaint( Stuff::Vector3D& worldPos, int screenX, int screenY,
 	const EditorObject* pObject = EditorObjectMgr::instance()->getObjectAtPosition( worldPos );
 
 	return pObject ? true : false;
-
 }
 
 bool DamageBrush::canPaintSelection( )
@@ -87,7 +84,6 @@ Action* DamageBrush::applyToSelection()
 
 	return pRetAction;
 }
-
 
 //*************************************************************************************************
 // end of file ( DamageBrush.cpp )

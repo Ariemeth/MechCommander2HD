@@ -1,5 +1,4 @@
 
-
 /*************************************************************************************************\
 ChooseUnitDlg.cpp			: Implementation of the ChooseUnitDlg component.
 //---------------------------------------------------------------------------//
@@ -8,18 +7,14 @@ ChooseUnitDlg.cpp			: Implementation of the ChooseUnitDlg component.
 \*************************************************************************************************/
 
 #include "resource.h"
-
 #include <stdlib.h>
 #include <assert.h>
 #include "EString.h"
-
 #include "ChooseUnitDlg.h"
 #include "PointerSelectObjectDlg.h"
 #include "Objective.h"
-
 #include "EditorInterface.h"
 #include "EditorObjectMgr.h"
-
 
 //-------------------------------------------------------------------------------------------------
 ChooseUnitDlg::ChooseUnitDlg( unit_ptr_type &unitPtr, int alignmentToExclude ):CDialog(IDD_CHOOSE_UNIT)
@@ -178,13 +173,11 @@ void ChooseUnitDlg::OnOK()
 	EndDialog(IDOK);
 }
 
-
 //-------------------------------------------------------------------------------------------------
 
 ChooseUnitDlg::~ChooseUnitDlg()
 {
 }
-
 
 //*************************************************************************************************
 // end of file ( ChooseUnitDlg.cpp )

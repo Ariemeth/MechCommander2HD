@@ -120,9 +120,7 @@ void
 	m_perturbation.m_ageCurve.SetCurve(0.25f);
 	m_perturbation.m_seeded = false;
 	m_perturbation.m_seedCurve.SetCurve(1.0f);
-
 }
-
 
 //------------------------------------------------------------------------------
 //
@@ -157,7 +155,6 @@ bool
 	m_perturbation.m_seeded = false;
 	m_perturbation.m_seedCurve.SetCurve(1.0f);
 */
-
 }
 
 //------------------------------------------------------------------------------

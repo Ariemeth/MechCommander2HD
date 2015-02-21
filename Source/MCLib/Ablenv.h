@@ -11,30 +11,12 @@
 #define ABLENV_H
 
 #include <stdio.h>
-
-#ifndef DABLENV_H
 #include "dablenv.h"
-#endif
-
-#ifndef ABLGEN_H
 #include "ablgen.h"
-#endif
-
-#ifndef ABLSYMT_H
 #include "ablsymt.h"
-#endif
-
-#ifndef ABLEXEC_H
 #include "ablexec.h"
-#endif
-
-#ifndef DABLDBUG_H
 #include "dabldbug.h"
-#endif
-
-#ifndef ABLSCAN_H
 #include "ablscan.h"
-#endif
 
 //***************************************************************************
 
@@ -197,7 +179,6 @@ class ABLModule {
 			traceExit = false;
 		}
 
-
 		ABLModule (void) {
 			init();
 		}
@@ -347,7 +328,6 @@ class ABLModule {
 
 			destroy();
 		}
-
 };
 
 //*************************************************************************

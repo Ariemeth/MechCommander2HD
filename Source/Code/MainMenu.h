@@ -7,22 +7,10 @@ MainMenu.h			: Interface for the MainMenu component.
 //===========================================================================//
 \*************************************************************************************************/
 
-#ifndef LOGISTICSSCREEN_H
 #include "LogisticsScreen.h"
-#endif
-
-#ifndef AANIM_H
 #include "AAnim.h"
-#endif
-
-#ifndef MPLOADMAP_H
 #include "MPLoadMap.h"
-#endif
-
-#ifndef MC2movie_H
 #include "mc2movie.h"
-#endif
-
 
 class OptionsScreenWrapper;
 class Mechlopedia;
@@ -40,9 +28,7 @@ public:
 	virtual ~SplashIntro(){}
 
 	void init();
-
 };
-
 
 class MainMenu: public LogisticsScreen
 {
@@ -50,7 +36,6 @@ class MainMenu: public LogisticsScreen
 
 		MainMenu();
 		virtual ~MainMenu();
-
 
 		int init( FitIniFile& file );
 
@@ -65,7 +50,6 @@ class MainMenu: public LogisticsScreen
 		void skipIntro();
 
 		virtual int	handleMessage( unsigned long, unsigned long );
-		
 
 		static	bool	bDrawMechlopedia;
 
@@ -73,8 +57,6 @@ class MainMenu: public LogisticsScreen
 
 		MainMenu& operator=( const MainMenu& ainMenu );
 		MainMenu( const MainMenu& src );
-
-
 
 		bool	bDrawBackground;
 
@@ -105,11 +87,7 @@ class MainMenu: public LogisticsScreen
 		bool					bHostLeftDlg;
 
 		MC2MoviePtr			introMovie;
-			
-		
-
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( MainMenu.h )

@@ -13,7 +13,6 @@ TargetAreaDlg.h		: Interface for the TargetAreaDlg component.
 #include "EditorObjectMgr.h"
 #include "stdafx.h"
 
-
 class TargetAreaDlg: public CDialog
 {
 public:
@@ -43,7 +42,6 @@ private:
 	CButton *m_pCancelButton;
 	CButton *m_pOKButton;
 };
-
 
 //*************************************************************************************************
 #endif  // end of file ( TargetAreaDlg.h )

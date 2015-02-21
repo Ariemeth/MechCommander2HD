@@ -11,49 +11,17 @@
 //---------------------------------------------------------------------------
 // Include Files
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef TERROBJ_H
 #include "terrobj.h"
-#endif
-
-#ifndef GAMESOUND_H
 #include "gamesound.h"
-#endif
-
-#ifndef SOUNDS_H
 #include "sounds.h"
-#endif
-
-#ifndef MOVE_H
 #include "move.h"
-#endif
-
-#ifndef TEAM_H
 #include "team.h"
-#endif
-
-#ifndef COLLSN_H
 #include "collsn.h"
-#endif
-
-#ifndef MULTPLYR_H
 #include "multplyr.h"
-#endif
-
-#ifndef OBJMGR_H
 #include "objmgr.h"
-#endif
-
-#ifndef CARNAGE_H
 #include "carnage.h"
-#endif
-
-#ifndef DOBJNUM_H
 #include "dobjnum.h"
-#endif
 
 //#include "ObjectAppearance.h"
 
@@ -475,7 +443,6 @@ long TerrainObject::update (void) {
 				}
 				break;
 		}
-
 	}
 
 	//-------------------------------------------
@@ -629,7 +596,6 @@ void TerrainObject::renderShadows (void)
 	
 	setSelected(false);		//ALWAYS reset the selected flags.  GUI needs this to work!
 	setTargeted( false );	//ALWAYS do it here, too!  Otherwise things may draw FUNNY!
-
 }	
 
 //---------------------------------------------------------------------------
@@ -790,7 +756,6 @@ void TerrainObject::init (bool create, ObjectTypePtr objType) {
 //---------------------------------------------------------------------------
 
 void TerrainObject::killFire (void) {
-
 }
 
 //---------------------------------------------------------------------------

@@ -14,7 +14,6 @@ namespace MidLevelRenderer {
 	//#### MLRIndexedTriMesh with no color no lighting one texture layer  #####
 	//##########################################################################
 
-
 	class MLR_I_TMesh:
 		public MLRIndexedPrimitiveBase
 	{
@@ -150,7 +149,6 @@ namespace MidLevelRenderer {
 		Stuff::DynamicArrayOf<unsigned char>	testList;
 		
 		Stuff::DynamicArrayOf<Stuff::Plane> facePlanes;
-		
 	};
 
 	#define ICO_X 0.525731112119133606f
@@ -168,5 +166,4 @@ namespace MidLevelRenderer {
 			IcoInfo&,
 			MLRState*
 		);
-
 }

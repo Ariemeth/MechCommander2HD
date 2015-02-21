@@ -8,20 +8,11 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 
-#ifndef MCLIB_H
 #include "mclib.h"
-#endif
-
-#ifndef MOVEMGR_H
 #include "movemgr.h"
-#endif
-
-#ifndef WARRIOR_H
 #include "warrior.h"
-#endif
 
 //#include <gameos\gameos.hpp>
-
 
 long MovePathManager::numPaths = 0;
 long MovePathManager::peakPaths = 0;
@@ -80,7 +71,6 @@ long MovePathManager::init (void) {
 //---------------------------------------------------------------------------
 
 void MovePathManager::destroy (void) {
-
 }
 
 //---------------------------------------------------------------------------

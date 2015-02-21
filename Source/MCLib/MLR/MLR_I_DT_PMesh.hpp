@@ -19,7 +19,6 @@ namespace MidLevelRenderer {
 	//#### MLRIndexedPolyMesh with no color no lighting two texture layer  #####
 	//##########################################################################
 
-
 	class MLR_I_DT_PMesh:
 		public MLR_I_PMesh
 	{
@@ -156,5 +155,4 @@ namespace MidLevelRenderer {
 			MLRState*,
 			MLRState*
 		);
-
 }

@@ -74,7 +74,6 @@ long MOUSE_REFRESH_RATE = 30;
 void CALLBACK MouseTimer(UINT wTimerID, UINT msg, DWORD dwUser, DWORD dw1, DWORD dw2);
 void (*AsynFunc)(RECT& WinRect,DDSURFACEDESC2& mouseSurfaceDesc ) = 0;
 
-
 //External GameOS stuff
 extern IDirectDrawSurface7*	FrontBufferSurface;
 extern HWND					hWindow;
@@ -852,7 +851,6 @@ void CALLBACK MouseTimer(UINT wTimerID, UINT msg, DWORD dwUser, DWORD dw1, DWORD
 		}	
 	}
 
-
 mouseTimerDone:
 	
 	//ALL done.  It is now safe to allow DisplayBackBuffer to run.
@@ -860,6 +858,5 @@ mouseTimerDone:
 	mc2DisplayHasFlipped = false;
 }
 #pragma warning( pop )
-
 
 //-------------------------------------------------------------------
