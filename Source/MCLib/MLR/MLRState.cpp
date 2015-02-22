@@ -17,7 +17,6 @@ float MLRState::maxUV;
 #endif
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRState::MLRState(
 	MemoryStream *stream,
 	int version
@@ -30,7 +29,6 @@ MLRState::MLRState(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRState::MLRState()
 {
 	renderState = renderDeltaMask = 0;
@@ -48,7 +46,6 @@ MLRState::MLRState()
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRState::MLRState(const MLRState& mState)
 {
 	Check_Object(&mState);
@@ -68,7 +65,6 @@ MLRState::MLRState(const MLRState& mState)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRState*
 	MLRState::Make(
 		MemoryStream *stream,
@@ -85,18 +81,15 @@ MLRState*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRState::Save(MemoryStream *stream)
 {
 	Check_Object(this);
 	Check_Object(stream);
 
-	//
 	//-----------------------------
 	// Save the renderState to the stream
 	//-----------------------------
-	//
 	*stream << renderState << renderDeltaMask << renderPermissionMask;
 	*stream << processState << processDeltaMask << processPermissionMask;
 
@@ -119,7 +112,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRState::Load(
 		MemoryStream *stream,
@@ -129,11 +121,9 @@ void
 	Check_Object(this);
 	Check_Object(stream);
 
-	//
 	//-------------------------------------
 	// Load the renderState from the stream
 	//-------------------------------------
-	//
 	*stream >> renderState >> renderDeltaMask >> renderPermissionMask;
 	*stream >> processState >> processDeltaMask >> processPermissionMask;
 
@@ -198,7 +188,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRState&
 	MLRState::Combine(
 		const MLRState &master,
@@ -266,7 +255,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRState::SetFogData (
 		RGBAColor fog_color,
@@ -279,7 +267,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRState::GetFogData (
 		RGBAColor *fog_color,
@@ -302,7 +289,6 @@ void
 */
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRState::SetRendererState(MLRTexturePool *texturePool)
 {

@@ -43,7 +43,6 @@ class MissionResults
 
 		//Tutorial - Used to play Voice Over, first time in!!
 		// THIS must be added to savegame!!
-		//
 		static bool FirstTimeResults;	
 
 	private:

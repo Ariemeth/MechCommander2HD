@@ -5,7 +5,6 @@
 #include "MLRHeaders.hpp"
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 GOSImagePool::GOSImagePool() :
 	imageHash(
 		4099,
@@ -18,7 +17,6 @@ GOSImagePool::GOSImagePool() :
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 GOSImagePool::~GOSImagePool()
 {
 	HashIteratorOf<GOSImage*, MString> images(&imageHash);
@@ -26,7 +24,6 @@ GOSImagePool::~GOSImagePool()
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void GOSImagePool::UnLoadImages (void)
 {
 	HashIteratorOf<GOSImage*, MString> images(&imageHash);
@@ -39,7 +36,6 @@ void GOSImagePool::UnLoadImages (void)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 GOSImage*
 	GOSImagePool::GetImage(const char* image_name)
 {
@@ -48,11 +44,9 @@ GOSImage*
 	MString imageName = image_name;
 	Verify(imageName.GetLength() > 0);
 
-	//
 	//---------------------------
 	// Get the image for the name
 	//---------------------------
-	//
 	GOSImage *image;
 
 	if ((image = imageHash.Find(imageName)) == NULL)
@@ -69,7 +63,6 @@ GOSImage*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 GOSImage*
 	GOSImagePool::GetImage(const char *image_name, gos_TextureFormat format, int size, gos_TextureHints hints)
 {
@@ -78,11 +71,9 @@ GOSImage*
 	MString imageName = image_name;
 	Verify(imageName.GetLength() > 0);
 
-	//
 	//---------------------------
 	// Get the image for the name
 	//---------------------------
-	//
 	GOSImage *image;
 
 	if ((image = imageHash.Find(imageName)) == NULL)
@@ -105,7 +96,6 @@ GOSImage*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	GOSImagePool::RemoveImage(GOSImage *image)
 {
@@ -115,14 +105,12 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 TGAFilePool::TGAFilePool(const char* path)
 {
 	texturePath = path;
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 bool
 	TGAFilePool::LoadImage(GOSImage *image, int hint)
 {

@@ -15,16 +15,12 @@ typedef struct
 	DWORD	ymax;
 } SHAPEHEADER;
 
-//
 // Sprite format
-//
-//
 // Marker.
 // 0			End of line
 // 1			Skip next bytes
 // Bit 0 = 0	Repeat next byte [7654321] times
 // Bit 0 = 1	String packet [7654321] bytes
-//
 
 unsigned int lookaside;
 static unsigned int tempXmax,tempXmin;
@@ -226,9 +222,7 @@ rp1:
 	jmp lineLoop
 
 StringPacket:
-//
 // 17 cycles / 8 bytes   - 2.125 per byte
-//
 	sub al,8
 	jc sp2
 sp1:
@@ -410,11 +404,7 @@ cEndPacket:
 
 	jmp Exit
 
-//
-//
 // Same routine as above, but using Alpha table
-//
-//
 AlphaDraw:
 	mov edi,pane
 	nop
@@ -999,9 +989,7 @@ rp1:
 	jmp lineLoop
 
 StringPacket:
-//
 // 17 cycles / 8 bytes   - 2.125 per byte
-//
 	sub al,8
 	jc sp2
 sp1:
@@ -1239,11 +1227,7 @@ cEndPacket:
 	pop ebp
 	jmp Exit
 
-//
-//
 // Same routine as above, but with Alpha Table effects
-//
-//
 AlphaDraw:
 	mov edi,pane
 	nop

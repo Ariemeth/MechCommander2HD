@@ -20,7 +20,6 @@ namespace MidLevelRenderer {
 	{
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Initialization
-	//
 	public:
 		static void
 			InitializeClass();
@@ -31,7 +30,6 @@ namespace MidLevelRenderer {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Constructors/Destructors
-	//
 	protected:
 		MLRIndexedPrimitiveBase(
 			ClassData *class_data,
@@ -101,7 +99,6 @@ namespace MidLevelRenderer {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Testing
-	//
 	public:
 		void
 			TestInstance() const;

@@ -1,9 +1,6 @@
 //-------------------------------------------------------------------------------
-//
 // Tiny Geometry Layer
-//
 // For MechCommander 2 -- Copyright (c) 1999 Microsoft
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -219,7 +216,6 @@ TG_ShapePtr TG_TypeNode::CreateFrom (void)
 //This function simply parses the ASE buffers handed to it.  This allows
 //users to load the ase file themselves and manage their own memory for it.
 //It allocates memory for internal Lists.  These are straight tglHeap->Mallocs at present.
-//
 long TG_TypeNode::MakeFromHelper (BYTE *aseBuffer, char *fileName)
 {
 	//------------------------------------------
@@ -571,7 +567,6 @@ void TG_Shape::destroy (void)
 //This function simply parses the ASE buffers handed to it.  This allows
 //users to load the ase file themselves and manage their own memory for it.
 //It allocates memory for internal Lists.  These are straight tglHeap->Mallocs at present.
-//
 // NOTE: Only takes the first HELPOBJECT from the ASE file.  Multi-object
 // Files will require user intervention to parse!!
 long TG_TypeShape::MakeFromHelper (BYTE *aseBuffer, char *fileName)
@@ -648,7 +643,6 @@ long TG_TypeShape::MakeFromHelper (BYTE *aseBuffer, char *fileName)
 //This function simply parses the ASE buffers handed to it.  This allows
 //users to load the ase file themselves and manage their own memory for it.
 //It allocates memory for internal Lists.  These are straight tglHeap->Mallocs at present.
-//
 // NOTE: Only takes the first GEOMOBJECT from the ASE file.  Multi-object
 // Files will require user intervention to parse!!
 long TG_TypeShape::ParseASEFile (BYTE *aseBuffer, char *fileName)
@@ -856,7 +850,6 @@ long TG_TypeShape::ParseASEFile (BYTE *aseBuffer, char *fileName)
 		//---------------------------------------------------------------------
 		// UVData for the face.
 		// This should be nummies!
-		//
 		//Load up the TFaces
 		sprintf(faceId,"%s",ASE_NUM_TVFACES);
 
@@ -1257,7 +1250,6 @@ long TG_TypeShape::ParseASEFile (BYTE *aseBuffer, char *fileName)
 //Function returns 0 if OK.  -1 if file not found or file not ASE Format.		
 //This function loads the ASE file into the TG_Triangle and TG_Vertex lists.
 //It allocates memory.  These are straight tglHeap->Mallocs at present.
-//
 // NOTE: Only takes the first GEOMOBJECT from the ASE file.  Multi-object
 // Files will require user intervention to parse!!
 long TG_TypeShape::LoadTGShapeFromASE (char *fileName)
@@ -1476,7 +1468,6 @@ void TG_Shape::SetViewport (float mulX, float mulY, float addX, float addY)
 //This function sets the list of lights used by the TransformShape function
 //to light the shape.
 //Function returns 0 if lightList entries are all OK.  -1 otherwise.
-//
 long TG_Shape::SetLightList (TG_LightPtr *lightList, DWORD nLights)
 {
 	if (lightList)
@@ -2564,19 +2555,14 @@ bool TG_Shape::PerPolySelect (float mouseX, float mouseY)
 			v0.z = v1.z = v2.z = 0.0f;
 			
 			//Using the above vertex Data, determine if the mouse is over this poly!
-			//
 			//Theorem:
 			// Given the sides of the triangle defined by the lines v0v1, v1v2 and v2v0
 			// in the form Ax + By + C = 0
-			//
 			// the point mousex, mousey lies inside the triangle if and only if
-			//
 			//  	A0 * mouseX + B0 * mouseY + C0 = D0
 			//		A1 * mouseX * B1 * mouseY + c1 = D1
 			//		A2 * mouseX + B2 * mouseY + c2 = D2
-			//
 			// Dx is the same sign for each line as the correct sign for clockwise or counterclockwise vertices!
-			//
 			Stuff::Vector3D line1;
 			Stuff::Vector3D line2;
 			line1.Subtract(v0,v1);
@@ -2613,7 +2599,6 @@ bool TG_Shape::PerPolySelect (float mouseX, float mouseY)
 #define FLOAT_SHADOW_HARDWARE_BLACK		128.0f
 //-------------------------------------------------------------------------------
 //This function creates the list of shadows and transforms them in preparation to drawing.
-//
 void TG_Shape::MultiTransformShadows (Stuff::Point3D *pos, Stuff::LinearMatrix4D *s2w, float rotation)
 {
 	if (!numVertices)		//WE are the root Shape which may have no shape or a helper shape which defintely has no shape!
@@ -2639,11 +2624,8 @@ void TG_Shape::MultiTransformShadows (Stuff::Point3D *pos, Stuff::LinearMatrix4D
 	// Run Through listOfVertices and create the listOfShadowVertices
 	// for each light source.  Only need to calc infinite rarely if at all.
 	// May need some way to delineate this.  Above here, probably!
-	//
 	// As we calc shadow vertices, transform and store results.
-	// 
 	// listOfTriangles will simply use these vertices to draw shadows.
-	//
 	// Again, note that after first iteration of infinite light we only need to transform infinite shadows!
 	Stuff::Matrix4D shapeToLocal;
 	Stuff::Matrix4D shapeToClip;

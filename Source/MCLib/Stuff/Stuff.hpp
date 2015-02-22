@@ -116,14 +116,12 @@ namespace Stuff {
 		gosFXClassIDCount					= 64,
 		LastgosFXClassID					= FirstgosFXClassID + gosFXClassIDCount -1,
 		
-		//
 		//------------------------------------------
 		// Please note that all new class id's
 		// should be above this comment.  NO
 		// class id's shoud be put between
 		// the temporary and the class id count
 		//------------------------------------------
-		//
 		FirstTemporaryClassID,
 		TemporaryClassIDCount				=	16,
 		LastTemporaryClassID				=	FirstTemporaryClassID + TemporaryClassIDCount-1,
@@ -131,18 +129,14 @@ namespace Stuff {
 		ClassIDCount
 	};
 
-	//
 	//--------------
 	// Stuff classes
 	//--------------
-	//
 	enum
 	{
-		//
 		//-------------------------
 		// attribute IDs
 		//-------------------------
-		//
 		NullClassID = ClassIDCount,
 		MStringClassID = FirstStuffClassID,
 		IntClassID,
@@ -160,11 +154,9 @@ namespace Stuff {
 		EulerAnglesClassID,
 		BoolClassID,
 
-		//
 		//---------------------
 		// Registered class IDs
 		//---------------------
-		//
 		RegisteredClassClassID,
 
 		MemoryStreamClassID,

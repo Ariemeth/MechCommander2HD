@@ -30,7 +30,6 @@ namespace MidLevelRenderer {
 	{
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Initialization
-	//
 	public:
 		static void
 			InitializeClass();
@@ -41,7 +40,6 @@ namespace MidLevelRenderer {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Constructors/Destructors
-	//
 	public:
 		MLRSortByOrder(MLRTexturePool*);
 		~MLRSortByOrder();
@@ -60,7 +58,6 @@ namespace MidLevelRenderer {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Testing
-	//
 	public:
 		void
 			TestInstance() const;

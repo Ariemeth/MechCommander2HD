@@ -4,7 +4,6 @@
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
-//
 #pragma once
 
 #include "gosFX.hpp"
@@ -21,7 +20,6 @@ namespace gosFX
 	{
 	//----------------------------------------------------------------------
 	// Constructors/Destructors
-	//
 	protected:
 		ParticleCloud__Specification(
 			Stuff::RegisteredClass::ClassID class_id,
@@ -46,7 +44,6 @@ namespace gosFX
 
 	//-------------------------------------------------------------------------
 	// FCurves
-	//
 	public:
 		ConstantCurve
 			m_startingPopulation;
@@ -82,7 +79,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------
 	// Data
-	//
 	public:
 		int
 			m_maxParticleCount,
@@ -146,7 +142,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Class Data Support
-	//
 	public:
 		Specification*
 			GetSpecification()
@@ -168,14 +163,12 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Testing
-	//
 	public:
 		void
 			TestInstance() const;
 
 	//----------------------------------------------------------------------------
 	// API
-	//
 	protected:
 		bool
 			Execute(ExecuteInfo *info);

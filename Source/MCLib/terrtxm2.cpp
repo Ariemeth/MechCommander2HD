@@ -1,9 +1,6 @@
 //---------------------------------------------------------------------------
-//
 // TerrTxm2.h -- File contains class definitions for the Terrain Textures
-//
 //	MechCommander 2 -- Microsoft
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -1846,7 +1843,6 @@ DWORD TerrainColorMap::getTextureHandle (VertexPtr vMin, VertexPtr vMax, Terrain
 		
 		// Now we need the UV Coords in this texture.  This is the fraction from 0.0 to 1.0
 		// across the texture we are as vMin and vMax.
-		//
 		// IMPORTANT OPTIMIZATION NOTE:  We only need to do this ONCE per terrain face at load time.
 		// It never changes!!!!!!!!
 		// We could calc as we get to the terrain faces and just know they're done, too!

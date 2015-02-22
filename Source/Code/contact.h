@@ -1,9 +1,6 @@
 //***************************************************************************
-//
 //	contact.h - This file contains the Contact Class header definitions
-//
 //	MechCommander 2 -- FASA Interactive Technologies
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

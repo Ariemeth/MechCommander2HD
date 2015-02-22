@@ -8,7 +8,6 @@
 //===========================================================================//
 
 //------------------------------------------------------------------------------
-//
 gosFX::EffectCloud__Specification::EffectCloud__Specification(
 	Stuff::MemoryStream *stream,
 	int gfx_version
@@ -26,7 +25,6 @@ gosFX::EffectCloud__Specification::EffectCloud__Specification(
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::EffectCloud__Specification::EffectCloud__Specification():
 	SpinningCloud__Specification(gosFX::EffectCloudClassID)
 {
@@ -37,7 +35,6 @@ gosFX::EffectCloud__Specification::EffectCloud__Specification():
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::EffectCloud__Specification*
 	gosFX::EffectCloud__Specification::Make(
 		Stuff::MemoryStream *stream,
@@ -55,7 +52,6 @@ gosFX::EffectCloud__Specification*
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::EffectCloud__Specification::Save(Stuff::MemoryStream *stream)
 {
@@ -67,7 +63,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::EffectCloud__Specification::Copy(EffectCloud__Specification *spec)
 {
@@ -87,7 +82,6 @@ gosFX::EffectCloud::ClassData*
 	gosFX::EffectCloud::DefaultData = NULL;
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::EffectCloud::InitializeClass()
 {
@@ -105,7 +99,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::EffectCloud::TerminateClass()
 {
@@ -115,7 +108,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::EffectCloud::EffectCloud(
 	Specification *spec,
 	unsigned flags
@@ -127,7 +119,6 @@ gosFX::EffectCloud::EffectCloud(
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::EffectCloud::~EffectCloud()
 {
 	if (m_activeParticleCount)
@@ -146,7 +137,6 @@ gosFX::EffectCloud::~EffectCloud()
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::EffectCloud*
 	gosFX::EffectCloud::Make(
 		Specification *spec,
@@ -163,7 +153,6 @@ gosFX::EffectCloud*
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::EffectCloud::CreateNewParticle(
 		unsigned index,
@@ -172,18 +161,14 @@ void
 {
 	Check_Object(this);
 
-	//
 	//---------------------------
 	// Let our parent do creation
 	//---------------------------
-	//
 	SpinningCloud::CreateNewParticle(index, translation);
 
-	//
 	//----------------------------------------
 	// Now create a new effect under ourselves
 	//----------------------------------------
-	//
 	Specification *spec = GetSpecification();
 	Check_Object(spec);
 	Particle *particle = GetParticle(index);
@@ -197,11 +182,9 @@ void
 	Check_Object(effect);
 	particle->m_radius = 0.0f;
 
-	//
 	//-------------------------------------------------------------
 	// Set the transform on the effect, then start the child effect
 	//-------------------------------------------------------------
-	//
 	effect->m_localToParent.BuildTranslation(particle->m_localTranslation);
 	effect->m_localToParent.BuildRotation(particle->m_localRotation);
 	ExecuteInfo
@@ -217,7 +200,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 bool
 	gosFX::EffectCloud::AnimateParticle(
 		unsigned index,
@@ -227,33 +209,27 @@ bool
 {
 	Check_Object(this);
 
-	//
 	//--------------------------------------------------------------------
 	// Make sure that we don't blow the age counters out of the base cloud
 	// effects
 	//--------------------------------------------------------------------
-	//
 	Particle *particle = GetParticle(index);
 	Check_Object(particle);
 	if (particle->m_age >= 1.0f)
 		particle->m_age = 1.0f - Stuff::SMALL;
 	SpinningCloud::AnimateParticle(index, world_to_new_local, till);
 
-	//
 	//---------------------------------
 	// Update the location of the cloud
 	//---------------------------------
-	//
 	Effect *effect = particle->m_effect;
 	Check_Object(effect);
 	effect->m_localToParent.BuildTranslation(particle->m_localTranslation);
 	effect->m_localToParent.BuildRotation(particle->m_localRotation);
 
-	//
 	//-----------------------
 	// Execute all the effect
 	//-----------------------
-	//
 	Stuff::OBB bounds;
 	ExecuteInfo
 		info(
@@ -275,7 +251,6 @@ bool
 }
 
 //------------------------------------------------------------------------------
-//
 void gosFX::EffectCloud::DestroyParticle(unsigned index)
 {
 	Check_Object(this);
@@ -292,17 +267,14 @@ void gosFX::EffectCloud::DestroyParticle(unsigned index)
 }
 
 //------------------------------------------------------------------------------
-//
 void gosFX::EffectCloud::Draw(DrawInfo *info)
 {
 	Check_Object(this);
 	Check_Object(info);
 
-	//
 	//---------------------------------------------------------
 	// If we have active particles, set up the draw information
 	//---------------------------------------------------------
-	//
 	if (m_activeParticleCount)
 	{
 		for (int i=0; i < m_activeParticleCount; i++)
@@ -310,12 +282,10 @@ void gosFX::EffectCloud::Draw(DrawInfo *info)
 			Particle *particle = GetParticle(i);
 			Check_Object(particle);
 
-			//
 			//-----------------------------------------------------------------
 			// If the particle is still alive, concatenate into world space and
 			// issue the draw command
 			//-----------------------------------------------------------------
-			//
 			if (particle->m_age < 1.0f)
 			{
 				if (particle->m_effect)
@@ -331,7 +301,6 @@ void gosFX::EffectCloud::Draw(DrawInfo *info)
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::EffectCloud::TestInstance() const
 {

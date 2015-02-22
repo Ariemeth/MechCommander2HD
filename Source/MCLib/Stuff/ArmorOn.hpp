@@ -103,10 +103,8 @@ template <class T> void
 
 #define Check_Object(p) Stuff::Check_Object_Function(p)
 
-//
 // Cast_Object will only work for polymorphic objects,
 // non-polymorphic objects use Cast_Pointer
-//
 
 template <class T> T
 	Cast_Object_Function(T p)

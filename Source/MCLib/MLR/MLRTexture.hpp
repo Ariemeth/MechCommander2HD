@@ -26,7 +26,6 @@ namespace MidLevelRenderer {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Constructors/Destructors
-	//
 	protected:
 		MLRTexture(Stuff::MemoryStream *stream);
 
@@ -110,7 +109,6 @@ namespace MidLevelRenderer {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Testing
-	//
 	public:
 		void
 			TestInstance() const;

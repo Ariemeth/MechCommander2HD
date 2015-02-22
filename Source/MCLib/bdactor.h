@@ -1,9 +1,6 @@
 //---------------------------------------------------------------------------
-//
 //	dbactor.h - This file contains the header for the Static ground object appearance class
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -26,9 +23,7 @@
 
 #define MAX_BD_ANIMATIONS			10
 //***********************************************************************
-//
 // BldgAppearanceType
-//
 //***********************************************************************
 class BldgAppearanceType : public AppearanceType
 {
@@ -150,9 +145,7 @@ class BldgAppearanceType : public AppearanceType
 };
 
 //***********************************************************************
-//
 // BldgAppearance
-//
 //***********************************************************************
 class BldgAppearance : public ObjectAppearance
 {
@@ -368,9 +361,7 @@ class BldgAppearance : public ObjectAppearance
 //***************************************************************************
 
 //***********************************************************************
-//
 // TreeAppearanceType
-//
 //***********************************************************************
 class TreeAppearanceType : public AppearanceType
 {
@@ -424,9 +415,7 @@ class TreeAppearanceType : public AppearanceType
 };
 
 //***********************************************************************
-//
 // TreeAppearance
-//
 //***********************************************************************
 class TreeAppearance : public ObjectAppearance
 {

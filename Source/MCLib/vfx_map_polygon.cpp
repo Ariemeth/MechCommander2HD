@@ -6,11 +6,7 @@ extern char AlphaTable[];
 static unsigned int SourceWidth,tWidth,tHeight,DestWidth;			// Used for code optimizing
 static _int64 xmask=-1;
 
-//
-//
 // Draws a status bar
-//
-//
 void AG_StatusBar( PANE *pane, int X0, int Y0, int X1, int Y1, int Color, int Width )
 {
 	static long TopY,BottomY;
@@ -92,9 +88,7 @@ lp0:
 	jz lp1
 	cmp ecx,edx
 	jz lp1
-//
 // Middle lines
-//
 //lp2:
 	xor eax,eax
 	xor edx,edx
@@ -127,9 +121,7 @@ lp4:
 
 	pop edi
 	jmp lp3
-//
 // Top or bottom line
-//
 lp1:
 	push edi
 	mov edx,ebx
@@ -162,11 +154,7 @@ lp3:
 	}
 }
 
-//
-//
 // Writes a single pixel
-//
-//
 void AG_pixel_write (PANE *pane, LONG x, LONG y, ULONG color)
 {
 	int X=x+pane->x0;
@@ -176,12 +164,7 @@ void AG_pixel_write (PANE *pane, LONG x, LONG y, ULONG color)
 		*(pane->window->buffer + X + Y*(pane->window->x_max+1))=(unsigned char)color;
 }
 
-//
-//
 // Draws a sprite - any colors marked 255 will be drawn transparent
-//
-//
-//
 long DrawTransparent( PANE *pane, WINDOW *texture, int X, int Y, int Width, int Height )
 {
 	DestWidth = pane->window->x_max+1;
@@ -356,11 +339,7 @@ mt7:	mov ebp,tWidth
 		emms
 		jmp done
 
-//
-//
 // Non-mmx version of the transparent blit. - color 255 is transparent
-//
-//
 nonmmx:
 		push ebp
 		mov edi,DestPointer

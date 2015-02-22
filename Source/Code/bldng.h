@@ -1,9 +1,6 @@
 //---------------------------------------------------------------------------
-//
 //	bldng.h -- File contains the Building Object Class
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -231,7 +228,6 @@ class Building : public TerrainObject
 			//-----------------------------------------
 			// Hotspot for buildings is position plus 
 			// some Z based on OBB to make Effect visible.
-			//
 			// Use THIS position for LOS Calc!!!
 			Stuff::Vector3D hsPos = position;
 

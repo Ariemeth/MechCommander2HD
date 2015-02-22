@@ -22,23 +22,18 @@ namespace Stuff {
 		#endif
 	{
 	public:
-		//
 		//--------------------------------------------------------------------
 		//--------------------------------------------------------------------
 		// Public interface to abstract class
-		//
 		// NOTE: All unsafe, untyped public methods are named XXXItem.  The
 		// safe, typed public methods are named XXX and are declared in the
 		// template sub-classes.
 		//--------------------------------------------------------------------
 		//--------------------------------------------------------------------
-		//
 
-		//
 		//--------------------------------------------------------------------
 		// Destructor and testing
 		//--------------------------------------------------------------------
-		//
 		virtual
 			~Iterator()
 				{}
@@ -48,35 +43,29 @@ namespace Stuff {
 			TestInstance()
 				{}
 
-		//
 		//--------------------------------------------------------------------
 		// First						- Moves to next item
 		// Last						- Moves to last item
 		//--------------------------------------------------------------------
-		//
 		virtual void
 			First();
 		virtual void
 			Last();
 
-		//
 		//--------------------------------------------------------------------
 		// Next			 			- Moves to next item
 		// Previous			 		- Moves to previous item
 		//--------------------------------------------------------------------
-		//
 		virtual void
 			Next();
 		virtual void
 			Previous();
 
-		//
 		//--------------------------------------------------------------------
 		// ReadAndNextItem		- Returns current item and moves to next item
 		// ReadAndPreviousItem	- Returns current item and moves to prev item
 		// GetCurrentItem			- Returns current item
 		//--------------------------------------------------------------------
-		//
 		void*
 			ReadAndNextItem()
 				{return ReadAndNextImplementation();}
@@ -87,24 +76,20 @@ namespace Stuff {
 			GetCurrentItem()
 				{return GetCurrentImplementation();}
 
-		//
 		//--------------------------------------------------------------------
 		// GetSize					- Returns number of items
 		// GetNthItem				- Returns nth item
 		//--------------------------------------------------------------------
-		//
 		virtual CollectionSize
 			GetSize();
 		void*
 			GetNthItem(CollectionSize index)
 				{return GetNthImplementation(index);}
 
-		//
 		//--------------------------------------------------------------------
 		// BeginIterator			- Moves to first item and returns iterator
 		// EndIterator				- Moves to last item and returns iterator
 		//--------------------------------------------------------------------
-		//
 		virtual Iterator&
 			BeginIterator()
 				{return BeginImplementation();}
@@ -112,12 +97,10 @@ namespace Stuff {
 			EndIterator()
 				{return EndImplementation();}
 
-		//
 		//--------------------------------------------------------------------
 		// ForwardIterator	  	- Moves to next item and returns iterator
 		// BackwardIterator	  	- Moves to previous item and returns iterator
 		//--------------------------------------------------------------------
-		//
 		virtual Iterator&
 			ForwardIterator()
 				{return ForwardImplementation();}
@@ -126,21 +109,17 @@ namespace Stuff {
 				{return BackwardImplementation();}
 
 	protected:
-		//
 		//--------------------------------------------------------------------
 		//--------------------------------------------------------------------
 		// Protected interface to abstract class
 		//--------------------------------------------------------------------
 		//--------------------------------------------------------------------
-		//
 		Iterator()
 			{}
 
-		//
 		//--------------------------------------------------------------------
 		// Untyped implementations
 		//--------------------------------------------------------------------
-		//
 		virtual void*
 			ReadAndNextImplementation();
 		virtual void*

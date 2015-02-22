@@ -770,11 +770,9 @@ void TerminateGameEngine()
 		TG_Shape::tglHeap = NULL;
 	}
 
-	//
 	//--------------------------
 	// Turn off the fast Files
 	//--------------------------
-	//
 	FastFileFini();
 
 	delete globalFloatHelp;
@@ -915,7 +913,6 @@ void ParseCommandLine(char *command_line)
 						else
 						{
 							//They put a quote on the line with no space.
-							//
 							scanName = false;
 							missionName[strlen(missionName)-1] = 0;
 						}
@@ -957,9 +954,7 @@ void GetGameOSEnvironment( char* CommandLine )
 	Environment.version					= versionStamp;
 
 	Environment.AntiAlias				= 0;
-//
 // Texture infomation
-//
 	Environment.Texture_S_256			= 6;
 	Environment.Texture_S_128			= 1;
 	Environment.Texture_S_64			= 0;

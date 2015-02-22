@@ -7,33 +7,27 @@
 
 #include "StuffHeaders.hpp"
 
-//
 //###########################################################################
 // SafeSocket
 //###########################################################################
-//	
 SafeSocket::SafeSocket(Node *node):
 	Socket(node)
 {
 	iteratorHead = NULL;
 }
 
-//
 //###########################################################################
 // ~SafeSocket
 //###########################################################################
-//	
 SafeSocket::~SafeSocket()
 {
 	Check_Object(this);
 	Verify(iteratorHead == NULL);
 }
 
-//
 //###########################################################################
 // TestInstance
 //###########################################################################
-//
 void
 	SafeSocket::TestInstance()
 {
@@ -44,11 +38,9 @@ void
 	}
 }
 
-//
 //###########################################################################
 // SendIteratorMemo
 //###########################################################################
-//
 void
 	SafeSocket::SendIteratorMemo(
 		IteratorMemo memo,
@@ -68,17 +60,13 @@ void
 	}
 }
 
-//
 //###########################################################################
 // SafeIterator
 //###########################################################################
-//
 SafeIterator::SafeIterator(SafeSocket *safeSocket):
 	SocketIterator(safeSocket)
 {
-	//
 	// Link iterator into sockets set of iterators
-	//
    Check_Object(safeSocket);
 	if ((nextIterator = safeSocket->iteratorHead) != NULL)
 	{
@@ -89,19 +77,15 @@ SafeIterator::SafeIterator(SafeSocket *safeSocket):
 	safeSocket->iteratorHead = this;
 }
 
-//
 //###########################################################################
 // ~SafeIterator
 //###########################################################################
-//
 SafeIterator::~SafeIterator()
 {
 	Check_Object(this);
 	SafeSocket *safeSocket = Cast_Object(SafeSocket*, socket);
 
-	//
 	// Remove iterator from sockets set of iterators
-	//
 	Check_Object(safeSocket);
 	if (safeSocket->iteratorHead == this)
 	{
@@ -119,11 +103,9 @@ SafeIterator::~SafeIterator()
 	}
 }
 
-//
 //###########################################################################
 // TestInstance
 //###########################################################################
-//
 void
 	SafeIterator::TestInstance() const
 {
@@ -139,11 +121,9 @@ void
 	}
 }
 
-//
 //###########################################################################
 // ReceiveMemo
 //###########################################################################
-//
 void
 	SafeIterator::ReceiveMemo(
       IteratorMemo,

@@ -69,7 +69,6 @@ namespace gosFX
 	{
 	//----------------------------------------------------------------------
 	// Constructors/Destructors
-	//
 	protected:
 		Effect__Specification(
 			Stuff::RegisteredClass::ClassID class_id,
@@ -126,7 +125,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------
 	// Events
-	//
 	public:
 		Stuff::ChainOf<Event*>
 			m_events;
@@ -136,7 +134,6 @@ namespace gosFX
 
 	//-------------------------------------------------------------------------
 	// FCurves
-	//
 	public:
 		ConstantCurve
 			m_lifeSpan;
@@ -146,14 +143,12 @@ namespace gosFX
 
 	//----------------------------------------------------------------------
 	// States
-	//
 	public:
 		MidLevelRenderer::MLRState
 			m_state;
 
 	//----------------------------------------------------------------------
 	// Testing
-	//
 	public:
 		void
 			TestInstance() const
@@ -171,7 +166,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Types
-	//
 	public:
 		struct ExecuteInfo
 		{
@@ -226,7 +220,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Initialization
-	//
 	public:
 		static void InitializeClass();
 		static void	TerminateClass();
@@ -235,7 +228,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Constructors/Destructors
-	//
 	protected:
 		Effect(
 			ClassData *class_data,
@@ -268,7 +260,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Events
-	//
 	protected:
 		Stuff::ChainOf<Effect *>
 			m_children;
@@ -277,14 +268,12 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Testing
-	//
 	public:
 		void
 			TestInstance() const;
 
 	//----------------------------------------------------------------------------
 	// API
-	//
 	public:
 		virtual void Start(ExecuteInfo *info);
 		void Stop();
@@ -376,7 +365,6 @@ namespace gosFX
 		public Stuff::Plug::ClassData
 	{
 	//----------------------------------------------------------------------------
-	//
 	public:
 		Effect__ClassData(
 			Stuff::RegisteredClass::ClassID class_id,
@@ -396,7 +384,6 @@ namespace gosFX
 			specificationFactory;
 
 	//----------------------------------------------------------------------------
-	//
 	public:
 		void TestInstance();
 	};

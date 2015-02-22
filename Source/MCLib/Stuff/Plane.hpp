@@ -33,17 +33,13 @@ namespace Stuff {
 	class Plane
 	{
 	 public:
-		//
 		// The plane equation is P*normal = offset, where P is a homogeneous
-		//
 		Normal3D
 			normal;
 		Scalar
 			offset;
 
-		//
 		// Constructors
-		//
 		Plane()
 			{}
 		Plane(
@@ -76,9 +72,7 @@ namespace Stuff {
 				const Point3D& p2
 			);
 
-		//
 		// Transform functions
-		//
 		Plane&
 			Multiply(
 				const Plane &p,
@@ -88,9 +82,7 @@ namespace Stuff {
 			operator*=(const LinearMatrix4D &m)
 				{Check_Object(this); Plane t(*this); return Multiply(t,m);}
 
-		//
 		// half-space division functions
-		//
 		bool
 			IsSeenBy(const Vector3D &A_Vector) const
 				{return normal * A_Vector < 0.0;}
@@ -105,9 +97,7 @@ namespace Stuff {
 		Scalar
 			GetDistanceTo(const OBB& box) const;
 
-		//
 		// half-space containment functions
-		//
 		bool
 			Contains(
 				const Point3D &point,
@@ -145,9 +135,7 @@ namespace Stuff {
 				Scalar thickness=SMALL
 			) const;
 
-		//
 		// plane surface intersection functions
-		//
 		bool
 			Intersects(
 				const Sphere &sphere,
@@ -177,9 +165,7 @@ namespace Stuff {
 		static bool
 			TestClass();
 			
-		//
 		// Equation solutions
-		//
 		Scalar
 			CalculateX(Scalar y, Scalar z)
 				{
@@ -202,9 +188,7 @@ namespace Stuff {
 					return result;
 				}
 
-		//
 		// Reflection code
-		//
 		void
 			Reflect(Vector3D *vector)
 				{

@@ -3,16 +3,11 @@
 //===========================================================================//
 
 //--------------------------------------------------------------------------------------
-//
 // MechCommander 2
-//
 // This header contains the base classes for the GUI
-//
 // GUI is now single update driven.  An event comes in, the manager decides who its for
 // and passes the event down.  Eveything still know how to draw etc.
-//
 // All drawing is done through gos_drawQuad and drawTriangle
-//
 // Basic cycle is 
 //		call gObject->update with this frame's events.
 //			This will check the events to see if any pertain to me.
@@ -21,7 +16,6 @@
 //		call gObject->render with this frame's events.
 //			This draws the object to the screen.
 //			called in order of depth.
-// 
 //--------------------------------------------------------------------------------------
 
 #ifndef DBASEGUI_H

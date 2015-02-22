@@ -54,20 +54,15 @@ namespace Stuff {
 
 	//=======================================================================
 	// Format of notation file:
-	//
 	// !include file1.txt
 	// !include=file1a.txt
 	// !include "file2.txt"
-	//
 	// !example_macro=Field2Data
-	//
 	// // comment
-	//
 	// [RecordName]	// comment
 	// FieldName=FieldData
 	// Field2Name=Field2Data
 	// Field3Name=test.ini
-	//
 	// [Record2Name]
 	// FieldName=FieldData
 	// Field4Name=$(example_macro)
@@ -75,12 +70,10 @@ namespace Stuff {
 	//  [Record3Name]
 	//  Field6Name=Whatever
 	// }
-	//
 	// /* [Page3Name]
 	// Field7Name=Uhhm
 	// Field8Name=Uhhh */
 	// ...
-	//
 	//=======================================================================
 
 	//##########################################################################
@@ -97,7 +90,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Constructor/Destructors
-	//
 	public:
 		enum Type {
 			Standard,
@@ -130,7 +122,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Stream access
-	//
 	public:
 		const FileDependencies*
 			GetFileDependencies() const
@@ -194,7 +185,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Page access
-	//
 	public:
 		bool
 			IsEmpty()

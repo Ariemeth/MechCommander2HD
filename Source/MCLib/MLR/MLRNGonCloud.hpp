@@ -24,7 +24,6 @@ namespace MidLevelRenderer {
 	{
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Initialization
-	//
 	public:
 		static void
 			InitializeClass();
@@ -33,7 +32,6 @@ namespace MidLevelRenderer {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Constructors/Destructors
-	//
 	public:
 		MLRNGonCloud(int vertices, int number);
 		~MLRNGonCloud();
@@ -51,14 +49,12 @@ namespace MidLevelRenderer {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Class Data Support
-	//
 	public:
 		static ClassData
 			*DefaultData;
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Testing
-	//
 	public:
 		void
 			TestInstance() const;

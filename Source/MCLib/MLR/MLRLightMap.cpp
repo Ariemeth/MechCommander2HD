@@ -31,7 +31,6 @@ ClipPolygon2
 	*MLRLightMap::clipBuffer;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRLightMap::InitializeClass()
 {
@@ -70,7 +69,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRLightMap::TerminateClass()
 {
@@ -106,7 +104,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRLightMap::MLRLightMap(MLRTexture *tex) :
 	RegisteredClass(DefaultData)
 {
@@ -131,7 +128,6 @@ MLRLightMap::MLRLightMap(MLRTexture *tex) :
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRLightMap::~MLRLightMap()
 {
 	Check_Object(this);
@@ -139,7 +135,6 @@ MLRLightMap::~MLRLightMap()
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRLightMap::SetDrawData
 		(
@@ -164,7 +159,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRLightMap::TestInstance()
 {
@@ -173,7 +167,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRLightMap::DrawLightMaps(MLRSorter *sorter)
 {
@@ -332,12 +325,10 @@ void
 
 						int numberVerticesPerPolygon = 0;
 
-						//
 						//---------------------------------------------------------------
 						// Handle the case of a single clipping plane by stepping through
 						// the vertices and finding the edge it originates
 						//---------------------------------------------------------------
-						//
 						bool firstIsIn;
 						MLRClippingState theTest;
 
@@ -353,12 +344,10 @@ void
 								k0 = k;
 								k1 = (k+1) < stride ? k+1 : 0;
 
-								//
 								//----------------------------------------------------
 								// If this vertex is inside the viewing space, copy it
 								// directly to the clipping buffer
 								//----------------------------------------------------
-								//
 								theTest = (*clippingStates)[k0];
 
 								if(theTest == 0)
@@ -373,20 +362,17 @@ void
 									numberVerticesPerPolygon++;
 									clipped_index++;
 
-									//
 									//-------------------------------------------------------
 									// We don't need to clip this edge if the next vertex is
 									// also in the viewing space, so just move on to the next
 									// vertex
 									//-------------------------------------------------------
-									//
 									if((*clippingStates)[k1] == 0)
 									{
 										continue;
 									}
 								}
 
-								//
 								//---------------------------------------------------------
 								// This vertex is outside the viewing space, so if the next
 								// vertex is also outside the viewing space, no clipping is
@@ -394,7 +380,6 @@ void
 								// clipping plane is involved, it must be in the same space
 								// as the first vertex
 								//---------------------------------------------------------
-								//
 								else
 								{
 									firstIsIn = false;
@@ -405,32 +390,26 @@ void
 									}
 								}
 
-								//
 								//--------------------------------------------------
 								// We now find the distance along the edge where the
 								// clipping plane will intersect
 								//--------------------------------------------------
-								//
 								mask = 1;
 								theTest |= (*clippingStates)[k1];
 
-								//
 								//-----------------------------------------------------
 								// Find the boundary conditions that match our clipping
 								// plane
 								//-----------------------------------------------------
-								//
 								for (l=0; l<MLRClippingState::NextBit; l++)
 								{
 									if(theTest.IsClipped(mask))
 									{
 			//							GetDoubleBC(l, bc0, bc1, transformedCoords[k0], transformedCoords[k1]);
 
-										//
 										//-------------------------------------------
 										// Find the clipping interval from bc0 to bc1
 										//-------------------------------------------
-										//
 										if(firstIsIn==true)
 										{
 											a = GetLerpFactor(l, (*transformedCoords)[k0], (*transformedCoords)[k1]);
@@ -449,11 +428,9 @@ void
 									mask <<= 1;
 								}
 
-								//
 								//------------------------------
 								// Lerp the homogeneous position
 								//------------------------------
-								//
 								if(firstIsIn==true)
 								{
 									(*clipExtraCoords)[clipped_index].Lerp(
@@ -467,12 +444,10 @@ void
 									Verify((*clipExtraCoords)[clipped_index].y >= 0.0f && (*clipExtraCoords)[clipped_index].y <= (*clipExtraCoords)[clipped_index].w );
 									Verify((*clipExtraCoords)[clipped_index].z >= 0.0f && (*clipExtraCoords)[clipped_index].z <= (*clipExtraCoords)[clipped_index].w );
 
-									//
 									//-----------------------------------------------------
 									// If there are texture uv's, we need to lerp them in a
 									// perspective correct manner
 									//-----------------------------------------------------
-									//
 									(*clipExtraTexCoords)[clipped_index].Lerp
 										(
 											texCoords[k0],
@@ -492,12 +467,10 @@ void
 									Verify((*clipExtraCoords)[clipped_index].x >= 0.0f && (*clipExtraCoords)[clipped_index].x <= (*clipExtraCoords)[clipped_index].w );
 									Verify((*clipExtraCoords)[clipped_index].y >= 0.0f && (*clipExtraCoords)[clipped_index].y <= (*clipExtraCoords)[clipped_index].w );
 									Verify((*clipExtraCoords)[clipped_index].z >= 0.0f && (*clipExtraCoords)[clipped_index].z <= (*clipExtraCoords)[clipped_index].w );
-									//
 									//-----------------------------------------------------
 									// If there are texture uv's, we need to lerp them in a
 									// perspective correct manner
 									//-----------------------------------------------------
-									//
 									(*clipExtraTexCoords)[clipped_index].Lerp
 										(
 											texCoords[k1],
@@ -506,21 +479,17 @@ void
 										);
 								}
 
-								//
 								//--------------------------------
 								// Bump the polygon's vertex count
 								//--------------------------------
-								//
 								numberVerticesPerPolygon++;
 							}
 						}
 
-						//
 						//---------------------------------------------------------------
 						// We have to handle multiple planes.  We do this by creating two
 						// buffers and we switch between them as we clip plane by plane
 						//---------------------------------------------------------------
-						//
 						else
 						{
 			#ifdef LAB_ONLY
@@ -535,11 +504,9 @@ void
 							srcPolygon.texCoords = clipBuffer[dstBuffer].texCoords.GetData();
 							srcPolygon.clipPerVertex = clipBuffer[dstBuffer].clipPerVertex.GetData();
 
-							//
 							//----------------------------------------------------------
 							// unravel and copy the original data into the source buffer
 							//----------------------------------------------------------
-							//
 							for(k=0;k<stride;k++)
 							{
 								srcPolygon.coords[k] = (*transformedCoords)[k];
@@ -549,11 +516,9 @@ void
 
 							srcPolygon.length = stride;
 
-							//
 							//--------------------------------
 							// Point to the destination buffer
 							//--------------------------------
-							//
 							dstBuffer = 0;
 
 							dstPolygon.coords = clipBuffer[dstBuffer].coords.GetData();
@@ -561,12 +526,10 @@ void
 							dstPolygon.clipPerVertex = clipBuffer[dstBuffer].clipPerVertex.GetData();
 							dstPolygon.length = 0;
 
-							//
 							//-----------------------------------------------------------
 							// Spin through each plane that clipped the primitive and use
 							// it to actually clip the primitive
 							//-----------------------------------------------------------
-							//
 							mask = 1;
 							MLRClippingState theNewOr(0);
 							int loop = 4;
@@ -578,23 +541,19 @@ void
 									if(theOr.IsClipped(mask))
 									{
 
-										//
 										//-----------------------------------
 										// Clip each vertex against the plane
 										//-----------------------------------
-										//
 										for(k=0;k<srcPolygon.length;k++)
 										{
 											k1 = (k+1) < srcPolygon.length ? k+1 : 0;
 
 											theTest = srcPolygon.clipPerVertex[k];
 
-											//
 											//----------------------------------------------------
 											// If this vertex is inside the viewing space, copy it
 											// directly to the clipping buffer
 											//----------------------------------------------------
-											//
 											if(theTest.IsClipped(mask) == 0)
 											{
 												firstIsIn = true;
@@ -608,20 +567,17 @@ void
 													srcPolygon.texCoords[k];
 												dstPolygon.length++;
 
-												//
 												//-------------------------------------------------------
 												// We don't need to clip this edge if the next vertex is
 												// also in the viewing space, so just move on to the next
 												// vertex
 												//-------------------------------------------------------
-												//
 												if(srcPolygon.clipPerVertex[k1].IsClipped(mask) == 0)
 												{
 													continue;
 												}
 											}
 
-											//
 											//---------------------------------------------------------
 											// This vertex is outside the viewing space, so if the next
 											// vertex is also outside the viewing space, no clipping is
@@ -629,7 +585,6 @@ void
 											// clipping plane is involved, it must be in the same space
 											// as the first vertex
 											//---------------------------------------------------------
-											//
 											else 
 											{
 												firstIsIn = false;
@@ -644,21 +599,17 @@ void
 												}
 											}
 
-											//
 											//-------------------------------------------
 											// Find the clipping interval from bc0 to bc1
 											//-------------------------------------------
-											//
 											if(firstIsIn == true)
 											{
 												a = GetLerpFactor (l, srcPolygon.coords[k], srcPolygon.coords[k1]);
 												Verify(a >= 0.0f && a <= 1.0f);
 
-											//
 											//------------------------------
 											// Lerp the homogeneous position
 											//------------------------------
-											//
 											dstPolygon.coords[dstPolygon.length].Lerp(
 												srcPolygon.coords[k],
 												srcPolygon.coords[k1],
@@ -667,12 +618,10 @@ void
 
 											DoClipTrick(dstPolygon.coords[dstPolygon.length], l);
 
-											//
 											//-----------------------------------------------------
 											// If there are texture uv's, we need to lerp them in a
 											// perspective correct manner
 											//-----------------------------------------------------
-											//
 											dstPolygon.texCoords[dstPolygon.length].Lerp
 												(
 													srcPolygon.texCoords[k],
@@ -685,11 +634,9 @@ void
 												a = GetLerpFactor (l, srcPolygon.coords[k1], srcPolygon.coords[k]);
 												Verify(a >= 0.0f && a <= 1.0f);
 
-												//
 												//------------------------------
 												// Lerp the homogeneous position
 												//------------------------------
-												//
 												dstPolygon.coords[dstPolygon.length].Lerp(
 													srcPolygon.coords[k1],
 													srcPolygon.coords[k],
@@ -698,12 +645,10 @@ void
 
 												DoClipTrick(dstPolygon.coords[dstPolygon.length], l);
 
-												//
 												//-----------------------------------------------------
 												// If there are texture uv's, we need to lerp them in a
 												// perspective correct manner
 												//-----------------------------------------------------
-												//
 												dstPolygon.texCoords[dstPolygon.length].Lerp
 													(
 														srcPolygon.texCoords[k1],
@@ -712,27 +657,21 @@ void
 													);
 											}
 
-											//
 											//-------------------------------------
 											// We have to generate a new clip state
 											//-------------------------------------
-											//
 											dstPolygon.clipPerVertex[dstPolygon.length].Clip4dVertex(&dstPolygon.coords[dstPolygon.length]);
 
-											//
 											//----------------------------------
 											// Bump the new polygon vertex count
 											//----------------------------------
-											//
 											dstPolygon.length++;
 										}
 
-										//
 										//-----------------------------------------------
 										// Swap source and destination buffer pointers in
 										// preparation for the next plane test
 										//-----------------------------------------------
-										//
 										srcPolygon.coords = clipBuffer[dstBuffer].coords.GetData();
 										srcPolygon.texCoords = clipBuffer[dstBuffer].texCoords.GetData();
 										srcPolygon.clipPerVertex = clipBuffer[dstBuffer].clipPerVertex.GetData();	
@@ -760,11 +699,9 @@ void
 							} while (theNewOr != 0 && loop--);
 
 							Verify(theNewOr == 0);
-							//
 							//--------------------------------------------------
 							// Move the most recent polygon into the clip buffer
 							//--------------------------------------------------
-							//
 							for(k=0;k<srcPolygon.length;k++)
 							{
 								(*clipExtraCoords)[k] = srcPolygon.coords[k];
@@ -871,12 +808,10 @@ void
 
 						int numberVerticesPerPolygon = 0;
 
-						//
 						//---------------------------------------------------------------
 						// Handle the case of a single clipping plane by stepping through
 						// the vertices and finding the edge it originates
 						//---------------------------------------------------------------
-						//
 						bool firstIsIn;
 						MLRClippingState theTest;
 
@@ -892,12 +827,10 @@ void
 								k0 = k;
 								k1 = (k+1) < stride ? k+1 : 0;
 
-								//
 								//----------------------------------------------------
 								// If this vertex is inside the viewing space, copy it
 								// directly to the clipping buffer
 								//----------------------------------------------------
-								//
 								theTest = (*clippingStates)[k0];
 
 								if(theTest == 0)
@@ -913,20 +846,17 @@ void
 									numberVerticesPerPolygon++;
 									clipped_index++;
 
-									//
 									//-------------------------------------------------------
 									// We don't need to clip this edge if the next vertex is
 									// also in the viewing space, so just move on to the next
 									// vertex
 									//-------------------------------------------------------
-									//
 									if((*clippingStates)[k1] == 0)
 									{
 										continue;
 									}
 								}
 
-								//
 								//---------------------------------------------------------
 								// This vertex is outside the viewing space, so if the next
 								// vertex is also outside the viewing space, no clipping is
@@ -934,7 +864,6 @@ void
 								// clipping plane is involved, it must be in the same space
 								// as the first vertex
 								//---------------------------------------------------------
-								//
 								else
 								{
 									firstIsIn = false;
@@ -945,7 +874,6 @@ void
 									}
 								}
 
-								//
 								//--------------------------------------------------
 								// We now find the distance along the edge where the
 								// clipping plane will intersect
@@ -954,23 +882,19 @@ void
 								mask = 1;
 								theTest |= (*clippingStates)[k1];
 
-								//
 								//-----------------------------------------------------
 								// Find the boundary conditions that match our clipping
 								// plane
 								//-----------------------------------------------------
-								//
 								for (l=0; l<MLRClippingState::NextBit; l++)
 								{
 									if(theTest.IsClipped(mask))
 									{
 			//							GetDoubleBC(l, bc0, bc1, transformedCoords[k0], transformedCoords[k1]);
 
-										//
 										//-------------------------------------------
 										// Find the clipping interval from bc0 to bc1
 										//-------------------------------------------
-										//
 										if(firstIsIn==true)
 										{
 											a = GetLerpFactor(l, (*transformedCoords)[k0], (*transformedCoords)[k1]);
@@ -989,11 +913,9 @@ void
 									mask <<= 1;
 								}
 
-								//
 								//------------------------------
 								// Lerp the homogeneous position
 								//------------------------------
-								//
 								if(firstIsIn==true)
 								{
 									(*clipExtraCoords)[clipped_index].Lerp(
@@ -1007,12 +929,10 @@ void
 									Verify((*clipExtraCoords)[clipped_index].y >= 0.0f && (*clipExtraCoords)[clipped_index].y <= (*clipExtraCoords)[clipped_index].w );
 									Verify((*clipExtraCoords)[clipped_index].z >= 0.0f && (*clipExtraCoords)[clipped_index].z <= (*clipExtraCoords)[clipped_index].w );
 
-									//
 									//-----------------------------------------------------
 									// If there are texture uv's, we need to lerp them in a
 									// perspective correct manner
 									//-----------------------------------------------------
-									//
 									(*clipExtraTexCoords)[clipped_index].Lerp
 										(
 											texCoords[k0],
@@ -1039,12 +959,10 @@ void
 									Verify((*clipExtraCoords)[clipped_index].x >= 0.0f && (*clipExtraCoords)[clipped_index].x <= (*clipExtraCoords)[clipped_index].w );
 									Verify((*clipExtraCoords)[clipped_index].y >= 0.0f && (*clipExtraCoords)[clipped_index].y <= (*clipExtraCoords)[clipped_index].w );
 									Verify((*clipExtraCoords)[clipped_index].z >= 0.0f && (*clipExtraCoords)[clipped_index].z <= (*clipExtraCoords)[clipped_index].w );
-									//
 									//-----------------------------------------------------
 									// If there are texture uv's, we need to lerp them in a
 									// perspective correct manner
 									//-----------------------------------------------------
-									//
 									(*clipExtraTexCoords)[clipped_index].Lerp
 										(
 											texCoords[k1],
@@ -1060,21 +978,17 @@ void
 										);
 								}
 
-								//
 								//--------------------------------
 								// Bump the polygon's vertex count
 								//--------------------------------
-								//
 								numberVerticesPerPolygon++;
 							}
 						}
 
-						//
 						//---------------------------------------------------------------
 						// We have to handle multiple planes.  We do this by creating two
 						// buffers and we switch between them as we clip plane by plane
 						//---------------------------------------------------------------
-						//
 						else
 						{
 			#ifdef LAB_ONLY
@@ -1089,11 +1003,9 @@ void
 							srcPolygon.colors = clipBuffer[dstBuffer].colors.GetData();
 							srcPolygon.clipPerVertex = clipBuffer[dstBuffer].clipPerVertex.GetData();
 
-							//
 							//----------------------------------------------------------
 							// unravel and copy the original data into the source buffer
 							//----------------------------------------------------------
-							//
 							for(k=0;k<stride;k++)
 							{
 								srcPolygon.coords[k] = (*transformedCoords)[k];
@@ -1104,11 +1016,9 @@ void
 
 							srcPolygon.length = stride;
 
-							//
 							//--------------------------------
 							// Point to the destination buffer
 							//--------------------------------
-							//
 							dstBuffer = 0;
 
 							dstPolygon.coords = clipBuffer[dstBuffer].coords.GetData();
@@ -1117,12 +1027,10 @@ void
 							dstPolygon.clipPerVertex = clipBuffer[dstBuffer].clipPerVertex.GetData();
 							dstPolygon.length = 0;
 
-							//
 							//-----------------------------------------------------------
 							// Spin through each plane that clipped the primitive and use
 							// it to actually clip the primitive
 							//-----------------------------------------------------------
-							//
 							mask = 1;
 							MLRClippingState theNewOr(0);
 							int loop = 4;
@@ -1134,23 +1042,19 @@ void
 									if(theOr.IsClipped(mask))
 									{
 
-										//
 										//-----------------------------------
 										// Clip each vertex against the plane
 										//-----------------------------------
-										//
 										for(k=0;k<srcPolygon.length;k++)
 										{
 											k1 = (k+1) < srcPolygon.length ? k+1 : 0;
 
 											theTest = srcPolygon.clipPerVertex[k];
 
-											//
 											//----------------------------------------------------
 											// If this vertex is inside the viewing space, copy it
 											// directly to the clipping buffer
 											//----------------------------------------------------
-											//
 											if(theTest.IsClipped(mask) == 0)
 											{
 												firstIsIn = true;
@@ -1166,20 +1070,17 @@ void
 													srcPolygon.colors[k];
 												dstPolygon.length++;
 
-												//
 												//-------------------------------------------------------
 												// We don't need to clip this edge if the next vertex is
 												// also in the viewing space, so just move on to the next
 												// vertex
 												//-------------------------------------------------------
-												//
 												if(srcPolygon.clipPerVertex[k1].IsClipped(mask) == 0)
 												{
 													continue;
 												}
 											}
 
-											//
 											//---------------------------------------------------------
 											// This vertex is outside the viewing space, so if the next
 											// vertex is also outside the viewing space, no clipping is
@@ -1187,7 +1088,6 @@ void
 											// clipping plane is involved, it must be in the same space
 											// as the first vertex
 											//---------------------------------------------------------
-											//
 											else 
 											{
 												firstIsIn = false;
@@ -1202,21 +1102,17 @@ void
 												}
 											}
 
-											//
 											//-------------------------------------------
 											// Find the clipping interval from bc0 to bc1
 											//-------------------------------------------
-											//
 											if(firstIsIn == true)
 											{
 												a = GetLerpFactor (l, srcPolygon.coords[k], srcPolygon.coords[k1]);
 												Verify(a >= 0.0f && a <= 1.0f);
 
-											//
 											//------------------------------
 											// Lerp the homogeneous position
 											//------------------------------
-											//
 											dstPolygon.coords[dstPolygon.length].Lerp(
 												srcPolygon.coords[k],
 												srcPolygon.coords[k1],
@@ -1225,12 +1121,10 @@ void
 
 											DoClipTrick(dstPolygon.coords[dstPolygon.length], l);
 
-											//
 											//-----------------------------------------------------
 											// If there are texture uv's, we need to lerp them in a
 											// perspective correct manner
 											//-----------------------------------------------------
-											//
 											dstPolygon.texCoords[dstPolygon.length].Lerp
 												(
 													srcPolygon.texCoords[k],
@@ -1249,11 +1143,9 @@ void
 												a = GetLerpFactor (l, srcPolygon.coords[k1], srcPolygon.coords[k]);
 												Verify(a >= 0.0f && a <= 1.0f);
 
-												//
 												//------------------------------
 												// Lerp the homogeneous position
 												//------------------------------
-												//
 												dstPolygon.coords[dstPolygon.length].Lerp(
 													srcPolygon.coords[k1],
 													srcPolygon.coords[k],
@@ -1262,12 +1154,10 @@ void
 
 												DoClipTrick(dstPolygon.coords[dstPolygon.length], l);
 
-												//
 												//-----------------------------------------------------
 												// If there are texture uv's, we need to lerp them in a
 												// perspective correct manner
 												//-----------------------------------------------------
-												//
 												dstPolygon.texCoords[dstPolygon.length].Lerp
 													(
 														srcPolygon.texCoords[k1],
@@ -1282,27 +1172,21 @@ void
 													);
 											}
 
-											//
 											//-------------------------------------
 											// We have to generate a new clip state
 											//-------------------------------------
-											//
 											dstPolygon.clipPerVertex[dstPolygon.length].Clip4dVertex(&dstPolygon.coords[dstPolygon.length]);
 
-											//
 											//----------------------------------
 											// Bump the new polygon vertex count
 											//----------------------------------
-											//
 											dstPolygon.length++;
 										}
 
-										//
 										//-----------------------------------------------
 										// Swap source and destination buffer pointers in
 										// preparation for the next plane test
 										//-----------------------------------------------
-										//
 										srcPolygon.coords = clipBuffer[dstBuffer].coords.GetData();
 										srcPolygon.texCoords = clipBuffer[dstBuffer].texCoords.GetData();
 										srcPolygon.colors = clipBuffer[dstBuffer].colors.GetData();
@@ -1332,11 +1216,9 @@ void
 							} while (theNewOr != 0 && loop--);
 
 							Verify(theNewOr == 0);
-							//
 							//--------------------------------------------------
 							// Move the most recent polygon into the clip buffer
 							//--------------------------------------------------
-							//
 							for(k=0;k<srcPolygon.length;k++)
 							{
 								(*clipExtraCoords)[k] = srcPolygon.coords[k];
@@ -1403,7 +1285,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRShape*
 	MLRLightMap::CreateLightMapShape()
 {

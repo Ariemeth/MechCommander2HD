@@ -75,9 +75,7 @@ namespace Stuff {
 				const Sphere& sphere2
 			);
 
-		//
 		// Intersection functions
-		//
 		bool
 			Contains(const Point3D &point) const
 				{

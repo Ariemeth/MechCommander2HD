@@ -512,14 +512,12 @@ void
 
 	//######################################################################################################################
 	//	the lines below will produce following functions:
-	//
 	//	bool GOSCopyData(GOSVertex*, const Stuff::Vector4D*, int);
 	//	bool GOSCopyData(GOSVertex*, const Stuff::Vector4D*, const DWORD*, int);
 	//	bool GOSCopyData(GOSVertex*, const Stuff::Vector4D*, const RGBAColor*, int);
 	//	bool GOSCopyData(GOSVertex*, const Stuff::Vector4D*, const Vector2DScalar*, int);
 	//	bool GOSCopyData(GOSVertex*, const Stuff::Vector4D*, const DWORD*, const Vector2DScalar*, int);
 	//	bool GOSCopyData(GOSVertex*, const Stuff::Vector4D*, const RGBAColor*, const Vector2DScalar*, int);
-	//
 	//	bool GOSCopyTriangleData(GOSVertex*, const Stuff::Vector4D*, int, int, int);
 	//	bool GOSCopyTriangleData(GOSVertex*, const Stuff::Vector4D*, const DWORD*, int, int, int);
 	//	bool GOSCopyTriangleData(GOSVertex*, const Stuff::Vector4D*, const RGBAColor*, int, int, int);

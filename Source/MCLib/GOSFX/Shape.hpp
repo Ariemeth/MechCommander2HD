@@ -4,7 +4,6 @@
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
-//
 #pragma once
 
 #include "gosFX.hpp"
@@ -28,7 +27,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------
 	// Constructors/Destructors
-	//
 	protected:
 		Shape__Specification(
 			Stuff::MemoryStream *stream,
@@ -69,7 +67,6 @@ namespace gosFX
 	{
 	//----------------------------------------------------------------------------
 	// Class Registration Support
-	//
 	public:
 		static void InitializeClass();
 		static void	TerminateClass();
@@ -78,7 +75,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Class Data Support
-	//
 	protected:
 		Shape(
 			Specification *spec,
@@ -105,14 +101,12 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Testing
-	//
 	public:
 		void
 			TestInstance() const;
 
 	//----------------------------------------------------------------------------
 	// API
-	//
 	public:
 		void
 			Draw(DrawInfo *info);

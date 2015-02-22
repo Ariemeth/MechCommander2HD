@@ -23,9 +23,7 @@ namespace Stuff {
 		static const LinearMatrix4D
 			Identity;
 
-		//
 		// Constructors
-		//
 		LinearMatrix4D()
 			{}
 		explicit LinearMatrix4D(int)
@@ -47,9 +45,7 @@ namespace Stuff {
 		explicit LinearMatrix4D(const Point3D &p)
 			{*this = p;}
 
-		//
 		// Assignment Operators
-		//
 		LinearMatrix4D&
 			operator=(const LinearMatrix4D &m)
 				{AffineMatrix4D::operator=(m); Check_Object(this); return *this;}
@@ -97,9 +93,7 @@ namespace Stuff {
 			BuildTranslation(const Point3D &p)
 				{AffineMatrix4D::BuildTranslation(p); return *this;}
 
-		//
 		// Axis Manipulation
-		//
 		void
 			GetLocalForwardInWorld(UnitVector3D *v) const
 		{
@@ -198,9 +192,7 @@ namespace Stuff {
 				int minor_axis
 			);
 
-		//
 		// Matrix4D Multiplication
-		//
 		LinearMatrix4D&
 			Multiply(
 				const LinearMatrix4D& m1,
@@ -211,18 +203,14 @@ namespace Stuff {
 			operator *=(const LinearMatrix4D& M)
 				{LinearMatrix4D src(*this); return Multiply(src, M);}
 
-		//
 		// Matrix4D Inversion
-		//
 		LinearMatrix4D&
 			Invert(const LinearMatrix4D& Source);
 		LinearMatrix4D&
 			Invert()
 				{LinearMatrix4D src(*this); return Invert(src);}
 
-		//
 		// Rotation and Translation
-		//
 		LinearMatrix4D&
 			Multiply(const LinearMatrix4D &m,const UnitQuaternion &q)
 				{
@@ -242,9 +230,7 @@ namespace Stuff {
 			operator*=(const Point3D& p)
 				{Check_Object(this); LinearMatrix4D m(*this); return Multiply(m,p);}
 
-		//
 		// Support functions
-		//
 		LinearMatrix4D&
 			Normalize();
 

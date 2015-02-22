@@ -11,7 +11,6 @@
 //##########################################################################
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 bool
 gosFX::Curve::IsComplex()
 {
@@ -1234,7 +1233,6 @@ gosFX::Curve::GetSubCurve(int curvenum)
 //##########################################################################
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 gosFX::ConstantCurve::Save(Stuff::MemoryStream *stream)
 {
@@ -1245,7 +1243,6 @@ gosFX::ConstantCurve::Save(Stuff::MemoryStream *stream)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void 
 	gosFX::ConstantCurve::Load(
 		Stuff::MemoryStream *stream,
@@ -1263,7 +1260,6 @@ void
 //##########################################################################
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 gosFX::LinearCurve::Save(Stuff::MemoryStream *stream)
 {
@@ -1275,7 +1271,6 @@ gosFX::LinearCurve::Save(Stuff::MemoryStream *stream)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void 
 	gosFX::LinearCurve::Load(
 		Stuff::MemoryStream *stream,
@@ -1317,7 +1312,6 @@ gosFX::LinearCurve::SetCurve(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 gosFX::LinearCurve::ComputeRange(
 								 Stuff::Scalar *low,
@@ -1328,12 +1322,10 @@ gosFX::LinearCurve::ComputeRange(
 	Check_Pointer(low);
 	Check_Pointer(hi);
 	
-	//
 	//------------------------------------------------------------------------
 	// We know that we will have to test the function at the beginning and end
 	// of the segment, so go ahead and do that now
 	//------------------------------------------------------------------------
-	//
 	*hi = *low = m_value;
 	Stuff::Scalar t = m_slope+m_value;
 	if (t>*hi)
@@ -1347,7 +1339,6 @@ gosFX::LinearCurve::ComputeRange(
 //##########################################################################
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 gosFX::SplineCurve&
 gosFX::SplineCurve::operator=(const SplineCurve& curve)
 {
@@ -1359,7 +1350,6 @@ gosFX::SplineCurve::operator=(const SplineCurve& curve)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 gosFX::SplineCurve::Save(Stuff::MemoryStream *stream)
 {
@@ -1371,7 +1361,6 @@ gosFX::SplineCurve::Save(Stuff::MemoryStream *stream)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void 
 	gosFX::SplineCurve::Load(
 		Stuff::MemoryStream *stream,
@@ -1437,7 +1426,6 @@ gosFX::SplineCurve::SetCurve(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 gosFX::SplineCurve::ComputeRange(
 								 Stuff::Scalar *low,
@@ -1448,12 +1436,10 @@ gosFX::SplineCurve::ComputeRange(
 	Check_Pointer(low);
 	Check_Pointer(hi);
 	
-	//
 	//------------------------------------------------------------------------
 	// We know that we will have to test the function at the beginning and end
 	// of the segment, so go ahead and do that now
 	//------------------------------------------------------------------------
-	//
 	*hi = *low = m_value;
 	Stuff::Scalar t = ComputeValue(1.0f, 0.0f);
 	if (t>*hi)
@@ -1461,13 +1447,11 @@ gosFX::SplineCurve::ComputeRange(
 	else if (t<*low)
 		*low = t;
 	
-	//
 	//----------------------------------------------------------------------
 	// If the curve is not cubic, we just have to look for the local min/max
 	// at the solution to 2*m_b*t + m_slope == 0.  If the curve is linear, we just
 	// return
 	//----------------------------------------------------------------------
-	//
 	if (!m_a)
 	{
 		if (m_b)
@@ -1485,12 +1469,10 @@ gosFX::SplineCurve::ComputeRange(
 		return;
 	}
 	
-	//
 	//----------------------------------------------------------------------
 	// Now we need to deal with the cubic.  Its min/max will be at either of
 	// the two roots of the equation 3*m_a*t*t + 2*m_b*t + m_slope == 0
 	//----------------------------------------------------------------------
-	//
 	Stuff::Scalar da = 3.0f*m_a;
 	Stuff::Scalar db = 2.0f*m_b;
 	Stuff::Scalar range = db*db - 4.0f*da*m_slope;
@@ -1500,12 +1482,10 @@ gosFX::SplineCurve::ComputeRange(
 	db = -db * da;
 	range = Stuff::Sqrt(range) * da;
 	
-	//
 	//------------------------------------------------------------------------
 	// db now holds the midpoint between the two solutions, which will be at +
 	// or - range from that point
 	//------------------------------------------------------------------------
-	//
 	t = db - range;
 	if (t > 0.0f && t < 1.0f)
 	{
@@ -1566,7 +1546,6 @@ gosFX::CurveKey::SetLinearKey(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 gosFX::CurveKey::ComputeRange(
 							  Stuff::Scalar *low,
@@ -1578,12 +1557,10 @@ gosFX::CurveKey::ComputeRange(
 	Check_Pointer(low);
 	Check_Pointer(hi);
 	
-	//
 	//------------------------------------------------------------------------
 	// We know that we will have to test the function at the beginning and end
 	// of the segment, so go ahead and do that now
 	//------------------------------------------------------------------------
-	//
 	*hi = *low = m_value;
 	if (dt < Stuff::SMALL)
 		return;
@@ -1595,7 +1572,6 @@ gosFX::CurveKey::ComputeRange(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 gosFX::ComplexCurve::ComplexCurve():
 Curve(e_ComplexType)
 {
@@ -1603,7 +1579,6 @@ Curve(e_ComplexType)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 gosFX::ComplexCurve::ComplexCurve(const ComplexCurve &fcurve):
 Curve(e_ComplexType)
 {
@@ -1613,7 +1588,6 @@ Curve(e_ComplexType)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 gosFX::ComplexCurve::ComplexCurve(
 	Stuff::MemoryStream *stream,
 	int gfx_version
@@ -1627,7 +1601,6 @@ Curve(e_ComplexType)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 gosFX::ComplexCurve&
 gosFX::ComplexCurve::operator=(const ComplexCurve &fcurve)
 {
@@ -1638,7 +1611,6 @@ gosFX::ComplexCurve::operator=(const ComplexCurve &fcurve)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 gosFX::ComplexCurve::Save(Stuff::MemoryStream *stream)
 {
@@ -1649,7 +1621,6 @@ gosFX::ComplexCurve::Save(Stuff::MemoryStream *stream)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void 
 gosFX::ComplexCurve::Load(
 	Stuff::MemoryStream *stream,
@@ -1666,12 +1637,10 @@ gosFX::ComplexCurve::Load(
 	}
 	Stuff::MemoryStreamIO_Read(stream, &m_keys);
 
-	//
 	//--------------------------------------------------------------------------
 	// If we are reading a previous version, make sure the tail doesn't go below
 	// zero
 	//--------------------------------------------------------------------------
-	//
 	CurveKey *key = &m_keys[m_keys.GetLength()-1];
 	Stuff::Scalar dt = 1.0f - key->m_time;
 	Min_Clamp(dt, 0.0f);
@@ -1689,19 +1658,16 @@ gosFX::ComplexCurve::Load(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 int
 gosFX::ComplexCurve::InsertKey(Stuff::Scalar m_time)
 {
 	Check_Object(this);
 	gos_PushCurrentHeap(Heap);
 	
-	//
 	//-----------------------------------------------------------------------
 	// Figure out where to insert the next key, then increase the size of the
 	// key array and shift the m_keys after the insert point up one slot
 	//-----------------------------------------------------------------------
-	//
 	int before = GetKeyIndex(m_time);
 	int key_count = m_keys.GetLength();
 	m_keys.SetLength(key_count+1);
@@ -1714,13 +1680,11 @@ gosFX::ComplexCurve::InsertKey(Stuff::Scalar m_time)
 		key = &(*this)[before];
 	Check_Object(key);
 	
-	//
 	//-----------------------------------------------------------------------
 	// If this is an insert as opposed to an append, we need to set the key
 	// values of the new segment so they smoothly complete the original curve
 	// being inserted into
 	//-----------------------------------------------------------------------
-	//
 	if (before < key_count)
 	{
 		Stuff::Scalar t = m_time - key->m_time;
@@ -1730,12 +1694,10 @@ gosFX::ComplexCurve::InsertKey(Stuff::Scalar m_time)
 		key->SetLinearKey(m_time, v0, v1, key[1].m_time - m_time);
 	}
 	
-	//
 	//-----------------------------------------------------------------------
 	// Otherwise, we are appending, so all we can do is establish m_a key equal
 	// to the the previous key at this m_time
 	//-----------------------------------------------------------------------
-	//
 	else if (key_count > 0)
 	{
 		Verify(before == key_count);
@@ -1746,25 +1708,20 @@ gosFX::ComplexCurve::InsertKey(Stuff::Scalar m_time)
 		key->SetLinearKey(m_time, v0, v1, 1.0f);
 	}
 	
-	//
 	//-----------------------------------------------------------------
 	// In we are inserting the first key, make m_a constant m_value of zero
 	//-----------------------------------------------------------------
-	//
 	else
 		key->SetConstantKey(m_time, 0.0f);
 	
-	//
 	//-------------------------
 	// Return the new key index
 	//-------------------------
-	//
 	gos_PopCurrentHeap();
 	return before;
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 gosFX::ComplexCurve::DeleteKey(int index)
 {
@@ -1772,11 +1729,9 @@ gosFX::ComplexCurve::DeleteKey(int index)
 	Verify(index>0 && index<m_keys.GetLength());
 	gos_PushCurrentHeap(Heap);
 	
-	//
 	//---------------------------------------------------
 	// If this is the last key, we just resize and return
 	//---------------------------------------------------
-	//
 	int key_count = m_keys.GetLength();
 	if (index == key_count-1)
 	{
@@ -1785,11 +1740,9 @@ gosFX::ComplexCurve::DeleteKey(int index)
 		return;
 	}
 	
-	//
 	//-----------------------------------------------------------
 	// Compute the ending values of this key, then shift the m_keys
 	//-----------------------------------------------------------
-	//
 	CurveKey* key = &(*this)[index];
 	Check_Object(key);
 	Stuff::Scalar t = key[1].m_time - key->m_time;
@@ -1797,11 +1750,9 @@ gosFX::ComplexCurve::DeleteKey(int index)
 	for (int i=index+1; i<key_count; ++i)
 		m_keys[i-1] = m_keys[i];
 	
-	//
 	//-------------------------------------------------
 	// Now connect the previous key to the new next key
 	//-------------------------------------------------
-	//
 	--key;
 	key->SetLinearKey(
 		key->m_time,
@@ -1815,7 +1766,6 @@ gosFX::ComplexCurve::DeleteKey(int index)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 gosFX::ComplexCurve::SetCurve(Stuff::Scalar m_value)
 {
@@ -1827,7 +1777,6 @@ gosFX::ComplexCurve::SetCurve(Stuff::Scalar m_value)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 gosFX::ComplexCurve::SetCurve(
 							  Stuff::Scalar starting_value,
@@ -1836,11 +1785,9 @@ gosFX::ComplexCurve::SetCurve(
 {
 	Check_Object(this);
 	
-	//
 	//-----------------------------------------------------------------------
 	// Build the linear step, then the constant m_value at the end of the curve
 	//-----------------------------------------------------------------------
-	//
 	gos_PushCurrentHeap(Heap);
 	m_keys.SetLength(1);
 	m_keys[0].SetLinearKey(0.0f, starting_value, ending_value, 1.0f);
@@ -1848,7 +1795,6 @@ gosFX::ComplexCurve::SetCurve(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 gosFX::ComplexCurve::ComputeRange(
 								  Stuff::Scalar *low,
@@ -1859,11 +1805,9 @@ gosFX::ComplexCurve::ComputeRange(
 	Check_Pointer(low);
 	Check_Pointer(hi);
 	
-	//
 	//--------------------------------------------
 	// If the key is empty, set everything to zero
 	//--------------------------------------------
-	//
 	int key_count = m_keys.GetLength();
 	if (!key_count)
 	{
@@ -1871,21 +1815,17 @@ gosFX::ComplexCurve::ComputeRange(
 		return;
 	}
 	
-	//
 	//----------------------------
 	// Deal with the last keyframe
 	//----------------------------
-	//
 	CurveKey *key = &m_keys[--key_count];
 	Stuff::Scalar dt = 1.0f - key->m_time;
 	Min_Clamp(dt, 0.0f);
 	key->ComputeRange(low, hi, dt);
 
-	//
 	//------------------------------------
 	// Now deal with the preceeding frames
 	//------------------------------------
-	//
 	while (--key_count >= 0)
 	{
 		--key;

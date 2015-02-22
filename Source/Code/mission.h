@@ -1,9 +1,7 @@
 //******************************************************************************************
 //	mission.h - This file contains the mission class header
 //		Missions are what scenarios were in MechCommander 1.
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

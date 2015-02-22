@@ -26,7 +26,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Constructors
-	//
 	protected:
 		Note(Page *page):
 			Plug(DefaultData)
@@ -37,7 +36,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Note functions
-	//
 	public:
 		void
 			SetName(const char *entryname)
@@ -60,7 +58,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// string access
-	//
 	public:
 		void
 			GetEntry(const char **contents)
@@ -74,7 +71,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// int access
-	//
 	public:
 		void
 			GetEntry(int *value);
@@ -83,7 +79,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// scalar access
-	//
 	public:
 		void
 			GetEntry(Scalar *value);
@@ -92,7 +87,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// bool access
-	//
 	public:
 		void
 			GetEntry(bool *value);
@@ -101,7 +95,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Vector3D access
-	//
 	public:
 		void
 			GetEntry(Vector3D *value);
@@ -110,7 +103,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// YawPitchRoll access
-	//
 	public:
 		void
 			GetEntry(YawPitchRoll *value);
@@ -119,7 +111,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// UnitQuaternion access
-	//
 	public:
 		void
 			GetEntry(UnitQuaternion *value);
@@ -128,7 +119,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Motion3D access
-	//
 	public:
 		void
 			GetEntry(Motion3D *value);
@@ -137,7 +127,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// RGBColor access
-	//
 	public:
 		void
 			GetEntry(RGBColor *value);
@@ -146,7 +135,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// RGBAColor access
-	//
 	public:
 		void
 			GetEntry(RGBAColor *value);
@@ -155,7 +143,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// NotationFile access
-	//
 	public:
 		void
 			GetEntry(NotationFile *value);

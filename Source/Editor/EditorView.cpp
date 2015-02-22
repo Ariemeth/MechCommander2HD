@@ -3,7 +3,6 @@
 //===========================================================================//
 
 // EditorView.cpp : implementation of the EditorView class
-//
 
 #include "stdafx.h"
 #include "mclib.h"

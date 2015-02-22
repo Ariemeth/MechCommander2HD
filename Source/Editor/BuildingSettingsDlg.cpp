@@ -3,7 +3,6 @@
 //===========================================================================//
 
 // BuildingSettingsDlg.cpp : implementation file
-//
 
 #include "stdafx.h"
 #include "resource.h"

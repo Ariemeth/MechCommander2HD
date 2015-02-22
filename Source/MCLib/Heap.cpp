@@ -1,10 +1,8 @@
 //---------------------------------------------------------------------------
-//
 // Heap.cpp -- This file contains the definition for the Base HEAP
 //		 			Manager Class.  The Base HEAP manager creates,
 //		 			manages and destroys block of memory using Win32
 //		 			Virtual memory calls.h
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -37,9 +35,7 @@ unsigned long totalLeft = 0;
 
 bool HeapList::heapInstrumented = 0;
 
-//
 // Returns a context ready for stack walking from current address
-//
 void GetCurrentContext( CONTEXT* Context )
 {
 	memset( Context, 0, sizeof(CONTEXT) );
@@ -2072,8 +2068,6 @@ bool UserHeap::pointerOnHeap (void *ptr)
 }
 
 //---------------------------------------------------------------------------
-//
 // Edit Log
-//
 //---------------------------------------------------------------------------
 

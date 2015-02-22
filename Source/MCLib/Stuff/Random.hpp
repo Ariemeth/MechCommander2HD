@@ -47,11 +47,9 @@ namespace Stuff {
 			TestInstance() const {}
 
 	public:
-		//
 		//------------------------
 		// Random number functions
 		//------------------------
-		//
 		static int
 			GetInt()						// returns 0 .. RAND_MAX
 				{return GetRandomInt();}

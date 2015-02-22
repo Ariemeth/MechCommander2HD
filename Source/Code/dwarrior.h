@@ -1,9 +1,6 @@
 //***************************************************************************
-//
 //	dwarrior.h - This file contains the MechWarrior Class header definitions
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

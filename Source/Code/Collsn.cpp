@@ -1,8 +1,6 @@
 //******************************************************************************
 //	collsn.cpp - This file contains the Collision Detection System
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -563,15 +561,12 @@ void CollisionSystem::checkExtents (GameObjectPtr obj1, GameObjectPtr obj2, floa
 	// If we are an explosion, handle our collisions here and
 	// DO NOT add our record.  Fuel Tank Farms will completely
 	// swamp this here otherwise.
-	//
 	// In fact, I can think of NO reason why we wouldn't just
 	// handle all of the collisions here anyway.  Saves us the
 	// trouble of ever running out of collision records and since
 	// we run process collisions afterwards anyway and nothing
 	// in MechCommander can ever go away, why not?
-	//
 	// We handle all here.  NO more collision records.
-	//
 
 	//Wow, does this not work.
 	// Helicopters still need to collide with turrets and explosions and artillery.

@@ -47,7 +47,6 @@ namespace MidLevelRenderer {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Initialization
-	//
 	public:
 		static void
 			InitializeClass();
@@ -59,7 +58,6 @@ namespace MidLevelRenderer {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Constructors/Destructors
-	//
 	protected:
 		MLRPrimitiveBase(
 			ClassData *class_data,
@@ -206,7 +204,6 @@ namespace MidLevelRenderer {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// This functions using the static buffers
-	//
 		void
 			SetClipCoord(Stuff::Point3D &point, int index)
 				{
@@ -246,7 +243,6 @@ namespace MidLevelRenderer {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Reference counting
-	//
 	public:
 		void
 			AttachReference()
@@ -272,7 +268,6 @@ namespace MidLevelRenderer {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Testing
-	//
 	public:
 		void
 			TestInstance() const;
@@ -359,7 +354,6 @@ namespace MidLevelRenderer {
 		public Stuff::RegisteredClass::ClassData
 	{
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//
 	public:
 		MLRPrimitiveBase__ClassData(
 			Stuff::RegisteredClass::ClassID class_id,
@@ -375,7 +369,6 @@ namespace MidLevelRenderer {
 			primitiveFactory;
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//
 	public:
 		void
 			TestInstance();

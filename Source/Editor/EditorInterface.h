@@ -40,14 +40,9 @@ namespace Microsoft
 extern Microsoft::Xna::Arm::IProviderEngine * armProvider;
 
 //--------------------------------------------------------------------------------------
-//
 // Mech Commander 2 -- Copyright (c) 1998 FASA Interactive
-//
 // the EditorInterface class handles all the messages for the editor
-//
 // the Editor class merely holds everything needed to make this go.
-//
-// 
 //--------------------------------------------------------------------------------------
 
 // this class handles and routes all messages...

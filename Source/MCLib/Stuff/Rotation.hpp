@@ -58,9 +58,7 @@ namespace Stuff {
 		static const EulerAngles
 			Identity;
 
-		//
 		// Constructors
-		//
 		EulerAngles()
 			{}
 		EulerAngles(
@@ -80,9 +78,7 @@ namespace Stuff {
 		explicit EulerAngles(const Origin3D &origin)
 			{*this = origin;}
 
-		//
 		// Assignment operators
-		//
 		EulerAngles&
 			operator=(const EulerAngles &angles)
 				{
@@ -99,9 +95,7 @@ namespace Stuff {
 		EulerAngles&
 			operator=(const Origin3D &p);
 
-		//
 		// "Close-enough" comparators
-		//
 		friend bool
 			Small_Enough(
 				const EulerAngles &a,
@@ -124,9 +118,7 @@ namespace Stuff {
 			operator!=(const EulerAngles& a) const
 				{return !Close_Enough(*this,a,SMALL);}
 
-		//
 		// Axis index operators
-		//
 		static int GetMemberCount(void)
 			{
 				return 3;
@@ -147,9 +139,7 @@ namespace Stuff {
 					return (&pitch)[index];
 				}
 
-		//
 		// Template support
-		//
 		EulerAngles&
 			Lerp(
 				const EulerAngles& v1,
@@ -157,9 +147,7 @@ namespace Stuff {
 				Scalar t
 			);
 
-		//
 		// Support functions
-		//
 		EulerAngles&
 			Normalize();
 
@@ -171,9 +159,7 @@ namespace Stuff {
 				);
 		#endif
 
-		//
 		// Test functions
-		//
 		void
 			TestInstance() const
 				{}
@@ -196,9 +182,7 @@ namespace Stuff {
 		static const YawPitchRoll
 			Identity;
 
-		//
 		// Constructors
-		//
 		YawPitchRoll()
 			{}
 		YawPitchRoll(
@@ -219,9 +203,7 @@ namespace Stuff {
 		explicit YawPitchRoll(const Origin3D &origin)
 			{*this = origin;}
 
-		//
 		// Assignment operators
-		//
 		YawPitchRoll&
 			operator=(const YawPitchRoll &angles)
 				{
@@ -258,9 +240,7 @@ namespace Stuff {
 					return (&yaw)[index];
 				}
 
-		//
 		// "Close-enough" comparators
-		//
 		friend bool
 			Small_Enough(
 				const YawPitchRoll &a,
@@ -283,9 +263,7 @@ namespace Stuff {
 			operator!=(const YawPitchRoll& a) const
 				{return !Close_Enough(*this,a);}
 
-		//
 		// Template support
-		//
 		YawPitchRoll&
 			Lerp(
 				const YawPitchRoll& v1,
@@ -293,9 +271,7 @@ namespace Stuff {
 				Scalar t
 			);
 
-		//
 		// Support functions
-		//
 		YawPitchRoll&
 			Normalize();
 		#if !defined(Spew)
@@ -308,9 +284,7 @@ namespace Stuff {
 		YawPitchRoll&
 			AlignWithVector(const Vector3D &v);
 
-		//
 		// Test functions
-		//
 		void
 			TestInstance() const
 				{}
@@ -341,9 +315,7 @@ namespace Stuff {
 			z,
 			w;
 
-		//
 		// Constructors
-		//
 		UnitQuaternion()
 			{}
 		UnitQuaternion(
@@ -358,9 +330,7 @@ namespace Stuff {
 				Check_Object(this);
 			}
 
-		//
 		// Assignment operators
-		//
 		UnitQuaternion&
 			operator=(const UnitQuaternion &q)
 				{
@@ -378,9 +348,7 @@ namespace Stuff {
 		UnitQuaternion&
 			operator=(const Vector3D &v);
 
-		//
 		// "Close-enough" comparators
-		//
 		friend bool
 			Small_Enough(
 				const UnitQuaternion &q,
@@ -404,9 +372,7 @@ namespace Stuff {
 			operator!=(const UnitQuaternion& a) const
 				{return !Close_Enough(*this,a,SMALL);}
 
-		//
 		// Axis index operators
-		//
 		const Scalar&
 			operator[](size_t index) const
 				{
@@ -427,9 +393,7 @@ namespace Stuff {
 		void
 			GetAxis(UnitVector3D *axis);
 
-		//
 		// Multiplication operators
-		//
 		UnitQuaternion&
 			Multiply(
 				const UnitQuaternion &q1,
@@ -447,9 +411,7 @@ namespace Stuff {
 				Scalar t
 			);
 
-		//
 		// Transform functions
-		//
 		UnitQuaternion&
 			Multiply(
 				const UnitQuaternion &q,
@@ -458,9 +420,7 @@ namespace Stuff {
 		UnitQuaternion&
 			operator*=(const LinearMatrix4D &m);
 
- 		//
 		// Template support
-		//
 		UnitQuaternion&
 			Lerp(
 				const UnitQuaternion& p, 
@@ -482,9 +442,7 @@ namespace Stuff {
 				Scalar t
 			);
 
-		//
 		// Miscellaneous functions
-		//
 		UnitQuaternion&
 			Normalize();
 
@@ -594,9 +552,7 @@ namespace Stuff {
 		// END JSE ---------------------------------------
 		//------------------------------------------------
 
-		//
 		// Support functions
-		//
 		#if !defined(Spew)
 			friend void
 				::Spew(

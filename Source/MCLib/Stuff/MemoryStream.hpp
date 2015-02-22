@@ -50,7 +50,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Construction and testing
-	//
 	public:
 		MemoryStream(
 			void *stream_start,
@@ -75,14 +74,12 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Class Data Support
-	//
 	public:
 		static ClassData
 			*DefaultData;
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Accessors
-	//
 	public:
 		virtual void*
 			GetPointer() const
@@ -103,7 +100,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Assignment methods
-	//
 	public:
 		virtual void
 			SetPointer(void *new_pointer)
@@ -129,7 +125,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Stream methods
-	//
 	public:
 		void
 			Rewind()
@@ -213,9 +208,7 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Bit operators  
-	//
 	// WARNING - DO NOT MIX AND MATCH WITH BYTE METHODS!!!!!
-	//
 	
 	private:
 		int
@@ -302,7 +295,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Protected data
-	//
 	protected:
 		BYTE
 			*streamStart,
@@ -331,7 +323,6 @@ namespace Stuff {
 
 	//--------------------------------------------------------------------------
 	// Extraction operators
-	//
 	template <class T> inline MemoryStream&
 		operator>>(
 			MemoryStream &stream,
@@ -341,7 +332,6 @@ namespace Stuff {
 
 	//--------------------------------------------------------------------------
 	// Insertion operators
-	//
 	template <class T> inline MemoryStream&
 		operator<<(
 			MemoryStream &stream,
@@ -368,7 +358,6 @@ namespace Stuff {
 	{
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Construction, destruction, and testing
-	//
 	public:
 		DynamicMemoryStream(DWORD stream_size=0);
 		DynamicMemoryStream(
@@ -388,7 +377,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Accessors
-	//
 	public:
 		DWORD
 			GetBufferSize()
@@ -407,7 +395,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Stream methods
-	//
 	public:
 		MemoryStream&
 			WriteBytes(
@@ -420,7 +407,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Private data
-	//
 	private:
 		DWORD
 			bufferSize;

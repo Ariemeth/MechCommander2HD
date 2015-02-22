@@ -6,13 +6,11 @@
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
-//
 //############################################################################
 //########################  gosFX::DebrisCloud__Specification  #############################
 //############################################################################
 
 //------------------------------------------------------------------------------
-//
 gosFX::DebrisCloud__Specification::DebrisCloud__Specification(
 	Stuff::MemoryStream *stream,
 	int gfx_version
@@ -39,7 +37,6 @@ gosFX::DebrisCloud__Specification::DebrisCloud__Specification(
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::DebrisCloud__Specification::DebrisCloud__Specification():
 	Effect__Specification(gosFX::DebrisCloudClassID)
 {
@@ -53,7 +50,6 @@ gosFX::DebrisCloud__Specification::DebrisCloud__Specification():
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::DebrisCloud__Specification::~DebrisCloud__Specification()
 {
 	Check_Object(this);
@@ -73,7 +69,6 @@ gosFX::DebrisCloud__Specification::~DebrisCloud__Specification()
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::DebrisCloud__Specification*
 	gosFX::DebrisCloud__Specification::Make(
 		Stuff::MemoryStream *stream,
@@ -91,7 +86,6 @@ gosFX::DebrisCloud__Specification*
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::DebrisCloud__Specification::Save(Stuff::MemoryStream *stream)
 {
@@ -129,7 +123,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::DebrisCloud__Specification::Copy(DebrisCloud__Specification *spec)
 {
@@ -175,7 +168,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::DebrisCloud__Specification::LoadGeometry(Stuff::MemoryStream *stream)
 {
@@ -207,11 +199,9 @@ void
 			maxRadius = debrisSpheres[i].radius;
 		}
 
-		//
 		//---------------
 		// Load the shape
 		//---------------
-		//
 		debrisPieces[i] =
 			MidLevelRenderer::MLRShape::Make(
 				stream,
@@ -228,7 +218,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void 
 	gosFX::DebrisCloud__Specification::BuildDefaults()
 {
@@ -273,7 +262,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 bool 
 	gosFX::DebrisCloud__Specification::IsDataValid(bool fix_data)
 {
@@ -326,7 +314,6 @@ gosFX::DebrisCloud::ClassData*
 	gosFX::DebrisCloud::DefaultData = NULL;
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::DebrisCloud::InitializeClass()
 {
@@ -344,7 +331,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::DebrisCloud::TerminateClass()
 {
@@ -354,7 +340,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::DebrisCloud::DebrisCloud(
 	Specification *spec,
 	unsigned flags
@@ -367,7 +352,6 @@ gosFX::DebrisCloud::DebrisCloud(
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::DebrisCloud*
 	gosFX::DebrisCloud::Make(
 		Specification *spec,
@@ -384,18 +368,15 @@ gosFX::DebrisCloud*
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::DebrisCloud::Start(struct gosFX::Effect::ExecuteInfo *info)
 {
 	Check_Object(this);
 	Check_Pointer(info);
 
-	//
 	//--------------------------------------------------------------------------
 	// Let effect initialize, then figure out how many particles we want to make
 	//--------------------------------------------------------------------------
-	//
 	Effect::Start(info);
 
 	Specification *spec = GetSpecification();
@@ -447,26 +428,21 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 bool
 	gosFX::DebrisCloud::Execute(struct gosFX::Effect::ExecuteInfo *info)
 {
 	Check_Object(this);
 	Check_Object(info);
 
-	//
 	//----------------------------------------
 	// If we aren't supposed to execute, don't
 	//----------------------------------------
-	//
 	if (!IsExecuted())
 		return false;
 
-	//
 	//--------------------------------------------------------
 	// Figure out the birth rate and request the new particles
 	//--------------------------------------------------------
-	//
 	Specification *spec = GetSpecification();
 	Check_Object(spec);
 	Stuff::Scalar dT =
@@ -476,11 +452,9 @@ bool
 	
 	m_age += dT * m_ageRate;
 
-	//
 	//-----------------------------------
 	// Deal with all the active particles
 	//-----------------------------------
-	//
 	int i;
 	Stuff::LinearMatrix4D local_to_world;
 
@@ -488,12 +462,10 @@ bool
 
 	for (i = 0; i < debrisPieces.GetLength(); i++)
 	{
-		//
 		//--------------------------------------------------------------------
 		// If the particle is active, age it and if it is not yet time to die,
 		// go to the next particle, otherwise kill it
 		//--------------------------------------------------------------------
-		//
 		Particle *particle = GetParticle(i);
 		Check_Object(particle);
 		if (particle->m_age < 1.0f)
@@ -508,33 +480,27 @@ bool
 		}
 	}
 
-	//
 	//----------------------------
 	// Now let effect do its thing
 	//----------------------------
-	//
 	m_age = prev_age;
 
 	if(!Effect::Execute(info))
 		return false;
 
-	//
 	//-------------------------------------------------------------------
 	// If there is no bounds yet, we need to create our extent box around
 	// the first legal point we find
 	//-------------------------------------------------------------------
-	//
 	Stuff::ExtentBox box(Stuff::Point3D::Identity, Stuff::Point3D::Identity);
 	for(i=0;i<debrisPieces.GetLength();i++)
 	{
 		Particle *particle = GetParticle(i);
 		Check_Object(particle);
 
-		//
 		//-----------------------------------------------------------
 		// We have found our first particle, so put the box around it
 		//-----------------------------------------------------------
-		//
 		if (particle->m_age < 1.0f)
 		{
 			Stuff::Point3D point;
@@ -556,11 +522,9 @@ bool
 		i++;
 	}
 
-	//
 	//-----------------------------
 	// Look for the other particles
 	//-----------------------------
-	//
 	while (i<debrisPieces.GetLength())
 	{
 		Particle *particle = GetParticle(i);
@@ -588,11 +552,9 @@ bool
 		i++;
 	}
 
-	//
 	//------------------------------------
 	// Now, build a info->m_bounds around this box
 	//------------------------------------
-	//
 	Verify(box.maxX >= box.minX);
 	Verify(box.maxY >= box.minY);
 	Verify(box.maxZ >= box.minZ);
@@ -610,16 +572,13 @@ bool
 	parent_bounds.Multiply(local_bounds, m_localToParent);
 	info->m_bounds->Union(*info->m_bounds, parent_bounds);
 
-	//
 	//----------------------------------------------
 	// Tell our caller that we get to keep executing
 	//----------------------------------------------
-	//
 	return true;
 }
 
 //------------------------------------------------------------------------------
-//
 bool
 	gosFX::DebrisCloud::HasFinished(void)
 {
@@ -628,32 +587,26 @@ bool
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::DebrisCloud::Kill(void)
 {
 	Check_Object(this);
 
-	//
 	//-------------------------------------------------------------
 	// Destroy all the particles and set up an empty particle cloud
 	//-------------------------------------------------------------
-	//
 	for(int i=0; i < debrisPieces.GetLength(); i++)
 	{
 		DestroyParticle(i);
 	}
 
-	//
 	//----------------------------------------
 	// Now let the base effect handle stopping
 	//----------------------------------------
-	//
 	Effect::Kill();
 }
 
 //------------------------------------------------------------------------------
-//
 bool
 	gosFX::DebrisCloud::AnimateParticle(
 		unsigned index,
@@ -663,11 +616,9 @@ bool
 {
 	Check_Object(this);
 
-	//
 	//-----------------------------------------
 	// Animate the parent then get our pointers
 	//-----------------------------------------
-	//
 	Specification *spec = GetSpecification();
 	Check_Object(spec);
 	Particle *particle = GetParticle(index);
@@ -677,21 +628,17 @@ bool
 	if (age >= 1.0f)
 		return false;
 
-	//
 	//------------------
 	// Animate the color
 	//------------------
-	//
 	Set_Statistic(Shape_Count, Shape_Count+1);
 	particle->m_alpha = spec->m_pAlpha.ComputeValue(age, seed);
 
-	//
 	//-----------------------------------------------------------------------
 	// If this cloud is unparented, we need to transform the point from local
 	// space into world space and set the internal position/velocity pointers
 	// to these temporary values
 	//-----------------------------------------------------------------------
-	//
 
 	Stuff::Point3D translation;
 	translation = particle->m_localToParent;
@@ -699,12 +646,10 @@ bool
 	Stuff::UnitQuaternion rotation;
 	rotation = particle->m_localToParent;
 
-	//
 	//------------------------------------------------------------------
 	// First, calculate the drag on the particle.  Drag can never assist
 	// velocity
 	//------------------------------------------------------------------
-	//
 	Stuff::Scalar drag = -spec->m_pDrag.ComputeValue(age, seed);
 	Max_Clamp(drag, 0.0f);
 	Stuff::Vector3D ether;
@@ -713,13 +658,11 @@ bool
 	ether.z = 0.0f;
 	Stuff::Vector3D accel(Stuff::Vector3D::Identity);
 
-	//
 	//-------------------------------------------------------------------
 	// Deal with pseudo-world simulation.  In this mode, we interpret the
 	// forces as if they are already in worldspace, and we transform them
 	// back to local space
 	//-------------------------------------------------------------------
-	//
 	Stuff::LinearMatrix4D world_to_effect;
 	world_to_effect.Invert(m_localToWorld);
 	Stuff::Vector3D local_ether;
@@ -728,11 +671,9 @@ bool
 	rel_vel.Subtract(particle->m_linearVelocity, local_ether);
 	accel.Multiply(rel_vel, drag);
 
-	//
 	//-----------------------------------------
 	// Now, add in acceleration of the particle
 	//-----------------------------------------
-	//
 	Stuff::Vector3D world_accel;
 	world_accel.x = 0.0f;
 	world_accel.y = spec->m_pAccelerationY.ComputeValue(age, seed);
@@ -741,11 +682,9 @@ bool
 	local_accel.Multiply(world_accel, world_to_effect);
 	accel += local_accel;
 
-	//
 	//-------------------------------------------------
 	// Compute the particle's new velocity and position
 	//-------------------------------------------------
-	//
 	Stuff::Scalar time_slice =
 		static_cast<Stuff::Scalar>(till - m_lastRan);
 	
@@ -753,11 +692,9 @@ bool
 	
 	translation.AddScaled(translation, particle->m_linearVelocity, time_slice);
 
-	//
 	//-----------------------
 	// Deal with the rotation
 	//-----------------------
-	//
 	Stuff::Vector3D omega(particle->m_angularVelocity);
 	omega *= time_slice;
 	Stuff::UnitQuaternion omega_q;
@@ -775,7 +712,6 @@ bool
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::DebrisCloud::DestroyParticle(unsigned int index)
 {
@@ -785,18 +721,15 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void gosFX::DebrisCloud::Draw(DrawInfo *info)
 {
 	Check_Object(this);
 	Check_Object(info);
 	Check_Object(info->m_parentToWorld);
 
-	//
 	//----------------------------
 	// Set up the common draw info
 	//----------------------------
-	//
 	Specification *spec = GetSpecification();
 	Check_Object(spec);
 
@@ -804,12 +737,10 @@ void gosFX::DebrisCloud::Draw(DrawInfo *info)
 
 	for(i=0;i<nrOfParticle;i++)
 	{
-		//
 		//-----------------------------------------------------------------
 		// If the particle is still alive, concatenate into world space and
 		// issue the draw command
 		//-----------------------------------------------------------------
-		//
 		Particle *particle = GetParticle(i);
 		Check_Object(particle);
 
@@ -827,12 +758,10 @@ void gosFX::DebrisCloud::Draw(DrawInfo *info)
 			Stuff::LinearMatrix4D local_to_world;
 			local_to_world.Multiply(m_localToParent, *info->m_parentToWorld);
 
-			//
 			//---------------------------------------------------------------
 			// No alignment is necessary, so just multiply out all the active
 			// particles
 			//---------------------------------------------------------------
-			//
 
 			Stuff::LinearMatrix4D shape_to_world;
 			shape_to_world.Multiply(
@@ -847,16 +776,13 @@ void gosFX::DebrisCloud::Draw(DrawInfo *info)
 		}
 	}
 
-	//
 	//----------------------------
 	// Let our parent do its thing
 	//----------------------------
-	//
 	Effect::Draw(info);
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::DebrisCloud::TestInstance() const
 {

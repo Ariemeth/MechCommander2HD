@@ -14,7 +14,6 @@ MLRSortByOrder::ClassData*
 //#############################################################################
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSortByOrder::InitializeClass()
 {
@@ -30,7 +29,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSortByOrder::TerminateClass()
 {
@@ -40,7 +38,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRSortByOrder::MLRSortByOrder(MLRTexturePool *tp) :
 	MLRSorter(DefaultData, tp)
 {
@@ -62,7 +59,6 @@ MLRSortByOrder::MLRSortByOrder(MLRTexturePool *tp) :
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRSortByOrder::~MLRSortByOrder()
 {
 	int i;
@@ -77,7 +73,6 @@ MLRSortByOrder::~MLRSortByOrder()
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSortByOrder::Reset ()
 {
@@ -94,7 +89,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSortByOrder::AddPrimitive(MLRPrimitiveBase *pt, int pass)
 {
@@ -119,7 +113,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSortByOrder::AddEffect(MLREffect *ef, const MLRState& state)
 {
@@ -179,7 +172,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSortByOrder::AddScreenQuads
 		(
@@ -205,7 +197,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSortByOrder::AddSortRawData(SortData *sd)
 {
@@ -221,14 +212,11 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSortByOrder::RenderNow ()
 {
 	Check_Object(this);
-//
 // So GameOS knows how long the transform and clip and lighting took of update renderers
-//
 
 	Stuff::DynamicArrayOf<SortData*>
 		*priorityBucket;
@@ -608,7 +596,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSortByOrder::TestInstance() const
 {

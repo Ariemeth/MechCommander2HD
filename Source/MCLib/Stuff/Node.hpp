@@ -30,7 +30,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Constructor/Destructor
-	//
 	public:
 		~Node();
 
@@ -39,7 +38,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Class Data Support
-	//
 	public:
 		typedef Node__ClassData ClassData;
 
@@ -48,7 +46,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// plug detachment
-	//
 	public:
 		virtual void
 			ReleaseLinkHandler(Socket*, Plug*);

@@ -40,9 +40,7 @@ namespace Stuff {
 		Scalar
 			entries[16];
 
-		//
 		// Constructors
-		//
 		Matrix4D()
 			{}
 		Matrix4D&
@@ -67,9 +65,7 @@ namespace Stuff {
 		explicit Matrix4D(const Point3D &p)
 			{*this = p;}
 
-		//
 		// Assignment operators
-		//
 		Matrix4D&
 			operator=(const Matrix4D &m)
 				{
@@ -99,9 +95,7 @@ namespace Stuff {
 		Matrix4D&
 			BuildTranslation(const Point3D &p);
 
-		//
 		// Comparison operators
-		//
 		friend bool
 			Close_Enough(
 				const Matrix4D &m1,
@@ -115,9 +109,7 @@ namespace Stuff {
 			operator!=(const Matrix4D& a) const
 				{return !Close_Enough(*this,a,SMALL);}
 
-		//
 		// Index operators
-		//
 		Scalar&
 			operator ()(size_t row,size_t column)
 				{
@@ -135,9 +127,7 @@ namespace Stuff {
 					return entries[(column<<2)+row];
 				}
 
-		//
 		// Matrix4D Multiplication
-		//
 		Matrix4D&
 			Multiply(
 				const Matrix4D& Source1,
@@ -567,18 +557,14 @@ namespace Stuff {
 				const AffineMatrix4D &Source2
 			);
 
-		//
 		// Matrix4D Inversion
-		//
 		Matrix4D&
 			Invert(const Matrix4D& Source);
 		Matrix4D&
 			Invert()
 				{Matrix4D src(*this); return Invert(src);}
 
-		//
 		// Viewpoint Calculation
-		//
 		#if !defined(Spew)
 			friend void
 				::Spew(
@@ -592,9 +578,7 @@ namespace Stuff {
 			TestInstance() const
 				{}
 
-		//
 		// Creating perspective Matrix4D
-		//
 		void
 			SetPerspective(
 				Scalar near_clip,

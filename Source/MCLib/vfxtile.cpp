@@ -1,12 +1,8 @@
 //-----------------------------------------------------------
-// 
 // FASA Interactive Technologies
-//
 // VFX Tile Draw Routine
-//
 // Started April 30, 1996
 // FFS
-//
 //-----------------------------------------------------------
 
 //-----------------------------------------------------------
@@ -98,9 +94,7 @@ long VFX_nTile_draw (PANE* pane, void *tile, LONG hotX, LONG hotY, MemoryPtr fad
 		FadeTable=fadeTable;
 		screenBuffer+=topLeftX;
 		count=lastScanOffset-firstScanOffset;
-//
 // No clipping, whole tile is on screen
-//
 		_asm{
 			push ebp
 			mov edx,screenBuffer
@@ -117,9 +111,7 @@ long VFX_nTile_draw (PANE* pane, void *tile, LONG hotX, LONG hotY, MemoryPtr fad
 			test eax,eax
 			jnz DoFade
 
-//
 // Normal
-//
 DisplayTile:
 			xor ebx,ebx
 			mov eax,[ebp+4]
@@ -177,9 +169,7 @@ DisplayTile1:
 
 			jmp done
 
-//
 // Black
-//
 DoBlack:	xor ebx,ebx
 			mov eax,[ebp+4]
 
@@ -223,9 +213,7 @@ DoBlack1:	mov ebx,pwXMax
 
 			jmp done
 
-//
 // Fade
-//
 DoFade:		xor ebx,ebx
 			mov ecx,[ebp+4]
 
@@ -274,9 +262,7 @@ done:
 		}
 	}
 	else
-//
 // This tile needs to be clipped
-//
 	{
 		unsigned long currentOffset = *yOffsetTable++;
 		unsigned long nextOffset=*yOffsetTable++;
@@ -405,12 +391,9 @@ NO_DRAW:
 }
 
 //----------------------------------------------------------------------------
-//
 // long VFX_shape_origin(void *shape_table, LONG shape_number);
-//
 // Returns hotspot of the shape (in pixels) relative to the upper left bounds).
 // (E)AX=x E(AX)=y.
-//
 //----------------------------------------------------------------------------
 
 long VFX_shape_origin(void *shape_table, LONG shape_number)
@@ -438,11 +421,8 @@ long VFX_shape_origin(void *shape_table, LONG shape_number)
 }
 
 //----------------------------------------------------------------------------
-//
 // long VFX_shape_resolution(void *shape_table, LONG shape_number);
-//
 // Returns x,y resolution (image size) in pixels.  (E)AX=x E(AX)=y.
-//
 //----------------------------------------------------------------------------
 
 long VFX_shape_resolution(void *shape_table, LONG shape_number)
@@ -480,11 +460,8 @@ long VFX_shape_resolution(void *shape_table, LONG shape_number)
 }
 
 //----------------------------------------------------------------------------
-//
 // long VFX_shape_minxy(void *shape_table, LONG shape_number);
-//
 // Returns min x,min y in pixels.  (E)AX=x E(AX)=y.
-//
 //---------------------------------------------------------------------------
 
 long VFX_shape_minxy(void *shape_table, LONG shape_number)
@@ -2473,7 +2450,6 @@ StraightProcLoop:
             jmp     ReturnClipFlags     // done
 
         // return error code:
-        //
         // -2: pane was malformed (or completely off its window)
         // -1: window was malformed
         //  0: line was accepted
@@ -2498,29 +2474,20 @@ exit:
 }
 
 //----------------------------------------------------------------------------
-//
 // int cdecl VFX_pixel_write (PANE *panep, int x, int y, UBYTE color)
-//
 //     This function writes a single pixel.
-//
 // The panep parameter specifies the pane containing the pixel to be written.
 // The x and y parameters specify the pixel coordinates.
 // The color parameter specifies the color to write to the pixel.
-//                                          
 // Return values:
-//
 //    0..255:
 //       Pixel value prior to write.
-//
 //   -1: Bad window.
 //       The height or width of the pane's window is less than one.
-//
 //   -2: Bad pane.
 //       The height or width of the pane is less than one.
-//
 //   -3: Off pane.
 //       The specified pixel is off the pane.
-//                                          
 //----------------------------------------------------------------------------
 
 LONG VFX_pixel_write (PANE *panep, LONG x, LONG y, ULONG color)
@@ -2703,28 +2670,19 @@ ReturnOffPane:
 }
 
 //----------------------------------------------------------------------------
-//
 // int cdecl VFX_pixel_read (PANE *panep, int x, int y)
-//
 //     This function reads a single pixel.
-//
 // The panep parameter specifies the pane containing the pixel to be written.
 // The x and y parameters specify the pixel coordinates.
-//                                          
 // Return values:
-//
 //    0..255:
 //       Pixel value.
-//
 //   -1: Bad window.
 //       The height or width of the pane's window is less than one.
-//
 //   -2: Bad pane.
 //       The height or width of the pane is less than one.
-//
 //   -3: Off pane.
 //      The specified pixel is off the pane.
-//                                         
 //---------------------------------------------------------------------------
 
 LONG VFX_pixel_read (PANE *panep, LONG x, LONG y)

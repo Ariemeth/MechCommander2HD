@@ -12,7 +12,6 @@ MLRPointLight::ClassData*
 	MLRPointLight::DefaultData = NULL;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRPointLight::InitializeClass()
 {
@@ -28,7 +27,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRPointLight::TerminateClass()
 {
@@ -38,7 +36,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRPointLight::MLRPointLight() :
 	MLRInfiniteLightWithFalloff(DefaultData)
 {
@@ -47,7 +44,6 @@ MLRPointLight::MLRPointLight() :
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRPointLight::MLRPointLight(
 	Stuff::MemoryStream *stream,
 	int version
@@ -76,7 +72,6 @@ MLRPointLight::MLRPointLight(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRPointLight::MLRPointLight(Stuff::Page *page):
 	MLRInfiniteLightWithFalloff(DefaultData, page)
 {
@@ -99,7 +94,6 @@ MLRPointLight::MLRPointLight(Stuff::Page *page):
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRPointLight::~MLRPointLight()
 {
 	if (lightMap)
@@ -110,7 +104,6 @@ MLRPointLight::~MLRPointLight()
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRPointLight::Save(Stuff::MemoryStream *stream)
 {
@@ -132,7 +125,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRPointLight::Write(Stuff::Page *page)
 {
@@ -151,7 +143,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRPointLight::TestInstance()
 {
@@ -159,7 +150,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRPointLight::LightVertex(const MLRVertexData& vertexData)
 {
@@ -173,13 +163,11 @@ void
 
 	vertex_to_light -= *vertexData.point;
 
-	//
 	//--------------------------------------------------------------
 	// If the distance to the vertex is zero, the light will not
 	// contribute to the vertex coloration.  Otherwise, decrease the
 	// light level as appropriate to the distance
 	//--------------------------------------------------------------
-	//
 	Scalar length = vertex_to_light.GetApproximateLength();
 
 	Scalar falloff = 1.0f;
@@ -197,12 +185,10 @@ void
 	length = -1.0f / length;
 	light_z.Vector3D::Multiply(vertex_to_light, length);
 
-	//
 	//-------------------------------------------------------------------
 	// Now we reduce the light level falling on the vertex based upon the
 	// cosine of the angle between light and normal
 	//-------------------------------------------------------------------
-	//
 	Scalar cosine = -(light_z * (*vertexData.normal)) * intensity;
 
 #if COLOR_AS_DWORD
@@ -220,7 +206,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRPointLight::SetLightMap(MLRLightMap *light_map)
 {

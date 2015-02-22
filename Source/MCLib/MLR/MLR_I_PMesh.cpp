@@ -23,7 +23,6 @@ DynamicArrayOf<Vector2DScalar> *lightMapUVs;
 DynamicArrayOf<Scalar> *lightMapSqFalloffs;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_PMesh::InitializeClass()
 {
@@ -51,7 +50,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_PMesh::TerminateClass()
 {
@@ -72,7 +70,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_PMesh::MLR_I_PMesh(
 	ClassData *class_data,
 	MemoryStream *stream,
@@ -91,7 +88,6 @@ MLR_I_PMesh::MLR_I_PMesh(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_PMesh::MLR_I_PMesh(ClassData *class_data):
 	MLRIndexedPrimitiveBase(class_data)
 {
@@ -140,14 +136,12 @@ void
 */
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_PMesh::~MLR_I_PMesh()
 {
 	Check_Object(this);
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_PMesh*
 	MLR_I_PMesh::Make(
 		MemoryStream *stream,
@@ -164,7 +158,6 @@ MLR_I_PMesh*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_PMesh::Save(MemoryStream *stream)
 {
@@ -175,7 +168,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_PMesh::TestInstance() const
 {
@@ -183,7 +175,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_PMesh::InitializeDrawPrimitive(unsigned char vis, int parameter)
 {
@@ -196,7 +187,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_PMesh::SetSubprimitiveLengths (unsigned char *data, int numPrimitives)
 {
@@ -211,7 +201,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_PMesh::GetSubprimitiveLengths (unsigned char **data, int *l)
 {
@@ -221,7 +210,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_PMesh::FindFacePlanes()
 {
@@ -247,7 +235,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 int
 	MLR_I_PMesh::FindBackFace(const Point3D& u)
 {
@@ -293,7 +280,6 @@ int
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_PMesh::ResetTestList()
 {
@@ -307,7 +293,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 int
 	MLR_I_PMesh::FindVisibleVertices()
 {
@@ -346,7 +331,6 @@ int
 extern DWORD gEnableTextureSort, gEnableAlphaSort;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_PMesh::Transform(Matrix4D *mat)
 {
@@ -380,22 +364,18 @@ void
 #endif
 
 		cs->Clip4dVertex(v4d);
-//
 //--------------------------------------------------------
 // I claims all vertices are in. lets check it. who knows
 //--------------------------------------------------------
-//
 #ifdef LAB_ONLY
 		if( (*cs)==0)
 		{
 #if defined(_ARMOR)
 			if(ArmorLevel > 3)
 			{
-//
 //--------------------------------------------------------
 // I claims all vertices are in. lets check it. who knows
 //--------------------------------------------------------
-//
 				Verify(v4d->x >= 0.0f && v4d->x <= v4d->w );
 				Verify(v4d->y >= 0.0f && v4d->y <= v4d->w );
 				Verify(v4d->z >= 0.0f && v4d->z <= v4d->w );
@@ -437,7 +417,6 @@ void
 #undef CLASSNAME
 
 //---------------------------------------------------------------------------
-//
 void
 	MLR_I_PMesh::Lighting(MLRLight* const* lights, int nrLights)
 {
@@ -458,7 +437,6 @@ void
 RGBAColor errorColor;
 
 //---------------------------------------------------------------------------
-//
 bool
 	CheckForBigTriangles(DynamicArrayOf<Vector2DScalar> *lightMapUVs, int stride)
 {
@@ -538,7 +516,6 @@ bool
 }
 
 //---------------------------------------------------------------------------
-//
 void
 	MLR_I_PMesh::LightMapLighting(MLRLight *light)
 {
@@ -757,7 +734,6 @@ void
 }
 
 //---------------------------------------------------------------------------
-//
 bool
 	MLR_I_PMesh::CastRay(
 		Line3D *line,
@@ -768,12 +744,10 @@ bool
 	Check_Object(line);
 	Check_Pointer(normal);
 
-	//
 	//---------------------------------------------------------------------
 	// We have to spin through each of the polygons stored in the shape and
 	// collide the ray against each
 	//---------------------------------------------------------------------
-	//
 	int poly_start = 0, numPrimitives = GetNumPrimitives();
 	bool hit = false;
 	for (int polygon=0; polygon<numPrimitives; ++polygon)
@@ -781,11 +755,9 @@ bool
 		int stride = lengths[polygon];
 		Verify(stride>2);
 
-		//
 		//---------------------------------
 		// See if the line misses the plane
 		//---------------------------------
-		//
 		Scalar product;
 		const Plane *plane = &facePlanes[polygon];
 		Check_Object(plane);
@@ -806,20 +778,16 @@ bool
 			negate = true;
 		}
 
-		//
 		//-------------------------------------------
 		// Figure out where on the plane the line hit
 		//-------------------------------------------
-		//
 		Point3D impact;
 		line->Project(distance, &impact);
 
-		//
 		//-------------------------------------------------------------------
 		// We now need to find out which cardinal plane we should project the
 		// triangle onto
 		//-------------------------------------------------------------------
-		//
 		int s,t;
 		Scalar nx = Abs(plane->normal.x);
 		Scalar ny = Abs(plane->normal.y);
@@ -848,31 +816,25 @@ bool
 			t = Y_Axis;
 		}
 
-		//
 		//----------------------------------------
 		// Initialize the vertex and leg variables
 		//----------------------------------------
-		//
 		Point3D *v1, *v2, *v3;
 		v1 = &coords[index[poly_start]];
 		v2 = &coords[index[poly_start+1]];
 		v3 = &coords[index[poly_start+2]];
 
-		//
 		//---------------------------------------
 		// Get the projection of the impact point
 		//---------------------------------------
-		//
 		Scalar s0 = impact[s] - (*v1)[s];
 		Scalar t0 = impact[t] - (*v1)[t];
 		Scalar s1 = (*v2)[s] - (*v1)[s];
 		Scalar t1 = (*v2)[t] - (*v1)[t];
 
-		//
 		//------------------------------------------------------------
 		// For each triangle, figure out what the second leg should be
 		//------------------------------------------------------------
-		//
 		bool local_hit = false;
 		int next_v = 3;
 Test_Triangle:
@@ -880,11 +842,9 @@ Test_Triangle:
 		Scalar s2 = (*v3)[s] - (*v1)[s];
 		Scalar t2 = (*v3)[t] - (*v1)[t];
 
-		//
 		//--------------------------------
 		// Now, see if we hit the triangle
 		//--------------------------------
-		//
 		if (Small_Enough(s1))
 		{
 			Verify(!Small_Enough(s2));
@@ -908,11 +868,9 @@ Test_Triangle:
 			}
 		}
 
-		//
 		//-----------------------------
 		// Set up for the next triangle
 		//-----------------------------
-		//
 		if (next_v < stride && !local_hit)
 		{
 			v2 = v3;
@@ -922,11 +880,9 @@ Test_Triangle:
 			goto Test_Triangle;
 		}
 
-		//
 		//----------------------------------------------------
 		// Handle the hit status, and move to the next polygon
 		//----------------------------------------------------
-		//
 		if (local_hit)
 		{
 			hit = true;
@@ -940,16 +896,13 @@ Test_Triangle:
 		poly_start += stride;
 	}
 
-	//
 	//----------------------
 	// Return the hit status
 	//----------------------
-	//
 	return hit;
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_PMesh*
 	MidLevelRenderer::CreateIndexedCube_NoColor_NoLit(
 		Scalar half, 
@@ -1073,7 +1026,6 @@ MLR_I_PMesh*
 long MidLevelRenderer::triDrawn = 0;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MidLevelRenderer::subdivide (
 		Point3D *coords,
@@ -1130,7 +1082,6 @@ unsigned int MidLevelRenderer::tindices [20][3] = {
 };
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRShape*
 	MidLevelRenderer::CreateIndexedIcosahedron_NoColor_NoLit(
 		IcoInfo& icoInfo,

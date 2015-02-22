@@ -7,7 +7,6 @@
 #include "StuffHeaders.hpp"
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 Sphere&
 	Sphere::Union(
 		const Sphere& sphere1,
@@ -18,42 +17,34 @@ Sphere&
 	Check_Object(&sphere1);
 	Check_Object(&sphere2);
 
-	//
 	//--------------------------------------------------
 	// Calculate the length between the sphere midpoints
 	//--------------------------------------------------
-	//
 	Vector3D dist;
 	dist.Subtract(sphere1.center, sphere2.center);
 	Scalar len = dist.GetLength();
 
-	//
 	//------------------------------------------------------
 	// If the sphere is contained in the old sphere, move on
 	//------------------------------------------------------
-	//
 	if (len + sphere1.radius <= sphere2.radius)
 	{
 		*this = sphere2;
 		return *this;
 	}
 
-	//
 	//----------------------------------------------------------
 	// If the new sphere contains the old sphere, use it instead
 	//----------------------------------------------------------
-	//
 	if (len + sphere2.radius <= sphere1.radius)
 	{
 		*this = sphere1;
 		return *this;
 	}
 
-	//
 	//------------------------------
 	// Calculate the new centerpoint
 	//------------------------------
-	//
 	len += sphere1.radius + sphere2.radius;
 	UnitVector3D direction;
 	direction.Normalize(dist);
@@ -67,10 +58,8 @@ Sphere&
 	return *this;
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 #if !defined(Spew)
 	void
 		Spew(

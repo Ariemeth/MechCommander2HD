@@ -1,9 +1,6 @@
 //---------------------------------------------------------------------------
-//
 // Vertex.h -- File contains class definitions for the Terrain Vertices
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -32,7 +29,6 @@ struct PostcompVertex
 	// This Structure is used to store the data the 3D
 	// version of the terrain uses so I don't have to 
 	// recalculate it every frame!
-	//
 	// Replaces the pVertex pointer in Vertex Class
 	
 	Stuff::Vector3D		vertexNormal;		//Used for lighting

@@ -61,11 +61,9 @@ bool
 
 	PageIterator *pages;
 
-	//
 	//----------------------------------------
 	// test NotationFile part 1 - create file
 	//----------------------------------------
-	//
 	{
 		NotationFile file;
 		Test_Assumption(file.IsEmpty());
@@ -172,11 +170,9 @@ bool
 		delete pages;
 //	}
 
-	//
 	//--------------------------------------
 	// Now we open up a second notation file
 	//--------------------------------------
-	//
 //	{
 		NotationFile file2(notation_snapshot);
 		Test_Assumption(!file2.IsChanged());
@@ -193,11 +189,9 @@ bool
 		Check_Object(notes);
 		delete notes;
 
-		//
 		//-------------------------
 		// Test the integer readers
 		//-------------------------
-		//
 		int integer_value;
 		Scalar scalar_value;
 		bool logical_value;
@@ -255,9 +249,7 @@ bool
 		file2.IgnoreChanges();
 	}
 
-	//
 	// TESTING PRE-PROCESSOR STYLE COMMANDS
-	//
 	const char* include_temp;
 	const char* base_name = "base.ini";
 	const char* inc_name = "inc.ini";

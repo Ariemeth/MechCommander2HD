@@ -9,11 +9,9 @@
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SortedChainLink ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-//
 //###########################################################################
 // SortedChainLink
 //###########################################################################
-//
 SortedChainLink::SortedChainLink(
 	SortedChain *vchain,
 	Plug *plug
@@ -24,28 +22,22 @@ SortedChainLink::SortedChainLink(
 	prev = NULL;
 }
 
-//
 //###########################################################################
 // ~SortedChainLink
 //###########################################################################
-//
 SortedChainLink::~SortedChainLink()
 {
 	Check_Object(this);
 	SortedChain *vchain = Cast_Object(SortedChain*, socket);
 
-	//
 	//-------------------------------------------
 	// Notify iterators that deletion is occuring
 	//-------------------------------------------
-	//
 	vchain->SendIteratorMemo(PlugRemoved, this);
 
-	//
 	//---------------------------
 	// Remove from existing links
 	//---------------------------
-	//
 	if (prev != NULL)
 	{
 		Check_Object(prev);
@@ -68,20 +60,16 @@ SortedChainLink::~SortedChainLink()
 	}
 	prev = next = NULL;
 
-	//
 	//------------------------------------------
 	// Remove this link from any plug references
 	//------------------------------------------
-	//
 	ReleaseFromPlug();
 
-	//
 	//-------------------------------------------------------------
 	// Tell the node to release this link.  Note that this link
 	// is not referenced by the plug or the chain at this point in
 	// time.
 	//-------------------------------------------------------------
-	//
 	if (vchain->GetReleaseNode() != NULL)
 	{
 		Check_Object(vchain->GetReleaseNode());
@@ -89,11 +77,9 @@ SortedChainLink::~SortedChainLink()
 	}
 }
 
-//
 //###########################################################################
 // TestInstance
 //###########################################################################
-//
 void
 	SortedChainLink::TestInstance()
 {
@@ -109,11 +95,9 @@ void
 	}
 }
 
-//
 //###########################################################################
 // SetupSortedChainLinks
 //###########################################################################
-//
 void
 	SortedChainLink::SetupSortedChainLinks(
 		SortedChainLink *next,
@@ -127,11 +111,9 @@ void
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SortedChain ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-//
 //###########################################################################
 // SortedChain
 //###########################################################################
-//
 SortedChain::SortedChain(
 	Node *node,
 	bool has_unique_entries
@@ -142,11 +124,9 @@ SortedChain::SortedChain(
 	tail = NULL;
 }
 
-//
 //###########################################################################
 // ~SortedChain
 //###########################################################################
-//
 SortedChain::~SortedChain()
 {
 	Check_Object(this);
@@ -162,11 +142,9 @@ SortedChain::~SortedChain()
 	}
 }
 
-//
 //###########################################################################
 // TestInstance
 //###########################################################################
-//
 void
 	SortedChain::TestInstance()
 {
@@ -182,11 +160,9 @@ void
 	}
 }
 
-//
 //###########################################################################
 // MakeSortedChainLink
 //###########################################################################
-//
 SortedChainLink
    *SortedChain::MakeSortedChainLink(
       Plug*,
@@ -198,11 +174,9 @@ SortedChainLink
    return NULL;
 }
 
-//
 //###########################################################################
 // CompareSortedChainLinks
 //###########################################################################
-//
 int
    SortedChain::CompareSortedChainLinks(
       SortedChainLink*,
@@ -214,11 +188,9 @@ int
    return 0;
 }
 
-//
 //###########################################################################
 // CompareValueToSortedChainLink
 //###########################################################################
-//
 int
    SortedChain::CompareValueToSortedChainLink(
       const void*,
@@ -230,11 +202,9 @@ int
    return 0;
 }
 
-//
 //###########################################################################
 // AddImplementation
 //###########################################################################
-//
 void
 	SortedChain::AddImplementation(
 		Plug *plug
@@ -245,11 +215,9 @@ void
 	// AddValueImplementation(plug, NULL);	
 }
 
-//
 //###########################################################################
 // AddValueImplementation
 //###########################################################################
-//
 void
 	SortedChain::AddValueImplementation(
 		Plug *plug,
@@ -259,26 +227,20 @@ void
 	Check_Object(this);
 	SortedChainLink *link;
 	
-	//
 	//-------------------------------------------------------------
 	// Verify that value has not been added
 	//-------------------------------------------------------------
-	//
 	Verify(HasUniqueEntries() ? (SearchForValue(value) == NULL) : (bool)true);
 
-	//
 	//-------------------------------------------------------------
 	// Make new vchain link
 	//-------------------------------------------------------------
-	//
 	link = MakeSortedChainLink(plug, value);
 	Register_Object(link);
 
-	//
 	//-------------------------------------------------------------
 	// Find insertion point for the new link
 	//-------------------------------------------------------------
-	//
 	if (head == NULL)
 	{
 		link->SetupSortedChainLinks(NULL, NULL);
@@ -305,27 +267,21 @@ void
 
 		if (greater_link == NULL)
 		{
-			//
 			// Add after tail
-			//
 			link->SetupSortedChainLinks(NULL, tail);
 			tail->next = link;
 			tail = link;
 		}
 		else if (greater_link == head)
 		{
-			//
 			// Add before head
-			//
 			link->SetupSortedChainLinks(head, NULL);
 			head->prev = link;
 			head = link;
 		}
 		else
 		{
-			//
 			// Add before greater_link
-			//
 			link->SetupSortedChainLinks(greater_link, greater_link->prev);
 			greater_link->prev->next = link;
 			greater_link->prev = link;
@@ -335,11 +291,9 @@ void
 	SendIteratorMemo(PlugAdded, link);
 }
 
-//
 //###########################################################################
 // FindImplementation
 //###########################################################################
-//
 Plug*
 	SortedChain::FindImplementation(
 		const void *value
@@ -356,11 +310,9 @@ Plug*
 	return NULL;
 }
 
-//
 //#############################################################################
 // IsEmpty
 //#############################################################################
-//
 bool
 	SortedChain::IsEmpty()
 {
@@ -368,11 +320,9 @@ bool
 	return (head == NULL);
 }
 
-//
 //###########################################################################
 // SearchForValue
 //###########################################################################
-//
 SortedChainLink*
 	SortedChain::SearchForValue(
 		const void *value
@@ -393,11 +343,9 @@ SortedChainLink*
 	return link;
 }
 
-//
 //###########################################################################
 // SortedChainIterator
 //###########################################################################
-//
 SortedChainIterator::SortedChainIterator(SortedChain *vchain):
 	SortedIterator(vchain)
 {
@@ -405,11 +353,9 @@ SortedChainIterator::SortedChainIterator(SortedChain *vchain):
 	currentLink = vchain->head;
 }
 
-//
 //###########################################################################
 // SortedChainIterator
 //###########################################################################
-//
 SortedChainIterator::SortedChainIterator(const SortedChainIterator *iterator):
 	SortedIterator(Cast_Object(SortedChain*, iterator->socket))
 {
@@ -424,20 +370,16 @@ Iterator*
 	return new SortedChainIterator(*this);
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 SortedChainIterator::~SortedChainIterator()
 {
 	Check_Object(this);
 }
 
-//
 //###########################################################################
 // TestInstance
 //###########################################################################
-//
 void
 	SortedChainIterator::TestInstance() const
 {
@@ -449,11 +391,9 @@ void
 	}
 }
 
-//
 //###########################################################################
 // First
 //###########################################################################
-//
 void
 	SortedChainIterator::First()
 {
@@ -461,11 +401,9 @@ void
 	currentLink = Cast_Object(SortedChain*, socket)->head;
 }
 
-//
 //###########################################################################
 // Last
 //###########################################################################
-//
 void
 	SortedChainIterator::Last()
 {
@@ -473,11 +411,9 @@ void
 	currentLink = Cast_Object(SortedChain*, socket)->tail;
 }
 
-//
 //###########################################################################
 // Next
 //###########################################################################
-//
 void
 	SortedChainIterator::Next()
 {
@@ -486,11 +422,9 @@ void
 	currentLink = currentLink->next;
 }
 
-//
 //###########################################################################
 // Previous
 //###########################################################################
-//
 void
 	SortedChainIterator::Previous()
 {
@@ -499,11 +433,9 @@ void
 	currentLink = currentLink->prev;
 }
 
-//
 //###########################################################################
 // ReadAndNextImplementation
 //###########################################################################
-//
 void
 	*SortedChainIterator::ReadAndNextImplementation()
 {
@@ -520,11 +452,9 @@ void
 	return NULL;
 }
 
-//
 //###########################################################################
 // ReadAndPreviousImplementation
 //###########################################################################
-//
 void
 	*SortedChainIterator::ReadAndPreviousImplementation()
 {
@@ -541,11 +471,9 @@ void
 	return NULL;
 }
 
-//
 //###########################################################################
 // GetCurrentImplementation
 //###########################################################################
-//
 void
 	*SortedChainIterator::GetCurrentImplementation()
 {
@@ -558,11 +486,9 @@ void
 	return NULL;
 }
 
-//
 //###########################################################################
 // GetSize
 //###########################################################################
-//
 CollectionSize
 	SortedChainIterator::GetSize()
 {
@@ -583,11 +509,9 @@ CollectionSize
 	return count;
 }
 
-//
 //###########################################################################
 // GetNthImplementation
 //###########################################################################
-//
 void
 	*SortedChainIterator::GetNthImplementation(
 		CollectionSize index
@@ -615,11 +539,9 @@ void
 	return NULL;
 }
 
-//
 //###########################################################################
 // Remove
 //###########################################################################
-//
 void
 	SortedChainIterator::Remove()
 {
@@ -629,11 +551,9 @@ void
 	delete currentLink;
 }
 
-//
 //###########################################################################
 // FindImplementation
 //###########################################################################
-//
 Plug*
 	SortedChainIterator::FindImplementation(
 		const void *value
@@ -650,11 +570,9 @@ Plug*
 	return NULL;
 }
 
-//
 //###########################################################################
 // ReceiveMemo
 //###########################################################################
-//
 void
 	SortedChainIterator::ReceiveMemo(
 		IteratorMemo memo,

@@ -4,7 +4,6 @@
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
-//
 #pragma once
 
 #include "gosFX.hpp"
@@ -21,7 +20,6 @@ namespace gosFX
 	{
 	//----------------------------------------------------------------------
 	// Constructors/Destructors
-	//
 	protected:
 		Singleton__Specification(
 			Stuff::RegisteredClass::ClassID class_id,
@@ -46,7 +44,6 @@ namespace gosFX
 
 	//-------------------------------------------------------------------------
 	// FCurves
-	//
 	public:
 		SeededCurveOf<ComplexCurve, LinearCurve,Curve::e_ComplexLinearType>
 			m_red,
@@ -91,7 +88,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Class Data Support
-	//
 	public:
 		Specification*
 			GetSpecification()
@@ -103,7 +99,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// API
-	//
 	public:
 		bool
 			Execute(ExecuteInfo *info);
@@ -117,7 +112,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Testing
-	//
 	public:
 		void
 			TestInstance() const;

@@ -1,9 +1,6 @@
 //---------------------------------------------------------------------------
-//
 //	objmgr.cpp - This file contains the GameObject Manager class code
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -227,7 +224,6 @@ void GameObjectManager::setNumObjects (long nMechs,
 
 	//-------------------------------------------------------------------------
 	// We need to make room for a potential max # of reinforcements per team...
-	//
 	// Please DONT add 2 to each of these.   You wind up pointing into the next list!!!!
 	// -fs   6/14/2000
 	maxMechs = numMechs + MAX_TEAMS * MAX_REINFORCEMENTS_PER_TEAM;

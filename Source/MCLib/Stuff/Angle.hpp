@@ -47,9 +47,7 @@ namespace Stuff {
 		Scalar
 			angle;
 
-		//
 		// Constructors
-		//
 		Radian()
 			{}
 		Radian(Scalar a)
@@ -61,9 +59,7 @@ namespace Stuff {
 		explicit Radian(const SinCosPair &pair)
 			{*this = pair;}
 
-		//
 		// Assignment operators
-		//
 		Radian&
 			operator=(Scalar angle)
 				{
@@ -81,17 +77,13 @@ namespace Stuff {
 		Radian&
 			operator=(const SinCosPair &pair);
 
-		//
 		// Casting
-		//
 		operator Scalar() const
 			{Check_Object(this); return angle;}
 
-		//
 		// These comparator functions are not designed to make exact comparisons
 		// of Scalaring point numbers, but rather to compare them to within some
 		// specified error threshold
-		//
 		bool
 			operator!() const
 				{Check_Object(this); return Small_Enough(angle);}
@@ -110,9 +102,7 @@ namespace Stuff {
 			operator!=(float r) const
 				{Check_Object(this); return !Close_Enough(angle,r);}
 
-		//
 		// Math operators
-		//
 		Radian&
 			Negate(Scalar r)
 				{Check_Pointer(this); angle = -r; return *this;}
@@ -148,9 +138,7 @@ namespace Stuff {
 			operator/=(Scalar r)
 				{Check_Object(this); Verify(!Small_Enough(r)); angle /= r; return *this;}
 
-		//
 		// Template support
-		//
 		Radian&
 			Lerp(
 				const Radian &a,
@@ -158,9 +146,7 @@ namespace Stuff {
 				Scalar t
 			);
 
-		//
 		// Support functions
-		//
 		static Scalar
 			Normalize(Scalar Value);
 		Radian&
@@ -188,9 +174,7 @@ namespace Stuff {
 		Scalar
 			angle;
 
-		//
 		// constructors
-		//
 		Degree()
 			{}
 		Degree(Scalar a)
@@ -200,9 +184,7 @@ namespace Stuff {
 		explicit Degree(const Radian &radian)
 			{*this = radian;}
 
-		//
 		// Assignment operators
-		//
 		Degree&
 			operator=(const Degree &degree)
 				{Check_Object(this); Check_Object(&degree); angle = degree.angle; return *this;}
@@ -216,9 +198,7 @@ namespace Stuff {
 					angle = radian.angle * Degrees_Per_Radian; return *this;
 				}
 
-		//
 		// Support functions
-		//
 		#if !defined(Spew)
 			friend void
 				::Spew(
@@ -249,9 +229,7 @@ namespace Stuff {
 			sine,
 			cosine;
 
-		//
 		// Constructors
-		//
 		SinCosPair()
 			{}
 		SinCosPair(Scalar sin, Scalar cos)
@@ -264,9 +242,7 @@ namespace Stuff {
 		explicit SinCosPair(const Radian &radian)
 			{*this = radian;}
 
-		//
 		// Assignment operators
-		//
 		SinCosPair&
 			operator=(const SinCosPair &pair)
 				{
@@ -307,9 +283,7 @@ namespace Stuff {
 					return *this;
 				}
 
-		//
 		// Support functions
-		//
 		#if !defined(Spew)
 			friend void
 				::Spew(

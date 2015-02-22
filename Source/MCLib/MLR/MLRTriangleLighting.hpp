@@ -2,7 +2,6 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	CLASSNAME::Lighting (
 		MLRLight* const* lights,
@@ -11,22 +10,18 @@ void
 {
 	Check_Object(this);
 
-	//
 	//----------------------------------------------------------------------
 	// If no lights or normals are specified, use the original vertex colors
 	//----------------------------------------------------------------------
-	//
 	actualColors = &colors;
 	int state_mask = GetCurrentState().GetLightingMode();
 	if (nrLights == 0 || normals.GetLength() == 0 || state_mask == MLRState::LightingOffMode)
 		return;
 	Check_Pointer(lights);
 
-	//
 	//-------------------------------
 	// See if we need vertex lighting
 	//-------------------------------
-	//
 	if (state_mask & MLRState::VertexLightingMode)
 	{
 		Start_Timer(Vertex_Light_Time);
@@ -44,11 +39,9 @@ void
 			RGBAColor *color = &colors[0];
 		#endif
 
-		//
 		//--------------------------------
 		// Now light the array of vertices
 		//--------------------------------
-		//
 		vertexData.point = &coords[0];
 		vertexData.color = &litColors[0];
 		vertexData.normal = &normals[0];

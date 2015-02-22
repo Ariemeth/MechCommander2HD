@@ -6,13 +6,11 @@
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
-//
 //############################################################################
 //########################  gosFX::Shape__Specification  #############################
 //############################################################################
 
 //------------------------------------------------------------------------------
-//
 gosFX::Shape__Specification::Shape__Specification(
 	Stuff::MemoryStream *stream,
 	int gfx_version
@@ -23,11 +21,9 @@ gosFX::Shape__Specification::Shape__Specification(
 	Verify(m_class == ShapeClassID);
 	Verify(gos_GetCurrentHeap() == Heap);
 
-	//
 	//---------------
 	// Load the shape
 	//---------------
-	//
 	m_shape =
 		MidLevelRenderer::MLRShape::Make(
 			stream,
@@ -38,7 +34,6 @@ gosFX::Shape__Specification::Shape__Specification(
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::Shape__Specification::Shape__Specification(
 	MidLevelRenderer::MLRShape *shape
 ):
@@ -51,7 +46,6 @@ gosFX::Shape__Specification::Shape__Specification(
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::Shape__Specification::~Shape__Specification()
 {
 	Check_Object(this);
@@ -63,7 +57,6 @@ gosFX::Shape__Specification::~Shape__Specification()
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::Shape__Specification*
 	gosFX::Shape__Specification::Make(
 		Stuff::MemoryStream *stream,
@@ -81,7 +74,6 @@ gosFX::Shape__Specification*
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Shape__Specification::Save(Stuff::MemoryStream *stream)
 {
@@ -94,7 +86,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Shape__Specification::Copy(Shape__Specification *spec)
 {
@@ -113,40 +104,33 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Shape__Specification::SetShape(MidLevelRenderer::MLRShape *shape)
 {
 	Check_Object(this);
 
-	//
 	//------------------------------------
 	// Detach the old shape if it is there
 	//------------------------------------
-	//
 	if (m_shape)
 	{
 		Check_Object(m_shape);
 		m_shape->DetachReference();
 	}
 
-	//
 	//------------------------------------
 	// Attach the new shape if it is there
 	//------------------------------------
-	//
 	if (shape)
 	{
 		Check_Object(shape);
 		m_shape = shape;
 		m_shape->AttachReference();
 
-		//
 		//-----------------------------------------------------------------
 		// Get the radius of the bounding sphere.  This will be the largest
 		// distance any point is from the origin
 		//-----------------------------------------------------------------
-		//
 		m_radius = 0.0f;
 		int count = m_shape->GetNum();
 		for (int i=0; i<count; ++i)
@@ -175,7 +159,6 @@ gosFX::Shape::ClassData*
 	gosFX::Shape::DefaultData = NULL;
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Shape::InitializeClass()
 {
@@ -193,7 +176,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Shape::TerminateClass()
 {
@@ -203,7 +185,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::Shape::Shape(
 	Specification *spec,
 	unsigned flags
@@ -215,7 +196,6 @@ gosFX::Shape::Shape(
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::Shape*
 	gosFX::Shape::Make(
 		Specification *spec,
@@ -232,18 +212,15 @@ gosFX::Shape*
 }
 
 //------------------------------------------------------------------------------
-//
 void gosFX::Shape::Draw(DrawInfo *info)
 {
 	Check_Object(this);
 	Check_Object(info);
 	Check_Object(info->m_parentToWorld);
 
-	//
 	//----------------------------
 	// Set up the common draw info
 	//----------------------------
-	//
 	MidLevelRenderer::DrawScalableShapeInformation dinfo;
 	MidLevelRenderer::MLRShape *shape = GetSpecification()->m_shape;
 	dinfo.clippingFlags.SetClippingState(0x3f);
@@ -261,11 +238,9 @@ void gosFX::Shape::Draw(DrawInfo *info)
 	local_to_world.Multiply(m_localToParent, *info->m_parentToWorld);
 	dinfo.shapeToWorld = &local_to_world;
 
-	//
 	//--------------------------------------------------------------
 	// Check the orientation mode.  The first case is XY orientation
 	//--------------------------------------------------------------
-	//
 	if (spec->m_alignZUsingX)
 	{
 		Stuff::Point3D
@@ -289,11 +264,9 @@ void gosFX::Shape::Draw(DrawInfo *info)
 			);
 	}
 
-	//
 	//-------------------------------------------------------
 	// Each matrix needs to be aligned to the camera around Y
 	//-------------------------------------------------------
-	//
 	else if (spec->m_alignZUsingY)
 	{
 		Stuff::Point3D
@@ -309,17 +282,14 @@ void gosFX::Shape::Draw(DrawInfo *info)
 		);
 	}
 
-	//
 	//----------------------------
 	// Let our parent do its thing
 	//----------------------------
-	//
 	info->m_clipper->DrawScalableShape(&dinfo);
 	Singleton::Draw(info);
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Shape::TestInstance() const
 {

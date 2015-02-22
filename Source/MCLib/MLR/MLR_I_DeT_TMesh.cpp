@@ -18,7 +18,6 @@ MLR_I_DeT_TMesh::ClassData*
 	MLR_I_DeT_TMesh::DefaultData = NULL;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_DeT_TMesh::InitializeClass()
 {
@@ -40,7 +39,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_DeT_TMesh::TerminateClass()
 {
@@ -55,7 +53,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_DeT_TMesh::MLR_I_DeT_TMesh(
 	ClassData *class_data,
 	MemoryStream *stream,
@@ -82,7 +79,6 @@ MLR_I_DeT_TMesh::MLR_I_DeT_TMesh(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_DeT_TMesh::MLR_I_DeT_TMesh(ClassData *class_data):
 	MLR_I_TMesh(class_data)
 {
@@ -98,7 +94,6 @@ MLR_I_DeT_TMesh::MLR_I_DeT_TMesh(ClassData *class_data):
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_DeT_TMesh::Copy(
 		MLR_I_TMesh *tMesh,
@@ -147,14 +142,12 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_DeT_TMesh::~MLR_I_DeT_TMesh()
 {
 	Check_Object(this);
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_DeT_TMesh*
 	MLR_I_DeT_TMesh::Make(
 		MemoryStream *stream,
@@ -171,7 +164,6 @@ MLR_I_DeT_TMesh*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_DeT_TMesh::Save(MemoryStream *stream)
 {
@@ -187,7 +179,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_DeT_TMesh::SetDetailData(
 		Stuff::Scalar xOff,
@@ -215,7 +206,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 int
 	MLR_I_DeT_TMesh::GetNumPasses()
 {
@@ -237,7 +227,6 @@ int
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_DeT_TMesh::TestInstance() const
 {
@@ -271,7 +260,6 @@ void
 #undef CLASSNAME
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_DeT_TMesh*
 	MidLevelRenderer::CreateIndexedTriCube_NoColor_NoLit_DetTex(
 		Scalar half, 
@@ -283,7 +271,6 @@ MLR_I_DeT_TMesh*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRShape*
 	MidLevelRenderer::CreateIndexedTriIcosahedron_NoColor_NoLit_DetTex(
 		IcoInfo& icoInfo,

@@ -1,13 +1,9 @@
 //---------------------------------------------------------------------------
-//
 // file.h - This file contains the class declaration for File
-//
 //				The File class simply calls the Windows 32bit file functions.
 //				It is purely a wrapper.
-//
 //				The mmFile Class is a wrapper for the Win32 Memory Mapped
 //				file functionality.  It is used exactly the same as above class.
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -226,8 +222,5 @@ class File
 #endif
 
 //---------------------------------------------------------------------------
-//
 // Edit Log
-//
-//
 //---------------------------------------------------------------------------

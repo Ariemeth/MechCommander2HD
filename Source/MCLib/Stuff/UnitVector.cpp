@@ -20,10 +20,8 @@ const UnitVector3D
 const UnitVector3D
 	UnitVector3D::Down(DOWN_X, DOWN_Y, DOWN_Z);
 
-//
 //#############################################################################
 //#############################################################################
-//
 UnitVector3D&
 	UnitVector3D::Lerp(
 		const UnitVector3D& v1,
@@ -35,11 +33,9 @@ UnitVector3D&
 	Check_Object(&v1);
 	Check_Object(&v2);
 
-	//
 	//-------------------------------------------------------
 	// Lerp the normals as a regular vector (yeah, I know)...
 	//-------------------------------------------------------
-	//
 	Vector3D result;
 	result.Lerp(v1, v2, t);
 	Normalize(result);
@@ -47,10 +43,8 @@ UnitVector3D&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 void
 	UnitVector3D::TestInstance() const
 {

@@ -31,9 +31,7 @@ namespace Stuff {
 		static const YawPitchRange
 			Identity;
 
-		//
 		// Constructors
-		//
 		YawPitchRange()
 			{}
 		YawPitchRange(
@@ -50,9 +48,7 @@ namespace Stuff {
 		explicit YawPitchRange(const Vector3D &vector)
 			{*this = vector;}
 
-		//
 		// Assignment operators
-		//
 		YawPitchRange&
 			operator=(const YawPitchRange &angles)
 				{
@@ -63,9 +59,7 @@ namespace Stuff {
 		YawPitchRange&
 			operator=(const Vector3D &vector);
 
-		//
 		// "Close-enough" comparators
-		//
 		friend bool
 			Small_Enough(
 				const YawPitchRange &a,
@@ -88,9 +82,7 @@ namespace Stuff {
 			operator!=(const YawPitchRange& a) const
 				{return !Close_Enough(*this,a,SMALL);}
 
-		//
 		// Support functions
-		//
 		#if !defined(Spew)
 			friend void
 				::Spew(
@@ -99,9 +91,7 @@ namespace Stuff {
 				);
 		#endif
 
-		//
 		// Test functions
-		//
 		void
 			TestInstance() const
 				{}

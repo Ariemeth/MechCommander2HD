@@ -40,7 +40,6 @@ extern volatile bool mc2IsInDisplayBackBuffer;
 extern void (*AsynFunc)(RECT& WinRect,DDSURFACEDESC2& mouseSurfaceDesc );
 extern CPrefs g_userPreferences;
 
-//
 // Returns the number of bits in a given mask.  Used to determine if we are in 555 mode vs 565 mode.
 WORD GetNumberOfBits( DWORD dwMask );
 

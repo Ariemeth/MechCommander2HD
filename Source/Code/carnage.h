@@ -1,11 +1,8 @@
 //***************************************************************************
-//
 //	Carnage.h -- Base class for any and all damage-related effects that
 //				 dynamically appear and disappear with short lifetimes.
 //				 Things such as fires, explosions and debris.
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

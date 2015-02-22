@@ -1,9 +1,6 @@
 //---------------------------------------------------------------------------
-//
 //	gvactor.cpp - This file contains the code for the Ground Vehicle Actor class
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

@@ -1,8 +1,6 @@
 //---------------------------------------------------------------------------
 // GameSound.cpp - This file is the sound system code for the GAME
-//
 // MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -282,7 +280,6 @@ void GameSoundSystem::update (void)
 	//---------------------------------------------
 	// Dynamic Music Code goes here!!!
 	// New System(tm)
-	//
 	
 	SoundSystem::update();
 

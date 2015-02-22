@@ -1,10 +1,7 @@
 //---------------------------------------------------------------------------
-//
 // MechCommander 2
-//
 // UserInput Class -- Polls the state of keyboard, mouse, joystick
 //						for this frame and stores values.
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

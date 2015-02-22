@@ -5,7 +5,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Developer Studio generated include file.
 // Used by Script1.rc
-//
 #define IDNEXT                          3
 #define IDMLRB                          3
 #define IDOBJBLDG                       3
@@ -4408,7 +4407,6 @@
 #define IDS_MPLAYER_NO_MORE_SUPPORT_VEHICLES1 60049
 
 // Next default values for new objects
-// 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        128

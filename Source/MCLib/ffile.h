@@ -1,10 +1,7 @@
 //---------------------------------------------------------------------------
-//
 // ffile.h - This file contains the class declaration for FastFile
-//
 // This class will catch a fileOpen and try to find the file in the FastFiles
 // open before allowing the call to go through to the system
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

@@ -5,13 +5,9 @@
 #ifndef TGAWND_H
 #define TGAWND_H
 //----------------------------------------------------------------------------
-//
 // TGaWnd.h - window that displays a targa with a given window name
-//
 // FASA Interactive Technologies
-//
 // Copyright (c) 1998 FASA Interactive Technologies
-//
 //---------------------------------------------------------------------------
 
 #if _MSC_VER > 1000

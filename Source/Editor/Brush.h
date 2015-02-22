@@ -1,8 +1,6 @@
 //----------------------------------------------------------------------------
-//
 // Brush.h - header file for the abstract base class that all brush objects should
 //			 derive from
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

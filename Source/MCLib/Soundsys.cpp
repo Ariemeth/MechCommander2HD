@@ -1,6 +1,5 @@
 //---------------------------------------------------------------------------
 // soundsys.cpp - This file is the sound system code
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -196,12 +195,10 @@ long SoundSystem::init (char *soundFileName)
 }
 
 //////////////////////////////////////////////////////////////////
-//
 // wave_ParseWaveMemory
 //   Parses a chunk of memory into the header and samples.
 //   This is done by looking for the "fmt " and "data"
 //   fields in the memory.
-//
 //////////////////////////////////////////////////////////////////
 bool wave_ParseWaveMemory(MemoryPtr lpChunkOfMemory, MC2_WAVEFORMATEX** lplpWaveHeader, MemoryPtr* lplpWaveSamples,DWORD *lpcbWaveSize)
 {

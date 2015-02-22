@@ -4,7 +4,6 @@
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
-//
 #pragma once
 
 #include "gosFX.hpp"
@@ -23,7 +22,6 @@ namespace gosFX
 	{
 	//----------------------------------------------------------------------
 	// Constructors/Destructors
-	//
 	protected:
 		Tube__Specification(
 			Stuff::MemoryStream *stream,
@@ -56,7 +54,6 @@ namespace gosFX
 
 	//-------------------------------------------------------------------------
 	// FCurves
-	//
 	public:
 		ConstantCurve
 			m_profilesPerSecond,
@@ -86,7 +83,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------
 	// Data
-	//
 	public:
 		int
 			m_maxProfileCount;
@@ -190,7 +186,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Class Data Support
-	//
 	public:
 		~Tube();
 
@@ -216,14 +211,12 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Testing
-	//
 	public:
 		void
 			TestInstance() const;
 
 	//----------------------------------------------------------------------------
 	// API
-	//
 	protected:
 		bool
 			Execute(ExecuteInfo *info);

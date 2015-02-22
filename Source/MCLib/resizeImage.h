@@ -1,11 +1,7 @@
 //-------------------------------------------------
-//
 // Generic Image Resize code.
-//
 // Used to refractalize the terrain.
-//
 // Based on Graphics Gems III General Filtered Image Rescaling
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

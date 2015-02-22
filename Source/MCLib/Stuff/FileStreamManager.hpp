@@ -55,7 +55,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Constructor, destructor, and testing
-	//
 	public:
 		FileStreamManager();
 		~FileStreamManager();
@@ -71,7 +70,6 @@ namespace Stuff {
 			
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Utility functions
-	//
 	public:
 		void
 			CleanUpAfterCompares();
@@ -86,7 +84,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Private data
-	//
 	protected:
 		typedef Stuff::PlugOf<__int64>
 			FileStatPlug;

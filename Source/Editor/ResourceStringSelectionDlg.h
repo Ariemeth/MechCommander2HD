@@ -9,7 +9,6 @@
 #pragma once
 #endif // _MSC_VER > 1000
 // ResourceStringSelectionDlg.h : header file
-//
 
 #include "EList.h"
 

@@ -18,9 +18,7 @@ namespace Stuff {
 		public UnitVector3D
 	{
 	public:
-		//
 		// Constructors
-		//
 		Normal3D()
 			{}
 		Normal3D(
@@ -52,9 +50,7 @@ namespace Stuff {
 		static const Normal3D
 			Down;
 
-		//
 		// Assignment operators
-		//
 		Normal3D&
 			operator=(const Normal3D& n)
 				{UnitVector3D::operator=(n); return *this;}
@@ -65,9 +61,7 @@ namespace Stuff {
 			operator=(const Vector3D& v)
 				{Normalize(v); return *this;}
 
-		//
 		// Math operators
-		//
 		Normal3D&
 			Negate(const Normal3D &v)
 				{Vector3D::Negate(v); return *this;}
@@ -85,7 +79,6 @@ namespace Stuff {
 			operator*=(const LinearMatrix4D &M)
 				{Normal3D src(*this); return Multiply(src,M);}
 
-		//
 		// These functions will cause the vector to lose its unit length, thus
 		// cause any downstream verifies to fail.  We have to be able to only
 		// normalize the normal once after all transformations if these are to
@@ -101,9 +94,7 @@ namespace Stuff {
 				const AffineMatrix4D &M
 			);
 
-		//
 		// Support functions
-		//
 		static bool
 			TestClass();
 

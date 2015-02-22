@@ -6,7 +6,6 @@
 #include "eh.h"
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Stuff::Flood_Memory_With_NAN(
 		void *where,
@@ -23,7 +22,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	__cdecl Terminate_Handler()
 {
@@ -31,7 +29,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 static bool __stdcall Check_0() {return ArmorLevel == 0;}
 static bool __stdcall Check_1() {return ArmorLevel == 1;}
 static bool __stdcall Check_2() {return ArmorLevel == 2;}
@@ -55,7 +52,6 @@ static bool
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 static bool __stdcall Check_4hz() {return Environment.MaxTimeDelta == 0.25f;}
 static bool __stdcall Check_40hz() {return Environment.MaxTimeDelta == 0.025f;}
 static bool __stdcall Check_400hz() {return Environment.MaxTimeDelta == 0.0025f;}
@@ -65,17 +61,14 @@ static void __stdcall Activate_40hz() {Environment.MaxTimeDelta = Environment.Mi
 static void __stdcall Activate_400hz() {Environment.MaxTimeDelta = Environment.MinimumTimeDelta = 0.0025f;}
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Stuff::InitializeClasses()
 {
 	set_terminate(Terminate_Handler);
 
-	//
 	//-------------------------------------------------
 	// First, Initialize all the non registered classes
 	//-------------------------------------------------
-	//
 	Verify(FirstFreeStuffClassID <= LastStuffClassID);
 	Verify(!FileStreamManager::Instance);
 	FileStreamManager::Instance = new FileStreamManager;
@@ -89,30 +82,24 @@ void
 
 	Random::InitializeClass();
 
-	//
 	//----------------------------------------------
 	// Now, initialize all of the registered classes
 	//----------------------------------------------
-	//
 	MemoryStream::InitializeClass();
 	FileStream::InitializeClass();
 	#if defined(TRACE_ENABLED)
 		TraceManager::InitializeClass();
 	#endif
 
-	//
 	//------------------------------------
 	// Build the quatenion fast lerp table
 	//------------------------------------
-	//
 
 	UnitQuaternion::InitializeClass();
 
-	//
 	//-------------------
 	// Add the armor menu
 	//-------------------
-	//
 	AddDebuggerMenuItem("Libraries\\Stuff\\Armor Level 0", Check_0, Activate_0, Greyed );
 	AddDebuggerMenuItem("Libraries\\Stuff\\Armor Level 1", Check_1, Activate_1, Greyed );
 	AddDebuggerMenuItem("Libraries\\Stuff\\Armor Level 2", Check_2, Activate_2, Greyed );
@@ -125,15 +112,12 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Stuff::TerminateClasses()
 {
-	//
 	//-----------------------------------------------
 	// First, terminate all of the registered classes
 	//-----------------------------------------------
-	//
 	if ( !FileStream::DefaultData ) // yet again, nobody every checks for NULL pointers
 		return;
 
@@ -145,11 +129,9 @@ void
 	FileStream::TerminateClass();
 	MemoryStream::TerminateClass();
 
-	//
 	//-----------------------------------------------
 	// Then, terminate all the non registered classes
 	//-----------------------------------------------
-	//
 	Random::TerminateClass();
 
 	SafeChainLink::TerminateClass();

@@ -21,7 +21,6 @@ ObjectNameList::ObjectNameList()
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 ObjectNameList::~ObjectNameList()
 {
 	Check_Object(this);
@@ -40,7 +39,6 @@ ObjectNameList::~ObjectNameList()
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 const char*
 	ObjectNameList::AddEntry(
 		const char *name,
@@ -76,7 +74,6 @@ const char*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void*
 	ObjectNameList::FindObject(const char *name)
 {
@@ -98,7 +95,6 @@ void*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	ObjectNameList::DeleteEntry(const char *name)
 {
@@ -139,7 +135,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 int
 	ObjectNameList::GetEntryCount() const
 {
@@ -160,7 +155,6 @@ int
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 int
 	ObjectNameList::BuildSubList(
 		const ObjectNameList &source_list,
@@ -217,7 +211,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 bool
 	ObjectNameList::Entry::IsName(const char *name) const
 {
@@ -244,13 +237,11 @@ NameList::NameList()
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 NameList::~NameList()
 {
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 const char*
 	NameList::FindName(void *data)
 {
@@ -271,7 +262,6 @@ const char*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 NameList::Entry*
 	NameList::FindEntry(const char *name)
 {
@@ -293,7 +283,6 @@ NameList::Entry*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 int
 	NameList::FindEntryIndex(const char *name)
 {
@@ -318,7 +307,6 @@ int
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 NameList::Entry
 	*NameList::FindEntry(void *data)
 {
@@ -339,7 +327,6 @@ NameList::Entry
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	NameList::DeleteEntry(const char *name)
 {
@@ -380,7 +367,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MemoryStream&
 	MemoryStreamIO::Write(
 		MemoryStream *stream,
@@ -389,11 +375,9 @@ MemoryStream&
 {
 	Check_Object(names);
 
-	//
 	//------------------------------
 	// Write out the number of names
 	//------------------------------
-	//
 	int i = 0;
 	const NameList::Entry *entry = names->GetFirstEntry();
 	while (entry)
@@ -404,11 +388,9 @@ MemoryStream&
 	}
 	*stream << i;
 
-	//
 	//--------------------
 	// Write out the names
 	//--------------------
-	//
 	entry = names->GetFirstEntry();
 	while (entry)
 	{
@@ -423,18 +405,15 @@ MemoryStream&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MemoryStream&
 	MemoryStreamIO::Read(
 		MemoryStream *stream,
 		NameList *names
 	)
 {
-	//
 	//---------------------------------------------------------------------
 	// Read in the number of strings to add, then loop through and add them
 	//---------------------------------------------------------------------
-	//
 	int count;
 	*stream >> count;
 	while (count-- > 0)
@@ -456,13 +435,11 @@ AlphaNameList::AlphaNameList()
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 AlphaNameList::~AlphaNameList()
 {
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 const char*
 	AlphaNameList::AddEntry(
 		const char *name,

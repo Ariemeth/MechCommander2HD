@@ -14,11 +14,9 @@
 namespace MidLevelRenderer
 {
 
-	//
 	//--------------
 	// Stuff classes
 	//--------------
-	//
 	enum
 	{
 		MLRStateClassID = Stuff::FirstMLRClassID,

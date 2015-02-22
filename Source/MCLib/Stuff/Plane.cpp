@@ -7,10 +7,8 @@
 
 #include "StuffHeaders.hpp"
 
-//
 //#############################################################################
 //#############################################################################
-//
 void
 	Plane::BuildPlane(
 		const Point3D& p0,
@@ -31,12 +29,10 @@ void
 		Scalar offset2 = normal * p1;
 		Scalar offset3 = normal * p2;
 
-		//
 		//----------------------------------------------------------------
 		// occasionaly the offset becomes large and the triangle is small
 		// this way we still maintain proof up to 1e-4 of the offset value
 		//----------------------------------------------------------------
-		//
 		Verify(Close_Enough(
 			offset,
 			offset2,
@@ -54,10 +50,8 @@ void
 	#endif
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 Plane&
 	Plane::Multiply(
 		const Plane &p,
@@ -78,22 +72,18 @@ Plane&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 Scalar
 	Plane::GetDistanceTo(const Sphere& sphere) const
 {
 	Check_Object(this);
 	Check_Object(&sphere);
 
-	//
 	//-----------------------------------------------------------------------
 	// Find out how far the centerpoint of the sphere is from us, then adjust
 	// so that 0.0 means we are intersecting the sphere
 	//-----------------------------------------------------------------------
-	//
 	Scalar distance = GetDistanceTo(sphere.center);
 	if (distance > sphere.radius)
 		return distance - sphere.radius;
@@ -102,21 +92,17 @@ Scalar
 	return 0.0f;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 Scalar
 	Plane::GetDistanceTo(const OBB& box) const
 {
 	Check_Object(this);
 	Check_Object(&box);
 
-	//
 	//-------------------------------------------------
 	// Rotate the plane into the local space of the box
 	//-------------------------------------------------
-	//
 	Plane local_plane;
 	LinearMatrix4D parent_to_local;
 	parent_to_local.Invert(box.localToParent);
@@ -124,12 +110,10 @@ Scalar
 	Point3D inside_extents(box.axisExtents);
 	Point3D outside_extents(box.axisExtents);
 
-	//
 	//---------------------------------------------------------------------
 	// Look at the resulting vector to find out which corners of the box we
 	// should be testing
 	//---------------------------------------------------------------------
-	//
 	if (local_plane.normal.x > 0.0f)
 		inside_extents.x = -inside_extents.x;
 	else
@@ -143,11 +127,9 @@ Scalar
 	else
 		outside_extents.z = -outside_extents.z;
 
-	//
 	//---------------------------
 	// Test against the plane now
 	//---------------------------
-	//
 	Scalar distance = local_plane.GetDistanceTo(outside_extents);
 	if (distance < 0.0f)
 		return distance;
@@ -157,10 +139,8 @@ Scalar
 	return 0.0f;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 bool
 	Plane::ContainsSomeOf(
 		const Sphere &sphere,
@@ -170,10 +150,8 @@ bool
 	return normal*sphere.center - offset <= sphere.radius - thickness;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 bool
 	Plane::ContainsAllOf(
 		const Sphere &sphere,
@@ -183,10 +161,8 @@ bool
 	return offset - normal*sphere.center >= sphere.radius + thickness;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 bool
 	Plane::ContainsSomeOf(
 		const ExtentBox &box,
@@ -203,10 +179,8 @@ bool
 	return normal * test < offset - thickness;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 bool
 	Plane::ContainsAllOf(
 		const ExtentBox &box,
@@ -223,10 +197,8 @@ bool
 	return normal * test <= offset + thickness;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 bool
 	Plane::Intersects(
 		const Sphere &sphere,
@@ -237,10 +209,8 @@ bool
 	return Abs(dist) <= sphere.radius + thickness;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 bool
 	Plane::Intersects(
 		const ExtentBox &box,
@@ -257,10 +227,8 @@ bool
 //	return inverse.ContainsSomeOf(box);
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 #if !defined(Spew)
 	void
 		Spew(
@@ -276,17 +244,14 @@ bool
 #endif
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 bool
 	Plane::ComputeBestDividingPlane(DynamicArrayOf<Point3D> &points)
 {
 	Check_Object(&points);
 
-	//
 	//-----------------
 	// Compute the sums
 	//-----------------
-	//
 	unsigned count = points.GetLength();
 	Verify(count > 1);
 	Point3D sum = Point3D::Identity;
@@ -308,11 +273,9 @@ bool
 		zz += points[i].z*points[i].z;
 	}
 
-	//
 	//--------------------------------------
 	// Compute the least squares differences
 	//--------------------------------------
-	//
 	Scalar t = 1.0f / static_cast<Scalar>(count);
 	xx -= t*sum.x*sum.x;
 	xy -= t*sum.x*sum.y;
@@ -321,11 +284,9 @@ bool
 	yz -= t*sum.y*sum.z;
 	zz -= t*sum.z*sum.z;
 
-	//
 	//------------------------------------------------------------------
 	// Find the largest axis component, and use that to orient the plane
 	//------------------------------------------------------------------
-	//
 	int axis;
 	if (xx > yy)
 		axis = (xx > zz) ? X_Axis : Z_Axis;
@@ -364,23 +325,19 @@ bool
 		STOP(("Bad switch"));
 	}
 
-	//
 	//-----------------------------------------------------------------------
 	// The dividing plane will coincide with the mean point and have a normal
 	// parallel to the variance vector
 	//-----------------------------------------------------------------------
-	//
 	normal = direction;
 	sum *= t;
 	offset = normal * sum;
 	Check_Object(this);
 
-	//
 	//-----------------------------------------------------------------------
 	// Now make sure that a coincident set didn't get through due to rounding
 	// errors
 	//-----------------------------------------------------------------------
-	//
 	for (i=0; i<count; i++) 
 	{
 		if (points[i] != sum)

@@ -11,7 +11,6 @@ const LinearMatrix4D
 	LinearMatrix4D::Identity(1);
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	LinearMatrix4D::AlignLocalAxisToWorldVector(
 		const Vector3D &world_target,
@@ -26,22 +25,18 @@ void
 	Verify(static_cast<unsigned>(rotating_axis) <= Z_Axis);
 	Verify(rotating_axis != pointing_axis);
 
-	//
 	//------------------------------------------------------------------
 	// These are the variables that the alignment algorithm must fill in
 	//------------------------------------------------------------------
-	//
 	UnitVector3D
 		rotation_vector,
 		pointing_vector,
 		minor_vector;
 
-	//
 	//------------------------------------------------------------------
 	// Extract the current target axis direction, then cross it with the
 	// plane target to find the minor axis direction (unsigned)
 	//------------------------------------------------------------------
-	//
 	if (Small_Enough(world_target.GetLengthSquared()))
 		return;
 	rotation_vector.x = (*this)(rotating_axis, X_Axis);
@@ -51,14 +46,12 @@ void
 	Vector3D temp;
 	temp.Cross(rotation_vector, world_target);
 
-	//
 	//----------------------------------------------------------------------
 	// First check to see if we are rotating around a frozen axis.  If so,
 	// if the axes specified are in the right-handed configuration, simply
 	// generate the new pointing axis values, otherwise negate the minor
 	// axis and generate the pointing vector appropriately
 	//----------------------------------------------------------------------
-	//
 	if (minor_axis == -1)
 	{
 		minor_axis = 3 - pointing_axis - rotating_axis;
@@ -73,24 +66,20 @@ void
 		Check_Object(&pointing_vector);
 	}
 
-	//
 	//------------------------------------------------------------------------
 	// The next case to check is non-frozen rotation.  In this case, maximum
 	// effort is taken to preserve the rotating matrix, but it will be rotated
 	// around the minor axis so that the pointing axis is exactly aligned with
 	// the target vector
 	//------------------------------------------------------------------------
-	//
 	else
 	{
 
-		//
 		//--------------------------------------------------------------------
 		// If the resultant vector is zero, it means the rotating axis is
 		// parallel to the target vector, and thus a correct orthogonal set of
 		// axis vectors can already be found in the matrix
 		//--------------------------------------------------------------------
-		//
 		Verify(minor_axis == 3 - pointing_axis - rotating_axis);
 		if (Small_Enough(temp.GetLengthSquared()))
 		{
@@ -117,7 +106,6 @@ void
 			minor_vector.z = (*this)(minor_axis, Z_Axis);
 		}
 
-		//
 		//---------------------------------------------------------------------
 		// We have a non-trivial minor vector, so use it to generate the real
 		// minor axis, then calculate the new rotation axis.  If the axes
@@ -125,7 +113,6 @@ void
 		// new pointing axis values, otherwise negate the minor axis and
 		// generate the pointing vector appropriately
 		//---------------------------------------------------------------------
-		//
 		else
 		{
 			pointing_vector.Normalize(world_target);
@@ -141,11 +128,9 @@ void
 		}
 	}
 
-	//
 	//------------------------------------------------
 	// Now stuff the unit vectors back into the matrix
 	//------------------------------------------------
-	//
 	Check_Object(&pointing_vector);
 	(*this)(pointing_axis, X_Axis) = pointing_vector.x;
 	(*this)(pointing_axis, Y_Axis) = pointing_vector.y;
@@ -165,7 +150,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 LinearMatrix4D&
 	LinearMatrix4D::Invert(const LinearMatrix4D& m)
 {
@@ -173,11 +157,9 @@ LinearMatrix4D&
 	Check_Object(&m);
 	Verify(this != &m);
 
-	//
 	//-----------------------------------------
 	// First, transpose the 3x3 rotation matrix
 	//-----------------------------------------
-	//
 	(*this)(0,0) = m(0,0);
 	(*this)(0,1) = m(1,0);
 	(*this)(0,2) = m(2,0);
@@ -188,11 +170,9 @@ LinearMatrix4D&
 	(*this)(2,1) = m(1,2);
 	(*this)(2,2) = m(2,2);
 
-	//
 	//----------------------------
 	// Now run the offsets through
 	//----------------------------
-	//
 	(*this)(3,0) = -m(3,0)*m(0,0) - m(3,1)*m(0,1) - m(3,2)*m(0,2);
 	(*this)(3,1) = -m(3,0)*m(1,0) - m(3,1)*m(1,1) - m(3,2)*m(1,2);
 	(*this)(3,2) = -m(3,0)*m(2,0) - m(3,1)*m(2,1) - m(3,2)*m(2,2);
@@ -200,7 +180,6 @@ LinearMatrix4D&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 LinearMatrix4D&
 	LinearMatrix4D::Normalize()
 {
@@ -216,7 +195,6 @@ LinearMatrix4D&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	LinearMatrix4D::TestInstance() const
 {

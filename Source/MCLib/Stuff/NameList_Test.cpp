@@ -42,12 +42,10 @@ public:
 };
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 ObjectNameList
 	TestHost::names;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 TestHost::TestHost(const char *a_name)
 {
 	Check_Pointer(this);
@@ -57,7 +55,6 @@ TestHost::TestHost(const char *a_name)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 TestHost::~TestHost()
 {
 	Check_Object(this);
@@ -65,7 +62,6 @@ TestHost::~TestHost()
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 bool
 	TestHost::TestInstance() const
 {

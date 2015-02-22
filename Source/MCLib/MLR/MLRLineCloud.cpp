@@ -16,7 +16,6 @@ MLRLineCloud::ClassData*
 	MLRLineCloud::DefaultData = NULL;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRLineCloud::InitializeClass()
 {
@@ -32,7 +31,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRLineCloud::TerminateClass()
 {
@@ -42,7 +40,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRLineCloud::MLRLineCloud(int nr, int _type) :
 	MLREffect(2*nr, DefaultData), type(_type)
 {
@@ -55,14 +52,12 @@ MLRLineCloud::MLRLineCloud(int nr, int _type) :
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRLineCloud::~MLRLineCloud()
 {
 	Check_Object(this);
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void 
 	MLRLineCloud::SetData(
 		const int *count,
@@ -79,7 +74,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void 
 	MLRLineCloud::Draw (DrawEffectInformation *dInfo, GOSVertexPool *allVerticesToDraw, MLRSorter *sorter)
 {
@@ -96,7 +90,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void 
 	MLRLineCloud::Transform(int, int)
 {
@@ -118,14 +111,12 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 int 
 	MLRLineCloud::Clip(MLRClippingState clippingFlags, GOSVertexPool *vt)
 {
 	//--------------------------------------
 	// See if we don't have to draw anything
 	//--------------------------------------
-	//
 	int i;
 	numGOSVertices = 0;
 
@@ -191,7 +182,6 @@ int
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void 
 	MLRLineCloud::TestInstance() const
 {

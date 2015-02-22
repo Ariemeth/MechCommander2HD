@@ -14,7 +14,6 @@ MLRTexturePool::ClassData*
 //#############################################################################
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRTexturePool::InitializeClass()
 {
@@ -32,7 +31,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRTexturePool::TerminateClass()
 {
@@ -48,7 +46,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRTexturePool::MLRTexturePool(MemoryStream *stream):
 	RegisteredClass(DefaultData)
 {
@@ -60,7 +57,6 @@ MLRTexturePool::MLRTexturePool(MemoryStream *stream):
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void MLRTexturePool::Stop (void)
 {
 	Verify(gos_GetCurrentHeap() == Heap);
@@ -84,7 +80,6 @@ void MLRTexturePool::Stop (void)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void MLRTexturePool::Restart (void)
 {
 	Verify(gos_GetCurrentHeap() == Heap);
@@ -106,7 +101,6 @@ void MLRTexturePool::Restart (void)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRTexturePool::MLRTexturePool(GOSImagePool *image_pool, int insDep):
 	RegisteredClass(DefaultData)
 {
@@ -138,7 +132,6 @@ MLRTexturePool::MLRTexturePool(GOSImagePool *image_pool, int insDep):
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRTexturePool::~MLRTexturePool()
 {
 	int i;
@@ -162,7 +155,6 @@ MLRTexturePool::~MLRTexturePool()
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRTexturePool*
 	MLRTexturePool::Make(MemoryStream *stream)
 {
@@ -176,7 +168,6 @@ MLRTexturePool*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRTexturePool::Save(MemoryStream *stream)
 {
@@ -184,7 +175,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRTexture*
 	MLRTexturePool::Add(const char *tn, int instance)
 {
@@ -292,7 +282,6 @@ MLRTexture*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRTexture*
 	MLRTexturePool::Add(GOSImage *image)
 {
@@ -361,7 +350,6 @@ MLRTexture*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRTexturePool::Remove(MLRTexture *tex)
 {
@@ -394,7 +382,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRTexture*
 	MLRTexturePool::operator()(const char *tn, int instance)
 {
@@ -431,7 +418,6 @@ MLRTexture*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 unsigned
 	MLRTexturePool::LoadImages()
 {
@@ -441,9 +427,7 @@ unsigned
 	{
 		return lastHandle;
 	}
-//
 // Statistic timing function
-//
 	for (unsigned i=0;i<MLRState::TextureMask+1;i++)
 	{
 		if(textureArray[i])
@@ -460,9 +444,7 @@ unsigned
 			}
 		}
 	}
-//
 // End timing function
-//
 
 	unLoadedImages = false;
 

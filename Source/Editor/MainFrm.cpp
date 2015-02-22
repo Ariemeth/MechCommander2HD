@@ -3,7 +3,6 @@
 //===========================================================================//
 
 // MainFrm.cpp : implementation of the MainFrame class
-//
 
 #include "stdafx.h"
 #include "EditorMFC.h"

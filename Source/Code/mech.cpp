@@ -1,9 +1,6 @@
 //***************************************************************************
-//
 //	mech.cpp - This file contains the BattleMech Class header
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -678,7 +675,6 @@ bool BattleMechType::handleCollision (GameObjectPtr collidee, GameObjectPtr coll
 	// The default reaction of any object in the world
 	// is to simply explode.  This just returns true
 	// to facilitate this behaviour.
-	//
 	// Don't blow us up unless we hit another mech.
 
 	if (MPlayer && !MPlayer->isServer())
@@ -1601,7 +1597,6 @@ long BattleMech::init (DWORD variantNum)
 					// amount equal to the number of missiles/bullets/whatever. If it's set
 					// to 255, use the default amount per ton as defined in the component
 					// table...
-					//
 					// Ammo per ton is always fully stocked.  I.e. always -1 or 255
 					inventory[realItemNum].amount = MasterComponent::masterList[inventory[realItemNum].masterID].getAmmoPerTon();
 					inventory[realItemNum].ammoIndex = -1;
@@ -2023,7 +2018,6 @@ void BattleMech::resetComponents (long totalComponents, long *componentList)
 	//--------------------------------------------------------------------------
 	//If we added Armor to the mech, remove the armor so that player's new armor
 	// components are all that is added, adjust the max and current armor settings.
-	// 
 	if (numArmorComponents)
 	{
 		float totalArmorPoints = ARMOR_POINTS_PER_NEWARMOR * numArmorComponents;
@@ -2318,7 +2312,6 @@ void BattleMech::resetComponents (long totalComponents, long *componentList)
 					// amount equal to the number of missiles/bullets/whatever. If it's set
 					// to 255, use the default amount per ton as defined in the component
 					// table...
-					//
 					// Ammo per ton is always fully stocked.  I.e. always -1 or 255
 					inventory[realItemNum].amount = MasterComponent::masterList[inventory[realItemNum].masterID].getAmmoPerTon();
 					inventory[realItemNum].ammoIndex = -1;
@@ -5872,7 +5865,6 @@ long BattleMech::update (void)
 				//-------------------------------------------------------
 				// Disable just plays an eject effect now.
 				// NO crater or it will look dumb.
-				//
 				// DO NOT play disable effect if pilot is dead!!
 				if (getPilot()->alive())
 				{

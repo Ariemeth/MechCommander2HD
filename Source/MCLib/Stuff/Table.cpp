@@ -9,11 +9,9 @@
 
 #define VERIFY_INDEX(x) 		Verify(0 <= (x) && (x) < numItems)
 
-//
 //###########################################################################
 // TABLEENTRY
 //###########################################################################
-//
 
 TableEntry::TableEntry(
 	Table *table,
@@ -30,35 +28,27 @@ TableEntry::~TableEntry()
 	Table *table = Cast_Object(Table*, socket);
 	IteratorPosition index;
 
-	//
 	//--------------------------------------
 	// Find the link in the table and remove
 	//--------------------------------------
-	//
 	index = table->SearchForTableEntry(this);
 	table->RemoveNthTableEntry(index);
 
-	//
 	//--------------------------------------------
 	// Notify iterators that link is being deleted
 	//--------------------------------------------
-	//
 	table->SendIteratorMemo(PlugRemoved, &index);
 
-	//
 	//------------------------------------------
 	// Remove this link from any plug references
 	//------------------------------------------
-	//
 	ReleaseFromPlug();
 
-	//
 	//-------------------------------------------------------------
 	// Tell the node to release this link.  Note that this link
 	// is not referenced by the plug or the chain at this point in
 	// time.
 	//-------------------------------------------------------------
-	//
 	if (table->GetReleaseNode() != NULL)
 	{
 		Check_Object(table->GetReleaseNode());
@@ -66,17 +56,13 @@ TableEntry::~TableEntry()
 	}
 }
 
-//
 //###########################################################################
 // TABLE
 //###########################################################################
-//
 
-//
 //###########################################################################
 // Table
 //###########################################################################
-//
 Table::Table(
 	Node *node,
 	bool has_unique_entries
@@ -87,11 +73,9 @@ Table::Table(
 	maxItems = numItems = 0;
 }
 
-//
 //###########################################################################
 // ~Table
 //###########################################################################
-//
 Table::~Table()
 {
 	Check_Object(this);
@@ -107,11 +91,9 @@ Table::~Table()
 	Verify(array == NULL);
 }
 
-//
 //###########################################################################
 // TestInstance
 //###########################################################################
-//
 void
 	Table::TestInstance()
 {
@@ -125,11 +107,9 @@ void
 	}
 }
 
-//
 //###########################################################################
 // AddImplementation
 //###########################################################################
-//
 void
 	Table::AddImplementation(Plug *plug)
 {
@@ -137,11 +117,9 @@ void
 	AddValueImplementation(plug, NULL);
 }
 
-//
 //###########################################################################
 // AddValueImplementation
 //###########################################################################
-//
 void
 	Table::AddValueImplementation(
 		Plug *plug,
@@ -170,11 +148,9 @@ void
 	SendIteratorMemo(PlugAdded, link);
 }
 
-//
 //###########################################################################
 // FindImplementation
 //###########################################################################
-//
 Plug*
 Table::FindImplementation(
 const void *value
@@ -194,11 +170,9 @@ const void *value
 	return NULL;
 }
 
-//
 //#############################################################################
 // IsEmpty
 //#############################################################################
-//
 bool
 	Table::IsEmpty()
 {
@@ -206,11 +180,9 @@ bool
 	return (numItems == (CollectionSize)0);
 }
 
-//
 //###########################################################################
 // MakeTableEntry
 //###########################################################################
-//
 TableEntry*
 	Table::MakeTableEntry(
       Plug*,
@@ -222,11 +194,9 @@ TableEntry*
    return NULL;
 }
 
-//
 //###########################################################################
 // CompareTableEntries
 //###########################################################################
-//
 int
 	Table::CompareTableEntries(
       TableEntry*,
@@ -238,11 +208,9 @@ int
    return 0;
 }
 
-//
 //###########################################################################
 // CompareValueToTableEntry
 //###########################################################################
-//
 int
 	Table::CompareValueToTableEntry(
       const void*,
@@ -254,11 +222,9 @@ int
    return 0;
 }
 
-//
 //###########################################################################
 // AddTableEntry
 //###########################################################################
-//
 void
 	Table::AddTableEntry(
 		TableEntry *link
@@ -295,11 +261,9 @@ void
 	numItems = new_num_items;
 }
 
-//
 //###########################################################################
 // SortTableEntries
 //###########################################################################
-//
 void
 	Table::SortTableEntries()
 {
@@ -333,11 +297,9 @@ void
 	}
 }
 
-//
 //###########################################################################
 // SearchForValue
 //###########################################################################
-//
 IteratorPosition
 	Table::SearchForValue(
 		const void *value
@@ -366,11 +328,9 @@ IteratorPosition
 	return TableNullIndex;
 }
 
-//
 //###########################################################################
 // SearchForTableEntry
 //###########################################################################
-//
 IteratorPosition
 	Table::SearchForTableEntry(
 		TableEntry *link
@@ -390,11 +350,9 @@ IteratorPosition
 	return TableNullIndex;
 }
 
-//
 //###########################################################################
 // RemoveNthTableEntry
 //###########################################################################
-//
 void
 	Table::RemoveNthTableEntry(
 		CollectionSize index
@@ -453,11 +411,9 @@ void
 	}
 #endif
 
-//
 //###########################################################################
 // TableIterator
 //###########################################################################
-//
 TableIterator::TableIterator(Table *table):
 	SortedIterator(table)
 {
@@ -470,19 +426,15 @@ TableIterator::TableIterator(Table *table):
 		currentPosition = TableNullIndex;
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 TableIterator::~TableIterator()
 {
 }
 
-//
 //###########################################################################
 // TestInstance
 //###########################################################################
-//
 void
 	TableIterator::TestInstance()
 {
@@ -496,11 +448,9 @@ void
 	}
 }
 
-//
 //###########################################################################
 // First
 //###########################################################################
-//
 void
 	TableIterator::First()
 {
@@ -508,11 +458,9 @@ void
 		currentPosition = 0;
 }
 
-//
 //###########################################################################
 // Last
 //###########################################################################
-//
 void
 	TableIterator::Last()
 {
@@ -520,33 +468,27 @@ void
 		currentPosition = numItems - 1;
 }
 
-//
 //###########################################################################
 // Next
 //###########################################################################
-//
 void
 	TableIterator::Next()
 {
 	IncrementPosition();
 }
 
-//
 //###########################################################################
 // Previous
 //###########################################################################
-//
 void
 	TableIterator::Previous()
 {
 	DecrementPosition();
 }
 
-//
 //###########################################################################
 // ReadAndNextImplementation
 //###########################################################################
-//
 void
 	*TableIterator::ReadAndNextImplementation()
 {
@@ -561,11 +503,9 @@ void
 	return NULL;
 }
 
-//
 //###########################################################################
 // ReadAndPreviousImplementation
 //###########################################################################
-//
 void
 	*TableIterator::ReadAndPreviousImplementation()
 {
@@ -580,11 +520,9 @@ void
 	return NULL;
 }
 
-//
 //###########################################################################
 // GetCurrentImplementation
 //###########################################################################
-//
 void
 	*TableIterator::GetCurrentImplementation()
 {
@@ -595,22 +533,18 @@ void
 	return NULL;
 }
 
-//
 //###########################################################################
 // GetSize
 //###########################################################################
-//
 CollectionSize
 	TableIterator::GetSize()
 {
 	return numItems;
 }
 
-//
 //###########################################################################
 // GetNthImplementation
 //###########################################################################
-//
 void
 	*TableIterator::GetNthImplementation(
 		CollectionSize index
@@ -623,11 +557,9 @@ void
 	return NULL;
 }
 
-//
 //###########################################################################
 // Remove
 //###########################################################################
-//
 void
 	TableIterator::Remove()
 {
@@ -638,11 +570,9 @@ void
 	}
 }
 
-//
 //###########################################################################
 // FindImplementation
 //###########################################################################
-//
 Plug
 	*TableIterator::FindImplementation(
 		const void *value
@@ -669,11 +599,9 @@ Plug
 	return NULL;
 }
 
-//
 //###########################################################################
 // ReceiveMemo
 //###########################################################################
-//
 void
 	TableIterator::ReceiveMemo(
 		IteratorMemo memo,
@@ -690,11 +618,9 @@ void
          array = table->array;
          numItems = table->numItems;
 
-      	//
          // If a plug is added before or at the current position then
          // the current position should be incremented one forward,
          // otherwise, no action is necessary
-         //
          TableEntry *link;
          IteratorPosition index;
 
@@ -717,11 +643,9 @@ void
          array = table->array;
          numItems = table->numItems;
 
-         //
          // If a plug is removed before the current position then decrement
          // the current position, else if the current position is at the end
          // of the table then decrement the counter
-         //
 			IteratorPosition index;
 
 			index = *Cast_Pointer(IteratorPosition*,content);

@@ -1,9 +1,6 @@
 //---------------------------------------------------------------------------
-//
 // inifile.cpp - This file contains the class declaration for the FitIni Files
-//
 //				The FitIni file is a ini style file.
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -2670,7 +2667,5 @@ long FitIniFile::writeIdUCharArray (const char *varName, unsigned char *array, u
 }
 
 //---------------------------------------------------------------------------
-//
 // Edit log
-//
 //---------------------------------------------------------------------------

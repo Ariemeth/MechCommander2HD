@@ -6,7 +6,6 @@
 #include <MLR\MLRCardCloud.hpp>
 
 //------------------------------------------------------------------------------
-//
 gosFX::CardCloud__Specification::CardCloud__Specification(
 	Stuff::MemoryStream *stream,
 	int gfx_version
@@ -21,12 +20,10 @@ gosFX::CardCloud__Specification::CardCloud__Specification(
 	m_halfHeight.Load(stream, gfx_version);
 	m_aspectRatio.Load(stream, gfx_version);
 
-	//
 	//-------------------------------------------------------------------
 	// If we are reading an old version of the card cloud, ignore all the
 	// animation on the UV channels
 	//-------------------------------------------------------------------
-	//
 	if (gfx_version < 10)
 	{
 		m_pIndex.m_ageCurve.SetCurve(0.0f);
@@ -48,11 +45,9 @@ gosFX::CardCloud__Specification::CardCloud__Specification(
 		m_animated = false;
 	}
 
-	//
 	//------------------------------
 	// Otherwise, read in the curves
 	//------------------------------
-	//
 	else
 	{
 		m_pIndex.Load(stream, gfx_version);
@@ -69,7 +64,6 @@ gosFX::CardCloud__Specification::CardCloud__Specification(
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::CardCloud__Specification::CardCloud__Specification():
 	SpinningCloud__Specification(gosFX::CardCloudClassID)
 {
@@ -82,7 +76,6 @@ gosFX::CardCloud__Specification::CardCloud__Specification():
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::CardCloud__Specification*
 	gosFX::CardCloud__Specification::Make(
 		Stuff::MemoryStream *stream,
@@ -100,7 +93,6 @@ gosFX::CardCloud__Specification*
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::CardCloud__Specification::Save(Stuff::MemoryStream *stream)
 {
@@ -118,7 +110,6 @@ void
 	*stream << m_animated;
 }
 //------------------------------------------------------------------------------
-//
 
 void 
 	gosFX::CardCloud__Specification::BuildDefaults()
@@ -149,7 +140,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 
 bool 
 	gosFX::CardCloud__Specification::IsDataValid(bool fix_data)
@@ -165,11 +155,9 @@ bool
 		lower = 0.0f;
 	Stuff::Scalar upper = max_scale;
 
-	//
 	//------------------------------------
 	// Calculate the worst case UV offsets
 	//------------------------------------
-	//
 	m_VOffset.ExpensiveComputeRange(&min_offset, &max_offset);
 	lower += min_offset;
 	upper += max_offset;
@@ -191,11 +179,9 @@ bool
 		lower = 0.0f;
 	upper = max_scale;
 
-	//
 	//------------------------------------
 	// Calculate the worst case UV offsets
 	//------------------------------------
-	//
 	max_offset, min_offset;
 	m_UOffset.ExpensiveComputeRange(&min_offset, &max_offset);
 	lower += min_offset;
@@ -216,7 +202,6 @@ bool
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::CardCloud__Specification::Copy(CardCloud__Specification *spec)
 {
@@ -239,7 +224,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::CardCloud__Specification::SetWidth()
 {
@@ -255,7 +239,6 @@ gosFX::CardCloud::ClassData*
 	gosFX::CardCloud::DefaultData = NULL;
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::CardCloud::InitializeClass()
 {
@@ -273,7 +256,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::CardCloud::TerminateClass()
 {
@@ -283,7 +265,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::CardCloud::CardCloud(
 	Specification *spec,
 	unsigned flags
@@ -315,7 +296,6 @@ gosFX::CardCloud::CardCloud(
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::CardCloud::~CardCloud()
 {
 	Unregister_Object(m_cloudImplementation);
@@ -323,7 +303,6 @@ gosFX::CardCloud::~CardCloud()
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::CardCloud*
 	gosFX::CardCloud::Make(
 		Specification *spec,
@@ -340,7 +319,6 @@ gosFX::CardCloud*
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::CardCloud::CreateNewParticle(
 		unsigned index,
@@ -349,20 +327,16 @@ void
 {
 	Check_Object(this);
 
-	//
 	//-------------------------------------------------------------------
 	// Let our parent do creation, then turn on the particle in the cloud
 	//-------------------------------------------------------------------
-	//
 	SpinningCloud::CreateNewParticle(index, translation);
 	m_cloudImplementation->TurnOn(index);
 	Verify(m_cloudImplementation->IsOn(index));
 
-	//
 	//-----------------------------
 	// Figure out the particle size
 	//-----------------------------
-	//
 	Specification *spec = GetSpecification();
 	Check_Object(spec);
 	Particle *particle = GetParticle(index);
@@ -379,7 +353,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 bool
 	gosFX::CardCloud::AnimateParticle(
 		unsigned index,
@@ -389,11 +362,9 @@ bool
 {
 	Check_Object(this);
 
-	//
 	//-----------------------------------------
 	// Animate the parent then get our pointers
 	//-----------------------------------------
-	//
 	if (!SpinningCloud::AnimateParticle(index, world_to_new_local, till))
 		return false;
 	Set_Statistic(Card_Count, Card_Count+1);
@@ -404,32 +375,26 @@ bool
 	Stuff::Scalar seed = particle->m_seed;
 	Stuff::Scalar age = particle->m_age;
 
-	//
 	//------------------
 	// Animate the color
 	//------------------
-	//
 	Check_Pointer(m_P_color);
 	m_P_color[index].red = spec->m_pRed.ComputeValue(age, seed);
 	m_P_color[index].green = spec->m_pGreen.ComputeValue(age, seed);
 	m_P_color[index].blue = spec->m_pBlue.ComputeValue(age, seed);
 	m_P_color[index].alpha = spec->m_pAlpha.ComputeValue(age, seed);
 
-	//
 	//----------------
 	// Animate the uvs
 	//----------------
-	//
 	Stuff::Scalar u = spec->m_UOffset.ComputeValue(age, seed);
 	Stuff::Scalar v = spec->m_VOffset.ComputeValue(age, seed);
 	Stuff::Scalar u2 = spec->m_USize.ComputeValue(age, seed);
 	Stuff::Scalar v2 = spec->m_VSize.ComputeValue(age, seed);
 
-	//
 	//--------------------------------------------------------------
 	// If we are animated, figure out the row/column to be displayed
 	//--------------------------------------------------------------
-	//
 	if (spec->m_animated)
 	{
 		BYTE columns =
@@ -439,11 +404,9 @@ bool
 		BYTE rows = static_cast<BYTE>(columns / spec->m_width);
 		columns = static_cast<BYTE>(columns - rows*spec->m_width);
 
-		//
 		//---------------------------
 		// Now compute the end points
 		//---------------------------
-		//
 		u += u2*columns;
 		v += v2*rows;
 	}
@@ -463,7 +426,6 @@ bool
 }
 
 //------------------------------------------------------------------------------
-//
 void gosFX::CardCloud::DestroyParticle(unsigned index)
 {
 	Check_Object(this);
@@ -474,17 +436,14 @@ void gosFX::CardCloud::DestroyParticle(unsigned index)
 }
 
 //------------------------------------------------------------------------------
-//
 void gosFX::CardCloud::Draw(DrawInfo *info)
 {
 	Check_Object(this);
 	Check_Object(info);
 
-	//
 	//---------------------------------------------------------
 	// If we have active particles, set up the draw information
 	//---------------------------------------------------------
-	//
 	if (m_activeParticleCount)
 	{
 		MidLevelRenderer::DrawEffectInformation dInfo;
@@ -497,22 +456,18 @@ void gosFX::CardCloud::Draw(DrawInfo *info)
 		local_to_world.Multiply(m_localToParent, *info->m_parentToWorld);
 		dInfo.effectToWorld = &local_to_world;
 
-		//
 		//--------------------------------------------------------------
 		// Check the orientation mode.  The first case is XY orientation
 		//--------------------------------------------------------------
-		//
 		unsigned i;
 		unsigned vert=0;
 		if (spec->m_alignZUsingX)
 		{
 			if (spec->m_alignZUsingY)
 			{
-				//
 				//-----------------------------------------
 				// Get the camera location into local space
 				//-----------------------------------------
-				//
 				Stuff::Point3D
 					camera_in_world(info->m_clipper->GetCameraToWorldMatrix());
 				Stuff::Point3D camera_in_cloud;
@@ -521,11 +476,9 @@ void gosFX::CardCloud::Draw(DrawInfo *info)
 					local_to_world
 				);
 
-				//
 				//--------------------------------------
 				// Spin through all the active particles
 				//--------------------------------------
-				//
 				for (i = 0; i < m_activeParticleCount; i++)
 				{
 					Particle *particle = GetParticle(i);
@@ -533,11 +486,9 @@ void gosFX::CardCloud::Draw(DrawInfo *info)
 					if (particle->m_age < 1.0f)
 					{
 
-						//
 						//--------------------------------
 						// Build the local to cloud matrix
 						//--------------------------------
-						//
 						Stuff::Vector3D direction_in_cloud;
 						direction_in_cloud.Subtract(
 							camera_in_cloud,
@@ -555,11 +506,9 @@ void gosFX::CardCloud::Draw(DrawInfo *info)
 							particle->m_localTranslation
 						);
 
-						//
 						//-------------------------------------------------
 						// Figure out the scale, then build the four points
 						//-------------------------------------------------
-						//
 						Stuff::Scalar scale = particle->m_scale;
 						m_P_vertices[vert++].Multiply(
 							Stuff::Point3D(
@@ -599,18 +548,14 @@ void gosFX::CardCloud::Draw(DrawInfo *info)
 				}
 			}
 
-			//
 			//-----------------------
 			// Handle X-only rotation
 			//-----------------------
-			//
 			else
 			{
-				//
 				//-----------------------------------------
 				// Get the camera location into local space
 				//-----------------------------------------
-				//
 				Stuff::Point3D
 					camera_in_world(info->m_clipper->GetCameraToWorldMatrix());
 				Stuff::Point3D camera_in_cloud;
@@ -619,11 +564,9 @@ void gosFX::CardCloud::Draw(DrawInfo *info)
 					local_to_world
 				);
 
-				//
 				//--------------------------------------
 				// Spin through all the active particles
 				//--------------------------------------
-				//
 				for (i = 0; i < m_activeParticleCount; i++)
 				{
 					Particle *particle = GetParticle(i);
@@ -631,11 +574,9 @@ void gosFX::CardCloud::Draw(DrawInfo *info)
 					if (particle->m_age < 1.0f)
 					{
 
-						//
 						//--------------------------------
 						// Build the local to cloud matrix
 						//--------------------------------
-						//
 						Stuff::Vector3D direction_in_cloud;
 						direction_in_cloud.Subtract(
 							camera_in_cloud,
@@ -651,11 +592,9 @@ void gosFX::CardCloud::Draw(DrawInfo *info)
 						);
 						card_to_cloud.BuildTranslation(particle->m_localTranslation);
 
-						//
 						//-------------------------------------------------
 						// Figure out the scale, then build the four points
 						//-------------------------------------------------
-						//
 						Stuff::Scalar scale = particle->m_scale;
 						m_P_vertices[vert++].Multiply(
 							Stuff::Point3D(
@@ -696,18 +635,14 @@ void gosFX::CardCloud::Draw(DrawInfo *info)
 			}
 		}
 
-		//
 		//-------------------------------------------------------
 		// Each matrix needs to be aligned to the camera around Y
 		//-------------------------------------------------------
-		//
 		else if (spec->m_alignZUsingY)
 		{
-			//
 			//-----------------------------------------
 			// Get the camera location into local space
 			//-----------------------------------------
-			//
 			Stuff::Point3D
 				camera_in_world(info->m_clipper->GetCameraToWorldMatrix());
 			Stuff::Point3D camera_in_cloud;
@@ -716,11 +651,9 @@ void gosFX::CardCloud::Draw(DrawInfo *info)
 				local_to_world
 			);
 
-			//
 			//--------------------------------------
 			// Spin through all the active particles
 			//--------------------------------------
-			//
 			for (i = 0; i < m_activeParticleCount; i++)
 			{
 				Particle *particle = GetParticle(i);
@@ -728,11 +661,9 @@ void gosFX::CardCloud::Draw(DrawInfo *info)
 				if (particle->m_age < 1.0f)
 				{
 
-					//
 					//--------------------------------
 					// Build the local to cloud matrix
 					//--------------------------------
-					//
 					Stuff::Vector3D direction_in_cloud;
 					direction_in_cloud.Subtract(
 						camera_in_cloud,
@@ -748,11 +679,9 @@ void gosFX::CardCloud::Draw(DrawInfo *info)
 					);
 					card_to_cloud.BuildTranslation(particle->m_localTranslation);
 
-					//
 					//-------------------------------------------------
 					// Figure out the scale, then build the four points
 					//-------------------------------------------------
-					//
 					Stuff::Scalar scale = particle->m_scale;
 					m_P_vertices[vert++].Multiply(
 						Stuff::Point3D(
@@ -792,12 +721,10 @@ void gosFX::CardCloud::Draw(DrawInfo *info)
 			}
 		}
 
-		//
 		//---------------------------------------------------------------
 		// No alignment is necessary, so just multiply out all the active
 		// particles
 		//---------------------------------------------------------------
-		//
 		else
 		{
 			for (i = 0; i < m_activeParticleCount; i++)
@@ -807,20 +734,16 @@ void gosFX::CardCloud::Draw(DrawInfo *info)
 				if (particle->m_age < 1.0f)
 				{
 
-					//
 					//--------------------------------
 					// Build the local to cloud matrix
 					//--------------------------------
-					//
 					Stuff::LinearMatrix4D card_to_cloud;
 					card_to_cloud.BuildRotation(particle->m_localRotation);
 					card_to_cloud.BuildTranslation(particle->m_localTranslation);
 
-					//
 					//-------------------------------------------------
 					// Figure out the scale, then build the four points
 					//-------------------------------------------------
-					//
 					Stuff::Scalar scale = particle->m_scale;
 					m_P_vertices[vert++].Multiply(
 						Stuff::Point3D(
@@ -860,11 +783,9 @@ void gosFX::CardCloud::Draw(DrawInfo *info)
 			}
 		}
 
-		//
 		//---------------------
 		// Now just do the draw
 		//---------------------
-		//
 	 	info->m_clipper->DrawEffect(&dInfo);
 	}
 
@@ -872,7 +793,6 @@ void gosFX::CardCloud::Draw(DrawInfo *info)
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::CardCloud::TestInstance() const
 {

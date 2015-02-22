@@ -6,13 +6,11 @@
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
-//
 //############################################################################
 //########################  gosFX::SpinningCloud__Specification  #############################
 //############################################################################
 
 //------------------------------------------------------------------------------
-//
 gosFX::SpinningCloud__Specification::SpinningCloud__Specification(
 	Stuff::RegisteredClass::ClassID class_id,
 	Stuff::MemoryStream *stream,
@@ -23,19 +21,15 @@ gosFX::SpinningCloud__Specification::SpinningCloud__Specification(
 	Check_Pointer(this);
 	Verify(gos_GetCurrentHeap() == Heap);
 
-	//
 	//-----------------
 	// Load the fcurves
 	//-----------------
-	//
 	m_pSpin.Load(stream, gfx_version);
 	m_pScale.Load(stream, gfx_version);
 
-	//
 	//-----------------------
 	// Load the rotation flag
 	//-----------------------
-	//
 	*stream >> m_randomStartingRotation;
 	*stream >> m_alignZUsingX >> m_alignZUsingY;
 	if (gfx_version >= 10)
@@ -45,7 +39,6 @@ gosFX::SpinningCloud__Specification::SpinningCloud__Specification(
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::SpinningCloud__Specification::SpinningCloud__Specification(
 	Stuff::RegisteredClass::ClassID class_id
 ):
@@ -60,7 +53,6 @@ gosFX::SpinningCloud__Specification::SpinningCloud__Specification(
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::SpinningCloud__Specification::Save(Stuff::MemoryStream *stream)
 {
@@ -76,7 +68,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void 
 	gosFX::SpinningCloud__Specification::BuildDefaults()
 {
@@ -99,7 +90,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 bool 
 	gosFX::SpinningCloud__Specification::IsDataValid(bool fix_data)
 {
@@ -121,7 +111,6 @@ bool
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::SpinningCloud__Specification::Copy(SpinningCloud__Specification *spec)
 {
@@ -150,7 +139,6 @@ gosFX::SpinningCloud::ClassData*
 	gosFX::SpinningCloud::DefaultData = NULL;
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::SpinningCloud::InitializeClass()
 {
@@ -168,7 +156,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::SpinningCloud::TerminateClass()
 {
@@ -178,7 +165,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::SpinningCloud::SpinningCloud(
 	ClassData *class_data,
 	Specification *spec,
@@ -190,56 +176,45 @@ gosFX::SpinningCloud::SpinningCloud(
 }
 
 //------------------------------------------------------------------------------
-//
 bool
 	gosFX::SpinningCloud::Execute(ExecuteInfo *info)
 {
 	Check_Object(this);
 	Check_Object(info);
 
-	//
 	//----------------------------------------
 	// If we aren't supposed to execute, don't
 	//----------------------------------------
-	//
 	if (!IsExecuted())
 		return false;
 
-	//
 	//------------------------------------------------------------------
 	// Animate the particles.  If it is time for us to die, return false
 	//------------------------------------------------------------------
-	//
 	if (!ParticleCloud::Execute(info))
 		return false;
 
-	//
 	//-----------------------------------------------------------------------
 	// If there are active particles to animate, get the current center point
 	// of the bounds
 	//-----------------------------------------------------------------------
-	//
 	if (m_activeParticleCount > 0)
 	{
 		Stuff::ExtentBox box(Stuff::Point3D::Identity, Stuff::Point3D::Identity);
 		unsigned i=0;
 
-		//
 		//-------------------------------------------------------------------
 		// If there is no bounds yet, we need to create our extent box around
 		// the first legal point we find
 		//-------------------------------------------------------------------
-		//
 		while (i<m_activeParticleCount)
 		{
 			Particle *particle = GetParticle(i++);
 			Check_Object(particle);
 
-			//
 			//-----------------------------------------------------------
 			// We have found our first particle, so put the box around it
 			//-----------------------------------------------------------
-			//
 			if (particle->m_age < 1.0f)
 			{
 				box.maxX =
@@ -264,11 +239,9 @@ bool
 			}
 		}
 
-		//
 		//-----------------------------
 		// Look for the other particles
 		//-----------------------------
-		//
 		while (i<m_activeParticleCount)
 		{
 			Particle *particle = GetParticle(i++);
@@ -298,11 +271,9 @@ bool
 			}
 		}
 
-		//
 		//------------------------------------
 		// Now, build a info->m_bounds around this box
 		//------------------------------------
-		//
 		Verify(box.maxX >= box.minX);
 		Verify(box.maxY >= box.minY);
 		Verify(box.maxZ >= box.minZ);
@@ -321,34 +292,27 @@ bool
 		info->m_bounds->Union(*info->m_bounds, parent_bounds);
 	}
 
-	//
 	//----------------------------------------------
 	// Tell our caller that we get to keep executing
 	//----------------------------------------------
-	//
 	return true;
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::SpinningCloud::CreateNewParticle(
 		unsigned index,
 		Stuff::Point3D *translation
 	)
 {
-	//
 	//---------------------------
 	// Let our parent do creation
 	//---------------------------
-	//
 	ParticleCloud::CreateNewParticle(index, translation);
 
-	//
 	//--------------------------------------
 	// Figure out where the particle is born
 	//--------------------------------------
-	//
 	Specification *spec = GetSpecification();
 	Check_Object(spec);
 	Particle *particle = GetParticle(index);
@@ -357,20 +321,16 @@ void
 	Stuff::Scalar age = m_age;
 	particle->m_localTranslation = *translation;
 
-	//
 	//---------------------------------
 	// Figure out the particle rotation
 	//---------------------------------
-	//
 	particle->m_angularVelocity.x = spec->m_pSpin.ComputeValue(age, seed);
 	particle->m_angularVelocity.y = spec->m_pSpin.ComputeValue(age, seed);
 	particle->m_angularVelocity.z = spec->m_pSpin.ComputeValue(age, seed);
 
-	//
 	//-----------------------------------------------------
 	// If we are aligning with velocity, deal with that now
 	//-----------------------------------------------------
-	//
 	if (spec->m_alignYUsingVelocity)
 	{
 		Stuff::LinearMatrix4D basis(1);
@@ -397,7 +357,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 bool
 	gosFX::SpinningCloud::AnimateParticle(
 		unsigned index,
@@ -407,13 +366,11 @@ bool
 {
 	Check_Object(this);
 
-	//
 	//-----------------------------------------------------------------------
 	// If this cloud is unparented, we need to transform the point from local
 	// space into world space and set the internal position/velocity pointers
 	// to these temporary values
 	//-----------------------------------------------------------------------
-	//
 	Particle *particle = GetParticle(index);
 	Check_Object(particle);
 	Stuff::Scalar age = particle->m_age;
@@ -439,12 +396,10 @@ bool
 	Check_Object(rotation);
 	Check_Object(velocity);
 
-	//
 	//------------------------------------------------------------------
 	// First, calculate the drag on the particle.  Drag can never assist
 	// velocity
 	//------------------------------------------------------------------
-	//
 	Stuff::Scalar seed = particle->m_seed;
 	Specification *spec = GetSpecification();
 	Check_Object(spec);
@@ -456,13 +411,11 @@ bool
 	ether.z = spec->m_pEtherVelocityZ.ComputeValue(age, seed);
 	Stuff::Vector3D accel(Stuff::Vector3D::Identity);
 
-	//
 	//-------------------------------------------------------------------
 	// Deal with pseudo-world simulation.  In this mode, we interpret the
 	// forces as if they are already in worldspace, and we transform them
 	// back to local space
 	//-------------------------------------------------------------------
-	//
 	if (sim_mode == StaticWorldSpaceSimulationMode)
 	{
 		Stuff::LinearMatrix4D world_to_effect;
@@ -473,11 +426,9 @@ bool
 		rel_vel.Subtract(*velocity, local_ether);
 		accel.Multiply(rel_vel, drag);
 
-		//
 		//-----------------------------------------
 		// Now, add in acceleration of the particle
 		//-----------------------------------------
-		//
 		Stuff::Vector3D world_accel;
 		world_accel.x = spec->m_pAccelerationX.ComputeValue(age, seed);
 		world_accel.y = spec->m_pAccelerationY.ComputeValue(age, seed);
@@ -487,42 +438,34 @@ bool
 		accel += local_accel;
 	}
 
-	//
 	//----------------------------------------------------------------------
 	// Otherwise, just add the forces in the same space the particles are in
 	//----------------------------------------------------------------------
-	//
 	else
 	{
 		Stuff::Vector3D rel_vel;
 		rel_vel.Subtract(*velocity, ether);
 		accel.Multiply(rel_vel, drag);
 
-		//
 		//-----------------------------------------
 		// Now, add in acceleration of the particle
 		//-----------------------------------------
-		//
 		accel.x += spec->m_pAccelerationX.ComputeValue(age, seed);
 		accel.y += spec->m_pAccelerationY.ComputeValue(age, seed);
 		accel.z += spec->m_pAccelerationZ.ComputeValue(age, seed);
 	}
 
-	//
 	//-------------------------------------------------
 	// Compute the particle's new velocity and position
 	//-------------------------------------------------
-	//
 	Stuff::Scalar time_slice =
 		static_cast<Stuff::Scalar>(till - m_lastRan);
 	velocity->AddScaled(*velocity, accel, time_slice);
 	translation->AddScaled(*translation, *velocity, time_slice);
 
-	//
 	//-----------------------
 	// Deal with the rotation
 	//-----------------------
-	//
 	if (!spec->m_alignYUsingVelocity)
 	{
 		Stuff::Vector3D omega(particle->m_angularVelocity);
@@ -533,12 +476,10 @@ bool
 		rotation->Normalize();
 	}
 
-	//
 	//---------------------------------------------------------------------
 	// If we are unparented, we need to transform the velocity and position
 	// data back into the NEW local space
 	//---------------------------------------------------------------------
-	//
 	if (sim_mode == DynamicWorldSpaceSimulationMode)
 	{
 		Check_Object(world_to_new_local);
@@ -550,11 +491,9 @@ bool
 		particle->m_localRotation = local_rot;
 	}
 
-	//
 	//------------------------------------------------------------
 	// If we are aligning Y using velocity, do the calculation now
 	//------------------------------------------------------------
-	//
 	if (spec->m_alignYUsingVelocity)
 	{
 		Stuff::LinearMatrix4D basis(1);
@@ -567,17 +506,14 @@ bool
 		particle->m_localRotation = basis;
 	}
 
-	//
 	//------------------
 	// Animate the scale
 	//------------------
-	//
 	particle->m_scale = spec->m_pScale.ComputeValue(age, seed);
 	return true;
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::SpinningCloud::TestInstance() const
 {

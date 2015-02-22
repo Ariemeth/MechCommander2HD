@@ -21,7 +21,6 @@ DynamicArrayOf<DynamicArrayOf<Vector2DScalar> >
 	*MLR_I_MT_PMesh::extraMultiTexCoords;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_MT_PMesh::InitializeClass()
 {
@@ -57,7 +56,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_MT_PMesh::TerminateClass()
 {
@@ -83,7 +81,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_MT_PMesh::MLR_I_MT_PMesh(
 	ClassData *class_data,
 	MemoryStream *stream,
@@ -123,7 +120,6 @@ MLR_I_MT_PMesh::MLR_I_MT_PMesh(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_MT_PMesh::MLR_I_MT_PMesh(ClassData *class_data):
 	MLR_I_PMesh(class_data)
 {
@@ -145,7 +141,6 @@ MLR_I_MT_PMesh::MLR_I_MT_PMesh(ClassData *class_data):
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_MT_PMesh::Copy(MLR_I_PMesh *pMesh)
 {
@@ -189,7 +184,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_MT_PMesh::~MLR_I_MT_PMesh()
 {
 	Check_Object(this);
@@ -202,7 +196,6 @@ MLR_I_MT_PMesh::~MLR_I_MT_PMesh()
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_MT_PMesh*
 	MLR_I_MT_PMesh::Make(
 		MemoryStream *stream,
@@ -219,7 +212,6 @@ MLR_I_MT_PMesh*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_MT_PMesh::Save(MemoryStream *stream)
 {
@@ -239,7 +231,6 @@ void
 }
  
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_MT_PMesh::TestInstance() const
 {
@@ -247,7 +238,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_MT_PMesh::InitializeDrawPrimitive(unsigned char vis, int parameter)
 {
@@ -257,7 +247,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_MT_PMesh::SetTexCoordData(
 		const Vector2DScalar *data,
@@ -302,7 +291,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_MT_PMesh::GetTexCoordData(
 		const Vector2DScalar **data,
@@ -320,7 +308,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_MT_PMesh::SetTexCoordDataPointer(const Vector2DScalar *data)
 {
@@ -358,7 +345,6 @@ void
 #undef CLASSNAME
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRShape*
 	MidLevelRenderer::CreateIndexedIcosahedron_NoColor_NoLit_MultiTexture(
 		IcoInfo& icoInfo,

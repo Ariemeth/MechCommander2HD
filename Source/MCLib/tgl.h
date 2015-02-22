@@ -1,9 +1,6 @@
 //-------------------------------------------------------------------------------
-//
 // Tiny Geometry Layer
-//
 // For MechCommander 2 -- Copyright (c) 1999 Microsoft
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -19,7 +16,6 @@
 
 //-------------------------------------------------------------------------------
 // Structs used by layer.
-//
 typedef DWORD* DWORDPtr;
 
 //-------------------------------------------------------------------------------
@@ -398,7 +394,6 @@ class TG_TypeNode
 		//This function simply parses the ASE buffers handed to it.  This allows
 		//users to load the ase file themselves and manage their own memory for it.
 		//It allocates memory for internal Lists.  These are straight mallocs at present.
-		//
 		// NOTE: Only takes the first GEOMOBJECT from the ASE file.  Multi-object
 		// Files will require user intervention to parse!!
 		virtual long ParseASEFile (BYTE *aseBuffer, char *filename)
@@ -410,7 +405,6 @@ class TG_TypeNode
 		//This function simply parses the ASE buffers handed to it.  This allows
 		//users to load the ase file themselves and manage their own memory for it.
 		//It allocates memory for internal Lists.  These are straight mallocs at present.
-		//
 		// NOTE: Only takes the first HELPEROBJECT from the ASE file.  Multi-object
 		// Files will require user intervention to parse!!
 		virtual long MakeFromHelper (BYTE *aseBuffer, char *filename);
@@ -418,7 +412,6 @@ class TG_TypeNode
 		//Function returns 0 if OK.  -1 if file not found or file not ASE Format.		
 		//This function loads the ASE file into the TG_Triangle and TG_Vertex lists.
 		//It allocates memory.  These are straight mallocs at present.
-		//
 		// NOTE: Only takes the first GEOMOBJECT from the ASE file.  Multi-object
 		// Files will require user intervention to parse!!
 		virtual long LoadTGShapeFromASE (char *fileName)
@@ -551,7 +544,6 @@ class TG_TypeShape : public TG_TypeNode
 		//This function simply parses the ASE buffers handed to it.  This allows
 		//users to load the ase file themselves and manage their own memory for it.
 		//It allocates memory for internal Lists.  These are straight mallocs at present.
-		//
 		// NOTE: Only takes the first GEOMOBJECT from the ASE file.  Multi-object
 		// Files will require user intervention to parse!!
 		virtual long ParseASEFile (BYTE *aseBuffer, char *filename);	//filename for error reporting ONLY
@@ -560,7 +552,6 @@ class TG_TypeShape : public TG_TypeNode
 		//This function simply parses the ASE buffers handed to it.  This allows
 		//users to load the ase file themselves and manage their own memory for it.
 		//It allocates memory for internal Lists.  These are straight mallocs at present.
-		//
 		// NOTE: Only takes the first HELPEROBJECT from the ASE file.  Multi-object
 		// Files will require user intervention to parse!!
 		virtual long MakeFromHelper (BYTE *aseBuffer, char *filename);
@@ -568,7 +559,6 @@ class TG_TypeShape : public TG_TypeNode
 		//Function returns 0 if OK.  -1 if file not found or file not ASE Format.		
 		//This function loads the ASE file into the TG_Triangle and TG_Vertex lists.
 		//It allocates memory.  These are straight mallocs at present.
-		//
 		// NOTE: Only takes the first GEOMOBJECT from the ASE file.  Multi-object
 		// Files will require user intervention to parse!!
 		virtual long LoadTGShapeFromASE (char *fileName);
@@ -761,7 +751,6 @@ class TG_Shape
 		//This function sets the list of lights used by the TransformShape function
 		//to light the shape.
 		//Function returns 0 if lightList entries are all OK.  -1 otherwise.
-		//
 		long SetLightList (TG_LightPtr *lightList, DWORD nLights);
 		
 		//This function sets the fog values for the shape.  Straight fog right now.
@@ -778,7 +767,6 @@ class TG_Shape
 		long MultiTransformShape (Stuff::Matrix4D *shapeToClip, Stuff::Point3D *backFacePoint, TG_ShapeRecPtr parentNode, bool isHudElement, BYTE alphaValue, bool isClamped);
 
 		//This function creates the list of shadows and transforms them in preparation to drawing.
-		//
 		void MultiTransformShadows (Stuff::Point3D *pos, Stuff::LinearMatrix4D *s2w, float rotation);
 
 		//This function takes the current listOfVisibleFaces and draws them using

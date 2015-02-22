@@ -1,9 +1,6 @@
 //---------------------------------------------------------------------------
-//
 // Quad.cpp -- File contains class code for the Terrain Quads
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -1493,7 +1490,6 @@ void TerrainQuad::draw (void)
 
 			//--------------------------
 			//Bottom Triangle
-			//
 			// gVertex[0] same as above gVertex[0].
 			// gVertex[1] is same as above gVertex[2].
 			// gVertex[2] is calced from vertex[3].
@@ -2085,7 +2081,6 @@ void TerrainQuad::drawWater (void)
    
 			//--------------------------
 			//Bottom Triangle
-			//
 			// gVertex[0] same as above gVertex[0].
 			// gVertex[1] is same as above gVertex[2].
 			// gVertex[2] is calced from vertex[3].

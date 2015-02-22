@@ -873,7 +873,6 @@ bool EditorData::initTerrainFromTGA( int mapSize, int min, int max, int terrain 
 			// YOU must scale the maps to match the mapsize.
 			// If its 120 x 120, no problem.
 			// If its smaller, you must create a SMALLER colormap!   Dork.
-			//
 			// And now, you must not only create a smaller one but convert
 			// From JPG to TGA.  Big Dork!
 			File src;
@@ -1912,7 +1911,6 @@ void EditorData::drawTacMap( BYTE* pDest, long dataSize, int tacMapSize )
 	//------------------------------------------------------
 	// Second Pass - Draw Base Terrain Colors and elevations
 	// This were the old way.
-	//
 	// Now we grab the colormap and shrink it on down!!
 	// IF NO colormap, try the burnin?
 	if (land->terrainTextures2)

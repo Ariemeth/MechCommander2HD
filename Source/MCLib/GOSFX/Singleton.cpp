@@ -6,13 +6,11 @@
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
-//
 //############################################################################
 //########################  gosFX::Singleton__Specification  #############################
 //############################################################################
 
 //------------------------------------------------------------------------------
-//
 gosFX::Singleton__Specification::Singleton__Specification(
 	Stuff::RegisteredClass::ClassID class_id,
 	Stuff::MemoryStream *stream,
@@ -24,11 +22,9 @@ gosFX::Singleton__Specification::Singleton__Specification(
 	Check_Object(stream);
 	Verify(gos_GetCurrentHeap() == Heap);
 
-	//
 	//-------------------
 	// Load in the curves
 	//-------------------
-	//
 	m_red.Load(stream, gfx_version);
 	m_green.Load(stream, gfx_version);
 	m_blue.Load(stream, gfx_version);
@@ -38,7 +34,6 @@ gosFX::Singleton__Specification::Singleton__Specification(
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::Singleton__Specification::Singleton__Specification(
 	Stuff::RegisteredClass::ClassID class_id
 ):
@@ -49,7 +44,6 @@ gosFX::Singleton__Specification::Singleton__Specification(
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Singleton__Specification::Save(Stuff::MemoryStream *stream)
 {
@@ -57,11 +51,9 @@ void
 	Check_Object(stream);
 	Effect__Specification::Save(stream);
 
-	//
 	//----------------
 	// Save our curves
 	//----------------
-	//
 	m_red.Save(stream);
 	m_green.Save(stream);
 	m_blue.Save(stream);
@@ -71,7 +63,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void 
 	gosFX::Singleton__Specification::BuildDefaults()
 {
@@ -101,7 +92,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 bool 
 	gosFX::Singleton__Specification::IsDataValid(bool fix_data)
 {
@@ -122,7 +112,6 @@ bool
 	return Effect__Specification::IsDataValid(fix_data);
 }
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Singleton__Specification::Copy(Singleton__Specification *spec)
 {
@@ -131,11 +120,9 @@ void
 
 	Effect__Specification::Copy(spec);
 
-	//
 	//----------------
 	// Copy the curves
 	//----------------
-	//
 	gos_PushCurrentHeap(Heap);
 	m_red = spec->m_red;
 	m_green = spec->m_green;
@@ -155,7 +142,6 @@ gosFX::Singleton::ClassData*
 	gosFX::Singleton::DefaultData = NULL;
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Singleton::InitializeClass()
 {
@@ -173,7 +159,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Singleton::TerminateClass()
 {
@@ -183,7 +168,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::Singleton::Singleton(
 	ClassData *class_data,
 	Specification *spec,
@@ -197,7 +181,6 @@ gosFX::Singleton::Singleton(
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Singleton::TestInstance() const
 {
@@ -205,7 +188,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 bool
 	gosFX::Singleton::Execute(ExecuteInfo *info)
 {
@@ -215,38 +197,30 @@ bool
 	if (!IsExecuted())
 		return false;
 
-	//
 	//------------------------
 	// Do the effect animation
 	//------------------------
-	//
 	if (!Effect::Execute(info))
 		return false;
 
-	//
 	//-----------------------------------------
 	// Animate the parent then get our pointers
 	//-----------------------------------------
-	//
 	Specification *spec = GetSpecification();
 	Check_Object(spec);
 
-	//
 	//------------------
 	// Animate the color
 	//------------------
-	//
 	m_color.red = spec->m_red.ComputeValue(m_age, m_seed);
 	m_color.green = spec->m_green.ComputeValue(m_age, m_seed);
 	m_color.blue = spec->m_blue.ComputeValue(m_age, m_seed);
 	m_color.alpha = spec->m_alpha.ComputeValue(m_age, m_seed);
 	m_scale = spec->m_scale.ComputeValue(m_age, m_seed);
 
-	//
 	//------------------------------
 	// Calculate the bounding volume
 	//------------------------------
-	//
 	Stuff::OBB bounds;
 	bounds.sphereRadius = m_radius*m_scale;
 	if (bounds.sphereRadius < Stuff::SMALL)

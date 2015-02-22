@@ -50,9 +50,7 @@
 
 #define SHAPE_FILE_VERSION '01.1' // 1.10 backwards for big-endian compare
 
-//
 // MetaWare support
-//
 
 #ifdef __HIGHC__
 #define  _CC(_REVERSE_PARMS | _NEAR_CALL)
@@ -90,57 +88,43 @@ typedef signed   long  FIXED30;   // 2:30 fixed-VFX_POINT type [-1.999,+1.999]
 #define GIF_SCRATCH_SIZE 20526L   // Temp memory req'd for GIF decompression
 
 #define S_BLACK			264
-//
 // VFX_map_polygon() flags
-//
 
 #define MP_XLAT      0x0001       // Use lookaside table (speed loss = ~9%)
 #define MP_XP        0x0002       // Enable transparency (speed loss = ~6%)
 
-//
 // VFX_shape_transform() flags
-//
 
 #define ST_XLAT      0x0001       // Use shape_lookaside() table
 #define ST_REUSE     0x0002       // Use buffer contents from prior call
 
-//
 // VFX_line_draw() modes
-//  
 
 #define LD_DRAW      0
 #define LD_TRANSLATE 1
 #define LD_EXECUTE   2
 
-//
 // VFX_pane_scroll() modes
-//
 
 #define PS_NOWRAP    0
 #define PS_WRAP      1
 
 #define NO_COLOR -1
 
-//
 // VFX_shape_visible_rectangle() mirror values
-//
 
 #define VR_NO_MIRROR 0
 #define VR_X_MIRROR  1
 #define VR_Y_MIRROR  2
 #define VR_XY_MIRROR 3
 
-//
 // PANE_LIST.flags values
-//
 
 #define PL_FREE      0            // Free and available for assignment
 #define PL_VALID     1            // Assigned; to be refreshed
 #define PL_CONTAINED 2            // Contained within another pane; don't refresh
 
-//
 // VFX data structures
-//
 
 typedef unsigned char STENCIL;
 
@@ -260,9 +244,7 @@ VFX_RECT;
 #define PIXELS_IN_PANE(pane)    (((pane).x1-(pane).x0+1)*((pane).y1-(pane).y0+1))
 #define PIXELS_IN_PANEP(pane)   (((pane)->x1-(pane)->x0+1)*((pane)->y1-(pane)0>y0+1))
 
-//
 // Hardware-specific VFX DLL functions
-//
 
 /*
 extern VFX_DESC *  (*VFX_describe_driver)(void);
@@ -284,9 +266,7 @@ extern void  (*VFX_bank_reset)(void);
 extern void  (*VFX_line_address)(LONG x, LONG y, UBYTE **addr, ULONG *nbytes);
 */
 
-//
 // Device-independent VFX API functions (VFXC.C)
-//
 
 extern ULONG VFX_stencil_size(WINDOW *source, ULONG transparent_color);
 
@@ -312,9 +292,7 @@ extern void VFX_pane_list_delete_entry(PANE_LIST *list, LONG entry_num);
 
 extern void VFX_pane_list_refresh(PANE_LIST *list);
 
-//
 // Device-independent VFX API functions (VFXA.ASM)
-//
 
 extern BYTE * VFX_driver_name(void *VFXScanDLL);
 
@@ -420,9 +398,7 @@ extern void  VFX_shape_transform(PANE *pane,
    void *shape_table, LONG shape_number, LONG hotX, LONG hotY,
    void *buffer, LONG rot, LONG x_scale, LONG y_scale, LONG flags);
 
-//
 // VFX 3D polygon functions
-//
 
 extern void VFX_flat_polygon(PANE *pane, LONG vcnt, SCRNVERTEX *vlist);
 
@@ -447,9 +423,7 @@ extern void VFX_illuminate_polygon(PANE *pane, FIXED16 dither_amount,
 }
 #endif
 
-//
 // MetaWare support
-//
 
 #ifdef __HIGHC__
 #pragma Global_aliasing_convention();

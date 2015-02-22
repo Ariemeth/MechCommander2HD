@@ -1,13 +1,10 @@
 //---------------------------------------------------------------------
-//
-//
 // This class will manage the texture memory provided by GOS
 // GOS gives me a maximum of 256 256x256 pixel texture pages.
 // I want GOS to think I only use 256x256 textures.  This class
 // will insure that GOS believes that completely and provided
 // smaller texture surfaces out of the main surface if necessary
 // as well as returning the necessary UVs to get to the other surface.
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -1069,7 +1066,6 @@ DWORD MC_TextureManager::textureFromMemory (DWORD *data, gos_TextureFormat key, 
 
 	//--------------------------------------------------------
 	// If we called this, we KNOW the texture is NOT loaded!
-	//
 	// Find first empty NODE
 	for (i=0;i<MC_MAXTEXTURES;i++)
 	{
@@ -1151,7 +1147,6 @@ DWORD MC_TextureManager::textureInstanceExists (const char *textureFullPathName,
 					//------------------------------------------------
 					// Copy the texture from old Handle to a new one.
 					// Return the NEW handle.
-					//
 					// There should be no code here!!!
 				}
 			}
@@ -1181,7 +1176,6 @@ DWORD MC_TextureManager::loadTexture (const char *textureFullPathName, gos_Textu
 				//------------------------------------------------
 				// Copy the texture from old Handle to a new one.
 				// Return the NEW handle.
-				//
 				// There should be no code here!!!
 			}
 		}
@@ -1190,7 +1184,6 @@ DWORD MC_TextureManager::loadTexture (const char *textureFullPathName, gos_Textu
 	//--------------------------------------------------
 	// If we get here, texture has not been loaded yet.
 	// Load it now!
-	//
 	// Find first empty NODE
 	for (i=0;i<MC_MAXTEXTURES;i++)
 	{
@@ -1246,7 +1239,6 @@ DWORD MC_TextureManager::loadTexture (const char *textureFullPathName, gos_Textu
 	
 	//Try reading the RAW data out of the fastFile.
 	// If it succeeds, we just saved a complete compress, decompress and two memcpys!!
-	//
 	long result = textureFile.readRAW(masterTextureNodes[i].textureData,textureCacheHeap);
 	if (!result)
 	{

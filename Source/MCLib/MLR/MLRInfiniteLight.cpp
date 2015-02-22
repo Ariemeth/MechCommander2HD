@@ -12,7 +12,6 @@ MLRInfiniteLight::ClassData*
 	MLRInfiniteLight::DefaultData = NULL;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRInfiniteLight::InitializeClass()
 {
@@ -28,7 +27,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRInfiniteLight::TerminateClass()
 {
@@ -38,7 +36,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRInfiniteLight::MLRInfiniteLight(ClassData *class_data) :
 	MLRLight(class_data)
 {
@@ -47,7 +44,6 @@ MLRInfiniteLight::MLRInfiniteLight(ClassData *class_data) :
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRInfiniteLight::MLRInfiniteLight(
 	ClassData *class_data,
 	Stuff::MemoryStream *stream,
@@ -61,7 +57,6 @@ MLRInfiniteLight::MLRInfiniteLight(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRInfiniteLight::MLRInfiniteLight(
 	ClassData *class_data,
 	Stuff::Page *page
@@ -74,13 +69,11 @@ MLRInfiniteLight::MLRInfiniteLight(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRInfiniteLight::~MLRInfiniteLight()
 {
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRInfiniteLight::TestInstance()
 {
@@ -88,7 +81,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRInfiniteLight::LightVertex(const MLRVertexData& vertexData)
 {
@@ -96,12 +88,10 @@ void
 
 	GetInShapeDirection(light_z);
 
-	//
 	//-------------------------------------------------------------------
 	// Now we reduce the light level falling on the vertex based upon the
 	// cosine of the angle between light and normal
 	//-------------------------------------------------------------------
-	//
 	Scalar cosine = -(light_z * (*vertexData.normal)) * intensity;
 
 #if COLOR_AS_DWORD

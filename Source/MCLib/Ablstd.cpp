@@ -2,9 +2,7 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 //***************************************************************************
-//
 //								ABLSTD.CPP
-//
 //***************************************************************************
 
 #include <stdio.h>
@@ -39,9 +37,7 @@ bool   EnterStateSymbol = false;
 void stdReturn (void) {
 
 	// RETURN function
-	//
 	//		PARAMS: <same as function return type>
-	//
 	//		RETURN: NONE
 
 	if (curToken == TKN_LPAREN) {
@@ -60,9 +56,7 @@ void stdReturn (void) {
 void stdPrint (void) {
 
 	// PRINT function:
-	//
 	//		PARAMS:	integer or real or string
-	//
 	//		RETURN: NONE
 
 	if (curToken == TKN_LPAREN)
@@ -84,11 +78,8 @@ void stdPrint (void) {
 TypePtr stdConcat (void) {
 
 	// PRINT function:
-	//
 	//		PARAMS:	char array
-	//
 	//				integer, real or char array
-	//
 	//		RETURN: integer (resulting length, not including NULL)
 
 	if (curToken == TKN_LPAREN)

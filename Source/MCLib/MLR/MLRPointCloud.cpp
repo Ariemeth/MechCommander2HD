@@ -12,7 +12,6 @@ MLRPointCloud::ClassData*
 	MLRPointCloud::DefaultData = NULL;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRPointCloud::InitializeClass()
 {
@@ -28,7 +27,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRPointCloud::TerminateClass()
 {
@@ -38,7 +36,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRPointCloud::MLRPointCloud(int nr, int _type) :
 	MLREffect(nr, DefaultData), type(_type)
 {
@@ -51,14 +48,12 @@ MLRPointCloud::MLRPointCloud(int nr, int _type) :
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRPointCloud::~MLRPointCloud()
 {
 	Check_Object(this);
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void 
 	MLRPointCloud::SetData(
 		const int *count,
@@ -75,7 +70,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void 
 	MLRPointCloud::Draw (DrawEffectInformation *dInfo, GOSVertexPool *allVerticesToDraw, MLRSorter *sorter)
 {
@@ -92,7 +86,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void 
 	MLRPointCloud::Transform(int, int)
 {
@@ -114,14 +107,12 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 int 
 	MLRPointCloud::Clip(MLRClippingState clippingFlags, GOSVertexPool *vt)
 {
 	//--------------------------------------
 	// See if we don't have to draw anything
 	//--------------------------------------
-	//
 	int i;
 	numGOSVertices = 0;
 
@@ -217,7 +208,6 @@ int
 //		{
 //			continue;
 //		}
-//
 //		if(
 //			//clippingFlags.IsTopClipped() &&
 //			(gos_vertices[numGOSVertices].y + ((type)?type*4.f : 4.f)) > Environment.screenHeight
@@ -225,7 +215,6 @@ int
 //		{
 //			continue;
 //		}
-//
 		numGOSVertices++;
 	}
 	vt->Increase(numGOSVertices);
@@ -243,7 +232,6 @@ int
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void 
 	MLRPointCloud::TestInstance() const
 {

@@ -130,9 +130,7 @@ namespace Stuff {
 					return *this;
 				}
 
-	//
 	// Support functions
-	//
 		#if !defined(Spew)
 			friend void
 				::Spew(
@@ -230,9 +228,7 @@ namespace Stuff {
 					return *this;
 				}
 
-	//
 	// Support functions
-	//
 		#if !defined(Spew)
 			friend void
 				::Spew(
@@ -333,9 +329,7 @@ namespace Stuff {
 					return *this;
 				}
 
-	//
 	// Support functions
-	//
 		#if !defined(Spew)
 			friend void
 				::Spew(
@@ -439,9 +433,7 @@ namespace Stuff {
 					return *this;
 				}
 
-	//
 	// Support functions
-	//
 		#if !defined(Spew)
 			friend void
 				::Spew(

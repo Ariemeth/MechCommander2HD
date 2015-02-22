@@ -1,9 +1,6 @@
 //******************************************************************************************
-//
 //	comndr.cpp - This file contains the Commander Class header
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -101,7 +98,6 @@ long Commander::setGroup (long id, long numMates, MoverPtr* moverList, long poin
 
 	//-----------------------------------
 	// Set the point for the new group...
-	//
 	// The MoverList passed in is INVALID passed
 	// the numMates count.  If you select a point
 	// which is dead, it invariably points to a 

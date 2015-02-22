@@ -6,13 +6,11 @@
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
-//
 //############################################################################
 //########################  gosFX::ParticleCloud__Specification  #############################
 //############################################################################
 
 //------------------------------------------------------------------------------
-//
 gosFX::ParticleCloud__Specification::ParticleCloud__Specification(
 	Stuff::RegisteredClass::ClassID class_id,
 	Stuff::MemoryStream *stream,
@@ -24,11 +22,9 @@ gosFX::ParticleCloud__Specification::ParticleCloud__Specification(
 	Check_Object(stream);
 	Verify(gos_GetCurrentHeap() == Heap);
 
-	//
 	//-------------------
 	// Load in the curves
 	//-------------------
-	//
 	m_startingPopulation.Load(stream, gfx_version);
 	m_particlesPerSecond.Load(stream, gfx_version);
 	m_emitterSizeX.Load(stream, gfx_version);
@@ -54,7 +50,6 @@ gosFX::ParticleCloud__Specification::ParticleCloud__Specification(
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::ParticleCloud__Specification::ParticleCloud__Specification(
 	Stuff::RegisteredClass::ClassID class_id
 ):
@@ -66,7 +61,6 @@ gosFX::ParticleCloud__Specification::ParticleCloud__Specification(
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::ParticleCloud__Specification::Save(Stuff::MemoryStream *stream)
 {
@@ -74,11 +68,9 @@ void
 	Check_Object(stream);
 	Effect__Specification::Save(stream);
 
-	//
 	//----------------
 	// Save our curves
 	//----------------
-	//
 	m_startingPopulation.Save(stream);
 	m_particlesPerSecond.Save(stream);
 	m_emitterSizeX.Save(stream);
@@ -104,7 +96,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void 
 	gosFX::ParticleCloud__Specification::BuildDefaults()
 {
@@ -176,7 +167,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 bool 
 	gosFX::ParticleCloud__Specification::IsDataValid(bool fix_data)
 {
@@ -220,7 +210,6 @@ bool
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::ParticleCloud__Specification::Copy(ParticleCloud__Specification *spec)
 {
@@ -230,11 +219,9 @@ void
 
 	Effect__Specification::Copy(spec);
 
-	//
 	//----------------
 	// Copy the curves
 	//----------------
-	//
 	gos_PushCurrentHeap(Heap);
 	m_startingPopulation = spec->m_startingPopulation;
 	m_particlesPerSecond = spec->m_particlesPerSecond;
@@ -268,7 +255,6 @@ gosFX::ParticleCloud::ClassData*
 	gosFX::ParticleCloud::DefaultData = NULL;
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::ParticleCloud::InitializeClass()
 {
@@ -286,7 +272,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::ParticleCloud::TerminateClass()
 {
@@ -296,7 +281,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::ParticleCloud::ParticleCloud(
 	ClassData *class_data,
 	Specification *spec,
@@ -308,35 +292,28 @@ gosFX::ParticleCloud::ParticleCloud(
 	Check_Object(spec);
 	Verify(gos_GetCurrentHeap() == Heap);
 
-	//
 	//------------------------------------------------
 	// Set up the data pointers into the channel block
 	//------------------------------------------------
-	//
 	m_data.SetLength(spec->m_maxParticleCount*spec->m_totalParticleSize);
 
-	//
 	//-------------------------------
 	// Set up an empty particle cloud
 	//-------------------------------
-	//
 	m_activeParticleCount = 0;
 	m_birthAccumulator = 0.0f;
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::ParticleCloud::Start(ExecuteInfo *info)
 {
 	Check_Object(this);
 	Check_Pointer(info);
 
-	//
 	//--------------------------------------------------------------------------
 	// Let effect initialize, then figure out how many particles we want to make
 	//--------------------------------------------------------------------------
-	//
 	Effect::Start(info);
 	Specification *spec = GetSpecification();
 	Check_Object(spec);
@@ -347,20 +324,17 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 bool gosFX::ParticleCloud::Execute(ExecuteInfo *info)
 {
 	Check_Object(this);
 	Check_Object(info);
 	Verify(IsExecuted());
 
-	//
 	//--------------------------------------------------------------------
 	// If we were given a new matrix, see if we have a parent.  If so,
 	// concatenate the two and figure out its inverse.  If no parent, then
 	// just invert the new matrix, otherwise just use the existing one
 	//--------------------------------------------------------------------
-	//
 	Stuff::LinearMatrix4D new_world_to_local;
 	Stuff::LinearMatrix4D *matrix = NULL;
 	int sim_mode = GetSimulationMode();
@@ -372,11 +346,9 @@ bool gosFX::ParticleCloud::Execute(ExecuteInfo *info)
 		matrix = &new_world_to_local;
 	}
 
-	//
 	//--------------------------------------------------------
 	// Figure out the birth rate and request the new particles
 	//--------------------------------------------------------
-	//
 	Specification *spec = GetSpecification();
 	Check_Object(spec);
 	Stuff::Scalar dT =
@@ -394,21 +366,17 @@ bool gosFX::ParticleCloud::Execute(ExecuteInfo *info)
 		m_birthAccumulator += dT * new_life;
 	}
 
-	//
 	//-----------------------------------
 	// Deal with all the active particles
 	//-----------------------------------
-	//
 	int i;
 	int last_real = -1;
 	for (i = 0; i < m_activeParticleCount; i++)
 	{
-		//
 		//--------------------------------------------------------------------
 		// If the particle is active, age it and if it is not yet time to die,
 		// go to the next particle, otherwise kill it
 		//--------------------------------------------------------------------
-		//
 		Particle *particle = GetParticle(i);
 		Check_Object(particle);
 		if (particle->m_age < 1.0f)
@@ -422,11 +390,9 @@ bool gosFX::ParticleCloud::Execute(ExecuteInfo *info)
 			DestroyParticle(i);
 		}
 
-		//
 		//--------------------------------------------------------------------
 		// If there are new particles to be born, go ahead and create them now
 		//--------------------------------------------------------------------
-		//
 		if (m_birthAccumulator >= 1.0f)
 		{
 			Stuff::Point3D translation;
@@ -440,12 +406,10 @@ bool gosFX::ParticleCloud::Execute(ExecuteInfo *info)
 	}
 	m_activeParticleCount = last_real + 1;
 
-	//
 	//----------------------------------------------------------------------
 	// If there are still new particles to be born, then we must try to grow
 	// the active particle count
 	//----------------------------------------------------------------------
-	//
 	while (
 		m_birthAccumulator >= 1.0f
 		 && m_activeParticleCount < spec->m_maxParticleCount
@@ -462,24 +426,19 @@ bool gosFX::ParticleCloud::Execute(ExecuteInfo *info)
 		m_birthAccumulator -= 1.0f;
 	}
 
-	//
 	//---------------------------------------------------------
 	// Only allow fractional births to carry over to next frame
 	//---------------------------------------------------------
-	//
 	m_birthAccumulator -= static_cast<Stuff::Scalar>(floor(m_birthAccumulator));
 
-	//
 	//----------------------------
 	// Now let effect do its thing
 	//----------------------------
-	//
 	m_age = prev_age;
 	return Effect::Execute(info);
 }
 
 //------------------------------------------------------------------------------
-//
 bool gosFX::ParticleCloud::HasFinished()
 {
 	Check_Object(this);
@@ -487,31 +446,25 @@ bool gosFX::ParticleCloud::HasFinished()
 }
 
 //------------------------------------------------------------------------------
-//
 void gosFX::ParticleCloud::Kill()
 {
 	Check_Object(this);
 
-	//
 	//-------------------------------------------------------------
 	// Destroy all the particles and set up an empty particle cloud
 	//-------------------------------------------------------------
-	//
 	for(int i=0; i < m_activeParticleCount; i++)
 		DestroyParticle(i);
 	m_activeParticleCount = 0;
 	m_birthAccumulator = 0.0f;
 
-	//
 	//----------------------------------------
 	// Now let the base effect handle stopping
 	//----------------------------------------
-	//
 	Effect::Kill();
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::ParticleCloud::CreateNewParticle(
 		unsigned index,
@@ -520,11 +473,9 @@ void
 {
 	Check_Object(this);
 
-	//
 	//----------------------------------------------------
 	// Figure out the age and age rate of the new particle
 	//----------------------------------------------------
-	//
 	Specification *spec = GetSpecification();
 	Check_Object(spec);
 	Particle *particle = GetParticle(index);
@@ -543,11 +494,9 @@ void
 	Min_Clamp(lifetime, 0.0333333f);
 	particle->m_ageRate = 1.0f / lifetime;
 
-	//
 	//--------------------------------
 	// Figure out the initial position
 	//--------------------------------
-	//
 	Stuff::YawPitchRange
 		initial_p(
 			Stuff::Random::GetFraction() * Stuff::Two_Pi,
@@ -562,11 +511,9 @@ void
 	translation->z =
 		position.z * spec->m_emitterSizeZ.ComputeValue(m_age, seed);
 
-	//
 	//--------------------------------
 	// Figure out the initial velocity
 	//--------------------------------
-	//
 	Stuff::Scalar pitch_min =
 		spec->m_minimumDeviation.ComputeValue(m_age, seed);
 	Stuff::Scalar pitch_range =
@@ -585,7 +532,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void gosFX::ParticleCloud::DestroyParticle(unsigned index)
 {
 	Particle *particle = GetParticle(index);
@@ -594,7 +540,6 @@ void gosFX::ParticleCloud::DestroyParticle(unsigned index)
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::ParticleCloud::TestInstance() const
 {

@@ -73,12 +73,10 @@ namespace Stuff {
 					return (&x)[index];
 				}
 
-		//
 		//-----------------------------------------------------------------------
 		// The following operators all assume that this points to the destination
 		// of the operation results
 		//-----------------------------------------------------------------------
-		//
 		Vector2DOf<T>&
 			Negate(const Vector2DOf<T> &v)
 				{

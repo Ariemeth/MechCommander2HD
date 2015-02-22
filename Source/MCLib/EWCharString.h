@@ -5,7 +5,6 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 // Notes				essentially EString, except that it uses wchars (not chars) even when UNICODE is not defined
-//				
 //***************************************************************
 
 //***************************************************************

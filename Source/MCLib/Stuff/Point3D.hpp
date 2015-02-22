@@ -24,9 +24,7 @@ namespace Stuff {
 		static const Point3D
 			Identity;
 
-		//
 		// Constructors
-		//
 		Point3D()
 			{}
 		Point3D(
@@ -50,9 +48,7 @@ namespace Stuff {
 		explicit Point3D(const YawPitchRange &polar)
 			{*this = polar;}
 
-		//
 		// Assignment operators
-		//
 		Point3D&
 			operator=(const Vector3D& v)
 				{Vector3D::operator=(v); return *this;}
@@ -66,9 +62,7 @@ namespace Stuff {
 			operator=(const YawPitchRange &polar)
 				{Vector3D::operator=(polar); return *this;}
 
-		//
 		// Math operators
-		//
 		Point3D&
 			Negate(const Vector3D &v)
 				{Vector3D::Negate(v); return *this;}
@@ -143,9 +137,7 @@ namespace Stuff {
 			operator/=(const Vector3D &v)
 				{return Divide(*this,v);}
 
-		//
 		// Transforms
-		//
 		Point3D&
 			Multiply(
 				const Vector3D &v,
@@ -172,9 +164,7 @@ namespace Stuff {
 				const LinearMatrix4D &m
 			);
 
-		//
 		// Miscellaneous functions
-		//
 		Point3D&
 			Combine(
 				const Vector3D& v1,
@@ -184,9 +174,7 @@ namespace Stuff {
 			)
 				{Vector3D::Combine(v1,t1,v2,t2); return *this;}
 
-		//
 		// Template support functions
-		//
 		Point3D&
 			Lerp(
 				const Vector3D& v1,

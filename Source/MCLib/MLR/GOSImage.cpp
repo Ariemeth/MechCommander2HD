@@ -9,7 +9,6 @@
 //#############################################################################
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 GOSImage::GOSImage( const char* iName ) : Plug (DefaultData)
 {
 	imageName = iName;
@@ -24,7 +23,6 @@ GOSImage::GOSImage( const char* iName ) : Plug (DefaultData)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 GOSImage::GOSImage( DWORD iHandle ) : Plug (DefaultData)
 {
 	char str[20];
@@ -43,7 +41,6 @@ GOSImage::GOSImage( DWORD iHandle ) : Plug (DefaultData)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 GOSImage::GOSImage(const char *name, gos_TextureHints hints) : Plug (DefaultData)
 {
 	imageName = name;
@@ -60,7 +57,6 @@ GOSImage::GOSImage(const char *name, gos_TextureHints hints) : Plug (DefaultData
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 GOSImage::~GOSImage()
 {
 	imageName = "";
@@ -82,7 +78,6 @@ GOSImage::~GOSImage()
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 int
 	GOSImage::GetWidth()
 {
@@ -90,7 +85,6 @@ int
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 int
 	GOSImage::GetHeight()
 {
@@ -98,7 +92,6 @@ int
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	GOSImage::LockImage()
 {
@@ -113,7 +106,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	GOSImage::UnlockImage()
 {
@@ -133,7 +125,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 unsigned char*
 	GOSImage::GetImagePtr()
 {

@@ -1,7 +1,5 @@
 //--------------------------------------------------------------------------
-//
 // And away we go.  MechCommander 2 -- Electric Boogaloo
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -573,7 +571,6 @@ void Initialize()
 	// them to a running state if they screw up their prefs.
 	// All they have to do is delete the orgprefs.cfg file.
 	// OR re-install!!
-	//
 	// ALWAYS use minPrefs.cfg here!
 	if (!fileExists("orgprefs.cfg"))
 	{
@@ -1383,11 +1380,8 @@ void detectHardwareInitialize()
 
 	//Set ScreenMode to 800x600x16 FULLSCREEN!!!!
 	// A window will return BAD DATA!!
-	//
 	// If this fails, GAME CANNOT RUN on their machine!!!!!
-	//
 	// Check which rasterizer comes up.  If software, tell prefs we cannot run in hardware!!
-	//
 	while (((gos_GetMachineInformation(gos_Info_GetDeviceLocalMemory, curDevice) +
 		gos_GetMachineInformation(gos_Info_GetDeviceAGPMemory, curDevice)) < 6291456) &&
 		(curDevice < gos_GetMachineInformation(gos_Info_NumberDevices)))
@@ -1527,7 +1521,6 @@ void ParseCommandLine(char *command_line)
 						else
 						{
 							//They put a quote on the line with no space.
-							//
 							scanName = false;
 							g_missionName[strlen(g_missionName)-1] = 0;
 						}
@@ -1652,9 +1645,7 @@ void ParseCommandLine(char *command_line)
 }
 
 //---------------------------------------------------------------------------
-//
 // Setup the GameOS structure -- This tells GameOS what I am using
-//
 void GetGameOSEnvironment( char* CommandLine )
 {
 	ParseCommandLine(CommandLine);
@@ -1737,9 +1728,7 @@ void GetGameOSEnvironment( char* CommandLine )
 	Environment.AntiAlias				= 0;
 	Environment.disableZBuffer			= 0;
 
-//
 // Texture infomation
-//
 	Environment.Texture_S_256			= 6;
 	Environment.Texture_S_128			= 1;
 	Environment.Texture_S_64			= 0;

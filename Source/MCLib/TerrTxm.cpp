@@ -1,7 +1,5 @@
 //---------------------------------------------------------------------------
-//
 // TerrTxm.cpp -- File contains class code for the Terrain Textures
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -39,7 +37,6 @@ long TerrainTextures::numTxms = 0;
 extern bool InEditor;
 //---------------------------------------------------------------------------
 // Class TerrainTextures
-//
 // At Present, this class doesn't load textures til it needs 'em.  Once loaded
 // they are loaded forever.  This may not be a problem, but if it becomes one,
 // the textures can be preloaded during the init.
@@ -1286,7 +1283,6 @@ long TerrainTextures::createTransition (DWORD typeInfo, DWORD overlayInfo)
 			// What if we saved off all of the textures instead of combining
 			// every time we load?  Should lower load time.  Lets see how big
 			// for all of the textures...
-			//
 			char nameData[256];
 			sprintf(nameData,"%08d.%08d.txm",typeInfo,overlayInfo);
 
@@ -1483,7 +1479,5 @@ void TerrainTextures::destroy (void)
 }
 
 //---------------------------------------------------------------------------
-//		
 //	Edit Log
-//
 //---------------------------------------------------------------------------

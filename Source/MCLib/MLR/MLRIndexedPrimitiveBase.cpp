@@ -18,7 +18,6 @@ unsigned short
 	*indexOffset;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRIndexedPrimitiveBase::InitializeClass()
 {
@@ -41,7 +40,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRIndexedPrimitiveBase::TerminateClass()
 {
@@ -57,7 +55,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRIndexedPrimitiveBase::MLRIndexedPrimitiveBase(
 	ClassData *class_data,
 	MemoryStream *stream,
@@ -89,7 +86,6 @@ MLRIndexedPrimitiveBase::MLRIndexedPrimitiveBase(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRIndexedPrimitiveBase::Save(MemoryStream *stream)
 {
@@ -102,7 +98,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRIndexedPrimitiveBase::MLRIndexedPrimitiveBase(ClassData *class_data):
 	MLRPrimitiveBase(class_data), index(0)
 {
@@ -110,13 +105,11 @@ MLRIndexedPrimitiveBase::MLRIndexedPrimitiveBase(ClassData *class_data):
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRIndexedPrimitiveBase::~MLRIndexedPrimitiveBase()
 {
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRIndexedPrimitiveBase::TestInstance() const
 {
@@ -124,7 +117,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRIndexedPrimitiveBase::InitializeDrawPrimitive(unsigned char vis, int parameter)
 {
@@ -143,7 +135,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRIndexedPrimitiveBase::SetCoordData(
 		const Point3D *data,
@@ -168,7 +159,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRIndexedPrimitiveBase::SetIndexData(
 		unsigned short *index_array,
@@ -196,7 +186,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRIndexedPrimitiveBase::GetIndexData(
 		unsigned short **index_array,
@@ -210,7 +199,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRIndexedPrimitiveBase::Transform(Matrix4D *mat)
 {
@@ -229,7 +217,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 bool
 	MLRIndexedPrimitiveBase::CheckIndicies()
 {

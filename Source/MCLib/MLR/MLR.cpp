@@ -101,7 +101,6 @@ bool MidLevelRenderer::ConvertToTriangleMeshes = true;
 bool MidLevelRenderer::PerspectiveMode = true;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MidLevelRenderer::InitializeClasses(
 		unsigned Max_Number_Vertices_Per_Frame,
@@ -191,11 +190,9 @@ void
 
 	gos_PopCurrentHeap();
 
-	//
 	//-------------------------
 	// Setup the debugger menus
 	//-------------------------
-	//
 	AddDebuggerMenuItem(
 		"Libraries\\MLR\\Show Clipped Polygons",
 		Check_ShowClippedPolys,
@@ -215,11 +212,9 @@ void
 	AddDebuggerMenuItem("Libraries\\MLR\\MultiTexture Enabled", CheckMultiTexture, EnableMultiTexture, NULL );
 	AddDebuggerMenuItem("Libraries\\MLR\\LightMaps Enabled", CheckLightMaps, EnableLightMaps, NULL );
 
-	//
 	//---------------------
 	// Setup the statistics
 	//---------------------
-	//
 	StatisticFormat( "" );
 	StatisticFormat( "Mid Level Renderer" );
 	StatisticFormat( "==================" );
@@ -253,7 +248,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MidLevelRenderer::TerminateClasses()
 {
@@ -323,18 +317,15 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 int
 	MidLevelRenderer::ReadMLRVersion(MemoryStream *erf_stream)
 {
 	Check_Object(erf_stream);
 
-	//
 	//------------------------------------------------------------------------
 	// See if this file has an erf signature.  If so, the next int will be the
 	// version number.  If not, assume it is version 1 and rewind the file
 	//------------------------------------------------------------------------
-	//
 	int version = -1;
 	int erf_signature;
 	*erf_stream >> erf_signature;
@@ -348,7 +339,6 @@ int
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MidLevelRenderer::WriteMLRVersion(MemoryStream *erf_stream)
 {

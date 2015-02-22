@@ -32,7 +32,6 @@ void
 //############################################################################
 
 //------------------------------------------------------------------------------
-//
 gosFX::PointLight__Specification::PointLight__Specification(
 	Stuff::MemoryStream *stream,
 	int gfx_version
@@ -64,7 +63,6 @@ gosFX::PointLight__Specification::PointLight__Specification(
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::PointLight__Specification::PointLight__Specification():
 	Effect__Specification(PointLightClassID)
 {
@@ -74,7 +72,6 @@ gosFX::PointLight__Specification::PointLight__Specification():
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::PointLight__Specification*
 	gosFX::PointLight__Specification::Make(
 		Stuff::MemoryStream *stream,
@@ -92,7 +89,6 @@ gosFX::PointLight__Specification*
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::PointLight__Specification::Save(Stuff::MemoryStream *stream)
 {
@@ -111,7 +107,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void 
 	gosFX::PointLight__Specification::BuildDefaults()
 {
@@ -131,7 +126,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 bool 
 	gosFX::PointLight__Specification::IsDataValid(bool fix_data)
 {
@@ -152,7 +146,6 @@ return	Effect__Specification::IsDataValid(fix_data);
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::PointLight__Specification::Copy(PointLight__Specification *spec)
 {
@@ -179,7 +172,6 @@ gosFX::PointLight::ClassData*
 	gosFX::PointLight::DefaultData = NULL;
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::PointLight::InitializeClass()
 {
@@ -197,7 +189,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::PointLight::TerminateClass()
 {
@@ -210,7 +201,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::PointLight::PointLight(
 	Specification *spec,
 	unsigned flags
@@ -222,7 +212,6 @@ gosFX::PointLight::PointLight(
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::PointLight::~PointLight()
 {
 	if (m_light)
@@ -233,7 +222,6 @@ gosFX::PointLight::~PointLight()
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::PointLight*
 	gosFX::PointLight::Make(
 		Specification *spec,
@@ -250,7 +238,6 @@ gosFX::PointLight*
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::PointLight::Start(ExecuteInfo *info)
 {
@@ -266,7 +253,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 bool
 	gosFX::PointLight::Execute(ExecuteInfo *info)
 {
@@ -276,34 +262,26 @@ bool
 	if (!IsExecuted())
 		return false;
 
-	//
 	//------------------------
 	// Do the effect animation
 	//------------------------
-	//
 	if (!Effect::Execute(info))
 		return false;
 
-	//
 	//-----------------------------------------
 	// Animate the parent then get our pointers
 	//-----------------------------------------
-	//
 	Specification *spec = GetSpecification();
 	Check_Object(spec);
 
-	//
 	//--------------------------------
 	// Animate the color and intensity
 	//--------------------------------
-	//
 	Stuff::LinearMatrix4D local_to_world;
 
-	//
 	//-----------------------------------------------------------
 	// Construct the info object and send it to the light manager
 	//-----------------------------------------------------------
-	//
 	LightManager::Info light_info;
 	light_info.m_color.red = spec->m_red.ComputeValue(m_age, m_seed);
 	light_info.m_color.green = spec->m_green.ComputeValue(m_age, m_seed);
@@ -319,7 +297,6 @@ bool
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::PointLight::Kill()
 {
@@ -332,7 +309,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::PointLight::TestInstance() const
 {

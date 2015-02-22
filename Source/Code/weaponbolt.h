@@ -1,10 +1,7 @@
 //---------------------------------------------------------------------------
-//
 // weaponBolt.h -- File contains the NEW and IMPROVED Weapon class for MC2
 //					ALL weapons go through this class now.
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

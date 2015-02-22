@@ -38,9 +38,7 @@ namespace Stuff {
 		Scalar
 			entries[12];
 
-		//
 		// Constructors
-		//
 		AffineMatrix4D()
 			{}
 		AffineMatrix4D&
@@ -62,9 +60,7 @@ namespace Stuff {
 		explicit AffineMatrix4D(const Point3D &p)
 			{*this = p;}
 
-		//
 		// Assignment Operators
-		//
 		AffineMatrix4D&
 			operator=(const AffineMatrix4D &m)
 				{
@@ -102,9 +98,7 @@ namespace Stuff {
 					return *this;
 				}
 
-		//
 		// Comparison operators
-		//
 		friend bool
 			Close_Enough(
 				const AffineMatrix4D &m1,
@@ -118,9 +112,7 @@ namespace Stuff {
 			operator!=(const AffineMatrix4D& a) const
 				{return !Close_Enough(*this,a,SMALL);}
 
-		//
 		// Index operators
-		//
 		Scalar&
 			operator()(size_t row,size_t column)
 				{
@@ -138,9 +130,7 @@ namespace Stuff {
 					return entries[(column<<2)+row];
 				}
 
-		//
 		// Axis Manipulation functions
-		//
 		void
 			GetLocalForwardInWorld(Vector3D *v) const
 		{
@@ -243,9 +233,7 @@ namespace Stuff {
 			v->z = APPLY_DOWN_SIGN((*this)(Z_Axis, DOWN_AXIS));
 		}
 
-		//
 		// Matrix Multiplication
-		//
 		inline AffineMatrix4D&
 			Multiply(
 				const AffineMatrix4D& Source1,
@@ -561,18 +549,14 @@ namespace Stuff {
 			operator*=(const AffineMatrix4D& m)
 				{AffineMatrix4D temp(*this); return Multiply(temp,m);}
 
-		//
 		// Matrix Inversion
-		//
 		AffineMatrix4D&
 			Invert(const AffineMatrix4D& Source);
 		AffineMatrix4D&
 			Invert()
 				{AffineMatrix4D src(*this); return Invert(src);}
 
-		//
 		// Scaling, Rotation and Translation
-		//
 		AffineMatrix4D&
 			Multiply(const AffineMatrix4D &m,const Vector3D &v);
 		AffineMatrix4D&
@@ -589,17 +573,13 @@ namespace Stuff {
 			operator*=(const Point3D& p)
 				{AffineMatrix4D m(*this); return Multiply(m,p);}
 
-		//
 		// Miscellaneous Functions
-		//
 		Scalar
 			Determinant() const;
 		AffineMatrix4D&
 			Solve();
 
-		//
 		// Support functions
-		//
 		#if !defined(Spew)
 			friend void
 				::Spew(

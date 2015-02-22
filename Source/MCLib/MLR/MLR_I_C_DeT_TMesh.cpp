@@ -16,7 +16,6 @@ MLR_I_C_DeT_TMesh::ClassData*
 	MLR_I_C_DeT_TMesh::DefaultData = NULL;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_DeT_TMesh::InitializeClass()
 {
@@ -38,7 +37,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_DeT_TMesh::TerminateClass()
 {
@@ -53,7 +51,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_C_DeT_TMesh::MLR_I_C_DeT_TMesh(
 	ClassData *class_data,
 	MemoryStream *stream,
@@ -115,7 +112,6 @@ MLR_I_C_DeT_TMesh::MLR_I_C_DeT_TMesh(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_C_DeT_TMesh::MLR_I_C_DeT_TMesh(ClassData *class_data):
 	MLR_I_DeT_TMesh(class_data), colors(0)
 {
@@ -126,14 +122,12 @@ MLR_I_C_DeT_TMesh::MLR_I_C_DeT_TMesh(ClassData *class_data):
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_C_DeT_TMesh::~MLR_I_C_DeT_TMesh()
 {
 	Check_Object(this);
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_C_DeT_TMesh*
 	MLR_I_C_DeT_TMesh::Make(
 		MemoryStream *stream,
@@ -150,7 +144,6 @@ MLR_I_C_DeT_TMesh*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_DeT_TMesh::Save(MemoryStream *stream)
 {
@@ -179,7 +172,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 bool
 	MLR_I_C_DeT_TMesh::Copy(MLR_I_C_DeT_PMesh *pMesh)
 {
@@ -202,7 +194,6 @@ bool
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_DeT_TMesh::Copy(
 		MLR_I_C_TMesh *tMesh,
@@ -231,7 +222,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_DeT_TMesh::SetColorData(
 #if COLOR_AS_DWORD
@@ -252,7 +242,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_DeT_TMesh::GetColorData(
 #if COLOR_AS_DWORD
@@ -269,7 +258,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_DeT_TMesh::PaintMe(
 #if COLOR_AS_DWORD
@@ -301,7 +289,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_DeT_TMesh::TestInstance() const
 {
@@ -309,7 +296,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_DeT_TMesh::HurtMe(const Stuff::LinearMatrix4D& pain, Stuff::Scalar radius)
 {
@@ -384,7 +370,6 @@ extern DWORD gEnableTextureSort, gEnableAlphaSort;
 #undef CLASSNAME
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_C_DeT_TMesh*
 	MidLevelRenderer::CreateIndexedTriCube_Color_NoLit_DetTex(
 		Scalar half, 
@@ -395,7 +380,6 @@ MLR_I_C_DeT_TMesh*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRShape*
 	MidLevelRenderer::CreateIndexedTriIcosahedron_Color_NoLit_DetTex(
 		IcoInfo& icoInfo,

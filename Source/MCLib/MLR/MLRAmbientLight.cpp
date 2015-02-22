@@ -12,7 +12,6 @@ MLRAmbientLight::ClassData*
 	MLRAmbientLight::DefaultData = NULL;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRAmbientLight::InitializeClass()
 {
@@ -28,7 +27,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRAmbientLight::TerminateClass()
 {
@@ -38,7 +36,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRAmbientLight::MLRAmbientLight() :
 	MLRLight(DefaultData)
 {
@@ -47,7 +44,6 @@ MLRAmbientLight::MLRAmbientLight() :
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRAmbientLight::MLRAmbientLight(
 	Stuff::MemoryStream *stream,
 	int version
@@ -60,7 +56,6 @@ MLRAmbientLight::MLRAmbientLight(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRAmbientLight::MLRAmbientLight(Stuff::Page *page) :
 	MLRLight(DefaultData, page)
 {
@@ -70,13 +65,11 @@ MLRAmbientLight::MLRAmbientLight(Stuff::Page *page) :
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRAmbientLight::~MLRAmbientLight()
 {
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRAmbientLight::TestInstance()
 {
@@ -84,7 +77,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRAmbientLight::LightVertex(const MLRVertexData& vertexData)
 {

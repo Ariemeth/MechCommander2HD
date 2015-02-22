@@ -2,7 +2,6 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 // Viewer.cpp : Defines the class behaviors for the application.
-//
 
 #include "version.h"
 #include <GameOS.hpp>
@@ -368,7 +367,6 @@ void __stdcall InitializeGameEngine()
 	// Mondo COOL!
 	// simply do this in the code and stuff goes to the file called mc2.output
 	//		DEBUG_STREAM << thing_you_want_to_output
-	//
 	// IMPORTANT NOTE:
 	Stuff::InitializeClasses();
 	MidLevelRenderer::InitializeClasses(8192*4,1024,0,0,true);
@@ -498,11 +496,9 @@ void __stdcall TerminateGameEngine()
 
 	gos_PopCurrentHeap();
 
-	//
 	//-------------------
 	// Turn off libraries
 	//-------------------
-	//
 	gosFX::TerminateClasses();
 	MidLevelRenderer::TerminateClasses();
 	Stuff::TerminateClasses();
@@ -514,11 +510,9 @@ void __stdcall TerminateGameEngine()
 
 	gos_CloseResourceDLL(gosResourceHandle);
 
-	//
 	//--------------------------
 	// Turn off the fast Files
 	//--------------------------
-	//
 	FastFileFini();
 }
 
@@ -545,9 +539,7 @@ void __stdcall GetGameOSEnvironment( char* CommandLine )
 	Environment.version					= versionStamp;
 
 	Environment.AntiAlias				= 0;
-//
 // Texture infomation
-//
 	Environment.Texture_S_256			= 6;
 	Environment.Texture_S_128			= 1;
 	Environment.Texture_S_64			= 0;

@@ -2,7 +2,6 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 // PlayerSettingsDlg.cpp : implementation file
-//
 
 #include "stdafx.h"
 #include "resource.h"

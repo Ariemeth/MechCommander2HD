@@ -1,16 +1,11 @@
 //-------------------------------------------------------------------------------
-//
 // Multiple TG Shape Layer
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 // Replace MLR for a myriad number of reasons.
-//
 // Started 4/16/99
-//
 // FFS
-//
 //-------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------
@@ -345,15 +340,11 @@ long TG_TypeMultiShape::LoadTGMultiShapeFromASE (char *fileName, bool forceMakeB
 
 	//------------------------------------------------------
 	// New!  Checks for Binary file to load instead.
-	//
 	// If Binary is older or equal to ASE, re-parses ASE and
 	// saves binary.
-	//
 	// If Binary does not exist, does the above, too!
-	// 
 	// If Binary exists and is newer, just loads that.
 	// MUCH FASTER!
-	//
 	bool makeBinary = false;
 
 	char drive[MAX_PATH];
@@ -1020,7 +1011,6 @@ void TG_MultiShape::SetFogRGB (DWORD fRGB)
 //This function sets the list of lights used by the TransformShape function
 //to light the shape.
 //Function returns 0 if lightList entries are all OK.  -1 otherwise.
-//
 long TG_MultiShape::SetLightList (TG_LightPtr *lightList, DWORD nLights)
 {
 	//-----------------------------------------------------
@@ -1155,7 +1145,6 @@ long TG_MultiShape::TransformMultiShape (Stuff::Point3D *pos, Stuff::UnitQuatern
 
 		//-----------------------------------------------------------------
 		// Heirarchy Animation Code.
-		//
 		// Simple, really.  For each shape in list, traverse back UP
 		// the heirarchy and store the traversal pointers in a temp list.
 		// Starting at the TOP of the heirarchy and for each shape, 
@@ -1297,7 +1286,6 @@ long TG_MultiShape::TransformMultiShape (Stuff::Point3D *pos, Stuff::UnitQuatern
 					{
 						//--------------------------------------
 						// NO Animation if we are here.
-						//
 						// Apply Base Rotation.  If it is Zero, no problem!
 						Stuff::UnitQuaternion totalRotation = childChain[j]->baseRotation;
 						localShapeOrigin.BuildRotation(totalRotation);
@@ -1939,15 +1927,11 @@ long TG_AnimateShape::LoadTGMultiShapeAnimationFromASE (char *fileName, TG_TypeM
 {
 	//------------------------------------------------------
 	// New!  Checks for Binary file to load instead.
-	//
 	// If Binary is older or equal to ASE, re-parses ASE and
 	// saves binary.
-	//
 	// If Binary does not exist, does the above, too!
-	// 
 	// If Binary exists and is newer, just loads that.
 	// MUCH FASTER!
-	//
 	bool makeBinary = false;
 
 	char drive[MAX_PATH];
@@ -1999,7 +1983,6 @@ long TG_AnimateShape::LoadTGMultiShapeAnimationFromASE (char *fileName, TG_TypeM
 		//-----------------------------------------------------
 		// Fully loads and parses an ASE File.  These files are
 		// output by 3D Studio MAX's ASCII Scene Exporter.
-		//
 		shapeIdsSet = false;
 	
 		//------------------------------------------

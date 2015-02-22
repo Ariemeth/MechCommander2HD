@@ -48,7 +48,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Construction
-	//
 	public:
 		OBB()
 			{}
@@ -77,7 +76,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Assignment
-	//
 	public:
 		OBB&
 			operator =(const OBB& obb)
@@ -100,7 +98,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Transforms
-	//
 	public:
 		OBB&
 			Multiply(
@@ -213,7 +210,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Intersection functions
-	//
 	public:
 		enum SeparatingAxis {
 			NoSeparation = 0,
@@ -236,9 +232,7 @@ namespace Stuff {
 
 		SeparatingAxis
 			FindSeparatingAxis(const OBB& box) const;
-		//
 		// Intersection functions
-		//
 		bool
 			Contains(const Point3D &point) const;
 		bool

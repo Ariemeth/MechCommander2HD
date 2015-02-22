@@ -40,9 +40,7 @@ namespace MidLevelRenderer {
 			GetLightType() 
 				{ Check_Object(this); return SpotLight; }
 
-	//
 	// spotlight spread.  This value is only valid if the light had falloff
-	//
 		bool
 			GetSpreadAngle(Stuff::Radian *angle);
 		void
@@ -71,14 +69,12 @@ namespace MidLevelRenderer {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Class Data Support
-	//
 	public:
 		static ClassData
 			*DefaultData;
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Testing
-	//
 	public:
 		void
 			TestInstance();

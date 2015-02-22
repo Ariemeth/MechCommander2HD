@@ -1,9 +1,6 @@
 //***************************************************************************
-//
 //	dcontact.h - This file contains the Contact Class header definitions
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

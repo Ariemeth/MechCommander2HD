@@ -4,7 +4,6 @@
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
-//
 #pragma once
 
 #include "gosFX.hpp"
@@ -28,7 +27,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------
 	// Constructors/Destructors
-	//
 	protected:
 		DebrisCloud__Specification(
 			Stuff::MemoryStream *stream,
@@ -65,7 +63,6 @@ namespace gosFX
 
 	//-------------------------------------------------------------------------
 	// FCurves
-	//
 	public:
 		ConstantCurve
 			m_minimumDeviation;
@@ -88,7 +85,6 @@ namespace gosFX
 
 	//-------------------------------------------------------------------------
 	// Data
-	//
 		Stuff::Point3D
 			centerOfForce;
 
@@ -137,7 +133,6 @@ namespace gosFX
 	{
 	//----------------------------------------------------------------------------
 	// Class Registration Support
-	//
 	public:
 		static void InitializeClass();
 		static void	TerminateClass();
@@ -147,7 +142,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Class Data Support
-	//
 	protected:
 		DebrisCloud(
 			Specification *spec,
@@ -184,14 +178,12 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Testing
-	//
 	public:
 		void
 			TestInstance() const;
 
 	//----------------------------------------------------------------------------
 	// API
-	//
 	protected:
 		bool
 			Execute(ExecuteInfo *info);

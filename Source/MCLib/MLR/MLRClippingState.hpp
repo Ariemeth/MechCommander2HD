@@ -32,7 +32,6 @@ namespace MidLevelRenderer {
 	//##########################################################################
 	//	Attention !!! when changing the flags also change them in
 	//	Stuff::Vector4D::MultiplySetClip the assembler block
-	//	
 	//##########################################################################
 		enum {
 			TopClipBit = 0,
@@ -162,7 +161,6 @@ namespace MidLevelRenderer {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Assignment operators
-	//
 	public:
 		MLRClippingState&
 			operator=(const MLRClippingState &s)
@@ -226,7 +224,6 @@ namespace MidLevelRenderer {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Testing
-	//
 	public:
 		void
 			TestInstance()

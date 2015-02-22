@@ -12,7 +12,6 @@ MLRInfiniteLightWithFalloff::ClassData*
 	MLRInfiniteLightWithFalloff::DefaultData = NULL;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRInfiniteLightWithFalloff::InitializeClass()
 {
@@ -28,7 +27,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRInfiniteLightWithFalloff::TerminateClass()
 {
@@ -38,7 +36,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRInfiniteLightWithFalloff::MLRInfiniteLightWithFalloff(ClassData *class_data) :
 	MLRLight(class_data)
 {
@@ -51,7 +48,6 @@ MLRInfiniteLightWithFalloff::MLRInfiniteLightWithFalloff(ClassData *class_data) 
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRInfiniteLightWithFalloff::MLRInfiniteLightWithFalloff(
 	ClassData *class_data,
 	Stuff::MemoryStream *stream,
@@ -68,7 +64,6 @@ MLRInfiniteLightWithFalloff::MLRInfiniteLightWithFalloff(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRInfiniteLightWithFalloff::MLRInfiniteLightWithFalloff(
 	ClassData *class_data,
 	Stuff::Page *page
@@ -86,13 +81,11 @@ MLRInfiniteLightWithFalloff::MLRInfiniteLightWithFalloff(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRInfiniteLightWithFalloff::~MLRInfiniteLightWithFalloff()
 {
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRInfiniteLightWithFalloff::Save(Stuff::MemoryStream *stream)
 {
@@ -104,7 +97,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRInfiniteLightWithFalloff::Write(Stuff::Page *page)
 {
@@ -117,7 +109,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRInfiniteLightWithFalloff::TestInstance()
 {
@@ -125,7 +116,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRInfiniteLightWithFalloff::SetFalloffDistance (Scalar ir, Scalar or)
 {
@@ -138,7 +128,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 bool
 	MLRInfiniteLightWithFalloff::GetFalloffDistance (Scalar& ir, Scalar& or)
 {
@@ -151,7 +140,6 @@ bool
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRInfiniteLightWithFalloff::LightVertex(const MLRVertexData& vertexData)
 {
@@ -159,12 +147,10 @@ void
 
 	GetInShapeDirection(light_z);
 
-	//
 	//-------------------------------------------------------------------
 	// Now we reduce the light level falling on the vertex based upon the
 	// cosine of the angle between light and normal
 	//-------------------------------------------------------------------
-	//
 	Scalar cosine = -(light_z * (*vertexData.normal)) * intensity;
 
 	RGBColor light_color(color);
@@ -177,13 +163,11 @@ void
 
 	vertex_to_light -= *vertexData.point;
 
-	//
 	//--------------------------------------------------------------
 	// If the distance to the vertex is zero, the light will not
 	// contribute to the vertex coloration.  Otherwise, decrease the
 	// light level as appropriate to the distance
 	//--------------------------------------------------------------
-	//
 	Scalar length = vertex_to_light.GetApproximateLength();
 
 	Scalar falloff = 1.0f;

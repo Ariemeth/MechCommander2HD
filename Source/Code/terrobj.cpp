@@ -1,9 +1,6 @@
 //---------------------------------------------------------------------------
-//
 //	terrobj.cpp -- File contains the misc terrain object code
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -234,10 +231,8 @@ bool TerrainObjectType::handleCollision (GameObjectPtr collidee, GameObjectPtr c
 			// Trees are magical.  If a mech hits one, it goes down
 			// and is replaced by its last frame.  In other words,
 			// play the animation and stop on last frame.
-			//
 			// When a tree falls, we change its frame_of_ref to match
 			// the direction it should fall in from the nominal world frame.
-			//
 			switch (collider->getObjectClass()) {
 				case EXPLOSION:
 				case BATTLEMECH:

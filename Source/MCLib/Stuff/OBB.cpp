@@ -8,14 +8,12 @@ OBB
 	OBB::Identity(LinearMatrix4D::Identity, Vector3D::Identity, 0.0f);
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	OBB::TestInstance() const
 {
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 #if !defined(Spew)
 	void
 		Spew(
@@ -40,7 +38,6 @@ void
 #endif
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 OBB&
 	OBB::Multiply(
 		const OBB &obb,
@@ -58,7 +55,6 @@ OBB&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 OBB::SeparatingAxis
 	OBB::FindSeparatingAxis(const OBB& box) const
 {
@@ -71,11 +67,9 @@ OBB::SeparatingAxis
 	Verify(box.axisExtents.y >= 0.0f);
 	Verify(box.axisExtents.z >= 0.0f);
 
-	//
 	//------------------------------------------
 	// Get the distance between the centerpoints
 	//------------------------------------------
-	//
 	Check_Object(&localToParent);
 	Check_Object(&box.localToParent);
 	Point3D
@@ -85,12 +79,10 @@ OBB::SeparatingAxis
 			localToParent(3,2) - box.localToParent(3,2)
 		);
 
-	//
 	//-----------------------------------------------------------------------
 	// First check L = Ax.  The next 6 tests are basically face tests to try
 	// and find a separating plane.  Both boxes are currently in parent space
 	//-----------------------------------------------------------------------
-	//
 	Scalar ab[3][3];
 	ab[0][0] =
 		Fabs(
@@ -125,11 +117,9 @@ OBB::SeparatingAxis
 		return A0;
 	}
 
-	//
 	//-------------
 	// Check L = Ay
 	//-------------
-	//
 	ab[1][0] =
 		Fabs(
 			localToParent(1,0) * box.localToParent(0,0)
@@ -163,11 +153,9 @@ OBB::SeparatingAxis
 		return A1;
 	}
 
-	//
 	//-------------
 	// Check L = Az
 	//-------------
-	//
 	ab[2][0] =
 		Fabs(
 			localToParent(2,0) * box.localToParent(0,0)
@@ -201,11 +189,9 @@ OBB::SeparatingAxis
 		return A2;
 	}
 
-	//
 	//-------------
 	// Check L = Bx
 	//-------------
-	//
 	radius =
 		box.axisExtents.x 
 		 + axisExtents.x * ab[0][0]
@@ -220,11 +206,9 @@ OBB::SeparatingAxis
 		return B0;
 	}
 
-	//
 	//-------------
 	// Check L = By
 	//-------------
-	//
 	radius =
 		box.axisExtents.y
 		 + axisExtents.x * ab[0][1]
@@ -239,11 +223,9 @@ OBB::SeparatingAxis
 		return B1;
 	}
 
-	//
 	//-------------
 	// Check L = Bz
 	//-------------
-	//
 	radius =
 		box.axisExtents.z
 		 + axisExtents.x * ab[0][2]
@@ -258,25 +240,21 @@ OBB::SeparatingAxis
 		return B2;
 	}
 
-	//
 	//-------------------------------------------------------------------------
 	// We have finished with the separation tests based upon the box faces.  We
 	// now need to test with the edges, so make a matrix that converts local b
 	// to local a, and figure a the new distance vector relative to a
 	//-------------------------------------------------------------------------
-	//
 	LinearMatrix4D parent_to_a;
 	parent_to_a.Invert(localToParent);
 	LinearMatrix4D b_to_a;
 	b_to_a.Multiply(box.localToParent, parent_to_a);
 	distance = b_to_a;
 
-	//
 	//-------------------------------------------------------------------------
 	// L = Ax crossed with Bx.  Since B has now been expressed in A, Ax can now
 	// be simplified to <1,0,0>, making the cross-product much simpler
 	//-------------------------------------------------------------------------
-	//
 	Scalar minor[3][3];
 	minor[1][0] = Fabs(b_to_a(0,1)*b_to_a(2,2) - b_to_a(2,1)*b_to_a(0,2));
 	minor[2][0] = Fabs(b_to_a(0,1)*b_to_a(1,2) - b_to_a(1,1)*b_to_a(0,2));
@@ -296,11 +274,9 @@ OBB::SeparatingAxis
 		return A0xB0;
 	}
 
-	//
 	//-----------------------
 	// L = Ax crossed with By
 	//-----------------------
-	//
 	minor[0][0] = Fabs(b_to_a(1,1)*b_to_a(2,2) - b_to_a(2,1)*b_to_a(1,2));
 
 	ba[1][1] = Fabs(b_to_a(1,1));
@@ -317,11 +293,9 @@ OBB::SeparatingAxis
 		return A0xB1;
 	}
 
-	//
 	//-----------------------
 	// L = Ax crossed with Bz
 	//-----------------------
-	//
 	ba[2][1] = Fabs(b_to_a(2,1));
 	ba[2][2] = Fabs(b_to_a(2,2));
 
@@ -336,11 +310,9 @@ OBB::SeparatingAxis
 		return A0xB2;
 	}
 
-	//
 	//-----------------------
 	// L = Ay crossed with Bx
 	//-----------------------
-	//
 	minor[2][1] = Fabs(b_to_a(0,2)*b_to_a(1,0) - b_to_a(0,0)*b_to_a(1,2));
 	minor[1][1] = Fabs(b_to_a(0,0)*b_to_a(2,2) - b_to_a(2,0)*b_to_a(1,2));
 
@@ -357,11 +329,9 @@ OBB::SeparatingAxis
 		return A1xB0;
 	}
 
-	//
 	//-----------------------
 	// L = Ay crossed with By
 	//-----------------------
-	//
 	minor[0][1] = Fabs(b_to_a(1,2)*b_to_a(2,0) - b_to_a(1,0)*b_to_a(2,2));
 
 	ba[1][0] = Fabs(b_to_a(1,0));
@@ -377,11 +347,9 @@ OBB::SeparatingAxis
 		return A1xB1;
 	}
 
-	//
 	//-----------------------
 	// L = Ay crossed with Bz
 	//-----------------------
-	//
 	ba[2][0] = Fabs(b_to_a(2,0));
 
 	radius =
@@ -395,11 +363,9 @@ OBB::SeparatingAxis
 		return A1xB2;
 	}
 
-	//
 	//-----------------------
 	// L = Az crossed with Bx
 	//-----------------------
-	//
 	minor[2][2] = Fabs(b_to_a(1,1)*b_to_a(0,0) - b_to_a(0,1)*b_to_a(1,0));
 	minor[1][2] = Fabs(b_to_a(2,1)*b_to_a(0,0) - b_to_a(2,0)*b_to_a(0,1));
 
@@ -414,11 +380,9 @@ OBB::SeparatingAxis
 		return A2xB0;
 	}
 
-	//
 	//-----------------------
 	// L = Az crossed with By
 	//-----------------------
-	//
 	minor[0][2] = Fabs(b_to_a(1,0)*b_to_a(2,1) - b_to_a(2,0)*b_to_a(1,1));
 
 	radius =
@@ -432,11 +396,9 @@ OBB::SeparatingAxis
 		return A2xB1;
 	}
 
-	//
 	//-----------------------
 	// L = Az crossed with Bz
 	//-----------------------
-	//
 	radius =
 		axisExtents.x*ba[2][1]
 		 + axisExtents.y*ba[2][0]
@@ -452,7 +414,6 @@ OBB::SeparatingAxis
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	OBB::Union(
 		const OBB &first,
@@ -463,22 +424,18 @@ void
 	Check_Object(&first);
 	Check_Object(&second);
 
-	//
 	//-------------------------------------------------
 	// Learn about the spheres surrounding the two OBBs
 	//-------------------------------------------------
-	//
 	Point3D c1(first.localToParent);
 	Point3D c2(second.localToParent);
 	Vector3D diff;
 	diff.Subtract(c2, c1);
 	Scalar len = diff.GetLength();
 
-	//
 	//---------------------------------------------------
 	// See if the first sphere is contained in the second
 	//---------------------------------------------------
-	//
 	if (len+first.sphereRadius <= second.sphereRadius || !first.sphereRadius)
 	{
 		if (this != &second)
@@ -486,11 +443,9 @@ void
 		return;
 	}
 
-	//
 	//---------------------------------------------------
 	// See if the second sphere is contained in the first
 	//---------------------------------------------------
-	//
 	if (len+second.sphereRadius <= first.sphereRadius || !second.sphereRadius)
 	{
 		if (this != &first)
@@ -498,11 +453,9 @@ void
 		return;
 	}
 
-	//
 	//-------------------------------------------------------
 	// The new sphere will lie somewhere between the old ones
 	//-------------------------------------------------------
-	//
 	localToParent = LinearMatrix4D::Identity;
 	axisExtents = Vector3D::Identity;
 	c1.Lerp(c1, c2, (len + second.sphereRadius - first.sphereRadius) / (2.0f*len));

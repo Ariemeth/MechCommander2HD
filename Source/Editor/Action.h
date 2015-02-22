@@ -1,10 +1,8 @@
 #ifndef ACTION_H
 #define ACTION_H
 //--------------------------------------------------------------------------------
-//
 // Actions.h - header file for the Action Base object and the Action Mgr.
 //				Actions are things that can be undone
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

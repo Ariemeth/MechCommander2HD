@@ -1,9 +1,6 @@
 //---------------------------------------------------------------------------
-//
 //	gvactor.h - This file contains the header for the Ground Vehicle Actor class
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -29,9 +26,7 @@
 
 #define MAX_GV_ANIMATIONS			10
 //***********************************************************************
-//
 // GVAppearanceType
-//
 //***********************************************************************
 class GVAppearanceType : public AppearanceType
 {
@@ -152,9 +147,7 @@ class GVAppearanceType : public AppearanceType
 };
 
 //***********************************************************************
-//
 // GVAppearance
-//
 //***********************************************************************
 class GVAppearance : public ObjectAppearance
 {

@@ -6,7 +6,6 @@
 #pragma once
 #endif // _MSC_VER > 1000
 // EditorTacMap.h : header file
-//
 
 #include "resource.h"
 #include "TacMapTGA.h"

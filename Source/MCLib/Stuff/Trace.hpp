@@ -211,7 +211,6 @@ namespace Stuff {
 		};
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		//
 		template <class T> TraceOf<T>::TraceOf(
 				const char* name,
 				const T& initial_value,
@@ -226,7 +225,6 @@ namespace Stuff {
 			}
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		//
 		template <class T> void
 			TraceOf<T>::DumpTraceStatus()
 		{
@@ -235,7 +233,6 @@ namespace Stuff {
 		}
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		//
 		template <class T> void
 			TraceOf<T>::ResetTrace()
 		{
@@ -247,7 +244,6 @@ namespace Stuff {
 		#if defined(USE_TIME_ANALYSIS)
 
 			//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			//
 			template <class T> void
 				TraceOf<T>::StartTiming()
 			{
@@ -256,7 +252,6 @@ namespace Stuff {
 			}
 
 			//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			//
 			template <class T> Scalar
 				TraceOf<T>::CalculateUsage(
 					Time when,
@@ -271,7 +266,6 @@ namespace Stuff {
 			}
 
 			//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			//
 			template <class T> void
 				TraceOf<T>::PrintUsage(Scalar usage)
 			{
@@ -282,7 +276,6 @@ namespace Stuff {
 		#endif
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		//
 		template <class T> void
 			TraceOf<T>::TakeSnapshot(const T& value)
 		{

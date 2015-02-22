@@ -3,9 +3,7 @@
 //===========================================================================//
 
 //***************************************************************************
-//
 //								TACORDR.CPP
-//
 //***************************************************************************
 
 #ifndef MCLIB
@@ -1365,7 +1363,6 @@ long TacticalOrder::status (MechWarriorPtr warrior) {
 			else 
 			{
 				// refitter and refitee *should* be pointing at each other...
-				//
 				if (warrior->getVehicle()->refitBuddyWID != target->getWatchID())
 					warrior->getVehicle()->refitBuddyWID = target->getWatchID();
 				if (((MoverPtr)target)->refitBuddyWID != (GameObjectWatchID)warrior->getVehicle()->getWatchID())

@@ -1,6 +1,5 @@
 //******************************************************************************************
 //	gvehicl.cpp - This file contains the GroundVehicle Class Code
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -330,7 +329,6 @@ bool GroundVehicleType::handleCollision (GameObjectPtr collidee, GameObjectPtr c
 	// The default reaction of any object in the world
 	// is to simply explode.  This just returns true
 	// to facilitate this behaviour.
-	//
 	// Don't blow us up unless we hit another mech\vehicle.
 	if (MPlayer && !MPlayer->isServer())
 		return(false);
@@ -389,7 +387,6 @@ bool GroundVehicleType::handleCollision (GameObjectPtr collidee, GameObjectPtr c
 // UGLY HACK HERE...
 				if (sameTeam)
 					shotInfo.init(collider->getWatchID(), -1, 0 /*(long)(collider->getTonnage() / 100.0 + 0.5)*/, hitLocation, collidee->relFacingTo(collider->getPosition()));
-//
 				else
 					shotInfo.init(collider->getWatchID(), -1, (long)(collider->getTonnage() / 10.0 + 0.5), hitLocation, collidee->relFacingTo(collider->getPosition()));
 				collidee->handleWeaponHit(&shotInfo, (MPlayer != NULL));
@@ -2736,7 +2733,6 @@ long GroundVehicle::updateAnimations (void)
 	// 		1 - Walk
 	//		2 - Run
 	//		3 - Repair
-	//
 	if (!MPlayer)		//ONLY allowed to animate outside of Multiplayer.  Do not want to pass anim info around.  TOO Late!
 	{
 		long animState = appearance->getCurrentGestureId();

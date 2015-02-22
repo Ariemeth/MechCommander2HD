@@ -4,7 +4,6 @@
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
-//
 #pragma once
 
 #include "gosFX.hpp"
@@ -64,7 +63,6 @@ namespace gosFX
 	{
 	//----------------------------------------------------------------------
 	// Constructors/Destructors
-	//
 	protected:
 		PointLight__Specification(
 			Stuff::MemoryStream *stream,
@@ -94,7 +92,6 @@ namespace gosFX
 
 	//-------------------------------------------------------------------------
 	// FCurves
-	//
 	public:
 		ComplexCurve
 			m_red,
@@ -148,7 +145,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Class Data Support
-	//
 	public:
 		Specification*
 			GetSpecification()
@@ -160,7 +156,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// API
-	//
 	public:
 		void
 			Start(ExecuteInfo *info);
@@ -171,7 +166,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Testing
-	//
 	public:
 		void
 			TestInstance() const;

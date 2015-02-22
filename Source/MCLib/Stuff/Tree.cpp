@@ -9,11 +9,9 @@
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~ TreeNode ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-//
 //###########################################################################
 // TreeNode
 //###########################################################################
-//
 TreeNode::TreeNode(
 	Tree *tree,
 	Plug *plug
@@ -25,45 +23,35 @@ TreeNode::TreeNode(
 	parent = NULL;
 }
 
-//
 //###########################################################################
 // ~TreeNode
 //###########################################################################
-//
 TreeNode::~TreeNode()
 {
 	Check_Object(this);
 	Tree *tree = Cast_Object(Tree*, socket);
 	Check_Object(tree);
 
-	//
 	//-------------------------------------------
 	// Notify iterators that deletion is occuring
 	//-------------------------------------------
-	//
 	tree->SendIteratorMemo(PlugRemoved, this);
 
-	//
 	//-----------------------------------
 	// Tell the tree to release this node
 	//-----------------------------------
-	//
 	tree->SeverFromTreeNode(this);
 
-	//
 	//------------------------------------------
 	// Remove this link from any plug references
 	//------------------------------------------
-	//
 	ReleaseFromPlug();
 
-	//
 	//-------------------------------------------------------------
 	// Tell the node to release this link.  Note that this link
 	// is not referenced by the plug or the chain at this point in
 	// time.
 	//-------------------------------------------------------------
-	//
 	if (tree->GetReleaseNode() != NULL)
 	{
 		Check_Object(tree->GetReleaseNode());
@@ -71,11 +59,9 @@ TreeNode::~TreeNode()
 	}
 }
 
-//
 //###########################################################################
 // TestInstance
 //###########################################################################
-//
 void
 	TreeNode::TestInstance()
 {
@@ -95,11 +81,9 @@ void
 	}
 }
 
-//
 //###########################################################################
 // SetupTreeLinks
 //###########################################################################
-//
 void
 	TreeNode::SetupTreeLinks(
 		TreeNode *less,
@@ -115,11 +99,9 @@ void
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~ Tree ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-//
 //###########################################################################
 // Tree
 //###########################################################################
-//
 Tree::Tree(
 	Node *node,
 	bool has_unique_entries
@@ -129,11 +111,9 @@ Tree::Tree(
 	root = NULL;
 }
 
-//
 //###########################################################################
 // ~Tree
 //###########################################################################
-//
 Tree::~Tree()
 {
 	Check_Object(this);
@@ -145,30 +125,24 @@ Tree::~Tree()
 	}
 }
 
-//
 //###########################################################################
 // TestInstance
 //###########################################################################
-//
 void
 	Tree::TestInstance()
 {
 	SortedSocket::TestInstance();
 
-	//
 	// Check root if not null
-	//
 	if (root != NULL)
 	{
 		Check_Object(root);
 	}
 }
 
-//
 //###########################################################################
 // AddImplementation
 //###########################################################################
-//
 void
 	Tree::AddImplementation(
 		Plug *plug
@@ -178,11 +152,9 @@ void
 	AddValueImplementation(plug, NULL);	
 }
 
-//
 //###########################################################################
 // AddValueImplementation
 //###########################################################################
-//
 void
 	Tree::AddValueImplementation(
 		Plug *plug,
@@ -213,11 +185,9 @@ void
 	SendIteratorMemo(PlugAdded, node);
 }
 
-//
 //###########################################################################
 // FindImplementation
 //###########################################################################
-//
 Plug*
 	Tree::FindImplementation(
 		const void *value
@@ -234,11 +204,9 @@ Plug*
 	return NULL;
 }
 
-//
 //#############################################################################
 // IsEmpty
 //#############################################################################
-//
 bool
 	Tree::IsEmpty()
 {
@@ -246,11 +214,9 @@ bool
 	return (root == NULL);
 }
 
-//
 //###########################################################################
 // MakeTreeNode
 //###########################################################################
-//
 TreeNode*
 	Tree::MakeTreeNode(
       Plug*,
@@ -262,11 +228,9 @@ TreeNode*
 	return NULL;
 }
 
-//
 //###########################################################################
 // CompareTreeNodes
 //###########################################################################
-//
 int
    Tree::CompareTreeNodes(
       TreeNode*,
@@ -278,11 +242,9 @@ int
    return 0;
 }
 
-//
 //###########################################################################
 // CompareValueToTreeNode
 //###########################################################################
-//
 int
    Tree::CompareValueToTreeNode(
       const void*,
@@ -294,11 +256,9 @@ int
    return 0;
 }
 
-//
 //###########################################################################
 // AddTreeNode
 //###########################################################################
-//
 void
 	Tree::AddTreeNode(
 		TreeNode *newNode
@@ -352,11 +312,9 @@ void
 	}
 }
 
-//
 //###########################################################################
 // SeverFromTreeNode
 //###########################################################################
-//
 void
 	Tree::SeverFromTreeNode(
 		TreeNode *node
@@ -369,23 +327,17 @@ void
 	{
 		if (node->less == NULL)
 		{
-			//
 			//--------------------------------------------------------------------
 			// The node has no subtrees
 			//--------------------------------------------------------------------
-			//
 			if (node == root)
 			{
-				//
 				// Tree is now empty, set root to null
-				//
 				root = NULL;
 			}
 			else
 			{
-				//
 				// Set appropiate branch to NULL
-				//
 				Check_Object(node->parent);
 				if (node->parent->less == node)
 					node->parent->less = NULL;
@@ -395,27 +347,21 @@ void
 		}
 		else 
 		{								
-			//
 			//--------------------------------------------------------------------
 			// The node has a less subtree
 			//--------------------------------------------------------------------
-			//
 			Check_Object(node->less);
 
 			if (node == root)
 			{
-				//
 				// Node is root... Set subtree to new root
-				//
 				root = node->less;
 				node->less->parent = NULL;
 			}
 			else
 			{
-				//
 				// Node is not root
 				// Set parents pointer to subtree
-				//
 				Check_Object( node->parent );
 				if (node->parent->less == node)
 				{
@@ -425,9 +371,7 @@ void
 				{
 					node->parent->greater = node->less;
 				}
-				//
 				// Set subtree parent to node parent
-				//
 				node->less->parent = node->parent;
 			}
 		}
@@ -435,48 +379,36 @@ void
 	else {
 		if (node->less == NULL)
 		{
-			//
 			//--------------------------------------------------------------------
 			// The node has a greater subtree
 			//--------------------------------------------------------------------
-			//
 			Check_Object( node->greater );
 			if (node == root)
 			{
-				//
 				// Node is root
 				// Set subtree to new root
-				//
 				root = node->greater;
-				//
 				// Set new root to have null parent
-				//
 				node->greater->parent = NULL;
 			}
 			else
 			{
-				//
 				// Node is not root
 				// Set parents pointer to subtree
-				//
 				Check_Object( node->parent );
 				if (node->parent->less == node)
 					node->parent->less = node->greater;
 				else
 					node->parent->greater = node->greater;
-				//
 				// Set subtree parent to node parent
-				//
 				node->greater->parent = node->parent;
 			}
 		}
 		else
 		{
-			//
 			//--------------------------------------------------------------------
 			// The node has lesser and greater sub-trees
 			//--------------------------------------------------------------------
-			//
 			TreeNode *successor;
 
 			Check_Object(node->less);
@@ -489,43 +421,33 @@ void
 				Check_Object(successor);
 			}
 
-			//
 			// Set successor's parent to subtree
-			//
 			Check_Object(successor->parent);
 			if (successor->parent->less == successor)
 				successor->parent->less = successor->greater;
 			else
 				successor->parent->greater = successor->greater;
 
-			//
 			// Set successor's subtree to parent
-			//
 			if (successor->greater != NULL)
 			{
 				Check_Object(successor->greater);
 				successor->greater->parent = successor->parent;
 			}
 
-			//
 			// Place at node
-			//
 			successor->parent = node->parent;
 			successor->less = node->less;
 			successor->greater = node->greater;
 
 			if (root == node)
 			{
-				//
 				// Node was root
-				//
 				root = successor;
 			}
 			else
 			{
-				//
 				// Set nodes parent to successor
-				//
 				Check_Object(successor->parent);
 				if (successor->parent->less == node)
 					successor->parent->less = successor;
@@ -533,9 +455,7 @@ void
 					successor->parent->greater = successor;
 			}
 
-			//
 			// Set subtrees parent to successor
-			//
 			if (successor->greater != NULL)
 			{
 				Check_Object(successor->greater);
@@ -550,11 +470,9 @@ void
 	}
 }
 
-//
 //###########################################################################
 // SearchForValue
 //###########################################################################
-//
 TreeNode*
 	Tree::SearchForValue(
 		const void *value
@@ -575,11 +493,9 @@ TreeNode*
 	return node;
 }
 
-//
 //###########################################################################
 // TreeIterator
 //###########################################################################
-//
 TreeIterator::TreeIterator(Tree *tree):
 	SortedIterator(tree)
 {
@@ -593,20 +509,16 @@ Iterator*
 	return new TreeIterator(*this);
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 TreeIterator::~TreeIterator()
 {
 	Check_Object(this);
 }
 
-//
 //###########################################################################
 // TestInstance
 //###########################################################################
-//
 void
 	TreeIterator::TestInstance()
 {
@@ -618,11 +530,9 @@ void
 	}
 }
 
-//
 //###########################################################################
 // First
 //###########################################################################
-//
 void
 	TreeIterator::First()
 {
@@ -641,18 +551,14 @@ void
 	currentNode = node;
 }
 
-//
 //###########################################################################
 // Last
 //###########################################################################
-//
 void
 	TreeIterator::Last()
 {
 	Check_Object(this);
-	//
 	// Should never reach here
-	//
 	#ifdef __BCPLUSPLUS__
 		#pragma warn -ccc
 			Verify(False);
@@ -660,11 +566,9 @@ void
 	#endif
 }
 
-//
 //###########################################################################
 // Next
 //###########################################################################
-//
 void
 	TreeIterator::Next()
 {
@@ -702,18 +606,14 @@ void
 	}
 }
 
-//
 //###########################################################################
 // Previous
 //###########################################################################
-//
 void
 	TreeIterator::Previous()
 {
 	Check_Object(this);
-	//
 	// Should never reach here
-	//
 	#ifdef __BCPLUSPLUS__
 		#pragma warn -ccc
 			Verify(False);
@@ -721,11 +621,9 @@ void
 	#endif
 }
 
-//
 //###########################################################################
 // GetCurrentImplementation
 //###########################################################################
-//
 void
 	*TreeIterator::GetCurrentImplementation()
 {
@@ -738,11 +636,9 @@ void
 	return NULL;
 }
 
-//
 //###########################################################################
 // GetSize
 //###########################################################################
-//
 CollectionSize
 	TreeIterator::GetSize()
 {
@@ -757,11 +653,9 @@ CollectionSize
 	return(i);
 }
 
-//
 //###########################################################################
 // Remove
 //###########################################################################
-//
 void
 	TreeIterator::Remove()
 {
@@ -773,11 +667,9 @@ void
 	}
 }
 
-//
 //###########################################################################
 // FindImplementation
 //###########################################################################
-//
 Plug*
 	TreeIterator::FindImplementation(
 		const void *value
@@ -794,11 +686,9 @@ Plug*
 	return NULL;
 }
 
-//
 //###########################################################################
 // ReceiveMemo
 //###########################################################################
-//
 void
 	TreeIterator::ReceiveMemo(
 		IteratorMemo memo,

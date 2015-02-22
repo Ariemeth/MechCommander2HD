@@ -4,7 +4,6 @@
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
-//
 #pragma once
 
 #include "gosFX.hpp"
@@ -21,7 +20,6 @@ namespace gosFX
 	{
 	//----------------------------------------------------------------------
 	// Constructors/Destructors
-	//
 	protected:
 		EffectCloud__Specification(
 			Stuff::MemoryStream *stream,
@@ -68,7 +66,6 @@ namespace gosFX
 	{
 	//----------------------------------------------------------------------------
 	// Class Registration Support
-	//
 	public:
 		static void InitializeClass();
 		static void	TerminateClass();
@@ -82,7 +79,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Class Data Support
-	//
 	protected:
 		EffectCloud(
 			Specification *spec,
@@ -121,14 +117,12 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Testing
-	//
 	public:
 		void
 			TestInstance() const;
 
 	//----------------------------------------------------------------------------
 	// API
-	//
 	protected:
 		bool
 			AnimateParticle(

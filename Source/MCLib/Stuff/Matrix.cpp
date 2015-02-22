@@ -10,10 +10,8 @@
 const Matrix4D
 	Matrix4D::Identity(1);
 
-//
 //###########################################################################
 //###########################################################################
-//
 Matrix4D&
 	Matrix4D::BuildIdentity()
 {
@@ -40,10 +38,8 @@ Matrix4D&
 	return *this;
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 Matrix4D&
 	Matrix4D::operator=(const AffineMatrix4D &m)
 {
@@ -58,10 +54,8 @@ Matrix4D&
 	return *this;
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 Matrix4D&
 	Matrix4D::operator=(const Origin3D& p)
 {
@@ -79,10 +73,8 @@ Matrix4D&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 Matrix4D&
 	Matrix4D::BuildRotation(const EulerAngles &angles)
 {
@@ -114,10 +106,8 @@ Matrix4D&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 Matrix4D&
 	Matrix4D::operator=(const EulerAngles &angles)
 {
@@ -136,10 +126,8 @@ Matrix4D&
 	return BuildRotation(angles);
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 Matrix4D&
 	Matrix4D::BuildRotation(const UnitQuaternion &q)
 {
@@ -173,10 +161,8 @@ Matrix4D&
 	return *this;
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 Matrix4D&
 	Matrix4D::operator=(const Point3D& p)
 {
@@ -206,10 +192,8 @@ Matrix4D&
 	return *this;
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 Matrix4D&
 	Matrix4D::BuildTranslation(const Point3D& p)
 {
@@ -222,10 +206,8 @@ Matrix4D&
 	return *this;
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 bool
 	Stuff::Close_Enough(
 		const Matrix4D &m1,
@@ -246,10 +228,8 @@ bool
 	return true;
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 Matrix4D&
 	Matrix4D::Multiply(
 		const Matrix4D &Source1,
@@ -343,10 +323,8 @@ Matrix4D&
 	return *this;
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 Matrix4D&
 	Matrix4D::Multiply(
 		const Matrix4D &Source1,
@@ -424,10 +402,8 @@ Matrix4D&
 	return *this;
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 Matrix4D&
 	Matrix4D::Multiply(
 		const AffineMatrix4D &m1,
@@ -538,10 +514,8 @@ Matrix4D&
 	return (*this);
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 #if !defined(Spew)
 	void
 		Spew(
@@ -585,10 +559,8 @@ Matrix4D&
 	}
 #endif
 
-//
 //###########################################################################
 //###########################################################################
-//
 void
 	Matrix4D::SetPerspective(
 		Scalar near_clip,
@@ -603,22 +575,18 @@ void
 	Verify(left_clip - right_clip > SMALL);
 	Verify(top_clip - bottom_clip > SMALL);
 
-	//
 	//-------------------------------------------------------
 	// Calculate the horizontal, vertical, and forward ranges
 	//-------------------------------------------------------
-	//
 	Scalar horizontal_range = APPLY_LEFT_SIGN(1.0f) / (left_clip - right_clip);
 	Scalar vertical_range = APPLY_UP_SIGN(1.0f) / (top_clip - bottom_clip);
 	Scalar depth_range = APPLY_FORWARD_SIGN(1.0f) / (far_clip - near_clip);
 
-	//
 	//------------------------------------------------------------------------
 	// Set up the camera to clip matrix.  This matrix takes camera space
 	// coordinates and maps them into a homogeneous culling space where valid
 	// X, Y, and Z axis values (when divided by W) will all be between 0 and 1
 	//------------------------------------------------------------------------
-	//
 	(*this)(LEFT_AXIS, LEFT_AXIS) = near_clip * horizontal_range;
 	(*this)(LEFT_AXIS, UP_AXIS) = 0.0f;
 	(*this)(LEFT_AXIS, FORWARD_AXIS) = 0.0f;
@@ -703,11 +671,9 @@ void
 	Verify(horizontal_fov > SMALL);
 	Verify(height_to_width > SMALL);
 
-	//
 	//-------------------------------------------------------------
 	// Calculate the near plane offsets to the side culling planes
 	//-------------------------------------------------------------
-	//
 	Scalar width = (Scalar)(near_clip * tan(horizontal_fov*0.5f));
 	Scalar height = width * height_to_width;
 	SetPerspective(near_clip, far_clip, width, -width, height, -height);

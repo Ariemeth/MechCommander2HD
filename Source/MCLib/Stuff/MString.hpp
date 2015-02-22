@@ -69,7 +69,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// ASCII Conversions
-	//
 	void
 		Convert_From_Ascii(
 			const char* str,
@@ -148,7 +147,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Construction, Destruction
-	//
 	private:
 		MStringRepresentation();
 		MStringRepresentation(const MStringRepresentation &str);
@@ -162,11 +160,8 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Length, Size
-	//
 	private:
-		//
 		// Length returns strlen of string
-		//
 		size_t
 			GetLength() const;
 		void
@@ -174,33 +169,24 @@ namespace Stuff {
 		void
 			AllocateLength(size_t length);
 
-		//
 		// Size returns memory allocation size
-		//
 		size_t
 			GetSize() const;
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Accesors & Manipulation
-	//
 	private:
-		//
 		// create a c-string from MStringRepresentation method
 		// HACK - ECH 11/1/95 - Remove const to support 3rd party libs
-		//
 		operator char*() const;
 
-		//
 		// assignment method
-		//
 		MStringRepresentation
 			operator = (const MStringRepresentation &str);
 		MStringRepresentation
 			operator = (const char *cstr);
 
-		//
 		// concatenation methods
-		//
 		friend MStringRepresentation
 			operator + (
 				const MStringRepresentation &str1,
@@ -218,9 +204,7 @@ namespace Stuff {
 		void
 			operator += (char ch);
 
-		//
 		// comparison methods
-		//
 		int
 			Compare(const MStringRepresentation &str) const;
 
@@ -240,9 +224,7 @@ namespace Stuff {
 		bool
 			operator == (const char *cstr) const;
 
-		//
 		// character retrieval method
-		//
 		char
 			operator [] (size_t pos) const;
 
@@ -252,17 +234,13 @@ namespace Stuff {
 				char *delimiters=NULL
 			) const;
 
-		//
 		// case-modification methods
-		//
 		void
 			ToUpper();
 		void
 			ToLower();
 
-		//
 		// stream input/output methods
-		//
 		#if !defined(Spew)
 			friend void
 				::Spew(
@@ -294,7 +272,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Reference count methods
-	//
 	private:
 		void
 			IncrementReferenceCount();
@@ -304,23 +281,16 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Private Data
-	//
 	private:
-		//
 		// class constant
-		//
 		static size_t
 			allocationIncrement;
 
-		//
 		// calc alloc size for needed bytes
-		//
 		static size_t
 			CalculateSize(size_t needed);
 
-		//
 		// instance variables
-		//
 		size_t
 			stringSize;
 		size_t
@@ -328,9 +298,7 @@ namespace Stuff {
 		char
 			*stringText;
 
-		//
 		// reference count
-		//
 		int
 			referenceCount;
 	};
@@ -466,10 +434,8 @@ namespace Stuff {
 	inline IteratorPosition
 		MStringRepresentation::GetHashValue()
 	{
-		//
 		// Verify that the IteratorPosition is 32 bits wide
 		// Hash value is first 16 bits of fileID and first 16 bits of recordID
-		//
 		Verify(sizeof(IteratorPosition) == sizeof(DWORD));
 
 		static int andAway[3] = {0x000000ff, 0x0000ffff, 0x00ffffff };
@@ -502,7 +468,6 @@ namespace Stuff {
 	{
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Construction, Destruction
-	//
 	public:
 		MString();
 		MString(const MString &str);
@@ -517,11 +482,8 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Length, Size
-	//
 	public:
-		//
 		// Length returns strlen of string
-		//
 		size_t
 			GetLength() const;
 		void
@@ -529,33 +491,24 @@ namespace Stuff {
 		void
 			AllocateLength(size_t length);
 
-		//
 		// Size returns memory allocation size
-		//
 		size_t
 			GetSize() const;
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Accesors & Manipulation
-	//
 	public:
-		//
 		// create a c-string from MString method
 		// HACK - ECH 11/1/95 - Remove const to support 3rd party libs
-		//
 		operator char*() const;
 
-		//
 		// assignment method
-		//
 		MString&
 			operator = (const MString &str);
 		MString&
 			operator = (const char *cstr);
 
-		//
 		// concatenation methods
-		//
 		friend MString
 			operator + (
 				const MString &str1, 
@@ -580,9 +533,7 @@ namespace Stuff {
 		void
 			operator += (char ch);
 
-		//
 		// comparison methods
-		//
 		int
 			Compare(const MString &str) const;
 
@@ -602,9 +553,7 @@ namespace Stuff {
 		bool
 			operator == (const char *cstr) const;
 		
-		//
 		// character retrieval method		
-		//
 		char
 			operator [] (size_t pos) const;
 	
@@ -614,17 +563,13 @@ namespace Stuff {
 				char *delimiters=NULL
 			) const;
 
-		//
 		// case-modification methods
-		//
 		void
 			ToUpper();
 		void
 			ToLower();
 
-		//
 		// stream input/output methods
-		//
 		#if !defined(Spew)
 			friend void
 				::Spew(
@@ -660,7 +605,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Private Data
-	//
 	private:
 		MStringRepresentation
 			*representation;

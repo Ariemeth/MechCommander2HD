@@ -39,9 +39,7 @@ namespace Stuff {
 		static const Vector4D
 			Identity;
 
-		//
 		// Constructors
-		//
 		Vector4D()
 			{}
 		Vector4D(
@@ -57,9 +55,7 @@ namespace Stuff {
 		explicit Vector4D(const Point3D &p)
 			{*this = p;}
 
-		//
 		// Assignment operators
-		//
 		Vector4D&
 			operator=(const Vector4D &v)
 				{
@@ -79,9 +75,7 @@ namespace Stuff {
 					x = p.x; y = p.y; z = p.z; w = 1.0f; return *this;
 				}
 
-		//
 		// Index operators
-		//
 		const Scalar&
 			operator[](size_t index) const
 				{
@@ -103,9 +97,7 @@ namespace Stuff {
 			operator!() const
 				{return Small_Enough(*this);}
 
-		//
 		// "Close-enough" comparison operators
-		//
 		friend bool
 			Close_Enough(
 				const Vector4D &v1,
@@ -119,10 +111,8 @@ namespace Stuff {
 			operator!=(const Vector4D& v) const
 				{return !Close_Enough(*this,v);}
 
-		//
 		// The following operators all assume that this points to the destination
 		// of the operation results
-		//
 		Vector4D&
 			Negate(const Vector4D &v)
 				{
@@ -221,9 +211,7 @@ namespace Stuff {
 			operator/=(const Vector4D &v)
 				{return Divide(*this,v);}
 
-		//
 		//  Transforms
-		//
 		Vector4D&
 			Multiply(
 				const Vector4D &v,
@@ -509,9 +497,7 @@ namespace Stuff {
 				return *this;
 			}
 */
-		//
 		// Support functions
-		//
 		Scalar
 			GetLengthSquared() const
 				{return operator*(*this);}

@@ -1,9 +1,7 @@
 //******************************************************************************************
 //	mission.cpp - This file contains the mission class code
 //		Missions are what scenarios were in MechCommander 1.
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -144,9 +142,7 @@ unsigned long Mission::terminationResult = mis_PLAYING;
 extern float OneOverProcessorSpeed;
 extern PriorityQueuePtr	openList;
 
-//
 // Macro used for statistic timing of main functions
-//
 #ifdef LAB_ONLY
 #define ProfileTime(x,y)	x=GetCycles();y;x=GetCycles()-x;
 extern __int64 MCTimeTerrainUpdate 	;
@@ -855,11 +851,9 @@ void Mission::createPartObject (long partIndex, MoverPtr mover) {
 	//------------------------------------------------------------------
 	// Create the object -- If object is Not DESTROYED Already OR
 	// it doesn't exist yet.  (parts[i].object = NULL
-	//
 	// This could NEVER have worked.  Destroyeds still need to be created.  Otherwise,
 	// why is there code inside this IF which checks if destroyed?  I blame Glenn's Crazy Bracing Style!
 	// Create the part just like always, just start it disabled.
-	// 
 	// If the mech is not on OUR team, you can recover it during the mission.
 	// If the mech IS on our team, it starts shutdown and NOT added to Heidi's interface.
 	// When we get close enough to it, it adds itself to Heidi's world and we can command it!
@@ -877,7 +871,6 @@ void Mission::createPartObject (long partIndex, MoverPtr mover) {
 		// This is MONDO DIFFERENT NOW.
 		// Profiles are in the mech's CSV file.  You should just init with mover with
 		// the variant number and the rest is done in the mover itself.
-		//
 		// Heidi, this is what needs to change in the mission.fit files!
 		// -fs 12/7/99		A date which will live in Infamy.
 		// Must also load Ground Vehicles the OLDen WAY until further notice.
@@ -1121,7 +1114,6 @@ typedef struct _MoverInitData {
 			// This is MONDO DIFFERENT NOW.
 			// Profiles are in the mech's CSV file.  You should just init with mover with
 			// the variant number and the rest is done in the mover itself.
-			//
 			// Heidi, this is what needs to change in the mission.fit files!
 			// -fs 12/7/99		A date which will live in Infamy.
 			// Must also load Ground Vehicles the OLDen WAY until further notice.
@@ -2998,9 +2990,7 @@ void Mission::destroy (bool initLogistics)
 	// Shut down the object system
 	// CANNOT just delete heaps do to our ASSHOLE MUNGA/ADEPT
 	// CODE which cannot be shutdown and restarted more then once.
-	//
 	// I wish I could just do demos and call that game experience!!!!
-	//
 	if (ObjectManager)
 	{
 		ObjectManager->destroy();

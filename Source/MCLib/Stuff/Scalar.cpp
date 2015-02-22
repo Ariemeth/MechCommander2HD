@@ -32,11 +32,9 @@ void
 	)
 {
 
-	//
 	//---------------------------------
 	// See if the quadratic is solvable
 	//---------------------------------
-	//
 	*range = b*b - 4.0f*a*c;
 	if (*range < 0.0f || Small_Enough(a))
 	{
@@ -45,11 +43,9 @@ void
 
 	else
 	{
-		//
 		//---------------------------
 		// Solve the single root case
 		//---------------------------
-		//
 		a *= 2.0f;
 		*center = -b / a;
 		if (*range < SMALL)
@@ -57,11 +53,9 @@ void
 			*range = 0.0f;
 		}
 
-		//
 		//--------------------------
 		// Find the two-root extents
 		//--------------------------
-		//
 		else
 		{
 			*range = Sqrt(*range);

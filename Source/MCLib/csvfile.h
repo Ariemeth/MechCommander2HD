@@ -1,11 +1,7 @@
 //---------------------------------------------------------------------------
-//
 // csvfile.h - This file contains the class declaration for the CSV Files
-//
 //				The CSV file is an Excel csv style file.
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

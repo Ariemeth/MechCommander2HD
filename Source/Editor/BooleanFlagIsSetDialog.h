@@ -9,7 +9,6 @@
 #pragma once
 #endif // _MSC_VER > 1000
 // BooleanFlagIsSetDialog.h : header file
-//
 
 /////////////////////////////////////////////////////////////////////////////
 // CBooleanFlagIsSetDialog dialog

@@ -24,7 +24,6 @@ extern DynamicArrayOf<Vector2DScalar> *lightMapUVs;
 extern DynamicArrayOf<Scalar> *lightMapSqFalloffs;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_Terrain2::InitializeClass()
 {
@@ -49,7 +48,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_Terrain2::TerminateClass()
 {
@@ -67,7 +65,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_Terrain2::MLR_Terrain2(
 	ClassData *class_data,
 	MemoryStream *stream,
@@ -204,7 +201,6 @@ MLR_Terrain2::MLR_Terrain2(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_Terrain2::MLR_Terrain2(ClassData *class_data):
 	MLR_I_DeT_TMesh(class_data)
 {
@@ -233,14 +229,12 @@ MLR_Terrain2::MLR_Terrain2(ClassData *class_data):
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_Terrain2::~MLR_Terrain2()
 {
 	Check_Object(this);
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_Terrain2*
 	MLR_Terrain2::Make(
 		MemoryStream *stream,
@@ -257,7 +251,6 @@ MLR_Terrain2*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_Terrain2::Save(MemoryStream *stream)
 {
@@ -329,7 +322,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_Terrain2::TestInstance() const
 {
@@ -337,7 +329,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_Terrain2::SetCurrentDepth(unsigned char d)
 {
@@ -363,7 +354,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_Terrain2::SetLevelTexture(int lev, int handle)
 {
@@ -378,7 +368,6 @@ void
  }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_Terrain2::CalculateUVs()
 {
@@ -406,7 +395,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 
 #define I_SAY_YES_TO_DETAIL_TEXTURES
 #define I_SAY_YES_TO_TERRAIN2
@@ -443,7 +431,6 @@ extern bool
 	CheckForBigTriangles(DynamicArrayOf<Vector2DScalar> *lightMapUVs, int stride);
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_Terrain2::LightMapLighting(MLRLight *light)
 {

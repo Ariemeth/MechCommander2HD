@@ -16,7 +16,6 @@ MLR_I_C_DeT_PMesh::ClassData*
 	MLR_I_C_DeT_PMesh::DefaultData = NULL;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_DeT_PMesh::InitializeClass()
 {
@@ -38,7 +37,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_DeT_PMesh::TerminateClass()
 {
@@ -53,7 +51,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_C_DeT_PMesh::MLR_I_C_DeT_PMesh(
 	ClassData *class_data,
 	MemoryStream *stream,
@@ -113,7 +110,6 @@ MLR_I_C_DeT_PMesh::MLR_I_C_DeT_PMesh(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_C_DeT_PMesh::MLR_I_C_DeT_PMesh(ClassData *class_data):
 	MLR_I_DeT_PMesh(class_data), colors(0)
 {
@@ -122,14 +118,12 @@ MLR_I_C_DeT_PMesh::MLR_I_C_DeT_PMesh(ClassData *class_data):
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_C_DeT_PMesh::~MLR_I_C_DeT_PMesh()
 {
 	Check_Object(this);
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_C_DeT_PMesh*
 	MLR_I_C_DeT_PMesh::Make(
 		MemoryStream *stream,
@@ -147,7 +141,6 @@ MLR_I_C_DeT_PMesh*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_DeT_PMesh::Save(MemoryStream *stream)
 {
@@ -176,7 +169,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_DeT_PMesh::TestInstance() const
 {
@@ -184,7 +176,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_DeT_PMesh::Copy(
 		MLR_I_C_PMesh*,
@@ -201,7 +192,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_DeT_PMesh::SetColorData(
 #if COLOR_AS_DWORD
@@ -222,7 +212,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_DeT_PMesh::GetColorData(
 #if COLOR_AS_DWORD
@@ -238,7 +227,6 @@ void
 	*dataSize = colors.GetLength();
 }
 
-//
 void
 	MLR_I_C_DeT_PMesh::PaintMe(
 #if COLOR_AS_DWORD
@@ -297,7 +285,6 @@ void
 #undef CLASSNAME
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_C_DeT_PMesh*
 	MidLevelRenderer::CreateIndexedCube_Color_NoLit_DetTex(
 		Scalar half, 
@@ -443,7 +430,6 @@ MLR_I_C_DeT_PMesh*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRShape*
 	MidLevelRenderer::CreateIndexedIcosahedron_Color_NoLit_DetTex(
 		IcoInfo& icoInfo,

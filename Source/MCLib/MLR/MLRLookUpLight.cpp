@@ -12,7 +12,6 @@ MLRLookUpLight::ClassData*
 	MLRLookUpLight::DefaultData = NULL;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRLookUpLight::InitializeClass()
 {
@@ -28,7 +27,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRLookUpLight::TerminateClass()
 {
@@ -38,7 +36,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRLookUpLight::MLRLookUpLight() :
 	MLRInfiniteLight(DefaultData)
 {
@@ -59,7 +56,6 @@ MLRLookUpLight::MLRLookUpLight() :
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRLookUpLight::MLRLookUpLight(
 	Stuff::MemoryStream *stream,
 	int version
@@ -90,7 +86,6 @@ MLRLookUpLight::MLRLookUpLight(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRLookUpLight::MLRLookUpLight(Stuff::Page *page):
 	MLRInfiniteLight(DefaultData, page)
 {
@@ -133,7 +128,6 @@ MLRLookUpLight::MLRLookUpLight(Stuff::Page *page):
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRLookUpLight::~MLRLookUpLight()
 {
 	if(maps!=NULL)
@@ -151,7 +145,6 @@ MLRLookUpLight::~MLRLookUpLight()
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRLookUpLight::Save(Stuff::MemoryStream *stream)
 {
@@ -172,7 +165,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRLookUpLight::Write(Stuff::Page *page)
 {
@@ -199,7 +191,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRLookUpLight::SetMapSizeAndName(int x, int z, const char *name)
 {
@@ -226,7 +217,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 bool
 	MLRLookUpLight::LoadMap()
 {
@@ -274,7 +264,6 @@ bool
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRLookUpLight::SetLightToShapeMatrix(const LinearMatrix4D& worldToShape)
 {
@@ -286,7 +275,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRLookUpLight::TestInstance()
 {
@@ -294,7 +282,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRLookUpLight::LightVertex(const MLRVertexData& vertexData)
 {
@@ -323,12 +310,10 @@ void
 
 	Scalar mapIntensity = maps[map_z*mapZoneCountX+map_x][(off_z<<8)+off_x]*One_Over_255;
 
-	//
 	//-------------------------------------------------------------------
 	// Now we reduce the light level falling on the vertex based upon the
 	// cosine of the angle between light and normal
 	//-------------------------------------------------------------------
-	//
 	Scalar cosine = -(light_z * (*vertexData.normal))*mapIntensity*intensity;
 
 #if COLOR_AS_DWORD

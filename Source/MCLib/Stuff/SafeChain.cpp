@@ -7,19 +7,15 @@
 
 #include "StuffHeaders.hpp"
 
-//
 //###########################################################################
 // SCHAINLINK
 //###########################################################################
-//
 
 MemoryBlock*
 	SafeChainLink::AllocatedMemory = NULL;
 
-//
 //###########################################################################
 //###########################################################################
-//
 void
 	SafeChainLink::InitializeClass(
 		size_t block_count,
@@ -37,10 +33,8 @@ void
 		);
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 void
 	SafeChainLink::TerminateClass()
 {
@@ -48,11 +42,9 @@ void
 	AllocatedMemory = NULL;
 }
 
-//
 //###########################################################################
 // SafeChainLink
 //###########################################################################
-//
 SafeChainLink::SafeChainLink(
 	SafeChain *chain,
 	Plug *plug,
@@ -61,11 +53,9 @@ SafeChainLink::SafeChainLink(
 ):
 	Link(chain, plug)
 {
-	//
 	//-------------------------
 	// Link into existing chain
 	//-------------------------
-	//
 	if ((this->nextSafeChainLink = nextSafeChainLink) != NULL)
 	{
 		Check_Object(nextSafeChainLink);
@@ -78,28 +68,22 @@ SafeChainLink::SafeChainLink(
 	}
 }
 
-//
 //###########################################################################
 // ~SafeChainLink
 //###########################################################################
-//
 SafeChainLink::~SafeChainLink()
 {
 	Check_Object(this);
 	SafeChain *chain = Cast_Object(SafeChain*, socket);
 
-	//
 	//---------------------------------------------
 	// Notify iterators that the link is going away
 	//---------------------------------------------
-	//
 	chain->SendIteratorMemo(PlugRemoved, this);
 
-	//
 	//---------------------------
 	// Remove from existing links
 	//---------------------------
-	//
 	if (prevSafeChainLink != NULL)
 	{
 		Check_Object(prevSafeChainLink);
@@ -122,20 +106,16 @@ SafeChainLink::~SafeChainLink()
 	}
 	prevSafeChainLink = nextSafeChainLink = NULL;
 
-	//
 	//------------------------------------------
 	// Remove this link from any plug references
 	//------------------------------------------
-	//
 	ReleaseFromPlug();
 
-	//
 	//-------------------------------------------------------------
 	// Tell the node to release this link.  Note that this link
 	// is not referenced by the plug or the chain at this point in
 	// time.
 	//-------------------------------------------------------------
-	//
 	if (chain->GetReleaseNode() != NULL)
 	{
 		Check_Object(chain->GetReleaseNode());
@@ -143,11 +123,9 @@ SafeChainLink::~SafeChainLink()
 	}
 }
 
-//
 //###########################################################################
 // TestInstance
 //###########################################################################
-//
 void
 	SafeChainLink::TestInstance()
 {
@@ -163,17 +141,13 @@ void
 	}
 }
 
-//
 //###########################################################################
 // SCHAIN
 //###########################################################################
-//
 
-//
 //###########################################################################
 // SafeChain
 //###########################################################################
-//
 SafeChain::SafeChain(
 	Node *node
 ) :
@@ -185,11 +159,9 @@ SafeSocket(
 	tail = NULL;
 }
 
-//
 //###########################################################################
 // ~SafeChain
 //###########################################################################
-//
 SafeChain::~SafeChain()
 {
 	Check_Object(this);
@@ -205,11 +177,9 @@ SafeChain::~SafeChain()
 	}
 }
 
-//
 //###########################################################################
 // TestInstance
 //###########################################################################
-//
 void
 	SafeChain::TestInstance()
 {
@@ -221,11 +191,9 @@ void
 	}
 }
 
-//
 //###########################################################################
 // AddImplementation
 //###########################################################################
-//
 void
 	SafeChain::AddImplementation(
 		Plug *plug
@@ -240,11 +208,9 @@ void
 	}
 }
 
-//
 //#############################################################################
 // IsEmpty
 //#############################################################################
-//
 bool
 	SafeChain::IsEmpty()
 {
@@ -252,11 +218,9 @@ bool
 	return (head == NULL);
 }
 
-//
 //###########################################################################
 // InsertPlug
 //###########################################################################
-//
 SafeChainLink*
 	SafeChain::InsertSafeChainLink(
 		Plug *plug,
@@ -284,11 +248,9 @@ SafeChainLink*
 	return new_link;
 }
 
-//
 //###########################################################################
 // SafeChainIterator
 //###########################################################################
-//
 SafeChainIterator::SafeChainIterator(
 	SafeChain *chain,
 	bool move_next_on_remove
@@ -313,11 +275,9 @@ SafeChainIterator::~SafeChainIterator()
 	Check_Object(this);
 }
 
-//
 //###########################################################################
 // TestInstance
 //###########################################################################
-//
 void
 	SafeChainIterator::TestInstance() const
 {
@@ -329,11 +289,9 @@ void
 	}
 }
 
-//
 //###########################################################################
 // First
 //###########################################################################
-//
 void
 	SafeChainIterator::First()
 {
@@ -341,11 +299,9 @@ void
 	currentLink = Cast_Object(SafeChain*, socket)->head;
 }
 
-//
 //###########################################################################
 // Last
 //###########################################################################
-//
 void
 	SafeChainIterator::Last()
 {
@@ -353,11 +309,9 @@ void
 	currentLink = Cast_Object(SafeChain*, socket)->tail;
 }
 
-//
 //###########################################################################
 // Next
 //###########################################################################
-//
 void
 	SafeChainIterator::Next()
 {
@@ -366,11 +320,9 @@ void
 	currentLink = currentLink->nextSafeChainLink;
 }
 
-//
 //###########################################################################
 // Previous
 //###########################################################################
-//
 void
 	SafeChainIterator::Previous()
 {
@@ -379,11 +331,9 @@ void
 	currentLink = currentLink->prevSafeChainLink;
 }
 
-//
 //###########################################################################
 // ReadAndNextImplementation
 //###########################################################################
-//
 void*
 	SafeChainIterator::ReadAndNextImplementation()
 {
@@ -400,11 +350,9 @@ void*
 	return NULL;
 }
 
-//
 //###########################################################################
 // ReadAndPreviousImplementation
 //###########################################################################
-//
 void*
 	SafeChainIterator::ReadAndPreviousImplementation()
 {
@@ -421,11 +369,9 @@ void*
 	return NULL;
 }
 
-//
 //###########################################################################
 // GetCurrentImplementation
 //###########################################################################
-//
 void*
 	SafeChainIterator::GetCurrentImplementation()
 {
@@ -438,11 +384,9 @@ void*
 	return NULL;
 }
 
-//
 //###########################################################################
 // GetSize
 //###########################################################################
-//
 CollectionSize
 	SafeChainIterator::GetSize()
 {
@@ -463,11 +407,9 @@ CollectionSize
 	return count;
 }
 
-//
 //###########################################################################
 // GetNthImplementation
 //###########################################################################
-//
 void*
 	SafeChainIterator::GetNthImplementation(
 		CollectionSize index
@@ -495,11 +437,9 @@ void*
 	return NULL;
 }
 
-//
 //###########################################################################
 // Remove
 //###########################################################################
-//
 void
 	SafeChainIterator::Remove()
 {
@@ -509,11 +449,9 @@ void
 	delete currentLink;
 }
 
-//
 //#############################################################################
 // InsertImplementation
 //#############################################################################
-//
 void
 	SafeChainIterator::InsertImplementation(Plug *plug)
 {
@@ -523,11 +461,9 @@ void
 	Check_Object(currentLink);
 }
 
-//
 //###########################################################################
 // ReceiveMemo
 //###########################################################################
-//
 void
 	SafeChainIterator::ReceiveMemo(
 		IteratorMemo memo,

@@ -18,7 +18,6 @@
 		Trace::NextTraceID = 0;
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//
 	Trace::Trace(
 		const char* name,
 		Type type 
@@ -37,7 +36,6 @@
 
 	#if defined(USE_TIME_ANALYSIS)
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		//
 		void
 			Trace::PrintUsage(Scalar usage)
 		{
@@ -57,7 +55,6 @@
 		BitTrace::NextBit = 0;
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//
 	BitTrace::BitTrace(const char* name):
 		Trace(name, BitType)
 	{
@@ -76,7 +73,6 @@
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//
 	void
 		BitTrace::DumpTraceStatus()
 	{
@@ -90,7 +86,6 @@
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//
 	void
 		BitTrace::ResetTrace()
 	{
@@ -109,7 +104,6 @@
 	#if defined(USE_TIME_ANALYSIS)
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		//
 		void
 			BitTrace::StartTiming()
 		{
@@ -118,7 +112,6 @@
 		}
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		//
 		Scalar
 			BitTrace::CalculateUsage(
 				Time when,
@@ -135,7 +128,6 @@
 		}
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		//
 		void
 			BitTrace::PrintUsage(Scalar usage)
 		{
@@ -150,7 +142,6 @@
 	#endif
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//
 	void
 		BitTrace::Set()
 	{
@@ -192,7 +183,6 @@
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//
 	void
 		BitTrace::Clear()
 	{
@@ -238,7 +228,6 @@
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//
 	void
 		BitTrace::TestInstance()
 	{
@@ -269,7 +258,6 @@
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//
 	TraceManager::TraceManager():
 		traceChain(NULL)
 	{
@@ -283,7 +271,6 @@
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//
 	TraceManager::~TraceManager()
 	{
 		Check_Object(this);
@@ -304,7 +291,6 @@
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//
 	void
 		TraceManager::Add(Trace *trace)
 	{
@@ -315,7 +301,6 @@
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//
 	void
 		TraceManager::DumpTracesStatus()
 	{
@@ -333,7 +318,6 @@
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//
 	void
 		TraceManager::ResetTraces()
 	{
@@ -357,13 +341,10 @@
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//
 	const char*
 		TraceManager::GetNameOfTrace(int bit_no)
 	{
-		//
 		// Set up the iterator
-		//
 		ChainIteratorOf<Trace*> traces(&traceChain);
 		Trace *trace;
 		while ((trace = traces.ReadAndNext()) != NULL)
@@ -385,7 +366,6 @@
 	#if defined(USE_TIME_ANALYSIS)
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		//
 		void
 			TraceManager::StartTimingAnalysis()
 		{
@@ -412,7 +392,6 @@
 		}
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		//
 		int
 			TraceManager::SnapshotTimingAnalysis(bool print)
 		{
@@ -456,7 +435,6 @@
 	#if defined(USE_TRACE_LOG)
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		//
 		void
 			TraceManager::CreateTraceLog(
 				size_t max_trace_count,
@@ -477,7 +455,6 @@
 		}
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		//
 		void
 			TraceManager::SaveTraceLog(const char* filename)
 		{
@@ -486,29 +463,23 @@
 			{
 				Check_Object(allocatedTraceLog);
 
-				//
 				//--------------------------------------------------------
 				// Rewind the memory stream and save it out in a disk file
 				//--------------------------------------------------------
-				//
 				FileStream output(filename, FileStream::WriteOnly);
 				size_t size = allocatedTraceLog->GetBytesUsed();
 				if (size > 0)
 				{
 					BYTE trace_count = GetTraceCount();
 
-					//
 					//----------------------------
 					// Write out the record header
 					//----------------------------
-					//
 					output << static_cast<int>('RVNO') << sizeof(int) << 2;
 
-					//
 					//---------------------------------------------------------
 					// Write out the header section after figuring out its size
 					//---------------------------------------------------------
-					//
 					ChainIteratorOf<Trace*> traces(&traceChain);
 					Trace *trace;
 					int header_size = sizeof(int);
@@ -544,11 +515,9 @@
 					}
 				}
 
-				//
 				//-------------------
 				// Release the memory
 				//-------------------
-				//
 				output.Close();
 
 				TraceSample *samples =
@@ -563,7 +532,6 @@
 		}
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		//
 		void
 			TraceManager::MarkTraceLog()
 		{
@@ -586,7 +554,6 @@
 		}
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		//
 		void
 			TraceManager::SuspendTraceLogging()
 		{
@@ -610,7 +577,6 @@
 		}
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		//
 		void
 			TraceManager::ResumeTraceLogging()
 		{

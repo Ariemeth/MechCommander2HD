@@ -16,7 +16,6 @@ MLR_I_C_PMesh::ClassData*
 	MLR_I_C_PMesh::DefaultData = NULL;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_PMesh::InitializeClass()
 {
@@ -38,7 +37,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_PMesh::TerminateClass()
 {
@@ -53,7 +51,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_C_PMesh::MLR_I_C_PMesh(
 	ClassData *class_data,
 	MemoryStream *stream,
@@ -113,7 +110,6 @@ MLR_I_C_PMesh::MLR_I_C_PMesh(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_C_PMesh::MLR_I_C_PMesh(ClassData *class_data):
 	MLR_I_PMesh(class_data), colors(0)
 {
@@ -143,14 +139,12 @@ void
 */
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_C_PMesh::~MLR_I_C_PMesh()
 {
 	Check_Object(this);
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_C_PMesh*
 	MLR_I_C_PMesh::Make(
 		MemoryStream *stream,
@@ -167,7 +161,6 @@ MLR_I_C_PMesh*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_PMesh::Save(MemoryStream *stream)
 {
@@ -196,7 +189,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_PMesh::TestInstance() const
 {
@@ -204,7 +196,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_PMesh::SetColorData(
 #if COLOR_AS_DWORD
@@ -225,7 +216,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_PMesh::GetColorData(
 #if COLOR_AS_DWORD
@@ -242,7 +232,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_C_PMesh::PaintMe(
 #if COLOR_AS_DWORD
@@ -299,7 +288,6 @@ void
 #undef CLASSNAME
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_C_PMesh*
 	MidLevelRenderer::CreateIndexedCube_Color_NoLit(
 		Scalar half, 
@@ -437,7 +425,6 @@ MLR_I_C_PMesh*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_PMesh*
 	MidLevelRenderer::CreateIndexedViewFrustrum_Color_NoLit(
 		Scalar near_clip,
@@ -600,7 +587,6 @@ MLR_I_PMesh*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRShape*
 	MidLevelRenderer::CreateIndexedIcosahedron_Color_NoLit(
 		IcoInfo& icoInfo,

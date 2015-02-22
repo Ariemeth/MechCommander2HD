@@ -4,24 +4,18 @@
 
 //---------------------------------------------------------------------------------------------------
 // Screen Clip code for use with video cards without guard bands and BLADE.
-// 
 // Generally, we will only need one or two of the below routines per triangle.
-//
 // If a triangle is completely on screen, none of the below should be called.
-//
 // Each triangle can be easily checked to see which of the below should be 
 // called in its case.  An easy, low-end machine optimization would be to
 // NOT call any of the below for TGL/MSL shapes which are partly off screen
 // and simply not to draw the shape.  Profiling will indicate if this is
 // necessary.  
-//
 // Color space clipping is HUGELY painful and we are cheating until it 
 // becomes necessary to do otherwise.  
-//
 // Triangles will be converted into polygons with as many as five sides.
 // It will be necessary in the draw code to hand the vertices down to
 // GOS/BLADE in triangles to avoid any weirdness in their code!
-//
 // These routines are easily optimized and assembled if and when it becomes
 // necessary to do so.  Routines should be inlined for speed!
 //---------------------------------------------------------------------------------------------------

@@ -21,7 +21,6 @@ RegisteredClass::ClassData*
 	RegisteredClass::ClassDataArray[ClassIDCount];
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	RegisteredClass::InitializeClass()
 {
@@ -32,7 +31,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	RegisteredClass::TerminateClass()
 {
@@ -42,7 +40,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 RegisteredClass::RegisteredClass(ClassData *class_data):
 	classData(class_data)
 {
@@ -50,7 +47,6 @@ RegisteredClass::RegisteredClass(ClassData *class_data):
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 const char*
 	RegisteredClass::GetClassString() const
 {
@@ -61,7 +57,6 @@ const char*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	RegisteredClass::TestInstance() const
 {
@@ -73,18 +68,15 @@ void
 //#############################################################################
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 RegisteredClass__ClassData::RegisteredClass__ClassData(
 	RegisteredClass::ClassID class_id,
 	const char *name,
 	RegisteredClass__ClassData *parent
 )
 {
-	//
 	//--------------------------------
 	// Set up the class data variables
 	//--------------------------------
-	//
 	Verify(static_cast<unsigned>(class_id) < ClassIDCount);
 	classID = class_id;
 	className = name;
@@ -94,12 +86,10 @@ RegisteredClass__ClassData::RegisteredClass__ClassData(
 	Verify(!RegisteredClass::ClassDataArray[class_id]);
 	RegisteredClass::ClassDataArray[class_id] = this;
 
-	//
 	//--------------------------------------------------------------------
 	// If this class has a parent, hook up to it, otherwise we must be the
 	// root class
 	//--------------------------------------------------------------------
-	//
 	if (parentClass)
 	{
 		Check_Object(parent);
@@ -112,31 +102,26 @@ RegisteredClass__ClassData::RegisteredClass__ClassData(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 RegisteredClass__ClassData::~RegisteredClass__ClassData()
 {
 	Check_Object(this);
 
-	//
 	//----------------------------------------------------------------------
 	// Make sure there are no children left, then if this is the root class,
 	// make sure it's parent link is NULL
 	//----------------------------------------------------------------------
-	//
 	Verify(!firstChildClass);
 	if (classID == RegisteredClassClassID)
 	{
 		Verify(!parentClass);
 	}
 
-	//
 	//-----------------------------------------------------------------------
 	// Otherwise, this is the a child class, so make sure it is it's parent's
 	// current first child.  This ensures that the deallocation order is
 	// symmetrical to the allocation order.  Then remove it from the linked
 	// list
 	//-----------------------------------------------------------------------
-	//
 	else
 	{
 		Check_Object(parentClass);
@@ -144,18 +129,15 @@ RegisteredClass__ClassData::~RegisteredClass__ClassData()
 		parentClass->firstChildClass = nextSiblingClass;
 	}
 
-	//
 	//-------------------------------------
 	// Remove this from the ClassData array
 	//-------------------------------------
-	//
 	Verify(static_cast<unsigned>(classID) < ClassIDCount);
 	Verify(RegisteredClass::ClassDataArray[classID] == this);
 	RegisteredClass::ClassDataArray[classID] = NULL;
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 bool
 	RegisteredClass__ClassData::IsDerivedFrom(
 		RegisteredClass__ClassData* parent
@@ -163,32 +145,26 @@ bool
 {
 	Check_Object(this);
 
-	//
 	//---------------------------
 	// Handle null parent pointer
 	//---------------------------
-	//
 	if (!parent)
 	{
 		return false;
 	}
 
-	//
 	//------------------------------
 	// We are descended from ourself
 	//------------------------------
-	//
 	Check_Object(parent);
 	if (parent == this)
 	{
 		return true;
 	}
 
-	//
 	//-----------------------------------------------
 	// Spin up the chain looking for the parent class
 	//-----------------------------------------------
-	//
 	RegisteredClass__ClassData *class_data = parentClass;
 	while (class_data)
 	{
@@ -203,7 +179,6 @@ bool
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 RegisteredClass__ClassData*
 	RegisteredClass__ClassData::FindClassData(const char* name)
 {
@@ -230,7 +205,6 @@ RegisteredClass__ClassData*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	RegisteredClass__ClassData::DeriveClass(RegisteredClass__ClassData* child)
 {
@@ -244,7 +218,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	RegisteredClass__ClassData::TestInstance()
 {

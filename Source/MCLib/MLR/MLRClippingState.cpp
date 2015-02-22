@@ -20,34 +20,28 @@ int MLRClippingState::numberBitsLookUpTable[MLRClippingState::ClipMask+1] = {
 };
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRClippingState::Save(MemoryStream *stream)
 {
 	Check_Object(this);
 	Check_Object(stream);
 
-	//
 	//-------------------------------------
 	// Save the clippingState to the stream
 	//-------------------------------------
-	//
 	*stream << clippingState;
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRClippingState::Load(MemoryStream *stream)
 {
 	Check_Object(this);
 	Check_Object(stream);
 
-	//
 	//---------------------------------------
 	// Load the clippingState from the stream
 	//---------------------------------------
-	//
 	*stream >> clippingState;
 }
 

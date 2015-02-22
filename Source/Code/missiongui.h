@@ -1,14 +1,9 @@
 //--------------------------------------------------------------------------------------
-//
 // MechCommander 2 -- Copyright (c) 1998 FASA Interactive
-//
 // This header contains the mission classes for the GUI
-//
 // GUI is now single update driven.  An event comes in, the manager decides who its for
 // and passes the event down.  Eveything still know how to draw etc.
-//
 // All drawing is done through gos_drawQuad and drawTriangle
-//
 // Basic cycle is 
 //		call GObject->update with this frame's events.
 //			This will check the events to see if any pertain to me.
@@ -17,7 +12,6 @@
 //		call GObject->render with this frame's events.
 //			This draws the object to the screen.
 //			called in order of depth.
-// 
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -51,19 +45,14 @@ class MissionInterfaceManager
 {
 	//-------------------------------------------------------------------
 	// This baby runs it all for the Missions
-	//
 	// It has an update which is called every frame.
-	//
 	// It has an init which takes a FIT file and creates the interface
 	// from the .FIT file.  This allows artists to correctly setup
 	// the interface for each screen using data files.
-	//
 	// Its also has a render which is called AFTER the camera render
 	// so that the interface ALWAYS sits on top of the world.
-	//
 	// It has an event constructor to create events and pass them down
 	// the interface chain.
-	//
 	// Essentially, this is the iface of MechCommander 2
 
 public:

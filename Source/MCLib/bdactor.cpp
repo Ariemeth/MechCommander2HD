@@ -1,9 +1,6 @@
 //---------------------------------------------------------------------------
-//
 //	bdactor.cpp - This file contains the code for the building and tree appearance classes
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

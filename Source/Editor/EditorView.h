@@ -2,7 +2,6 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 // EditorView.h : interface of the EditorView class
-//
 /////////////////////////////////////////////////////////////////////////////
 
 #if !defined(AFX_EDITORVIEW_H__9E5FF9E4_BE22_4D61_AC89_58B0AA90DD56__INCLUDED_)

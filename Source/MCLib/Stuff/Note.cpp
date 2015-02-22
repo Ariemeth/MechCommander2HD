@@ -12,7 +12,6 @@
 #define MAX_LINE_SIZE 512
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Note::WriteNotation(MemoryStream *stream)
 {
@@ -27,7 +26,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Note::GetEntry(int *value)
 {
@@ -41,7 +39,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Note::SetEntry(int value)
 {
@@ -55,7 +52,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Note::GetEntry(Scalar *value)
 {
@@ -69,7 +65,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Note::SetEntry(Scalar value)
 {
@@ -83,7 +78,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Note::GetEntry(bool *value)
 {
@@ -97,7 +91,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Note::SetEntry(bool value)
 {
@@ -107,7 +100,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Note::GetEntry(Vector3D *value)
 {
@@ -142,7 +134,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Note::SetEntry(const Vector3D &value)
 {
@@ -155,7 +146,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Note::GetEntry(YawPitchRoll *value)
 {
@@ -193,7 +183,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Note::SetEntry(const YawPitchRoll &value)
 {
@@ -213,7 +202,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Note::GetEntry(UnitQuaternion *value)
 {
@@ -253,7 +241,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Note::SetEntry(const UnitQuaternion &value)
 {
@@ -274,7 +261,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Note::GetEntry(Motion3D *value)
 {
@@ -312,7 +298,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Note::SetEntry(const Motion3D &value)
 {
@@ -335,7 +320,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Note::GetEntry(RGBColor *value)
 {
@@ -370,7 +354,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Note::SetEntry(const RGBColor &value)
 {
@@ -390,7 +373,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Note::GetEntry(RGBAColor *value)
 {
@@ -428,7 +410,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Note::SetEntry(const RGBAColor &value)
 {
@@ -449,7 +430,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Note::GetEntry(NotationFile *value)
 {
@@ -460,11 +440,9 @@ void
 	GetEntry(&contents);
 	Check_Pointer(contents);
 
-	//
 	//-------------------------------------------------------
 	// If this is a file reference, open the file and read it
 	//-------------------------------------------------------
-	//
 	if (strncmp(contents, "{\r\n", 3))
 	{
 		FileStream file(contents);
@@ -473,11 +451,9 @@ void
 		value->Read(&file, NULL, NULL, false);
 	}
 
-	//
 	//--------------------------------------------------------------------
 	// Otherwise, we are reading a nested file, so set up the dependencies
 	//--------------------------------------------------------------------
-	//
 	else
 	{
 		MemoryStream stream(const_cast<char*>(contents+3), strlen(contents)-3);
@@ -487,11 +463,9 @@ void
 			parent_file->GetFileDependencies()
 		);
 
-		//
 		//-----------------------------------
 		// Figure out the name of the subfile
 		//-----------------------------------
-		//
 		if (parent_file->GetFileName())
 		{
 			MString name(parent_file->GetFileName());
@@ -501,38 +475,31 @@ void
 			value->m_fileName = name;
 		}
 
-		//
 		//--------------------
 		// Read the string now
 		//--------------------
-		//
 		value->Read(&stream, NULL, NULL, true);
 	}
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Note::SetEntry(NotationFile *value)
 {
 	Check_Object(this);
 	Check_Object(value);
 
-	//
 	//----------------------------------------------------
 	// If this isn't a nested file, write out the filename
 	//----------------------------------------------------
-	//
 	const char* name = value->GetFileName();
 	if (name && name[strlen(name)-1] != ']')
 		SetEntry(name);
 
-	//
 	//-------------------------------------------------------------------------
 	// Otherwise, we need to write the notation file out to a memory stream and
 	// assign that to the entry
 	//-------------------------------------------------------------------------
-	//
 	else
 	{
 		DynamicMemoryStream file_buffer(5);
@@ -546,7 +513,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Note::TestInstance() const
 {

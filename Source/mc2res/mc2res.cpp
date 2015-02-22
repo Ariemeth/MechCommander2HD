@@ -3,7 +3,6 @@
 //===========================================================================//
 
 // Resources.cpp : Defines the entry point for the DLL application.
-//
 #include <windows.h>
 
 BOOL APIENTRY DllMain( HANDLE hModule, 

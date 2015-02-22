@@ -12,7 +12,6 @@ extern unsigned short *indexOffset;	// [MidLevelRenderer::Max_Number_Vertices_Pe
 #define HUNT_CLIP_ERROR 0
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	CLASSNAME::TransformNoClip(Matrix4D *mat, GOSVertexPool *vt,bool db)
 {
@@ -316,11 +315,9 @@ int
 	Verify(len == (int)testList.GetLength());
 	Verify(clippingFlags.GetClippingState() != 0);
 
-	//
 	//--------------------------------------
 	// See if we don't have to draw anything
 	//--------------------------------------
-	//
 	if(len <= 0)
 	{
 		visible = 0;
@@ -397,21 +394,17 @@ int
 		FindVisibleVertices();
 	}
 
-	//
 	//------------------------
 	// Handle the indexed case
 	//------------------------
-	//
 
 	//	initialize visibleIndexedVertices
 	memset(visibleIndexedVertices.GetData(), 0, visibleIndexedVertices.GetSize());
 
-	//
 	//-----------------------------------------------------------------
 	// Step through each polygon, making sure that we don't try to clip
 	// backfaced polygons
 	//-----------------------------------------------------------------
-	//
 	for(i=0,j=0;i<len;i++)
 	{
 		stride = lengths[i];
@@ -422,13 +415,11 @@ int
 			continue;
 		}
 
-		//
 		//---------------------------------------------------------------
 		// Test each vertex of the polygon against the allowed clipping
 		// planes, and accumulate status for which planes always clip and
 		// which planes clipped at least once
 		//---------------------------------------------------------------
-		//
 		theAnd.SetClippingState(0x3f);
 		theOr.SetClippingState(0);
 		end = j+stride;
@@ -440,14 +431,12 @@ int
 			theOr |= (*clipPerVertex)[index[k]];
 		}
 
-		//
 		//-------------------------------------------------------------------
 		// If any bit is set for all vertices, then the polygon is completely
 		// outside the viewing space and we don't have to draw it.  On the
 		// other hand, if no bits at all were ever set, we can do a trivial
 		// accept of the polygon
 		//-------------------------------------------------------------------
-		//
 		if (theAnd != 0)
 		{
 			testList[i] = 0;
@@ -467,22 +456,18 @@ int
 #endif
 		}
 
-		//
 		//-----------------------------------------------------------------
 		// It is not a trivial case, so we must now do real clipping on the
 		// polygon
 		//-----------------------------------------------------------------
-		//
 		else
 		{
 			unsigned short numberVerticesPerPolygon = 0;
 
-			//
 			//---------------------------------------------------------------
 			// Handle the case of a single clipping plane by stepping through
 			// the vertices and finding the edge it originates
 			//---------------------------------------------------------------
-			//
 			bool firstIsIn;
 			if (theOr.GetNumberOfSetBits() == 1)
 			{
@@ -494,12 +479,10 @@ int
 					k0 = index[k];
 					k1 = index[(k+1) < end ? k+1 : j];
 
-					//
 					//----------------------------------------------------
 					// If this vertex is inside the viewing space, copy it
 					// directly to the clipping buffer
 					//----------------------------------------------------
-					//
 					int clipped_index =
 						myNumberUsedClipVertex + numberVerticesPerPolygon;
 					theTest = (*clipPerVertex)[k0];
@@ -535,20 +518,17 @@ int
 						numberVerticesPerPolygon++;
 						clipped_index++;
 
-						//
 						//-------------------------------------------------------
 						// We don't need to clip this edge if the next vertex is
 						// also in the viewing space, so just move on to the next
 						// vertex
 						//-------------------------------------------------------
-						//
 						if((*clipPerVertex)[k1] == 0)
 						{
 							continue;
 						}
 					}
 
-					//
 					//---------------------------------------------------------
 					// This vertex is outside the viewing space, so if the next
 					// vertex is also outside the viewing space, no clipping is
@@ -556,7 +536,6 @@ int
 					// clipping plane is involved, it must be in the same space
 					// as the first vertex
 					//---------------------------------------------------------
-					//
 					else
 					{
 						firstIsIn = false;
@@ -567,32 +546,26 @@ int
 						}
 					}
 
-					//
 					//--------------------------------------------------
 					// We now find the distance along the edge where the
 					// clipping plane will intersect
 					//--------------------------------------------------
-					//
 					mask = 1;
 					theTest |= (*clipPerVertex)[k1];
 
-					//
 					//-----------------------------------------------------
 					// Find the boundary conditions that match our clipping
 					// plane
 					//-----------------------------------------------------
-					//
 					for (l=0; l<MLRClippingState::NextBit; l++)
 					{
 						if(theTest.IsClipped(mask))
 						{
 //							GetDoubleBC(l, bc0, bc1, transformedCoords[k0], transformedCoords[k1]);
 
-							//
 							//-------------------------------------------
 							// Find the clipping interval from bc0 to bc1
 							//-------------------------------------------
-							//
 							if(firstIsIn==true)
 							{
 								a = GetLerpFactor(l, (*transformedCoords)[k0], (*transformedCoords)[k1]);
@@ -611,11 +584,9 @@ int
 						mask <<= 1;
 					}
 
-					//
 					//------------------------------
 					// Lerp the homogeneous position
 					//------------------------------
-					//
 					if(firstIsIn==true)
 					{
 						(*clipExtraCoords)[clipped_index].Lerp(
@@ -626,12 +597,10 @@ int
 
 						DoClipTrick((*clipExtraCoords)[clipped_index], ct);
 
-						//
 						//----------------------------------------------------------
 						// If there are colors, lerp them in screen space for now as
 						// most cards do that anyway
 						//----------------------------------------------------------
-						//
 #ifdef I_SAY_YES_TO_COLOR
 	#ifdef I_SAY_YES_TO_LIGHTING
 						Verify((*actualColors).GetLength() > 0);
@@ -665,12 +634,10 @@ int
 		#endif
 	#endif
 #endif
-						//
 						//-----------------------------------------------------
 						// If there are texture uv's, we need to lerp them in a
 						// perspective correct manner
 						//-----------------------------------------------------
-						//
 						Verify(texCoords.GetLength() > 0);
 						(*clipExtraTexCoords)[clipped_index].Lerp
 							(
@@ -711,12 +678,10 @@ int
 
 						DoClipTrick((*clipExtraCoords)[clipped_index], ct);
 
-						//
 						//----------------------------------------------------------
 						// If there are colors, lerp them in screen space for now as
 						// most cards do that anyway
 						//----------------------------------------------------------
-						//
 #ifdef I_SAY_YES_TO_COLOR
 	#ifdef I_SAY_YES_TO_LIGHTING
 						Verify((*actualColors).GetLength() > 0);
@@ -750,12 +715,10 @@ int
 		#endif
 	#endif
 #endif
-						//
 						//-----------------------------------------------------
 						// If there are texture uv's, we need to lerp them in a
 						// perspective correct manner
 						//-----------------------------------------------------
-						//
 						Verify(texCoords.GetLength() > 0);
 						(*clipExtraTexCoords)[clipped_index].Lerp
 							(
@@ -787,11 +750,9 @@ int
 #endif
 					}
 
-					//
 					//--------------------------------
 					// Bump the polygon's vertex count
 					//--------------------------------
-					//
 					numberVerticesPerPolygon++;
 				}
 				(*clipExtraLength)[myNumberUsedClipLength] = numberVerticesPerPolygon;
@@ -800,12 +761,10 @@ int
 #endif
 			}
 
-			//
 			//---------------------------------------------------------------
 			// We have to handle multiple planes.  We do this by creating two
 			// buffers and we switch between them as we clip plane by plane
 			//---------------------------------------------------------------
-			//
 			else
 			{
 #ifdef LAB_ONLY
@@ -828,11 +787,9 @@ int
 				srcPolygon.texCoords = clipBuffer[dstBuffer].texCoords.GetData();
 				srcPolygon.clipPerVertex = clipBuffer[dstBuffer].clipPerVertex.GetData();
 
-				//
 				//----------------------------------------------------------
 				// unravel and copy the original data into the source buffer
 				//----------------------------------------------------------
-				//
 				for(k=j,l=0;k<end;k++,l++)
 				{
 					int indexK = index[k];
@@ -865,11 +822,9 @@ int
 
 				srcPolygon.length = l;
 
-				//
 				//--------------------------------
 				// Point to the destination buffer
 				//--------------------------------
-				//
 				dstBuffer = 0;
 
 				dstPolygon.coords = clipBuffer[dstBuffer].coords.GetData();
@@ -880,12 +835,10 @@ int
 				dstPolygon.clipPerVertex = clipBuffer[dstBuffer].clipPerVertex.GetData();
 				dstPolygon.length = 0;
 
-				//
 				//-----------------------------------------------------------
 				// Spin through each plane that clipped the primitive and use
 				// it to actually clip the primitive
 				//-----------------------------------------------------------
-				//
 				mask = 1;
 				MLRClippingState theNewOr(0);
 				int loop = 4;
@@ -911,11 +864,9 @@ int
 						if(theOr.IsClipped(mask))
 						{
 
-							//
 							//-----------------------------------
 							// Clip each vertex against the plane
 							//-----------------------------------
-							//
 	#if HUNT_CLIP_ERROR
 							DEBUG_STREAM << l << ": " << '\n';
 	#endif
@@ -926,12 +877,10 @@ int
 
 								theTest = srcPolygon.clipPerVertex[k];
 
-								//
 								//----------------------------------------------------
 								// If this vertex is inside the viewing space, copy it
 								// directly to the clipping buffer
 								//----------------------------------------------------
-								//
 								if(theTest.IsClipped(mask) == 0)
 								{
 									firstIsIn = true;
@@ -973,20 +922,17 @@ int
 	#endif
 									dstPolygon.length++;
 
-									//
 									//-------------------------------------------------------
 									// We don't need to clip this edge if the next vertex is
 									// also in the viewing space, so just move on to the next
 									// vertex
 									//-------------------------------------------------------
-									//
 									if(srcPolygon.clipPerVertex[k1].IsClipped(mask) == 0)
 									{
 										continue;
 									}
 								}
 
-								//
 								//---------------------------------------------------------
 								// This vertex is outside the viewing space, so if the next
 								// vertex is also outside the viewing space, no clipping is
@@ -994,7 +940,6 @@ int
 								// clipping plane is involved, it must be in the same space
 								// as the first vertex
 								//---------------------------------------------------------
-								//
 								else 
 								{
 									firstIsIn = false;
@@ -1009,22 +954,18 @@ int
 									}
 								}
 
-								//
 								//-------------------------------------------
 								// Find the clipping interval from bc0 to bc1
 								//-------------------------------------------
-								//
 								if(firstIsIn == true)
 								{
 									a = GetLerpFactor (l, srcPolygon.coords[k], srcPolygon.coords[k1]);
 
 									Verify(a >= 0.0f && a <= 1.0f);
 
-									//
 									//------------------------------
 									// Lerp the homogeneous position
 									//------------------------------
-									//
 									dstPolygon.coords[dstPolygon.length].Lerp(
 										srcPolygon.coords[k],
 										srcPolygon.coords[k1],
@@ -1041,12 +982,10 @@ int
 	#endif
 									DoClipTrick(dstPolygon.coords[dstPolygon.length], l);
 
-									//
 									//----------------------------------------------------------
 									// If there are colors, lerp them in screen space for now as
 									// most cards do that anyway
 									//----------------------------------------------------------
-									//
 	#ifdef I_SAY_YES_TO_COLOR
 			#if COLOR_AS_DWORD
 									dstPolygon.colors[dstPolygon.length] = Color_DWORD_Lerp(
@@ -1062,12 +1001,10 @@ int
 									);
 		#endif
 	#endif
-									//
 									//-----------------------------------------------------
 									// If there are texture uv's, we need to lerp them in a
 									// perspective correct manner
 									//-----------------------------------------------------
-									//
 	#ifdef I_SAY_YES_TO_DUAL_TEXTURES
 									dstPolygon.texCoords[2*dstPolygon.length].Lerp
 										(
@@ -1108,11 +1045,9 @@ int
 									a = GetLerpFactor (l, srcPolygon.coords[k1], srcPolygon.coords[k]);
 									Verify(a >= 0.0f && a <= 1.0f);
 
-								//
 								//------------------------------
 								// Lerp the homogeneous position
 								//------------------------------
-								//
 								dstPolygon.coords[dstPolygon.length].Lerp(
 									srcPolygon.coords[k1],
 									srcPolygon.coords[k],
@@ -1130,12 +1065,10 @@ int
 
 								DoClipTrick(dstPolygon.coords[dstPolygon.length], l);
 
-								//
 								//----------------------------------------------------------
 								// If there are colors, lerp them in screen space for now as
 								// most cards do that anyway
 								//----------------------------------------------------------
-								//
 	#ifdef I_SAY_YES_TO_COLOR
 		#if COLOR_AS_DWORD
 								dstPolygon.colors[dstPolygon.length] = Color_DWORD_Lerp(
@@ -1151,12 +1084,10 @@ int
 								);
 		#endif
 	#endif
-								//
 								//-----------------------------------------------------
 								// If there are texture uv's, we need to lerp them in a
 								// perspective correct manner
 								//-----------------------------------------------------
-								//
 	#ifdef I_SAY_YES_TO_DUAL_TEXTURES
 								dstPolygon.texCoords[2*dstPolygon.length].Lerp
 									(
@@ -1193,27 +1124,21 @@ int
 	#endif
 								}
 
-								//
 								//-------------------------------------
 								// We have to generate a new clip state
 								//-------------------------------------
-								//
 								dstPolygon.clipPerVertex[dstPolygon.length].Clip4dVertex(&dstPolygon.coords[dstPolygon.length]);
 
-								//
 								//----------------------------------
 								// Bump the new polygon vertex count
 								//----------------------------------
-								//
 								dstPolygon.length++;
 							}
 
-							//
 							//-----------------------------------------------
 							// Swap source and destination buffer pointers in
 							// preparation for the next plane test
 							//-----------------------------------------------
-							//
 							srcPolygon.coords = clipBuffer[dstBuffer].coords.GetData();
 	#ifdef I_SAY_YES_TO_COLOR
 							srcPolygon.colors = clipBuffer[dstBuffer].colors.GetData();
@@ -1247,22 +1172,18 @@ int
 					theOr == theNewOr;
 				} while (theNewOr != 0 && loop--);
 
-				//
 				//--------------------------------------------------
 				// could not clip this rare case, just ignore it
 				//--------------------------------------------------
-				//
 				if(theNewOr != 0)
 				{
 					testList[i] = 0;
 					continue;
 				}
 
-				//
 				//--------------------------------------------------
 				// Move the most recent polygon into the clip buffer
 				//--------------------------------------------------
-				//
 #if HUNT_CLIP_ERROR
 				DEBUG_STREAM << "Final: " << srcPolygon.length << '\n';
 #endif

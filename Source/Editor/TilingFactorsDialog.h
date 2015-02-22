@@ -9,7 +9,6 @@
 #pragma once
 #endif // _MSC_VER > 1000
 // TilingFactorsDialog.h : header file
-//
 
 /////////////////////////////////////////////////////////////////////////////
 // TilingFactorsDialog dialog

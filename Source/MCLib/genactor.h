@@ -1,9 +1,6 @@
 //---------------------------------------------------------------------------
-//
 //	Genactor.h - This file contains the header for the generic 3D appearance class
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -26,9 +23,7 @@
 #define MAX_GEN_ANIMATIONS			10
 
 //***********************************************************************
-//
 // GenericAppearanceType
-//
 //***********************************************************************
 class GenericAppearanceType : public AppearanceType
 {
@@ -118,9 +113,7 @@ class GenericAppearanceType : public AppearanceType
 };
 
 //***********************************************************************
-//
 // GenericAppearance
-//
 //***********************************************************************
 class GenericAppearance : public ObjectAppearance
 {

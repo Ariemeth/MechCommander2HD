@@ -17,11 +17,9 @@
 
 #define Verify_Index(x) Verify(0 <= (x) && (x) < hashTableSize)
 
-//
 //###########################################################################
 // Hash
 //###########################################################################
-//
 Hash::Hash(
 	CollectionSize size,
 	Node *node,
@@ -31,9 +29,7 @@ Hash::Hash(
 {
 	hashTableSize = size;
 	
-	//
 	// If the size is not prime, warn and select new size
-	//
 	Warn(!CheckForPrimeSize());
 	if (!CheckForPrimeSize())
 	{
@@ -47,11 +43,9 @@ Hash::Hash(
 	BuildHashTable();
 }
 
-//
 //###########################################################################
 // ~Hash
 //###########################################################################
-//
 Hash::~Hash()
 {
 	Check_Object(this);
@@ -74,11 +68,9 @@ Hash::~Hash()
 	hashTableSize = 0;
 }
 
-//
 //###########################################################################
 // TestInstance
 //###########################################################################
-//
 void
 	Hash::TestInstance()
 {
@@ -87,11 +79,9 @@ void
 	Verify(hashTableSize > 0);
 }
 
-//
 //###########################################################################
 // AddImplementation
 //###########################################################################
-//
 void
 	Hash::AddImplementation(Plug *plug)
 {
@@ -99,11 +89,9 @@ void
 	STOP(("Hash::AddImplementation - Must add with value"));
 }
 
-//
 //###########################################################################
 // AddValueImplementation
 //###########################################################################
-//
 void
 	Hash::AddValueImplementation(
 		Plug *plug,
@@ -114,27 +102,21 @@ void
 	Check_Object(plug);
 	Check_Pointer(value);
 
-	//
 	//-------------------------------------------------------------
 	// Verify that value has not been added
 	//-------------------------------------------------------------
-	//
 	Verify(HasUniqueEntries() ? (FindImplementation(value) == NULL) : (bool)true);
 
-	//
 	//-------------------------------------------------------------
 	// Find hash entry
 	//-------------------------------------------------------------
-	//
 	IteratorPosition index;
 
 	index = GetHashIndex(value);
 
-	//
 	//-------------------------------------------------------------
 	// Get vchain for this index
 	//-------------------------------------------------------------
-	//
 	SortedChain *vchain;
 
 	Check_Pointer(hashTable);
@@ -146,20 +128,16 @@ void
 		hashTable[index] = vchain;
 	}
 
-	//
 	//-------------------------------------------------------------
 	// Add to the vchain
 	//-------------------------------------------------------------
-	//
 	Check_Object(vchain);
 	vchain->AddValuePlug(plug, value);
 }
 
-//
 //###########################################################################
 // FindImplementation
 //###########################################################################
-//
 Plug*
 	Hash::FindImplementation(
 		const void *value
@@ -168,20 +146,16 @@ Plug*
 	Check_Object(this);
 	Check_Pointer(value);
 
-	//
 	//-------------------------------------------------------------
 	// Find hash entry
 	//-------------------------------------------------------------
-	//
 	IteratorPosition index;
 
 	index = GetHashIndex(value);
 
-	//
 	//-------------------------------------------------------------
 	// Get vchain for this index
 	//-------------------------------------------------------------
-	//
 	SortedChain *vchain;
 
 	Check_Pointer(hashTable);
@@ -191,20 +165,16 @@ Plug*
 		return NULL;
 	}
 
-	//
 	//-------------------------------------------------------------
 	// Find in vchain
 	//-------------------------------------------------------------
-	//
 	Check_Object(vchain);
 	return vchain->FindPlug(value);
 }
 
-//
 //#############################################################################
 // IsEmpty
 //#############################################################################
-//
 bool
 	Hash::IsEmpty()
 {
@@ -225,11 +195,9 @@ bool
 	return true;
 }
 
-//
 //###########################################################################
 // MakeSortedChain
 //###########################################################################
-//
 SortedChain*
 	Hash::MakeSortedChain()
 {
@@ -238,11 +206,9 @@ SortedChain*
    return NULL;
 }
 
-//
 //###########################################################################
 // MakeSortedChain
 //###########################################################################
-//
 IteratorPosition
 	Hash::GetHashIndex(const void*)
 {
@@ -251,11 +217,9 @@ IteratorPosition
    return 0;
 }
 
-//
 //###########################################################################
 // BuildHashTable
 //###########################################################################
-//
 void
 	Hash::BuildHashTable()
 {
@@ -273,11 +237,9 @@ void
 	}
 }
 
-//
 //###########################################################################
 // CheckForPrimeSize
 //###########################################################################
-//
 bool
 	Hash::CheckForPrimeSize()
 {
@@ -299,11 +261,9 @@ bool
 
 const IteratorPosition HashIteratorNullPosition = -1;
 
-//
 //###########################################################################
 // HashIterator
 //###########################################################################
-//
 HashIterator::HashIterator(Hash *hash):
 	SortedIterator(hash)
 {
@@ -330,11 +290,9 @@ HashIterator::~HashIterator()
 	DeleteSortedChainIterator();
 }
 
-//
 //###########################################################################
 // TestInstance
 //###########################################################################
-//
 void
 	HashIterator::TestInstance()
 {
@@ -347,11 +305,9 @@ void
 	}
 }
 
-//
 //###########################################################################
 // First
 //###########################################################################
-//
 void
 	HashIterator::First()
 {
@@ -359,11 +315,9 @@ void
 	NextSortedChainIterator(0);
 }
 
-//
 //###########################################################################
 // Last
 //###########################################################################
-//
 void
 	HashIterator::Last()
 {
@@ -371,11 +325,9 @@ void
 	STOP(("Shouldn't reach here"));
 }
 
-//
 //###########################################################################
 // Next
 //###########################################################################
-//
 void
 	HashIterator::Next()
 {
@@ -386,26 +338,20 @@ void
 
 		if (vchainIterator->GetCurrentPlug() != NULL)
 		{
-			//
 			// Try to step to the next item in this list
-			//
 			vchainIterator->Next();
 		}
 		if (vchainIterator->GetCurrentPlug() == NULL)
 		{
-			//
 			// At end of list, step to the next list
-			//
 			NextSortedChainIterator(currentPosition+1);
 		}
 	}
 }
 
-//
 //###########################################################################
 // Previous
 //###########################################################################
-//
 void
 	HashIterator::Previous()
 {
@@ -413,11 +359,9 @@ void
 	STOP(("Not implemented"));
 }
 
-//
 //###########################################################################
 // GetCurrentImplementation
 //###########################################################################
-//
 void
 	*HashIterator::GetCurrentImplementation()
 {
@@ -431,9 +375,7 @@ void
 			return vchainIterator->GetCurrentPlug();
 		}
 
-		//
 		// List was emptied, step to next list
-		//
 		NextSortedChainIterator(currentPosition+1);
 
 		if (vchainIterator != NULL)
@@ -446,11 +388,9 @@ void
 	return NULL;
 }
 
-//
 //###########################################################################
 // GetSize
 //###########################################################################
-//
 CollectionSize
 	HashIterator::GetSize()
 {
@@ -465,11 +405,9 @@ CollectionSize
 	return(i);
 }
 
-//
 //###########################################################################
 // Remove
 //###########################################################################
-//
 void
 	HashIterator::Remove()
 {
@@ -484,9 +422,7 @@ void
 			return;
 		}
 
-		//
 		// List was emptied, step to next list
-		//
 		NextSortedChainIterator(currentPosition+1);
 
 		if (vchainIterator != NULL)
@@ -498,11 +434,9 @@ void
 	}
 }
 
-//
 //###########################################################################
 // FindImplementation
 //###########################################################################
-//
 Plug
 	*HashIterator::FindImplementation(
 		const void*
@@ -513,11 +447,9 @@ Plug
 	return NULL;
 }
 
-//
 //###########################################################################
 // ReceiveMemo
 //###########################################################################
-//
 void
 	HashIterator::ReceiveMemo(
 		IteratorMemo,
@@ -527,10 +459,8 @@ void
 	Check_Object(this);
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 void
 	HashIterator::DeleteSortedChainIterator()
 {
@@ -542,10 +472,8 @@ void
 	}
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 void
 	HashIterator::NextSortedChainIterator(IteratorPosition index)
 {
@@ -562,28 +490,20 @@ void
 
 		if (hashTable[i] != NULL)
 		{
-			//
 			// This index contains a vchain
-			//
 			Check_Object(hashTable[i]);
 
-			//
 			// Create a vchain iterator
-			//
 			vchainIterator = new SortedChainIterator(hashTable[i]);
 			Register_Object(vchainIterator);
 			if (vchainIterator->GetCurrentPlug() != NULL)
 			{
-				//
 				// The vchain contains items
-				//
 				currentPosition = i;
 				return;
 			}
 
-			//
 			// Destroy the vchain iterator
-			//
 			DeleteSortedChainIterator();
 		}
 	}

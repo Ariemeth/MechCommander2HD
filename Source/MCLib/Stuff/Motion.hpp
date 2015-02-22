@@ -35,9 +35,7 @@ namespace Stuff {
 		static const Motion3D
 			Identity;
 
-		//
 		// Constructors
-		//
 		Motion3D()
 			{}
 		Motion3D(const Motion3D& motion);
@@ -47,9 +45,7 @@ namespace Stuff {
 		) : linearMotion(t), angularMotion(q)
 			{Check_Object(&t); Check_Object(&q);}
 
-		//
 		// Assignment operators
-		//
 		Motion3D&
 			operator=(const Motion3D& p);
 
@@ -66,9 +62,7 @@ namespace Stuff {
 			operator!=(const Motion3D& a) const
 				{return !Close_Enough(*this,a,SMALL);}
 
-		//
 		// Origin3D motion
-		//
 		Motion3D&
 			AddScaled(
 				const Motion3D& source,
@@ -76,9 +70,7 @@ namespace Stuff {
 				Scalar t
 			);
 
-		//
 		// Support functions
-		//
 		#if !defined(Spew)
 			friend void
 				::Spew(

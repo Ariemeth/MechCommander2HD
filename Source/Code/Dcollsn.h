@@ -1,8 +1,6 @@
 //******************************************************************************
 //	dcollsn.h - This file contains the Collision Detection System definitions
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

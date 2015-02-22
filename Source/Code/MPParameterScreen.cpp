@@ -95,7 +95,6 @@ MPParameterScreen::~MPParameterScreen()
 {
 	//ONLY destroy the 0 member.  All of the other were set equal which means deleting their pointers will crash!!
 	// Well DONE.
-	//
 	playerParameters[0].factionDropList.destroy();
 	playerParameters[0].teamNumberDropList.destroy();
 
@@ -986,7 +985,6 @@ void MPParameterScreen::update()
 			if ( mapName != MPlayer->missionSettings.map 
 				&& strlen( MPlayer->missionSettings.map )) // check for new map
 			{
-				//
 				setMissionClientOnly( MPlayer->missionSettings.map );
 			}
 		}

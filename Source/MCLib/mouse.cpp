@@ -2,15 +2,11 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 //-------------------------------------------------------------------
-//
 // This code will run in a separate callback to update the mouse
 // positions at a fixed frame rate which is different from the game's
-// 
 // Essential for software and low frame rate situations
-//
 // Code is actually fairly simple BUT must work right ALL the time.
 // As usual, debugging when a lock has been taken is often VERY hard.
-//
 // For each trip through the callback:
 //	-if Screen has not been flipped since we were last here...
 //		-Lock Rect Cursor WAS in.
@@ -21,16 +17,11 @@
 //	-Copy Screen Contents of Rect to mouseBuffer.
 // 	-BLT mouse cursor to Rect.
 //	-Unlock Rect Cursor IS in.
-//
 // We should run this at a fixed rate of 10 to 20 Hz.
-//
 // This MUST block GameOS DisplayBackBuffer AND must NOT be called
 // DURING GameOS DisplayBackBuffer.
-//
 // Cursors must be stored in a BLTable format for speed purposes.  32Bit TGA OK?
-//
 // Cursors must NOT be anything BUT keyed from now on.
-//
 // DisplayBackBuffer MUST do the following AFTER everything is done rendering
 // and BEFORE it flips its buffers:
 //	-Get Current Mouse X and Y.
@@ -38,8 +29,6 @@
 //	-Copy Screen Contents of Rect to mouseBuffer.
 //	-BLT mouse cursor to Rect.
 //	-Unlock Rect Cursor IS in.
-//
-//
 //-----------------------------------------------------------------------
 
 #include "dstd.h"
@@ -80,9 +69,7 @@ extern HWND					hWindow;
 extern POINT				clientToScreen;
 extern DWORD 				MouseInWindow;
 
-//
 // Init the Mouse timer
-//
 void MouseTimerInit()
 {
 	//Create mouseBuffer to hold screen contents under the mouse cursor.
@@ -91,10 +78,8 @@ void MouseTimerInit()
 	// FASTEST would be created to screen Bit Depth BUT this means that 
 	// the mouseBuffer must be recreated if we change to 32 bit rendering.
 	// Should we even allow changing to 32-Bit Rendering?
-	//
 	// For now, create a 32Bit buffer and convert as needed.  If speed is an
 	// issue on low end stuff, change it out.
-	//
 	mouseBuffer = (MemoryPtr)malloc(sizeof(DWORD) * MOUSE_WIDTH * MOUSE_WIDTH);
 	memset(mouseBuffer,0,sizeof(DWORD) * MOUSE_WIDTH * MOUSE_WIDTH);
 	
@@ -115,9 +100,7 @@ void MouseTimerInit()
 	HTimer=timeSetEvent( 1000/MOUSE_REFRESH_RATE, 0, (LPTIMECALLBACK)MouseTimer, 0, TIME_PERIODIC );
 }
 
-//
 // Clean up the mouse timer
-//
 void MouseTimerKill()
 {
 	if(HTimer)
@@ -142,7 +125,6 @@ void MouseTimerKill()
 	mc2MouseData = NULL;
 }
 
-//
 // Returns the number of bits in a given mask.  Used to determine if we are in 555 mode vs 565 mode.
 WORD GetNumberOfBits( DWORD dwMask )
 {
@@ -155,9 +137,7 @@ WORD GetNumberOfBits( DWORD dwMask )
     return wBits;
 }
  
-//
 // Actual Mouse Callback code here.
-//
 #pragma warning(push)
 #pragma warning( disable:4701 )
 void CALLBACK MouseTimer(UINT wTimerID, UINT msg, DWORD dwUser, DWORD dw1, DWORD dw2)
@@ -194,9 +174,7 @@ void CALLBACK MouseTimer(UINT wTimerID, UINT msg, DWORD dwUser, DWORD dw1, DWORD
 	//Warn everyone that we are updating the mouse now.
 	// If we get to DisplayBackBuffer and this is true, WAIT until it goes false!!
 	mc2IsInMouseTimer = true;
-//
 // Create a Rect with the actual screen dimensions in it.
-//
 	if( Environment.fullScreen )
 	{
 		GetWindowRect( hWindow, &WinRect );
@@ -228,7 +206,6 @@ void CALLBACK MouseTimer(UINT wTimerID, UINT msg, DWORD dwUser, DWORD dw1, DWORD
 			{
 				//Good.  Surface was ready to be locked, BLT our mouseBuffer to it.
 				//		-BLT old screen contents from mouseBuffer.
-				//
 				// Get the pixel Format and use it to copy data from the mouseBuffer
 				// to the screen.
 				if (mouseSurfaceDesc.ddpfPixelFormat.dwRGBBitCount == 16)
@@ -259,7 +236,6 @@ void CALLBACK MouseTimer(UINT wTimerID, UINT msg, DWORD dwUser, DWORD dw1, DWORD
 							else
 							{
 								//Just iterate across the screen and buffer
-								//
 								//Skip first byte
 								mBuffer++;
 								screenPos++;
@@ -303,7 +279,6 @@ void CALLBACK MouseTimer(UINT wTimerID, UINT msg, DWORD dwUser, DWORD dw1, DWORD
 							else
 							{
 								//Just iterate across the screen and buffer
-								//
 								//Skip first byte
 								mBuffer++;
 								screenPos++;
@@ -356,7 +331,6 @@ void CALLBACK MouseTimer(UINT wTimerID, UINT msg, DWORD dwUser, DWORD dw1, DWORD
 							else
 							{
 								//Just iterate across the screen and buffer
-								//
 								//Skip first byte
 								mBuffer++;
 								screenPos++;
@@ -416,14 +390,10 @@ void CALLBACK MouseTimer(UINT wTimerID, UINT msg, DWORD dwUser, DWORD dw1, DWORD
 		//	-Get Current Mouse X and Y.
 		// Copy code from GameOS here.  DO NOT CALL GAMEOS FUNCTIONS!!!!!!
 		// They are almost certainly not re-entrant!!
-	//
 	// Get absolute mouse position using window calls
-	//
 		POINT pt;
 		GetCursorPos(&pt);
-	//
 	// Determine if cursor is out of WinRect.  If so, clamp it back in.
-	//
 		if (pt.x < WinRect.left)
 		{
 			pt.x = WinRect.left;
@@ -490,10 +460,8 @@ void CALLBACK MouseTimer(UINT wTimerID, UINT msg, DWORD dwUser, DWORD dw1, DWORD
 			//	-Copy Screen Contents of Rect to mouseBuffer.
 			// Get the pixel Format and use it to copy data from the screen
 			// to the mouseBuffer.
-			// 
 			// Our new mouseRect may include negative numbers which are off screen.
 			// Clip so that ALL numbers are greater then zero!!
-			//
 			if (mouseSurfaceDesc.ddpfPixelFormat.dwRGBBitCount == 16)
 			{
 				MemoryPtr mBuffer = mouseBuffer;
@@ -521,7 +489,6 @@ void CALLBACK MouseTimer(UINT wTimerID, UINT msg, DWORD dwUser, DWORD dw1, DWORD
 						else
 						{
 							//Just iterate across the screen and buffer
-							//
 							//Skip first byte
 							mBuffer++;
 							screenPos++;
@@ -565,7 +532,6 @@ void CALLBACK MouseTimer(UINT wTimerID, UINT msg, DWORD dwUser, DWORD dw1, DWORD
 						else
 						{
 							//Just iterate across the screen and buffer
-							//
 							//Skip first byte
 							mBuffer++;
 							screenPos++;
@@ -618,7 +584,6 @@ void CALLBACK MouseTimer(UINT wTimerID, UINT msg, DWORD dwUser, DWORD dw1, DWORD
 						else
 						{
 							//Just iterate across the screen and buffer
-							//
 							//Skip first byte
 							mBuffer++;
 							screenPos++;
@@ -654,7 +619,6 @@ void CALLBACK MouseTimer(UINT wTimerID, UINT msg, DWORD dwUser, DWORD dw1, DWORD
 			// 	-BLT mouse cursor to Rect.
 			// mc2MouseData should contain a 32-bit image of the mouse cursor.
 			// BLT it to the mouseSurface.
-			//
 			// Again, the mouseRect may contain negative numbers.
 			// This means do NOT BLT until numbers are greater then Zero
 			// Keep iterating across the mouse shape, though!!

@@ -1,21 +1,16 @@
 //---------------------------------------------------------------------
-//
-//
 // This class will manage the texture memory provided by GOS
 // GOS gives me a maximum of 256 256x256 pixel texture pages.
 // I want GOS to think I only use 256x256 textures.  This class
 // will insure that GOS believes that completely and provided
 // smaller texture surfaces out of the main surface if necessary
 // as well as returning the necessary UVs to get to the other surface.
-//
 // NOT ANY MORE
 // Now we no longer coalesce textures.  Causes too many problems with rendering
 // Now it simply checks for redundant filenames and can instance a texture instead of reloading it.
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
-//
 //----------------------------------------------------------------------
 #ifndef TXMMGR_H
 #define TXMMGR_H
@@ -286,7 +281,6 @@ class MC_TextureManager
 
 		//-----------------------------------------------------------------------------
 		// Returns the TextureNode Id based on what you asked for.
-		//
 		// uniqueInstance is an ID for the instance of the texture. If its value matches that of
 		// an already existing instance of the texture, the handle of the existing instance will
 		// be returned. Used for Mech Coloration possibly, damage states, etc.

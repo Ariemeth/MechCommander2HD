@@ -5,7 +5,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Developer Studio generated include file.
 // Used by MCLib.rc
-//
 #define IDS_ERROR                       1000
 #define IDS_CANCEL                      1006
 #define IDS_OK                          1007
@@ -131,7 +130,6 @@
 #define IDS_INVALID_COLOR_MAP           40073
 
 // Next default values for new objects
-// 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        102

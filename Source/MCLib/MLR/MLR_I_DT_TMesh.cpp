@@ -21,7 +21,6 @@ DynamicArrayOf<Vector2DScalar>
 	*MLR_I_DT_TMesh::texCoords2;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_DT_TMesh::InitializeClass()
 {
@@ -51,7 +50,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_DT_TMesh::TerminateClass()
 {
@@ -71,7 +69,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_DT_TMesh::MLR_I_DT_TMesh(
 	ClassData *class_data,
 	MemoryStream *stream,
@@ -94,7 +91,6 @@ MLR_I_DT_TMesh::MLR_I_DT_TMesh(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_DT_TMesh::MLR_I_DT_TMesh(ClassData *class_data):
 	MLR_I_TMesh(class_data)
 {
@@ -105,14 +101,12 @@ MLR_I_DT_TMesh::MLR_I_DT_TMesh(ClassData *class_data):
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_DT_TMesh::~MLR_I_DT_TMesh()
 {
 	Check_Object(this);
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_DT_TMesh*
 	MLR_I_DT_TMesh::Make(
 		MemoryStream *stream,
@@ -129,7 +123,6 @@ MLR_I_DT_TMesh*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_DT_TMesh::Save(MemoryStream *stream)
 {
@@ -142,7 +135,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 bool
 	MLR_I_DT_TMesh::Copy(MLR_I_DT_PMesh *pmesh)
 {
@@ -156,7 +148,6 @@ bool
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_DT_TMesh::TestInstance() const
 {
@@ -164,7 +155,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_DT_TMesh::SetTexCoordData(
 		const Vector2DScalar *data,
@@ -180,7 +170,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 int
 	MLR_I_DT_TMesh::GetNumPasses()
 {
@@ -220,7 +209,6 @@ int
 #undef CLASSNAME
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_DT_TMesh*
 	MidLevelRenderer::CreateIndexedTriCube_NoColor_NoLit_2Tex(
 		Scalar half, 
@@ -232,7 +220,6 @@ MLR_I_DT_TMesh*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRShape*
 	MidLevelRenderer::CreateIndexedTriIcosahedron_NoColor_NoLit_2Tex(
 		IcoInfo& icoInfo,

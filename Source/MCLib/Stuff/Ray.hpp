@@ -1,7 +1,5 @@
 //###########################################################################
-//
 // $Workfile:   RAY.HPP  $
-//
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //===========================================================================//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
@@ -42,9 +40,7 @@ namespace Stuff {
 			direction(direction)
 				{}
 
-		//
 		// Ray3D projection functions
-		//
 		void
 			Project(
 				Scalar length,
@@ -72,18 +68,14 @@ namespace Stuff {
 					Project(GetLengthToClosestPointTo(point),result);
 				}
 
-		//
 		// Assignment operators
-		//
 		Ray3D&
 			SetDirection(const Vector3D &vector);
 		Ray3D&
 			SetOrigin(const Point3D &point)
 				{Check_Pointer(this); origin = point; return *this;}
 
-		//
 		// Ray3D intersection functions
-		//
 		Scalar
 			GetDistanceTo(
 				const Plane &plane,
@@ -97,9 +89,7 @@ namespace Stuff {
 		Scalar
 			GetDistanceTo(const OBB &obb) const;
 
-		//
 		// Test support
-		//
 		void
 			TestInstance() const
 				{}

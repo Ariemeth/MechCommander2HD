@@ -39,12 +39,10 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// The following macros define MUNGAs base coordinate system
-	//
 	// Note that Yaw is always about the up/down axis, pitch is always about
 	// the left/right axis, and Roll is always about the forward/back axis.  In
 	// order to rotate about negative axes, the appropriate macros should be
 	// uncommented
-	//
 //	#define LEFT_HANDED_COORDINATES
 
 	#define UP_AXIS Y_Axis
@@ -117,9 +115,7 @@ namespace Stuff {
 		static const Vector3D
 			Right;
 
-		//
 		// Constructors
-		//
 		Vector3D()
 		{  x = 0.f; y = 0.f; z = 0.f; }
 		Vector3D(
@@ -141,9 +137,7 @@ namespace Stuff {
 		explicit Vector3D(const YawPitchRange &p)
 			{*this = p;}
 
-		//
 		// Assignment operators
-		//
 		Vector3D&
 			operator=(const Vector3D &vector)
 				{
@@ -156,9 +150,7 @@ namespace Stuff {
 		Vector3D&
 			operator=(const YawPitchRange &p);
 
-		//
 		// "Close-enough" comparators
-		//
 		friend bool
 			Small_Enough(
 				const Vector3D &v,
@@ -186,9 +178,7 @@ namespace Stuff {
 			TestInstance() const
 				{}
 
-		//
 		// Indexing operations
-		//
 
 		static int GetMemberCount(void)
 			{
@@ -229,10 +219,8 @@ namespace Stuff {
 			GetLeftComponent()
 				{Check_Object(this); return APPLY_LEFT_SIGN((*this)[LEFT_AXIS]);}
 
-		//
 		// The following operators all assume that this points to the destination
 		// of the operation results
-		//
 		Vector3D&
 			Negate(const Vector3D &v)
 				{
@@ -380,9 +368,7 @@ namespace Stuff {
 			operator/=(const Vector3D &v)
 				{return Divide(*this,v);}
 
-		//
 		// Transform operators
-		//
 		Vector3D&
 			Multiply(
 				const Vector3D &v,
@@ -397,9 +383,7 @@ namespace Stuff {
 				const LinearMatrix4D &m
 			);
 
-		//
 		// Miscellaneous functions
-		//
 		Scalar
 			GetLengthSquared() const
 				{Check_Object(this); return x*x + y*y + z*z;}
@@ -438,9 +422,7 @@ namespace Stuff {
 			x = y = z = 0.0;
 		}
 
-		//
 		// Template support
-		//
 		Vector3D&
 			Lerp(
 				const Vector3D& v1,
@@ -453,9 +435,7 @@ namespace Stuff {
 					z = v1.z + t*(v2.z-v1.z); return *this;
 				}
 
-		//
 		// Support functions
-		//
 		#if !defined(Spew)
 			friend void
 				::Spew(

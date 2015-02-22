@@ -18,13 +18,11 @@ namespace Stuff {
 	//###########################    Socket    #################################
 	//##########################################################################
 
-	//
 	//--------------------------------------------------------------------------
 	// NOTE: All unsafe, untyped public methods are named XXXPlug or
 	// XXXIterator.  The safe, typed public methods are named XXX and are
 	// declared in the template sub-classes.
 	//--------------------------------------------------------------------------
-	//
 
 	class Socket
 		#if defined(_ARMOR)
@@ -33,7 +31,6 @@ namespace Stuff {
 	{
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Destructor, testing
-	//
 	public:
 		virtual
 			~Socket();
@@ -43,47 +40,36 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Socket methods
-	//
 	public:
-		//
 		//-----------------------------------------------------------------------
 		// AddPlug - Add a plug to this socket, untyped access.
 		//-----------------------------------------------------------------------
-		//
 		void
 			AddPlug(Plug *plug)
 				{AddImplementation(plug);}
 
-		//
 		//-----------------------------------------------------------------------
 		// RemovePlug - Remove a plug from this socket, untyped access.
 		//-----------------------------------------------------------------------
-		//
 		virtual void
 			RemovePlug(Plug *plug);
 
-		//
 		//-----------------------------------------------------------------------
 		// IsPlugMember - Determine if the plug is a member of this socket.
 		//-----------------------------------------------------------------------
-		//
 		virtual bool
 			IsPlugMember(Plug *plug);
 
-		//
 		//-----------------------------------------------------------------------
 		// IsEmpty - Returns true if the socket contains no plugs.
 		//-----------------------------------------------------------------------
-		//
 		virtual bool
 			IsEmpty();
 
- 		//
 		//-----------------------------------------------------------------------
 		// Accessors for the release node, this is provided for socket 
 		//		utilities and are not normally used by a client.
 		//-----------------------------------------------------------------------
-		//
 		Node*
 			GetReleaseNode()
 				{return socketsNode;}
@@ -93,7 +79,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Protected methods
-	//
 	protected:
 		explicit Socket(Node *node);
 
@@ -102,7 +87,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Protected data
-	//
 	protected:
 		Node
       	*socketsNode;
@@ -128,20 +112,17 @@ namespace Stuff {
 	//########################    SocketIterator    ############################
 	//##########################################################################
 
-	//
 	//--------------------------------------------------------------------------
 	// NOTE: All unsafe, untyped public methods are named XXXPlug or
 	// XXXIterator.  The safe, typed public methods are named XXX and are
 	// declared in the template sub-classes.
 	//--------------------------------------------------------------------------
-	//
 
 	class SocketIterator:
 		public Iterator
 	{
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Destructor and testing
-	//
 	public:
 		~SocketIterator()
 			{}
@@ -151,7 +132,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Iterator methods (see Iterator for full listing)
-	//
 	public:
 		Plug*
 			ReadAndNextPlug()
@@ -166,36 +146,29 @@ namespace Stuff {
 			GetNthPlug(CollectionSize index)
 				{return static_cast<Plug*>(GetNthImplementation(index));}
 
-		//
 		//-----------------------------------------------------------------------
 		// InsertPlug - Inserts plug at current location, untyped access.
 		//-----------------------------------------------------------------------
-		//
 		void
 			InsertPlug(Plug *plug)
 				{InsertImplementation(plug);}
 
-		//
 		//-----------------------------------------------------------------------
 		// Remove - Removes the link at the current location, does not remove 
 		//		the plug.
 		//-----------------------------------------------------------------------
-		//
 		virtual void
 			Remove();
 
-		//
 		//-----------------------------------------------------------------------
 		// DeletePlugs	- For each plug in the socket, the routine unregisters it 
 		//		and then deletes it.
 		//-----------------------------------------------------------------------
-		//
 		void
 			DeletePlugs(bool defeat_release_node = true);
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Protected interface
-	//
 	protected:
 		explicit SocketIterator(Socket *socket)
 			{this->socket = socket;}

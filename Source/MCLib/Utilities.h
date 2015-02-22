@@ -78,7 +78,6 @@ inline long reverseRGB( long oldVal )
 // Replaces the WINDOWS version because it is a lie!
 // There are cases where windows does NOT append a null.
 // THANKS!
-//
 // Replace with GOS String Resource get when available
 // Replaced.  Andy wants us to call everytime.  Will try and see if practical.
 extern DWORD gosResourceHandle;

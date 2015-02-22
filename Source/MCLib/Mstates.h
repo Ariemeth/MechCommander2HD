@@ -1,6 +1,5 @@
 //---------------------------------------------------------------------
 // Mech Gesture State Table for all Mecha.
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -19,7 +18,6 @@
 // 6 -- Jump
 // 7 -- Fallen Forward
 // 8 -- Fallen Back
-//
 // Actual Gestures are:
 //  0 -- Park 
 //  1 -- ParkToStand 

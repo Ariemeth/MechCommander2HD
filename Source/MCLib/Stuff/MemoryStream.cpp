@@ -15,7 +15,6 @@ MemoryStream::ClassData*
 	MemoryStream::DefaultData = NULL;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MemoryStream::InitializeClass()
 {
@@ -30,7 +29,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MemoryStream::TerminateClass()
 {
@@ -40,7 +38,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MemoryStream::MemoryStream(
 	void *stream_start,
 	DWORD stream_size,
@@ -58,7 +55,6 @@ MemoryStream::MemoryStream(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MemoryStream::MemoryStream(
 	ClassData *class_data,
 	void *stream_start,
@@ -77,13 +73,11 @@ MemoryStream::MemoryStream(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MemoryStream::~MemoryStream()
 {
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MemoryStream&
 	MemoryStream::ReadBytes(
 		void *ptr,
@@ -104,7 +98,6 @@ MemoryStream&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 int
 	MemoryStream::ReadChar()
 {
@@ -120,7 +113,6 @@ int
 }	
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 bool
 	MemoryStream::ReadLine(
 		char *buffer,
@@ -132,11 +124,9 @@ bool
 	Check_Pointer(buffer);
 	Verify(max_number_of_bytes > 0);
 
-	//
 	// while the character is not end of file &&
 	// there is room left in the buffer,
 	// copy the character into the buffer
-	//
 	int c = ReadChar();
 	if (c == End_Of_Stream)
 		return false;
@@ -154,9 +144,7 @@ bool
 		Verify(i < max_number_of_bytes); 
 		p[i] = (char)c;
 
-		//
 		// If we have met the end of line condition, break
-		//
 		switch (eol_length)
 		{
 		case 1:
@@ -202,7 +190,6 @@ bool
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MString
 	MemoryStream::ReadString(
 		DWORD size_of_buffer,
@@ -224,7 +211,6 @@ MString
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MemoryStream&
 	MemoryStream::ReadSwappedBytes(
 		void *ptr,
@@ -249,7 +235,6 @@ MemoryStream&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MemoryStream::WriteLine(char *buffer)
 {
@@ -261,7 +246,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MemoryStream&
 	MemoryStream::WriteBytes(
 		const void *ptr,
@@ -278,7 +262,6 @@ MemoryStream&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MemoryStream&
 	MemoryStream::WriteSwappedBytes(
 		const void *ptr,
@@ -303,7 +286,6 @@ MemoryStream&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MemoryStream&
 	MemoryStreamIO::Write(
 		MemoryStream *stream,
@@ -321,7 +303,6 @@ MemoryStream&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 
 void
 	MemoryStream::ByteAlign()
@@ -338,7 +319,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MemoryStream&
 	MemoryStream::ReadBit(bool &bit_value)
 {
@@ -372,7 +352,6 @@ MemoryStream&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
  
 MemoryStream&
 	MemoryStream::WriteBit(const bool &bit_value)
@@ -405,7 +384,6 @@ MemoryStream&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MemoryStream&
 	MemoryStream::ReadUnsafeBits(
 		void *ptr, 
@@ -488,7 +466,6 @@ MemoryStream&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 
 MemoryStream&
 	MemoryStream::WriteBits(
@@ -556,7 +533,6 @@ MemoryStream&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 
 MemoryStream&
 	MemoryStream::ReadBitsToScaledInt(int &number, int min, int max,  DWORD number_of_bits)
@@ -572,7 +548,6 @@ MemoryStream&
 }	
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 
 MemoryStream&
 	MemoryStream::WriteScaledIntToBits(const int &number, int min, int max,  DWORD number_of_bits)
@@ -589,7 +564,6 @@ MemoryStream&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 
 MemoryStream&
 	MemoryStream::ReadBitsToScaledFloat(float &number, float min, float max,  DWORD number_of_bits)
@@ -606,7 +580,6 @@ MemoryStream&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 
 MemoryStream&
 	MemoryStream::WriteScaledFloatToBits(const float &number, float min, float max,  DWORD number_of_bits)
@@ -623,7 +596,6 @@ MemoryStream&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MemoryStream::TestInstance() const
 {
@@ -635,9 +607,7 @@ void
 //######################    DynamicMemoryStream    ############################
 //#############################################################################
 
-//
 // calculate the allocation size for stream
-//
 static inline DWORD
 	Calculate_Buffer_Size(DWORD needed)
 {
@@ -645,7 +615,6 @@ static inline DWORD
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 DynamicMemoryStream::DynamicMemoryStream(DWORD stream_size):
 	MemoryStream(NULL, stream_size)
 {
@@ -661,7 +630,6 @@ DynamicMemoryStream::DynamicMemoryStream(DWORD stream_size):
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 DynamicMemoryStream::DynamicMemoryStream(const DynamicMemoryStream &otherStream):
 	MemoryStream(NULL, otherStream.GetSize())
 {
@@ -679,7 +647,6 @@ DynamicMemoryStream::DynamicMemoryStream(const DynamicMemoryStream &otherStream)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 DynamicMemoryStream::DynamicMemoryStream(
 	void *stream_start,
 	DWORD stream_size,
@@ -693,7 +660,6 @@ DynamicMemoryStream::DynamicMemoryStream(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 DynamicMemoryStream::~DynamicMemoryStream()
 {
 	Check_Object(this);
@@ -705,7 +671,6 @@ DynamicMemoryStream::~DynamicMemoryStream()
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 bool
 	DynamicMemoryStream::AllocateBytes(DWORD count)
 {
@@ -732,7 +697,6 @@ bool
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MemoryStream&
 	DynamicMemoryStream::WriteBytes(
 		const void *ptr,
@@ -743,12 +707,10 @@ MemoryStream&
 	Check_Pointer(ptr);
 	Verify(number_of_bytes > 0);
 
-	//
 	//--------------------------------------------------------------------
 	// If we own the stream, and we don't have enough memory to accept the
 	// write, copy the buffer and make a new stream that is bigger
 	//--------------------------------------------------------------------
-	//
 	AllocateBytes(number_of_bytes);
 	Mem_Copy(
 		GetPointer(),

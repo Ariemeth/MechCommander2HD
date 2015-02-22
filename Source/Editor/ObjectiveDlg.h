@@ -9,7 +9,6 @@
 #pragma once
 #endif // _MSC_VER > 1000
 // ObjectiveDlg.h : header file
-//
 
 #include "resource.h"
 #include "stdafx.h"

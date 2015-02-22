@@ -1,9 +1,6 @@
 //***************************************************************************
-//
 //	dmech.h - This file contains the BattleMech Class header definitions
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

@@ -1,13 +1,9 @@
 //---------------------------------------------------------------------------
-//
 // file.cpp - This file contains the class functions for File
-//
 //				The File class simply calls the Windows file functions.
 //				It is purely a wrapper.
-//
 //				The mmFile Class is a wrapper for the Win32 Memory Mapped
 //				file functionality.  It is used exactly the same as above class.
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -287,15 +283,12 @@ long File::open (const char* fName, FileMode _mode, long numChild)
 
 					//------------------------------------------------------------
 					// NEW FUNCTIONALITY!!!
-					// 
 					// Each file may have a number of files open as children which
 					// use the parent's handle for reads and writes.  This would
 					// allow us to open a packet file and read a packet as a fitIni
 					// or allow us to write a packet as a fit ini and so forth.
-					//
 					// It also allows us to use the packet file extensions as tree
 					// files to avoid the ten thousand file syndrome.
-					//
 					// There is now an open which takes a FilePtr and a size.
 					maxChildren = numChild;
 					childList = (FilePtr *)g_systemHeap->Malloc(sizeof(FilePtr) * maxChildren);
@@ -367,15 +360,12 @@ long File::open (const char* fName, FileMode _mode, long numChild)
 	
 			//------------------------------------------------------------
 			// NEW FUNCTIONALITY!!!
-			// 
 			// Each file may have a number of files open as children which
 			// use the parent's handle for reads and writes.  This would
 			// allow us to open a packet file and read a packet as a fitIni
 			// or allow us to write a packet as a fit ini and so forth.
-			//
 			// It also allows us to use the packet file extensions as tree
 			// files to avoid the ten thousand file syndrome.
-			//
 			// There is now an open which takes a FilePtr and a size.
 			maxChildren = numChild;
 			childList = (FilePtr *)g_systemHeap->Malloc(sizeof(FilePtr) * maxChildren);
@@ -437,17 +427,13 @@ long File::open (FilePtr _parent, unsigned long fileSize, long numChild)
 
 		//------------------------------------------------------------
 		// NEW FUNCTIONALITY!!!
-		// 
 		// Each file may have a number of files open as children which
 		// use the parent's handle for reads and writes.  This would
 		// allow us to open a packet file and read a packet as a fitIni
 		// or allow us to write a packet as a fit ini and so forth.
-		//
 		// It also allows us to use the packet file extensions as tree
 		// files to avoid the ten thousand file syndrome.
-		//
 		// There is now an open which takes a FilePtr and a size.
-		// 
 		// IF a numChild parameter is passed in as -1, we want this file in RAM!!
 		// This means NO CHILDREN!!!!!!!!!!!!!
 		if (numChild != -1)
@@ -582,7 +568,6 @@ void File::close (void)
 	//------------------------------------------------------------------------
 	// First, close us if we are the parent.  Otherwise, just NULL the handle
 	// DO NOT CALL CLOSE IF WE ARE A CHILD!!
-	//
 	// The actual stored filename is also in the parent.  Everyone else just has
 	// pointer and, as such, only the parent frees the memory.
 

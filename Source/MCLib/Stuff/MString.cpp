@@ -16,16 +16,12 @@
 size_t
 	MStringRepresentation::allocationIncrement = 8;
 
-//
 //#############################################################################
 //#############################################################################
-//
 inline size_t
 	MStringRepresentation::CalculateSize(size_t needed)
 {
-	//
 	// calculate the allocation size for a string
-	//
 	Verify(allocationIncrement);
 	size_t x =
 		((needed + allocationIncrement) / allocationIncrement) *
@@ -33,10 +29,8 @@ inline size_t
 	return x;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 MStringRepresentation::MStringRepresentation()
 {
 	stringLength = 0;
@@ -45,10 +39,8 @@ MStringRepresentation::MStringRepresentation()
 	referenceCount = 0;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 MStringRepresentation::MStringRepresentation(const MStringRepresentation &str)
 {
 	Check_Object(&str);
@@ -68,10 +60,8 @@ MStringRepresentation::MStringRepresentation(const MStringRepresentation &str)
 	referenceCount = 0;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 MStringRepresentation::MStringRepresentation(const char *cstr)
 {
 	if ((cstr == NULL) || (cstr[0] == '\x00'))
@@ -92,10 +82,8 @@ MStringRepresentation::MStringRepresentation(const char *cstr)
 	referenceCount = 0;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 MStringRepresentation::~MStringRepresentation()
 {
 	if (stringText != NULL)
@@ -108,19 +96,15 @@ MStringRepresentation::~MStringRepresentation()
 	}
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 void
 	MStringRepresentation::TestInstance() const
 {
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 void
 	MStringRepresentation::AllocateLength(size_t length)
 {
@@ -150,10 +134,8 @@ void
 	}
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 MStringRepresentation
 	MStringRepresentation::operator = (const MStringRepresentation &str)
 {
@@ -189,10 +171,8 @@ MStringRepresentation
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 MStringRepresentation
 	MStringRepresentation::operator = (const char *cstr)
 {
@@ -226,10 +206,8 @@ MStringRepresentation
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 MStringRepresentation
 	Stuff::operator + (
 		const MStringRepresentation &str1,
@@ -279,10 +257,8 @@ MStringRepresentation
 	return temp;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 MStringRepresentation
 	Stuff::operator + (const MStringRepresentation &str, char ch)
 {
@@ -326,10 +302,8 @@ MStringRepresentation
 	return temp;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 int
 	MStringRepresentation::Compare(const MStringRepresentation &str) const
 {
@@ -352,10 +326,8 @@ int
 	return strcmp(stringText, str.stringText);
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 MStringRepresentation
 	MStringRepresentation::GetNthToken(
 		size_t nth_token,
@@ -364,9 +336,7 @@ MStringRepresentation
 {
 	Check_Object(this);
 
-	//
 	// Which delimters to use
-	//
 	char *delimter_string = " \t,";
 
 	if (delimiters != NULL)
@@ -375,17 +345,13 @@ MStringRepresentation
 	}
 	Check_Pointer(delimter_string);
 
-   //
 	// Make temporary
-   //
 	MStringRepresentation temp(*this);
 
    if (temp.stringText == NULL)
 		return temp;
 
-   //
 	// Parse string with strtok
-   //
 	size_t i;
 	char *ptr;
 
@@ -406,10 +372,8 @@ MStringRepresentation
 	return token_return;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 void
 	MStringRepresentation::ToUpper()
 {
@@ -423,10 +387,8 @@ void
 	}
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 void MStringRepresentation::ToLower()
 {
 	Check_Object(this);
@@ -436,10 +398,8 @@ void MStringRepresentation::ToLower()
 	}
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 MemoryStream&
 	MemoryStreamIO::Read(
 		MemoryStream *stream,
@@ -468,10 +428,8 @@ MemoryStream&
 	return *stream;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 MemoryStream&
 	MemoryStreamIO::Write(
 		MemoryStream *stream,
@@ -489,10 +447,8 @@ MemoryStream&
 	return *stream;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 void
 	Stuff::Convert_From_Ascii(
 		const char *str,
@@ -514,10 +470,8 @@ void
 //##############################    MString    ################################
 //#############################################################################
 
-//
 //#############################################################################
 //#############################################################################
-//
 MString&
 	MString::operator = (const MString &str)
 {
@@ -534,10 +488,8 @@ MString&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 MString&
 	MString::operator = (const char *cstr)
 {
@@ -549,10 +501,8 @@ MString&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 void
 	MString::ToUpper()
 {
@@ -568,10 +518,8 @@ void
 	representation->ToUpper();
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 void
 	MString::ToLower()
 {
@@ -587,10 +535,8 @@ void
 	representation->ToLower();
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 MemoryStream&
 	MemoryStreamIO::Read(
 		MemoryStream *stream,
@@ -607,10 +553,8 @@ MemoryStream&
 	return Read(stream, str->representation);
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 void
 	Stuff::Convert_From_Ascii(
 		const char *str,
@@ -626,10 +570,8 @@ void
 	Verify(value->representation->referenceCount == 1);
 	Convert_From_Ascii(str, value->representation);
 }
-//
 //#############################################################################
 //#############################################################################
-//
 bool
 	Stuff::Close_Enough(
 		const char *str1,

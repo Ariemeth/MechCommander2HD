@@ -2988,7 +2988,6 @@ LRESULT EditorInterface::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 {
 	//We're not ready to draw anything.
 	// If you let an event through it'll probably crash!
-	//
 	if ( message == WM_KEYDOWN )
 		handleKeyDown( wParam );
 

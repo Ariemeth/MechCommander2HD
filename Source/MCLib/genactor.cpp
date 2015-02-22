@@ -1,9 +1,6 @@
 //---------------------------------------------------------------------------
-//
 //	genactor.cpp - This file contains the code for the generic appearance classes
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

@@ -9,7 +9,6 @@
 //===========================================================================//
 
 //------------------------------------------------------------------------------
-//
 gosFX::ShardCloud__Specification::ShardCloud__Specification(
 	Stuff::MemoryStream *stream,
 	int gfx_version
@@ -29,7 +28,6 @@ gosFX::ShardCloud__Specification::ShardCloud__Specification(
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::ShardCloud__Specification::ShardCloud__Specification():
 	SpinningCloud__Specification(gosFX::ShardCloudClassID)
 {
@@ -40,7 +38,6 @@ gosFX::ShardCloud__Specification::ShardCloud__Specification():
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::ShardCloud__Specification*
 	gosFX::ShardCloud__Specification::Make(
 		Stuff::MemoryStream *stream,
@@ -58,7 +55,6 @@ gosFX::ShardCloud__Specification*
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::ShardCloud__Specification::Save(Stuff::MemoryStream *stream)
 {
@@ -71,7 +67,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void 
 	gosFX::ShardCloud__Specification::BuildDefaults()
 {
@@ -89,7 +84,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 bool 
 	gosFX::ShardCloud__Specification::IsDataValid(bool fix_data)
 {
@@ -108,7 +102,6 @@ return		SpinningCloud__Specification::IsDataValid(fix_data);
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::ShardCloud__Specification::Copy(ShardCloud__Specification *spec)
 {
@@ -131,7 +124,6 @@ gosFX::ShardCloud::ClassData*
 	gosFX::ShardCloud::DefaultData = NULL;
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::ShardCloud::InitializeClass()
 {
@@ -149,7 +141,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::ShardCloud::TerminateClass()
 {
@@ -159,7 +150,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::ShardCloud::ShardCloud(
 	Specification *spec,
 	unsigned flags
@@ -188,7 +178,6 @@ gosFX::ShardCloud::ShardCloud(
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::ShardCloud::~ShardCloud()
 {
 	Unregister_Object(m_cloudImplementation);
@@ -196,7 +185,6 @@ gosFX::ShardCloud::~ShardCloud()
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::ShardCloud*
 	gosFX::ShardCloud::Make(
 		Specification *spec,
@@ -213,7 +201,6 @@ gosFX::ShardCloud*
 }
 
 //------------------------------------------------------------------------------
-//
 bool
 	gosFX::ShardCloud::AnimateParticle(
 		unsigned index,
@@ -223,11 +210,9 @@ bool
 {
 	Check_Object(this);
 
-	//
 	//-----------------------------------------
 	// Animate the parent then get our pointers
 	//-----------------------------------------
-	//
 	if (!SpinningCloud::AnimateParticle(index, world_to_new_local, till))
 		return false;
 	Set_Statistic(Shard_Count, Shard_Count+1);
@@ -238,11 +223,9 @@ bool
 	Stuff::Scalar seed = particle->m_seed;
 	Stuff::Scalar age = particle->m_age;
 
-	//
 	//------------------
 	// Animate the color
 	//------------------
-	//
 	Check_Pointer(m_P_color);
 	index *= 3;
 	m_P_color[index].red = spec->m_pRed.ComputeValue(age, seed);
@@ -254,7 +237,6 @@ bool
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::ShardCloud::CreateNewParticle(
 		unsigned index,
@@ -263,20 +245,16 @@ void
 {
 	Check_Object(this);
 
-	//
 	//-------------------------------------------------------------------
 	// Let our parent do creation, then turn on the particle in the cloud
 	//-------------------------------------------------------------------
-	//
 	SpinningCloud::CreateNewParticle(index, translation);
 	m_cloudImplementation->TurnOn(index);
 	Verify(m_cloudImplementation->IsOn(index));
 
-	//
 	//-----------------------------
 	// Figure out the particle size
 	//-----------------------------
-	//
 	Specification *spec = GetSpecification();
 	Check_Object(spec);
 	Particle *particle = GetParticle(index);
@@ -287,7 +265,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void gosFX::ShardCloud::DestroyParticle(unsigned index)
 {
 	Check_Object(this);
@@ -298,17 +275,14 @@ void gosFX::ShardCloud::DestroyParticle(unsigned index)
 }
 
 //------------------------------------------------------------------------------
-//
 void gosFX::ShardCloud::Draw(DrawInfo *info)
 {
 	Check_Object(this);
 	Check_Object(info);
 
-	//
 	//---------------------------------------------------------
 	// If we have active particles, set up the draw information
 	//---------------------------------------------------------
-	//
 	if (m_activeParticleCount)
 	{
 		MidLevelRenderer::DrawEffectInformation dInfo;
@@ -321,22 +295,18 @@ void gosFX::ShardCloud::Draw(DrawInfo *info)
 		local_to_world.Multiply(m_localToParent, *info->m_parentToWorld);
 		dInfo.effectToWorld = &local_to_world;
 
-		//
 		//--------------------------------------------------------------
 		// Check the orientation mode.  The first case is XY orientation
 		//--------------------------------------------------------------
-		//
 		unsigned i;
 		unsigned vert=0;
 		if (spec->m_alignZUsingX)
 		{
 			if (spec->m_alignZUsingY)
 			{
-				//
 				//-----------------------------------------
 				// Get the camera location into local space
 				//-----------------------------------------
-				//
 				Stuff::Point3D
 					camera_in_world(info->m_clipper->GetCameraToWorldMatrix());
 				Stuff::Point3D camera_in_cloud;
@@ -345,11 +315,9 @@ void gosFX::ShardCloud::Draw(DrawInfo *info)
 					local_to_world
 				);
 
-				//
 				//--------------------------------------
 				// Spin through all the active particles
 				//--------------------------------------
-				//
 				for (i = 0; i < m_activeParticleCount; i++)
 				{
 					Particle *particle = GetParticle(i);
@@ -357,11 +325,9 @@ void gosFX::ShardCloud::Draw(DrawInfo *info)
 					if (particle->m_age < 1.0f)
 					{
 
-						//
 						//--------------------------------
 						// Build the local to cloud matrix
 						//--------------------------------
-						//
 						Stuff::Vector3D direction_in_cloud;
 						direction_in_cloud.Subtract(
 							camera_in_cloud,
@@ -377,11 +343,9 @@ void gosFX::ShardCloud::Draw(DrawInfo *info)
 						);
 						shard_to_cloud.BuildTranslation(particle->m_localTranslation);
 
-						//
 						//--------------------------------------------------
 						// Figure out the scale, then build the three points
 						//--------------------------------------------------
-						//
 						Stuff::Scalar scale = particle->m_scale;
 						m_P_vertices[vert++].Multiply(
 							Stuff::Point3D(
@@ -413,18 +377,14 @@ void gosFX::ShardCloud::Draw(DrawInfo *info)
 				}
 			}
 
-			//
 			//-----------------------
 			// Handle X-only rotation
 			//-----------------------
-			//
 			else
 			{
-				//
 				//-----------------------------------------
 				// Get the camera location into local space
 				//-----------------------------------------
-				//
 				Stuff::Point3D
 					camera_in_world(info->m_clipper->GetCameraToWorldMatrix());
 				Stuff::Point3D camera_in_cloud;
@@ -433,11 +393,9 @@ void gosFX::ShardCloud::Draw(DrawInfo *info)
 					local_to_world
 				);
 
-				//
 				//--------------------------------------
 				// Spin through all the active particles
 				//--------------------------------------
-				//
 				for (i = 0; i < m_activeParticleCount; i++)
 				{
 					Particle *particle = GetParticle(i);
@@ -445,11 +403,9 @@ void gosFX::ShardCloud::Draw(DrawInfo *info)
 					if (particle->m_age < 1.0f)
 					{
 
-						//
 						//--------------------------------
 						// Build the local to cloud matrix
 						//--------------------------------
-						//
 						Stuff::Vector3D direction_in_cloud;
 						direction_in_cloud.Subtract(
 							camera_in_cloud,
@@ -465,11 +421,9 @@ void gosFX::ShardCloud::Draw(DrawInfo *info)
 						);
 						shard_to_cloud.BuildTranslation(particle->m_localTranslation);
 
-						//
 						//--------------------------------------------------
 						// Figure out the scale, then build the three points
 						//--------------------------------------------------
-						//
 						Stuff::Scalar scale = particle->m_scale;
 						m_P_vertices[vert++].Multiply(
 							Stuff::Point3D(
@@ -502,18 +456,14 @@ void gosFX::ShardCloud::Draw(DrawInfo *info)
 			}
 		}
 
-		//
 		//-------------------------------------------------------
 		// Each matrix needs to be aligned to the camera around Y
 		//-------------------------------------------------------
-		//
 		else if (spec->m_alignZUsingY)
 		{
-			//
 			//-----------------------------------------
 			// Get the camera location into local space
 			//-----------------------------------------
-			//
 			Stuff::Point3D
 				camera_in_world(info->m_clipper->GetCameraToWorldMatrix());
 			Stuff::Point3D camera_in_cloud;
@@ -522,11 +472,9 @@ void gosFX::ShardCloud::Draw(DrawInfo *info)
 				local_to_world
 			);
 
-			//
 			//--------------------------------------
 			// Spin through all the active particles
 			//--------------------------------------
-			//
 			for (i = 0; i < m_activeParticleCount; i++)
 			{
 				Particle *particle = GetParticle(i);
@@ -534,11 +482,9 @@ void gosFX::ShardCloud::Draw(DrawInfo *info)
 				if (particle->m_age < 1.0f)
 				{
 
-					//
 					//--------------------------------
 					// Build the local to cloud matrix
 					//--------------------------------
-					//
 					Stuff::Vector3D direction_in_cloud;
 					direction_in_cloud.Subtract(
 						camera_in_cloud,
@@ -554,11 +500,9 @@ void gosFX::ShardCloud::Draw(DrawInfo *info)
 					);
 					shard_to_cloud.BuildTranslation(particle->m_localTranslation);
 
-					//
 					//--------------------------------------------------
 					// Figure out the scale, then build the three points
 					//--------------------------------------------------
-					//
 					Stuff::Scalar scale = particle->m_scale;
 					m_P_vertices[vert++].Multiply(
 						Stuff::Point3D(
@@ -590,12 +534,10 @@ void gosFX::ShardCloud::Draw(DrawInfo *info)
 			}
 		}
 
-		//
 		//---------------------------------------------------------------
 		// No alignment is necessary, so just multiply out all the active
 		// particles
 		//---------------------------------------------------------------
-		//
 		else
 		{
 			for (i = 0; i < m_activeParticleCount; i++)
@@ -605,20 +547,16 @@ void gosFX::ShardCloud::Draw(DrawInfo *info)
 				if (particle->m_age < 1.0f)
 				{
 
-					//
 					//--------------------------------
 					// Build the local to cloud matrix
 					//--------------------------------
-					//
 					Stuff::LinearMatrix4D shard_to_cloud;
 					shard_to_cloud.BuildRotation(particle->m_localRotation);
 					shard_to_cloud.BuildTranslation(particle->m_localTranslation);
 
-					//
 					//--------------------------------------------------
 					// Figure out the scale, then build the three points
 					//--------------------------------------------------
-					//
 					Stuff::Scalar scale = particle->m_scale;
 					m_P_vertices[vert++].Multiply(
 						Stuff::Point3D(
@@ -650,11 +588,9 @@ void gosFX::ShardCloud::Draw(DrawInfo *info)
 			}
 		}
 
-		//
 		//---------------------
 		// Now just do the draw
 		//---------------------
-		//
 	 	info->m_clipper->DrawEffect(&dInfo);
 	}
 
@@ -662,7 +598,6 @@ void gosFX::ShardCloud::Draw(DrawInfo *info)
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::ShardCloud::TestInstance() const
 {

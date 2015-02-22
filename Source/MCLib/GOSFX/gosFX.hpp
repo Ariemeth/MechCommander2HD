@@ -11,11 +11,9 @@
 namespace gosFX
 {
 
-	//
 	//--------------
 	// gosFX classes
 	//--------------
-	//
 	enum {
 		EffectClassID = Stuff::FirstgosFXClassID,
 			ParticleCloudClassID,

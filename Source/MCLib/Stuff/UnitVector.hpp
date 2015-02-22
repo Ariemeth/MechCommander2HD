@@ -20,9 +20,7 @@ namespace Stuff {
 		public Vector3D
 	{
 	public:
-		//
 		// Constructors
-		//
 		UnitVector3D()
 			{}
 		UnitVector3D(
@@ -51,9 +49,7 @@ namespace Stuff {
 		static const UnitVector3D
 			Down;
 
-		//
 		// Assignment operators
-		//
 		UnitVector3D&
 			operator=(const UnitVector3D &vector)
 				{Check_Object(&vector); Vector3D::operator=(vector); return *this;}
@@ -61,9 +57,7 @@ namespace Stuff {
 			operator=(const Vector3D& v)
 				{Vector3D::Normalize(v); return *this;}
 
-		//
 		// Math operations
-		//
 		UnitVector3D&
 			Negate(const UnitVector3D &v)
 				{Check_Object(&v); Vector3D::Negate(v); return *this;}
@@ -72,9 +66,7 @@ namespace Stuff {
 			operator*(const Vector3D& v) const
 				{return Vector3D::operator*(v);}
 
-		//
 		// Transforms
-		//
 		UnitVector3D& Multiply(
 			const UnitVector3D &v,
 			const LinearMatrix4D &m
@@ -88,9 +80,7 @@ namespace Stuff {
 			)
 				{Vector3D::MultiplyByInverse(v,m); return *this;}
 
-		//
 		// Template support
-		//
 		UnitVector3D&
 			Lerp(
 				const UnitVector3D& v1,
@@ -98,9 +88,7 @@ namespace Stuff {
 				Scalar t
 			);
 
-		//
 		// Support functions
-		//
 		void
 			TestInstance() const;
 		static bool

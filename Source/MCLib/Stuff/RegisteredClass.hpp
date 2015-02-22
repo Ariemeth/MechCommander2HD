@@ -34,14 +34,12 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// ClassID enumeration
-	//
 	public:
 		typedef int ClassID;
 		typedef RegisteredClass__ClassData ClassData;
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Construction, destruction, saving
-	//
 	public:
 		virtual
 			~RegisteredClass()
@@ -55,7 +53,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Class Data Support
-	//
 	public:
 		ClassData*
 			GetClassData() const
@@ -84,7 +81,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Accessors
-	//
 	public:
 		ClassID
 			GetClassID() const;
@@ -105,7 +101,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Test support
-	//
 	public:
 		void
 			TestInstance() const;
@@ -124,7 +119,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Construction, destruction, testing
-	//
 	public:
 		RegisteredClass__ClassData(
 			RegisteredClass::ClassID class_id,
@@ -136,7 +130,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Inheritance stuff
-	//
 	public:
 		bool
 			IsDerivedFrom(RegisteredClass__ClassData* parent);
@@ -170,14 +163,12 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Test support
-	//
 	public:
 		void
       	TestInstance();
 	};
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//
 	inline bool
 		RegisteredClass::IsDerivedFrom(RegisteredClass__ClassData* parent) const
 	{
@@ -187,7 +178,6 @@ namespace Stuff {
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//
 	inline bool
 		RegisteredClass::IsDerivedFrom(ClassID class_id) const
 	{
@@ -197,7 +187,6 @@ namespace Stuff {
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//
 	inline bool
 		RegisteredClass::IsDerivedFrom(const char* parent) const
 	{
@@ -207,7 +196,6 @@ namespace Stuff {
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//
 	inline RegisteredClass::ClassID
 		RegisteredClass::GetClassID() const
 	{
@@ -218,7 +206,6 @@ namespace Stuff {
 	}
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//
 	inline RegisteredClass::ClassData*
 		RegisteredClass::FindClassData(const char* name)
 	{

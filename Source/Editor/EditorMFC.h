@@ -3,7 +3,6 @@
 //===========================================================================//
 
 // EditorMFC.h : main header file for the EDITORMFC application
-//
 
 #if !defined(AFX_EDITORMFC_H__FFBDF9AD_0923_4563_968D_887E72897ECF__INCLUDED_)
 #define AFX_EDITORMFC_H__FFBDF9AD_0923_4563_968D_887E72897ECF__INCLUDED_
@@ -21,7 +20,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // EditorMFCApp:
 // See EditorMFC.cpp for the implementation of this class
-//
 
 class EditorMFCApp : public CWinApp
 {

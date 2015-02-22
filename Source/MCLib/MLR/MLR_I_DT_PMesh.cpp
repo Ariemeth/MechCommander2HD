@@ -21,7 +21,6 @@ DynamicArrayOf<Vector2DScalar>
 	*MLR_I_DT_PMesh::texCoords2;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_DT_PMesh::InitializeClass()
 {
@@ -51,7 +50,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_DT_PMesh::TerminateClass()
 {
@@ -71,7 +69,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_DT_PMesh::MLR_I_DT_PMesh(
 	ClassData *class_data,
 	MemoryStream *stream,
@@ -94,7 +91,6 @@ MLR_I_DT_PMesh::MLR_I_DT_PMesh(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_DT_PMesh::MLR_I_DT_PMesh(ClassData *class_data):
 	MLR_I_PMesh(class_data)
 {
@@ -105,14 +101,12 @@ MLR_I_DT_PMesh::MLR_I_DT_PMesh(ClassData *class_data):
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_DT_PMesh::~MLR_I_DT_PMesh()
 {
 	Check_Object(this);
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_DT_PMesh*
 	MLR_I_DT_PMesh::Make(
 		MemoryStream *stream,
@@ -129,7 +123,6 @@ MLR_I_DT_PMesh*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_DT_PMesh::Save(MemoryStream *stream)
 {
@@ -142,7 +135,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_DT_PMesh::TestInstance() const
 {
@@ -150,7 +142,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_DT_PMesh::SetTexCoordData(
 		const Vector2DScalar *data,
@@ -191,7 +182,6 @@ void
 #undef CLASSNAME
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_DT_PMesh*
 	MidLevelRenderer::CreateIndexedCube_NoColor_NoLit_2Tex(
 		Scalar half, 
@@ -342,7 +332,6 @@ MLR_I_DT_PMesh*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRShape*
 	MidLevelRenderer::CreateIndexedIcosahedron_NoColor_NoLit_2Tex(
 		IcoInfo& icoInfo,

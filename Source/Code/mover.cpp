@@ -1,9 +1,6 @@
 //******************************************************************************************
-//
 //	mover.cpp - This file contains the Mover Class code
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -2162,7 +2159,6 @@ void Mover::init (bool create) {
 	startUpThisFrame = false;
 	disableThisFrame = false;
 
-	// 
 	teamId = -1;
 	groupId = -1;
 	squadId = -1;

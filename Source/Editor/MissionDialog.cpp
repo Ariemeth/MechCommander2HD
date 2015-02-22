@@ -3,7 +3,6 @@
 //===========================================================================//
 
 // MissionDialog.cpp : implementation file
-//
 
 #include "stdafx.h"
 //include "CampaignEditor.h"

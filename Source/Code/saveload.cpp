@@ -1,9 +1,7 @@
 //******************************************************************************************
 //	saveload.cpp - This file contains the mission Save Load class code
 //		Missions are what scenarios were in MechCommander 1.
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -358,7 +356,6 @@ void Mission::save (const char *saveFileName)
 	//		If NULL, save a magic Number to tell me this entry is NULL.
 	//		If NOT NULL, 
 	// 			Call Save DOWN the heirarchy.
-	//
 	currentPacket = ObjectManager->Save( &saveFile, currentPacket );
 
 	loadProgress = 95.0f;
@@ -1263,7 +1260,6 @@ void Mission::load (const char *loadFileName)
 	//		If NULL, save a magic Number to tell me this entry is NULL.
 	//		If NOT NULL, 
 	// 			Call Save DOWN the heirarchy.
-	//
 	currentPacket = ObjectManager->Load( &loadFile, currentPacket );
 
 	ObjectManager->buildMoverLists();
@@ -1308,7 +1304,6 @@ void Mission::load (const char *loadFileName)
 	// If we're not playing multiplayer, make sure all home commander movers have their
 	// localMoverId set to 0, so the iface can at least check if a mover is player
 	// controlled...
-	//
 	// Should already be done but no harm in doing again?
 	if (!MPlayer)
 		Commander::home->setLocalMoverId(0);

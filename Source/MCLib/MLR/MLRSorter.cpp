@@ -32,7 +32,6 @@ SortData::LoadSortAlphaFunc SortData::LoadSortAlpha[LastMode]	=
 };
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	SortData::DrawTriList()
 {
@@ -65,7 +64,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	SortData::DrawTriIndexedList()
 {
@@ -108,7 +106,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	SortData::DrawPointCloud()
 {
@@ -134,9 +131,7 @@ void
 		}
 
 		int Triangle = 0, Vertex = 0;
-	//
 	// Warning! - These points need clipping!
-	//
 		for( int i=numVertices; i; i-- )
 		{
 			pArray[Triangle+0] = *((GOSVertex *)vertices + Vertex);
@@ -169,7 +164,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	SortData::DrawQuads()
 {
@@ -194,7 +188,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	SortData::DrawLineCloud()
 {
@@ -223,7 +216,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 int
 	SortData::LoadAlphaFromTriList(SortAlpha **alpha)
 {
@@ -249,7 +241,6 @@ int
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 int
 	SortData::LoadAlphaFromTriIndexedList(SortAlpha **alpha)
 {
@@ -275,7 +266,6 @@ int
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 int
 	SortData::LoadAlphaFromPointCloud(SortAlpha**)
 {
@@ -287,7 +277,6 @@ int
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 int
 	SortData::LoadAlphaFromQuads(SortAlpha**)
 {
@@ -299,7 +288,6 @@ int
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 int
 	SortData::LoadAlphaFromLineCloud(SortAlpha**)
 {
@@ -312,7 +300,6 @@ int
 
 #ifdef CalDraw
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 ToBeDrawnPrimitive::ToBeDrawnPrimitive()
 {
 	primitive = NULL;
@@ -333,7 +320,6 @@ ToBeDrawnPrimitive::ToBeDrawnPrimitive()
 //#############################################################################
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSorter::InitializeClass()
 {
@@ -349,7 +335,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSorter::TerminateClass()
 {
@@ -359,7 +344,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRSorter::MLRSorter(ClassData *class_data, MLRTexturePool *tp):
 	RegisteredClass(class_data)
 {
@@ -382,13 +366,11 @@ MLRSorter::MLRSorter(ClassData *class_data, MLRTexturePool *tp):
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRSorter::~MLRSorter()
 {
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSorter::StartDraw(const MLRState &default_state)
 {
@@ -397,7 +379,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSorter::Reset ()
 {
@@ -414,7 +395,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSorter::DrawPrimitive(MLRPrimitiveBase *pt, int pass)
 {
@@ -470,7 +450,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 SortData *
 	MLRSorter::SetRawData
 		(
@@ -506,7 +485,6 @@ SortData *
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 SortData *
 	MLRSorter::SetRawIndexedData
 		(
@@ -544,7 +522,6 @@ SortData *
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 SortData *
 	MLRSorter::SetRawData ( MLRPrimitiveBase *pt, int pass)
 {
@@ -594,7 +571,6 @@ SortData *
 
 #ifdef CalDraw
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSorter::IncreaseTBDPCounter()
 {
@@ -606,7 +582,6 @@ void
 #endif
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 bool
 	MLRSorter::SetDifferences(const MLRState& original, const MLRState& newer)
 {
@@ -760,7 +735,6 @@ bool
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSorter::TestInstance() const
 {

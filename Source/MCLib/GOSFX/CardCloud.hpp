@@ -21,7 +21,6 @@ namespace gosFX
 	{
 	//----------------------------------------------------------------------
 	// Constructors/Destructors
-	//
 	protected:
 		CardCloud__Specification(
 			Stuff::MemoryStream *stream,
@@ -50,7 +49,6 @@ namespace gosFX
 
 	//-------------------------------------------------------------------------
 	// FCurves
-	//
 	public:
 		SeededCurveOf<ComplexCurve, ComplexCurve,Curve::e_ComplexComplexType>
 			m_halfHeight,
@@ -93,7 +91,6 @@ namespace gosFX
 	{
 	//----------------------------------------------------------------------------
 	// Class Registration Support
-	//
 	public:
 		static void InitializeClass();
 		static void	TerminateClass();
@@ -118,7 +115,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Class Data Support
-	//
 	protected:
 		CardCloud(
 			Specification *spec,
@@ -157,14 +153,12 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Testing
-	//
 	public:
 		void
 			TestInstance() const;
 
 	//----------------------------------------------------------------------------
 	// API
-	//
 	protected:
 		bool
 			AnimateParticle(

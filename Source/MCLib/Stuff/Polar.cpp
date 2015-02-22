@@ -12,21 +12,17 @@
 const YawPitchRange
 	YawPitchRange::Identity(0.0f,0.0f,0.0f);
 
-//
 //#############################################################################
 //#############################################################################
-//
 YawPitchRange&
 	YawPitchRange::operator=(const Vector3D &vector)
 {
 	Check_Pointer(this);
 	Check_Object(&vector);
 
-	//
 	//------------------------------------------------------------------------
 	// See if we have a zero length vector.  If so, convert it to the identity
 	//------------------------------------------------------------------------
-	//
 	Verify(
 		Vector3D::Forward.z == 1.0f && Vector3D::Left.x == 1.0f && Vector3D::Up.y == 1.0f
 	);
@@ -39,13 +35,11 @@ YawPitchRange&
 	}
 	else
 	{
-		//
 		//---------------------------------------------------------------------
 		// Isolate the yaw element.  If the vector is vertical, yaw will simply
 		// be zero.  If not, the yaw will indicate counter-clockwise deviation
 		// from the negative Z axis
 		//---------------------------------------------------------------------
-		//
 		sub_range = Sqrt(sub_range);
 		if (Small_Enough(sub_range))
 		{
@@ -62,10 +56,8 @@ YawPitchRange&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 bool
 	Stuff::Small_Enough(
 		const YawPitchRange& angles,
@@ -80,10 +72,8 @@ bool
 		 && Small_Enough(angles.range,e);
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 bool
 	Stuff::Close_Enough(
 		const YawPitchRange& a1,
@@ -100,10 +90,8 @@ bool
 		 && Close_Enough(a1.range,a2.range,e);
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 #if !defined(Spew)
 	void
 		Spew(

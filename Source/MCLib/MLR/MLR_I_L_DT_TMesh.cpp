@@ -16,7 +16,6 @@ MLR_I_L_DT_TMesh::ClassData*
 	MLR_I_L_DT_TMesh::DefaultData = NULL;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_L_DT_TMesh::InitializeClass()
 {
@@ -38,7 +37,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_L_DT_TMesh::TerminateClass()
 {
@@ -53,7 +51,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_L_DT_TMesh::MLR_I_L_DT_TMesh(
 	ClassData *class_data,
 	MemoryStream *stream,
@@ -84,7 +81,6 @@ MLR_I_L_DT_TMesh::MLR_I_L_DT_TMesh(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_L_DT_TMesh::MLR_I_L_DT_TMesh(ClassData *class_data):
 	MLR_I_C_DT_TMesh(class_data), normals(0)
 {
@@ -93,14 +89,12 @@ MLR_I_L_DT_TMesh::MLR_I_L_DT_TMesh(ClassData *class_data):
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_L_DT_TMesh::~MLR_I_L_DT_TMesh()
 {
 	Check_Object(this);
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_L_DT_TMesh*
 	MLR_I_L_DT_TMesh::Make(
 		MemoryStream *stream,
@@ -117,7 +111,6 @@ MLR_I_L_DT_TMesh*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_L_DT_TMesh::Save(MemoryStream *stream)
 {
@@ -130,7 +123,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 bool
 	MLR_I_L_DT_TMesh::Copy(MLR_I_L_DT_PMesh *pMesh)
 {
@@ -149,7 +141,6 @@ bool
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_L_DT_TMesh::SetNormalData(
 		const Vector3D *data,
@@ -173,7 +164,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_L_DT_TMesh::GetNormalData(
 		Vector3D **data,
@@ -186,7 +176,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_L_DT_TMesh::SetColorData(
 #if COLOR_AS_DWORD
@@ -209,7 +198,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_L_DT_TMesh::PaintMe(
 #if COLOR_AS_DWORD
@@ -245,7 +233,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_L_DT_TMesh::TestInstance() const
 {
@@ -289,7 +276,6 @@ extern DWORD gEnableTextureSort, gEnableAlphaSort;
 #undef CLASSNAME
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRShape*
 	MidLevelRenderer::CreateIndexedTriIcosahedron_Color_Lit_2Tex(
 		IcoInfo& icoInfo,

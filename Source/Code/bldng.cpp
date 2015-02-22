@@ -1,9 +1,6 @@
 //---------------------------------------------------------------------------
-//
 //	bldng.cpp -- File contains the Building Object code
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -786,7 +783,6 @@ long Building::update (void)
 
 			if (getObjectType()->whatAmI() == 607)
 			{
-				//
 				//Find out what vertex we are in the terrain.
 				long mx = (float2long(position.x) >> 7) + Terrain::halfVerticesMapSide;
 				long my = Terrain::halfVerticesMapSide - ((float2long(position.y) >> 7) + 1);

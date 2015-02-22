@@ -38,9 +38,7 @@ namespace Stuff {
 			length(length)
 				{}
 
-		//
 		// Assignment operators
-		//
 		Line3D&
 			SetDirection(const Vector3D &vector);
 
@@ -48,9 +46,7 @@ namespace Stuff {
 			FindEnd(Point3D *result)
 				{Check_Object(this); Check_Pointer(result); Ray3D::Project(length, result);}
 			
-		//
 		// Intersection functions
-		//
 		Scalar
 			GetDistanceTo(
 				const Plane &plane,

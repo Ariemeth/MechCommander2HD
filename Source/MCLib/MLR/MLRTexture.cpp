@@ -9,7 +9,6 @@
 //#############################################################################
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRTexture::MLRTexture(MemoryStream *stream)
 {
 	Verify(gos_GetCurrentHeap() == Heap);
@@ -20,7 +19,6 @@ MLRTexture::MLRTexture(MemoryStream *stream)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRTexture::MLRTexture(
 	MLRTexturePool *tp,
 	const char* texName,
@@ -48,7 +46,6 @@ MLRTexture::MLRTexture(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRTexture::MLRTexture(
 	MLRTexturePool *tp,
 	GOSImage *_image,
@@ -75,7 +72,6 @@ MLRTexture::MLRTexture(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRTexture::TestInstance() const
 {
@@ -84,7 +80,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRTexture::MLRTexture(const MLRTexture& tex)
 {
 	Check_Object(&tex);
@@ -92,7 +87,6 @@ MLRTexture::MLRTexture(const MLRTexture& tex)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRTexture::~MLRTexture()
 {
 	if(NULL==thePool->GetImage(image->GetName()))
@@ -103,7 +97,6 @@ MLRTexture::~MLRTexture()
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRTexture*
 	MLRTexture::Make(MemoryStream *stream)
 {
@@ -117,14 +110,12 @@ MLRTexture*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRTexture::Save(MemoryStream *stream)
 {
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 int
 	MLRTexture::GetImageNumber()
 {
@@ -133,7 +124,6 @@ int
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 int
 	MLRTexture::GetInstanceNumber()
 {

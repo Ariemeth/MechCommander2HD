@@ -19,7 +19,6 @@ DynamicArrayOf<Vector2DScalar>
 	*MLR_Terrain::clipTexCoords;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_Terrain::InitializeClass()
 {
@@ -44,7 +43,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_Terrain::TerminateClass()
 {
@@ -62,7 +60,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_Terrain::MLR_Terrain(
 	ClassData *class_data,
 	MemoryStream *stream,
@@ -78,7 +75,6 @@ MLR_Terrain::MLR_Terrain(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_Terrain::MLR_Terrain(ClassData *class_data):
 	MLR_I_DeT_TMesh(class_data)
 {
@@ -89,14 +85,12 @@ MLR_Terrain::MLR_Terrain(ClassData *class_data):
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_Terrain::~MLR_Terrain()
 {
 	Check_Object(this);
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_Terrain*
 	MLR_Terrain::Make(
 		MemoryStream *stream,
@@ -113,7 +107,6 @@ MLR_Terrain*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_Terrain::Save(MemoryStream *stream)
 {
@@ -124,7 +117,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_Terrain::TestInstance() const
 {
@@ -132,7 +124,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_Terrain::SetUVData(
 		Stuff::Scalar bpf,
@@ -155,7 +146,6 @@ void
 #undef I_SAY_YES_TO_DUAL_TEXTURES
 #undef I_SAY_YES_TO_COLOR
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 #undef I_SAY_YES_TO_LIGHTING
 
 #define I_SAY_YES_TO_TERRAIN
@@ -185,7 +175,6 @@ void
 #undef CLASSNAME
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRShape*
 	MidLevelRenderer::CreateIndexedTriIcosahedron_TerrainTest(
 		IcoInfo& icoInfo,

@@ -2,9 +2,7 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 //***************************************************************************
-//
 //								ABLXSTD.CPP
-//
 //***************************************************************************
 
 #include <stdio.h>
@@ -688,16 +686,11 @@ void execStdGetModule (void) {
 void execStdSetMaxLoops (void) {
 
 	//----------------------------------------------------------------------
-	//
 	//	SET MAX LOOPS function:
-	//
 	//		Sets the max number of loops that may occur (in a for, while or
 	//		repeat loop) before an infinite loop run-time error occurs.
-	//
 	//		PARAMS:	integer
-	//
 	//		RETURN: none
-	//
 	//----------------------------------------------------------------------
 
 	MaxLoopIterations = ABLi_popInteger() + 1;
@@ -708,19 +701,13 @@ void execStdSetMaxLoops (void) {
 void execStdFatal (void) {
 
 	//----------------------------------------------------------------------
-	//
 	//	FATAL function:
-	//
 	//		If the debugger is active, this immediately jumps into debug mode.
 	//		Otherwise, it causes a fatal and exits the game (displaying the
 	//		string passed in).
-	//
 	//		PARAMS:	integer							fatal code to display
-	//
 	//				char[]							message
-	//
 	//		RETURN: none
-	//
 	//----------------------------------------------------------------------
 
 	long code = ABLi_popInteger();
@@ -749,23 +736,16 @@ void execStdFatal (void) {
 void execStdAssert (void) {
 
 	//----------------------------------------------------------------------
-	//
 	//	ASSERT function:
-	//
 	//		If the debugger is active, this immediately jumps into debug mode
 	//		if expression is FALSE. Otherwise, the assert statement is ignored
 	//		unless the #debug directive has been issued in the module. If
 	//		so, a fatal occurs and exits the game (displaying the
 	//		string passed in).
-	//
 	//		PARAMS:	boolean							expression
-	//
 	//				integer							assert code to display
-	//
 	//				char[]							message
-	//
 	//		RETURN: none
-	//
 	//----------------------------------------------------------------------
 
 	long expression = ABLi_popInteger();

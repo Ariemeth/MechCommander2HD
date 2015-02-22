@@ -1,8 +1,6 @@
 //-----------------------------------------------------------------------------------------
-//
 // Floating Help class.  Used for tool tips, building/mech/vehicle IDs.
 // Basically draws itself AFTER everything else since gos_Font"3D" has no Z Depth!
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

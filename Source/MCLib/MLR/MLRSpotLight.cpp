@@ -12,7 +12,6 @@ MLRSpotLight::ClassData*
 	MLRSpotLight::DefaultData = NULL;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSpotLight::InitializeClass()
 {
@@ -28,7 +27,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSpotLight::TerminateClass()
 {
@@ -38,7 +36,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRSpotLight::MLRSpotLight() :
 	MLRInfiniteLightWithFalloff(DefaultData)
 {
@@ -47,7 +44,6 @@ MLRSpotLight::MLRSpotLight() :
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRSpotLight::MLRSpotLight(
 	Stuff::MemoryStream *stream,
 	int version
@@ -79,7 +75,6 @@ MLRSpotLight::MLRSpotLight(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRSpotLight::MLRSpotLight(Stuff::Page *page):
 	MLRInfiniteLightWithFalloff(DefaultData, page)
 {
@@ -105,7 +100,6 @@ MLRSpotLight::MLRSpotLight(Stuff::Page *page):
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRSpotLight::~MLRSpotLight()
 {
 	if (lightMap)
@@ -116,7 +110,6 @@ MLRSpotLight::~MLRSpotLight()
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSpotLight::Save(Stuff::MemoryStream *stream)
 {
@@ -139,7 +132,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSpotLight::Write(Stuff::Page *page)
 {
@@ -159,7 +151,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSpotLight::TestInstance()
 {
@@ -167,7 +158,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSpotLight::SetSpreadAngle(const Radian &radian)
 {
@@ -180,7 +170,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSpotLight::SetSpreadAngle(const Degree &degree)
 {
@@ -193,7 +182,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 bool
 	MLRSpotLight::GetSpreadAngle(Radian *angle)
 {
@@ -205,7 +193,6 @@ bool
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSpotLight::LightVertex(const MLRVertexData& vertexData)
 {
@@ -219,13 +206,11 @@ void
 
 	vertex_to_light -= *vertexData.point;
 
-	//
 	//--------------------------------------------------------------
 	// If the distance to the vertex is zero, the light will not
 	// contribute to the vertex coloration.  Otherwise, decrease the
 	// light level as appropriate to the distance
 	//--------------------------------------------------------------
-	//
 	Scalar length = vertex_to_light.GetApproximateLength();
 
 	Scalar falloff = 1.0f;
@@ -266,12 +251,10 @@ void
 	light_z.y = vertex_to_light.y;
 	light_z.z = vertex_to_light.z;
 
-	//
 	//-------------------------------------------------------------------
 	// Now we reduce the light level falling on the vertex based upon the
 	// cosine of the angle between light and normal
 	//-------------------------------------------------------------------
-	//
 	Scalar cosine = -(light_z * (*vertexData.normal)) * intensity;
 
 #if COLOR_AS_DWORD
@@ -289,7 +272,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRSpotLight::SetLightMap(MLRLightMap *light_map)
 {

@@ -26,7 +26,6 @@ const Stuff::LinearMatrix4D&
 	gosFX::Effect_Against_Motion = Effect_Against_Motion_data;
 
 //-----------------------------------------------------------------------------
-//
 void
 	gosFX::InitializeClasses()
 {
@@ -84,7 +83,6 @@ void
 }
 
 //-----------------------------------------------------------------------------
-//
 void
 	gosFX::TerminateClasses()
 {
@@ -116,7 +114,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 int
 	gosFX::ReadGFXVersion(Stuff::MemoryStream *erf_stream)
 {
@@ -133,7 +130,6 @@ int
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	gosFX::WriteGFXVersion(Stuff::MemoryStream *erf_stream)
 {

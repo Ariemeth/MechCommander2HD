@@ -14,10 +14,8 @@ bool SingeBitStreamTest(int total_sections_to_write);
 bool MultipleBitStreamTest(int total_sections_to_write);
 bool FloatIntBitStreamTest(int total_sections_to_write);
 
-//
 //#############################################################################
 //#############################################################################
-//
 
 bool
 	MemoryStream::TestClass()
@@ -38,7 +36,6 @@ bool
 	return true;
 };
 
-//
 //#############################################################################
 
 bool SingeBitStreamTest(int total_sections_to_write)
@@ -106,7 +103,6 @@ bool SingeBitStreamTest(int total_sections_to_write)
 
 	return true;
 }
-//
 //#############################################################################
 
 template <class T> class MinMaxHolderOf
@@ -321,7 +317,6 @@ bool FloatIntBitStreamTest(int total_sections_to_write)
 
 	return true;
 }
-//
 //#############################################################################
 
 bool MultipleBitStreamTest(int total_sections_to_write)

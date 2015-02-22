@@ -113,7 +113,6 @@ void ParseCommandLine(char *command_line)
 						else
 						{
 							//They put a quote on the line with no space.
-							//
 							scanName = false;
 							fileName[strlen(fileName)-1] = 0;
 						}
@@ -151,7 +150,6 @@ void ParseCommandLine(char *command_line)
 						else
 						{
 							//They put a quote on the line with no space.
-							//
 							scanName = false;
 							listName[strlen(listName)-1] = 0;
 						}
@@ -619,9 +617,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	delete systemFile;
 	systemFile = NULL;
 
-//
 // Init GameOS with window created
-//
 	//InitGameOS( hInstance, appWnd, lpCmdLine );
 
 	Platform = Platform_DLL;
@@ -659,9 +655,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 	}
 	else
 	{
-		//
 		// A list file was provided
-		//
 		File file;
 		if (file.open(listName) == NO_ERR)
 		{
@@ -676,9 +670,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
 		}
 	}
 
-	//
 	// Exit app
-	//
 	CoUninitialize();
 	return 0;
 }
@@ -691,9 +683,7 @@ void DoGameLogic()
 {
 }
 
-//
 // Setup the GameOS structure
-//
 void GetGameOSEnvironment( char* CommandLine )
 {
 	Environment.applicationName			= "MechCmdr2";

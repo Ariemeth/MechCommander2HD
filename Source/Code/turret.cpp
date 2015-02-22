@@ -1,9 +1,6 @@
 //***************************************************************************
-//
 //	turret.cpp -- File contains the Turret Object code
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -765,7 +762,6 @@ long Turret::update (void)
 		// Yes we are.  Check if night.
 		// If night and no spotlight yet, create one.
 		// Move it with turret's rotation below.
-		//
 		// For E3, have the spotlights create the light immediately or we run out of light sources!
 		if (active && eye->getIsNight() && (pointLight == NULL) && (getStatus() != OBJECT_STATUS_DESTROYED))
 		{

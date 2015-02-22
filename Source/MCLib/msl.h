@@ -1,16 +1,11 @@
 //-------------------------------------------------------------------------------
-//
 // Multiple TG Shape Layer
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 // Replace MLR for a myriad number of reasons.
-//
 // Started 4/16/99
-//
 // FFS
-//
 //-------------------------------------------------------------------------------
 
 #ifndef MSL_H
@@ -35,7 +30,6 @@ namespace Microsoft
 
 //-------------------------------------------------------------------------------
 // Structs used by layer.
-//
 
 class TG_MultiShape;
 class TG_AnimateShape;
@@ -284,7 +278,6 @@ class TG_MultiShape
 		//This function sets the list of lights used by the TransformShape function
 		//to light the shape.
 		//Function returns 0 if lightList entries are all OK.  -1 otherwise.
-		//
 		long SetLightList (TG_LightPtr *lightList, DWORD nLights);
 
 		//This function sets the fog values for the shape.  Straight fog right now.

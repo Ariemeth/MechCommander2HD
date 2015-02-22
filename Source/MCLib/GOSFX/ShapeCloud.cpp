@@ -6,13 +6,11 @@
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
-//
 //############################################################################
 //########################  gosFX::ShapeCloud__Specification  #############################
 //############################################################################
 
 //------------------------------------------------------------------------------
-//
 gosFX::ShapeCloud__Specification::ShapeCloud__Specification(
 	Stuff::MemoryStream *stream,
 	int gfx_version
@@ -25,11 +23,9 @@ gosFX::ShapeCloud__Specification::ShapeCloud__Specification(
 	m_particleClassSize = sizeof(gosFX::ShapeCloud::Particle);
 	m_totalParticleSize = sizeof(gosFX::ShapeCloud::Particle);
 
-	//
 	//---------------
 	// Load the shape
 	//---------------
-	//
 	m_shape =
 		MidLevelRenderer::MLRShape::Make(
 			stream,
@@ -38,15 +34,12 @@ gosFX::ShapeCloud__Specification::ShapeCloud__Specification(
 	Register_Object(m_shape);
 	*stream >> m_radius;
 
-	//
 	//---------------------------------
 	// Make sure everything is in order
 	//---------------------------------
-	//
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::ShapeCloud__Specification::ShapeCloud__Specification(
 	MidLevelRenderer::MLRShape *shape
 ):
@@ -60,7 +53,6 @@ gosFX::ShapeCloud__Specification::ShapeCloud__Specification(
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::ShapeCloud__Specification::~ShapeCloud__Specification()
 {
 	Check_Object(this);
@@ -72,7 +64,6 @@ gosFX::ShapeCloud__Specification::~ShapeCloud__Specification()
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::ShapeCloud__Specification*
 	gosFX::ShapeCloud__Specification::Make(
 		Stuff::MemoryStream *stream,
@@ -90,7 +81,6 @@ gosFX::ShapeCloud__Specification*
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::ShapeCloud__Specification::Save(Stuff::MemoryStream *stream)
 {
@@ -103,7 +93,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::ShapeCloud__Specification::Copy(ShapeCloud__Specification *spec)
 {
@@ -122,40 +111,33 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::ShapeCloud__Specification::SetShape(MidLevelRenderer::MLRShape *shape)
 {
 	Check_Object(this);
 
-	//
 	//------------------------------------
 	// Detach the old shape if it is there
 	//------------------------------------
-	//
 	if (m_shape)
 	{
 		Check_Object(m_shape);
 		m_shape->DetachReference();
 	}
 
-	//
 	//------------------------------------
 	// Attach the new shape if it is there
 	//------------------------------------
-	//
 	if (shape)
 	{
 		Check_Object(shape);
 		m_shape = shape;
 		m_shape->AttachReference();
 
-		//
 		//-----------------------------------------------------------------
 		// Get the radius of the bounding sphere.  This will be the largest
 		// distance any point is from the origin
 		//-----------------------------------------------------------------
-		//
 		m_radius = 0.0f;
 		int count = m_shape->GetNum();
 		for (int i=0; i<count; ++i)
@@ -184,7 +166,6 @@ gosFX::ShapeCloud::ClassData*
 	gosFX::ShapeCloud::DefaultData = NULL;
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::ShapeCloud::InitializeClass()
 {
@@ -202,7 +183,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::ShapeCloud::TerminateClass()
 {
@@ -212,7 +192,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::ShapeCloud::ShapeCloud(
 	Specification *spec,
 	unsigned flags
@@ -223,7 +202,6 @@ gosFX::ShapeCloud::ShapeCloud(
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::ShapeCloud*
 	gosFX::ShapeCloud::Make(
 		Specification *spec,
@@ -240,7 +218,6 @@ gosFX::ShapeCloud*
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::ShapeCloud::CreateNewParticle(
 		unsigned index,
@@ -249,11 +226,9 @@ void
 {
 	Check_Object(this);
 
-	//
 	//-------------------------------------------------------------------
 	// Let our parent do creation, then turn on the particle in the cloud
 	//-------------------------------------------------------------------
-	//
 	SpinningCloud::CreateNewParticle(index, translation);
 	Specification *spec = GetSpecification();
 	Check_Object(spec);
@@ -263,7 +238,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 bool
 	gosFX::ShapeCloud::AnimateParticle(
 		unsigned index,
@@ -273,11 +247,9 @@ bool
 {
 	Check_Object(this);
 
-	//
 	//-----------------------------------------
 	// Animate the parent then get our pointers
 	//-----------------------------------------
-	//
 	if (!SpinningCloud::AnimateParticle(index, world_to_new_local, till))
 		return false;
 	Set_Statistic(Shape_Count, Shape_Count+1);
@@ -288,11 +260,9 @@ bool
 	Stuff::Scalar seed = particle->m_seed;
 	Stuff::Scalar age = particle->m_age;
 
-	//
 	//------------------
 	// Animate the color
 	//------------------
-	//
 	particle->m_color.red = spec->m_pRed.ComputeValue(age, seed);
 	particle->m_color.green = spec->m_pGreen.ComputeValue(age, seed);
 	particle->m_color.blue = spec->m_pBlue.ComputeValue(age, seed);
@@ -301,18 +271,15 @@ bool
 }
 
 //------------------------------------------------------------------------------
-//
 void gosFX::ShapeCloud::Draw(DrawInfo *info)
 {
 	Check_Object(this);
 	Check_Object(info);
 	Check_Object(info->m_parentToWorld);
 
-	//
 	//----------------------------
 	// Set up the common draw info
 	//----------------------------
-	//
 	if (m_activeParticleCount)
 	{
 		MidLevelRenderer::DrawScalableShapeInformation dinfo;
@@ -328,21 +295,17 @@ void gosFX::ShapeCloud::Draw(DrawInfo *info)
 		Stuff::LinearMatrix4D local_to_world;
 		local_to_world.Multiply(m_localToParent, *info->m_parentToWorld);
 
-		//
 		//--------------------------------------------------------------
 		// Check the orientation mode.  The first case is XY orientation
 		//--------------------------------------------------------------
-		//
 		unsigned i;
 		if (spec->m_alignZUsingX)
 		{
 			if (spec->m_alignZUsingY)
 			{
-				//
 				//-----------------------------------------
 				// Get the camera location into local space
 				//-----------------------------------------
-				//
 				Stuff::Point3D
 					camera_in_world(info->m_clipper->GetCameraToWorldMatrix());
 				Stuff::Point3D camera_in_cloud;
@@ -355,12 +318,10 @@ void gosFX::ShapeCloud::Draw(DrawInfo *info)
 					Particle *particle = GetParticle(i);
 					Check_Object(particle);
 
-					//
 					//-----------------------------------------------------------------
 					// If the particle is still alive, concatenate into world space and
 					// issue the draw command
 					//-----------------------------------------------------------------
-					//
 					if (particle->m_age < 1.0f)
 					{
 						Stuff::Vector3D direction_in_cloud;
@@ -396,18 +357,14 @@ void gosFX::ShapeCloud::Draw(DrawInfo *info)
 				}
 			}
 
-			//
 			//-----------------------
 			// Handle X-only rotation
 			//-----------------------
-			//
 			else
 			{
-				//
 				//-----------------------------------------
 				// Get the camera location into local space
 				//-----------------------------------------
-				//
 				Stuff::Point3D
 					camera_in_world(info->m_clipper->GetCameraToWorldMatrix());
 				Stuff::Point3D camera_in_cloud;
@@ -420,12 +377,10 @@ void gosFX::ShapeCloud::Draw(DrawInfo *info)
 					Particle *particle = GetParticle(i);
 					Check_Object(particle);
 
-					//
 					//-----------------------------------------------------------------
 					// If the particle is still alive, concatenate into world space and
 					// issue the draw command
 					//-----------------------------------------------------------------
-					//
 					if (particle->m_age < 1.0f)
 					{
 						Stuff::Vector3D direction_in_cloud;
@@ -462,18 +417,14 @@ void gosFX::ShapeCloud::Draw(DrawInfo *info)
 			}
 		}
 
-		//
 		//-------------------------------------------------------
 		// Each matrix needs to be aligned to the camera around Y
 		//-------------------------------------------------------
-		//
 		else if (spec->m_alignZUsingY)
 		{
-			//
 			//-----------------------------------------
 			// Get the camera location into local space
 			//-----------------------------------------
-			//
 			Stuff::Point3D
 				camera_in_world(info->m_clipper->GetCameraToWorldMatrix());
 			Stuff::Point3D camera_in_cloud;
@@ -486,12 +437,10 @@ void gosFX::ShapeCloud::Draw(DrawInfo *info)
 				Particle *particle = GetParticle(i);
 				Check_Object(particle);
 
-				//
 				//-----------------------------------------------------------------
 				// If the particle is still alive, concatenate into world space and
 				// issue the draw command
 				//-----------------------------------------------------------------
-				//
 				if (particle->m_age < 1.0f)
 				{
 					Stuff::Vector3D direction_in_cloud;
@@ -527,12 +476,10 @@ void gosFX::ShapeCloud::Draw(DrawInfo *info)
 			}
 		}
 
-		//
 		//---------------------------------------------------------------
 		// No alignment is necessary, so just multiply out all the active
 		// particles
 		//---------------------------------------------------------------
-		//
 		else
 		{
 			for (i=0; i < m_activeParticleCount; i++)
@@ -540,12 +487,10 @@ void gosFX::ShapeCloud::Draw(DrawInfo *info)
 				Particle *particle = GetParticle(i);
 				Check_Object(particle);
 
-				//
 				//-----------------------------------------------------------------
 				// If the particle is still alive, concatenate into world space and
 				// issue the draw command
 				//-----------------------------------------------------------------
-				//
 				if (particle->m_age < 1.0f)
 				{
 					Stuff::LinearMatrix4D shape_to_cloud;
@@ -571,16 +516,13 @@ void gosFX::ShapeCloud::Draw(DrawInfo *info)
 		}
 	}
 
-	//
 	//----------------------------
 	// Let our parent do its thing
 	//----------------------------
-	//
 	SpinningCloud::Draw(info);
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::ShapeCloud::TestInstance() const
 {

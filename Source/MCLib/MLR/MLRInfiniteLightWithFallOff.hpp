@@ -46,11 +46,9 @@ namespace MidLevelRenderer {
 			GetLightType() 
 				{ Check_Object(this); return InfiniteLightWithFallOff; }
 
-		//
 		// light falloff.  The light is infinite if the GetFalloffDistance
 		// function return false.  Lights default to infinite unless
 		// SetFalloffDistance is called
-		//
 		void
 			SetFalloffDistance(
 				Stuff::Scalar n,
@@ -96,14 +94,12 @@ namespace MidLevelRenderer {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Class Data Support
-	//
 	public:
 		static ClassData
 			*DefaultData;
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Testing
-	//
 	public:
 		void
 			TestInstance();

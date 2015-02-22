@@ -21,10 +21,8 @@ static bool __stdcall Check_UseFastNormalize() {return UseFastNormalize == true;
 static void __stdcall Activate_UseFastLerp() {UseFastLerp = !UseFastLerp;}
 static void __stdcall Activate_UseFastNormalize() {UseFastNormalize = !UseFastNormalize;}
 
-//
 //#############################################################################
 //#############################################################################
-//
 EulerAngles&
 	EulerAngles::operator=(const YawPitchRoll &angles)
 {
@@ -38,10 +36,8 @@ EulerAngles&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 EulerAngles&
 	EulerAngles::operator=(const UnitQuaternion &quaternion)
 {
@@ -53,10 +49,8 @@ EulerAngles&
 	return *this = m;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 EulerAngles&
 	EulerAngles::operator=(const LinearMatrix4D &matrix)
 {
@@ -71,11 +65,9 @@ EulerAngles&
 	SinCosPair
 		p,y,r;
 
-	//
 	//-------------------------------------------------
 	// First deal with the singularity of 90 degree yaw
 	//-------------------------------------------------
-	//
 	y.sine = -matrix(0,2);
 	if (Close_Enough(y.sine,1.0f,0.0001f))
 	{
@@ -87,11 +79,9 @@ EulerAngles&
 		return *this;
 	}
 
-	//
 	//-----------------------------
 	// Now deal with -90 degree yaw
 	//-----------------------------
-	//
 	else if (Close_Enough(y.sine,-1.0f,0.0001f))
 	{
 		p.sine = -matrix(1,0);
@@ -102,14 +92,12 @@ EulerAngles&
 		return *this;
 	}
 
-	//
 	//-------------------------------------------------------------------------
 	// Otherwise, assume that pitch must be constrained between +/- 90 degrees.
 	// This is particularly complex in this case, because pitch is the primary
 	// axis.  So, we will set the yaw cosine to the appropriate sign that
 	// results in the cosine of pitch being positive.
 	//-------------------------------------------------------------------------
-	//
 	else
 	{
 		y.cosine = Sqrt(1.0f - y.sine*y.sine);
@@ -139,10 +127,8 @@ EulerAngles&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 bool
 	Stuff::Small_Enough(
 		const EulerAngles& angles,
@@ -157,10 +143,8 @@ bool
 		 && Small_Enough(angles.roll,e);
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 bool
 	Stuff::Close_Enough(
 		const EulerAngles& a1,
@@ -177,10 +161,8 @@ bool
 		 && Close_Enough(a1.roll,a2.roll,e);
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 EulerAngles&
 	EulerAngles::Lerp(
 		const EulerAngles &a1,
@@ -198,10 +180,8 @@ EulerAngles&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 EulerAngles&
 	EulerAngles::Normalize()
 {
@@ -213,10 +193,8 @@ EulerAngles&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 #if !defined(Spew)
 	void
 		Spew(
@@ -240,10 +218,8 @@ EulerAngles&
 const YawPitchRoll
 	YawPitchRoll::Identity(0.0f, 0.0f, 0.0f);
 
-//
 //#############################################################################
 //#############################################################################
-//
 YawPitchRoll&
 	YawPitchRoll::operator=(const EulerAngles &angles)
 {
@@ -257,10 +233,8 @@ YawPitchRoll&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 YawPitchRoll&
 	YawPitchRoll::operator=(const UnitQuaternion &quaternion)
 {
@@ -272,10 +246,8 @@ YawPitchRoll&
 	return *this = m;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 YawPitchRoll&
 	YawPitchRoll::operator=(const LinearMatrix4D &matrix)
 {
@@ -290,11 +262,9 @@ YawPitchRoll&
 	SinCosPair
 		p,y,r;
 
-	//
 	//---------------------------------------------------
 	// First deal with the singularity of 90 degree pitch
 	//---------------------------------------------------
-	//
 	p.sine = -matrix(2,1);
 	if (Close_Enough(p.sine,1.0f,0.0001f))
 	{
@@ -306,11 +276,9 @@ YawPitchRoll&
 		return *this;
 	}
 
-	//
 	//-------------------------------
 	// Now deal with -90 degree pitch
 	//-------------------------------
-	//
 	else if (Close_Enough(p.sine,-1.0f,0.0001f))
 	{
 		y.sine = matrix(0,2);
@@ -321,11 +289,9 @@ YawPitchRoll&
 		return *this;
 	}
 
-	//
 	//------------------------------------------------------------------------
 	// Otherwise, assume that pitch must be constrained between +/- 90 degrees
 	//------------------------------------------------------------------------
-	//
 	else {
 		p.cosine = Sqrt(1.0f - p.sine*p.sine);
 		y.sine = matrix(2,0) / p.cosine;
@@ -347,10 +313,8 @@ YawPitchRoll&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 bool
 	Stuff::Small_Enough(
 		const YawPitchRoll& angles,
@@ -365,10 +329,8 @@ bool
 		 && Small_Enough(angles.roll,e);
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 bool
 	Stuff::Close_Enough(
 		const YawPitchRoll& a1,
@@ -385,10 +347,8 @@ bool
 		 && Close_Enough(a1.roll,a2.roll,e);
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 YawPitchRoll&
 	YawPitchRoll::Lerp(
 		const YawPitchRoll &a1,
@@ -406,10 +366,8 @@ YawPitchRoll&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 YawPitchRoll&
 	YawPitchRoll::Normalize()
 {
@@ -421,10 +379,8 @@ YawPitchRoll&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 #if !defined(Spew)
 	void
 		Spew(
@@ -452,10 +408,8 @@ DEFINE_TIMER(UnitQuaternion, SlerpTime);
 DWORD
 	UnitQuaternion::SlerpCount;
 
-//
 //#############################################################################
 //#############################################################################
-//
 
 const int QuaternionLerpTableSize=static_cast<int>(1024);
 const int SinTableSize=static_cast<int>(1024);
@@ -478,10 +432,8 @@ float Sin_Table[SinTableSize];
 bool  quaternionFastLerpTableBuilt = false;
 float tableIncrementStepOverOne;
 
-//
 //#############################################################################
 //#############################################################################
-//
 
 void
 	UnitQuaternion::InitializeClass()
@@ -526,10 +478,8 @@ void
 	quaternionFastLerpTableBuilt = true;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 
 void
 	UnitQuaternion::TerminateClass()
@@ -537,10 +487,8 @@ void
 	quaternionFastLerpTableBuilt = false;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 UnitQuaternion&
 	UnitQuaternion::operator=(const EulerAngles &angles)
 {
@@ -553,10 +501,8 @@ UnitQuaternion&
 	*this = m;
 	return *this;
 }
-//
 //#############################################################################
 //#############################################################################
-//
 UnitQuaternion&
 	UnitQuaternion::operator=(const YawPitchRoll &angles)
 {
@@ -565,22 +511,18 @@ UnitQuaternion&
 	*this = lin_matrix;
    return *this;
 }
-//
 //#############################################################################
 //#############################################################################
-//
 UnitQuaternion&
 	UnitQuaternion::operator=(const LinearMatrix4D &matrix)
 {
 	Check_Pointer(this);
 	Check_Object(&matrix);
 
-	//
 	//------------------------------------------------------------------------
 	// Compute the w component.  If it is close enough to zero, then we have a
 	// 180 degree pivot, so figure out the correct axis to rotate around
 	//------------------------------------------------------------------------
-	//
 	w = (1.0f + matrix(0,0) + matrix(1,1) + matrix(2,2)) * 0.25f;
 	if (Small_Enough(w,1e-2f))
 	{
@@ -590,11 +532,9 @@ UnitQuaternion&
 			w = 0.0f;
 		}
 
-		//
 		//----------------------------------------------------------------
 		// Figure out the length of each component of the axis of rotation
 		//----------------------------------------------------------------
-		//
 		Scalar temp = (1.0f + matrix(0,0)) * 0.5f - w;
 		Min_Clamp(temp, 0.0f);
 		x = Sqrt(temp);
@@ -606,11 +546,9 @@ UnitQuaternion&
 		z = Sqrt(temp);
 		w = Sqrt(w);
 
-		//
 		//-------------------------------------------
 		// Now figure out the signs of the components
 		//-------------------------------------------
-		//
 		if (matrix(0,1) < matrix(1,0))
 		{
 			z = -z;
@@ -625,11 +563,9 @@ UnitQuaternion&
 		}
 	}
 
-	//
 	//----------------------------------------------------------
 	// Otherwise, determine x, y, and z directly from the matrix
 	//----------------------------------------------------------
-	//
 	else
 	{
 		Verify(w>0.0f);
@@ -643,34 +579,28 @@ UnitQuaternion&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 UnitQuaternion&
 	UnitQuaternion::operator=(const Vector3D &v)
 {
 	Check_Pointer(this);
 	Check_Object(&v);
 
-	//
 	//---------------------------------------------------------------
 	// See if there is any rotation to apply to the source quaternion
 	//---------------------------------------------------------------
-	//
 	Scalar rotation = v.GetLength();
 	if (Small_Enough(rotation))
 	{
 		return *this = Identity;
 	}
 
-	//
 	//---------------------------------------------------------------------
 	// Build a quaternion from the delta vector, treating the length as the
 	// amount of rotation and the direction of the vector as the axis of
 	// rotation
 	//---------------------------------------------------------------------
-	//
 	SinCosPair half_angle;
 	half_angle = 0.5f * Radian::Normalize(rotation);
 	rotation = half_angle.sine / rotation;
@@ -682,10 +612,8 @@ UnitQuaternion&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 bool
 	Stuff::Close_Enough(
 		const UnitQuaternion& a1,
@@ -700,10 +628,8 @@ bool
 	return Small_Enough(v, e);
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 Scalar
 	UnitQuaternion::GetAngle()
 {
@@ -722,10 +648,8 @@ Scalar
 	return angle * 2.0f;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 void
 	UnitQuaternion::GetAxis(UnitVector3D *axis)
 {
@@ -750,10 +674,8 @@ void
 	return;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 UnitQuaternion&
 	UnitQuaternion::Multiply(const UnitQuaternion &q2, const UnitQuaternion &q1)
 {
@@ -771,10 +693,8 @@ UnitQuaternion&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 UnitQuaternion&
 	UnitQuaternion::Multiply(const UnitQuaternion &q, const LinearMatrix4D &m)
 {
@@ -792,10 +712,8 @@ UnitQuaternion&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 UnitQuaternion&
 	UnitQuaternion::Multiply(
 		const UnitQuaternion &q,
@@ -805,11 +723,9 @@ UnitQuaternion&
 	Check_Pointer(this);
 	Check_Object(&q);
 
-	//
 	//---------------------------------------------------------
 	// Figure out the half the angle of rotation and scale that
 	//---------------------------------------------------------
-	//
 	Scalar sine_of_half = Sqrt(q.x*q.x + q.y*q.y + q.z*q.z);
 	if (Small_Enough(sine_of_half))
 	{
@@ -823,11 +739,9 @@ UnitQuaternion&
 	angle *= t;
 	half_angle = angle;
 
-	//
 	//-----------------------------------------------------------------
 	// Build the scaled quaternion out of the components of the old one
 	//-----------------------------------------------------------------
-	//
 	w = half_angle.cosine;
 	sine_of_half = half_angle.sine / sine_of_half;
 	x = q.x * sine_of_half;
@@ -838,10 +752,8 @@ UnitQuaternion&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 UnitQuaternion&
 	UnitQuaternion::MultiplyScaled(
 		const UnitQuaternion &q1,
@@ -863,10 +775,8 @@ UnitQuaternion&
    return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 UnitQuaternion&
 	UnitQuaternion::Normalize()
 {
@@ -897,10 +807,8 @@ UnitQuaternion&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 
 UnitQuaternion&
 	UnitQuaternion::FastNormalize()
@@ -934,10 +842,8 @@ UnitQuaternion&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 UnitQuaternion&
 	UnitQuaternion::Subtract(
 		const UnitQuaternion &end,
@@ -954,10 +860,8 @@ UnitQuaternion&
 	return Normalize();
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 UnitQuaternion&
 	UnitQuaternion::Subtract(
 		const UnitVector3D &end,
@@ -974,12 +878,10 @@ UnitQuaternion&
 		delta;
 	delta.cosine = start*end;
 
-	//
 	//----------------------------------------------------------------------
 	// See if the vectors point in the same direction.  If so, return a null
 	// rotation
 	//----------------------------------------------------------------------
-	//
 	if (Close_Enough(delta.cosine, 1.0f))
 	{
 		x = 0.0f;
@@ -988,21 +890,17 @@ UnitQuaternion&
 		w = 1.0f;
 	}
 
-	//
 	//-------------------------------------------------------------------------
 	// See if the vectors directly oppose each other.  If so, pick the smallest
 	// axis coordinate and generate a vector along it.  Project this onto the
 	// base vector and subtract it out, leaving a perpendicular projection.
 	// Extend that out to unit length, then set the angle to PI
 	//-------------------------------------------------------------------------
-	//
 	else if (Close_Enough(delta.cosine, -1.0f))
 	{
-		//
 		//---------------------------
 		// Pick out the smallest axis
 		//---------------------------
-		//
 		int
 			smallest=0;
 		Scalar
@@ -1016,21 +914,17 @@ UnitQuaternion&
 			}
 		}
 
-		//
 		//----------------------------------------
 		// Set up a vector along the selected axis
 		//----------------------------------------
-		//
 		axis.x = 0.0f;
 		axis.y = 0.0f;
 		axis.z = 0.0f;
 		axis[smallest] = 1.0f;
 
-		//
 		//-------------------------------------------------------------------
 		// If the value on that axis wasn't zero, subtract out the projection
 		//-------------------------------------------------------------------
-		//
 		if (!Small_Enough(value))
 		{
 			Vector3D t;
@@ -1039,34 +933,28 @@ UnitQuaternion&
 			axis.Normalize(axis);
 		}
 
-		//
 		//----------------------
 		// Convert to quaternion
 		//----------------------
-		//
 		x = axis.x;
 		y = axis.y;
 		z = axis.z;
 		w = 0.0f;
 	}
 
-	//
 	//--------------------------------------------------
 	// Otherwise, generate the cross product and unitize
 	//--------------------------------------------------
-	//
 	else
 	{
 		axis.Cross(start, end);
 		delta.sine = axis.GetLength();
 		axis /= delta.sine;
 
-		//
 		//---------------------------------------------------------------
 		// Now compute sine and cosine of half the angle and generate the
 		// quaternion
 		//---------------------------------------------------------------
-		//
 		delta.sine = Sqrt((1.0f - delta.cosine)*0.5f);
 		x = axis.x * delta.sine;
 		y = axis.y * delta.sine;
@@ -1076,10 +964,8 @@ UnitQuaternion&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 UnitQuaternion&
 	UnitQuaternion::Subtract(
 		const Vector3D &end,
@@ -1098,10 +984,8 @@ UnitQuaternion&
 	return Subtract(e, s);
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 UnitQuaternion&
 	UnitQuaternion::Lerp(
 		const EulerAngles& v1,
@@ -1118,7 +1002,6 @@ UnitQuaternion&
 
 //#############################################################################
 //#############################################################################
-//
 #define SLERP_THRESHOLD (float)0.00001f
 
 UnitQuaternion &UnitQuaternion::Lerp(const UnitQuaternion& p, const UnitQuaternion& q, Scalar t)
@@ -1198,10 +1081,8 @@ UnitQuaternion &UnitQuaternion::Lerp(const UnitQuaternion& p, const UnitQuaterni
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 
 UnitQuaternion&
 	UnitQuaternion::FastLerp(
@@ -1311,10 +1192,8 @@ UnitQuaternion&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 UnitQuaternion
 	UnitQuaternion::Squad(
 		const UnitQuaternion& p, // start quaternion
@@ -1328,10 +1207,8 @@ UnitQuaternion
     return(Lerp(Lerp(p,q,t),Lerp(a,b,t),k));
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 UnitQuaternion
 	UnitQuaternion::SquadRev(
 		Scalar angle,			// angle of rotation 
@@ -1395,10 +1272,8 @@ UnitQuaternion
 	return(r);
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 
 UnitQuaternion& 
 	UnitQuaternion::MakeClosest(const UnitQuaternion& qto)
@@ -1411,10 +1286,8 @@ UnitQuaternion&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 Scalar
 	UnitQuaternion::Dot(
 		const UnitQuaternion& p, 
@@ -1424,10 +1297,8 @@ Scalar
 	return (q.x*p.x + q.y*p.y + q.z*p.z + q.w*p.w);
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 UnitQuaternion&
 	UnitQuaternion::Inverse(const UnitQuaternion& q)
 {
@@ -1446,10 +1317,8 @@ UnitQuaternion&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 
 // Ratio of two quaternions: This creates a result quaternion r = p/q, such
 // that q*r = p.  (order of multiplication is important)
@@ -1467,10 +1336,8 @@ UnitQuaternion&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 
 UnitQuaternion&
 	UnitQuaternion::LnDif(
@@ -1483,10 +1350,8 @@ UnitQuaternion&
 	return(LogN(r));
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 
 //  natural logarithm of UNIT quaternion 
 
@@ -1510,10 +1375,8 @@ UnitQuaternion&
 	w = 0.0f;
 	return *this;
 }
-//
 //#############################################################################
 //#############################################################################
-//
 
 UnitQuaternion& 
 	UnitQuaternion::Exp(const UnitQuaternion& q) 
@@ -1532,10 +1395,8 @@ UnitQuaternion&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 UnitQuaternion
 	UnitQuaternion::CompA(
 		const UnitQuaternion& qprev,
@@ -1559,10 +1420,8 @@ UnitQuaternion
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 
 UnitQuaternion&
 	UnitQuaternion::Orthog(
@@ -1574,10 +1433,8 @@ UnitQuaternion&
 	return *this;
 }
 
-//
 //#############################################################################
 //#############################################################################
-//
 #if !defined(Spew)
 	void
 		Spew(
@@ -1590,10 +1447,8 @@ UnitQuaternion&
 	}
 #endif
 
-//
 //#############################################################################
 //#############################################################################
-//
 void
 	UnitQuaternion::TestInstance() const
 {

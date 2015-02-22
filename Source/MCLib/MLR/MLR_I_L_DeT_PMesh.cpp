@@ -16,7 +16,6 @@ MLR_I_L_DeT_PMesh::ClassData*
 	MLR_I_L_DeT_PMesh::DefaultData = NULL;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_L_DeT_PMesh::InitializeClass()
 {
@@ -38,7 +37,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_L_DeT_PMesh::TerminateClass()
 {
@@ -53,7 +51,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_L_DeT_PMesh::MLR_I_L_DeT_PMesh(
 	ClassData *class_data,
 	MemoryStream *stream,
@@ -85,7 +82,6 @@ MLR_I_L_DeT_PMesh::MLR_I_L_DeT_PMesh(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_L_DeT_PMesh::MLR_I_L_DeT_PMesh(ClassData *class_data):
 	MLR_I_C_DeT_PMesh(class_data), normals(0)
 {
@@ -96,14 +92,12 @@ MLR_I_L_DeT_PMesh::MLR_I_L_DeT_PMesh(ClassData *class_data):
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_L_DeT_PMesh::~MLR_I_L_DeT_PMesh()
 {
 	Check_Object(this);
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLR_I_L_DeT_PMesh*
 	MLR_I_L_DeT_PMesh::Make(
 		MemoryStream *stream,
@@ -120,7 +114,6 @@ MLR_I_L_DeT_PMesh*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_L_DeT_PMesh::Save(MemoryStream *stream)
 {
@@ -133,7 +126,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_L_DeT_PMesh::TestInstance() const
 {
@@ -141,7 +133,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_L_DeT_PMesh::SetNormalData(
 		const Vector3D *data,
@@ -159,7 +150,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_L_DeT_PMesh::GetNormalData(
 		Vector3D **data,
@@ -172,7 +162,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_L_DeT_PMesh::SetColorData(
 #if COLOR_AS_DWORD
@@ -195,7 +184,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLR_I_L_DeT_PMesh::PaintMe(
 #if COLOR_AS_DWORD
@@ -267,7 +255,6 @@ void
 #undef CLASSNAME
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRShape*
 	MidLevelRenderer::CreateIndexedIcosahedron_Color_Lit_DetTex(
 		IcoInfo& icoInfo,

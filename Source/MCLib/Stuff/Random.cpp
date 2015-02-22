@@ -16,7 +16,6 @@ Random*
 	Random::Instance = NULL;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Random::InitializeClass()
 {
@@ -27,7 +26,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Random::TerminateClass()
 {
@@ -37,29 +35,23 @@ void
 	Index = -1;
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 void Random::Init()
 {
-	//
 	//------------------------------
 	// Load the random number buffer
 	//------------------------------
-	//
 	int i;
 	Index=0;
 	for (i=0; i<250; i++)
 		Numbers[i] = gos_rand();
 
-	//
 	//--------------------------------------------------------------------
 	// In order to preserve a good random number mix for the XOR function,
 	// mask and set the bits of 15 words in a descending manner as in
 	// 01xx..., 001xx..., 0001xx..., ...
 	//--------------------------------------------------------------------
-	//
 	int mask = RAND_MAX >> 1;
 	int msb = mask + 1;
 	int rand_size;
@@ -76,10 +68,8 @@ void Random::Init()
 	}
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 int
 	Random::GetRandomInt()
 {
@@ -87,31 +77,25 @@ int
 		indent,
 		result;
 
-	//
 	//------------------------------------------------------------------
 	// The random number generated will be the result of an XOR with the
 	// element 103 positions further (wrapping around) in the table
 	//------------------------------------------------------------------
-	//
 	indent = (Index>=147)?Index-147:Index+103;
 	result = Numbers[Index]^Numbers[indent];
 
-	//
 	//------------------------------------------------------------------------
 	// Replace the current random number with the new one generated, increment
 	// the buffer index pointer, and return the number
 	//------------------------------------------------------------------------
-	//
 	Numbers[Index] = result;
 	if (++Index == ELEMENTS(Numbers))
 		Index=0;
 	return result;
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 Scalar
 	Random::GetFraction()
 {
@@ -123,10 +107,8 @@ Scalar
 	return result;
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 int
 	Random::GetLessThan(int range)
 {
@@ -142,41 +124,33 @@ int
 	return result%range;
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 Die::Die(int n)
 {
 	dieSides = (n>1)?n:2;
 	highestRandom = RAND_MAX - ((RAND_MAX+1)%dieSides);
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 Die::operator int() {
 	int
 		result;
 
-	//
 	//------------------------------------------------------------------------
 	// In order to not skew the probabilities to the low numbers, make sure
 	// that the random # used is not greater than the limit determined for the
 	// number of sides.
 	//------------------------------------------------------------------------
-	//
 	do
 	{
 		result = Random::GetInt();
 	} while (result>highestRandom);
 
-	//
 	//-------------------------------------------------------------------
 	// Once the base random number is determined, do modulus division and
 	// increment by 1 to map into the die range.
 	//-------------------------------------------------------------------
-	//
 	return result%dieSides + 1;
 }

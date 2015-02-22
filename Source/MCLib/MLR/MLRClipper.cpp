@@ -51,7 +51,6 @@ MLRClipper::ClassData*
 	MLRClipper::DefaultData = NULL;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRClipper::InitializeClass()
 {
@@ -67,7 +66,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRClipper::TerminateClass()
 {
@@ -77,7 +75,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRClipper::MLRClipper(AndyDisplay *ad, MLRSorter *s):
 	RegisteredClass(DefaultData), display(ad)
 {
@@ -91,7 +88,6 @@ MLRClipper::MLRClipper(AndyDisplay *ad, MLRSorter *s):
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MLRClipper::~MLRClipper()
 {
 	if(sorter)
@@ -102,7 +98,6 @@ MLRClipper::~MLRClipper()
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRClipper::StartDraw (
 		const LinearMatrix4D &camera_to_world,
@@ -115,9 +110,7 @@ void
 {
 	Check_Object(this);
 
-//
 //	No detail under software rasterizer
-//
 	if(Environment.Renderer == 3)
 	{
 		gEnableDetailTexture = 0;
@@ -142,9 +135,7 @@ void
 		MLRState::SetMultitextureSpecularMap(false);
 	}
 
-//
 // Make viewport the whole screen
-//
 	gos_PushCurrentHeap(Heap);
 	Scalar z = 1.0f;
 	DWORD back_color = 0;
@@ -204,11 +195,9 @@ void
 		static Vector2DOf<Scalar> Camera_Shift(0.0f, 0.0f);
 		static LinearMatrix4D birdsEye = LinearMatrix4D::Identity;
 
-		//
 		//---------------
 		// Read the mouse
 		//---------------
-		//
 		int
 			x_delta,
 			y_delta;
@@ -219,11 +208,9 @@ void
 			x_speed = x_delta * 0.01f,
 			y_speed = y_delta * 0.01f;
 
-		//
 		//------------------------------------------------------
 		// If the left Ctrl button is held down, move the camera
 		//------------------------------------------------------
-		//
 		gosEnum_KeyStatus status = gos_GetKeyStatus(KEY_LCONTROL);
 		if (status != KEY_FREE && status != KEY_RELEASED)
 		{
@@ -231,11 +218,9 @@ void
 			Camera_Direction.yaw -= x_speed;
 		}
 
-		//
 		//------------------------------------------------------
 		// If the left Shift button is held down, pan the camera
 		//------------------------------------------------------
-		//
 		status = gos_GetKeyStatus(KEY_LSHIFT);
 		if (status != KEY_FREE && status != KEY_RELEASED)
 		{
@@ -243,11 +228,9 @@ void
 			Camera_Shift.y += y_speed;
 		}
 
-		//
 		//----------------------------------------------------------------
 		// If the left Alt button is held down, zoom the camera in and out
 		//----------------------------------------------------------------
-		//
 		status = gos_GetKeyStatus(KEY_LMENU);
 		if (status != KEY_FREE && status != KEY_RELEASED)
 		{
@@ -256,11 +239,9 @@ void
 			Camera_Direction.range = Camera_Direction.range > 0.0f ? Camera_Direction.range : 0.0f;
 		}
 
-		//
 		//----------------------
 		// Set the camera matrix
 		//----------------------
-		//
 		birdsEye.BuildRotation(
 			EulerAngles(Camera_Direction.pitch, Camera_Direction.yaw, 0.0f)
 		);
@@ -371,22 +352,17 @@ void
 
 	gos_PopCurrentHeap();
 
-//
 // End timing function
-//
 }
 
 static	AffineMatrix4D scaledShapeToWorld;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRClipper::DrawShape (DrawShapeInformation *dInfo)
 {
 	Check_Object(this);
-//
 // Statistic timing function
-//
 
 	gos_PushCurrentHeap(Heap);
 	MLRShape *shape = dInfo->shape;
@@ -532,21 +508,16 @@ void
 		}
 	}
 
-//
 // End timing function
-//
 	gos_PopCurrentHeap();
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRClipper::DrawScalableShape (DrawScalableShapeInformation *dInfo)
 {
 	Check_Object(this);
-//
 // Statistic timing function
-//
 
 	MLRShape *shape = dInfo->shape;
 	MLRPrimitiveBase *primitive = NULL;
@@ -636,19 +607,14 @@ void
 			#endif
 		}
 	}
-//
 // End timing function
-//
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRClipper::DrawEffect (DrawEffectInformation *dInfo)
 {
-//
 // Statistic timing function
-//
 
 	Check_Object(this);
 	Check_Object(dInfo);
@@ -664,19 +630,14 @@ void
 	dInfo->effect->SetEffectToClipMatrix(dInfo->effectToWorld, &worldToClipMatrix);
 	gos_GetViewport( &ViewportScalars::MulX, &ViewportScalars::MulY, &ViewportScalars::AddX, &ViewportScalars::AddY );
 	dInfo->effect->Draw(dInfo, &allVerticesToDraw, sorter);
-//
 // End timing function
-//
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRClipper::DrawScreenQuads (DrawScreenQuadsInformation *dInfo)
 {
-//
 // Statistic timing function
-//
 
 	Check_Object(this);
 	Check_Object(dInfo);
@@ -721,13 +682,10 @@ void
 
 		sorter->AddScreenQuads(vertices, dInfo);
 	}
-//
 // End timing function
-//
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	MLRClipper::Clear (unsigned int flags)
 {

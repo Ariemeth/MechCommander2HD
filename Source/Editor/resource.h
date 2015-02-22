@@ -5,7 +5,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Developer Studio generated include file.
 // Used by resource.rc
-//
 #define MBOK                            1
 #define IDC_CHOOSE_UNIT_USING_POINTER_BUTTON 3
 #define IDC_ADD_POSSIBILITY             3
@@ -574,7 +573,6 @@
 #define ID_TERRAINS_GRASS3              60030
 
 // Next default values for new objects
-// 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        165

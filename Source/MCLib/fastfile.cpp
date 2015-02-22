@@ -4,7 +4,6 @@
 
 //----------------------------------------------------------------------------
 // Global Fast File Code.
-//
 
 #include "heap.h"
 #include "fastfile.h"

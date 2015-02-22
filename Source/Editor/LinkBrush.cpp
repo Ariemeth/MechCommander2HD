@@ -1,8 +1,6 @@
 //----------------------------------------------------------------------------
-//
 // LinkBrush.cpp - the link brush links turrets to turret controls, gates to 
 //						gate controls etc.
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

@@ -9,7 +9,6 @@
 #pragma once
 #endif // _MSC_VER > 1000
 // GroupDialog.h : header file
-//
 
 #include "CampaignData.h"
 

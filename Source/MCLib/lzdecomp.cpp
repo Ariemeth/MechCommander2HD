@@ -1,6 +1,5 @@
 //--------------------------------------------------------------------------
 // LZ Decompress Routine
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -80,10 +79,8 @@ long LZDecomp (MemoryPtr dest, MemoryPtr src, unsigned long srcLen)
 		jmp		GetCode
 
 //--------------------------------------------------------------------------
-//                                                                          
 // ClearHash restarts decompression assuming that it is starting from the   
 //           beginning                                                      
-//                                                                          
 //--------------------------------------------------------------------------
 
 ClearHash:
@@ -149,14 +146,12 @@ GetCode:
 		cmp		eax,HASH_CLEAR         		//are we to clear out hash table?
 		je		ClearHash
 //---------------------------------------------------------------------------
-//                                                                           
 // Handle Chain acts on two types of Codes, A previously tabled one and a new
 // one. On a previously tabled one, the chain value and suffix for that code 
 // are preserved into OldSuffix and OldChain. The block operates on searching
 // backward in the chains until a chain offset of 0-255 is found (meaning the
 // terminal character has been reached.) Each character in the chain is saved
 // on the stack.                                                             
-//                                                                           
 //---------------------------------------------------------------------------
 
 //HandleChain:
@@ -207,10 +202,8 @@ send_bytes:
 		jnz		send_bytes
 
 //---------------------------------------------------------------------------
-//                                                                           
 // Here we add another chain to the hash table so that we continually use it 
 // for more decompressions.                                                  
-//                                                                           
 //---------------------------------------------------------------------------
 
 		mov		al,LZOldSuffix

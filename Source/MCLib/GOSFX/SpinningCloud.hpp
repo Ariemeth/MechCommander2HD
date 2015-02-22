@@ -4,7 +4,6 @@
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
-//
 #pragma once
 
 #include "gosFX.hpp"
@@ -25,7 +24,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------
 	// Constructors/Destructors
-	//
 	protected:
 		SpinningCloud__Specification(
 			Stuff::RegisteredClass::ClassID class_id,
@@ -50,7 +48,6 @@ namespace gosFX
 
 	//-------------------------------------------------------------------------
 	// FCurves
-	//
 	public:
 		SeededCurveOf<ConstantCurve, LinearCurve,Curve::e_ConstantLinearType>
 			m_pSpin;
@@ -94,7 +91,6 @@ namespace gosFX
 	{
 	//----------------------------------------------------------------------------
 	// Class Registration Support
-	//
 	public:
 		static void InitializeClass();
 		static void	TerminateClass();
@@ -104,7 +100,6 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Class Data Support
-	//
 	public:
 		typedef SpinningCloud__Specification Specification;
 		typedef SpinningCloud__Particle Particle;
@@ -137,14 +132,12 @@ namespace gosFX
 
 	//----------------------------------------------------------------------------
 	// Testing
-	//
 	public:
 		void
 			TestInstance() const;
 
 	//----------------------------------------------------------------------------
 	// API
-	//
 	protected:
 		bool
 			AnimateParticle(

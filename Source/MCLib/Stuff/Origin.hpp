@@ -38,9 +38,7 @@ namespace Stuff {
 		static const Origin3D
 			Identity;
 
-		//
 		// Constructors
-		//
 		Origin3D()
 			{}
 		Origin3D(
@@ -58,9 +56,7 @@ namespace Stuff {
 		explicit Origin3D(const LinearMatrix4D &matrix)
 			{*this = matrix;}
 
-		//
 		// Assignment operators
-		//
 		Origin3D&
 			operator=(const Origin3D& p);
 		Origin3D&
@@ -78,9 +74,7 @@ namespace Stuff {
 		Origin3D&
 			BuildRotation(const UnitQuaternion& q)
 				{Check_Pointer(this); Check_Object(&q); angularPosition = q; return *this;}
-		//
 		// Equality operator
-		//
 		friend bool
 			Close_Enough(
 				const Origin3D &a1,
@@ -94,9 +88,7 @@ namespace Stuff {
 			operator!=(const Origin3D& a) const
 				{return !Close_Enough(*this,a,SMALL);}
 
-		//
 		// Origin3D motion
-		//
 		Origin3D&
 			Lerp(
 				const Origin3D& start,
@@ -104,9 +96,7 @@ namespace Stuff {
 				Scalar t
 			);
 
-		//
 		// Support functions
-		//
 		#if !defined(Spew)
 			friend void
 				::Spew(

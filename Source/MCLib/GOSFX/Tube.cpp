@@ -7,13 +7,11 @@
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
-//
 //############################################################################
 //########################  gosFX::Tube__Specification  #############################
 //############################################################################
 
 //------------------------------------------------------------------------------
-//
 gosFX::Tube__Specification::Tube__Specification(
 	Stuff::MemoryStream *stream,
 	int gfx_version
@@ -24,11 +22,9 @@ gosFX::Tube__Specification::Tube__Specification(
 	Check_Object(stream);
 	Verify(gos_GetCurrentHeap() == Heap);
 
-	//
 	//-------------------
 	// Load in the curves
 	//-------------------
-	//
 	m_profilesPerSecond.Load(stream, gfx_version);
 	m_pLifeSpan.Load(stream, gfx_version);
 	m_emitterSizeX.Load(stream, gfx_version);
@@ -62,7 +58,6 @@ gosFX::Tube__Specification::Tube__Specification(
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::Tube__Specification::Tube__Specification():
 	Effect__Specification(TubeClassID)
 {
@@ -75,7 +70,6 @@ gosFX::Tube__Specification::Tube__Specification():
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::Tube__Specification*
 	gosFX::Tube__Specification::Make(
 		Stuff::MemoryStream *stream,
@@ -93,7 +87,6 @@ gosFX::Tube__Specification*
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Tube__Specification::Save(Stuff::MemoryStream *stream)
 {
@@ -101,11 +94,9 @@ void
 	Check_Object(stream);
 	Effect__Specification::Save(stream);
 
-	//
 	//----------------
 	// Save our curves
 	//----------------
-	//
 	m_profilesPerSecond.Save(stream);
 	m_pLifeSpan.Save(stream);
 	m_emitterSizeX.Save(stream);
@@ -129,7 +120,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void 
 	gosFX::Tube__Specification::BuildDefaults()
 {
@@ -195,7 +185,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 bool 
 	gosFX::Tube__Specification::IsDataValid(bool fix_data)
 {
@@ -231,11 +220,9 @@ bool
 		lower = 0.0f;
 	Stuff::Scalar upper = max_scale;
 
-	//
 	//------------------------------------
 	// Calculate the worst case UV offsets
 	//------------------------------------
-	//
 	m_pVOffset.ExpensiveComputeRange(&min_offset, &max_offset);
 	lower += min_offset;
 	upper += max_offset;
@@ -259,11 +246,9 @@ bool
 		lower = 0.0f;
 	upper = max_scale;
 
-	//
 	//------------------------------------
 	// Calculate the worst case UV offsets
 	//------------------------------------
-	//
 	max_offset, min_offset;
 	m_pUOffset.ExpensiveComputeRange(&min_offset, &max_offset);
 	lower += min_offset;
@@ -286,7 +271,6 @@ bool
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Tube__Specification::Copy(Tube__Specification *spec)
 {
@@ -296,11 +280,9 @@ void
 
 	Effect__Specification::Copy(spec);
 
-	//
 	//----------------
 	// Copy the curves
 	//----------------
-	//
 	gos_PushCurrentHeap(Heap);
 	m_profilesPerSecond = spec->m_profilesPerSecond;
 	m_pLifeSpan = spec->m_pLifeSpan;
@@ -329,7 +311,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Tube__Specification::BuildTemplate()
 {
@@ -438,17 +419,14 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 bool
 	gosFX::Tube__Specification::CalculateUBias(bool adjust)
 {
 	Check_Object(this);
 
-	//
 	//----------------------------------
 	// Calculate the worst case UV scale
 	//----------------------------------
-	//
 	int max_index = m_maxProfileCount-1;
 	Stuff::Scalar max_scale, min_scale;
 Retry:
@@ -458,11 +436,9 @@ Retry:
 		lower = 0.0f;
 	Stuff::Scalar upper = max_scale * max_index;
 
-	//
 	//------------------------------------
 	// Calculate the worst case UV offsets
 	//------------------------------------
-	//
 	Stuff::Scalar max_offset, min_offset;
 	m_pUOffset.ExpensiveComputeRange(&min_offset, &max_offset);
 	lower += min_offset;
@@ -501,7 +477,6 @@ gosFX::Tube::ClassData*
 	gosFX::Tube::DefaultData = NULL;
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Tube::InitializeClass()
 {
@@ -519,7 +494,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Tube::TerminateClass()
 {
@@ -529,7 +503,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::Tube::Tube(
 	Specification *spec,
 	unsigned flags
@@ -540,11 +513,9 @@ gosFX::Tube::Tube(
 	Check_Object(spec);
 	Verify(gos_GetCurrentHeap() == Heap);
 
-	//
 	//----------------------------------
 	// Figure out how much space we need
 	//----------------------------------
-	//
 	m_profiles.SetLength(spec->m_maxProfileCount);
 	unsigned vertex_count = spec->m_vertices.GetLength();
 	Verify(vertex_count < 8);
@@ -556,11 +527,9 @@ gosFX::Tube::Tube(
 	size *= vertex_count*spec->m_maxProfileCount;
 	size += sizeof(unsigned short)*(spec->m_maxProfileCount-1)*index_count;
 
-	//
 	//-----------------------
 	// Allocate the tube mesh
 	//-----------------------
-	//
 	gos_PushCurrentHeap(MidLevelRenderer::Heap);
 	m_mesh =
 		new MidLevelRenderer::MLRIndexedTriangleCloud(
@@ -569,11 +538,9 @@ gosFX::Tube::Tube(
 	Register_Object(m_mesh);
 	gos_PopCurrentHeap();
 
-	//
 	//------------------------------------------------
 	// Set up the data pointers into the channel block
 	//------------------------------------------------
-	//
 	m_triangleCount = 0;
 	m_vertexCount = 0;
 	m_data.SetLength(size);
@@ -594,11 +561,9 @@ gosFX::Tube::Tube(
 	);
 	BuildMesh(mesh_indices);
 
-	//
 	//-------------------------------
 	// Set up an empty profile cloud
 	//-------------------------------
-	//
 	m_activeProfileCount = 0;
 	m_headProfile = -1;
 	m_tailProfile = -1;
@@ -606,28 +571,23 @@ gosFX::Tube::Tube(
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Tube::BuildMesh(unsigned short *indices)
 {
 	Check_Object(this);
 	Check_Pointer(indices);
 
-	//
 	//--------------------------------------
 	// Figure out the parameters of the mesh
 	//--------------------------------------
-	//
 	Specification *spec = GetSpecification();
 	Check_Object(spec);
 	unsigned vertex_count = spec->m_vertices.GetLength();
 	Verify(vertex_count < 8);
 
-	//
 	//-------------------------------------------------
 	// Crosses are built different from everything else
 	//-------------------------------------------------
-	//
 	if (spec->m_profileType != Specification::e_Cross)
 	{
 		for (unsigned short profile=0; profile<spec->m_maxProfileCount-1; ++profile)
@@ -688,7 +648,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::Tube::~Tube()
 {
 	Unregister_Object(m_mesh);
@@ -696,7 +655,6 @@ gosFX::Tube::~Tube()
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::Tube*
 	gosFX::Tube::Make(
 		Specification *spec,
@@ -713,60 +671,48 @@ gosFX::Tube*
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Tube::Start(ExecuteInfo *info)
 {
 	Check_Object(this);
 	Check_Pointer(info);
 
-	//
 	//----------------------
 	// Let effect initialize
 	//----------------------
-	//
 	Effect::Start(info);
 
-	//
 	//--------------------------------------------------------------------------
 	// If the effect is off, we will create two profiles.  If they effect is on,
 	// we just keep doing what we do
 	//--------------------------------------------------------------------------
-	//
 	m_birthAccumulator = 1.0f;
 }
 
 //------------------------------------------------------------------------------
-//
 bool gosFX::Tube::Execute(ExecuteInfo *info)
 {
 	Check_Object(this);
 	Check_Object(info);
 
-	//
 	//----------------------------------------
 	// If we aren't supposed to execute, don't
 	//----------------------------------------
-	//
 	if (!IsExecuted())
 		return false;
 
-	//
 	//----------------------------------------------------------------------
 	// Update the head of the tube to the current location, then compute the
 	// inverse transformation to keep all particles in their place of origin
 	//----------------------------------------------------------------------
-	//
 	Stuff::LinearMatrix4D new_world_to_local;
 	Stuff::LinearMatrix4D local_to_world;
 	local_to_world.Multiply(m_localToParent, *info->m_parentToWorld);
 	new_world_to_local.Invert(local_to_world);
 
-	//
 	//--------------------------
 	// Figure out the birth rate
 	//--------------------------
-	//
 	Specification *spec = GetSpecification();
 	Check_Object(spec);
 	Stuff::Scalar dT =
@@ -783,13 +729,11 @@ bool gosFX::Tube::Execute(ExecuteInfo *info)
 		Min_Clamp(new_life, 0.0f);
 		m_birthAccumulator += dT * new_life;
 
-		//
 		//------------------------------------------------------------------
 		// If it is time for a new child and there is room, move the head of
 		// the tube and create the new profile, then clear out the integer
 		// part of the accumulator - stacking up would look stupid
 		//------------------------------------------------------------------
-		//
 		if (m_birthAccumulator >= 1.0f && m_activeProfileCount < spec->m_maxProfileCount)
 		{
 			if (!m_activeProfileCount)
@@ -812,34 +756,28 @@ bool gosFX::Tube::Execute(ExecuteInfo *info)
 			m_profiles[m_headProfile].m_profileToWorld = local_to_world;
 	}
 
-	//
 	//--------------------------------------------------------------------
 	// If we don't have any profiles, just execute the children and return
 	//--------------------------------------------------------------------
-	//
 	if (!m_activeProfileCount)
 	{
 		m_age = prev_age;
 		return Effect::Execute(info);
 	}
 
-	//
 	//----------------------------------
 	// Deal with all the active profiles
 	//----------------------------------
-	//
 	Stuff::ExtentBox box(Stuff::Point3D::Identity, Stuff::Point3D::Identity);
 	int i = m_headProfile;
 	int profile_count = 0;
 	Verify(i >= 0);
 	do
 	{
-		//
 		//----------------------------------------------------------------------
 		// Age and animate the profile.  If the profile should die, it becomes
 		// the end of the tail
 		//----------------------------------------------------------------------
-		//
 		Profile *profile = GetProfile(i);
 		Check_Object(profile);
 		Verify (profile->m_age < 1.0f);
@@ -851,11 +789,9 @@ bool gosFX::Tube::Execute(ExecuteInfo *info)
 			break;
 		}
 
-		//
 		//---------------------
 		// Deal with the bounds
 		//---------------------
-		//
 		if (i == m_headProfile)
 		{
 			box.maxX = bounds.center.x + bounds.radius;
@@ -877,31 +813,25 @@ bool gosFX::Tube::Execute(ExecuteInfo *info)
 			box.Union(box, local_box);
 		}
 
-		//
 		//---------------------------------------------------------------------------
 		// Move to the previous profile and wrap to the end of the list if necessary
 		//---------------------------------------------------------------------------
-		//
 		++profile_count;
 		if (--i < 0)
 			i = spec->m_maxProfileCount-1;
 	} while (i != m_tailProfile);
 	m_activeProfileCount = profile_count;
 
-	//
 	//-----------------------------------------------
 	// Put the age back and run the base effect stuff
 	//-----------------------------------------------
-	//
 	m_age = prev_age;
 	if (!Effect::Execute(info))
 		return false;
 
-	//
 	//--------------------------------------------
 	// Now, build a info->m_bounds around this box
 	//--------------------------------------------
-	//
 	Verify(box.maxX >= box.minX);
 	Verify(box.maxY >= box.minY);
 	Verify(box.maxZ >= box.minZ);
@@ -920,16 +850,13 @@ bool gosFX::Tube::Execute(ExecuteInfo *info)
 }
 
 //------------------------------------------------------------------------------
-//
 void gosFX::Tube::Kill()
 {
 	Check_Object(this);
 
-	//
 	//-------------------------------------------------------------
 	// Destroy all the profiles and set up an empty profile cloud
 	//-------------------------------------------------------------
-	//
 	Specification *spec = GetSpecification();
 	Check_Object(spec);
 	if (m_activeProfileCount>0)
@@ -946,16 +873,13 @@ void gosFX::Tube::Kill()
 	m_tailProfile = -1;
 	m_birthAccumulator = 0.0f;
 
-	//
 	//----------------------------------------
 	// Now let the base effect handle stopping
 	//----------------------------------------
-	//
 	Effect::Kill();
 }
 
 //------------------------------------------------------------------------------
-//
 bool gosFX::Tube::HasFinished()
 {
 	Check_Object(this);
@@ -963,7 +887,6 @@ bool gosFX::Tube::HasFinished()
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Tube::CreateNewProfile(
 		unsigned index,
@@ -973,11 +896,9 @@ void
 	Check_Object(this);
 	Check_Object(&origin);
 
-	//
 	//----------------------------------------------------
 	// Figure out the age and age rate of the new profile
 	//----------------------------------------------------
-	//
 	Specification *spec = GetSpecification();
 	Check_Object(spec);
 	Profile *profile = GetProfile(index);
@@ -996,11 +917,9 @@ void
 	Min_Clamp(lifetime, 0.0333333f);
 	profile->m_ageRate = 1.0f / lifetime;
 
-	//
 	//------------------------------------------------------------------
 	// Establish the base position and figure out the direction of drift
 	//------------------------------------------------------------------
-	//
 	profile->m_profileToWorld = origin;
 	Stuff::Scalar pitch_min =
 		spec->m_minimumDeviation.ComputeValue(m_age, seed);
@@ -1017,7 +936,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 bool
 	gosFX::Tube::AnimateProfile(
 		unsigned index,
@@ -1029,22 +947,18 @@ bool
 {
 	Check_Object(this);
 
-	//
 	//----------------------------------------------------
 	// If the profile gets too old, don't do anything else
 	//----------------------------------------------------
-	//
 	Profile *profile = GetProfile(index);
 	Check_Object(profile);
 	Stuff::Scalar age = profile->m_age;
 	if (age >= 1.0f)
 		return false;
 
-	//
 	//--------------------------------------------------------------------
 	// Figure out the scale and displacement of the profile in world space
 	//--------------------------------------------------------------------
-	//
 	Set_Statistic(Profile_Count, Profile_Count+1);
 	Stuff::Scalar seed = profile->m_seed;
 	Specification *spec = GetSpecification();
@@ -1055,11 +969,9 @@ bool
 	Stuff::Point3D offset;
 	offset.Multiply(profile->m_direction, disp);
 
-	//
 	//-------------------------------------------------
 	// Now build the template to new local space matrix
 	//-------------------------------------------------
-	//
 	Stuff::AffineMatrix4D template_to_profile(1);
 	template_to_profile(0,0) = scale;
 	template_to_profile(1,1) = scale;
@@ -1072,12 +984,10 @@ bool
 	bounds->center = template_to_new_local;
 	bounds->radius = scale;
 
-	//
 	//------------------------------------------------------------------------
 	// Now we just multiply the template through to the vertices unless we are
 	// doing the aligned ribbon
 	//------------------------------------------------------------------------
-	//
 	unsigned i;
 	unsigned vertex_count = spec->m_vertices.GetLength();
 	Verify(vertex_count < 8);
@@ -1094,11 +1004,9 @@ bool
 		}
 	}
 
-	//
 	//------------------------------
 	// Figure out the UV adjustments
 	//------------------------------
-	//
 	Check_Pointer(m_P_uvs);
 	Stuff::Scalar u = spec->m_pUOffset.ComputeValue(age, seed);
 	Stuff::Scalar v = spec->m_pVOffset.ComputeValue(age, seed);
@@ -1111,11 +1019,9 @@ bool
 		m_P_uvs[vertex_index+i].y = spec->m_uvs[i].y*v2 + v;
 	}
 
-	//
 	//---------------------------
 	// Lastly, animate the colors
 	//---------------------------
-	//
 	Check_Pointer(m_P_colors);
 	Stuff::RGBAColor color;
 	color.red = spec->m_pRed.ComputeValue(age, seed);
@@ -1128,7 +1034,6 @@ bool
 }
 
 //------------------------------------------------------------------------------
-//
 void gosFX::Tube::DestroyProfile(unsigned index)
 {
 	Profile *profile = GetProfile(index);
@@ -1137,17 +1042,14 @@ void gosFX::Tube::DestroyProfile(unsigned index)
 }
 
 //------------------------------------------------------------------------------
-//
 void gosFX::Tube::Draw(DrawInfo *info)
 {
 	Check_Object(this);
 	Check_Object(info);
 
-	//
 	//---------------------------------------------------------
 	// If we have active particles, set up the draw information
 	//---------------------------------------------------------
-	//
 	if (m_activeProfileCount>1)
 	{
 		MidLevelRenderer::DrawEffectInformation dInfo;
@@ -1163,12 +1065,10 @@ void gosFX::Tube::Draw(DrawInfo *info)
 		m_vertexCount = m_activeProfileCount * vertex_count;
 		m_triangleCount = 2 * (m_activeProfileCount-1) * (vertex_count-1);
 
-		//
 		//-------------------------------------------------------------------
 		// If we are doing the aligned ribbon, we will have to orient each of
 		// the profiles and then compute its vertex positions accordingly
 		//-------------------------------------------------------------------
-		//
 		if (spec->m_profileType == Specification::e_AlignedRibbon)
 		{
 			int i = m_headProfile;
@@ -1180,12 +1080,10 @@ void gosFX::Tube::Draw(DrawInfo *info)
 			Stuff::LinearMatrix4D world_to_local;
 			world_to_local.Invert(local_to_world);
 
-			//
 			//----------------------------------------------------------------
 			// go thru all the profiles and figure out where they are in local
 			// space
 			//----------------------------------------------------------------
-			//
 			Verify(i >= 0);
 			do
 			{
@@ -1194,12 +1092,10 @@ void gosFX::Tube::Draw(DrawInfo *info)
 				Stuff::Point3D camera_in_profile;
 				camera_in_profile.MultiplyByInverse(camera_in_world, profile->m_profileToWorld);
 
-				//
 				//---------------------------------------------------------
 				// Figure out the scale and displacement of the template in
 				// profile space
 				//---------------------------------------------------------
-				//
 				Stuff::Scalar age = profile->m_age;
 				Stuff::Scalar seed = profile->m_seed;
 				Stuff::Scalar scale = spec->m_pScale.ComputeValue(age, seed);
@@ -1207,12 +1103,10 @@ void gosFX::Tube::Draw(DrawInfo *info)
 				Stuff::Point3D offset_in_profile;
 				offset_in_profile.Multiply(profile->m_direction, disp);
 
-				//
 				//----------------------------------------------------------
 				// Figure out the direction that we want the profile to face
 				// and build a rotation vector that does it
 				//----------------------------------------------------------
-				//
 				Stuff::Vector3D direction;
 				direction.Subtract(camera_in_profile, offset_in_profile);
 				Stuff::LinearMatrix4D template_rotation(1);
@@ -1223,11 +1117,9 @@ void gosFX::Tube::Draw(DrawInfo *info)
 					-1
 				);
 
-				//
 				//-------------------------------------------------
 				// Now build the template to new local space matrix
 				//-------------------------------------------------
-				//
 				Stuff::AffineMatrix4D template_to_profile;
 				template_to_profile(0,0) = scale*template_rotation(0,0);
 				template_to_profile(0,1) = scale*template_rotation(0,1);
@@ -1244,11 +1136,9 @@ void gosFX::Tube::Draw(DrawInfo *info)
 				Stuff::AffineMatrix4D template_to_local;
 				template_to_local.Multiply(template_to_world, world_to_local);
 
-				//
 				//------------------------------------
 				// Multiply the points thru the matrix
 				//------------------------------------
-				//
 				for (int v=0; v<vertex_count; ++v)
 				{
 					m_P_vertices[vertex++].Multiply(
@@ -1257,21 +1147,17 @@ void gosFX::Tube::Draw(DrawInfo *info)
 					);
 				}
 
-				//
 				//---------------------------------------------------------------------------
 				// Move to the previous profile and wrap to the end of the list if necessary
 				//---------------------------------------------------------------------------
-				//
 				if (--i < 0)
 					i = spec->m_maxProfileCount-1;
 			} while (i != m_tailProfile);
 		}
 
-		//
 		//--------------------
 		// Now draw the effect
 		//--------------------
-		//
 	 	info->m_clipper->DrawEffect(&dInfo);
 	}
 
@@ -1279,7 +1165,6 @@ void gosFX::Tube::Draw(DrawInfo *info)
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Tube::TestInstance() const
 {

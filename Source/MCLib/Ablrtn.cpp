@@ -2,9 +2,7 @@
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
 //***************************************************************************
-//
 //								ABLRTN.CPP
-//
 //***************************************************************************
 
 #include <stdio.h>
@@ -342,7 +340,6 @@ void ABLi_init (unsigned long runtimeStackSize,
 #ifdef _DEBUG
 profile = true;
 #endif
-//
 	//-------------------------------------------------------------------
 	// Let's make sure we have not created too many built-in ABL routines
 	// for the lovely user...

@@ -1,11 +1,7 @@
 //-------------------------------------------------------------------------------
-//
 // Mech 3D layer.  Controls how the mech moves through animations
-//
 // For MechCommander 2
-//
 // Replace Mactor for better looking mechs!
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -20,7 +16,6 @@
 #include <gosFX\gosfxheaders.hpp>
 //-------------------------------------------------------------------------------
 // Structs used by layer.
-//
 typedef struct _GestureData
 {
 	float			startVel;				//Gesture Starts at this speed
@@ -518,10 +513,8 @@ class Mech3DAppearance: public ObjectAppearance
 			//--------------------------------
 			// We are at the goal.  Store off
 			// our current gesture state.
-			//
 			// NOTE: This is only used to force the helicopters to be parked
 			// at startup.  Any other attempt to use this will probably not work!!
-			//
 			// These two lines force the select box to match the helicopter's position in the sky
 			currentGestureId = 2;
 			inView = true;
@@ -539,9 +532,7 @@ class Mech3DAppearance: public ObjectAppearance
 			//This will set which gesture we are trying to get to.
 			//-----------------------------------------------------------
 			// Smart(tm) Gesture code goes here.
-			//
 			// NO gesture queueing.  Current request is current goal.
-			//
 			if (oncePerFrame)
 				return 0;
 

@@ -16,12 +16,10 @@ void EnterWindowMode();
 #define EXTERNAL
 //--------------------------------------------------------------------------------------------
 //DW Exception Code for MC2.
-//
 // Simple, really.  Setup the exception filter by calling InitDW.
 // After DW is inited, ANY exception which occurs in ANY thread will be handed
 // to DW first.  Any problem with running DW OR when DW ends, the GameOS exception handler
 // will triggered to give even more data to the user.
-//
 //--------------------------------------------------------------------------------------------
 
 char WatsonCrashMessage[4096];

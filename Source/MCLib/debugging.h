@@ -1,9 +1,6 @@
 //***************************************************************************
-//
 //	Debugging.h -- File contains the MechCommander Debugging Definitions
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

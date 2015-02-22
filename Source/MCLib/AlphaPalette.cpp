@@ -10,22 +10,14 @@
 
 unsigned char FindClosest( VFX_RGB* Palette, int r, int g, int b );
 
-//
-//
 // Number of colors listed in the AlphaPal.ini file (>255 are special colors)
-//
-//
 #define NUM_ALPHACOLORS 280			// (One+last color listed)
 
-//
 // Table used for alpha effects
 //  Low byte  = Background
 //  High byte = Sprite
-//
 char AlphaTable[NUM_ALPHACOLORS*256];
-//
 // Flag set to 1 when an alpha pixel is used
-//
 char SpecialColor[NUM_ALPHACOLORS];
 
 enum { R, G, B, SourceAlpha, DestAlpha };
@@ -42,14 +34,10 @@ void InitAlphaLookup( VFX_RGB* Palette)
 	char Line[256];
 	float AlphaIni[NUM_ALPHACOLORS][5];
 	int LineNumber;
-//
 // Clear the AlphaPal.ini array
-//
 	memset(AlphaIni,0,sizeof(AlphaIni));
 	memset(SpecialColor,0,sizeof(SpecialColor));
-//
 // Read in and parse the AlphaPal.ini file containing all the color information
-//
 	IniFile = new File;
 #ifdef _DEBUG
 	long AlphapalOpenResult = 
@@ -88,9 +76,7 @@ void InitAlphaLookup( VFX_RGB* Palette)
 	IniFile->close();
 	delete IniFile;
 	IniFile = NULL;
-//
 // Now generate the 64K alpha value lookup table
-//
 	for( int source=0; source<NUM_ALPHACOLORS; source++ )
 	{
 		for( int dest=0; dest<256; dest++ )
@@ -143,14 +129,10 @@ void InitAlphaLookup( VFX_RGB* Palette)
 	}
 }
 
-//
-//
 // 51% Green
 // 39% Red
 // 10% Blue
-//
 // Returns the closest matching color in a palette, dose not check windows colors
-//
 unsigned char FindClosest( VFX_RGB* Palette, int r, int g, int b )
 {
 	unsigned char Closest = 10;

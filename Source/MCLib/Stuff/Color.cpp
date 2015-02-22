@@ -11,7 +11,6 @@
 //~~~~~~~~~~~~~~~~~~~~~~~~~~ RGBColor functions ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 const RGBColor
 	RGBColor::Unassigned(-1.0f, -1.0f, -1.0f);
 
@@ -32,10 +31,8 @@ bool
 		 && Close_Enough(c1.blue, c2.blue, e);
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 RGBColor&
 	RGBColor::operator=(const HSVColor &color)
 {
@@ -43,22 +40,18 @@ RGBColor&
 	Check_Object(&color);
 	Verify(color.saturation >= 0.0 && color.saturation <= 1.0f);
 
-	//
 	//----------------
 	// Check for black
 	//----------------
-	//
 	if (color.saturation <= SMALL)
 	{
 		red = green = blue = 0.0f;
 		return *this;
 	}
 
-	//
 	//-----------------------------
 	// find the sextant for the hue
 	//-----------------------------
-	//
 	Verify(color.hue >= 0.0 && color.hue <= 1.0f);
 	Scalar hue = (color.hue == 1.0f) ? 0.0f : color.hue;
 	hue *= 6.0f;
@@ -66,11 +59,9 @@ RGBColor&
 	Verify(static_cast<unsigned>(sextant) < 6);
 	Scalar remainder = hue - static_cast<Scalar>(sextant);
 
-	//
 	//--------------------
 	// Build the RGB color
 	//--------------------
-	//
 	Verify(color.value >= 0.0f && color.value <= 1.0f);
 	Scalar a = color.value * (1.0f - color.saturation);
 	Verify(a >= 0.0f && a < 1.0f);
@@ -121,10 +112,8 @@ RGBColor&
 	return *this;
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 void
 	Stuff::Convert_From_Ascii(
 		const char *str,
@@ -174,10 +163,8 @@ bool
 		 && Close_Enough(c1.alpha, c2.alpha, e);
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 void
 	Stuff::Convert_From_Ascii(
 		const char *str,
@@ -211,7 +198,6 @@ void
 //~~~~~~~~~~~~~~~~~~~~~~~~~~ HSVColor functions ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 const HSVColor
 	HSVColor::Unassigned(-1.0f, -1.0f, -1.0f);
 
@@ -232,10 +218,8 @@ bool
 		 && Close_Enough(c1.value, c2.value, e);
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 HSVColor&
 	HSVColor::operator=(const RGBColor &color)
 {
@@ -246,18 +230,14 @@ HSVColor&
 	Verify(color.green >= 0.0f && color.green <= 1.0f);
 	Verify(color.blue >= 0.0f && color.blue <= 1.0f);
 
-	//
 	//--------------------
 	// Set the color value
 	//--------------------
-	//
 	value = Max(color.red, Max(color.green, color.blue));
 
-	//
 	//-------------------------
 	// Set the saturation value
 	//-------------------------
-	//
 	Scalar delta = value - Min(color.red, Min(color.green, color.blue));
 	if (value > SMALL)
 	{
@@ -269,11 +249,9 @@ HSVColor&
 		saturation = 0.0f;
 	}
 
-	//
 	//------------
 	// Set the hue
 	//------------
-	//
 	if (saturation <= SMALL)
 	{
 		hue = 0.0f;
@@ -303,10 +281,8 @@ HSVColor&
 	return *this;
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 void
 	Stuff::Convert_From_Ascii(
 		const char *str,
@@ -356,10 +332,8 @@ bool
 		 && Close_Enough(c1.alpha, c2.alpha, e);
 }
 
-//
 //###########################################################################
 //###########################################################################
-//
 void
 	Stuff::Convert_From_Ascii(
 		const char *str,

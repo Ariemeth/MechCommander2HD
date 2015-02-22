@@ -3,7 +3,6 @@
 //===========================================================================//
 
 // TilingFactorsDialog.cpp : implementation file
-//
 
 #include "stdafx.h"
 #include "resource.h"

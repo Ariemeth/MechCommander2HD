@@ -1,9 +1,7 @@
 //----------------------------------------------------------------------------
-//
 // Action.cpp - implementation file for the abstract action object, and
 //				the mgr that holds action objects. (otherwise known as the
 //				undo manager )
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

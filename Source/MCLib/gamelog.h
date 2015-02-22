@@ -1,11 +1,8 @@
 //---------------------------------------------------------------------------
-//
 // gamelog.h - This file contains the class declaration for GameLog
-//
 //				The Log File class allows easy dumping to a log file
 //				from your application. It handles the string buffer (to
 //				prevent writing to file everytime you call it).
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

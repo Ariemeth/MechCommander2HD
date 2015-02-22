@@ -10,7 +10,6 @@
 //############################################################################
 
 //------------------------------------------------------------------------------
-//
 gosFX::Card__Specification::Card__Specification(
 	Stuff::MemoryStream *stream,
 	int gfx_version
@@ -24,12 +23,10 @@ gosFX::Card__Specification::Card__Specification(
 	m_halfHeight.Load(stream, gfx_version);
 	m_aspectRatio.Load(stream, gfx_version);
 
-	//
 	//-------------------------------------------------------------------
 	// If we are reading an old version of the card cloud, ignore all the
 	// animation on the UV channels
 	//-------------------------------------------------------------------
-	//
 	if (gfx_version < 10)
 	{
 		m_index.m_ageCurve.SetCurve(0.0f);
@@ -51,11 +48,9 @@ gosFX::Card__Specification::Card__Specification(
 		m_animated = false;
 	}
 
-	//
 	//------------------------------
 	// Otherwise, read in the curves
 	//------------------------------
-	//
 	else
 	{
 		m_index.Load(stream, gfx_version);
@@ -69,7 +64,6 @@ gosFX::Card__Specification::Card__Specification(
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::Card__Specification::Card__Specification():
 	Singleton__Specification(gosFX::CardClassID)
 {
@@ -80,7 +74,6 @@ gosFX::Card__Specification::Card__Specification():
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::Card__Specification*
 	gosFX::Card__Specification::Make(
 		Stuff::MemoryStream *stream,
@@ -98,7 +91,6 @@ gosFX::Card__Specification*
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Card__Specification::Save(Stuff::MemoryStream *stream)
 {
@@ -117,7 +109,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void 
 	gosFX::Card__Specification::BuildDefaults()
 {
@@ -150,7 +141,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 bool 
 	gosFX::Card__Specification::IsDataValid(bool fix_data)
 {
@@ -165,11 +155,9 @@ bool
 		lower = 0.0f;
 	Stuff::Scalar upper = max_scale;
 
-	//
 	//------------------------------------
 	// Calculate the worst case UV offsets
 	//------------------------------------
-	//
 	m_VOffset.ExpensiveComputeRange(&min_offset, &max_offset);
 	lower += min_offset;
 	upper += max_offset;
@@ -191,11 +179,9 @@ bool
 		lower = 0.0f;
 	upper = max_scale;
 
-	//
 	//------------------------------------
 	// Calculate the worst case UV offsets
 	//------------------------------------
-	//
 	max_offset, min_offset;
 	m_UOffset.ExpensiveComputeRange(&min_offset, &max_offset);
 	lower += min_offset;
@@ -216,7 +202,6 @@ return		Singleton__Specification::IsDataValid(fix_data);
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Card__Specification::Copy(Card__Specification *spec)
 {
@@ -239,7 +224,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Card__Specification::SetWidth()
 {
@@ -255,7 +239,6 @@ gosFX::Card::ClassData*
 	gosFX::Card::DefaultData = NULL;
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Card::InitializeClass()
 {
@@ -273,7 +256,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Card::TerminateClass()
 {
@@ -283,7 +265,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::Card::Card(
 	Specification *spec,
 	unsigned flags
@@ -308,7 +289,6 @@ gosFX::Card::Card(
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::Card::~Card()
 {
 	Unregister_Object(m_cardCloud);
@@ -316,7 +296,6 @@ gosFX::Card::~Card()
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::Card*
 	gosFX::Card::Make(
 		Specification *spec,
@@ -333,7 +312,6 @@ gosFX::Card*
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Card::Start(ExecuteInfo *info)
 {
@@ -350,7 +328,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 bool
 	gosFX::Card::Execute(ExecuteInfo *info)
 {
@@ -360,38 +337,30 @@ bool
 	if (!IsExecuted())
 		return false;
 
-	//
 	//------------------------
 	// Do the effect animation
 	//------------------------
-	//
 	if (!Singleton::Execute(info))
 		return false;
 
-	//
 	//-----------------------------------------
 	// Animate the parent then get our pointers
 	//-----------------------------------------
-	//
 	Set_Statistic(Card_Count, Card_Count+1);
 	Specification *spec = GetSpecification();
 	Check_Object(spec);
 
-	//
 	//----------------
 	// Animate the uvs
 	//----------------
-	//
 	Stuff::Scalar u = spec->m_UOffset.ComputeValue(m_age, m_seed);
 	Stuff::Scalar v = spec->m_VOffset.ComputeValue(m_age, m_seed);
 	Stuff::Scalar u2 = spec->m_USize.ComputeValue(m_age, m_seed);
 	Stuff::Scalar v2 = spec->m_VSize.ComputeValue(m_age, m_seed);
 
-	//
 	//--------------------------------------------------------------
 	// If we are animated, figure out the row/column to be displayed
 	//--------------------------------------------------------------
-	//
 	if (spec->m_animated)
 	{
 		BYTE columns =
@@ -401,11 +370,9 @@ bool
 		BYTE rows = static_cast<BYTE>(columns / spec->m_width);
 		columns = static_cast<BYTE>(columns - rows*spec->m_width);
 
-		//
 		//---------------------------
 		// Now compute the end points
 		//---------------------------
-		//
 		u += u2*columns;
 		v += v2*rows;
 	}
@@ -421,21 +388,17 @@ bool
 	m_uvs[3].x = u;
 	m_uvs[3].y = v;
 
-	//
 	//------------------
 	// Fill in the color
 	//------------------
-	//
 	m_colors[0] = m_color;
 	m_colors[1] = m_color;
 	m_colors[2] = m_color;
 	m_colors[3] = m_color;
 
-	//
 	//---------------------
 	// Fill in the position
 	//---------------------
-	//
 	m_vertices[0].x = m_scale*m_halfX;
 	m_vertices[0].y = -m_scale*m_halfY;
 	m_vertices[0].z = 0.0f;
@@ -456,7 +419,6 @@ bool
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Card::Kill()
 {
@@ -467,17 +429,14 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void gosFX::Card::Draw(DrawInfo *info)
 {
 	Check_Object(this);
 	Check_Object(info);
 
-	//
 	//----------------------------
 	// Set up the common draw info
 	//----------------------------
-	//
 	MidLevelRenderer::DrawEffectInformation dInfo;
 	dInfo.effect = m_cardCloud;
 	Specification *spec = GetSpecification();
@@ -488,11 +447,9 @@ void gosFX::Card::Draw(DrawInfo *info)
 	local_to_world.Multiply(m_localToParent, *info->m_parentToWorld);
 	dInfo.effectToWorld = &local_to_world;
 
-	//
 	//--------------------------------------------------------------
 	// Check the orientation mode.  The first case is XY orientation
 	//--------------------------------------------------------------
-	//
 	if (spec->m_alignZUsingX)
 	{
 		Stuff::Point3D
@@ -516,11 +473,9 @@ void gosFX::Card::Draw(DrawInfo *info)
 			);
 	}
 
-	//
 	//-------------------------------------------------------
 	// Each matrix needs to be aligned to the camera around Y
 	//-------------------------------------------------------
-	//
 	else if (spec->m_alignZUsingY)
 	{
 		Stuff::Point3D
@@ -536,17 +491,14 @@ void gosFX::Card::Draw(DrawInfo *info)
 		);
 	}
 
-	//
 	//---------------------
 	// Now just do the draw
 	//---------------------
-	//
 	info->m_clipper->DrawEffect(&dInfo);
 	Singleton::Draw(info);
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::Card::TestInstance() const
 {

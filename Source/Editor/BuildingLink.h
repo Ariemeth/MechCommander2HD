@@ -1,9 +1,7 @@
 #ifndef BUILDINGLINK_H
 #define BUILDINGLINK_H
 //----------------------------------------------------------------------------
-//
 // Link.h - represents a link between buildings
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//

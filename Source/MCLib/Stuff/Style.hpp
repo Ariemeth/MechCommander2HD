@@ -115,7 +115,6 @@ namespace Stuff {
 
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	// Spews
-	//
 	#if !defined(Spew)
 		inline void
 			Spew(

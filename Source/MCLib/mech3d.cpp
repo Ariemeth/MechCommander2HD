@@ -1,11 +1,7 @@
 //-------------------------------------------------------------------------------
-//
 // Mech 3D layer.  Controls how the mech moves through animations
-//
 // For MechCommander 2
-//
 // Replace Mactor for better looking mechs!
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -291,7 +287,6 @@ void Mech3DAppearanceType::init (char * fileName)
 	//-----------------------------------------------
 	// Load Damaged States
 	// They are named mechnamefallForward and mechnameFallBackward
-	//
 	char forwardName[1024];
 	sprintf(forwardName,"%sFallForwardDam",fileName);
 
@@ -3852,7 +3847,6 @@ long Mech3DAppearance::update (bool animate)
 			// reset all frames to zero for this gesture.
 			// NOTE:  This may be a two way gesture.  Most will be
 			// set to zero, but some may need to be set to last.
-			//
 			{
 				//----------------------------------------------
 				// Now actually reset everything and setup flags
@@ -4272,7 +4266,6 @@ void Mech3DAppearance::blowLeftArm (void)
 		
 	// For now, the shoulder just gets a location which does not change.
 	// Can easily move to a node if a node becomes available.
-	//
 	if (strcmp(weaponEffects->GetEffectName(SHOULDER_POP_ID),"NONE") != 0)
 	{
 		//--------------------------------------------
@@ -4398,7 +4391,6 @@ void Mech3DAppearance::blowRightArm (void)
 		
 	// For now, the shoulder just gets a location which does not change.
 	// Can easily move to a node if a node becomes available.
-	//
 	if (strcmp(weaponEffects->GetEffectName(SHOULDER_POP_ID),"NONE") != 0)
 	{
 		//--------------------------------------------

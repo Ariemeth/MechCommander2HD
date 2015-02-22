@@ -11,7 +11,6 @@ gosFX::EffectLibrary*
 	gosFX::EffectLibrary::Instance = NULL;
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::EffectLibrary::InitializeClass()
 {
@@ -19,7 +18,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::EffectLibrary::TerminateClass()
 {
@@ -32,14 +30,12 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::EffectLibrary::EffectLibrary()
 {
 	Verify(gos_GetCurrentHeap() == Heap);
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::EffectLibrary::~EffectLibrary()
 {
 	for (unsigned i=0; i<m_effects.GetLength(); ++i)
@@ -53,7 +49,6 @@ gosFX::EffectLibrary::~EffectLibrary()
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::EffectLibrary::Load(Stuff::MemoryStream* stream)
 {
@@ -72,7 +67,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 void
 	gosFX::EffectLibrary::Save(Stuff::MemoryStream* stream)
 {
@@ -86,7 +80,6 @@ void
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::Effect::Specification*
 	gosFX::EffectLibrary::Find(const char* name)
 {
@@ -107,7 +100,6 @@ gosFX::Effect::Specification*
 }
 
 //------------------------------------------------------------------------------
-//
 gosFX::Effect*
 	gosFX::EffectLibrary::MakeEffect(
 		unsigned index,

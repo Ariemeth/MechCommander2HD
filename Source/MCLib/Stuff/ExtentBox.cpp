@@ -8,7 +8,6 @@
 #include "StuffHeaders.hpp"
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 ExtentBox::ExtentBox(
 	const Vector3D &min,
 	const Vector3D &max
@@ -53,7 +52,6 @@ ExtentBox::ExtentBox(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 ExtentBox::ExtentBox(const ExtentBox &box)
 {
 	Check_Pointer(this);
@@ -68,7 +66,6 @@ ExtentBox::ExtentBox(const ExtentBox &box)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 ExtentBox::ExtentBox(const OBB &obb)
 {
 	Check_Pointer(this);
@@ -84,7 +81,6 @@ ExtentBox::ExtentBox(const OBB &obb)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 ExtentBox&
 	ExtentBox::Intersect(
 		const ExtentBox &box_1,
@@ -113,7 +109,6 @@ ExtentBox&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 ExtentBox&
 	ExtentBox::Union(
 		const ExtentBox &box_1,
@@ -136,7 +131,6 @@ ExtentBox&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 ExtentBox&
 	ExtentBox::Union(
 		const ExtentBox &box,
@@ -158,7 +152,6 @@ ExtentBox&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 Vector3D*
 	ExtentBox::Constrain(Vector3D *point) const
 {
@@ -172,7 +165,6 @@ Vector3D*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 bool
 	ExtentBox::Contains(const Vector3D &point) const
 {
@@ -186,7 +178,6 @@ bool
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 bool
 	ExtentBox::Contains(const ExtentBox &box) const
 {
@@ -200,7 +191,6 @@ bool
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 bool
 	ExtentBox::Intersects(const ExtentBox &box) const
 {
@@ -214,7 +204,6 @@ bool
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	ExtentBox::GetCenterpoint(Point3D *point) const
 {
@@ -227,7 +216,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	ExtentBox::TestInstance() const
 {
@@ -235,7 +223,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 #if !defined(Spew)
 	void
 		Spew(
@@ -260,7 +247,6 @@ void
 //~~~~~~~~~~~~~~~~~~~~~~~~~~ ExtentBox functions ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Stuff::Convert_From_Ascii(
       const char *str,
@@ -295,7 +281,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Stuff::Use_Scalar_In_Sorted_Array(
 		DynamicArrayOf<Scalar> *values,
@@ -308,11 +293,9 @@ void
 	Check_Object(values);
 	Check_Pointer(max_index);
 
-	//
 	//-------------------------------------------------------------
 	// First, look to see if the table contains the specified value
 	//-------------------------------------------------------------
-	//
 	unsigned bottom = 0;
 	unsigned top = *max_index;
 	while (top > bottom)
@@ -333,12 +316,10 @@ void
 	}
 	Verify(top == bottom);
 
-	//
 	//-----------------------------------------------------------------------
 	// Since we got here, a new value must be added to the table.  First make
 	// room in the table
 	//-----------------------------------------------------------------------
-	//
 	if (*max_index == values->GetLength())
 	{
 		values->SetLength(*max_index + block_size);
@@ -358,7 +339,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Stuff::Find_Planes_Of_Boxes(
 		DynamicArrayOf<Plane> *planes,
@@ -368,11 +348,9 @@ void
 	Check_Object(planes);
 	Check_Object(&boxes);
 
-	//
 	//------------------------------------------------------------
 	// Figure out all the unique axis components used by the boxes
 	//------------------------------------------------------------
-	//
 	DynamicArrayOf<Scalar>
 		xs,
 		ys,
@@ -394,19 +372,15 @@ void
 		Use_Scalar_In_Sorted_Array(&zs, boxes[i].maxZ, &max_z, 10);
 	}
 
-	//
 	//------------------------------------------------
 	// There will be a plane for each unique component
 	//------------------------------------------------
-	//
 	count = max_x + max_y + max_z;
 	planes->SetLength(count);
 
-	//
 	//------------------------
 	// Generate the Y-Z planes
 	//------------------------
-	//
 	Plane *plane = &(*planes)[0];
 	for (i=0; i<max_x; ++i)
 	{
@@ -418,11 +392,9 @@ void
 		++plane;
 	}
 
-	//
 	//------------------------
 	// Generate the X-Z planes
 	//------------------------
-	//
 	for (i=0; i<max_y; ++i)
 	{
 		Verify(static_cast<unsigned>(plane - &(*planes)[0]) < count);
@@ -433,11 +405,9 @@ void
 		++plane;
 	}
 
-	//
 	//------------------------
 	// Generate the X-Y planes
 	//------------------------
-	//
 	for (i=0; i<max_z; ++i)
 	{
 		Verify(static_cast<unsigned>(plane - &(*planes)[0]) < count);

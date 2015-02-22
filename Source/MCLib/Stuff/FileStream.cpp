@@ -13,7 +13,6 @@
 //#############################################################################
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 Directory::Directory(
 	char *find_files,
 	bool directories
@@ -23,18 +22,14 @@ Directory::Directory(
 {
 	Check_Pointer(find_files);
 
-	//
 	//------------------------------------------------
 	// Isolate the search path that we are looking for
 	//------------------------------------------------
-	//
 	MString new_directory_string = find_files;
 
-	//
 	//---------------------------------------------------------
 	// Now look for the files and add each entry into the chain
 	//---------------------------------------------------------
-	//
 	const char* file_name = gos_FindFiles(new_directory_string);
 	while (file_name)
 	{
@@ -48,11 +43,9 @@ Directory::Directory(
 	fileWalker = new SortedChainIteratorOf<DirectoryEntry*,MString>(&fileEntries);
 	Check_Object(fileWalker);
 
-	//
 	//---------------------------------------------------
 	// Look through the directories if we are supposed to
 	//---------------------------------------------------
-	//
 	folderWalker = NULL;
 	if (directories)
 	{
@@ -72,7 +65,6 @@ Directory::Directory(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 Directory::~Directory(void)
 {
 	Check_Object(this);
@@ -90,7 +82,6 @@ Directory::~Directory(void)
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 char*
 	Directory::GetCurrentFileName(void)
 {
@@ -108,7 +99,6 @@ char*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	Directory::AdvanceCurrentFile(void)
 {
@@ -118,7 +108,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 char * Directory::GetCurrentFolderName( void )
 {
 	Check_Object(this);
@@ -137,7 +126,6 @@ char * Directory::GetCurrentFolderName( void )
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void Directory::AdvanceCurrentFolder( void )
 {
 	Check_Object(this);
@@ -164,7 +152,6 @@ bool
 	FileStream::IgnoreReadOnlyFlag=false;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	FileStream::InitializeClass()
 {
@@ -179,7 +166,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	FileStream::TerminateClass()
 {
@@ -189,7 +175,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	FileStream::TestInstance() const
 {
@@ -197,7 +182,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 FileStream::FileStream():
 	MemoryStream(DefaultData, NULL, 0)
 {
@@ -207,7 +191,6 @@ FileStream::FileStream():
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 FileStream::FileStream(
 	const char* file_name,
 	WriteStatus writable
@@ -220,14 +203,12 @@ FileStream::FileStream(
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 FileStream::~FileStream()
 {
 	Close();
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	FileStream::Open(
 		const char* file_name,
@@ -242,11 +223,9 @@ void
 	streamSize = 0;
 	fileHandle = NULL;
 
-	//
 	//------------------------------------------------
 	// If this is a readonly file, have gos read it in
 	//------------------------------------------------
-	//
 	if (writeEnabled == ReadOnly)
 	{
 		if (IsRedirected)
@@ -269,11 +248,9 @@ void
 		currentPosition = streamStart;
 	}
 
-	//
 	//-----------------------------------------------
 	// Write only flags go through standard file open
 	//-----------------------------------------------
-	//
 	else
 	{
 		writeEnabled = writable;
@@ -295,36 +272,29 @@ void
 		fileName = _strdup(file_name);
 	}
 
-	//
 	//--------------------------
 	// Try and open the filename
 	//--------------------------
-	//
 	IsRedirected = false;
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	FileStream::Close()
 {
 	Check_Object(this);
 
-	//
 	//---------------------------------
 	// If the file was opened, close it
 	//---------------------------------
-	//
 	if (fileHandle)
 		gos_CloseFile(fileHandle);
 	else if (streamStart != NULL)
 		gos_Free(streamStart);
 
-	//
 	//----------------
 	// Delete the name
 	//----------------
-	//
 	isOpen = false;
 	if (fileName)
 	{
@@ -335,7 +305,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	FileStream::SetPointer(DWORD index)
 {
@@ -346,7 +315,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MemoryStream&
 	FileStream::AdvancePointer(DWORD index)
 {
@@ -357,7 +325,6 @@ MemoryStream&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MemoryStream&
 	FileStream::RewindPointer(DWORD index)
 {
@@ -368,7 +335,6 @@ MemoryStream&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MemoryStream&
 	FileStream::ReadBytes(
 		void *ptr,
@@ -382,7 +348,6 @@ MemoryStream&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MemoryStream&
 	FileStream::WriteBytes(
 		const void *ptr,
@@ -404,7 +369,6 @@ MemoryStream&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 bool
 	FileStream::IsFileOpened()
 {
@@ -413,7 +377,6 @@ bool
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 bool
 	Stuff::CreateDirectories(const char *directory_path)
 {

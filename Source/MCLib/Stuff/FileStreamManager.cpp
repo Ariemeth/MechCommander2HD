@@ -13,20 +13,17 @@
 //#############################################################################
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 FileDependencies::FileDependencies():
 	Plug(DefaultData)
 {
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 FileDependencies::~FileDependencies()
 {
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 FileDependencies&
 	FileDependencies::operator=(const FileDependencies &dependencies)
 {
@@ -48,35 +45,28 @@ FileDependencies&
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	FileDependencies::AddDependency(FileStream *stream)
 {
 	Check_Object(this);
 	Check_Object(stream);
 
-	//
 	//---------------------
 	// Get the new filename
 	//---------------------
-	//
 	const char* new_file = stream->GetFileName();
 	Check_Pointer(new_file);
 
-	//
 	//---------------------------------------------------
 	// Make a new memorystream that wraps our current one
 	//---------------------------------------------------
-	//
 	BYTE *end = Cast_Pointer(BYTE*, m_fileNameStream.GetPointer());
 	int len = m_fileNameStream.GetBytesUsed();
 	MemoryStream scanner(end-len, len);
 
-	//
 	//--------------------------------------
 	// See if the new file is already inside
 	//--------------------------------------
-	//
 	while (scanner.GetBytesRemaining() > 0)
 	{
 		const char* old_name = Cast_Pointer(const char*, scanner.GetPointer());
@@ -89,7 +79,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	FileDependencies::AddDependencies(MemoryStream *dependencies)
 {
@@ -105,19 +94,15 @@ void
 			Cast_Pointer(const char*, dependencies->GetPointer());
 		int new_len = strlen(new_name);
 
-		//
 		//---------------------------------------------------
 		// Make a new memorystream that wraps our current one
 		//---------------------------------------------------
-		//
 		BYTE *end = static_cast<BYTE*>(m_fileNameStream.GetPointer());
 		MemoryStream scanner(end-m_fileNameStream.GetBytesUsed(), old_len);
 
-		//
 		//--------------------------------------
 		// See if the new file is already inside
 		//--------------------------------------
-		//
 		while (scanner.GetBytesRemaining() > 0)
 		{
 			const char* old_name = Cast_Pointer(const char*, scanner.GetPointer());
@@ -133,7 +118,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	FileDependencies::AddDependencies(const FileDependencies *dependencies)
 {
@@ -151,21 +135,18 @@ FileStreamManager*
 	FileStreamManager::Instance = NULL;
 	
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 FileStreamManager::FileStreamManager():
 	compareCache(NULL, true)
 {	
 }	
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 FileStreamManager::~FileStreamManager()
 {
 	PurgeFileCompareCache();
 }	
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 bool
 	FileStreamManager::CompareModificationDate(
 		const MString &file_name,
@@ -175,11 +156,9 @@ bool
 	Check_Object(this);
 	Check_Object(&file_name);
 
-	//
 	//------------------------------
 	// Check the compare cache first
 	//------------------------------
-	//
 	FileStatPlug *stat_plug;
 	
 	if ((stat_plug = compareCache.Find(file_name)) != NULL)
@@ -191,35 +170,28 @@ bool
 		return false;
 	}
 
-	//
 	//-------------------------------------------------------------
 	// Get the statistics about the file.  If the file isn't there, 
 	// return false == "file older than time stamp"
 	//-------------------------------------------------------------
-	//
 	__int64 file_stats = gos_FileTimeStamp(file_name);
 	if (file_stats == -1)
 		return false;
 
-	//
 	//-------------
 	// Add to cache
 	//-------------
-	//
 	stat_plug = new FileStatPlug(file_stats);
 	Register_Object(stat_plug);
 	compareCache.AddValue(stat_plug, file_name);
 
-	//
 	// Return, "is file newer than time stamp"?
-	//
 	if (file_stats > time_stamp)
 		return true;
 	return false;
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 void
 	FileStreamManager::PurgeFileCompareCache()
 {
@@ -229,7 +201,6 @@ void
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MString*
 	Stuff::StripExtension(MString* file_name)
 {
@@ -252,7 +223,6 @@ MString*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MString*
 	Stuff::IsolateDirectory(MString* file_name)
 {
@@ -279,7 +249,6 @@ MString*
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
 MString*
 	Stuff::StripDirectory(MString* file_name)
 {

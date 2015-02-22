@@ -1,8 +1,4 @@
-//
-//
 // Faster versions of common routines
-//
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -16,9 +12,7 @@ void memfill(void *Dest,int Length);
 extern enum { CPU_UNKNOWN, CPU_PENTIUM, CPU_MMX, CPU_KATMAI } Processor;
 static _int64 fillnum=-1;
 
-//
 // Instead of using memset(x,0,x) - use this function
-//
 void memclear(void *Dest,int Len)
 {
 	_asm{
@@ -83,9 +77,7 @@ done:
 		}
 };
 
-//
 // Instead of using memset(x,0xff,x) - use this function
-//
 void memfill(void *Dest,int Len)
 {
 	_asm{

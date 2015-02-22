@@ -9,7 +9,6 @@
 #pragma once
 #endif // _MSC_VER > 1000
 // CampaignDialog.h : header file
-//
 
 //include "CampaignEditor.h"
 #include "resource.h"

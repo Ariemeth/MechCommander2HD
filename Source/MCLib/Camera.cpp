@@ -1,7 +1,5 @@
 //---------------------------------------------------------------------------
-//
 // Camera.cpp -- File contains the camera class code
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -473,9 +471,7 @@ void Camera::getClosestVertex (Stuff::Vector2DOf<long> &screenPos, long &row, lo
 	unsigned long numVertices = land->getNumVertices();
 	VertexPtr closestVertex = NULL;
 
-//
 // Redone all using integers and no square root.
-//
 	long i=0,tvx=screenPos.x,tvy=screenPos.y;
 	float dx,dy,cd=1e38f,dist;
 	for (i=0;i<(long)numVertices;i++)
@@ -545,19 +541,14 @@ inline bool overThisTile (TerrainQuadPtr tile, long mouseX, long mouseY)
 			return false;
 		
 		//Using the above vertex Data, determine if the mouse is over this poly!
-		//
 		//Theorem:
 		// Given the sides of the triangle defined by the lines v0v1, v1v2 and v2v0
 		// in the form Ax + By + C = 0
-		//
 		// the point mousex, mousey lies inside the triangle if and only if
-		//
 		//  	A0 * mouseX + B0 * mouseY + C0 = D0
 		//		A1 * mouseX * B1 * mouseY + c1 = D1
 		//		A2 * mouseX + B2 * mouseY + c2 = D2
-		//
 		// Dx is the same sign for each line as the correct sign for clockwise or counterclockwise vertices!
-		//
 		Stuff::Vector3D line1;
 		Stuff::Vector3D line2;
 		line1.Subtract(v0,v1);
@@ -602,19 +593,14 @@ inline bool overThisTile (TerrainQuadPtr tile, long mouseX, long mouseY)
 			return false;
 			
  		//Using the above vertex Data, determine if the mouse is over this poly!
-		//
 		//Theorem:
 		// Given the sides of the triangle defined by the lines v0v1, v1v2 and v2v0
 		// in the form Ax + By + C = 0
-		//
 		// the point mousex, mousey lies inside the triangle if and only if
-		//
 		//  	A0 * mouseX + B0 * mouseY + C0 = D0
 		//		A1 * mouseX * B1 * mouseY + c1 = D1
 		//		A2 * mouseX + B2 * mouseY + c2 = D2
-		//
 		// Dx is the same sign for each line as the correct sign for clockwise or counterclockwise vertices!
-		//
 		line1.Subtract(v0,v1);
 		line2.Subtract(v1,v2);
 		
@@ -1427,7 +1413,6 @@ long Camera::update (void)
 
 	//If we are not transitioning, we need to set the night/day flags and factors.
 	//If we ARE transitioning, they have already been set in updateDaylight!
-	//
 	// WE ARE NEVER TRANSITIONING ANYMORE
 	//if (day2NightTransitionTime <= 0.0f)
 	{
@@ -1765,13 +1750,11 @@ void Camera::setOrthogonal(void)
 		near_clip = -2000.0;
 		far_clip = 8000.0;
 		
-		//
 		//------------------------------------------------------------------------
 		// Set up the camera to clip matrix.  This matrix takes camera space
 		// coordinates and maps them into a homogeneous culling space where valid
 		// X, Y, and Z axis values (when divided by W) will all be between 0 and 1
 		//------------------------------------------------------------------------
-		//
 		cameraToClip(LEFT_AXIS, LEFT_AXIS) = 1.0f / (left_clip-right_clip);
 		cameraToClip(LEFT_AXIS, UP_AXIS) = 0.0f;
 		cameraToClip(LEFT_AXIS, FORWARD_AXIS) = 0.0f;
@@ -1796,7 +1779,6 @@ void Camera::setOrthogonal(void)
 	{
 		//-----------------------
 		//Perspective Projection
-		//
 
 		float far_clip,near_clip;
 		near_clip = Camera::NearPlaneDistance;
@@ -1805,11 +1787,9 @@ void Camera::setOrthogonal(void)
 		float horizontal_fov = camera_fov * DEGREES_TO_RADS;
 		float height2width = ((float)Environment.screenHeight / (float)Environment.screenWidth);
 
-		//
 		//-------------------------------------------------------
 		// Calculate the horizontal, vertical, and forward ranges
 		//-------------------------------------------------------
-		//
 		float left_clip = -(float)(near_clip * tan(horizontal_fov*0.5f));
 		float top_clip = -left_clip * height2width;
 		float bottom_clip = -top_clip;
@@ -1819,13 +1799,11 @@ void Camera::setOrthogonal(void)
 		float vertical_range = APPLY_UP_SIGN(1.0f) / (top_clip - bottom_clip);
 		float depth_range = APPLY_FORWARD_SIGN(1.0f) / (far_clip - near_clip);
 		
- 		//
 		//------------------------------------------------------------------------
 		// Set up the camera to clip matrix.  This matrix takes camera space
 		// coordinates and maps them into a homogeneous culling space where valid
 		// X, Y, and Z axis values (when divided by W) will all be between 0 and 1
 		//------------------------------------------------------------------------
-		//
 		cameraToClip(LEFT_AXIS, LEFT_AXIS) = near_clip * horizontal_range;
 		cameraToClip(LEFT_AXIS, UP_AXIS) = 0.0f;
 		cameraToClip(LEFT_AXIS, FORWARD_AXIS) = 0.0f;

@@ -1,9 +1,6 @@
 //---------------------------------------------------------------------------
-//
 //	terrobj.h -- File contains the Terrain Object Definition
-//
 //	MechCommander 2
-//
 //---------------------------------------------------------------------------//
 // Copyright (C) Microsoft Corporation. All rights reserved.                 //
 //===========================================================================//
@@ -289,7 +286,6 @@ class TerrainObject : public GameObject {
 			//-----------------------------------------
 			// Hotspot for buildings is position plus 
 			// some Z based on OBB to make Effect visible.
-			//
 			// Use THIS position for LOS Calc!!!
 			Stuff::Vector3D hsPos = position;
 
