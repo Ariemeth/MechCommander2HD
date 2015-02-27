@@ -66,6 +66,8 @@ aRect*		SpecialtyListItem::s_outline = 0;
 long		SpecialtyListItem::s_itemCount = 0; // hack, we really don't want to delete these each time
 
 PilotReviewScreen* PilotReviewScreen::instance = NULL;
+bool PilotReviewScreen::s_skipAnimation = false;
+int PilotReviewScreen::s_pilotsToPromote = 0;
 
 extern float g_frameTime;
 
@@ -86,7 +88,7 @@ PilotReviewScreen::PilotReviewScreen()
 	staticCount = rectCount = buttonCount = textCount = 0;
 	buttons = 0;
 	textObjects = 0;
-	bDone = 0;
+	bDone = false;
 	instance = this;
 
 	// this MUST be initialized
@@ -175,8 +177,6 @@ void PilotReviewScreen::init(FitIniFile* file)
 	}
 
 	bool bLiveTextAdded = 0;
-	bool bJustPromoted = 0;
-
 	for ( i = 0; i < count; i++ )
 	{
 		if ( !pPilots[i]->isDead() && pPilots[i]->isUsed() )
@@ -197,7 +197,7 @@ void PilotReviewScreen::init(FitIniFile* file)
 			ActivePilotListItem* pItem = new ActivePilotListItem( pPilots[i] );
 			pilotListBox.AddItem( pItem );
 			if ( pPilots[i]->promotePilot() )
-				bJustPromoted = true;
+				++s_pilotsToPromote;
 		}
 	}
 
@@ -209,7 +209,7 @@ void PilotReviewScreen::init(FitIniFile* file)
 	beginFadeIn( 0 );
 	gosASSERT( rects ); // need this for the list box
 
-	if ( bJustPromoted ) // disable done button if promotion is going to happen
+	if (s_pilotsToPromote) // disable done button if promotion is going to happen
 		buttons[0].disable( true );
 }
 
@@ -257,6 +257,7 @@ bool PilotReviewScreen::isDone()
 }
 void PilotReviewScreen::update()
 {
+	// Selecting a pilot upgrade
 	if ( s_curPromotion && !bDone )
 	{
 		s_curPromotion->update();
@@ -265,9 +266,12 @@ void PilotReviewScreen::update()
 		return;
 	}
 
+	// Update the animation
 	if ( entryAnim.isDone() )
 		pilotListBox.update();
 
+	// Handle on-screen button input
+	bool handled = false;
 	for ( int i = 0; i < buttonCount; i++ )
 	{
 		buttons[i].update();
@@ -275,19 +279,28 @@ void PilotReviewScreen::update()
 			&& userInput->isLeftClick() 
 			&& buttons[i].isEnabled() )
 		{
+			handled = true;
 			handleMessage( aMSG_DONE, aMSG_DONE );
 		}
 	}
 
-	if ( pilotListBox.isDone() )
+	// MCHD CHANGE (02/27/15): Skip the current item's animation
+	PilotReviewScreen::s_skipAnimation = false; // Reset each frame
+	if (!handled)
+	{
+		if (userInput->isLeftClick() || userInput->getKeyDown(KEY_ESCAPE)
+			|| userInput->getKeyDown(KEY_RETURN) || userInput->getKeyDown(KEY_SPACE))
+		{
+			s_skipAnimation = true;
+		}
+	}
+
+	// MCHD CHANGE (02/27/15): If there are no more promotions, you can leave
+	if ( s_pilotsToPromote == 0 )
 		buttons[0].disable( false );
 
 	entryAnim.update();
 	exitAnim.update();
-}
-
-void PilotReviewScreen::updatePilots()
-{
 }
 
 //////////////////////////////////////////////
@@ -454,7 +467,7 @@ void DeadPilotListItem::render()
 
 long PilotListBox::AddItem( aListItem* add )
 {
-	bDone= 0;
+	bDone = false;
 	DeadPilotListItem* pItem = dynamic_cast< DeadPilotListItem* >(  add );
 	if ( pItem )
 	{
@@ -518,101 +531,74 @@ void PilotListBox::update()
 	if ( timeSinceStart < 1.0 )
 		return;
 
-	if ( this->curItem >= itemCount )
+	// MCHD CHANGE (02/27/15): This whole function, because it was a godless abomination
+
+	// If the list is done animating, do a quick update and bail out early
+	if ( bDone )
 	{
 		for ( int i = 0; i < itemCount; i++ )
-		{
-			GetItem( i )->showGUIWindow( true );
 			GetItem( i )->update();
-		}
 
-		bDone = true;
 		return;	
-	}// done
+	}
 
-	for ( int i = 0; i < itemCount; i++ )
+	// Show the current item
+	aListItem* item = GetItem(curItem);
+	item->showGUIWindow(true);
+
+	// If the item is done animating or is not a pilot, set up the next item
+	PilotListItem* pilotItem = dynamic_cast<PilotListItem*>(item);
+	if (pilotItem == NULL || pilotItem->isDone())
 	{
-		bDone = 0;
-		aListItem* item = GetItem( i );
-		if ( item )
+		++curItem;
+
+		// If the previous item was the last, we're done
+		if (curItem >= itemCount)
 		{
-			if ( i < curItem )
+			bDone = true;
+		}
+		// Otherwise, set the scroll amount based on the next item
+		else
+		{
+			float itemTop = GetItem(curItem)->globalY();
+			if (itemTop > bottom() - 3 * height() / 4)
 			{
-				item->showGUIWindow( true );
-			}
-			else if ( i == curItem )
-			{
-				PilotListItem* pilotItem = dynamic_cast<PilotListItem*>(item);
-				if ( pilotItem )
-				{
-
-					if ( pilotItem->isDone()  )
-					{
-						pilotItem = NULL;
-						while ( !pilotItem )
-						{
-							curItem++;
-							scrollTime = 0.f;
-							oldScroll = scrollBar->GetScrollPos();
-
-							if ( curItem <= itemCount )
-							{
-								item = GetItem( curItem );					
-								pilotItem = dynamic_cast<PilotListItem*>(item);
-							}
-							else
-							{
-								curItem++;
-								break;
-							}
-						}
-						if ( pilotItem )
-						{
-							pilotItem->begin();						
-						}
-					}
-					else
-						pilotItem->update();
-				}
-				else
-					curItem++;
-
-				if ( item )
-				{
-					float itemTop = item->globalY();
-					if ( itemTop  > bottom() - 3 * height() / 4 && !newScroll )
-					{
-						// need to scroll
-						oldScroll = scrollBar->GetScrollPos();
-						newScroll = oldScroll + itemTop - bottom()  + 3 * height() / 4;
-
-						if ( newScroll < oldScroll )
-							newScroll = 0;
-					}
-					else if ( !newScroll )
-						items[curItem]->showGUIWindow(1);
-				}
-			}
-			else 
-			{
-				item->showGUIWindow( false );
+				oldScroll = scrollBar->GetScrollPos();
+				newScroll = oldScroll + itemTop - bottom() + 3 * height() / 4;
 			}
 		}
 	}
+	// Update if the pilot is not done animating
+	else
+	{
+		pilotItem->update();
+	}
 
+	// Scroll the list
 	if ( newScroll )
 	{
 		scrollTime += g_frameTime;
-		long delta = 140.f * scrollTime;
-		if ( delta + oldScroll < newScroll && delta + oldScroll < scrollBar->GetScrollMax() )
-			scrollBar->SetScroll( oldScroll + delta );
+
+		// Interpolate
+		long delta = 140 * scrollTime;
+		if ( delta + oldScroll < newScroll && delta + oldScroll < scrollBar->GetScrollMax())
+		{
+			scrollBar->SetScroll(oldScroll + delta);
+		}
+		// Lock to final scroll amount
 		else
 		{
 			scrollBar->SetScroll( newScroll );
-			if ( items[curItem] )
-				items[curItem]->showGUIWindow(1);
 			newScroll = 0;
-			scrollTime = 0;
+			scrollTime = 0.0f;
+		}
+
+		// MCHD CHANGE (02/27/15):  Skip scroll animation
+		if (PilotReviewScreen::s_skipAnimation == true)
+		{
+			scrollBar->SetScroll(newScroll);
+			newScroll = 0;
+			scrollTime = 0.0f;
 		}
 	}
 }
@@ -625,7 +611,7 @@ PilotListBox::PilotListBox()
 	oldScroll = 0.f;
 	newScroll = 0.f;
 	topSkip = 2.f;
-	bDone = 0;
+	bDone = false;
 }
 //////////////////////////////////
 
@@ -687,7 +673,7 @@ void	ActivePilotListItem::render()
 		promotionText.setColor( 0 );
 	}
 
-	bool bCanBeDone = currentTime > flashTime();
+	bool animationFinished = currentTime > flashTime();
 	
 	aObject::render();
 
@@ -742,7 +728,7 @@ void	ActivePilotListItem::render()
 	if (currentTime - 1.5 - g_frameTime < 0 )
 		oldPossible = -1;
 
-	if ( numPossible > 0 && promotionShown && bCanBeDone ) // finish when all of the dead guys are rendered
+	if ( numPossible > 0 && promotionShown && animationFinished ) // finish when all of the dead guys are rendered
 		bDone = true;
 
 	// when adding a new icon, play sound
@@ -772,26 +758,33 @@ void		ActivePilotListItem::update()
 	if ( !isShowing() ) // do nothing until active
 		return;
 
-	if ( showingPromotion )// if in promotion area, do that...
+	// MCHD CHANGE (02/27/15): Skip pilot animation
+	if (PilotReviewScreen::s_skipAnimation == true)
+		currentTime = flashTime();
+
+	// Update promotion screen
+	if ( showingPromotion )
 	{
 		s_pilotPromotionArea->update();
 		PilotReviewScreen::s_curPromotion = s_pilotPromotionArea;
 
 		if ( s_pilotPromotionArea->isDone() )
 		{
+			--PilotReviewScreen::s_pilotsToPromote;
 			promotionShown = true;
 			PilotReviewScreen::s_curPromotion = NULL;
 			showingPromotion = false;
 		}
 	} 
+	// Start showing promotion screen
 	else if ( !showingPromotion && !promotionShown && pilot->promotePilot() )
 	{
-		if ( currentTime > flashTime() + .5f  ) // wait five seconds before bringing in the doors
+		if ( currentTime > flashTime() )
 		{
-				s_pilotPromotionArea->setPilot( pilot, pilotIcon );
-				showingPromotion = true;
-				promotionShown = false;
-				showGUIWindow( true );
+			s_pilotPromotionArea->setPilot( pilot, pilotIcon );
+			showingPromotion = true;
+			promotionShown = false;
+			showGUIWindow( true );
 		}
 	}
 	else if ( !pilot->promotePilot() )
@@ -1068,7 +1061,6 @@ ActivePilotListItem::ActivePilotListItem( LogisticsPilot* pPilot )
 	}
 
 	pilot = pPilot;
-	showingPromotion = 0;
 
 	int top = s_area->top();
 

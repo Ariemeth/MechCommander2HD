@@ -209,7 +209,7 @@ MissionInterfaceManager::Command		MissionInterfaceManager::s_debugCommands[] =
 	"DamageObject4",		ALT | KEY_NUMPAD4, -1, -1, false, &MissionInterfaceManager::damageObject4, 0, -1,
 	"DamageObject5",		ALT | KEY_NUMPAD5, -1, -1, false, &MissionInterfaceManager::damageObject5, 0, -1,
 	"DamageObject6",		ALT | KEY_NUMPAD6, -1, -1, false, &MissionInterfaceManager::damageObject6, 0, -1,
-	"GoalPlan",				ALT | KEY_P, -1, -1, false, &MissionInterfaceManager::goalPlan, 0, -1, // Still don't know what these do...
+	"GoalPlan",				ALT | KEY_P, -1, -1, false, &MissionInterfaceManager::goalPlan, 0, -1, // MCHD TODO: Still don't know what these do...
 	"EnemyGoalPlan",		ALT | SHIFT | KEY_P, -1, -1, false, &MissionInterfaceManager::enemyGoalPlan, 0, -1,
 
 	// Sun
@@ -2517,14 +2517,20 @@ int MissionInterfaceManager::zoomIn()
 int MissionInterfaceManager::zoomChoiceOut()
 {
 	float frameFactor = g_frameTime / baseFrameLength;
-	eye->ZoomOut(zoomInc * frameFactor * 5.0f * eye->getScaleFactor());
+	float amount = zoomInc * frameFactor * 7.5f * (1.25f - eye->getScaleFactor());
+	if (amount < 0.04f)
+		amount = 0.04f;
+	eye->ZoomOut(amount);
 
 	return 1;
 }
 int MissionInterfaceManager::zoomChoiceIn()
 {
 	float frameFactor = g_frameTime / baseFrameLength;
-	eye->ZoomIn(zoomInc * frameFactor * 5.0f * eye->getScaleFactor());
+	float amount = zoomInc * frameFactor * 7.5f * (1.25f - eye->getScaleFactor());
+	if (amount < 0.04f)
+		amount = 0.04f;
+	eye->ZoomIn(amount);
  	return 1;
 }
 int MissionInterfaceManager::rotateLeft()

@@ -167,7 +167,6 @@ void MissionResults::update()
 		pPilotScreen->update();
 		if ( pPilotScreen->isDone() )
 		{
-			pPilotScreen->updatePilots();
 			delete pPilotScreen;
 			pPilotScreen = 0;
 			// take this out!

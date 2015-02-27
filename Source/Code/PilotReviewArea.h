@@ -48,7 +48,10 @@ private:
 class PilotReviewScreen : public LogisticsScreen
 {
 public:
-	
+
+	static bool s_skipAnimation;
+	static int s_pilotsToPromote;
+
 	PilotReviewScreen();
 	virtual ~PilotReviewScreen();
 	

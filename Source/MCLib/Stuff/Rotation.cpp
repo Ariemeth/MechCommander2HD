@@ -1460,7 +1460,7 @@ void
 		q2.Normalize();
 		diff = q2.x*q2.x + q2.y*q2.y + q2.z*q2.z + q2.w*q2.w - 1.0f;
 		if (Small_Enough(diff))
-			STOP(("UnitQuaternion needs normalizing"));
+			PAUSE(("UnitQuaternion needs normalizing"));
 	}
 	Verify(Small_Enough(diff));
 }
