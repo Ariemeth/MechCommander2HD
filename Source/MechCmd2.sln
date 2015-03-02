@@ -3,6 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUI", "GUI\GUI.vcxproj", "{97985315-F026-4AB8-A765-2DBE7B78CC6C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{09582E8D-FAA3-4A07-AB43-74C33436CDDF} = {09582E8D-FAA3-4A07-AB43-74C33436CDDF}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MCLib", "MCLib\MCLib.vcxproj", "{09582E8D-FAA3-4A07-AB43-74C33436CDDF}"
 EndProject

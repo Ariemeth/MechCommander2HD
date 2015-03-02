@@ -107,7 +107,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <AdditionalIncludeDirectories>..\GameOS\include;mclib;.;..\editor;..\..\DirectX8\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;WIN32;FINAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <StructMemberAlignment>4Bytes</StructMemberAlignment>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -598,6 +598,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release Editor|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Retail|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="MCHDUtilities.cpp" />
     <ClCompile Include="mouse.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Editor|Win32'">Disabled</Optimization>
@@ -2095,6 +2096,7 @@
     <ClInclude Include="Heap.h" />
     <ClInclude Include="Lz.h" />
     <ClInclude Include="mathfunc.h" />
+    <ClInclude Include="MCHDUtilities.h" />
     <ClInclude Include="msl.h" />
     <ClInclude Include="objstatus.h" />
     <ClInclude Include="Paths.h" />

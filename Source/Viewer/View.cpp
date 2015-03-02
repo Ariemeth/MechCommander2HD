@@ -15,6 +15,7 @@
 #include "LogisticsData.h"
 #include "prefs.h"
 #include "Soundsys.h"
+#include <MCHDUtilities.h>
 
 CPrefs g_userPreferences;
 MultiPlayer* MPlayer = NULL;
@@ -441,6 +442,9 @@ void __stdcall InitializeGameEngine()
 	pMechlopedia = new Mechlopedia;
 	pMechlopedia->init();
 	pMechlopedia->begin();
+
+	// MCHD CHANGE (03/02/15): Initialize global instance (g_MCHD)
+	MCHDUtilities::InitializeInstance();
 }
 
 void __stdcall TerminateGameEngine()

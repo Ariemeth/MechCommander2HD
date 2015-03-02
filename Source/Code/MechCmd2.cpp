@@ -23,6 +23,7 @@
 #include "gamelog.h"
 #include "LogisticsDialog.h"
 #include "prefs.h"
+#include <MCHDUtilities.h>
 
 //------------------------------------------------------------------------------------------------------------
 // Command line
@@ -320,6 +321,25 @@ void UpdateGame()
 	// Update debug windows
 	DEBUGWINS_update();
 
+	// MCHD CHANGE (03/02/15): Timing code frame end
+#ifndef FINAL
+	static float timeSinceCommand = 0.0f;
+	timeSinceCommand += g_frameTime;
+	if (timeSinceCommand > 0.2f)
+	{
+		if (userInput->alt() && userInput->getKeyDown(KEY_F9))
+		{
+			timeSinceCommand = 0.0f;
+			g_MCHD->ToggleDebugText();
+		}
+	}
+
+	g_MCHD->Stop(MCHDUtilities::TIME_WHOLE_FRAME);
+	g_MCHD->UpdateTiming();
+	g_MCHD->debugStrings[0].Format("Average FPS: %f", g_MCHD->GetAverageFPS());
+	g_MCHD->Start(MCHDUtilities::TIME_WHOLE_FRAME);
+#endif
+
 	//---------------------------------------------------
 	// Update heap instrumentation.
 #ifdef LAB_ONLY
@@ -399,6 +419,9 @@ void Render()
 
 	// Debug windows
 	DEBUGWINS_render();
+
+	// MCHD CHANGE (03/02/15): On-screen debug text
+	g_MCHD->RenderDebugText();
 
 	#ifdef LAB_ONLY
 	if (currentLineElement)
@@ -913,7 +936,10 @@ void Initialize()
 	// Debug
 	GameDebugWindow::setFont("assets\\graphics\\arial8.tga");
 	DEBUGWINS_init();
-	
+
+	// MCHD CHANGE (03/02/15): Initialize the global instance (g_MCHD)
+	MCHDUtilities::InitializeInstance();
+
 	// Networking
 	StartupNetworking();
 

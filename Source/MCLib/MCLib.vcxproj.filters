@@ -299,6 +299,7 @@
     </ClCompile>
     <ClCompile Include="TacMap.cpp" />
     <ClCompile Include="Utilities.cpp" />
+    <ClCompile Include="MCHDUtilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bitflag.h">
@@ -598,5 +599,6 @@
     <ClInclude Include="mclib.h" />
     <ClInclude Include="TacMap.h" />
     <ClInclude Include="Utilities.h" />
+    <ClInclude Include="MCHDUtilities.h" />
   </ItemGroup>
 </Project>
