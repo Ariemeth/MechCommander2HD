@@ -9,6 +9,7 @@
 class Ase_HelperObject : public AseGenericItem
 {
 public:
+    void setData(QString);
     Ase_String Name;
     Ase_String HelperClass;
     Ase_String NodeParent; //optional.

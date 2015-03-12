@@ -9,6 +9,7 @@
 class Ase_Node_TM : public AseGenericItem
 {
 public:
+    void setData(QString);
     Ase_String Name;
     Ase_ThreeInt InheritPos;
     Ase_ThreeInt InheritRot;
